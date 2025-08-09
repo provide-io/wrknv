@@ -151,3 +151,6 @@ Thumbs.db
 *.bf.txt
 *bfiles*.txt
 fix_imports.py
+
+# Workenv directories
+workenv/
