@@ -27,6 +27,8 @@ requires-python = ">=3.12"
 dependencies = [
     "click>=8.0",
     "pyvider-telemetry",
+    "pyvider-cty>=0.0.111",
+    "pyvider-hcl>=0.0.113",
     "packaging>=23.0",
     "semver>=3.0.0",
     "tomli>=2.0.0 ; python_version < '3.11'",
@@ -35,6 +37,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+package = [
+    "flavor @ file:///Users/tim/code/gh/provide-io/flavor",
+]
 dev = [
     "pytest>=7.0",
     "pytest-asyncio>=0.21",
@@ -54,7 +59,16 @@ wrkenv = "wrkenv.env.cli:entry_point"
 "Source Code" = "https://github.com/provide-io/wrkenv"
 
 [tool.setuptools]
-packages = ["wrkenv", "wrkenv.env", "wrkenv.env.managers", "wrkenv.env.operations", "wrkenv.env.testing"]
+packages = [
+    "wrkenv", 
+    "wrkenv.env", 
+    "wrkenv.env.managers", 
+    "wrkenv.env.operations", 
+    "wrkenv.env.testing",
+    "wrkenv.package",
+    "wrkenv.config",
+    "wrkenv.provider",
+]
 package-dir = {"" = "src"}
 
 [tool.setuptools.package-data]
