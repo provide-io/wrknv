@@ -31,8 +31,8 @@ tools = {}
         """)
 
         # WHEN: Setting flavor to terraform
-        with patch('tofusoup.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
-            with patch('tofusoup.workenv.cli.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
+            with patch('wrkenv.workenv.cli.get_tool_manager') as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.get_installed_version.return_value = "1.9.3"
                 mock_get_manager.return_value = mock_manager
@@ -54,8 +54,8 @@ tools = {}
         """)
 
         # WHEN: Setting flavor to opentofu
-        with patch('tofusoup.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
-            with patch('tofusoup.workenv.cli.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
+            with patch('wrkenv.workenv.cli.get_tool_manager') as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.get_installed_version.return_value = "1.10.5"
                 mock_get_manager.return_value = mock_manager
@@ -77,8 +77,8 @@ tools = {}
         """)
 
         # WHEN: Setting flavor to opentofu but no tofu installed
-        with patch('tofusoup.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
-            with patch('tofusoup.workenv.cli.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
+            with patch('wrkenv.workenv.cli.get_tool_manager') as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.get_installed_version.return_value = None
                 mock_get_manager.return_value = mock_manager
@@ -100,8 +100,8 @@ tools = {}
         """)
 
         # WHEN: Setting flavor
-        with patch('tofusoup.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
-            with patch('tofusoup.workenv.cli.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
+            with patch('wrkenv.workenv.cli.get_tool_manager') as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.get_installed_version.return_value = "1.10.5"
                 mock_get_manager.return_value = mock_manager

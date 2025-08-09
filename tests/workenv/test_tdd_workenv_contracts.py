@@ -139,8 +139,8 @@ class TestBaseToolManagerContracts:
         manager.get_download_url = Mock(return_value="https://example.com/terraform.zip")
         manager.get_checksum_url = Mock(return_value="https://example.com/terraform.sha256")
 
-        with patch('tofusoup.workenv.operations.download.download_file') as mock_download:
-            with patch('tofusoup.workenv.operations.verify.verify_checksum') as mock_verify:
+        with patch('wrkenv.workenv.operations.download.download_file') as mock_download:
+            with patch('wrkenv.workenv.operations.verify.verify_checksum') as mock_verify:
                 mock_verify.return_value = True
 
                 # This workflow should be consistent across all tools
@@ -297,7 +297,7 @@ class TestTDDConfiguration:
     def mock_network_calls(self):
         """Mock all network calls for isolated testing."""
         with patch('urllib.request.urlopen'), \
-             patch('tofusoup.workenv.operations.download.download_file'):
+             patch('wrkenv.workenv.operations.download.download_file'):
             yield
 
     def test_tdd_fixtures_available(self, temp_workenv_dir, mock_network_calls):

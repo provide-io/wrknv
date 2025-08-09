@@ -29,7 +29,7 @@ tools = {}
         # WHEN: Running profile list
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
             result = runner.invoke(workenv_profile, ["list"])
@@ -58,7 +58,7 @@ tofu = "1.7.0"
         # WHEN: Running profile list
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
             result = runner.invoke(workenv_profile, ["list"])
@@ -97,11 +97,11 @@ tools = {}
         # WHEN: Saving current state as a profile
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
             with patch("pathlib.Path.home", return_value=tmp_path):
-                with patch("tofusoup.workenv.config.tomli_w"):  # Mock the writer
+                with patch("wrkenv.workenv.config.tomli_w"):  # Mock the writer
                     result = runner.invoke(workenv_profile, ["save", "testing"])
 
         # THEN: It should succeed
@@ -121,10 +121,10 @@ tofu = "1.9.0"
         # WHEN: Loading the profile
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
-            with patch("tofusoup.workenv.cli.get_tool_manager") as mock_manager:
+            with patch("wrkenv.workenv.cli.get_tool_manager") as mock_manager:
                 # Mock the tool manager
                 mock_tm = MagicMock()
                 mock_manager.return_value = mock_tm
@@ -149,7 +149,7 @@ tools = {}
         # WHEN: Trying to load a non-existent profile
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
             result = runner.invoke(workenv_profile, ["load", "nonexistent"])
@@ -170,10 +170,10 @@ terraform = "1.7.0"
         # WHEN: Deleting a profile with --force
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
-            with patch("tofusoup.workenv.config.tomli_w"):  # Mock the writer
+            with patch("wrkenv.workenv.config.tomli_w"):  # Mock the writer
                 result = runner.invoke(
                     workenv_profile, ["delete", "temporary", "--force"]
                 )
@@ -194,7 +194,7 @@ terraform = "1.7.0"
         # WHEN: Deleting without --force and declining
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
             result = runner.invoke(
@@ -223,7 +223,7 @@ uv = "0.1.0"
         # WHEN: Listing profiles
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
             result = runner.invoke(workenv_profile, ["list"])
@@ -250,11 +250,11 @@ tools = {}
         # WHEN: Trying to save a profile
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
             with patch("pathlib.Path.home", return_value=tmp_path):
-                with patch("tofusoup.workenv.cli.get_tool_manager") as mock_manager:
+                with patch("wrkenv.workenv.cli.get_tool_manager") as mock_manager:
                     # Mock tool managers returning no installed versions
                     mock_tm = MagicMock()
                     mock_tm.get_installed_version.return_value = None
@@ -279,17 +279,17 @@ tofu = "1.7.0"
         # WHEN: Saving with the same name
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
-            with patch("tofusoup.workenv.cli.get_tool_manager") as mock_manager:
+            with patch("wrkenv.workenv.cli.get_tool_manager") as mock_manager:
                 # Mock tool managers returning new versions
                 mock_tm = MagicMock()
                 # Return a version for any tool
                 mock_tm.get_installed_version.return_value = "1.9.3"
                 mock_manager.return_value = mock_tm
 
-                with patch("tofusoup.workenv.config.tomli_w"):
+                with patch("wrkenv.workenv.config.tomli_w"):
                     result = runner.invoke(workenv_profile, ["save", "myprofile"])
 
         # THEN: It should succeed
@@ -308,7 +308,7 @@ tools = {}
         # WHEN: Trying to delete non-existent profile
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
             result = runner.invoke(
@@ -332,10 +332,10 @@ tofu = "1.10.0"
         # WHEN: Loading with --dry-run
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
-            with patch("tofusoup.workenv.cli.get_tool_manager") as mock_manager:
+            with patch("wrkenv.workenv.cli.get_tool_manager") as mock_manager:
                 mock_tm = MagicMock()
                 mock_manager.return_value = mock_tm
 
@@ -363,15 +363,15 @@ tools = {}
         # WHEN: Saving with special characters
         runner = CliRunner()
         with patch(
-            "tofusoup.workenv.config.WorkenvConfig._find_soup_toml",
+            "wrkenv.workenv.config.WorkenvConfig._find_soup_toml",
             return_value=soup_toml,
         ):
-            with patch("tofusoup.workenv.cli.get_tool_manager") as mock_manager:
+            with patch("wrkenv.workenv.cli.get_tool_manager") as mock_manager:
                 mock_tm = MagicMock()
                 mock_tm.get_installed_version.return_value = "1.9.0"
                 mock_manager.return_value = mock_tm
 
-                with patch("tofusoup.workenv.config.tomli_w"):
+                with patch("wrkenv.workenv.config.tomli_w"):
                     result = runner.invoke(
                         workenv_profile, ["save", "my-test_profile.v1"]
                     )

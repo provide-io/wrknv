@@ -2,10 +2,28 @@
 # wrkenv/workenv/managers/__init__.py
 #
 """
-TofuSoup Workenv Managers
-========================
+wrkenv Tool Managers
+====================
 Tool managers for different development tools.
 """
 
+from .base import BaseToolManager, ToolManagerError
+from .terraform import TerraformManager
+from .tofu import TofuManager
+from .go import GoManager
+from .uv import UvManager
+from .factory import get_tool_manager, get_supported_tools
 
-# 🍲🥄📄🪄
+__all__ = [
+    "BaseToolManager",
+    "ToolManagerError",
+    "TerraformManager", 
+    "TofuManager",
+    "GoManager",
+    "UvManager",
+    "get_tool_manager",
+    "get_supported_tools",
+]
+
+
+# 🧰🌍🖥️🪄
