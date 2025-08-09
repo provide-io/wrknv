@@ -45,7 +45,7 @@ dev = [
 ]
 
 [project.scripts]
-wrkenv = "wrkenv.workenv.cli:entry_point"
+wrkenv = "wrkenv.env.cli:entry_point"
 
 [project.urls]
 "Homepage" = "https://github.com/provide-io/wrkenv"
@@ -54,7 +54,7 @@ wrkenv = "wrkenv.workenv.cli:entry_point"
 "Source Code" = "https://github.com/provide-io/wrkenv"
 
 [tool.setuptools]
-packages = ["wrkenv", "wrkenv.workenv"]
+packages = ["wrkenv", "wrkenv.env"]
 package-dir = {"" = "src"}
 
 [tool.setuptools.package-data]

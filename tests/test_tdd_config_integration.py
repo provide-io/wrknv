@@ -11,7 +11,7 @@ from unittest.mock import Mock, patch
 import pytest
 
 from wrkenv import WorkenvConfig
-from wrkenv.workenv.config import (
+from wrkenv.env.config import (
     ConfigSource,
     EnvironmentConfigSource,
     FileConfigSource,
