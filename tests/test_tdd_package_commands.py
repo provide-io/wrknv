@@ -83,17 +83,22 @@ entry_point = "test.main:serve"
         """)
         
         runner = CliRunner()
-        with patch("wrkenv.package.commands.build_package") as mock_build:
-            mock_build.return_value = [tmp_path / "dist" / "test.flavor"]
+        with patch("flavor.api.build_package_from_manifest") as mock_build_api:
+            mock_build_api.return_value = [tmp_path / "dist" / "test.flavor"]
             
-            result = runner.invoke(
-                workenv_cli, 
-                ["package", "build", "--manifest", str(manifest)]
-            )
+            # Also patch the manager to avoid tool checks in this unit test
+            with patch("wrkenv.package.commands.PackageManager") as mock_manager:
+                mock_manager.return_value.is_flavor_available.return_value = True
+                mock_manager.return_value.check_required_tools.return_value = {"go": "1.21", "uv": "0.4"}
+
+                result = runner.invoke(
+                    workenv_cli, 
+                    ["package", "build", "--manifest", str(manifest)]
+                )
         
-        assert result.exit_code == 0
+        assert result.exit_code == 0, f"CLI exited with code {result.exit_code}: {result.output}"
         assert "Successfully built" in result.output
-        mock_build.assert_called_once()
+        mock_build_api.assert_called_once()
 
     def test_package_build_default_manifest(self, tmp_path):
         """Package build should use pyproject.toml by default."""
@@ -108,13 +113,18 @@ name = "test-provider"
 version = "0.1.0"
             """)
             
-            with patch("wrkenv.package.commands.build_package") as mock_build:
-                mock_build.return_value = [Path("dist/test.flavor")]
+            with patch("flavor.api.build_package_from_manifest") as mock_build_api:
+                mock_build_api.return_value = [Path("dist/test.flavor")]
                 
-                result = runner.invoke(workenv_cli, ["package", "build"])
+                # Also patch the manager to avoid tool checks in this unit test
+                with patch("wrkenv.package.commands.PackageManager") as mock_manager:
+                    mock_manager.return_value.is_flavor_available.return_value = True
+                    mock_manager.return_value.check_required_tools.return_value = {"go": "1.21", "uv": "0.4"}
+
+                    result = runner.invoke(workenv_cli, ["package", "build"])
             
-            assert result.exit_code == 0
-            mock_build.assert_called_once()
+            assert result.exit_code == 0, f"CLI exited with code {result.exit_code}: {result.output}"
+            mock_build_api.assert_called_once()
 
     def test_package_keygen_creates_keys(self, tmp_path):
         """Package keygen should create key pair."""
