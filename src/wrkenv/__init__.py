@@ -13,6 +13,7 @@ __version__ = "0.1.0"
 # Public API - import on demand to avoid circular imports
 __all__ = [
     "env",
+    "package",
     "WorkenvConfig",
     "WorkenvConfigError", 
     "get_tool_manager",

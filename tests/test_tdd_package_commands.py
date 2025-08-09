@@ -83,7 +83,7 @@ entry_point = "test.main:serve"
         """)
         
         runner = CliRunner()
-        with patch("wrkenv.env.package.commands.build_package") as mock_build:
+        with patch("wrkenv.package.commands.build_package") as mock_build:
             mock_build.return_value = [tmp_path / "dist" / "test.flavor"]
             
             result = runner.invoke(
@@ -108,7 +108,7 @@ name = "test-provider"
 version = "0.1.0"
             """)
             
-            with patch("wrkenv.env.package.commands.build_package") as mock_build:
+            with patch("wrkenv.package.commands.build_package") as mock_build:
                 mock_build.return_value = [Path("dist/test.flavor")]
                 
                 result = runner.invoke(workenv_cli, ["package", "build"])
@@ -120,7 +120,7 @@ version = "0.1.0"
         """Package keygen should create key pair."""
         runner = CliRunner()
         
-        with patch("wrkenv.env.package.commands.generate_keys") as mock_gen:
+        with patch("wrkenv.package.commands.generate_keys") as mock_gen:
             mock_gen.return_value = (
                 tmp_path / "provider-private.key",
                 tmp_path / "provider-public.key"
@@ -141,7 +141,7 @@ version = "0.1.0"
         package_file.write_text("dummy")
         
         runner = CliRunner()
-        with patch("wrkenv.env.package.commands.verify_package") as mock_verify:
+        with patch("wrkenv.package.commands.verify_package") as mock_verify:
             result = runner.invoke(
                 workenv_cli,
                 ["package", "verify", str(package_file)]
@@ -157,7 +157,7 @@ version = "0.1.0"
         package_file.write_text("invalid")
         
         runner = CliRunner()
-        with patch("wrkenv.env.package.commands.verify_package") as mock_verify:
+        with patch("wrkenv.package.commands.verify_package") as mock_verify:
             mock_verify.side_effect = Exception("Invalid signature")
             
             result = runner.invoke(
@@ -172,7 +172,7 @@ version = "0.1.0"
         """Package clean should remove build cache."""
         runner = CliRunner()
         
-        with patch("wrkenv.env.package.commands.clean_cache") as mock_clean:
+        with patch("wrkenv.package.commands.clean_cache") as mock_clean:
             result = runner.invoke(workenv_cli, ["package", "clean"])
         
         assert result.exit_code == 0
@@ -184,7 +184,7 @@ version = "0.1.0"
         project_dir = tmp_path / "my-provider"
         
         runner = CliRunner()
-        with patch("wrkenv.env.package.commands.init_provider") as mock_init:
+        with patch("wrkenv.package.commands.init_provider") as mock_init:
             mock_init.return_value = project_dir
             
             result = runner.invoke(
@@ -220,7 +220,7 @@ auto_sign = true
             assert result.exit_code == 0
             
             # Build should use profile settings
-            with patch("wrkenv.env.package.commands.build_package") as mock_build:
+            with patch("wrkenv.package.commands.build_package") as mock_build:
                 mock_build.return_value = [tmp_path / "test.flavor"]
                 
                 result = runner.invoke(workenv_cli, ["package", "build"])
@@ -232,7 +232,7 @@ auto_sign = true
         """Package list should show built packages."""
         runner = CliRunner()
         
-        with patch("wrkenv.env.package.commands.list_packages") as mock_list:
+        with patch("wrkenv.package.commands.list_packages") as mock_list:
             mock_list.return_value = [
                 {"name": "provider-aws", "version": "5.0.0", "size": "45MB"},
                 {"name": "provider-gcp", "version": "4.2.0", "size": "38MB"},
@@ -251,7 +251,7 @@ auto_sign = true
         package_file.write_text("dummy")
         
         runner = CliRunner()
-        with patch("wrkenv.env.package.commands.get_package_info") as mock_info:
+        with patch("wrkenv.package.commands.get_package_info") as mock_info:
             mock_info.return_value = {
                 "name": "test-provider",
                 "version": "1.0.0",
@@ -280,7 +280,7 @@ auto_sign = true
         key_file.write_text("key")
         
         runner = CliRunner()
-        with patch("wrkenv.env.package.commands.sign_package") as mock_sign:
+        with patch("wrkenv.package.commands.sign_package") as mock_sign:
             result = runner.invoke(
                 workenv_cli,
                 ["package", "sign", str(package_file), "--key", str(key_file)]
@@ -296,7 +296,7 @@ auto_sign = true
         package_file.write_text("data")
         
         runner = CliRunner()
-        with patch("wrkenv.env.package.commands.publish_package") as mock_pub:
+        with patch("wrkenv.package.commands.publish_package") as mock_pub:
             mock_pub.return_value = {
                 "url": "https://registry.example.com/provider",
                 "sha256": "abc123",
@@ -321,7 +321,7 @@ version = "1.0.0"
         """)
         
         runner = CliRunner()
-        with patch("wrkenv.env.package.commands.build_package") as mock_build:
+        with patch("wrkenv.package.commands.build_package") as mock_build:
             result = runner.invoke(
                 workenv_cli,
                 ["package", "build", "--manifest", str(manifest), "--dry-run"]
@@ -363,7 +363,7 @@ class TestPackageManagerIntegration:
     
     def test_package_manager_requires_flavor(self):
         """PackageManager should check for flavor availability."""
-        from wrkenv.env.package.manager import PackageManager
+        from wrkenv.package.manager import PackageManager
         from wrkenv.env.config import WorkenvConfig
         
         config = WorkenvConfig()
@@ -381,7 +381,7 @@ class TestPackageManagerIntegration:
 
     def test_package_manager_tool_integration(self):
         """PackageManager should integrate with tool managers."""
-        from wrkenv.env.package.manager import PackageManager
+        from wrkenv.package.manager import PackageManager
         from wrkenv.env.config import WorkenvConfig
         
         config = WorkenvConfig()
@@ -401,7 +401,7 @@ class TestPackageManagerIntegration:
 
     def test_package_manager_environment_setup(self):
         """PackageManager should set up build environment."""
-        from wrkenv.env.package.manager import PackageManager
+        from wrkenv.package.manager import PackageManager
         from wrkenv.env.config import WorkenvConfig
         
         config = WorkenvConfig()
@@ -426,7 +426,7 @@ class TestPackageCommandsWithWorkenv:
         """Package build should install missing tools automatically."""
         runner = CliRunner()
         
-        with patch("wrkenv.env.package.commands.check_tools") as mock_check:
+        with patch("wrkenv.package.commands.check_tools") as mock_check:
             mock_check.return_value = {"go": False, "uv": False}
             
             with patch("wrkenv.env.managers.factory.get_tool_manager") as mock_mgr:
