@@ -4,6 +4,13 @@
 
 ### Overall Status: ✅ Core Functionality Working
 
+### Directory Structure Update
+- Renamed `wrkenv/workenv/` to `wrkenv/env/` to avoid naming confusion
+- Now have clean separation:
+  - `/workenv/` - Git-ignored directory for actual work environments
+  - `/src/wrkenv/env/` - Source code directory
+- All imports updated from `wrkenv.workenv` to `wrkenv.env`
+
 ### Test Results
 
 #### ✅ Passing Tests (31 total)
