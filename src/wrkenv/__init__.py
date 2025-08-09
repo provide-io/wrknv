@@ -10,13 +10,7 @@ Can be used standalone or integrated with other tools like TofuSoup.
 
 __version__ = "0.1.0"
 
-# Import env module to make it accessible
-from . import env
-
-# Public API
-from .env.config import WorkenvConfig, WorkenvConfigError
-from .env.managers.factory import get_tool_manager, get_supported_tools
-
+# Public API - import on demand to avoid circular imports
 __all__ = [
     "env",
     "WorkenvConfig",
