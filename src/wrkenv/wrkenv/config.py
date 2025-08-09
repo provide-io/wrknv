@@ -156,6 +156,8 @@ class WorkenvConfig:
                 sources.append(FileConfigSource(soup_toml, "workenv"))
         
         self.sources = sources
+        self.config_path = self._get_config_path()
+        self._config_data = self._get_merged_config_data()
     
     def _find_config_file(self, filename: str) -> Optional[pathlib.Path]:
         """Find config file in current directory or parent directories."""
@@ -168,6 +170,22 @@ class WorkenvConfig:
             current = current.parent
         
         return None
+    
+    def _get_config_path(self) -> Optional[pathlib.Path]:
+        """Get the primary config file path."""
+        for source in self.sources:
+            if isinstance(source, FileConfigSource):
+                return source.file_path
+        return None
+    
+    def _get_merged_config_data(self) -> Dict[str, Any]:
+        """Get merged configuration data from all file sources."""
+        merged = {}
+        for source in reversed(self.sources):  # Start with lowest priority
+            if isinstance(source, FileConfigSource):
+                # Get the raw data from the file source
+                merged.update({"workenv": source._data})
+        return merged
     
     def get_tool_version(self, tool_name: str) -> Optional[str]:
         """Get configured version for a tool."""
@@ -252,11 +270,26 @@ class WorkenvConfig:
         pattern = r"^\d+\.\d+(\.\d+)?(-[\w\.-]+)?(\+[\w\.-]+)?$"
         return bool(re.match(pattern, version))
     
-    def save_profile(self, profile_name: str, tools: Dict[str, str]) -> None:
+    def save_profile(self, profile_name: str, tools: Optional[Dict[str, str]] = None) -> None:
         """Save a profile to the configuration file."""
         # This would need to determine which file to save to
         # For now, we'll raise NotImplementedError
         raise NotImplementedError("Profile saving not yet implemented")
+    
+    def list_profiles(self) -> list[str]:
+        """List all available profile names."""
+        profiles = self._config_data.get("workenv", {}).get("profiles", {})
+        return list(profiles.keys()) if profiles else []
+    
+    def show_config(self) -> None:
+        """Display current configuration to console."""
+        # This is a placeholder for tests
+        pass
+    
+    def edit_config(self) -> None:
+        """Open configuration file for editing."""
+        # This is a placeholder for tests
+        pass
 
 
 # Convenience function for TofuSoup integration

@@ -1,5 +1,5 @@
 #
-# wrkenv/workenv/managers/base.py
+# wrkenv/wrkenv/managers/base.py
 #
 """
 Base Tool Manager for wrkenv
@@ -15,7 +15,7 @@ import subprocess
 from urllib.parse import urlparse
 
 from pyvider.telemetry import logger
-from wrkenv.workenv.config import WorkenvConfig, WorkenvConfigError
+from wrkenv.wrkenv.config import WorkenvConfig, WorkenvConfigError
 
 
 class ToolManagerError(Exception):

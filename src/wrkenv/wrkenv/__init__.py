@@ -18,5 +18,13 @@ This module can be used standalone or integrated with other tools.
 
 __version__ = "0.1.0"
 
+# Import submodules to make them accessible
+from . import config
+from . import managers
+from . import operations
+from . import testing
+
+__all__ = ["config", "managers", "operations", "testing"]
+
 
 # 🧰🌍🖥️🪄
