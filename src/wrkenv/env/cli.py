@@ -17,7 +17,10 @@ from click.testing import CliRunner
 
 from wrkenv.env.config import WorkenvConfig, WorkenvConfigError
 from wrkenv.env.managers.factory import get_supported_tools, get_tool_manager
-from wrkenv.env.visual import Emoji, print_success, print_error, print_info, print_warning
+from wrkenv.env.visual import (
+    Emoji, print_success, print_error, print_info, print_warning,
+    get_console, get_tool_emoji
+)
 
 
 @click.group(name="workenv", invoke_without_command=True)
@@ -131,15 +134,32 @@ def terraform_command(version: str, dry_run: bool):
 @workenv_cli.command(name="status")
 def status_command():
     """📊 Show status of all managed tools."""
+    from rich.table import Table
+    
     config = WorkenvConfig()
     tools = config.get_all_tools()
+    console = get_console()
     
     if not tools:
-        click.echo("No tools configured")
+        print_warning("No tools configured")
         return
     
+    # Create status table
+    table = Table(title=f"{Emoji.STATUS} Tool Status", show_header=True)
+    table.add_column("Tool", style="cyan")
+    table.add_column("Configured Version", style="yellow")
+    table.add_column("Status", style="green")
+    
     for tool_name, version in tools.items():
-        click.echo(f"{tool_name}: {version}")
+        tool_emoji = get_tool_emoji(tool_name)
+        # Check if tool is installed (simplified for now)
+        table.add_row(
+            f"{tool_emoji} {tool_name}",
+            version or "Not specified",
+            f"{Emoji.INFO} Configured"
+        )
+    
+    console.print(table)
 
 
 # === Sync Command ===
