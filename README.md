@@ -87,18 +87,20 @@ manager = get_tool_manager("terraform", config)
 manager.install_version("1.5.7")
 ```
 
-## TofuSoup Integration
+## Integration with Other Tools
 
-wrkenv was originally part of the TofuSoup project and maintains backward compatibility:
+wrkenv provides a flexible API that can be extended by other tools:
 
 ```python
-from wrkenv.workenv.config import create_soup_config
+from wrkenv.env.config import WorkenvConfig, FileConfigSource, EnvironmentConfigSource
 
-# Create config that prioritizes soup.toml
-config = create_soup_config()
+# Create custom configuration with your own sources
+sources = [
+    EnvironmentConfigSource("MYAPP"),
+    FileConfigSource(Path("myapp.toml"), section="tools"),
+]
+config = WorkenvConfig(sources=sources)
 ```
-
-This allows TofuSoup to use wrkenv while maintaining its existing configuration structure.
 
 ## Configuration
 
@@ -106,8 +108,7 @@ wrkenv supports multiple configuration sources with priority ordering:
 
 1. Environment variables (`WRKENV_*`)
 2. `wrkenv.toml` file
-3. Backward compatibility with `soup.toml`
-4. Built-in defaults
+3. Built-in defaults
 
 ## Development
 
@@ -135,5 +136,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Originally developed as part of the TofuSoup project
 - Inspired by tools like tfenv, pyenv, and rustup
