@@ -227,14 +227,11 @@ version = "0.1.0"
         project_dir = tmp_path / "terraform-provider-example"
         
         runner = CliRunner()
-        # Mock the tofusoup import to use our fallback implementation
-        with patch("tofusoup.scaffolding.generator.scaffold_new_provider", side_effect=ImportError):
-            # This will use the fallback implementation in init_provider
-            
-            result = runner.invoke(
-                workenv_cli,
-                ["package", "init", str(project_dir)]
-            )
+        # No need to mock tofusoup anymore - it's removed from wrkenv
+        result = runner.invoke(
+            workenv_cli,
+            ["package", "init", str(project_dir)]
+        )
         
         if result.exit_code != 0:
             print(f"Init failed: {result.output}")
