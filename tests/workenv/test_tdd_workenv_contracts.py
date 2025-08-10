@@ -38,11 +38,11 @@ class TestWorkenvConfigContracts:
 
     def test_config_supports_environment_variables(self):
         """
-        CONTRACT: Configuration should support TOFUSOUP_WORKENV_* environment variables
+        CONTRACT: Configuration should support WRKENV_* environment variables
         """
         with patch.dict('os.environ', {
-            'TOFUSOUP_WORKENV_TERRAFORM_VERSION': '1.6.0',
-            'TOFUSOUP_WORKENV_VERIFY_CHECKSUMS': 'false'
+            'WRKENV_TERRAFORM_VERSION': '1.6.0',
+            'WRKENV_VERIFY_CHECKSUMS': 'false'
         }):
             config = WorkenvConfig()
 
@@ -144,7 +144,7 @@ class TestBaseToolManagerContracts:
         # Mock the download operations
 
         with patch('wrkenv.env.operations.download.download_file') as mock_download:
-            with patch('wrkenv.env.managers.base.verify_checksum') as mock_verify:
+            with patch('wrkenv.env.operations.download.verify_checksum') as mock_verify:
                 mock_verify.return_value = True
 
                 # This workflow should be consistent across all tools

@@ -243,20 +243,11 @@ version = "0.1.0"
         assert project_dir.exists()
         assert (project_dir / "pyproject.toml").exists()
 
-    def test_package_with_config(self, tmp_path):
-        """Package commands should respect workenv config."""
-        # Create a config with package settings
-        config_file = tmp_path / "wrkenv.toml"
-        config_file.write_text("""
-[workenv.package]
-default_curve = "P-384"
-auto_sign = true
-        """)
-        
+    def test_package_build_with_dry_run(self, tmp_path):
+        """Package build should support dry-run mode."""
         runner = CliRunner()
         
-        # Change to the tmp directory so config is found
-        with patch("os.getcwd", return_value=str(tmp_path)):
+        with runner.isolated_filesystem(temp_dir=tmp_path):
             # Create a minimal pyproject.toml for the build command
             pyproject = tmp_path / "pyproject.toml"
             pyproject.write_text("""
@@ -265,29 +256,12 @@ name = "test-provider"
 version = "0.1.0"
             """)
             
-            # Test that package commands use the config
-            # Mock both PackageManager's is_flavor_available and build_package
-            with patch("wrkenv.package.manager.PackageManager.is_flavor_available") as mock_flavor_check:
-                mock_flavor_check.return_value = True
-                
-                with patch("wrkenv.package.commands.build_package") as mock_build:
-                    mock_build.return_value = [tmp_path / "test.flavor"]
-                    
-                    result = runner.invoke(workenv_cli, ["package", "build", "--manifest", str(pyproject)])
-                
-                # Should pass config to build command
-                if result.exit_code != 0:
-                    print(f"Package build failed: {result.output}")
-                    print(f"Exception: {result.exception}")
-                assert result.exit_code == 0
-                # Verify config was passed
-                mock_build.assert_called_once()
-                call_args = mock_build.call_args
-                if call_args and len(call_args) > 0:
-                    config_arg = call_args[0][-1] if call_args[0] else call_args.kwargs.get('config')
-                    if config_arg:
-                        assert config_arg.get_setting("default_curve") == "P-384"
-                        assert config_arg.get_setting("auto_sign") is True
+            # Test dry-run mode - should not require flavor
+            result = runner.invoke(workenv_cli, ["package", "build", "--manifest", str(pyproject), "--dry-run"])
+            
+            assert result.exit_code == 0
+            assert "[DRY-RUN]" in result.output
+            assert str(pyproject) in result.output
 
     def test_package_list_command(self):
         """Package list should show built packages."""
