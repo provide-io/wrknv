@@ -12,8 +12,8 @@ from click.testing import CliRunner
 
 # These will fail initially - expected in TDD
 try:
-    from wrkenv.workenv.cli import workenv_cli
-    from wrkenv.workenv.config import WorkenvConfig
+    from wrkenv.env.cli import workenv_cli
+    from wrkenv.env.config import WorkenvConfig
 except ImportError:
     workenv_cli = Mock()
     WorkenvConfig = Mock()
@@ -30,13 +30,17 @@ class TestWorkenvCLIBehavior:
         """
         TDD: `soup workenv tf 1.6.2` should install OpenTofu 1.6.2
         """
-        with patch('wrkenv.workenv.managers.tofu.TofuManager') as mock_manager:
+        with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
             mock_instance = Mock()
-            mock_manager.return_value = mock_instance
+            mock_factory.return_value = mock_instance
 
             result = self.runner.invoke(workenv_cli, ['tf', '1.6.2'])
 
             # Should succeed
+            if result.exit_code != 0:
+                print(f"Exit code: {result.exit_code}")
+                print(f"Output: {result.output}")
+                print(f"Exception: {result.exception}")
             assert result.exit_code == 0
 
             # Should call install_version with correct version
@@ -49,9 +53,9 @@ class TestWorkenvCLIBehavior:
         """
         TDD: `soup workenv tf --latest` should install latest OpenTofu version
         """
-        with patch('wrkenv.workenv.managers.tofu.TofuManager') as mock_manager:
+        with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
             mock_instance = Mock()
-            mock_manager.return_value = mock_instance
+            mock_factory.return_value = mock_instance
 
             result = self.runner.invoke(workenv_cli, ['tf', '--latest'])
 
@@ -62,7 +66,7 @@ class TestWorkenvCLIBehavior:
         """
         TDD: `soup workenv tf --list` should show available OpenTofu versions
         """
-        with patch('wrkenv.workenv.managers.tofu.TofuManager') as mock_manager:
+        with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
             mock_instance = Mock()
             mock_instance.get_available_versions.return_value = ['1.6.2', '1.6.1', '1.6.0']
             
@@ -72,20 +76,20 @@ class TestWorkenvCLIBehavior:
                     print(f"   {version}")
             
             mock_instance.list_versions = mock_list_versions
-            mock_manager.return_value = mock_instance
+            mock_factory.return_value = mock_instance
 
             result = self.runner.invoke(workenv_cli, ['tf', '--list'])
 
             assert result.exit_code == 0
             assert '1.6.2' in result.output
             assert '1.6.1' in result.output
-            assert 'Available OpenTofu versions' in result.output.lower()
+            assert 'available opentofu versions' in result.output.lower()
 
     def test_workenv_status_command(self):
         """
         TDD: `soup workenv status` should show installed tools
         """
-        with patch('wrkenv.workenv.config.WorkenvConfig') as mock_config:
+        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.get_all_tools.return_value = {
                 'terraform': '1.5.7',
@@ -105,7 +109,7 @@ class TestWorkenvCLIBehavior:
         """
         TDD: `soup workenv sync` should install tools from soup.toml
         """
-        with patch('wrkenv.workenv.config.WorkenvConfig') as mock_config:
+        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.get_all_tools.return_value = {
                 'terraform': '1.5.7',
@@ -113,7 +117,7 @@ class TestWorkenvCLIBehavior:
             }
             mock_config.return_value = mock_config_instance
 
-            with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_factory:
+            with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
                 mock_tf_manager = Mock()
                 mock_tofu_manager = Mock()
                 mock_factory.side_effect = [mock_tf_manager, mock_tofu_manager]
@@ -128,27 +132,36 @@ class TestWorkenvCLIBehavior:
         """
         TDD: `soup workenv matrix-test` should run version matrix tests
         """
-        with patch('wrkenv.workenv.testing.matrix.VersionMatrix') as mock_matrix:
-            mock_matrix_instance = Mock()
-            mock_matrix_instance.run_tests.return_value = {
-                'success_count': 4,
-                'failure_count': 0,
-                'results': []
-            }
-            mock_matrix.return_value = mock_matrix_instance
+        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
+            mock_config_instance = Mock()
+            mock_config_instance.get_setting.return_value = {'tools': ['terraform', 'tofu']}
+            mock_config.return_value = mock_config_instance
+            
+            with patch('wrkenv.env.testing.matrix.VersionMatrix') as mock_matrix:
+                mock_matrix_instance = Mock()
+                mock_matrix_instance.run_tests.return_value = {
+                    'success_count': 4,
+                    'failure_count': 0,
+                    'results': []
+                }
+                mock_matrix.return_value = mock_matrix_instance
 
-            result = self.runner.invoke(workenv_cli, ['matrix-test'])
+                result = self.runner.invoke(workenv_cli, ['matrix-test'])
 
+            if result.exit_code != 0:
+                print(f"Exit code: {result.exit_code}")
+                print(f"Output: {result.output}")
+                print(f"Exception: {result.exception}")
             assert result.exit_code == 0
-            assert 'success_count: 4' in result.output or '4 passed' in result.output
+            assert 'Success: 4' in result.output or '4 passed' in result.output
 
     def test_workenv_dry_run_flag(self):
         """
         TDD: `--dry-run` flag should show what would be done without doing it
         """
-        with patch('wrkenv.workenv.managers.terraform.TerraformManager') as mock_manager:
+        with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
             mock_instance = Mock()
-            mock_manager.return_value = mock_instance
+            mock_factory.return_value = mock_instance
 
             result = self.runner.invoke(workenv_cli, ['terraform', '1.5.7', '--dry-run'])
 
@@ -167,12 +180,16 @@ class TestWorkenvProfileManagement:
         """
         TDD: `soup workenv profile save dev` should save current state as profile
         """
-        with patch('wrkenv.workenv.config.WorkenvConfig') as mock_config:
+        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
             mock_config_instance = Mock()
             mock_config.return_value = mock_config_instance
 
             result = self.runner.invoke(workenv_cli, ['profile', 'save', 'dev'])
 
+            if result.exit_code != 0:
+                print(f"Exit code: {result.exit_code}")
+                print(f"Output: {result.output}")
+                print(f"Exception: {result.exception}")
             assert result.exit_code == 0
             mock_config_instance.save_profile.assert_called_once_with('dev')
 
@@ -180,7 +197,7 @@ class TestWorkenvProfileManagement:
         """
         TDD: `soup workenv profile load dev` should switch to dev profile
         """
-        with patch('wrkenv.workenv.config.WorkenvConfig') as mock_config:
+        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.get_profile.return_value = {
                 'terraform': '1.5.7',
@@ -188,7 +205,7 @@ class TestWorkenvProfileManagement:
             }
             mock_config.return_value = mock_config_instance
 
-            with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_factory:
+            with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
                 mock_tf_manager = Mock()
                 mock_tofu_manager = Mock()
                 mock_factory.side_effect = [mock_tf_manager, mock_tofu_manager]
@@ -203,7 +220,7 @@ class TestWorkenvProfileManagement:
         """
         TDD: `soup workenv profile list` should show available profiles
         """
-        with patch('wrkenv.workenv.config.WorkenvConfig') as mock_config:
+        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.list_profiles.return_value = ['dev', 'prod', 'testing']
             mock_config.return_value = mock_config_instance
@@ -226,10 +243,10 @@ class TestWorkenvErrorHandling:
         """
         TDD: Invalid version should show helpful error message
         """
-        with patch('wrkenv.workenv.managers.terraform.TerraformManager') as mock_manager:
+        with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
             mock_instance = Mock()
             mock_instance.install_version.side_effect = ValueError("Invalid version: invalid")
-            mock_manager.return_value = mock_instance
+            mock_factory.return_value = mock_instance
 
             result = self.runner.invoke(workenv_cli, ['terraform', 'invalid'])
 
@@ -240,10 +257,10 @@ class TestWorkenvErrorHandling:
         """
         TDD: Network errors should show helpful error message
         """
-        with patch('wrkenv.workenv.managers.terraform.TerraformManager') as mock_manager:
+        with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
             mock_instance = Mock()
             mock_instance.install_version.side_effect = ConnectionError("Network unreachable")
-            mock_manager.return_value = mock_instance
+            mock_factory.return_value = mock_instance
 
             result = self.runner.invoke(workenv_cli, ['terraform', '1.5.7'])
 
@@ -254,10 +271,10 @@ class TestWorkenvErrorHandling:
         """
         TDD: Permission errors should show helpful error message
         """
-        with patch('wrkenv.workenv.managers.terraform.TerraformManager') as mock_manager:
+        with patch('wrkenv.env.cli.get_tool_manager') as mock_factory:
             mock_instance = Mock()
             mock_instance.install_version.side_effect = PermissionError("Permission denied")
-            mock_manager.return_value = mock_instance
+            mock_factory.return_value = mock_instance
 
             result = self.runner.invoke(workenv_cli, ['terraform', '1.5.7'])
 
@@ -275,7 +292,7 @@ class TestWorkenvConfiguration:
         """
         TDD: `soup workenv config show` should display current configuration
         """
-        with patch('wrkenv.workenv.config.WorkenvConfig') as mock_config:
+        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.show_config.return_value = None  # Prints to console
             mock_config.return_value = mock_config_instance
@@ -289,7 +306,7 @@ class TestWorkenvConfiguration:
         """
         TDD: `soup workenv config edit` should open configuration for editing
         """
-        with patch('wrkenv.workenv.config.WorkenvConfig') as mock_config:
+        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
             mock_config_instance = Mock()
             mock_config.return_value = mock_config_instance
 

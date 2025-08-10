@@ -10,8 +10,8 @@ import pathlib
 from unittest.mock import Mock, patch
 from click.testing import CliRunner
 
-from wrkenv.workenv.cli import workenv_tf
-from wrkenv.workenv.config import WorkenvConfig
+from wrkenv.env.cli import workenv_tf
+from wrkenv.env.config import WorkenvConfig
 
 
 class TestTerraformFlavorCommands:
@@ -31,8 +31,8 @@ tools = {}
         """)
 
         # WHEN: Setting flavor to terraform
-        with patch('wrkenv.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
-            with patch('wrkenv.workenv.cli.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
+            with patch('wrkenv.env.cli.get_tool_manager') as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.get_installed_version.return_value = "1.9.3"
                 mock_get_manager.return_value = mock_manager
@@ -54,8 +54,8 @@ tools = {}
         """)
 
         # WHEN: Setting flavor to opentofu
-        with patch('wrkenv.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
-            with patch('wrkenv.workenv.cli.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
+            with patch('wrkenv.env.cli.get_tool_manager') as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.get_installed_version.return_value = "1.10.5"
                 mock_get_manager.return_value = mock_manager
@@ -77,8 +77,8 @@ tools = {}
         """)
 
         # WHEN: Setting flavor to opentofu but no tofu installed
-        with patch('wrkenv.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
-            with patch('wrkenv.workenv.cli.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
+            with patch('wrkenv.env.cli.get_tool_manager') as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.get_installed_version.return_value = None
                 mock_get_manager.return_value = mock_manager
@@ -100,8 +100,8 @@ tools = {}
         """)
 
         # WHEN: Setting flavor
-        with patch('wrkenv.workenv.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
-            with patch('wrkenv.workenv.cli.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.config.WorkenvConfig._find_soup_toml', return_value=soup_toml):
+            with patch('wrkenv.env.cli.get_tool_manager') as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.get_installed_version.return_value = "1.10.5"
                 mock_get_manager.return_value = mock_manager

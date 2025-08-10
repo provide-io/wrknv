@@ -15,7 +15,7 @@ import pathlib
 
 # Import will fail initially - that's expected in TDD
 try:
-    from wrkenv.workenv.cli import workenv_cli
+    from wrkenv.env.cli import workenv_cli
 except ImportError:
     workenv_cli = Mock()
 
@@ -31,7 +31,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf list` should list available versions
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_terraform_manager = Mock()
             
@@ -66,7 +66,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf install opentofu-1.6.2` should install OpenTofu 1.6.2
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_manager = Mock()
             mock_get_manager.return_value = mock_manager
             
@@ -81,7 +81,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf install terraform-1.5.7` should install Terraform 1.5.7
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_manager = Mock()
             mock_get_manager.return_value = mock_manager
             
@@ -96,7 +96,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf install opentofu-latest` and `terraform-latest`
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_manager = Mock()
             mock_get_manager.return_value = mock_manager
             
@@ -124,7 +124,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf status` should show installed versions
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_terraform_manager = Mock()
             
@@ -156,7 +156,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf clean` should remove all tf tool versions
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_terraform_manager = Mock()
             
@@ -183,7 +183,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf clean --tf-version=opentofu-1.6.1` should remove specific version
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_manager = Mock()
             mock_get_manager.return_value = mock_manager
             
@@ -198,7 +198,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf clean --tf-version=terraform-1.5.7 --tf-version=opentofu-1.6.1`
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_terraform_manager = Mock()
             
@@ -226,7 +226,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf install opentofu-1.6.2 --dry-run` should not actually install
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_manager = Mock()
             mock_get_manager.return_value = mock_manager
             
@@ -252,7 +252,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf list --tf-version=opentofu-latest` filters versions
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_tofu_manager.get_available_versions.return_value = ['1.6.2', '1.6.1', '1.6.0']
             
@@ -273,7 +273,7 @@ class TestWorkenvTfCommands:
         """
         TDD: `soup workenv tf list --tf-version=terraform>=1.11` filters with comparison
         """
-        with patch('wrkenv.workenv.managers.factory.get_tool_manager') as mock_get_manager:
+        with patch('wrkenv.env.managers.factory.get_tool_manager') as mock_get_manager:
             mock_terraform_manager = Mock()
             mock_terraform_manager.get_available_versions.return_value = ['1.12.0', '1.11.5', '1.11.0', '1.10.0', '1.9.0']
             
@@ -285,7 +285,7 @@ class TestWorkenvTfCommands:
             mock_get_manager.side_effect = get_manager
             
             # Need to mock packaging.version
-            with patch('wrkenv.workenv.cli.version_matches') as mock_matches:
+            with patch('wrkenv.env.cli.version_matches') as mock_matches:
                 # Make it return True for versions >= 1.11
                 def matches(version, op, target):
                     if op == '>=' and target == '1.11':

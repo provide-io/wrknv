@@ -12,7 +12,7 @@ from unittest.mock import Mock, patch, MagicMock
 import pathlib
 
 try:
-    from wrkenv.workenv.cli import workenv_cli
+    from wrkenv.env.cli import workenv_cli
 except ImportError:
     workenv_cli = Mock()
 
@@ -45,7 +45,7 @@ class TestWorkenvTfCommandsV2:
             with patch("pathlib.Path.home") as mock_home:
                 mock_home.return_value = pathlib.Path(temp_dir)
                 
-                with patch("wrkenv.workenv.cli.get_tool_manager") as mock_get_manager:
+                with patch("wrkenv.env.cli.get_tool_manager") as mock_get_manager:
                     mock_tofu_manager = Mock()
                     mock_terraform_manager = Mock()
                     
@@ -84,7 +84,7 @@ class TestWorkenvTfCommandsV2:
         TDD: `soup workenv tf list --remote` should list available remote versions
         """
         with patch(
-            "wrkenv.workenv.managers.factory.get_tool_manager"
+            "wrkenv.env.managers.factory.get_tool_manager"
         ) as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_terraform_manager = Mock()
@@ -124,7 +124,7 @@ class TestWorkenvTfCommandsV2:
         TDD: `soup workenv tf list --tf-version=opentofu-*` filters local versions
         """
         with patch(
-            "wrkenv.workenv.managers.factory.get_tool_manager"
+            "wrkenv.env.managers.factory.get_tool_manager"
         ) as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_terraform_manager = Mock()
@@ -170,7 +170,7 @@ class TestWorkenvTfCommandsV2:
             with patch("pathlib.Path.home") as mock_home:
                 mock_home.return_value = pathlib.Path(temp_dir)
                 
-                with patch("wrkenv.workenv.cli.get_tool_manager") as mock_get_manager:
+                with patch("wrkenv.env.cli.get_tool_manager") as mock_get_manager:
                     mock_tofu_manager = Mock()
                     
                     # Mock current active version
@@ -198,7 +198,7 @@ class TestWorkenvTfCommandsV2:
         """
         TDD: `soup workenv tf status` should show current active versions only
         """
-        with patch("wrkenv.workenv.cli.get_tool_manager") as mock_get_manager:
+        with patch("wrkenv.env.cli.get_tool_manager") as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_terraform_manager = Mock()
 
@@ -257,7 +257,7 @@ class TestWorkenvTfCommandsV2:
         TDD: `soup workenv tf list --remote --tf-version=opentofu-latest`
         """
         with patch(
-            "wrkenv.workenv.managers.factory.get_tool_manager"
+            "wrkenv.env.managers.factory.get_tool_manager"
         ) as mock_get_manager:
             mock_tofu_manager = Mock()
             mock_tofu_manager.get_available_versions.return_value = [
@@ -286,7 +286,7 @@ class TestWorkenvTfCommandsV2:
         """
         TDD: `soup workenv tf switch opentofu-1.6.0` switches to installed version
         """
-        with patch("wrkenv.workenv.cli.get_tool_manager") as mock_get_manager:
+        with patch("wrkenv.env.cli.get_tool_manager") as mock_get_manager:
             mock_manager = Mock()
             mock_manager.get_installed_versions.return_value = ["1.6.2", "1.6.0"]
             mock_get_manager.return_value = mock_manager

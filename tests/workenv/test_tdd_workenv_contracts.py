@@ -13,11 +13,11 @@ from unittest.mock import Mock, patch, MagicMock
 
 # These imports will fail initially - that's expected in TDD
 try:
-    from wrkenv.workenv.config import WorkenvConfig
-    from wrkenv.workenv.managers.base import BaseToolManager
-    from wrkenv.workenv.managers.terraform import TerraformManager
-    from wrkenv.workenv.managers.tofu import TofuManager
-    from wrkenv.workenv.testing.matrix import VersionMatrix
+    from wrkenv.env.config import WorkenvConfig
+    from wrkenv.env.managers.base import BaseToolManager
+    from wrkenv.env.managers.terraform import TerraformManager
+    from wrkenv.env.managers.tofu import TofuManager
+    from wrkenv.env.testing.matrix import VersionMatrix
 except ImportError:
     # Expected during TDD - we'll implement these
     WorkenvConfig = Mock
@@ -28,7 +28,7 @@ except ImportError:
 
 # PlatformDetector doesn't exist, but we have platform functions
 try:
-    from wrkenv.workenv.operations.platform import get_platform_info
+    from wrkenv.env.operations.platform import get_platform_info
     PlatformDetector = None  # We'll use the functions directly
 except ImportError:
     PlatformDetector = Mock
@@ -139,8 +139,8 @@ class TestBaseToolManagerContracts:
         manager.get_download_url = Mock(return_value="https://example.com/terraform.zip")
         manager.get_checksum_url = Mock(return_value="https://example.com/terraform.sha256")
 
-        with patch('wrkenv.workenv.operations.download.download_file') as mock_download:
-            with patch('wrkenv.workenv.operations.verify.verify_checksum') as mock_verify:
+        with patch('wrkenv.env.operations.download.download_file') as mock_download:
+            with patch('wrkenv.env.operations.verify.verify_checksum') as mock_verify:
                 mock_verify.return_value = True
 
                 # This workflow should be consistent across all tools
@@ -297,7 +297,7 @@ class TestTDDConfiguration:
     def mock_network_calls(self):
         """Mock all network calls for isolated testing."""
         with patch('urllib.request.urlopen'), \
-             patch('wrkenv.workenv.operations.download.download_file'):
+             patch('wrkenv.env.operations.download.download_file'):
             yield
 
     def test_tdd_fixtures_available(self, temp_workenv_dir, mock_network_calls):

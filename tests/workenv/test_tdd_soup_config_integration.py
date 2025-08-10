@@ -11,7 +11,7 @@ from unittest.mock import Mock, patch
 
 # TDD imports - will fail initially
 try:
-    from wrkenv.workenv.config import WorkenvConfig
+    from wrkenv.env.config import WorkenvConfig
     from tofusoup.common.config import load_tofusoup_config
 except ImportError:
     WorkenvConfig = Mock
