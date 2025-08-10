@@ -138,17 +138,25 @@ class TestBaseToolManagerContracts:
                 pass
         
         config = Mock()
-        config.get_setting.return_value = "/tmp/test"
+        config.get_setting.side_effect = lambda key, default=None: {
+            "install_path": "/tmp/test",
+            "cache_path": "/tmp/cache",
+            "cache_downloads": True,
+            "verify_checksums": True,
+            "clean_on_failure": True
+        }.get(key, default)
+        config.get_command_option.return_value = True
         manager = TestManager(config)
 
-        # Mock the download operations
+        # Mock the download operations and paths
+        with patch('pathlib.Path.exists', return_value=False):
+            with patch('pathlib.Path.mkdir'):
+                with patch('wrkenv.env.operations.download.download_file') as mock_download:
+                    with patch('wrkenv.env.operations.download.verify_checksum') as mock_verify:
+                        mock_verify.return_value = True
 
-        with patch('wrkenv.env.operations.download.download_file') as mock_download:
-            with patch('wrkenv.env.operations.download.verify_checksum') as mock_verify:
-                mock_verify.return_value = True
-
-                # This workflow should be consistent across all tools
-                manager.install_version("1.5.7")
+                        # This workflow should be consistent across all tools
+                        manager.install_version("1.5.7")
 
                 # Verify the workflow steps
                 mock_download.assert_called()
