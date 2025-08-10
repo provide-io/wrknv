@@ -2,7 +2,7 @@
 # wrkenv/workenv/operations/download.py
 #
 """
-TofuSoup Workenv Download Operations
+wrkenv Download Operations
 ====================================
 Functions for downloading and verifying tool archives.
 """

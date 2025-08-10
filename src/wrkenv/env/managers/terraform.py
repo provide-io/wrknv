@@ -2,9 +2,9 @@
 # wrkenv/workenv/managers/terraform.py
 #
 """
-Terraform Tool Manager for TofuSoup Workenv
-===========================================
-Manages Terraform versions for the TofuSoup development environment.
+Terraform Tool Manager for wrkenv
+===================================
+Manages Terraform versions for development environment.
 """
 
 import json
@@ -18,7 +18,7 @@ from .tf_versions_base import TfVersionsManager, ToolManagerError
 
 
 class TerraformManager(TfVersionsManager):
-    """Manages Terraform versions using HashiCorp's releases API with TofuSoup's directory structure."""
+    """Manages Terraform versions using HashiCorp's releases API with wrkenv's directory structure."""
 
     @property
     def tool_name(self) -> str:
@@ -153,12 +153,12 @@ class TerraformManager(TfVersionsManager):
             return False
 
     def get_harness_compatibility(self) -> dict:
-        """Get compatibility information for TofuSoup harnesses."""
+        """Get compatibility information for development tools."""
         version = self.get_installed_version()
         if not version:
             return {"status": "not_installed"}
 
-        # Check compatibility with TofuSoup harnesses
+        # Check compatibility with development tools
         compatibility = {
             "status": "compatible",
             "version": version,
@@ -172,15 +172,15 @@ class TerraformManager(TfVersionsManager):
         return compatibility
 
     def _check_cty_compatibility(self, version: str) -> dict:
-        """Check compatibility with CTY harness."""
-        # CTY harness works with most Terraform versions
+        """Check compatibility with CTY tools."""
+        # CTY tools work with most Terraform versions
         return {
             "compatible": True,
             "notes": "CTY testing compatible with all Terraform versions",
         }
 
     def _check_wire_compatibility(self, version: str) -> dict:
-        """Check compatibility with wire protocol harness."""
+        """Check compatibility with wire protocol tools."""
         # Wire protocol compatibility depends on Terraform version
         major_minor = ".".join(version.split(".")[:2])
 

@@ -2,7 +2,7 @@
 # wrkenv/workenv/operations/platform.py
 #
 """
-TofuSoup Workenv Platform Detection
+wrkenv Platform Detection
 ===================================
 Functions for detecting platform and architecture information.
 """

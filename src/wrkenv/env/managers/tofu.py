@@ -2,9 +2,9 @@
 # wrkenv/workenv/managers/tofu.py
 #
 """
-OpenTofu Tool Manager for TofuSoup Workenv
-==========================================
-Manages OpenTofu versions for the TofuSoup development environment.
+OpenTofu Tool Manager for wrkenv
+==================================
+Manages OpenTofu versions for development environment.
 """
 
 import json
@@ -18,7 +18,7 @@ from .tf_versions_base import TfVersionsManager, ToolManagerError
 
 
 class TofuManager(TfVersionsManager):
-    """Manages OpenTofu versions using GitHub releases API with TofuSoup's directory structure."""
+    """Manages OpenTofu versions using GitHub releases API with wrkenv's directory structure."""
 
     @property
     def tool_name(self) -> str:
@@ -135,12 +135,12 @@ class TofuManager(TfVersionsManager):
             return False
 
     def get_harness_compatibility(self) -> dict:
-        """Get compatibility information for TofuSoup harnesses."""
+        """Get compatibility information for development tools."""
         version = self.get_installed_version()
         if not version:
             return {"status": "not_installed"}
 
-        # Check compatibility with TofuSoup harnesses
+        # Check compatibility with development tools
         compatibility = {
             "status": "compatible",
             "version": version,
@@ -154,14 +154,14 @@ class TofuManager(TfVersionsManager):
         return compatibility
 
     def _check_cty_compatibility(self, version: str) -> dict:
-        """Check compatibility with CTY harness."""
+        """Check compatibility with CTY tools."""
         return {
             "compatible": True,
             "notes": "CTY testing compatible with all OpenTofu versions",
         }
 
     def _check_wire_compatibility(self, version: str) -> dict:
-        """Check compatibility with wire protocol harness."""
+        """Check compatibility with wire protocol tools."""
         # OpenTofu 1.6+ is compatible with Terraform wire protocol
         major_minor = ".".join(version.split(".")[:2])
 

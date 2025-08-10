@@ -2,9 +2,9 @@
 # wrkenv/workenv/managers/uv.py
 #
 """
-UV Tool Manager for TofuSoup Workenv
-====================================
-Manages UV (Python package manager) versions for TofuSoup development.
+UV Tool Manager for wrkenv
+============================
+Manages UV (Python package manager) versions for development.
 """
 
 import json
@@ -163,12 +163,12 @@ class UvManager(BaseToolManager):
             return False
 
     def get_harness_compatibility(self) -> dict:
-        """Get compatibility information for TofuSoup Python harnesses."""
+        """Get compatibility information for Python tools."""
         version = self.get_installed_version()
         if not version:
             return {"status": "not_installed"}
 
-        # Check compatibility with TofuSoup Python harnesses
+        # Check compatibility with Python tools
         compatibility = {
             "status": "compatible",
             "version": version,
@@ -182,24 +182,24 @@ class UvManager(BaseToolManager):
         return compatibility
 
     def _check_python_cty_compatibility(self, version: str) -> dict:
-        """Check compatibility with Python CTY harness."""
+        """Check compatibility with Python CTY tools."""
         return {
             "compatible": True,
-            "notes": "Python CTY harness compatible with all UV versions",
+            "notes": "Python CTY tools compatible with all UV versions",
         }
 
     def _check_python_hcl_compatibility(self, version: str) -> dict:
-        """Check compatibility with Python HCL harness."""
+        """Check compatibility with Python HCL tools."""
         return {
             "compatible": True,
-            "notes": "Python HCL harness compatible with all UV versions",
+            "notes": "Python HCL tools compatible with all UV versions",
         }
 
     def _check_python_wire_compatibility(self, version: str) -> dict:
-        """Check compatibility with Python wire protocol harness."""
+        """Check compatibility with Python wire protocol tools."""
         return {
             "compatible": True,
-            "notes": "Python wire protocol harness compatible with all UV versions",
+            "notes": "Python wire protocol tools compatible with all UV versions",
         }
 
 

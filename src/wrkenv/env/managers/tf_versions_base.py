@@ -2,11 +2,11 @@
 # wrkenv/workenv/managers/tf_versions_base.py
 #
 """
-TofuSoup Tf Versions Manager Base
-=================================
-Base class for Tf (Terraform/OpenTofu) managers that use TofuSoup's ~/.terraform.versions
-directory structure. This implementation is compatible with tfswitch but is
-TofuSoup's own design for managing Tf tool versions.
+Tf Versions Manager Base
+==========================
+Base class for Tf (Terraform/OpenTofu) managers that use ~/.terraform.versions
+directory structure. This implementation is compatible with tfswitch and
+designed for managing Tf tool versions.
 """
 
 import hashlib
@@ -26,16 +26,16 @@ from .base import BaseToolManager, ToolManagerError
 
 class TfVersionsManager(BaseToolManager):
     """
-    Base class for managers using TofuSoup's ~/.terraform.versions directory.
+    Base class for managers using ~/.terraform.versions directory.
 
     This directory structure is compatible with tfswitch, allowing users to
     use either tool interchangeably while providing enhanced metadata tracking
-    for TofuSoup's advanced features. Supports both Terraform and OpenTofu.
+    for advanced features. Supports both Terraform and OpenTofu.
     """
 
     def __init__(self, config=None):
         super().__init__(config)
-        # Override install path to use TofuSoup's tf versions directory
+        # Override install path to use tf versions directory
         self.install_path = pathlib.Path("~/.terraform.versions").expanduser()
         self.install_path.mkdir(parents=True, exist_ok=True)
 
@@ -173,7 +173,7 @@ class TfVersionsManager(BaseToolManager):
 
     def get_binary_path(self, version: str) -> pathlib.Path:
         """Get path to the installed binary for a version."""
-        # In TofuSoup format, binaries are stored as prefix_version
+        # In tf versions format, binaries are stored as prefix_version
         binary_name = f"{self.tool_prefix}_{version}"
         return self.install_path / binary_name
 
@@ -294,7 +294,7 @@ class TfVersionsManager(BaseToolManager):
         return hash_func.hexdigest()
 
     def _install_from_archive(self, archive_path: pathlib.Path, version: str) -> None:
-        """Install tool from downloaded archive in TofuSoup format."""
+        """Install tool from downloaded archive in tf versions format."""
         # Extract to temporary directory
         extract_dir = self.cache_dir / f"{self.tool_prefix}_{version}_extract"
         extract_dir.mkdir(exist_ok=True)
@@ -319,7 +319,7 @@ class TfVersionsManager(BaseToolManager):
             if not binary_path:
                 raise ToolManagerError(f"{self.tool_name} binary not found in archive")
 
-            # Copy to TofuSoup location
+            # Copy to tf versions location
             target_path = self.get_binary_path(version)
             shutil.copy2(binary_path, target_path)
 
@@ -384,7 +384,7 @@ class TfVersionsManager(BaseToolManager):
             "binary_sha256": binary_hash,
             "signature_files": [str(f) for f in signature_files],
             "platform": self.get_platform_info(),
-            "tofusoup_version": "0.1.0",  # Track which version of TofuSoup installed this
+            "wrkenv_version": "0.1.0",  # Track which version of wrkenv installed this
         }
 
         self._save_metadata()
@@ -486,7 +486,7 @@ class TfVersionsManager(BaseToolManager):
     def _get_current_profile(self) -> str:
         """Get the current workenv profile name."""
         # Check environment variable first
-        profile = os.environ.get("TOFUSOUP_WORKENV_PROFILE")
+        profile = os.environ.get("WRKENV_PROFILE")
         if profile:
             return profile
 
@@ -509,7 +509,7 @@ class TfVersionsManager(BaseToolManager):
             # We're in a virtual environment
             venv_path = pathlib.Path(sys.prefix)
 
-            # Check if this is a TofuSoup workenv (has 'workenv' in the path)
+            # Check if this is a wrkenv (has 'workenv' in the path)
             if "workenv" in str(venv_path):
                 # Use the workenv structure
                 if os.name == "nt":  # Windows

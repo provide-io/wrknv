@@ -2,8 +2,8 @@
 # wrkenv/env/managers/factory.py
 #
 """
-Tool Manager Factory for TofuSoup Workenv
-=========================================
+Tool Manager Factory for wrkenv
+================================
 Factory for creating appropriate tool managers.
 """
 
