@@ -23,13 +23,12 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: click>=8.0
 Requires-Dist: pyvider-telemetry
-Requires-Dist: pyvider-cty>=0.0.111
-Requires-Dist: pyvider-hcl>=0.0.113
 Requires-Dist: packaging>=23.0
 Requires-Dist: semver>=3.0.0
 Requires-Dist: tomli>=2.0.0; python_version < "3.11"
 Requires-Dist: tomli-w>=1.0.0
 Requires-Dist: rich>=13.0.0
+Requires-Dist: jinja2>=3.0.0
 Provides-Extra: package
 Requires-Dist: flavor@ file:///Users/tim/code/gh/provide-io/flavor ; extra == "package"
 Provides-Extra: dev
@@ -39,6 +38,7 @@ Requires-Dist: pytest-cov>=4.0; extra == "dev"
 Requires-Dist: black>=23.0; extra == "dev"
 Requires-Dist: ruff>=0.1.0; extra == "dev"
 Requires-Dist: mypy>=1.0; extra == "dev"
+Requires-Dist: bandit>=1.7.0; extra == "dev"
 Dynamic: license-file
 
 # 🧰🌍 wrkenv

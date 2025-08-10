@@ -43,10 +43,20 @@ def workenv_cli(ctx):
 
 @workenv_cli.command(name="setup")
 @click.option("--shell-integration", is_flag=True, help="Set up shell aliases")
-def setup_command(shell_integration: bool):
+@click.option("--init", is_flag=True, help="Initialize wrkenv's own workenv")
+@click.option("--force", is_flag=True, help="Force recreate workenv")
+def setup_command(shell_integration: bool, init: bool, force: bool):
     """Set up wrkenv environment and integrations."""
     import subprocess
     from pathlib import Path
+
+    from wrkenv.env.workenv import WorkenvManager
+
+    if init:
+        # Set up wrkenv's own workenv
+        print_info("Setting up wrkenv workenv...", Emoji.CONFIG)
+        WorkenvManager.setup_workenv(force=force)
+        return
 
     if shell_integration:
         # Look for script in the repository root
@@ -67,7 +77,8 @@ def setup_command(shell_integration: bool):
             sys.exit(1)
     else:
         print_info("Available setup options:")
-        print_info("  --shell-integration  Set up shell aliases and shortcuts")
+        print_info("  --init                Create wrkenv's own workenv")
+        print_info("  --shell-integration   Set up shell aliases and shortcuts")
 
 
 # === Direct Tool Commands ===
