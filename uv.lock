@@ -199,6 +199,7 @@ wheels = [
 
 [[package]]
 name = "flavor"
+version = "0.1.0"
 source = { directory = "../flavor" }
 dependencies = [
     { name = "attrs" },
