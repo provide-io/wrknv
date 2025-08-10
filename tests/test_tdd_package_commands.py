@@ -227,8 +227,9 @@ version = "0.1.0"
         project_dir = tmp_path / "terraform-provider-example"
         
         runner = CliRunner()
-        with patch("wrkenv.package.commands.init_provider") as mock_init:
-            mock_init.return_value = project_dir
+        # Mock the tofusoup import to use our fallback implementation
+        with patch("tofusoup.scaffolding.generator.scaffold_new_provider", side_effect=ImportError):
+            # This will use the fallback implementation in init_provider
             
             result = runner.invoke(
                 workenv_cli,
@@ -241,7 +242,9 @@ version = "0.1.0"
         assert result.exit_code == 0
         assert "created" in result.output.lower()
         assert str(project_dir) in result.output
-        mock_init.assert_called_once_with(project_dir)
+        # Check that the project was actually created
+        assert project_dir.exists()
+        assert (project_dir / "pyproject.toml").exists()
 
     def test_package_with_profile_integration(self, tmp_path):
         """Package commands should respect workenv profiles."""
