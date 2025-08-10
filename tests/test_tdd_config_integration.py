@@ -15,7 +15,6 @@ from wrkenv.env.config import (
     ConfigSource,
     EnvironmentConfigSource,
     FileConfigSource,
-    create_soup_config,
 )
 
 

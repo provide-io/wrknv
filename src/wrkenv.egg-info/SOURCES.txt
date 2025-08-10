@@ -27,8 +27,6 @@ src/wrkenv/env/operations/download.py
 src/wrkenv/env/operations/install.py
 src/wrkenv/env/operations/platform.py
 src/wrkenv/env/operations/verify.py
-src/wrkenv/env/testing/__init__.py
-src/wrkenv/env/testing/matrix.py
 src/wrkenv/package/__init__.py
 src/wrkenv/package/commands.py
 src/wrkenv/package/manager.py
