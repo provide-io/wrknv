@@ -300,6 +300,21 @@ class WorkenvConfig:
         # This is a placeholder for tests
         pass
 
+    def get_command_option(self, command: str, option: str, default: Any = None) -> Any:
+        """Get a command-specific option from configuration.
+        
+        Args:
+            command: The command path (e.g., "workenv.terraform")
+            option: The option name (e.g., "create_symlinks")
+            default: Default value if not found
+            
+        Returns:
+            The option value or default
+        """
+        # For now, return the default value
+        # In the future, this could look up command-specific settings
+        return default
+
 
 # Convenience function for TofuSoup integration
 def create_soup_config() -> WorkenvConfig:

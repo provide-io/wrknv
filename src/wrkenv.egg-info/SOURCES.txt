@@ -33,5 +33,4 @@ src/wrkenv/package/__init__.py
 src/wrkenv/package/commands.py
 src/wrkenv/package/manager.py
 tests/test_tdd_config_integration.py
-tests/test_tdd_cty_integration.py
 tests/test_tdd_package_commands.py

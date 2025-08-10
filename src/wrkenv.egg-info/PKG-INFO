@@ -30,7 +30,6 @@ Requires-Dist: tomli-w>=1.0.0
 Requires-Dist: rich>=13.0.0
 Requires-Dist: jinja2>=3.0.0
 Provides-Extra: package
-Requires-Dist: flavor@ file:///Users/tim/code/gh/provide-io/flavor ; extra == "package"
 Provides-Extra: dev
 Requires-Dist: pytest>=7.0; extra == "dev"
 Requires-Dist: pytest-asyncio>=0.21; extra == "dev"
