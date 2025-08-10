@@ -149,6 +149,10 @@ version = "0.1.0"
                 ["package", "keygen", "--out-dir", str(tmp_path)]
             )
         
+        if result.exit_code != 0:
+            print(f"Exit code: {result.exit_code}")
+            print(f"Output: {result.output}")
+            print(f"Exception: {result.exception}")
         assert result.exit_code == 0
         assert "Keys generated" in result.output
         mock_gen.assert_called_once_with(tmp_path)
