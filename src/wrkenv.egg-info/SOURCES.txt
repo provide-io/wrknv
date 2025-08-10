@@ -11,6 +11,7 @@ src/wrkenv.egg-info/top_level.txt
 src/wrkenv/env/__init__.py
 src/wrkenv/env/cli.py
 src/wrkenv/env/config.py
+src/wrkenv/env/visual.py
 src/wrkenv/env/managers/__init__.py
 src/wrkenv/env/managers/base.py
 src/wrkenv/env/managers/factory.py
