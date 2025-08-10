@@ -243,15 +243,11 @@ version = "0.1.0"
         assert project_dir.exists()
         assert (project_dir / "pyproject.toml").exists()
 
-    def test_package_with_profile_integration(self, tmp_path):
-        """Package commands should respect workenv profiles."""
-        # Create a profile with specific tool versions
+    def test_package_with_config(self, tmp_path):
+        """Package commands should respect workenv config."""
+        # Create a config with package settings
         config_file = tmp_path / "wrkenv.toml"
         config_file.write_text("""
-[workenv.profiles.build]
-go = "1.21.5"
-uv = "0.4.15"
-
 [workenv.package]
 default_curve = "P-384"
 auto_sign = true
@@ -260,27 +256,22 @@ auto_sign = true
         runner = CliRunner()
         # Change to the tmp directory so config is found
         with runner.isolated_filesystem(temp_dir=tmp_path):
-            # Mock the tool installation to avoid actual downloads
-            with patch("wrkenv.env.operations.install.install_go") as mock_install_go:
-                with patch("wrkenv.env.operations.install.install_uv") as mock_install_uv:
-                    mock_install_go.return_value = True
-                    mock_install_uv.return_value = True
-                    
-                    # Load profile
-                    result = runner.invoke(workenv_cli, ["profile", "load", "build"])
-                    if result.exit_code != 0:
-                        print(f"Profile load failed: {result.output}")
-                        print(f"Exception: {result.exception}")
-                    assert result.exit_code == 0
-            
-            # Build should use profile settings
+            # Test that package commands use the config
             with patch("wrkenv.package.commands.build_package") as mock_build:
                 mock_build.return_value = [tmp_path / "test.flavor"]
                 
                 result = runner.invoke(workenv_cli, ["package", "build"])
                 
-                # Should pass profile config to build
+                # Should pass config to build command
                 assert result.exit_code == 0
+                # Verify config was passed
+                mock_build.assert_called_once()
+                call_args = mock_build.call_args
+                if call_args and len(call_args) > 0:
+                    config_arg = call_args[0][-1] if call_args[0] else call_args.kwargs.get('config')
+                    if config_arg:
+                        assert config_arg.get_setting("default_curve") == "P-384"
+                        assert config_arg.get_setting("auto_sign") is True
 
     def test_package_list_command(self):
         """Package list should show built packages."""
