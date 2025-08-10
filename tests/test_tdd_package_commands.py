@@ -284,8 +284,8 @@ auto_sign = true
         """Package list should show built packages."""
         runner = CliRunner()
         
-        # Directly patch the function being used
-        with patch("wrkenv.package.commands.list_packages") as mock_list:
+        # Patch where the CLI imports the function
+        with patch("wrkenv.package.list_packages") as mock_list:
             mock_list.return_value = [
                 {"name": "provider-aws", "version": "5.0.0", "size": "45MB"},
                 {"name": "provider-gcp", "version": "4.2.0", "size": "38MB"},
@@ -304,8 +304,8 @@ auto_sign = true
         package_file.write_text("dummy")
         
         runner = CliRunner()
-        # Directly patch the function being used
-        with patch("wrkenv.package.commands.get_package_info") as mock_info:
+        # Patch where the CLI imports the function
+        with patch("wrkenv.package.get_package_info") as mock_info:
             mock_info.return_value = {
                 "name": "test-provider",
                 "version": "1.0.0",
@@ -332,7 +332,7 @@ auto_sign = true
         package_file.write_text("data")
         
         runner = CliRunner()
-        with patch("wrkenv.package.commands.publish_package") as mock_pub:
+        with patch("wrkenv.package.publish_package") as mock_pub:
             mock_pub.return_value = {
                 "url": "https://registry.example.com/provider",
                 "sha256": "abc123",
