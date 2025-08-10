@@ -224,7 +224,7 @@ version = "0.1.0"
 
     def test_package_init_creates_project(self, tmp_path):
         """Package init should create a new provider project."""
-        project_dir = tmp_path / "my-provider"
+        project_dir = tmp_path / "terraform-provider-example"
         
         runner = CliRunner()
         with patch("wrkenv.package.commands.init_provider") as mock_init:
@@ -235,6 +235,9 @@ version = "0.1.0"
                 ["package", "init", str(project_dir)]
             )
         
+        if result.exit_code != 0:
+            print(f"Init failed: {result.output}")
+            print(f"Exception: {result.exception}")
         assert result.exit_code == 0
         assert "created" in result.output.lower()
         assert str(project_dir) in result.output
