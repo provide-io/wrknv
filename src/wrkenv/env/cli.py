@@ -17,6 +17,7 @@ from click.testing import CliRunner
 
 from wrkenv.env.config import WorkenvConfig, WorkenvConfigError
 from wrkenv.env.managers.factory import get_supported_tools, get_tool_manager
+from wrkenv.env.visual import Emoji, print_success, print_error, print_info, print_warning
 
 
 @click.group(name="workenv", invoke_without_command=True)
@@ -29,6 +30,32 @@ def workenv_cli(ctx):
     """
     if ctx.invoked_subcommand is None:
         click.echo(ctx.get_help())
+
+
+# === Setup Commands ===
+
+@workenv_cli.command(name="setup")
+@click.option("--shell-integration", is_flag=True, help="Set up shell aliases")
+def setup_command(shell_integration: bool):
+    """Set up wrkenv environment and integrations."""
+    import subprocess
+    from pathlib import Path
+    
+    if shell_integration:
+        script_path = Path(__file__).parent.parent.parent / "scripts" / "shell-integration.sh"
+        if script_path.exists():
+            print_info("Setting up shell integration...", Emoji.CONFIG)
+            try:
+                subprocess.run(["bash", str(script_path)], check=True)
+            except subprocess.CalledProcessError:
+                print_error("Failed to set up shell integration")
+                sys.exit(1)
+        else:
+            print_error(f"Shell integration script not found at {script_path}")
+            sys.exit(1)
+    else:
+        print_info("Available setup options:")
+        print_info("  --shell-integration  Set up shell aliases and shortcuts")
 
 
 # === Direct Tool Commands ===
@@ -46,10 +73,10 @@ def tf_command(version: Optional[str], latest: bool, list: bool, dry_run: bool):
         # List available versions
         try:
             manager = get_tool_manager("tofu", config)
-            click.echo("Available OpenTofu versions:")
+            print_info(f"Available OpenTofu versions:", Emoji.OPENTOFU)
             manager.list_versions()
         except Exception as e:
-            click.echo(f"Error: {e}", err=True)
+            print_error(f"Error: {e}")
             sys.exit(1)
     elif latest:
         # Install latest version
@@ -57,24 +84,24 @@ def tf_command(version: Optional[str], latest: bool, list: bool, dry_run: bool):
             manager = get_tool_manager("tofu", config)
             manager.install_latest(dry_run=dry_run)
         except Exception as e:
-            click.echo(f"Error: {e}", err=True)
+            print_error(f"Error: {e}")
             sys.exit(1)
     elif version:
         # Install specific version
         try:
             manager = get_tool_manager("tofu", config)
             if dry_run:
-                click.echo(f"[DRY-RUN] Would install OpenTofu {version}")
+                print_info(f"[DRY-RUN] Would install OpenTofu {version}")
             else:
-                click.echo(f"Installing OpenTofu {version}...")
+                print_info(f"Installing OpenTofu {version}...", f"{Emoji.OPENTOFU} {Emoji.DOWNLOAD}")
             manager.install_version(version, dry_run=dry_run)
             if not dry_run:
-                click.echo(f"✅ Successfully installed OpenTofu {version}")
+                print_success(f"Successfully installed OpenTofu {version}")
         except Exception as e:
-            click.echo(f"Error: {e}", err=True)
+            print_error(f"Error: {e}")
             sys.exit(1)
     else:
-        click.echo("Please specify a version, --latest, or --list")
+        print_warning("Please specify a version, --latest, or --list")
         sys.exit(1)
 
 
@@ -167,6 +194,134 @@ def matrix_test_command():
     click.echo(f"\nResults:")
     click.echo(f"  Success: {results.get('success_count', 0)}")
     click.echo(f"  Failure: {results.get('failure_count', 0)}")
+
+
+# === Container Commands ===
+
+@workenv_cli.group(name="container")
+def container_group():
+    """🐳 Manage development containers."""
+    pass
+
+
+@container_group.command(name="build")
+@click.option("--rebuild", is_flag=True, help="Force rebuild without cache")
+def container_build(rebuild: bool):
+    """Build the development container image."""
+    from wrkenv.container import build_container
+    
+    config = WorkenvConfig()
+    
+    if build_container(config, rebuild=rebuild):
+        click.echo("✅ Container image built successfully")
+    else:
+        click.echo("❌ Failed to build container image", err=True)
+        sys.exit(1)
+
+
+@container_group.command(name="start")
+@click.option("--rebuild", is_flag=True, help="Rebuild image before starting")
+def container_start(rebuild: bool):
+    """Start the development container."""
+    from wrkenv.container import start_container
+    
+    config = WorkenvConfig()
+    
+    if start_container(config, rebuild=rebuild):
+        click.echo("✅ Container started successfully")
+        click.echo("Run 'wrkenv container enter' to access the container")
+    else:
+        click.echo("❌ Failed to start container", err=True)
+        sys.exit(1)
+
+
+@container_group.command(name="enter")
+@click.argument("command", nargs=-1, required=False)
+def container_enter(command: tuple):
+    """Enter the running container."""
+    from wrkenv.container import enter_container
+    
+    config = WorkenvConfig()
+    
+    # Convert tuple to list
+    cmd_list = list(command) if command else None
+    enter_container(config, command=cmd_list)
+
+
+@container_group.command(name="stop")
+def container_stop():
+    """Stop the development container."""
+    from wrkenv.container import stop_container
+    
+    config = WorkenvConfig()
+    
+    if stop_container(config):
+        click.echo("✅ Container stopped successfully")
+    else:
+        click.echo("❌ Failed to stop container", err=True)
+        sys.exit(1)
+
+
+@container_group.command(name="restart")
+def container_restart():
+    """Restart the development container."""
+    from wrkenv.container import restart_container
+    
+    config = WorkenvConfig()
+    
+    if restart_container(config):
+        click.echo("✅ Container restarted successfully")
+    else:
+        click.echo("❌ Failed to restart container", err=True)
+        sys.exit(1)
+
+
+@container_group.command(name="status")
+def container_status_cmd():
+    """Show container status."""
+    from wrkenv.container import container_status
+    
+    config = WorkenvConfig()
+    container_status(config)
+
+
+@container_group.command(name="logs")
+@click.option("-f", "--follow", is_flag=True, help="Follow log output")
+@click.option("-n", "--tail", default=100, help="Number of lines to show")
+def container_logs_cmd(follow: bool, tail: int):
+    """Show container logs."""
+    from wrkenv.container import container_logs
+    
+    config = WorkenvConfig()
+    container_logs(config, follow=follow, tail=tail)
+
+
+@container_group.command(name="clean")
+def container_clean():
+    """Remove container and image."""
+    from wrkenv.container import clean_container
+    
+    config = WorkenvConfig()
+    
+    if clean_container(config):
+        click.echo("✅ Container resources cleaned successfully")
+    else:
+        click.echo("❌ Failed to clean container resources", err=True)
+        sys.exit(1)
+
+
+@container_group.command(name="rebuild")
+def container_rebuild():
+    """Rebuild container from scratch."""
+    from wrkenv.container import rebuild_container
+    
+    config = WorkenvConfig()
+    
+    if rebuild_container(config):
+        click.echo("✅ Container rebuilt successfully")
+    else:
+        click.echo("❌ Failed to rebuild container", err=True)
+        sys.exit(1)
 
 
 # === Profile Commands ===
