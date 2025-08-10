@@ -96,7 +96,7 @@ def print_warning(text: str, emoji: str = Emoji.WARNING) -> None:
 def print_error(text: str, emoji: str = Emoji.ERROR) -> None:
     """Print an error message."""
     console = get_console()
-    console.print(f"{emoji} [error]{text}[/error]", err=True)
+    console.print(f"{emoji} [error]{text}[/error]", style="error")
 
 
 def print_dim(text: str) -> None:

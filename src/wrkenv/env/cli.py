@@ -45,7 +45,8 @@ def setup_command(shell_integration: bool):
     from pathlib import Path
     
     if shell_integration:
-        script_path = Path(__file__).parent.parent.parent / "scripts" / "shell-integration.sh"
+        # Look for script in the repository root
+        script_path = Path(__file__).parent.parent.parent.parent / "scripts" / "shell-integration.sh"
         if script_path.exists():
             print_info("Setting up shell integration...", Emoji.CONFIG)
             try:
