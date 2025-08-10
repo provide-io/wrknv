@@ -323,7 +323,7 @@ auto_sign = true
         assert result.exit_code == 0
         assert "test-provider" in result.output
         assert "1.0.0" in result.output
-        assert "Python 3.13" in result.output
+        assert "Python: 3.13" in result.output
 
 
     def test_package_publish_command(self, tmp_path):
