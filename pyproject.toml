@@ -27,8 +27,6 @@ requires-python = ">=3.12"
 dependencies = [
     "click>=8.0",
     "pyvider-telemetry",
-    "pyvider-cty>=0.0.111",
-    "pyvider-hcl>=0.0.113",
     "packaging>=23.0",
     "semver>=3.0.0",
     "tomli>=2.0.0 ; python_version < '3.11'",
