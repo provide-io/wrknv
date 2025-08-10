@@ -9,8 +9,8 @@ Functions for downloading and verifying tool archives.
 
 import hashlib
 import pathlib
-from urllib.parse import urlparse
 import urllib.request
+from urllib.parse import urlparse
 
 from pyvider.telemetry import logger
 
@@ -179,10 +179,7 @@ def validate_download_url(url: str) -> bool:
             return False
 
         # Must be HTTP or HTTPS
-        if parsed.scheme.lower() not in ["http", "https"]:
-            return False
-
-        return True
+        return parsed.scheme.lower() in ["http", "https"]
 
     except Exception:
         return False

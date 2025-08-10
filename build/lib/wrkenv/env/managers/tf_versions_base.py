@@ -9,17 +9,16 @@ directory structure. This implementation is compatible with tfswitch but is
 TofuSoup's own design for managing Tf tool versions.
 """
 
-from abc import abstractmethod
-from datetime import datetime
 import hashlib
 import json
 import os
 import pathlib
 import shutil
 import sys
+from abc import abstractmethod
+from datetime import datetime
 
 import semver
-
 from pyvider.telemetry import logger
 
 from .base import BaseToolManager, ToolManagerError
@@ -424,10 +423,7 @@ class TfVersionsManager(BaseToolManager):
         local_bin_dir.mkdir(parents=True, exist_ok=True)
 
         # Determine target executable name
-        if self.tool_name == "tofu":
-            target_name = "tofu"
-        else:
-            target_name = "terraform"
+        target_name = "tofu" if self.tool_name == "tofu" else "terraform"
 
         if os.name == "nt":  # Windows
             target_name += ".exe"
@@ -577,10 +573,7 @@ class TfVersionsManager(BaseToolManager):
                     source_path = temp_manager.get_binary_path(active_version)
                     if source_path.exists():
                         # Terraform is copied as 'hctf', OpenTofu stays as 'tofu'
-                        if tool_name == "terraform":
-                            target_name = "hctf"
-                        else:
-                            target_name = "tofu"
+                        target_name = "hctf" if tool_name == "terraform" else "tofu"
 
                         if os.name == "nt":  # Windows
                             target_name += ".exe"

@@ -7,14 +7,15 @@ Base Tool Manager for wrkenv
 Common functionality for all tool managers.
 """
 
-from abc import ABC, abstractmethod
 import pathlib
 import platform
 import shutil
 import subprocess
+from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
 from pyvider.telemetry import logger
+
 from wrkenv.env.config import WorkenvConfig, WorkenvConfigError
 
 
@@ -280,7 +281,7 @@ class BaseToolManager(ABC):
             versions = self.get_available_versions()
             current = self.get_installed_version()
 
-            for i, version in enumerate(versions[:limit]):
+            for _i, version in enumerate(versions[:limit]):
                 marker = " (current)" if version == current else ""
                 status = "✅" if version == current else "  "
                 print(f"{status} {version}{marker}")

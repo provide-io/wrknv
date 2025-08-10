@@ -37,7 +37,7 @@ dependencies = [
 
 [project.optional-dependencies]
 package = [
-    "flavor @ file:///Users/tim/code/gh/provide-io/flavor",
+    # "flavor",  # Install with: uv pip install -e ~/code/gh/provide-io/flavor
 ]
 dev = [
     "pytest>=7.0",
