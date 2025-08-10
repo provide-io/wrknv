@@ -6,7 +6,7 @@ Test-driven development for package management functionality.
 
 import json
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 from click.testing import CliRunner
@@ -254,15 +254,31 @@ auto_sign = true
         """)
         
         runner = CliRunner()
+        
         # Change to the tmp directory so config is found
-        with runner.isolated_filesystem(temp_dir=tmp_path):
+        with patch("os.getcwd", return_value=str(tmp_path)):
+            # Create a minimal pyproject.toml for the build command
+            pyproject = tmp_path / "pyproject.toml"
+            pyproject.write_text("""
+[project]
+name = "test-provider"
+version = "0.1.0"
+            """)
+            
             # Test that package commands use the config
-            with patch("wrkenv.package.commands.build_package") as mock_build:
-                mock_build.return_value = [tmp_path / "test.flavor"]
+            # Mock both PackageManager's is_flavor_available and build_package
+            with patch("wrkenv.package.manager.PackageManager.is_flavor_available") as mock_flavor_check:
+                mock_flavor_check.return_value = True
                 
-                result = runner.invoke(workenv_cli, ["package", "build"])
+                with patch("wrkenv.package.commands.build_package") as mock_build:
+                    mock_build.return_value = [tmp_path / "test.flavor"]
+                    
+                    result = runner.invoke(workenv_cli, ["package", "build", "--manifest", str(pyproject)])
                 
                 # Should pass config to build command
+                if result.exit_code != 0:
+                    print(f"Package build failed: {result.output}")
+                    print(f"Exception: {result.exception}")
                 assert result.exit_code == 0
                 # Verify config was passed
                 mock_build.assert_called_once()

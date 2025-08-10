@@ -11,7 +11,9 @@
       "Bash(python -m pytest tests/workenv/test_terraform_wrapper.py -xvs)",
       "Bash(python -m pytest tests/ -x)",
       "Bash(python -m pytest tests/test_tdd_package_commands.py::TestWorkenvPackageCommands::test_package_init_creates_project -xvs)",
-      "Bash(python -m pytest tests/test_tdd_package_commands.py::TestWorkenvPackageCommands::test_package_with_profile_integration -xvs)"
+      "Bash(python -m pytest tests/test_tdd_package_commands.py::TestWorkenvPackageCommands::test_package_with_profile_integration -xvs)",
+      "Bash(python -m pytest tests/test_tdd_package_commands.py::TestWorkenvPackageCommands::test_package_with_config -xvs)",
+      "Bash(python -m pytest tests/)"
     ],
     "deny": []
   }
