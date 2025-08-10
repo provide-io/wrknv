@@ -52,7 +52,7 @@ def build_package(
         logger.warning(f"Missing required tools: {list(missing.keys())}")
 
     # Set up build environment
-    env = manager.setup_build_environment()
+    manager.setup_build_environment()
 
     # Use flavor API to build
     flavor_api = _get_flavor_api()

@@ -7,7 +7,6 @@ Visual UX Enhancements
 Emoji and color support for enhanced CLI output.
 """
 
-
 from rich.console import Console
 from rich.theme import Theme
 

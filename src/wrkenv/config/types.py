@@ -7,7 +7,6 @@ Configuration Type Definitions
 Cty type definitions for wrkenv configuration.
 """
 
-
 try:
     from pyvider.cty import (
         CtyBool,

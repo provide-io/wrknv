@@ -7,7 +7,6 @@ Container Command Implementations
 Command implementations for container management.
 """
 
-
 from rich.console import Console
 from rich.table import Table
 
@@ -16,17 +15,13 @@ from wrkenv.env.config import WorkenvConfig
 from .manager import ContainerManager
 
 
-def build_container(
-    config: WorkenvConfig | None = None, rebuild: bool = False
-) -> bool:
+def build_container(config: WorkenvConfig | None = None, rebuild: bool = False) -> bool:
     """Build the development container image."""
     manager = ContainerManager(config)
     return manager.build_image(rebuild=rebuild)
 
 
-def start_container(
-    config: WorkenvConfig | None = None, rebuild: bool = False
-) -> bool:
+def start_container(config: WorkenvConfig | None = None, rebuild: bool = False) -> bool:
     """Start the development container."""
     manager = ContainerManager(config)
     return manager.start(force_rebuild=rebuild)

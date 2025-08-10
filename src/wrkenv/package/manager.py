@@ -41,7 +41,7 @@ class PackageManager:
         }
 
         available = {}
-        for tool, required_version in required_tools.items():
+        for tool, _required_version in required_tools.items():
             if tool == "python":
                 # Check Python version
                 try:
