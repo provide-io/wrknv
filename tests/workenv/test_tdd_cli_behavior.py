@@ -101,9 +101,10 @@ class TestWorkenvCLIBehavior:
             result = self.runner.invoke(workenv_cli, ['status'])
 
             assert result.exit_code == 0
-            assert 'terraform: 1.5.7' in result.output
-            assert 'tofu: 1.6.2' in result.output
-            assert 'uv: 0.4.15' in result.output
+            # The new output uses a Rich table format, not plain text
+            assert '1.5.7' in result.output  # terraform version
+            assert '1.6.2' in result.output  # tofu version
+            assert '0.4.15' in result.output  # uv version
 
     def test_workenv_sync_command(self):
         """
@@ -163,7 +164,7 @@ class TestWorkenvCLIBehavior:
             mock_instance = Mock()
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ['terraform', '1.5.7', '--dry-run'])
+            result = self.runner.invoke(workenv_cli, ['tf', '--terraform', '1.5.7', '--dry-run'])
 
             assert result.exit_code == 0
             mock_instance.install_version.assert_called_once_with('1.5.7', dry_run=True)
@@ -248,7 +249,7 @@ class TestWorkenvErrorHandling:
             mock_instance.install_version.side_effect = ValueError("Invalid version: invalid")
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ['terraform', 'invalid'])
+            result = self.runner.invoke(workenv_cli, ['tf', '--terraform', 'invalid'])
 
             assert result.exit_code != 0
             assert 'Invalid version' in result.output
@@ -262,7 +263,7 @@ class TestWorkenvErrorHandling:
             mock_instance.install_version.side_effect = ConnectionError("Network unreachable")
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ['terraform', '1.5.7'])
+            result = self.runner.invoke(workenv_cli, ['tf', '--terraform', '1.5.7'])
 
             assert result.exit_code != 0
             assert 'network' in result.output.lower() or 'connection' in result.output.lower()
@@ -276,7 +277,7 @@ class TestWorkenvErrorHandling:
             mock_instance.install_version.side_effect = PermissionError("Permission denied")
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ['terraform', '1.5.7'])
+            result = self.runner.invoke(workenv_cli, ['tf', '--terraform', '1.5.7'])
 
             assert result.exit_code != 0
             assert 'permission' in result.output.lower()

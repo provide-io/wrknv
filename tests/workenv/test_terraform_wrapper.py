@@ -35,7 +35,7 @@ terraform_flavor = "terraform"
         """)
         
         # Import the wrapper module
-        wrapper_path = pathlib.Path(__file__).parent.parent.parent / "src" / "tofusoup" / "workenv" / "scripts" / "terraform-wrapper.py"
+        wrapper_path = pathlib.Path(__file__).parent.parent.parent / "src" / "wrkenv" / "env" / "scripts" / "terraform-wrapper.py"
         
         # Mock the environment
         with patch('sys.argv', ['terraform', 'version']):
@@ -74,7 +74,7 @@ terraform_flavor = "opentofu"
         """)
         
         # Import the wrapper module
-        wrapper_path = pathlib.Path(__file__).parent.parent.parent / "src" / "tofusoup" / "workenv" / "scripts" / "terraform-wrapper.py"
+        wrapper_path = pathlib.Path(__file__).parent.parent.parent / "src" / "wrkenv" / "env" / "scripts" / "terraform-wrapper.py"
         
         # Mock the environment
         with patch('sys.argv', ['terraform', 'version']):
@@ -100,7 +100,7 @@ terraform_flavor = "opentofu"
         bin_dir.mkdir(parents=True)
         
         # Import the wrapper module
-        wrapper_path = pathlib.Path(__file__).parent.parent.parent / "src" / "tofusoup" / "workenv" / "scripts" / "terraform-wrapper.py"
+        wrapper_path = pathlib.Path(__file__).parent.parent.parent / "src" / "wrkenv" / "env" / "scripts" / "terraform-wrapper.py"
         
         # Import and test
         import importlib.util

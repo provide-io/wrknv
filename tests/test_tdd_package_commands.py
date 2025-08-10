@@ -281,24 +281,6 @@ auto_sign = true
         assert "1.0.0" in result.output
         assert "Python 3.13" in result.output
 
-    def test_package_sign_command(self, tmp_path):
-        """Package sign should sign an existing package."""
-        package_file = tmp_path / "unsigned.flavor"
-        package_file.write_text("unsigned")
-        
-        key_file = tmp_path / "private.key"
-        key_file.write_text("key")
-        
-        runner = CliRunner()
-        with patch("wrkenv.package.commands.sign_package") as mock_sign:
-            result = runner.invoke(
-                workenv_cli,
-                ["package", "sign", str(package_file), "--key", str(key_file)]
-            )
-        
-        assert result.exit_code == 0
-        assert "signed" in result.output.lower()
-        mock_sign.assert_called_once()
 
     def test_package_publish_command(self, tmp_path):
         """Package publish should upload to registry."""

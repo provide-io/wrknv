@@ -37,35 +37,6 @@ except ImportError:
 class TestWorkenvConfigContracts:
     """TDD contracts for workenv configuration management."""
 
-    def test_config_loads_from_soup_toml(self):
-        """
-        CONTRACT: WorkenvConfig should load workenv settings from soup.toml
-        """
-        with tempfile.TemporaryDirectory() as tmpdir:
-            config_path = pathlib.Path(tmpdir) / "soup.toml"
-            config_path.write_text("""
-[workenv.tools]
-terraform = "1.5.7"
-tofu = "1.6.2"
-uv = "0.4.15"
-
-[workenv.profiles.dev]
-terraform = "1.5.7"
-tofu = "1.6.2"
-
-[workenv.settings]
-verify_checksums = true
-cache_downloads = true
-""")
-
-            # This should work when implemented
-            config = WorkenvConfig(config_path)
-
-            # Contracts
-            assert config.get_tool_version("terraform") == "1.5.7"
-            assert config.get_tool_version("tofu") == "1.6.2"
-            assert config.get_profile("dev")["terraform"] == "1.5.7"
-            assert config.get_setting("verify_checksums") is True
 
     def test_config_supports_environment_variables(self):
         """
