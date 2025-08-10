@@ -31,22 +31,22 @@ def get_workenv_root():
 
 
 def get_terraform_flavor():
-    """Get the configured terraform flavor from soup.toml."""
-    # Check for soup.toml
-    soup_toml = None
+    """Get the configured terraform flavor from wrkenv.toml."""
+    # Check for wrkenv.toml
+    wrkenv_toml = None
     current = pathlib.Path.cwd()
     while current != current.parent:
-        candidate = current / "soup.toml"
+        candidate = current / "wrkenv.toml"
         if candidate.exists():
-            soup_toml = candidate
+            wrkenv_toml = candidate
             break
         current = current.parent
 
-    if soup_toml:
+    if wrkenv_toml:
         try:
             import tomllib
 
-            with open(soup_toml, "rb") as f:
+            with open(wrkenv_toml, "rb") as f:
                 config = tomllib.load(f)
 
             # Check for terraform_flavor setting
@@ -85,12 +85,12 @@ def main():
             print(f"Error: {flavor} binary not found at {binary_path}", file=sys.stderr)
             if flavor == "opentofu":
                 print(
-                    "Run 'soup workenv tf install opentofu-<version>' to install it",
+                    "Run 'wrkenv tf <version>' to install OpenTofu",
                     file=sys.stderr,
                 )
             else:
                 print(
-                    "Run 'soup workenv tf install terraform-<version>' to install it",
+                    "Run 'wrkenv tf <version> --terraform' to install Terraform",
                     file=sys.stderr,
                 )
             sys.exit(1)
