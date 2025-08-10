@@ -151,10 +151,8 @@ class TestBaseToolManagerContracts:
         # Mock the download operations and paths
         with patch('pathlib.Path.exists', return_value=False):
             with patch('pathlib.Path.mkdir'):
-                with patch('wrkenv.env.operations.download.download_file') as mock_download:
-                    with patch('wrkenv.env.operations.download.verify_checksum') as mock_verify:
-                        mock_verify.return_value = True
-
+                with patch.object(manager, 'download_file') as mock_download:
+                    with patch.object(manager, '_verify_download_checksum') as mock_verify:
                         # This workflow should be consistent across all tools
                         manager.install_version("1.5.7")
 
