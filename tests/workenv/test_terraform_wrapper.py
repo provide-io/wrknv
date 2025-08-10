@@ -27,9 +27,9 @@ class TestTerraformWrapper:
         hctf_bin.write_text("#!/bin/sh\necho 'Terraform v1.9.3'\n")
         hctf_bin.chmod(0o755)
         
-        # Create soup.toml with terraform flavor
-        soup_toml = tmp_path / "soup.toml"
-        soup_toml.write_text("""
+        # Create wrkenv.toml with terraform flavor
+        wrkenv_toml = tmp_path / "wrkenv.toml"
+        wrkenv_toml.write_text("""
 [workenv]
 terraform_flavor = "terraform"
         """)
@@ -66,9 +66,9 @@ terraform_flavor = "terraform"
         tofu_bin.write_text("#!/bin/sh\necho 'OpenTofu v1.10.5'\n")
         tofu_bin.chmod(0o755)
         
-        # Create soup.toml with opentofu flavor
-        soup_toml = tmp_path / "soup.toml"
-        soup_toml.write_text("""
+        # Create wrkenv.toml with opentofu flavor
+        wrkenv_toml = tmp_path / "wrkenv.toml"
+        wrkenv_toml.write_text("""
 [workenv]
 terraform_flavor = "opentofu"
         """)
@@ -94,7 +94,7 @@ terraform_flavor = "opentofu"
 
     def test_wrapper_default_flavor_without_config(self, tmp_path):
         """Test wrapper defaults to terraform without config."""
-        # GIVEN: No soup.toml exists
+        # GIVEN: No wrkenv.toml exists
         workenv_dir = tmp_path / "workenv" / "test_darwin_arm64" 
         bin_dir = workenv_dir / "bin"
         bin_dir.mkdir(parents=True)

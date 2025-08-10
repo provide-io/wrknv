@@ -7,7 +7,8 @@
       "Bash(ls:*)",
       "Bash(python -m pytest tests/test_tdd_wrapper_behavior.py::TestTerraformWrapper::test_uses_workenv_config_for_default_version -xvs)",
       "Bash(python -m pytest tests/workenv/test_terraform_wrapper.py::TestTerraformWrapper::test_uses_workenv_config_for_default_version -xvs)",
-      "Bash(python -m pytest tests/test_tdd_config_integration.py -xvs)"
+      "Bash(python -m pytest tests/test_tdd_config_integration.py -xvs)",
+      "Bash(python -m pytest tests/workenv/test_terraform_wrapper.py -xvs)"
     ],
     "deny": []
   }
