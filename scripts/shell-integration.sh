@@ -42,11 +42,11 @@ alias wrkenv-sync="wrkenv sync"
 
 # Container shortcuts
 alias wrkenv-container="wrkenv container"
-alias wc="wrkenv container"  # Short alias
-alias wc-start="wrkenv container start"
-alias wc-enter="wrkenv container enter"
-alias wc-stop="wrkenv container stop"
-alias wc-status="wrkenv container status"
+alias wec="wrkenv container"  # Short alias (wrkenv container)
+alias wec-start="wrkenv container start"
+alias wec-enter="wrkenv container enter"
+alias wec-stop="wrkenv container stop"
+alias wec-status="wrkenv container status"
 
 # Package shortcuts
 alias wrkenv-build="wrkenv package build"
@@ -75,10 +75,10 @@ echo "  source $RC_FILE"
 echo ""
 echo "Available shortcuts:"
 echo "  we              - Short for wrkenv"
-echo "  wc              - Short for wrkenv container"
+echo "  wec             - Short for wrkenv container"
 echo "  tf-install      - Install OpenTofu"
 echo "  go-install      - Install Go"
-echo "  wc-start        - Start development container"
-echo "  wc-enter        - Enter development container"
+echo "  wec-start       - Start development container"
+echo "  wec-enter       - Enter development container"
 echo ""
 echo "Run 'alias | grep wrkenv' to see all available aliases"
