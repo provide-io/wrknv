@@ -118,10 +118,17 @@ class TestWorkenvConfigIntegration:
         CONTRACT: WorkenvConfig should have sensible defaults
         """
         with tempfile.TemporaryDirectory() as tmpdir:
+            # Create a wrkenv.toml to have multiple sources
+            wrkenv_toml = pathlib.Path(tmpdir) / "wrkenv.toml"
+            wrkenv_toml.write_text("""
+[workenv.tools]
+terraform = "1.5.0"
+""")
+            
             with patch('pathlib.Path.cwd', return_value=pathlib.Path(tmpdir)):
                 config = WorkenvConfig()
                 
-                # Should have multiple sources
+                # Should have multiple sources (env + file)
                 assert len(config.sources) >= 2
                 
                 # Should prioritize WRKENV_ env vars
@@ -130,8 +137,8 @@ class TestWorkenvConfigIntegration:
                     for s in config.sources
                 )
                 
-                # Should support legacy TOFUSOUP_WORKENV_ env vars
-                assert any(
+                # Should NOT have TOFUSOUP_WORKENV_ env vars
+                assert not any(
                     isinstance(s, EnvironmentConfigSource) and s.prefix == "TOFUSOUP_WORKENV"
                     for s in config.sources
                 )
@@ -149,18 +156,10 @@ terraform = "1.5.0"
 tofu = "1.6.0"
 """)
             
-            soup_toml = pathlib.Path(tmpdir) / "soup.toml"
-            soup_toml.write_text("""
-[workenv.tools]
-terraform = "1.4.0"
-tofu = "1.5.0"
-go = "1.21.0"
-""")
-            
             # Set environment variables
             with patch.dict('os.environ', {
                 'WRKENV_TERRAFORM_VERSION': '1.7.0',
-                'TOFUSOUP_WORKENV_TOFU_VERSION': '1.8.0'
+                'WRKENV_GO_VERSION': '1.22.0'
             }):
                 with patch('pathlib.Path.cwd', return_value=pathlib.Path(tmpdir)):
                     config = WorkenvConfig()
@@ -168,11 +167,11 @@ go = "1.21.0"
                     # WRKENV_ env var should win for terraform
                     assert config.get_tool_version("terraform") == "1.7.0"
                     
-                    # TOFUSOUP_WORKENV_ should win for tofu (no WRKENV_ set)
-                    assert config.get_tool_version("tofu") == "1.8.0"
+                    # File config should be used for tofu (no env var)
+                    assert config.get_tool_version("tofu") == "1.6.0"
                     
-                    # File config should be used for go (no env var)
-                    assert config.get_tool_version("go") == "1.21.0"
+                    # WRKENV_ env var should win for go
+                    assert config.get_tool_version("go") == "1.22.0"
     
     def test_custom_configuration_sources(self):
         """
