@@ -90,7 +90,26 @@ class TestBaseToolManagerContracts:
         """
         CONTRACT: BaseToolManager should detect platform correctly
         """
-        manager = BaseToolManager(Mock())
+        # Create a concrete implementation for testing
+        class TestManager(BaseToolManager):
+            tool_name = "test"
+            executable_name = "test"
+            
+            def get_available_versions(self):
+                return []
+            
+            def get_download_url(self, version):
+                return ""
+            
+            def get_checksum_url(self, version):
+                return ""
+            
+            def _install_from_archive(self, archive_path, version):
+                pass
+        
+        config = Mock()
+        config.get_setting.return_value = "/tmp/test"
+        manager = TestManager(config)
         platform_info = manager.get_platform_info()
 
         assert "os" in platform_info
@@ -103,15 +122,31 @@ class TestBaseToolManagerContracts:
         """
         CONTRACT: Tool installation should follow consistent workflow
         """
-        manager = BaseToolManager(Mock())
+        # Create a concrete implementation for testing
+        class TestManager(BaseToolManager):
+            tool_name = "test"
+            executable_name = "test"
+            
+            def get_available_versions(self):
+                return []
+            
+            def get_download_url(self, version):
+                return "https://example.com/test.zip"
+            
+            def get_checksum_url(self, version):
+                return "https://example.com/test.sha256"
+            
+            def _install_from_archive(self, archive_path, version):
+                pass
+        
+        config = Mock()
+        config.get_setting.return_value = "/tmp/test"
+        manager = TestManager(config)
 
-        # Mock the abstract methods
-        manager.tool_name = "terraform"
-        manager.get_download_url = Mock(return_value="https://example.com/terraform.zip")
-        manager.get_checksum_url = Mock(return_value="https://example.com/terraform.sha256")
+        # Mock the download operations
 
         with patch('wrkenv.env.operations.download.download_file') as mock_download:
-            with patch('wrkenv.env.operations.verify.verify_checksum') as mock_verify:
+            with patch('wrkenv.env.managers.base.verify_checksum') as mock_verify:
                 mock_verify.return_value = True
 
                 # This workflow should be consistent across all tools
@@ -129,7 +164,13 @@ class TestTerraformManagerContracts:
         """
         CONTRACT: TerraformManager should fetch versions from HashiCorp API
         """
-        manager = TerraformManager(Mock())
+        config = Mock()
+        config.get_setting.side_effect = lambda key, default=None: {
+            "install_path": "/tmp/test",
+            "base_url": "https://releases.hashicorp.com/terraform"
+        }.get(key, default)
+        config.get_workenv_dir_name.return_value = "workenv/test"
+        manager = TerraformManager(config)
 
         with patch('urllib.request.urlopen') as mock_urlopen:
             # Mock HashiCorp releases API response
@@ -147,7 +188,13 @@ class TestTerraformManagerContracts:
         """
         CONTRACT: Terraform download URLs should follow HashiCorp pattern
         """
-        manager = TerraformManager(Mock())
+        config = Mock()
+        config.get_setting.side_effect = lambda key, default=None: {
+            "install_path": "/tmp/test",
+            "base_url": "https://releases.hashicorp.com/terraform"
+        }.get(key, default)
+        config.get_workenv_dir_name.return_value = "workenv/test"
+        manager = TerraformManager(config)
 
         with patch.object(manager, 'get_platform_info') as mock_platform:
             mock_platform.return_value = {"os": "linux", "arch": "amd64"}
@@ -165,11 +212,9 @@ class TestVersionMatrixContracts:
         """
         CONTRACT: VersionMatrix should generate test combinations
         """
-        matrix = VersionMatrix({
-            "terraform": ["1.5.7", "1.6.0"],
-            "tofu": ["1.6.2", "1.7.0"],
-            "go": ["1.21.5"]
-        })
+        config = Mock()
+        config.get_setting.return_value = {"terraform": ["1.5.7", "1.6.0"], "tofu": ["1.6.2", "1.7.0"], "go": ["1.21.5"]}
+        matrix = VersionMatrix("test", config)
 
         combinations = matrix.generate_combinations()
 
@@ -186,7 +231,9 @@ class TestVersionMatrixContracts:
         """
         CONTRACT: Matrix testing should run tests against all combinations
         """
-        matrix = VersionMatrix({"terraform": ["1.5.7", "1.6.0"]})
+        config = Mock()
+        config.get_setting.return_value = {"terraform": ["1.5.7", "1.6.0"]}
+        matrix = VersionMatrix("test", config)
 
         test_results = []
 
@@ -194,7 +241,7 @@ class TestVersionMatrixContracts:
             test_results.append(versions)
             return True
 
-        results = matrix.run_tests(mock_test_function)
+        results = matrix.run_tests()
 
         # Should have run tests for each combination
         assert len(test_results) == 2

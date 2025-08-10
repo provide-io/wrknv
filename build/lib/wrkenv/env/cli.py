@@ -89,15 +89,21 @@ def setup_command(shell_integration: bool, init: bool, force: bool):
 @click.option("--latest", is_flag=True, help="Install latest version")
 @click.option("--list", is_flag=True, help="List available versions")
 @click.option("--dry-run", is_flag=True, help="Show what would be installed")
-def tf_command(version: str | None, latest: bool, list: bool, dry_run: bool):
-    """Install or manage OpenTofu versions."""
+@click.option("--terraform", is_flag=True, help="Install Terraform instead of OpenTofu")
+def tf_command(version: str | None, latest: bool, list: bool, dry_run: bool, terraform: bool):
+    """Install or manage Terraform/OpenTofu versions."""
     config = WorkenvConfig()
+    
+    # Determine which tool to manage
+    tool_name = "terraform" if terraform else "tofu"
+    tool_display = "Terraform" if terraform else "OpenTofu"
+    tool_emoji = Emoji.TERRAFORM if terraform else Emoji.OPENTOFU
 
     if list:
         # List available versions
         try:
-            manager = get_tool_manager("tofu", config)
-            print_info("Available OpenTofu versions:", Emoji.OPENTOFU)
+            manager = get_tool_manager(tool_name, config)
+            print_info(f"Available {tool_display} versions:", tool_emoji)
             manager.list_versions()
         except Exception as e:
             print_error(f"Error: {e}")
@@ -105,7 +111,7 @@ def tf_command(version: str | None, latest: bool, list: bool, dry_run: bool):
     elif latest:
         # Install latest version
         try:
-            manager = get_tool_manager("tofu", config)
+            manager = get_tool_manager(tool_name, config)
             manager.install_latest(dry_run=dry_run)
         except Exception as e:
             print_error(f"Error: {e}")
@@ -113,44 +119,30 @@ def tf_command(version: str | None, latest: bool, list: bool, dry_run: bool):
     elif version:
         # Install specific version
         try:
-            manager = get_tool_manager("tofu", config)
+            manager = get_tool_manager(tool_name, config)
             if dry_run:
-                print_info(f"[DRY-RUN] Would install OpenTofu {version}")
+                print_info(f"[DRY-RUN] Would install {tool_display} {version}")
             else:
                 print_info(
-                    f"Installing OpenTofu {version}...",
-                    f"{Emoji.OPENTOFU} {Emoji.DOWNLOAD}",
+                    f"Installing {tool_display} {version}...",
+                    f"{tool_emoji} {Emoji.DOWNLOAD}",
                 )
             manager.install_version(version, dry_run=dry_run)
             if not dry_run:
-                print_success(f"Successfully installed OpenTofu {version}")
+                print_success(f"Successfully installed {tool_display} {version}")
         except Exception as e:
             print_error(f"Error: {e}")
             sys.exit(1)
     else:
         print_warning("Please specify a version, --latest, or --list")
+        print_info("Examples:")
+        print_info(f"  wrkenv tf --list              # List OpenTofu versions")
+        print_info(f"  wrkenv tf 1.8.0               # Install OpenTofu 1.8.0")
+        print_info(f"  wrkenv tf --terraform 1.5.7   # Install Terraform 1.5.7")
+        print_info(f"  wrkenv tf --terraform --list  # List Terraform versions")
         sys.exit(1)
 
 
-@workenv_cli.command(name="terraform")
-@click.argument("version")
-@click.option("--dry-run", is_flag=True, help="Show what would be installed")
-def terraform_command(version: str, dry_run: bool):
-    """Install specific Terraform version."""
-    config = WorkenvConfig()
-
-    try:
-        manager = get_tool_manager("terraform", config)
-        if dry_run:
-            click.echo(f"[DRY-RUN] Would install Terraform {version}")
-        else:
-            click.echo(f"Installing Terraform {version}...")
-        manager.install_version(version, dry_run=dry_run)
-        if not dry_run:
-            click.echo(f"✅ Successfully installed Terraform {version}")
-    except Exception as e:
-        click.echo(f"Error: {e}", err=True)
-        sys.exit(1)
 
 
 # === Status Command ===
