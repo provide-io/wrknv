@@ -8,13 +8,14 @@ Functionality for testing multiple tool version combinations.
 """
 
 import asyncio
-from dataclasses import dataclass, field
 import itertools
 import json
 import pathlib
 import tempfile
+from dataclasses import dataclass, field
 from typing import Any
 
+from pyvider.telemetry import logger
 from rich.console import Console
 from rich.progress import (
     BarColumn,
@@ -23,8 +24,6 @@ from rich.progress import (
     TextColumn,
     TimeElapsedColumn,
 )
-
-from pyvider.telemetry import logger
 
 from ..config import WorkenvConfig
 from ..managers.factory import get_tool_manager

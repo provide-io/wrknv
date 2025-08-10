@@ -7,30 +7,34 @@ Visual UX Enhancements
 Emoji and color support for enhanced CLI output.
 """
 
-from typing import Optional
+
 from rich.console import Console
 from rich.theme import Theme
 
 # Custom theme with colors
-WRKENV_THEME = Theme({
-    "info": "blue",
-    "success": "green",
-    "warning": "yellow",
-    "error": "red",
-    "dim": "dim white",
-    "highlight": "cyan",
-})
+WRKENV_THEME = Theme(
+    {
+        "info": "blue",
+        "success": "green",
+        "warning": "yellow",
+        "error": "red",
+        "dim": "dim white",
+        "highlight": "cyan",
+    }
+)
+
 
 # Emoji constants for consistent visual feedback
 class Emoji:
     """Emoji constants for visual feedback."""
+
     # Tool emojis
     TERRAFORM = "🔷"
     OPENTOFU = "🌿"
     GO = "🐹"
     PYTHON = "🐍"
     UV = "📦"
-    
+
     # Action emojis
     BUILD = "🔨"
     START = "🚀"
@@ -42,10 +46,10 @@ class Emoji:
     INSTALL = "📥"
     CONFIG = "⚙️"
     PACKAGE = "📦"
-    
+
     # Container emojis
     CONTAINER = "🐳"
-    
+
     # Status emojis
     SUCCESS = "✅"
     ERROR = "❌"
@@ -53,7 +57,7 @@ class Emoji:
     INFO = "ℹ️"
     RUNNING = "🟢"
     STOPPED = "🟡"
-    
+
     # Environment emojis
     PROFILE = "👤"
     MATRIX = "🔢"
@@ -66,7 +70,7 @@ def get_console() -> Console:
     return Console(theme=WRKENV_THEME)
 
 
-def print_header(text: str, emoji: Optional[str] = None) -> None:
+def print_header(text: str, emoji: str | None = None) -> None:
     """Print a styled header."""
     console = get_console()
     if emoji:

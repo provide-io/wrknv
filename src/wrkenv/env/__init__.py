@@ -9,7 +9,7 @@ Core environment management functionality for development tool management.
 Provides:
 - Cross-platform tool installation (Terraform, OpenTofu, Go, UV, etc.)
 - Version management and switching
-- Development environment profiles  
+- Development environment profiles
 - Version matrix testing support
 - Flexible configuration system
 
