@@ -258,15 +258,20 @@ auto_sign = true
         """)
         
         runner = CliRunner()
-        with patch("wrkenv.env.config.WorkenvConfig._get_config_path") as mock_path:
-            mock_path.return_value = config_file
-            
-            # Load profile
-            result = runner.invoke(workenv_cli, ["profile", "load", "build"])
-            if result.exit_code != 0:
-                print(f"Profile load failed: {result.output}")
-                print(f"Exception: {result.exception}")
-            assert result.exit_code == 0
+        # Change to the tmp directory so config is found
+        with runner.isolated_filesystem(temp_dir=tmp_path):
+            # Mock the tool installation to avoid actual downloads
+            with patch("wrkenv.env.operations.install.install_go") as mock_install_go:
+                with patch("wrkenv.env.operations.install.install_uv") as mock_install_uv:
+                    mock_install_go.return_value = True
+                    mock_install_uv.return_value = True
+                    
+                    # Load profile
+                    result = runner.invoke(workenv_cli, ["profile", "load", "build"])
+                    if result.exit_code != 0:
+                        print(f"Profile load failed: {result.output}")
+                        print(f"Exception: {result.exception}")
+                    assert result.exit_code == 0
             
             # Build should use profile settings
             with patch("wrkenv.package.commands.build_package") as mock_build:
