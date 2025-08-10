@@ -64,7 +64,6 @@ packages = [
     "wrkenv.env", 
     "wrkenv.env.managers", 
     "wrkenv.env.operations", 
-    "wrkenv.env.testing",
     "wrkenv.package"
 ]
 package-dir = {"" = "src"}

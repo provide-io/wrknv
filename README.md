@@ -12,7 +12,6 @@ wrkenv provides a flexible, cross-platform solution for managing development too
 - **Multiple Tools**: Manage Terraform, OpenTofu, Go, UV, and more
 - **Flexible Configuration**: Support for multiple configuration sources
 - **Environment Profiles**: Switch between different tool version sets
-- **Version Matrix Testing**: Test against multiple tool version combinations
 - **Easy Integration**: Clean API for integration with other tools
 
 ## Installation

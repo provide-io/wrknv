@@ -203,38 +203,6 @@ def sync_command():
         except Exception as e:
             click.echo(f"❌ Error installing {tool_name} {version}: {e}")
 
-
-# === Matrix Test Command ===
-
-
-@workenv_cli.command(name="matrix-test")
-def matrix_test_command():
-    """🧪 Run tests against multiple tool version combinations."""
-    try:
-        from wrkenv.env.testing.matrix import VersionMatrix
-    except ImportError:
-        click.echo("Matrix testing not available", err=True)
-        sys.exit(1)
-
-    config = WorkenvConfig()
-
-    # Get matrix configuration
-    matrix_config = config.get_setting("matrix", {})
-    if not matrix_config:
-        click.echo("No matrix configuration found")
-        sys.exit(1)
-
-    matrix = VersionMatrix(matrix_config)
-
-    # Run the matrix tests
-    click.echo("Running matrix tests...")
-    results = matrix.run_tests(lambda versions: True)  # Dummy test function
-
-    click.echo("\nResults:")
-    click.echo(f"  Success: {results.get('success_count', 0)}")
-    click.echo(f"  Failure: {results.get('failure_count', 0)}")
-
-
 # === Container Commands ===
 
 
@@ -688,20 +656,6 @@ def package_config():
         click.echo(f"  {key}: {value}")
 
 
-@package_group.command(name="matrix-test")
-@click.option("--matrix", required=True, help="Matrix configuration name")
-def package_matrix_test(matrix: str):
-    """Run package builds with tool version matrix."""
-    config = WorkenvConfig()
-
-    matrix_config = config.get_setting(f"matrix.{matrix}", {})
-    if not matrix_config:
-        click.echo(f"Matrix configuration '{matrix}' not found", err=True)
-        sys.exit(1)
-
-    click.echo(f"🧪 Running matrix test: {matrix}")
-    click.echo("Matrix testing not yet fully implemented")
-    # TODO: Implement matrix testing with version combinations
 
 
 # === TF Subcommands (moved to tf command above) ===
