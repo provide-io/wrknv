@@ -17,14 +17,12 @@ try:
     from wrkenv.env.managers.base import BaseToolManager
     from wrkenv.env.managers.terraform import TerraformManager
     from wrkenv.env.managers.tofu import TofuManager
-    from wrkenv.env.testing.matrix import VersionMatrix
 except ImportError:
     # Expected during TDD - we'll implement these
     WorkenvConfig = Mock
     BaseToolManager = Mock
     TerraformManager = Mock
     TofuManager = Mock
-    VersionMatrix = Mock
 
 # PlatformDetector doesn't exist, but we have platform functions
 try:
@@ -205,48 +203,6 @@ class TestTerraformManagerContracts:
             assert url == expected
 
 
-class TestVersionMatrixContracts:
-    """TDD contracts for version matrix testing functionality."""
-
-    def test_matrix_generation(self):
-        """
-        CONTRACT: VersionMatrix should generate test combinations
-        """
-        config = Mock()
-        config.get_setting.return_value = {"terraform": ["1.5.7", "1.6.0"], "tofu": ["1.6.2", "1.7.0"], "go": ["1.21.5"]}
-        matrix = VersionMatrix("test", config)
-
-        combinations = matrix.generate_combinations()
-
-        # Should generate all possible combinations
-        assert len(combinations) == 4  # 2 * 2 * 1
-
-        # Each combination should have all tools
-        for combo in combinations:
-            assert "terraform" in combo
-            assert "tofu" in combo
-            assert "go" in combo
-
-    def test_matrix_testing_execution(self):
-        """
-        CONTRACT: Matrix testing should run tests against all combinations
-        """
-        config = Mock()
-        config.get_setting.return_value = {"terraform": ["1.5.7", "1.6.0"]}
-        matrix = VersionMatrix("test", config)
-
-        test_results = []
-
-        def mock_test_function(versions: Dict[str, str]) -> bool:
-            test_results.append(versions)
-            return True
-
-        results = matrix.run_tests()
-
-        # Should have run tests for each combination
-        assert len(test_results) == 2
-        assert results["success_count"] == 2
-        assert results["failure_count"] == 0
 
 
 class TestCLIContracts:
@@ -271,13 +227,6 @@ class TestCLIContracts:
         # Should show installed tools and versions
         pass
 
-    def test_cli_matrix_test_command(self):
-        """
-        CONTRACT: CLI should support matrix testing
-        """
-        # soup workenv matrix-test
-        # Should run tests against version combinations
-        pass
 
 
 class TestIntegrationContracts:

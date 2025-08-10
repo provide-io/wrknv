@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(wrkenv:*)",
-      "Bash(python -m pytest tests/ -v)"
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(python -m pytest tests/workenv/test_tdd_cli_behavior.py::TestWorkenvCLIBehavior::test_workenv_sync_command -xvs)"
     ],
     "deny": []
   }

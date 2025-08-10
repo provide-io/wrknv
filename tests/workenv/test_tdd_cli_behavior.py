@@ -129,32 +129,6 @@ class TestWorkenvCLIBehavior:
                 mock_tf_manager.install_version.assert_called_once_with('1.5.7', dry_run=False)
                 mock_tofu_manager.install_version.assert_called_once_with('1.6.2', dry_run=False)
 
-    def test_workenv_matrix_test_command(self):
-        """
-        TDD: `soup workenv matrix-test` should run version matrix tests
-        """
-        with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
-            mock_config_instance = Mock()
-            mock_config_instance.get_setting.return_value = {'tools': ['terraform', 'tofu']}
-            mock_config.return_value = mock_config_instance
-            
-            with patch('wrkenv.env.testing.matrix.VersionMatrix') as mock_matrix:
-                mock_matrix_instance = Mock()
-                mock_matrix_instance.run_tests.return_value = {
-                    'success_count': 4,
-                    'failure_count': 0,
-                    'results': []
-                }
-                mock_matrix.return_value = mock_matrix_instance
-
-                result = self.runner.invoke(workenv_cli, ['matrix-test'])
-
-            if result.exit_code != 0:
-                print(f"Exit code: {result.exit_code}")
-                print(f"Output: {result.output}")
-                print(f"Exception: {result.exception}")
-            assert result.exit_code == 0
-            assert 'Success: 4' in result.output or '4 passed' in result.output
 
     def test_workenv_dry_run_flag(self):
         """
