@@ -83,13 +83,17 @@ entry_point = "test.main:serve"
         """)
         
         runner = CliRunner()
-        with patch("flavor.api.build_package_from_manifest") as mock_build_api:
-            mock_build_api.return_value = [tmp_path / "dist" / "test.flavor"]
+        # Patch the function that imports flavor API
+        with patch("wrkenv.package.commands._get_flavor_api") as mock_get_api:
+            mock_api = MagicMock()
+            mock_api.build_package_from_manifest.return_value = [tmp_path / "dist" / "test.flavor"]
+            mock_get_api.return_value = mock_api
             
             # Also patch the manager to avoid tool checks in this unit test
             with patch("wrkenv.package.commands.PackageManager") as mock_manager:
                 mock_manager.return_value.is_flavor_available.return_value = True
                 mock_manager.return_value.check_required_tools.return_value = {"go": "1.21", "uv": "0.4"}
+                mock_manager.return_value.setup_build_environment.return_value = None
 
                 result = runner.invoke(
                     workenv_cli, 
@@ -113,13 +117,17 @@ name = "test-provider"
 version = "0.1.0"
             """)
             
-            with patch("flavor.api.build_package_from_manifest") as mock_build_api:
-                mock_build_api.return_value = [Path("dist/test.flavor")]
+            # Patch the function that imports flavor API
+            with patch("wrkenv.package.commands._get_flavor_api") as mock_get_api:
+                mock_api = MagicMock()
+                mock_api.build_package_from_manifest.return_value = [Path("dist/test.flavor")]
+                mock_get_api.return_value = mock_api
                 
                 # Also patch the manager to avoid tool checks in this unit test
                 with patch("wrkenv.package.commands.PackageManager") as mock_manager:
                     mock_manager.return_value.is_flavor_available.return_value = True
                     mock_manager.return_value.check_required_tools.return_value = {"go": "1.21", "uv": "0.4"}
+                    mock_manager.return_value.setup_build_environment.return_value = None
 
                     result = runner.invoke(workenv_cli, ["package", "build"])
             
