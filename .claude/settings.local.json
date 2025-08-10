@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wrkenv:*)"
+      "Bash(wrkenv:*)",
+      "Bash(python -m pytest tests/ -v)"
     ],
     "deny": []
   }
