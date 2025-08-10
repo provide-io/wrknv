@@ -79,6 +79,9 @@ include = '\.pyi?$'
 
 [tool.ruff]
 line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
 select = [
     "E",    # pycodestyle
     "F",    # pyflakes
@@ -87,7 +90,6 @@ select = [
     "SIM",  # flake8-simplify
     "I",    # isort
 ]
-target-version = "py310"
 
 [tool.mypy]
 python_version = "3.10"
