@@ -14,7 +14,8 @@
       "Bash(python -m pytest tests/test_tdd_package_commands.py::TestWorkenvPackageCommands::test_package_with_profile_integration -xvs)",
       "Bash(python -m pytest tests/test_tdd_package_commands.py::TestWorkenvPackageCommands::test_package_with_config -xvs)",
       "Bash(python -m pytest tests/)",
-      "Bash(python -m pytest tests/ -v --tb=short)"
+      "Bash(python -m pytest tests/ -v --tb=short)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
