@@ -45,7 +45,8 @@
       "Bash(docker stop:*)",
       "Bash(docker rm:*)",
       "Bash(docker run:*)",
-      "Bash(/Users/tim/code/gh/provide-io/build-provider-final.sh)"
+      "Bash(/Users/tim/code/gh/provide-io/build-provider-final.sh)",
+      "Bash(/Users/tim/code/gh/provide-io/build-pyvider-provider.sh)"
     ],
     "deny": []
   }
