@@ -1,10 +1,10 @@
 #
-# wrkenv/workenv/managers/tf_versions_base.py
+# wrkenv/workenv/managers/tf_base.py
 #
 """
-Tf Versions Manager Base
-==========================
-Base class for Tf (Terraform/OpenTofu) managers that use ~/.terraform.versions
+Tf Manager Base
+===============
+Base class for Tf (IBM Terraform/OpenTofu) managers that use ~/.terraform.versions
 directory structure. This implementation is compatible with tfswitch and
 designed for managing Tf tool versions.
 """
@@ -30,7 +30,7 @@ class TfVersionsManager(BaseToolManager):
 
     This directory structure is compatible with tfswitch, allowing users to
     use either tool interchangeably while providing enhanced metadata tracking
-    for advanced features. Supports both Terraform and OpenTofu.
+    for advanced features. Supports both IBM Terraform (formerly HashiCorp) and OpenTofu.
     """
 
     def __init__(self, config=None):

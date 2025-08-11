@@ -16,7 +16,8 @@
       "Bash(python -m pytest tests/)",
       "Bash(python -m pytest tests/ -v --tb=short)",
       "Bash(rm:*)",
-      "Bash(python -m pytest tests/ -v --cov=src/wrkenv --cov-report=term-missing)"
+      "Bash(python -m pytest tests/ -v --cov=src/wrkenv --cov-report=term-missing)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }
