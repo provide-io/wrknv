@@ -32,7 +32,8 @@
       "Bash(chmod:*)",
       "Bash(/Users/tim/code/gh/provide-io/update-all-envs.sh)",
       "Bash(find:*)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(/Users/tim/code/gh/provide-io/test-container-envs.sh)"
     ],
     "deny": []
   }
