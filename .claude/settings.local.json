@@ -27,7 +27,8 @@
       "Bash(source env.sh)",
       "Bash(source:*)",
       "Bash(python:*)",
-      "Bash(/Users/tim/code/gh/provide-io/pyvider-hcl/.venv_darwin_arm64/bin/wrkenv generate-env --output hcl-env.sh)"
+      "Bash(/Users/tim/code/gh/provide-io/pyvider-hcl/.venv_darwin_arm64/bin/wrkenv generate-env --output hcl-env.sh)",
+      "Bash(/Users/tim/code/gh/provide-io/pyvider-hcl/.venv_darwin_arm64/bin/wrkenv generate-env)"
     ],
     "deny": []
   }
