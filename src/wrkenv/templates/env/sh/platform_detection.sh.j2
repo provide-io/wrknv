@@ -7,7 +7,7 @@ case "$TFARCH" in
 esac
 
 # Workenv directory setup
-PROFILE="${{{ env_profile_var }}:-default}"
+PROFILE="{% raw %}${{% endraw %}{{ env_profile_var }}{% raw %}:-default}{% endraw %}"
 if [ "$PROFILE" = "default" ]; then
     VENV_DIR="workenv/{{ venv_prefix }}_${TFOS}_${TFARCH}"
 else

@@ -25,14 +25,14 @@ done
 # Special handling for specific packages
 {% for special in special_siblings %}
 {{ special.var_name }}_DIR="${PARENT_DIR}/{{ special.name }}"
-if [ -d "${{{ special.var_name | upper }}_DIR}" ]; then
+if [ -d "{% raw %}${{% endraw %}{{ special.var_name | upper }}_DIR{% raw %}}{% endraw %}" ]; then
     echo "Found {{ special.name }} package. Installing in editable mode{{ ' with dependencies' if special.with_deps else '' }}..."
     {% if special.with_deps %}
-    if ! uv pip install -e "${{{ special.var_name | upper }}_DIR}"; then
+    if ! uv pip install -e "{% raw %}${{% endraw %}{{ special.var_name | upper }}_DIR{% raw %}}{% endraw %}"; then
     {% else %}
-    if ! uv pip install --no-deps -e "${{{ special.var_name | upper }}_DIR}"; then
+    if ! uv pip install --no-deps -e "{% raw %}${{% endraw %}{{ special.var_name | upper }}_DIR{% raw %}}{% endraw %}"; then
     {% endif %}
-        print_warning "Failed to install {{ special.name }} package from '${{{ special.var_name | upper }}_DIR}' in editable mode."
+        print_warning "Failed to install {{ special.name }} package from '{% raw %}${{% endraw %}{{ special.var_name | upper }}_DIR{% raw %}}{% endraw %}' in editable mode."
         echo "Attempting to continue..."
     fi
 fi

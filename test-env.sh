@@ -29,7 +29,6 @@ spinner() {
     done
     printf "    \b\b\b\b"
 }
-
 print_header() {
     echo -e "\n${COLOR_BLUE}--- ${1} ---${COLOR_NC}"
 }
@@ -45,7 +44,6 @@ print_error() {
 print_warning() {
     echo -e "${COLOR_YELLOW}⚠️  ${1}${COLOR_NC}"
 }
-
 # --- Cleanup Previous Environment ---
 print_header "🧹 Cleaning Previous Environment"
 
@@ -62,7 +60,6 @@ unset PYTHONPATH
 ORIGINAL_PATH="${PATH}"
 
 print_success "Cleared Python aliases and PYTHONPATH"
-
 # --- Project Validation ---
 if [ ! -f "pyproject.toml" ]; then
     print_error "No 'pyproject.toml' found in current directory"
@@ -71,9 +68,6 @@ if [ ! -f "pyproject.toml" ]; then
 fi
 
 PROJECT_NAME=$(basename "$(pwd)")
-if [ "$PROJECT_NAME" != "wrkenv" ]; then
-    print_warning "This script is optimized for wrkenv but running in '${PROJECT_NAME}'"
-fi
 
 # --- UV Installation ---
 print_header "🚀 Checking UV Package Manager"
@@ -101,25 +95,26 @@ if ! command -v uv &> /dev/null; then
 else
     print_success "UV already installed"
 fi
-
 # --- Platform Detection ---
-WRKENV_OS=$(uname -s | tr '[:upper:]' '[:lower:]')
-WRKENV_ARCH=$(uname -m)
-case "$WRKENV_ARCH" in
-    x86_64) WRKENV_ARCH="amd64" ;;
-    aarch64|arm64) WRKENV_ARCH="arm64" ;;
+TFOS=$(uname -s | tr '[:upper:]' '[:lower:]')
+TFARCH=$(uname -m)
+case "$TFARCH" in
+    x86_64) TFARCH="amd64" ;;
+    aarch64|arm64) TFARCH="arm64" ;;
 esac
 
-# Workenv directory setup (compatible with wrkenv naming)
-PROFILE="${WRKENV_PROFILE:-default}"
+# Workenv directory setup
+PROFILE="${WRKENV_WORKENV_PROFILE:-default}"
 if [ "$PROFILE" = "default" ]; then
-    VENV_DIR="workenv/wrkenv_${WRKENV_OS}_${WRKENV_ARCH}"
+    VENV_DIR="workenv/wrkenv_${TFOS}_${TFARCH}"
 else
-    VENV_DIR="workenv/${PROFILE}_wrkenv_${WRKENV_OS}_${WRKENV_ARCH}"
+    VENV_DIR="workenv/${PROFILE}_${TFOS}_${TFARCH}"
 fi
 
-export UV_PROJECT_ENVIRONMENT="${VENV_DIR}"
-
+# Validate platform
+if [[ "$TFOS" != "darwin" && "$TFOS" != "linux" ]]; then
+    print_warning "Detected OS: $TFOS (only darwin and linux are fully tested)"
+fi
 # --- Virtual Environment ---
 print_header "🐍 Setting Up Virtual Environment"
 echo "Directory: ${VENV_DIR}"
@@ -136,7 +131,6 @@ fi
 # Activate virtual environment
 source "${VENV_DIR}/bin/activate"
 export VIRTUAL_ENV="$(pwd)/${VENV_DIR}"
-
 # --- Dependency Installation ---
 print_header "📦 Installing Dependencies"
 
@@ -159,16 +153,24 @@ echo -n "Installing wrkenv in editable mode..."
 uv pip install --no-deps -e . > /tmp/wrkenv_setup/install.log 2>&1 &
 spinner $!
 print_success "wrkenv installed"
-
 # --- Sibling Packages ---
-print_header "🤝 Checking for Sibling Packages"
+print_header "🤝 Installing Sibling Packages"
 
 PARENT_DIR=$(dirname "$(pwd)")
 SIBLING_COUNT=0
 
-# Check for pyvider packages that wrkenv might need
 for dir in "${PARENT_DIR}"/pyvider*; do
-    if [ -d "${dir}" ] && [ -f "${dir}/pyproject.toml" ]; then
+    if [ -d "${dir}" ]; then
+        SIBLING_NAME=$(basename "${dir}")
+        echo -n "Installing ${SIBLING_NAME}..."
+        uv pip install --no-deps -e "${dir}" > /tmp/wrkenv_setup/${SIBLING_NAME}.log 2>&1 &
+        spinner $!
+        print_success "${SIBLING_NAME} installed"
+        ((SIBLING_COUNT++))
+    fi
+done
+for dir in "${PARENT_DIR}"/flavor; do
+    if [ -d "${dir}" ]; then
         SIBLING_NAME=$(basename "${dir}")
         echo -n "Installing ${SIBLING_NAME}..."
         uv pip install --no-deps -e "${dir}" > /tmp/wrkenv_setup/${SIBLING_NAME}.log 2>&1 &
@@ -178,10 +180,19 @@ for dir in "${PARENT_DIR}"/pyvider*; do
     fi
 done
 
-if [ $SIBLING_COUNT -eq 0 ]; then
-    print_warning "No sibling packages found (this is OK for standalone development)"
+# Special handling for specific packages
+WRKENV_DIR="${PARENT_DIR}/wrkenv"
+if [ -d "${WRKENV_DIR}" ]; then
+    echo "Found wrkenv package. Installing in editable mode with dependencies..."
+    if ! uv pip install -e "${WRKENV_DIR}"; then
+        print_warning "Failed to install wrkenv package from '${WRKENV_DIR}' in editable mode."
+        echo "Attempting to continue..."
+    fi
 fi
 
+if [ $SIBLING_COUNT -eq 0 ]; then
+    print_warning "No sibling packages found"
+fi
 # --- Environment Configuration ---
 print_header "🔧 Configuring Environment"
 
@@ -208,57 +219,20 @@ print_header "🔍 Verifying Installation"
 echo -e "\n${COLOR_GREEN}Tool Locations & Versions:${COLOR_NC}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# UV
-if command -v uv &> /dev/null; then
-    UV_PATH=$(command -v uv 2>/dev/null || which uv 2>/dev/null || echo "uv")
-    printf "%-12s: %s\n" "UV" "$UV_PATH"
-    printf "%-12s  %s\n" "" "$(uv --version 2>/dev/null || echo "not found")"
-fi
-
-# Python
-PYTHON_PATH="${VENV_DIR}/bin/python"
-if [ -f "$PYTHON_PATH" ]; then
-    printf "%-12s: %s\n" "Python" "$PYTHON_PATH"
-    printf "%-12s  %s\n" "" "$($PYTHON_PATH --version 2>&1)"
-fi
-
-# Python3
-PYTHON3_PATH="${VENV_DIR}/bin/python3"
-if [ -f "$PYTHON3_PATH" ]; then
-    printf "%-12s: %s\n" "Python3" "$PYTHON3_PATH"
-    printf "%-12s  %s\n" "" "$($PYTHON3_PATH --version 2>&1)"
-fi
-
-# Pytest
-PYTEST_PATH="${VENV_DIR}/bin/pytest"
-if [ -f "$PYTEST_PATH" ]; then
-    printf "%-12s: %s\n" "Pytest" "$PYTEST_PATH"
-    PYTEST_VERSION=$($PYTEST_PATH --version 2>&1 | head -n1)
-    printf "%-12s  %s\n" "" "$PYTEST_VERSION"
-fi
-
-# wrkenv
-WRKENV_PATH="${VENV_DIR}/bin/wrkenv"
-if [ -f "$WRKENV_PATH" ]; then
-    printf "%-12s: %s\n" "wrkenv" "$WRKENV_PATH"
-    WRKENV_VERSION=$($WRKENV_PATH --version 2>&1 | grep -E "version|wrkenv" | head -n1 || echo "development")
-    printf "%-12s  %s\n" "" "$WRKENV_VERSION"
-fi
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
 # --- Final Summary ---
 print_header "✅ Environment Ready!"
 
-echo -e "\n${COLOR_GREEN}🧰🌍 wrkenv development environment activated${COLOR_NC}"
+echo -e "\n${COLOR_GREEN}wrkenv development environment activated${COLOR_NC}"
 echo "Virtual environment: ${VENV_DIR}"
 echo "Profile: ${PROFILE}"
 echo -e "\nUseful commands:"
-echo "  wrkenv --help     # wrkenv CLI"
-echo "  wrkenv status     # Show tool status"
-echo "  wrkenv install    # Install a tool"
-echo "  pytest            # Run tests"
-echo "  deactivate        # Exit environment"
+echo "  wrkenv --help  # wrkenv CLI"
+echo "  wrkenv status  # Check tool versions"
+echo "  wrkenv container status  # Container status"
+echo "  pytest  # Run tests"
+echo "  deactivate  # Exit environment"
 
 # --- Cleanup ---
 # Remove temporary log files older than 1 day
@@ -266,5 +240,3 @@ find /tmp/wrkenv_setup -name "*.log" -mtime +1 -delete 2>/dev/null
 
 # Return success
 return 0 2>/dev/null || exit 0
-
-# 🧰🌍🖥️🪄
