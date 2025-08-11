@@ -21,6 +21,9 @@ class TestPythonVersionCheck:
         venv_dir.mkdir(parents=True)
         python_bin = venv_dir / "bin" / "python"
         python_bin.parent.mkdir(exist_ok=True)
+        # Create a dummy python file
+        python_bin.write_text("#!/usr/bin/env python")
+        python_bin.chmod(0o755)
         
         # Mock subprocess.run to return version info
         with patch('subprocess.run') as mock_run:
@@ -137,7 +140,7 @@ requires-python = ">=3.11"
 
     def test_env_generator_with_python_version_check(self, tmp_path):
         """Test that env_generator includes Python version checking."""
-        from wrkenv.env.env_generator import generate_env_scripts
+        from wrkenv.env.env_generator import create_project_env_scripts
         
         # Create a mock pyproject.toml
         pyproject = tmp_path / "pyproject.toml"
@@ -155,7 +158,7 @@ tf_flavor = "opentofu"
 """)
         
         with patch('os.getcwd', return_value=str(tmp_path)):
-            generate_env_scripts()
+            create_project_env_scripts(tmp_path)
         
         # Check that env.sh was created
         env_sh = tmp_path / "env.sh"
@@ -165,9 +168,9 @@ tf_flavor = "opentofu"
         content = env_sh.read_text()
         
         # Should contain Python version checking logic
-        assert "# Check Python version compatibility" in content
-        assert "requires-python" in content or ">=3.11" in content
-        assert "recreate" in content.lower() or "version mismatch" in content.lower()
+        assert "Python Version Compatibility Check" in content
+        assert ">=3.11" in content
+        assert "PROJECT_PYTHON_REQ" in content
 
     def test_template_includes_version_check(self):
         """Test that the shell template includes version checking."""
@@ -198,7 +201,7 @@ tf_flavor = "opentofu"
 
     def test_venv_recreation_in_generated_script(self, tmp_path):
         """Test that generated script can recreate venv on version mismatch."""
-        from wrkenv.env.env_generator import generate_env_scripts
+        from wrkenv.env.env_generator import create_project_env_scripts
         
         # Create project with Python requirement
         pyproject = tmp_path / "pyproject.toml"
@@ -216,7 +219,7 @@ requires-python = ">=3.12"
         with patch('os.getcwd', return_value=str(tmp_path)):
             with patch('platform.system', return_value='Darwin'):
                 with patch('platform.machine', return_value='arm64'):
-                    generate_env_scripts()
+                    create_project_env_scripts(tmp_path)
         
         env_sh = tmp_path / "env.sh"
         content = env_sh.read_text()
