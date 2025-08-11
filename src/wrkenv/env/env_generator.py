@@ -64,10 +64,8 @@ class EnvScriptGenerator:
             "use_spinner": script_type == "sh",  # PowerShell doesn't need spinner
             "strict_project_check": False,
             "install_siblings": True,
-            "sibling_patterns": ["pyvider*", "flavor"],
-            "special_siblings": [
-                {"name": "wrkenv", "var_name": "WRKENV", "with_deps": True},
-            ],
+            "sibling_patterns": [],  # No default peers - specified in config
+            "special_siblings": [],  # No default peers - specified in config
             "create_log_dir": True,
             "deduplicate_path": True,
             "include_tool_verification": True,  # Enable for wrkenv

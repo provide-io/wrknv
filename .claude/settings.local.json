@@ -22,7 +22,10 @@
       "Bash(python3:*)",
       "Bash(grep:*)",
       "Bash(docker exec:*)",
-      "Bash(docker inspect:*)"
+      "Bash(docker inspect:*)",
+      "Bash(uv pip install:*)",
+      "Bash(source env.sh)",
+      "Bash(source:*)"
     ],
     "deny": []
   }
