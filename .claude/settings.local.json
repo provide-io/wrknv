@@ -54,7 +54,8 @@
       "Bash(deactivate)",
       "Bash(uv venv:*)",
       "Bash(uv pip uninstall:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }
