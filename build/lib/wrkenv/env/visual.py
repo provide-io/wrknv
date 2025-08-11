@@ -59,7 +59,6 @@ class Emoji:
 
     # Environment emojis
     PROFILE = "👤"
-    MATRIX = "🔢"
     ENVIRONMENT = "🌍"
     WORKBENCH = "🧰"
 

@@ -2,7 +2,7 @@
 # wrkenv/workenv/operations/install.py
 #
 """
-TofuSoup Workenv Installation Operations
+wrkenv Installation Operations
 ========================================
 Functions for extracting archives and making files executable.
 """

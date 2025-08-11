@@ -91,24 +91,17 @@ def clean_cache(config: WorkenvConfig | None = None) -> None:
 
 def init_provider(project_dir: Path, config: WorkenvConfig | None = None) -> Path:
     """Initialize a new provider project."""
-    # For now, use tofusoup's scaffolding
-    # In future, this could be moved to wrkenv entirely
-    try:
-        from tofusoup.scaffolding.generator import scaffold_new_provider
+    # Basic project scaffolding
+    project_dir.mkdir(parents=True, exist_ok=True)
 
-        return scaffold_new_provider(project_dir)
-    except ImportError:
-        # Basic scaffolding without tofusoup
-        project_dir.mkdir(parents=True, exist_ok=True)
+    # Create basic structure
+    (project_dir / "src").mkdir(exist_ok=True)
+    (project_dir / "tests").mkdir(exist_ok=True)
+    (project_dir / "keys").mkdir(exist_ok=True)
 
-        # Create basic structure
-        (project_dir / "src").mkdir(exist_ok=True)
-        (project_dir / "tests").mkdir(exist_ok=True)
-        (project_dir / "keys").mkdir(exist_ok=True)
-
-        # Create basic pyproject.toml
-        pyproject = project_dir / "pyproject.toml"
-        pyproject.write_text(
+    # Create basic pyproject.toml
+    pyproject = project_dir / "pyproject.toml"
+    pyproject.write_text(
             """[project]
 name = "provider-example"
 version = "0.1.0"
@@ -124,9 +117,9 @@ private_key_path = "keys/provider-private.key"
 public_key_path = "keys/provider-public.key"
 curve = "P-256"
 """
-        )
+    )
 
-        return project_dir
+    return project_dir
 
 
 def list_packages(config: WorkenvConfig | None = None) -> list[dict[str, str]]:

@@ -145,18 +145,10 @@ class WorkenvConfig:
             # Environment variables (highest priority)
             sources.append(EnvironmentConfigSource("WRKENV"))
 
-            # Also support legacy TOFUSOUP_WORKENV_ prefix
-            sources.append(EnvironmentConfigSource("TOFUSOUP_WORKENV"))
-
-            # Look for wrkenv.toml first
+            # Look for wrkenv.toml
             wrkenv_toml = self._find_config_file("wrkenv.toml")
             if wrkenv_toml:
                 sources.append(FileConfigSource(wrkenv_toml, "workenv"))
-
-            # Fall back to soup.toml for backward compatibility
-            soup_toml = self._find_config_file("soup.toml")
-            if soup_toml:
-                sources.append(FileConfigSource(soup_toml, "workenv"))
 
         self.sources = sources
         self.config_path = self._get_config_path()
@@ -316,29 +308,6 @@ class WorkenvConfig:
         return default
 
 
-# Convenience function for TofuSoup integration
-def create_soup_config() -> WorkenvConfig:
-    """
-    Create a WorkenvConfig that prioritizes soup.toml.
-
-    This is for backward compatibility with TofuSoup.
-    """
-    sources = [
-        EnvironmentConfigSource("TOFUSOUP_WORKENV"),
-        EnvironmentConfigSource("WRKENV"),
-    ]
-
-    # Look for soup.toml first
-    soup_toml = WorkenvConfig()._find_config_file("soup.toml")
-    if soup_toml:
-        sources.append(FileConfigSource(soup_toml, "workenv"))
-
-    # Also check wrkenv.toml
-    wrkenv_toml = WorkenvConfig()._find_config_file("wrkenv.toml")
-    if wrkenv_toml:
-        sources.append(FileConfigSource(wrkenv_toml, "workenv"))
-
-    return WorkenvConfig(sources)
 
 
 # 🧰🌍🖥️🪄

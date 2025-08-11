@@ -2,7 +2,7 @@
 # wrkenv/workenv/operations/__init__.py
 #
 """
-TofuSoup Workenv Operations
+wrkenv Operations
 ===========================
 Core operation modules for workenv functionality.
 """

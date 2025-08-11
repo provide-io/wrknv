@@ -19,10 +19,10 @@ def get_tool_manager(
     if config is None:
         config = WorkenvConfig()
 
-    if tool_name == "terraform":
-        from .terraform import TerraformManager
+    if tool_name == "ibmtf":
+        from .ibm_tf import IbmTfManager
 
-        return TerraformManager(config)
+        return IbmTfManager(config)
 
     elif tool_name == "tofu":
         from .tofu import TofuManager
@@ -53,12 +53,12 @@ def get_tool_manager(
 
 def get_supported_tools() -> list[str]:
     """Get list of supported tools."""
-    return ["terraform", "tofu", "uv", "go"]
+    return ["ibmtf", "tofu", "uv", "go"]
 
 
 def get_major_tools() -> list[str]:
     """Get list of major tools (those with direct CLI commands)."""
-    return ["terraform", "tofu", "uv", "go"]
+    return ["ibmtf", "tofu", "uv", "go"]
 
 
 def get_secondary_tools() -> list[str]:

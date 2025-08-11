@@ -18,8 +18,8 @@ src/wrkenv/env/managers/__init__.py
 src/wrkenv/env/managers/base.py
 src/wrkenv/env/managers/factory.py
 src/wrkenv/env/managers/go.py
-src/wrkenv/env/managers/terraform.py
-src/wrkenv/env/managers/tf_versions_base.py
+src/wrkenv/env/managers/ibm_tf.py
+src/wrkenv/env/managers/tf_base.py
 src/wrkenv/env/managers/tofu.py
 src/wrkenv/env/managers/uv.py
 src/wrkenv/env/operations/__init__.py

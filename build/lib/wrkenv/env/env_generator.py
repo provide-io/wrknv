@@ -66,7 +66,6 @@ class EnvScriptGenerator:
             "install_siblings": True,
             "sibling_patterns": ["pyvider*", "flavor"],
             "special_siblings": [
-                {"name": "tofusoup", "var_name": "TOFUSOUP", "with_deps": True},
                 {"name": "wrkenv", "var_name": "WRKENV", "with_deps": True},
             ],
             "create_log_dir": True,

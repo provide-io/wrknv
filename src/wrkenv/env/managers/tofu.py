@@ -14,7 +14,7 @@ from urllib.request import urlopen
 import semver
 from pyvider.telemetry import logger
 
-from .tf_versions_base import TfVersionsManager, ToolManagerError
+from .tf_base import TfVersionsManager, ToolManagerError
 
 
 class TofuManager(TfVersionsManager):

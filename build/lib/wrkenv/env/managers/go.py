@@ -2,9 +2,9 @@
 # wrkenv/workenv/managers/go.py
 #
 """
-Go Tool Manager for TofuSoup Workenv
-====================================
-Manages Go versions for TofuSoup harness development.
+Go Tool Manager for wrkenv
+============================
+Manages Go versions for development.
 """
 
 import json
@@ -159,12 +159,12 @@ class GoManager(BaseToolManager):
             return False
 
     def get_harness_compatibility(self) -> dict:
-        """Get compatibility information for TofuSoup Go harnesses."""
+        """Get compatibility information for Go-based tools."""
         version = self.get_installed_version()
         if not version:
             return {"status": "not_installed"}
 
-        # Check compatibility with TofuSoup Go harnesses
+        # Check compatibility with Go-based tools
         compatibility = {
             "status": "compatible",
             "version": version,
@@ -179,43 +179,43 @@ class GoManager(BaseToolManager):
         return compatibility
 
     def _check_go_cty_compatibility(self, version: str) -> dict:
-        """Check compatibility with go-cty harness."""
+        """Check compatibility with go-cty tools."""
         # go-cty requires Go 1.18+
         is_compatible = self._version_compare(version, "1.18.0") >= 0
 
         return {
             "compatible": is_compatible,
-            "notes": f"go-cty harness requires Go 1.18+ (current: {version})",
+            "notes": f"go-cty tools require Go 1.18+ (current: {version})",
         }
 
     def _check_go_rpc_compatibility(self, version: str) -> dict:
-        """Check compatibility with go-rpc harness."""
+        """Check compatibility with go-rpc tools."""
         # go-rpc requires Go 1.19+ for generics
         is_compatible = self._version_compare(version, "1.19.0") >= 0
 
         return {
             "compatible": is_compatible,
-            "notes": f"go-rpc harness requires Go 1.19+ (current: {version})",
+            "notes": f"go-rpc tools require Go 1.19+ (current: {version})",
         }
 
     def _check_go_wire_compatibility(self, version: str) -> dict:
-        """Check compatibility with go-wire harness."""
+        """Check compatibility with go-wire tools."""
         # go-wire requires Go 1.18+
         is_compatible = self._version_compare(version, "1.18.0") >= 0
 
         return {
             "compatible": is_compatible,
-            "notes": f"go-wire harness requires Go 1.18+ (current: {version})",
+            "notes": f"go-wire tools require Go 1.18+ (current: {version})",
         }
 
     def _check_go_hcl_compatibility(self, version: str) -> dict:
-        """Check compatibility with go-hcl harness."""
+        """Check compatibility with go-hcl tools."""
         # go-hcl requires Go 1.18+
         is_compatible = self._version_compare(version, "1.18.0") >= 0
 
         return {
             "compatible": is_compatible,
-            "notes": f"go-hcl harness requires Go 1.18+ (current: {version})",
+            "notes": f"go-hcl tools require Go 1.18+ (current: {version})",
         }
 
     def _version_compare(self, version1: str, version2: str) -> int:

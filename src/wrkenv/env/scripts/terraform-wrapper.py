@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 #
-# wrkenv/workenv/scripts/terraform-wrapper.py
+# wrkenv/workenv/scripts/tf-wrapper.py
 #
 """
-Terraform Wrapper Script
-========================
-This script acts as a 'terraform' command that delegates to the
-developer's chosen terraform flavor (terraform or opentofu).
+Tf Wrapper Script
+=================
+This script acts as a 'tf' command that delegates to the
+developer's chosen Tf flavor (IBM Terraform or OpenTofu).
 """
 
 import os
@@ -30,8 +30,8 @@ def get_workenv_root():
     return None
 
 
-def get_terraform_flavor():
-    """Get the configured terraform flavor from wrkenv.toml."""
+def get_tf_flavor():
+    """Get the configured Tf flavor from wrkenv.toml."""
     # Check for wrkenv.toml
     wrkenv_toml = None
     current = pathlib.Path.cwd()
@@ -49,18 +49,18 @@ def get_terraform_flavor():
             with open(wrkenv_toml, "rb") as f:
                 config = tomllib.load(f)
 
-            # Check for terraform_flavor setting
-            if "workenv" in config and "terraform_flavor" in config["workenv"]:
-                return config["workenv"]["terraform_flavor"]
+            # Check for tf_flavor setting
+            if "workenv" in config and "tf_flavor" in config["workenv"]:
+                return config["workenv"]["tf_flavor"]
         except:
             pass
 
-    return "terraform"  # Default to HashiCorp Terraform
+    return "ibm"  # Default to IBM Terraform
 
 
 def main():
     """Main entry point."""
-    flavor = get_terraform_flavor()
+    flavor = get_tf_flavor()
 
     # Find the actual binary
     workenv_root = get_workenv_root()
@@ -71,7 +71,7 @@ def main():
         if flavor == "opentofu":
             binary_name = "tofu"
         else:
-            binary_name = "hctf"  # HashiCorp Terraform
+            binary_name = "ibmtf"  # IBM Terraform
 
         if os.name == "nt":
             binary_name += ".exe"
@@ -85,12 +85,12 @@ def main():
             print(f"Error: {flavor} binary not found at {binary_path}", file=sys.stderr)
             if flavor == "opentofu":
                 print(
-                    "Run 'wrkenv tf <version>' to install OpenTofu",
+                    "Run 'wrkenv tofu <version>' to install OpenTofu",
                     file=sys.stderr,
                 )
             else:
                 print(
-                    "Run 'wrkenv tf <version> --terraform' to install Terraform",
+                    "Run 'wrkenv ibmtf <version>' to install IBM Terraform",
                     file=sys.stderr,
                 )
             sys.exit(1)

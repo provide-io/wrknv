@@ -2,7 +2,7 @@
 # wrkenv/workenv/operations/verify.py
 #
 """
-TofuSoup Workenv Verification Operations
+wrkenv Verification Operations
 ========================================
 Functions for verifying tool installations.
 """
