@@ -203,6 +203,66 @@ def sync_command():
         except Exception as e:
             click.echo(f"❌ Error installing {tool_name} {version}: {e}")
 
+
+# === Generate Env Command ===
+
+
+@workenv_cli.command(name="generate-env")
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(path_type=pathlib.Path),
+    default=pathlib.Path("env.sh"),
+    help="Output path for the environment script",
+)
+@click.option(
+    "--shell",
+    type=click.Choice(["bash", "zsh", "sh", "powershell", "ps1"]),
+    default="sh",
+    help="Target shell type",
+)
+@click.option(
+    "--project-dir",
+    type=click.Path(exists=True, dir_okay=True, path_type=pathlib.Path),
+    default=pathlib.Path.cwd(),
+    help="Project directory to generate env script for",
+)
+def generate_env_command(output: pathlib.Path, shell: str, project_dir: pathlib.Path):
+    """🌍 Generate optimized environment setup script."""
+    from wrkenv.env.env_generator import EnvScriptGenerator
+    
+    config = WorkenvConfig(project_root=project_dir)
+    generator = EnvScriptGenerator()
+    
+    # Map shell choices to script types
+    script_type = "ps1" if shell in ["powershell", "ps1"] else "sh"
+    
+    # Gather current state
+    tools = config.get_all_tools()
+    project_name = project_dir.name
+    
+    # Prepare configuration
+    env_config = {
+        "project_name": project_name,
+        "tools": tools,
+        "tf_flavor": config.get_setting("tf_flavor", "ibm"),
+        "workenv_dir": config.get_workenv_dir_name(),
+    }
+    
+    # Generate the script
+    click.echo(f"🔧 Generating {shell} environment script...")
+    generator.generate_env_script(
+        project_name=project_name,
+        output_path=output,
+        script_type=script_type,
+        **env_config
+    )
+    
+    click.echo(f"✅ Generated {output}")
+    click.echo("\nTo use the environment:")
+    click.echo(f"  source {output}")
+
+
 # === Container Commands ===
 
 
