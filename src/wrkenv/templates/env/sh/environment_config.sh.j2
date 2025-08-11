@@ -7,7 +7,9 @@ echo "PYTHONPATH: ${PYTHONPATH}"
 
 {% if deduplicate_path %}
 # Clean up PATH - remove duplicates
-NEW_PATH="${VENV_DIR}/bin"
+# Ensure UV bin directories are included
+UV_BIN_PATHS="$HOME/.local/bin:$HOME/.cargo/bin"
+NEW_PATH="${VENV_DIR}/bin:${UV_BIN_PATHS}"
 OLD_IFS="$IFS"
 IFS=':'
 for p in $PATH; do

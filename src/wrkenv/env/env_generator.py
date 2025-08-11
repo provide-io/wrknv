@@ -196,6 +196,8 @@ def create_project_env_scripts(
     if project_name == "wrkenv":
         extra_config["is_wrkenv"] = True
         extra_config["include_tool_verification"] = True
+        extra_config["sibling_patterns"] = ["pyvider*", "tofusoup", "flavor"]
+        extra_config["special_siblings"] = []
 
     # Generate scripts
     generator = EnvScriptGenerator()
