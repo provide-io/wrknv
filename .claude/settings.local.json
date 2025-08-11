@@ -53,7 +53,8 @@
       "Bash(uv pip show:*)",
       "Bash(deactivate)",
       "Bash(uv venv:*)",
-      "Bash(uv pip uninstall:*)"
+      "Bash(uv pip uninstall:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }
