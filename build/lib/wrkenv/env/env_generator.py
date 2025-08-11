@@ -59,19 +59,54 @@ class EnvScriptGenerator:
         # Default configuration
         config = {
             "project_name": project_name,
-            "env_profile_var": f"{project_name.upper()}_WORKENV_PROFILE",
+            "env_profile_var": f"{project_name.upper().replace('-', '_')}_PROFILE",
             "venv_prefix": project_name.lower(),
             "use_spinner": script_type == "sh",  # PowerShell doesn't need spinner
             "strict_project_check": False,
             "install_siblings": True,
-            "sibling_patterns": ["pyvider*", "flavor"],
-            "special_siblings": [
-                {"name": "wrkenv", "var_name": "WRKENV", "with_deps": True},
-            ],
+            "sibling_patterns": [],  # No default peers - specified in config
+            "special_siblings": [],  # No default peers - specified in config
             "create_log_dir": True,
             "deduplicate_path": True,
             "include_tool_verification": True,  # Enable for wrkenv
             "cleanup_logs": True,
+            "tools_to_verify": [
+                {
+                    "name": "Python",
+                    "command": "python",
+                    "check_type": "command",
+                    "var_name": "PYTHON",
+                    "version_cmd": "python --version 2>&1",
+                },
+                {
+                    "name": "UV",
+                    "command": "uv",
+                    "check_type": "command",
+                    "var_name": "UV",
+                    "version_cmd": "uv --version 2>&1",
+                },
+                {
+                    "name": "wrkenv",
+                    "command": "wrkenv",
+                    "check_type": "command",
+                    "var_name": "WRKENV",
+                    "version_cmd": "wrkenv --version 2>&1 || echo 'No version info'",
+                },
+                {
+                    "name": "ibmtf",
+                    "command": "ibmtf",
+                    "check_type": "command",
+                    "var_name": "IBMTF",
+                    "version_cmd": "ibmtf version 2>&1 | head -1 || echo 'Not installed'",
+                },
+                {
+                    "name": "tofu",
+                    "command": "tofu",
+                    "check_type": "command",
+                    "var_name": "TOFU",
+                    "version_cmd": "tofu version 2>&1 | head -1 || echo 'Not installed'",
+                },
+            ],
             "useful_commands": [
                 {
                     "command": f"{project_name.lower()} --help",
@@ -161,6 +196,8 @@ def create_project_env_scripts(
     if project_name == "wrkenv":
         extra_config["is_wrkenv"] = True
         extra_config["include_tool_verification"] = True
+        extra_config["sibling_patterns"] = ["pyvider*", "tofusoup", "flavor"]
+        extra_config["special_siblings"] = []
 
     # Generate scripts
     generator = EnvScriptGenerator()

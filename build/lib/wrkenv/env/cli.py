@@ -203,6 +203,62 @@ def sync_command():
         except Exception as e:
             click.echo(f"❌ Error installing {tool_name} {version}: {e}")
 
+
+# === Generate Env Command ===
+
+
+@workenv_cli.command(name="generate-env")
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(path_type=pathlib.Path),
+    default=pathlib.Path("env.sh"),
+    help="Output path for the environment script",
+)
+@click.option(
+    "--shell",
+    type=click.Choice(["bash", "zsh", "sh", "powershell", "ps1"]),
+    default="sh",
+    help="Target shell type",
+)
+@click.option(
+    "--project-dir",
+    type=click.Path(exists=True, dir_okay=True, path_type=pathlib.Path),
+    default=pathlib.Path.cwd(),
+    help="Project directory to generate env script for",
+)
+def generate_env_command(output: pathlib.Path, shell: str, project_dir: pathlib.Path):
+    """🌍 Generate optimized environment setup script."""
+    from wrkenv.env.env_generator import create_project_env_scripts
+    
+    click.echo(f"🔧 Generating environment scripts for {project_dir.name}...")
+    
+    try:
+        # Use the existing function that works
+        sh_path, ps1_path = create_project_env_scripts(project_dir)
+        
+        # Move to requested output location if different
+        if shell in ["powershell", "ps1"]:
+            if output != ps1_path:
+                import shutil
+                shutil.move(str(ps1_path), str(output))
+                ps1_path = output
+            click.echo(f"✅ Generated {ps1_path}")
+        else:
+            if output != sh_path:
+                import shutil
+                shutil.move(str(sh_path), str(output))
+                sh_path = output
+            click.echo(f"✅ Generated {sh_path}")
+        
+        click.echo("\nTo use the environment:")
+        click.echo(f"  source {output}")
+        
+    except FileNotFoundError as e:
+        click.echo(f"❌ Error: {e}")
+        click.echo("Make sure you're in a project directory with pyproject.toml")
+
+
 # === Container Commands ===
 
 
