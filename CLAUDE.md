@@ -16,9 +16,9 @@
 ### Recent Changes
 
 1. **Python 3.11+ Support** (August 2025)
-   - Updated all Provide.io projects to support Python 3.11+
-   - Removed Python 3.12+ syntax from dependencies
-   - Fixed pyvider-telemetry local file reference in pyproject.toml
+   - All Provide.io projects support Python 3.11+
+   - Sibling installation handles Python version conflicts gracefully
+   - Force local installs when published versions have incompatible requirements
 
 2. **env.sh Generation Working**
    - Successfully generates env.sh with sibling package discovery
