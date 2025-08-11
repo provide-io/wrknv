@@ -59,7 +59,7 @@ class EnvScriptGenerator:
         # Default configuration
         config = {
             "project_name": project_name,
-            "env_profile_var": f"{project_name.upper()}_WORKENV_PROFILE",
+            "env_profile_var": f"{project_name.upper()}_PROFILE",
             "venv_prefix": project_name.lower(),
             "use_spinner": script_type == "sh",  # PowerShell doesn't need spinner
             "strict_project_check": False,
