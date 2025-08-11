@@ -39,7 +39,8 @@
       "Bash(done)",
       "Bash(/Users/tim/code/gh/provide-io/test-pyvider-envs.sh)",
       "Bash(/Users/tim/code/gh/provide-io/test-with-siblings.sh)",
-      "Bash(/Users/tim/code/gh/provide-io/test-single-project.sh)"
+      "Bash(/Users/tim/code/gh/provide-io/test-single-project.sh)",
+      "Bash(/Users/tim/code/gh/provide-io/build-provider-in-container.sh)"
     ],
     "deny": []
   }
