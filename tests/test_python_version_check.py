@@ -174,30 +174,31 @@ tf_flavor = "opentofu"
 
     def test_template_includes_version_check(self):
         """Test that the shell template includes version checking."""
-        from wrkenv.env.env_generator import EnvGenerator
+        from wrkenv.env.env_generator import EnvScriptGenerator
         
-        generator = EnvGenerator()
+        generator = EnvScriptGenerator()
         
-        # Mock the config
+        # Mock the config (excluding project_name since it's a positional arg)
         config = {
-            "project_name": "test-project",
             "python_requirement": ">=3.11",
             "venv_dir": "workenv/test_darwin_arm64",
             "use_spinner": True,
         }
         
         # Generate just the version check part
-        with patch.object(generator, '_get_template') as mock_get_template:
+        with patch.object(generator.sh_env, 'get_template') as mock_get_template:
             mock_template = Mock()
+            mock_template.render = Mock(return_value="test content")
             mock_get_template.return_value = mock_template
             
-            generator._generate_shell_script("sh", config, Path("/tmp/test.sh"))
+            generator.generate_env_script("test-project", Path("/tmp/test.sh"), "sh", **config)
             
             # Verify template was called with python_requirement
             assert mock_template.render.called
-            call_args = mock_template.render.call_args[1]
-            assert "python_requirement" in call_args
-            assert call_args["python_requirement"] == ">=3.11"
+            # call_args is (args, kwargs), we want kwargs
+            call_kwargs = mock_template.render.call_args[1]
+            assert "python_requirement" in call_kwargs
+            assert call_kwargs["python_requirement"] == ">=3.11"
 
     def test_venv_recreation_in_generated_script(self, tmp_path):
         """Test that generated script can recreate venv on version mismatch."""
