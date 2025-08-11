@@ -58,7 +58,8 @@
       "Bash(git checkout:*)",
       "Bash(pyvider:*)",
       "Bash(uv sync:*)",
-      "Bash(uv pip:*)"
+      "Bash(uv pip:*)",
+      "Bash(./verify_container.sh:*)"
     ],
     "deny": []
   }
