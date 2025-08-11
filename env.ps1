@@ -251,6 +251,46 @@ Write-Header "🔍 Verifying Installation"
 Write-Host "`nTool Locations & Versions:" -ForegroundColor Green
 Write-Host ("━" * 40)
 
+# Python
+$PYTHONCmd = Get-Command python -ErrorAction SilentlyContinue
+if ($PYTHONCmd) {
+    Write-Host ("{0,-12}: {1}" -f "Python", $PYTHONCmd.Source)
+    $Version = & python --version 2>&1 2>&1 | Select-Object -First 1
+    Write-Host ("{0,-12}  {1}" -f "", $Version)
+}
+
+# UV
+$UVCmd = Get-Command uv -ErrorAction SilentlyContinue
+if ($UVCmd) {
+    Write-Host ("{0,-12}: {1}" -f "UV", $UVCmd.Source)
+    $Version = & uv --version 2>&1 2>&1 | Select-Object -First 1
+    Write-Host ("{0,-12}  {1}" -f "", $Version)
+}
+
+# wrkenv
+$WRKENVCmd = Get-Command wrkenv -ErrorAction SilentlyContinue
+if ($WRKENVCmd) {
+    Write-Host ("{0,-12}: {1}" -f "wrkenv", $WRKENVCmd.Source)
+    $Version = & wrkenv --version 2>&1 || echo 'No version info' 2>&1 | Select-Object -First 1
+    Write-Host ("{0,-12}  {1}" -f "", $Version)
+}
+
+# ibmtf
+$IBMTFCmd = Get-Command ibmtf -ErrorAction SilentlyContinue
+if ($IBMTFCmd) {
+    Write-Host ("{0,-12}: {1}" -f "ibmtf", $IBMTFCmd.Source)
+    $Version = & ibmtf version 2>&1 | head -1 || echo 'Not installed' 2>&1 | Select-Object -First 1
+    Write-Host ("{0,-12}  {1}" -f "", $Version)
+}
+
+# tofu
+$TOFUCmd = Get-Command tofu -ErrorAction SilentlyContinue
+if ($TOFUCmd) {
+    Write-Host ("{0,-12}: {1}" -f "tofu", $TOFUCmd.Source)
+    $Version = & tofu version 2>&1 | head -1 || echo 'Not installed' 2>&1 | Select-Object -First 1
+    Write-Host ("{0,-12}  {1}" -f "", $Version)
+}
+
 
 Write-Host ("━" * 40)
 # --- Final Summary ---

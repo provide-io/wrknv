@@ -72,6 +72,43 @@ class EnvScriptGenerator:
             "deduplicate_path": True,
             "include_tool_verification": True,  # Enable for wrkenv
             "cleanup_logs": True,
+            "tools_to_verify": [
+                {
+                    "name": "Python",
+                    "command": "python",
+                    "check_type": "command",
+                    "var_name": "PYTHON",
+                    "version_cmd": "python --version 2>&1",
+                },
+                {
+                    "name": "UV",
+                    "command": "uv",
+                    "check_type": "command",
+                    "var_name": "UV",
+                    "version_cmd": "uv --version 2>&1",
+                },
+                {
+                    "name": "wrkenv",
+                    "command": "wrkenv",
+                    "check_type": "command",
+                    "var_name": "WRKENV",
+                    "version_cmd": "wrkenv --version 2>&1 || echo 'No version info'",
+                },
+                {
+                    "name": "ibmtf",
+                    "command": "ibmtf",
+                    "check_type": "command",
+                    "var_name": "IBMTF",
+                    "version_cmd": "ibmtf version 2>&1 | head -1 || echo 'Not installed'",
+                },
+                {
+                    "name": "tofu",
+                    "command": "tofu",
+                    "check_type": "command",
+                    "var_name": "TOFU",
+                    "version_cmd": "tofu version 2>&1 | head -1 || echo 'Not installed'",
+                },
+            ],
             "useful_commands": [
                 {
                     "command": f"{project_name.lower()} --help",

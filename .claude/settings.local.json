@@ -20,7 +20,8 @@
       "Bash(mv:*)",
       "Bash(python -m wrkenv generate-env:*)",
       "Bash(python3:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(docker exec:*)"
     ],
     "deny": []
   }
