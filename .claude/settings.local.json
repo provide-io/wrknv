@@ -37,7 +37,8 @@
       "Bash(for:*)",
       "Bash(do rm:*)",
       "Bash(done)",
-      "Bash(/Users/tim/code/gh/provide-io/test-pyvider-envs.sh)"
+      "Bash(/Users/tim/code/gh/provide-io/test-pyvider-envs.sh)",
+      "Bash(/Users/tim/code/gh/provide-io/test-with-siblings.sh)"
     ],
     "deny": []
   }
