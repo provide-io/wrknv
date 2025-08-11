@@ -47,7 +47,11 @@
       "Bash(docker run:*)",
       "Bash(/Users/tim/code/gh/provide-io/build-provider-final.sh)",
       "Bash(/Users/tim/code/gh/provide-io/build-pyvider-provider.sh)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(pytest:*)",
+      "Bash(pip show:*)",
+      "Bash(uv pip show:*)",
+      "Bash(deactivate)"
     ],
     "deny": []
   }
