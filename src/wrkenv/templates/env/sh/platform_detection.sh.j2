@@ -18,3 +18,6 @@ fi
 if [[ "$TFOS" != "darwin" && "$TFOS" != "linux" ]]; then
     print_warning "Detected OS: $TFOS (only darwin and linux are fully tested)"
 fi
+
+# Set UV project environment early so uv commands use the correct venv
+export UV_PROJECT_ENVIRONMENT="${VENV_DIR}"
