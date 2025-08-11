@@ -10,6 +10,7 @@
 
 ### Core Functionality
 - [x] **Dynamic Sibling Configuration** - ✅ COMPLETED - Read sibling patterns from wrkenv.toml
+- [x] **Unified Siblings Format** - ✅ COMPLETED (2025-08-11) - Single `siblings` array with flexible configuration
 - [ ] **Better Error Handling** - UV installation failures in containers need graceful recovery
 
 ## Medium Priority

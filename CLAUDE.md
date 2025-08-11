@@ -113,17 +113,21 @@ The generated `env.sh` script provides a complete development environment withou
 6. **PYTHONPATH Configuration** - Sets up proper Python paths
 
 ### Sibling Package Configuration
-Currently hardcoded in `env_generator.py`:
-```python
-elif project_name == "pyvider":
-    extra_config["include_tool_verification"] = True
-    extra_config["sibling_patterns"] = ["pyvider-*"]
-    extra_config["special_siblings"] = [
-        {"name": "tofusoup", "var_name": "tofusoup", "with_deps": False},
-        {"name": "flavor", "var_name": "flavor", "with_deps": False},
-        {"name": "wrkenv", "var_name": "wrkenv", "with_deps": False}
-    ]
+Configure in `wrkenv.toml` under `[workenv.env]`:
+```toml
+[workenv.env]
+siblings = [
+    # Simple patterns (default: with_deps = true)
+    "pyvider-*",
+    
+    # Advanced configuration
+    { pattern = "lib-*", with_deps = false },
+    { name = "tofusoup", with_deps = true },
+    { name = "my-tool", var_name = "my_tool", with_deps = false }
+]
 ```
+
+See `docs/SIBLINGS_CONFIGURATION.md` for full documentation.
 
 ## Configuration
 
