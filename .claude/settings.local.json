@@ -56,7 +56,9 @@
       "Bash(uv pip uninstall:*)",
       "Bash(sed:*)",
       "Bash(git checkout:*)",
-      "Bash(pyvider:*)"
+      "Bash(pyvider:*)",
+      "Bash(uv sync:*)",
+      "Bash(uv pip:*)"
     ],
     "deny": []
   }
