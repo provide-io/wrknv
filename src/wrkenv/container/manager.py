@@ -322,6 +322,7 @@ RUN apt-get update && apt-get install -y \\
     python3-venv \\
     docker.io \\
     sudo \\
+    zsh \\
     && rm -rf /var/lib/apt/lists/*
 
 # Install UV package manager
@@ -331,8 +332,11 @@ ENV PATH="/root/.cargo/bin:$PATH"
 # Create workspace directory
 RUN mkdir -p /workspace
 
+# Set zsh as default shell
+RUN chsh -s /bin/zsh root
+
 # Set up shell
-SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/zsh", "-c"]
 
 # Install wrkenv in development mode
 WORKDIR /workspace
