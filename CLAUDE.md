@@ -2,28 +2,34 @@
 
 ## Project Overview
 
-**wrkenv** is a development toolkit for managing tool versions and generating optimized environment setup scripts. It's part of the Provide.io ecosystem that includes:
+**wrkenv** (Work Environment) is a development environment management tool that generates optimized shell scripts (`env.sh` and `env.ps1`) for Python projects. It manages tool versions, virtual environments, and sibling package dependencies within the Provide.io ecosystem.
 
+### Ecosystem Context
 - **pyvider** - Python framework for building Terraform providers
 - **tofusoup** - Testing/conformance suite for providers  
 - **flavor** - Optional packaging system for binary distribution
 - **wrkenv** - Development environment management (this project)
 - **supsrc** - Automated Git commit/push utility (managed by wrkenv)
 
-## Current State (December 2024)
+## Current State (August 2025)
 
 ### Recent Changes
 
-1. **IBM Naming Convention**
+1. **Python 3.11+ Support** (August 2025)
+   - Updated all Provide.io projects to support Python 3.11+
+   - Removed Python 3.12+ syntax from dependencies
+   - Fixed pyvider-telemetry local file reference in pyproject.toml
+
+2. **env.sh Generation Working**
+   - Successfully generates env.sh with sibling package discovery
+   - Hardcoded pyvider sibling patterns in env_generator.py
+   - Tested in Docker containers with Python 3.11
+
+3. **IBM Naming Convention** (December 2024)
    - HashiCorp Terraform is now referred to as "IBM Terraform" (IBM acquired HashiCorp)
    - Tool name changed: `terraform` → `ibmtf`
    - Manager renamed: `TerraformManager` → `IbmTfManager`
    - Config key: `terraform_flavor` → `tf_flavor` with values `"ibm"` or `"opentofu"`
-
-2. **Architecture Refactoring**
-   - Base class renamed: `TerraformVersionsBase` → `TfVersionsBase`
-   - File renamed: `tf_versions_base.py` → `tf_base.py`
-   - "Terraform" is now "Tf" as the generic term for both implementations
 
 ### Key Concepts
 
@@ -65,9 +71,17 @@ src/wrkenv/
 │   │   └── factory.py       # Tool manager factory
 │   ├── config.py            # Configuration handling
 │   ├── cli.py               # CLI commands
-│   └── env_generator.py     # Generates env.sh scripts
-├── package/                 # Package management (for pyvider packages)
-└── container/              # Container support (unused, consider removing)
+│   ├── env_generator.py     # Generates env.sh scripts
+│   └── visual.py            # Console output formatting
+├── package/                 # Package management (unused)
+├── container/              # Container support (0% coverage)
+└── templates/
+    └── env/
+        ├── sh/             # Bash templates (modular)
+        │   ├── base.sh.j2
+        │   ├── sibling_packages.sh.j2
+        │   └── ...
+        └── pwsh/           # PowerShell templates
 ```
 
 ## Testing
@@ -84,6 +98,31 @@ Run tests:
 ```bash
 python -m pytest tests/ -v
 python -m pytest tests/ -v --cov=src/wrkenv --cov-report=term-missing
+```
+
+## env.sh Generation
+
+The generated `env.sh` script provides a complete development environment without requiring wrkenv at runtime:
+
+### Features
+1. **UV Installation** - Installs UV package manager if not present
+2. **Virtual Environment** - Creates venv in `workenv/{project}_{os}_{arch}`
+3. **Dependency Installation** - Runs `uv sync` to install all dependencies
+4. **Sibling Discovery** - Automatically finds and installs sibling packages
+5. **Tool Verification** - Checks for required tools (Python, UV, wrkenv, ibmtf, tofu)
+6. **PYTHONPATH Configuration** - Sets up proper Python paths
+
+### Sibling Package Configuration
+Currently hardcoded in `env_generator.py`:
+```python
+elif project_name == "pyvider":
+    extra_config["include_tool_verification"] = True
+    extra_config["sibling_patterns"] = ["pyvider-*"]
+    extra_config["special_siblings"] = [
+        {"name": "tofusoup", "var_name": "tofusoup", "with_deps": False},
+        {"name": "flavor", "var_name": "flavor", "with_deps": False},
+        {"name": "wrkenv", "var_name": "wrkenv", "with_deps": False}
+    ]
 ```
 
 ## Configuration
@@ -106,6 +145,11 @@ go = "1.21.5"
 [workenv.settings]
 verify_checksums = true
 cache_downloads = true
+
+# Future: sibling configuration
+[workenv.env]
+sibling_patterns = ["pyvider-*"]
+special_siblings = ["tofusoup", "flavor"]
 ```
 
 ## TofuSoup Integration
@@ -131,9 +175,10 @@ The integration is in `tofusoup/src/tofusoup/workenv_integration.py`.
 ## Current Tasks
 
 1. **Improve Test Coverage** - Currently at 34%, critical functionality untested
-2. **Implement env.sh Generation** - Core feature for making wrkenv optional
-3. **Add Provider Shim Support** - For development without Flavor packaging
-4. **Profile-Based Matrix Testing** - Instead of version combinations
+2. **Dynamic Sibling Configuration** - Read sibling patterns from wrkenv.toml instead of hardcoding
+3. **Better Error Handling** - UV installation failures in containers need graceful recovery
+4. **Add Provider Shim Support** - For development without Flavor packaging
+5. **Profile-Based Matrix Testing** - Instead of version combinations
 
 ## Development Workflow
 
@@ -158,10 +203,12 @@ The integration is in `tofusoup/src/tofusoup/workenv_integration.py`.
 
 4. **Common Commands**
    ```bash
+   wrkenv generate-env           # Generate env.sh and env.ps1
+   wrkenv generate-env --output custom.sh  # Custom output path
    wrkenv ibmtf install 1.8.5    # Install IBM Terraform
    wrkenv tofu install 1.10.5    # Install OpenTofu
    wrkenv list                   # List installed versions
-   wrkenv generate-env           # Generate env.sh (TODO)
+   wrkenv status                 # Check tool versions
    ```
 
 ## Ecosystem Tools Summary
@@ -190,6 +237,9 @@ The integration is in `tofusoup/src/tofusoup/workenv_integration.py`.
 
 ## Important Notes
 
+- **env.sh Generation Works** - Tested with pyvider, installs sibling packages correctly
+- **Container Verified** - env.sh works in Python 3.11 Docker containers
+- **Sibling Patterns Hardcoded** - Currently in env_generator.py for pyvider project
 - **Container module** (src/wrkenv/container/) has 0% coverage - consider removing
 - **Download/Install operations** have only 11-14% coverage - critical for reliability
 - **Tool managers** have 18-24% coverage - core functionality needs testing
@@ -199,9 +249,49 @@ The integration is in `tofusoup/src/tofusoup/workenv_integration.py`.
 ## Questions to Consider
 
 1. Should wrkenv support generic tool management or focus on the Provide.io ecosystem?
-2. How to handle the transition from HashiCorp to IBM naming for existing users?
-3. Should the container module be removed if unused?
+2. How to make sibling pattern configuration dynamic (read from wrkenv.toml)?
+3. Should the container module be removed if unused (0% coverage)?
 4. What's the priority: test coverage or new features?
+5. How to handle UV installation failures gracefully in restricted environments?
+
+## Troubleshooting
+
+### Common Issues
+
+1. **UV Installation Fails in Container**
+   ```bash
+   # Manual UV installation
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   source ~/.local/bin/env
+   ```
+
+2. **Sibling Packages Not Found**
+   - Check directory structure: siblings must be in parent directory
+   - Verify patterns match: `ls -d ../pyvider-*`
+   - Check generated env.sh has sibling installation section
+
+3. **Wrong Virtual Environment Path**
+   - Check `PYVIDER_PROFILE` environment variable
+   - Default creates `workenv/pyvider_darwin_arm64`
+   - Profile creates `workenv/{profile}_darwin_arm64`
+
+4. **Import Errors After env.sh**
+   - Ensure all siblings installed: `uv pip list | grep pyvider`
+   - Check PYTHONPATH: `echo $PYTHONPATH`
+   - Verify editable installs: look for `.egg-link` files
+
+### Testing env.sh
+
+```bash
+# Basic test
+source env.sh && pyvider --help
+
+# Full test with pytest  
+source env.sh && pytest -v
+
+# Container test
+docker run --rm -v $(pwd):/app python:3.11-slim bash env.sh
+```
 
 ## Related Documentation
 
@@ -211,5 +301,5 @@ The integration is in `tofusoup/src/tofusoup/workenv_integration.py`.
 
 ---
 
-Last updated: December 2024
+Last updated: August 2025
 When updating, please preserve this structure and keep information current.
