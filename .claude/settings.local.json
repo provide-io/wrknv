@@ -43,7 +43,8 @@
       "Bash(/Users/tim/code/gh/provide-io/build-provider-in-container.sh)",
       "Bash(/Users/tim/code/gh/provide-io/build-provider-simple.sh)",
       "Bash(docker stop:*)",
-      "Bash(docker rm:*)"
+      "Bash(docker rm:*)",
+      "Bash(docker run:*)"
     ],
     "deny": []
   }
