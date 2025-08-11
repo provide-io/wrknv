@@ -14,4 +14,7 @@ else
     VENV_DIR="workenv/${PROFILE}_${TFOS}_${TFARCH}"
 fi
 
-export UV_PROJECT_ENVIRONMENT="${VENV_DIR}"
+# Validate platform
+if [[ "$TFOS" != "darwin" && "$TFOS" != "linux" ]]; then
+    print_warning "Detected OS: $TFOS (only darwin and linux are fully tested)"
+fi

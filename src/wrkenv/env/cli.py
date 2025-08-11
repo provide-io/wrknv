@@ -229,38 +229,34 @@ def sync_command():
 )
 def generate_env_command(output: pathlib.Path, shell: str, project_dir: pathlib.Path):
     """🌍 Generate optimized environment setup script."""
-    from wrkenv.env.env_generator import EnvScriptGenerator
+    from wrkenv.env.env_generator import create_project_env_scripts
     
-    config = WorkenvConfig(project_root=project_dir)
-    generator = EnvScriptGenerator()
+    click.echo(f"🔧 Generating environment scripts for {project_dir.name}...")
     
-    # Map shell choices to script types
-    script_type = "ps1" if shell in ["powershell", "ps1"] else "sh"
-    
-    # Gather current state
-    tools = config.get_all_tools()
-    project_name = project_dir.name
-    
-    # Prepare configuration
-    env_config = {
-        "project_name": project_name,
-        "tools": tools,
-        "tf_flavor": config.get_setting("tf_flavor", "ibm"),
-        "workenv_dir": config.get_workenv_dir_name(),
-    }
-    
-    # Generate the script
-    click.echo(f"🔧 Generating {shell} environment script...")
-    generator.generate_env_script(
-        project_name=project_name,
-        output_path=output,
-        script_type=script_type,
-        **env_config
-    )
-    
-    click.echo(f"✅ Generated {output}")
-    click.echo("\nTo use the environment:")
-    click.echo(f"  source {output}")
+    try:
+        # Use the existing function that works
+        sh_path, ps1_path = create_project_env_scripts(project_dir)
+        
+        # Move to requested output location if different
+        if shell in ["powershell", "ps1"]:
+            if output != ps1_path:
+                import shutil
+                shutil.move(str(ps1_path), str(output))
+                ps1_path = output
+            click.echo(f"✅ Generated {ps1_path}")
+        else:
+            if output != sh_path:
+                import shutil
+                shutil.move(str(sh_path), str(output))
+                sh_path = output
+            click.echo(f"✅ Generated {sh_path}")
+        
+        click.echo("\nTo use the environment:")
+        click.echo(f"  source {output}")
+        
+    except FileNotFoundError as e:
+        click.echo(f"❌ Error: {e}")
+        click.echo("Make sure you're in a project directory with pyproject.toml")
 
 
 # === Container Commands ===

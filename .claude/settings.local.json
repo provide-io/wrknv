@@ -18,7 +18,8 @@
       "Bash(rm:*)",
       "Bash(python -m pytest tests/ -v --cov=src/wrkenv --cov-report=term-missing)",
       "Bash(mv:*)",
-      "Bash(python -m wrkenv generate-env:*)"
+      "Bash(python -m wrkenv generate-env:*)",
+      "Bash(python3:*)"
     ],
     "deny": []
   }
