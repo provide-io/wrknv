@@ -1,5 +1,5 @@
 click>=8.0
-pyvider-telemetry
+pyvider-telemetry@ file:///Users/tim/code/gh/provide-io/pyvider-telemetry
 packaging>=23.0
 semver>=3.0.0
 tomli-w>=1.0.0

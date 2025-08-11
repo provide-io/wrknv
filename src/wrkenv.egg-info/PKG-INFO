@@ -22,7 +22,7 @@ Requires-Python: >=3.11
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: click>=8.0
-Requires-Dist: pyvider-telemetry
+Requires-Dist: pyvider-telemetry@ file:///Users/tim/code/gh/provide-io/pyvider-telemetry
 Requires-Dist: packaging>=23.0
 Requires-Dist: semver>=3.0.0
 Requires-Dist: tomli>=2.0.0; python_version < "3.11"
