@@ -195,6 +195,18 @@ Get-ChildItem -Path $ParentDir -Directory -Filter "pyvider*" | ForEach-Object {
         Write-Warning " Failed to install $SiblingName"
     }
 }
+Get-ChildItem -Path $ParentDir -Directory -Filter "tofusoup" | ForEach-Object {
+    $SiblingName = $_.Name
+    Write-Host "Installing $SiblingName..." -NoNewline
+    try {
+        & uv pip install --no-deps -e $_.FullName 2>&1 | Out-File -FilePath (Join-Path $LogDir "$SiblingName.log")
+        Write-Success " $SiblingName installed"
+        $SiblingCount++
+    }
+    catch {
+        Write-Warning " Failed to install $SiblingName"
+    }
+}
 Get-ChildItem -Path $ParentDir -Directory -Filter "flavor" | ForEach-Object {
     $SiblingName = $_.Name
     Write-Host "Installing $SiblingName..." -NoNewline
@@ -208,19 +220,6 @@ Get-ChildItem -Path $ParentDir -Directory -Filter "flavor" | ForEach-Object {
     }
 }
 
-# Special handling for specific packages
-$WRKENVDir = Join-Path $ParentDir "wrkenv"
-if (Test-Path $WRKENVDir) {
-    Write-Host "Found wrkenv package. Installing in editable mode with dependencies..." -NoNewline
-    try {
-        & uv pip install -e $WRKENVDir
-        Write-Success " wrkenv installed"
-    }
-    catch {
-        Write-Warning " Failed to install wrkenv package from '$WRKENVDir'"
-        Write-Host "Attempting to continue..."
-    }
-}
 
 if ($SiblingCount -eq 0) {
     Write-Warning "No sibling packages found"
