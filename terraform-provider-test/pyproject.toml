@@ -4,7 +4,7 @@
 name = "terraform-provider-test"
 version = "0.1.0"
 description = "A Terraform provider for test, built with Pyvider."
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "pyvider>=0.1.0",
 ]
@@ -19,7 +19,7 @@ build-backend = "pspf.build_backend"
 [tool.pspf]
 provider_name = "test"
 entry_point = "test.main:serve"
-python_version = "3.13"
+python_version = "3.11"
 targets = []
 
 [tool.pspf.build]

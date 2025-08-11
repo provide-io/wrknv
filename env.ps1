@@ -183,43 +183,6 @@ Write-Header "🤝 Installing Sibling Packages"
 $ParentDir = Split-Path -Parent (Get-Location)
 $SiblingCount = 0
 
-Get-ChildItem -Path $ParentDir -Directory -Filter "pyvider*" | ForEach-Object {
-    $SiblingName = $_.Name
-    Write-Host "Installing $SiblingName..." -NoNewline
-    try {
-        & uv pip install --no-deps -e $_.FullName 2>&1 | Out-File -FilePath (Join-Path $LogDir "$SiblingName.log")
-        Write-Success " $SiblingName installed"
-        $SiblingCount++
-    }
-    catch {
-        Write-Warning " Failed to install $SiblingName"
-    }
-}
-Get-ChildItem -Path $ParentDir -Directory -Filter "tofusoup" | ForEach-Object {
-    $SiblingName = $_.Name
-    Write-Host "Installing $SiblingName..." -NoNewline
-    try {
-        & uv pip install --no-deps -e $_.FullName 2>&1 | Out-File -FilePath (Join-Path $LogDir "$SiblingName.log")
-        Write-Success " $SiblingName installed"
-        $SiblingCount++
-    }
-    catch {
-        Write-Warning " Failed to install $SiblingName"
-    }
-}
-Get-ChildItem -Path $ParentDir -Directory -Filter "flavor" | ForEach-Object {
-    $SiblingName = $_.Name
-    Write-Host "Installing $SiblingName..." -NoNewline
-    try {
-        & uv pip install --no-deps -e $_.FullName 2>&1 | Out-File -FilePath (Join-Path $LogDir "$SiblingName.log")
-        Write-Success " $SiblingName installed"
-        $SiblingCount++
-    }
-    catch {
-        Write-Warning " Failed to install $SiblingName"
-    }
-}
-
 
 if ($SiblingCount -eq 0) {
     Write-Warning "No sibling packages found"
