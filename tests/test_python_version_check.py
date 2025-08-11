@@ -230,5 +230,5 @@ requires-python = ">=3.12"
         # 2. Compare with requirement
         # 3. Recreate if needed
         assert ".python-version" in content
-        assert "rm -rf" in content  # For removing old venv
-        assert "Python version mismatch" in content or "recreating virtual environment" in content.lower()
+        assert "mv " in content and ".backup" in content  # For backing up old venv
+        assert "Python Version Compatibility Check" in content
