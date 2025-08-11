@@ -31,7 +31,8 @@
       "Bash(/Users/tim/code/gh/provide-io/pyvider-hcl/.venv_darwin_arm64/bin/wrkenv generate-env)",
       "Bash(chmod:*)",
       "Bash(/Users/tim/code/gh/provide-io/update-all-envs.sh)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": []
   }
