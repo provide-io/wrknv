@@ -33,7 +33,10 @@
       "Bash(/Users/tim/code/gh/provide-io/update-all-envs.sh)",
       "Bash(find:*)",
       "Bash(git fetch:*)",
-      "Bash(/Users/tim/code/gh/provide-io/test-container-envs.sh)"
+      "Bash(/Users/tim/code/gh/provide-io/test-container-envs.sh)",
+      "Bash(for:*)",
+      "Bash(do rm:*)",
+      "Bash(done)"
     ],
     "deny": []
   }
