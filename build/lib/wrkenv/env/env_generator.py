@@ -198,6 +198,14 @@ def create_project_env_scripts(
         extra_config["include_tool_verification"] = True
         extra_config["sibling_patterns"] = ["pyvider*", "tofusoup", "flavor"]
         extra_config["special_siblings"] = []
+    elif project_name == "pyvider":
+        extra_config["include_tool_verification"] = True
+        extra_config["sibling_patterns"] = ["pyvider-*"]
+        extra_config["special_siblings"] = [
+            {"name": "tofusoup", "var_name": "tofusoup", "with_deps": False},
+            {"name": "flavor", "var_name": "flavor", "with_deps": False},
+            {"name": "wrkenv", "var_name": "wrkenv", "with_deps": False}
+        ]
 
     # Generate scripts
     generator = EnvScriptGenerator()

@@ -12,6 +12,7 @@ src/wrkenv/env/__init__.py
 src/wrkenv/env/cli.py
 src/wrkenv/env/config.py
 src/wrkenv/env/env_generator.py
+src/wrkenv/env/python_version.py
 src/wrkenv/env/visual.py
 src/wrkenv/env/workenv.py
 src/wrkenv/env/managers/__init__.py
@@ -30,5 +31,9 @@ src/wrkenv/env/operations/verify.py
 src/wrkenv/package/__init__.py
 src/wrkenv/package/commands.py
 src/wrkenv/package/manager.py
+tests/test_download_operations.py
+tests/test_install_operations.py
+tests/test_python_version_check.py
+tests/test_siblings_configuration.py
 tests/test_tdd_config_integration.py
 tests/test_tdd_package_commands.py

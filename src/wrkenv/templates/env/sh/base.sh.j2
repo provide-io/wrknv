@@ -27,6 +27,8 @@ COLOR_NC='\033[0m'
 
 {% include 'platform_detection.sh.j2' %}
 
+{% include 'python_version_check.sh.j2' %}
+
 {% include 'venv_setup.sh.j2' %}
 
 {% include 'dependency_installation.sh.j2' %}

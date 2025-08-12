@@ -15,7 +15,7 @@ from unittest.mock import Mock, patch, MagicMock
 try:
     from wrkenv.env.config import WorkenvConfig
     from wrkenv.env.managers.base import BaseToolManager
-    from wrkenv.env.managers.terraform import TerraformManager
+    from wrkenv.env.managers.ibm_tf import IbmTfManager as TerraformManager
     from wrkenv.env.managers.tofu import TofuManager
 except ImportError:
     # Expected during TDD - we'll implement these

@@ -48,6 +48,10 @@ class ConfigSource:
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
         return default
+    
+    def get_env_config(self) -> dict[str, Any]:
+        """Get env configuration section."""
+        return {}
 
 
 class FileConfigSource(ConfigSource):
@@ -91,6 +95,10 @@ class FileConfigSource(ConfigSource):
         """Get a configuration setting."""
         settings = self._data.get("settings", {})
         return settings.get(key, default)
+    
+    def get_env_config(self) -> dict[str, Any]:
+        """Get env configuration section."""
+        return self._data.get("env", {})
 
 
 class EnvironmentConfigSource(ConfigSource):
@@ -229,6 +237,16 @@ class WorkenvConfig:
             if value is not None:
                 return value
         return default
+    
+    def get_env_config(self) -> dict[str, Any]:
+        """Get merged env configuration from all sources."""
+        merged = {}
+        # Start with lowest priority sources
+        for source in reversed(self.sources):
+            env_config = source.get_env_config()
+            if env_config:
+                merged.update(env_config)
+        return merged
 
     def get_workenv_dir_name(self) -> str:
         """Get the workenv directory name based on current profile and platform."""

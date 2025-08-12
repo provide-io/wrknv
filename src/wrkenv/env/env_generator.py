@@ -185,27 +185,47 @@ def create_project_env_scripts(
         pyproject = tomllib.load(f)
 
     project_name = pyproject.get("project", {}).get("name", project_dir.name)
+    python_requirement = pyproject.get("project", {}).get("requires-python")
 
     # Additional config for wrkenv projects
     extra_config = {}
     if workenv_name:
         extra_config["workenv_name"] = workenv_name
         extra_config["venv_prefix"] = workenv_name
+    
+    # Add Python requirement if present
+    if python_requirement:
+        extra_config["python_requirement"] = python_requirement
 
-    # Check if this is wrkenv itself
-    if project_name == "wrkenv":
-        extra_config["is_wrkenv"] = True
+    # Get wrkenv configuration
+    from wrkenv.env.config import WorkenvConfig
+    config = WorkenvConfig()
+    env_config = config.get_env_config()
+    
+    # Use configuration from wrkenv.toml if available
+    if env_config:
+        logger.info(f"Using env configuration from wrkenv.toml", env_config=env_config)
+        extra_config["include_tool_verification"] = env_config.get("include_tool_verification", True)
+        
+        # Handle new unified siblings format
+        siblings_config = env_config.get("siblings", [])
+        if siblings_config:
+            extra_config["siblings"] = siblings_config
+            # Keep backward compatibility
+            extra_config["sibling_patterns"] = []
+            extra_config["special_siblings"] = []
+        else:
+            # Backward compatibility with old format
+            extra_config["sibling_patterns"] = env_config.get("sibling_patterns", [])
+            extra_config["special_siblings"] = env_config.get("special_siblings", [])
+            extra_config["siblings"] = []
+    else:
+        # Default configuration - empty by default
+        logger.info(f"No env configuration found in wrkenv.toml, using defaults")
         extra_config["include_tool_verification"] = True
-        extra_config["sibling_patterns"] = ["pyvider*", "tofusoup", "flavor"]
+        extra_config["sibling_patterns"] = []
         extra_config["special_siblings"] = []
-    elif project_name == "pyvider":
-        extra_config["include_tool_verification"] = True
-        extra_config["sibling_patterns"] = ["pyvider-*"]
-        extra_config["special_siblings"] = [
-            {"name": "tofusoup", "var_name": "tofusoup", "with_deps": False},
-            {"name": "flavor", "var_name": "flavor", "with_deps": False},
-            {"name": "wrkenv", "var_name": "wrkenv", "with_deps": False}
-        ]
+        extra_config["siblings"] = []
 
     # Generate scripts
     generator = EnvScriptGenerator()
