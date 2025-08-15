@@ -15,6 +15,7 @@ import sys
 from pathlib import Path
 
 import click
+from click import secho
 
 from wrkenv.wenv.config import WorkenvConfig
 from wrkenv.wenv.exceptions import (
@@ -819,9 +820,9 @@ def config_get(key: str):
             sys.exit(1)
 
         if isinstance(value, (dict, list)):
-            click.echo(json.dumps(value, indent=2))
+            secho(json.dumps(value, indent=2))
         else:
-            click.echo(value)
+            secho(f"{key}: {value}", fg="green")
 
     except Exception as e:
         print_error(f"Error getting config value: {e}")

@@ -112,6 +112,18 @@ testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "cli: CLI command tests",
+    "config: Configuration tests",
+    "container: Container management tests",
+    "package: Package management tests",
+    "operations: File and platform operations tests",
+    "managers: Tool manager tests",
+    "slow: Slow running tests",
+    "network: Tests requiring network access",
+]
 
 [tool.coverage.run]
 source = ["src/wrkenv"]
