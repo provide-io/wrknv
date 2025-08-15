@@ -10,7 +10,7 @@ The main features of `wrkenv` include:
 
 *   **Tool Version Management**: Manage Terraform, OpenTofu, Go, UV, and more.
 *   **Workflow Orchestration**: Integrated support for containerized environments and package building.
-*   **Flexible Configuration**: Support for multiple configuration sources, with a planned move to a type-safe, `go-cty` compatible system.
+*   **Flexible Configuration**: Support for multiple configuration sources, with a plan to move to a schema-validated system.
 *   **Portable Environments**: Generates self-contained `env.sh` and `env.ps1` scripts that do not require `wrkenv` at runtime.
 
 ## Key Documentation

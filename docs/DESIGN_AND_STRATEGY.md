@@ -15,16 +15,16 @@ The strategy is to create a central CLI tool that handles:
 ## 2. Core Architectural Principles
 
 - **Operational Excellence:** All features must be robust, testable, and reliable. Critical infrastructure code requires high test coverage.
-- **`go-cty` Compatibility:** As a tool for the Terraform ecosystem, all user-facing configuration and data models should be compatible with or directly use a `cty`-like type system for validation and interoperability.
+- **Type-Safe Configuration:** User-facing configuration should be validated against a defined schema to ensure correctness and provide clear, actionable error messages to the user.
 - **Extensibility:** The system should be designed with clear interfaces (e.g., `BaseToolManager`, `Bundle` protocols) to allow for future expansion with new tools or bundle types.
 - **Standalone Runtime:** The primary output for end-users (`env.sh`/`env.ps1`) should be self-contained and **not** require `wrkenv` to be installed, ensuring maximum portability. `wrkenv` is a development-time tool.
 
 ## 3. Key Design Patterns
 
-### 3.1. Type-Safe Configuration
+### 3.1. Validated Configuration
 
 - **Current State:** Basic TOML parsing.
-- **Target State:** Configuration will be loaded from `wrkenv.toml` or `wrkenv.hcl` and validated against a schema defined using `pyvider-cty`. This provides:
+- **Target State:** Configuration loaded from `wrkenv.toml` will be validated against an internal schema. This provides:
   - Early failure for invalid configuration.
   - Rich, context-aware error messages.
   - A structured, discoverable configuration API for programmatic use (e.g., by AI agents).

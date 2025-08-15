@@ -16,11 +16,9 @@ This document tracks prioritized development tasks.
 
 ## Medium Priority - Feature Completeness & Architecture
 
-- [ ] **Implement Type-Safe, `go-cty` Compatible Configuration**
-  - Integrate `pyvider-cty` and `pyvider-hcl` as discussed in design documents.
-  - Define a `cty` schema for `wrkenv.toml`.
-  - Refactor `env.config` to validate loaded configuration against the schema.
-  - This will improve reliability and enable HCL-based configuration files.
+- [ ] **Implement Type-Safe Configuration**
+  - Define a validation schema for the `wrkenv.toml` structure.
+  - Refactor `env.config` to validate loaded configuration against this schema, providing clear errors on invalid input. This will improve reliability and user experience.
 
 - [ ] **Complete `package` Command Implementation**
   - Implement the actual logic for `sign_package` and `publish_package` by integrating with the `flavor` API.
