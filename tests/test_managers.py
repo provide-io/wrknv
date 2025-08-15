@@ -56,8 +56,8 @@ class TestManagers(unittest.TestCase):
         mock_tool_install_dir.iterdir.return_value = [
             MagicMock(spec=Path, name='1.0.0', is_dir=MagicMock(return_value=True)),
             MagicMock(spec=Path, name='1.1.0', is_dir=MagicMock(return_value=True)),
-            MagicMock(spec=Path, name='invalid', is_dir=MagicMock(return_value=True)),
-            MagicMock(spec=Path, name='2.0.0', is_dir=MagicMock(return_value=True)),
+            MagicMock(is_dir=MagicMock(return_value=True), name='invalid'),
+            MagicMock(is_dir=MagicMock(return_value=True), name='2.0.0'),
         ]
         mock_install_path.__truediv__.return_value = mock_tool_install_dir
         manager.install_path = mock_install_path
