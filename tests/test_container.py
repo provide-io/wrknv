@@ -1,13 +1,14 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from wrkenv.container.commands import build_container
+from wrkenv.container.commands import build_container, start_container
 from wrkenv.env.config import WorkenvConfig
 
 class TestContainer(unittest.TestCase):
-    @patch('wrkenv.container.commands.build_container')
-    def test_build_container(self, mock_build_container):
+    @patch('wrkenv.container.commands.ContainerManager')
+    def test_build_container(self, MockContainerManager):
         # Arrange
-        mock_build_container.return_value = True
+        mock_manager = MockContainerManager.return_value
+        mock_manager.build_image.return_value = True
         config = WorkenvConfig()
 
         # Act
@@ -15,7 +16,21 @@ class TestContainer(unittest.TestCase):
 
         # Assert
         self.assertTrue(result)
-        mock_build_container.assert_called_once_with(config, rebuild=True)
+        mock_manager.build_image.assert_called_once_with(rebuild=True)
+
+    @patch('wrkenv.container.commands.ContainerManager')
+    def test_start_container(self, MockContainerManager):
+        # Arrange
+        mock_manager = MockContainerManager.return_value
+        mock_manager.start.return_value = True
+        config = WorkenvConfig()
+
+        # Act
+        result = start_container(config, rebuild=True)
+
+        # Assert
+        self.assertTrue(result)
+        mock_manager.start.assert_called_once_with(force_rebuild=True)
 
 if __name__ == '__main__':
     unittest.main()
