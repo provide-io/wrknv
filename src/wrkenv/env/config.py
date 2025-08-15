@@ -23,6 +23,16 @@ except ImportError:
 
 from pyvider.telemetry import logger
 
+from .schema import (
+    WorkenvConfig,
+    ToolConfig,
+    ContainerConfig,
+    ProfileConfig,
+    load_config_from_dict,
+    validate_config_dict,
+    get_default_config,
+)
+
 
 class WorkenvConfigError(Exception):
     """Raised when there's an error in workenv configuration."""
@@ -99,6 +109,81 @@ class FileConfigSource(ConfigSource):
     def get_env_config(self) -> dict[str, Any]:
         """Get env configuration section."""
         return self._data.get("env", {})
+
+
+class ValidatedTomlSource(ConfigSource):
+    """Configuration source from a TOML file with schema validation."""
+
+    def __init__(self, file_path: pathlib.Path):
+        self.file_path = file_path
+        self._config: WorkenvConfig | None = None
+        self._raw_data: dict[str, Any] = {}
+        self._load()
+
+    def _load(self):
+        """Load and validate configuration from file."""
+        if self.file_path and self.file_path.exists():
+            try:
+                with open(self.file_path, "rb") as f:
+                    self._raw_data = tomllib.load(f)
+                
+                # Validate the configuration
+                is_valid, errors = validate_config_dict(self._raw_data)
+                if not is_valid:
+                    error_msg = "\n".join(errors)
+                    logger.error(f"Configuration validation failed: {error_msg}")
+                    raise WorkenvConfigError(f"Invalid configuration in {self.file_path}:\n{error_msg}")
+                
+                # Load into typed config
+                self._config = load_config_from_dict(self._raw_data)
+                logger.debug(f"Loaded and validated config from {self.file_path}")
+            except WorkenvConfigError:
+                raise
+            except Exception as e:
+                logger.warning(f"Failed to load {self.file_path}", error=str(e))
+                self._config = None
+                self._raw_data = {}
+    
+    def get_config(self) -> WorkenvConfig | None:
+        """Get the validated configuration object."""
+        return self._config
+    
+    def get_tool_version(self, tool_name: str) -> str | None:
+        """Get version for a specific tool."""
+        if self._config:
+            tool_config = self._config.get_tool_config(tool_name)
+            return tool_config.version if tool_config else None
+        return None
+    
+    def get_all_tools(self) -> dict[str, str]:
+        """Get all tool versions."""
+        if self._config:
+            return {
+                name: config.version 
+                for name, config in self._config.tools.items()
+                if config.enabled
+            }
+        return {}
+    
+    def get_profile(self, profile_name: str) -> dict[str, Any]:
+        """Get a configuration profile."""
+        if self._config:
+            profile = self._config.get_profile(profile_name)
+            if profile:
+                return profile.model_dump()
+        return {}
+    
+    def get_setting(self, key: str, default: Any = None) -> Any:
+        """Get a configuration setting."""
+        if self._config:
+            return getattr(self._config, key, default)
+        return default
+    
+    def get_env_config(self) -> dict[str, Any]:
+        """Get env configuration section."""
+        if self._config:
+            return self._config.environment
+        return {}
 
 
 class EnvironmentConfigSource(ConfigSource):
