@@ -16,6 +16,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -23,10 +24,9 @@ classifiers = [
     "Topic :: Software Development :: Build Tools",
     "Topic :: System :: Installation/Setup",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 dependencies = [
     "click>=8.0",
-    "pyvider-telemetry @ file:///Users/tim/code/gh/provide-io/pyvider-telemetry",
     "packaging>=23.0",
     "semver>=3.0.0",
     "tomli>=2.0.0 ; python_version < '3.11'",
@@ -75,12 +75,12 @@ wrkenv = ["py.typed"]
 
 [tool.black]
 line-length = 88
-target-version = ['py310', 'py311', 'py312']
+target-version = ['py39', 'py310', 'py311', 'py312', 'py313']
 include = '\.pyi?$'
 
 [tool.ruff]
 line-length = 88
-target-version = "py310"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = [
@@ -93,7 +93,7 @@ select = [
 ]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
