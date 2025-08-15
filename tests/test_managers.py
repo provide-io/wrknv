@@ -53,11 +53,29 @@ class TestManagers(unittest.TestCase):
         # Create dummy directories for mocking
         mock_install_path = MagicMock(spec=Path)
         mock_tool_install_dir = MagicMock(spec=Path)
+        
+        # Create proper mock Path objects with name attributes
+        mock_dir_1_0_0 = MagicMock(spec=Path)
+        mock_dir_1_0_0.name = '1.0.0'
+        mock_dir_1_0_0.is_dir.return_value = True
+        
+        mock_dir_1_1_0 = MagicMock(spec=Path)
+        mock_dir_1_1_0.name = '1.1.0'
+        mock_dir_1_1_0.is_dir.return_value = True
+        
+        mock_dir_invalid = MagicMock(spec=Path)
+        mock_dir_invalid.name = 'invalid'
+        mock_dir_invalid.is_dir.return_value = True
+        
+        mock_dir_2_0_0 = MagicMock(spec=Path)
+        mock_dir_2_0_0.name = '2.0.0'
+        mock_dir_2_0_0.is_dir.return_value = True
+        
         mock_tool_install_dir.iterdir.return_value = [
-            MagicMock(spec=Path, name='1.0.0', is_dir=MagicMock(return_value=True)),
-            MagicMock(spec=Path, name='1.1.0', is_dir=MagicMock(return_value=True)),
-            MagicMock(is_dir=MagicMock(return_value=True), name='invalid'),
-            MagicMock(is_dir=MagicMock(return_value=True), name='2.0.0'),
+            mock_dir_1_0_0,
+            mock_dir_1_1_0,
+            mock_dir_invalid,
+            mock_dir_2_0_0,
         ]
         mock_install_path.__truediv__.return_value = mock_tool_install_dir
         manager.install_path = mock_install_path
