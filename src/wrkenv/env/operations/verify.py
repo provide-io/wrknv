@@ -186,7 +186,7 @@ def parse_terraform_version(output: str) -> dict[str, str]:
     """Parse Terraform version output."""
 
     # Example: "Terraform v1.5.0"
-    lines = output.split("\\n")
+    lines = output.split("\n")
 
     info = {"tool": "terraform"}
 
@@ -195,10 +195,9 @@ def parse_terraform_version(output: str) -> dict[str, str]:
         if line.startswith("Terraform v"):
             version = line.replace("Terraform v", "")
             info["version"] = version
-        elif "on" in line and (
-            "linux" in line or "darwin" in line or "windows" in line
-        ):
-            info["platform"] = line
+        elif line.startswith("on "):
+            # Extract platform from "on linux_amd64" format
+            info["platform"] = line.replace("on ", "").strip()
 
     return info
 
@@ -207,7 +206,7 @@ def parse_tofu_version(output: str) -> dict[str, str]:
     """Parse OpenTofu version output."""
 
     # Example: "OpenTofu v1.6.0"
-    lines = output.split("\\n")
+    lines = output.split("\n")
 
     info = {"tool": "tofu"}
 
@@ -216,10 +215,9 @@ def parse_tofu_version(output: str) -> dict[str, str]:
         if line.startswith("OpenTofu v"):
             version = line.replace("OpenTofu v", "")
             info["version"] = version
-        elif "on" in line and (
-            "linux" in line or "darwin" in line or "windows" in line
-        ):
-            info["platform"] = line
+        elif line.startswith("on "):
+            # Extract platform from "on darwin_arm64" format
+            info["platform"] = line.replace("on ", "").strip()
 
     return info
 
@@ -265,9 +263,9 @@ def parse_generic_version(output: str, tool_name: str) -> dict[str, str]:
 
     # Look for version patterns like "1.2.3", "v1.2.3", etc.
     version_patterns = [
-        r"v?([0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-zA-Z0-9]+)?)",
-        r"([0-9]+\\.[0-9]+(?:-[a-zA-Z0-9]+)?)",
-        r"([0-9]+\\.[0-9]+\\.[0-9]+)",
+        r"v?([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9]+)?)",
+        r"([0-9]+\.[0-9]+(?:-[a-zA-Z0-9]+)?)",
+        r"([0-9]+\.[0-9]+\.[0-9]+)",
     ]
 
     for pattern in version_patterns:
