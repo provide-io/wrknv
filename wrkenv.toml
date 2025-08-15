@@ -1,5 +1,0 @@
-[workenv.tools]
-terraform = "1.5.7"
-tofu = "1.8.0"
-go = "1.22.0"
-uv = "0.4.0"
