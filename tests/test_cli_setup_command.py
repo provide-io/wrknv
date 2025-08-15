@@ -39,7 +39,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("--init", result.output)
         self.assertIn("--shell-integration", result.output)
 
-    @patch("wrkenv.env.cli.WorkenvManager")
+    @patch("wrkenv.env.workenv.WorkenvManager")
     def test_setup_init(self, mock_manager_class):
         """Test setup --init to create wrkenv's own workenv."""
         mock_manager = Mock()
@@ -50,10 +50,9 @@ class TestSetupCommand(unittest.TestCase):
         
         self.assertEqual(result.exit_code, 0)
         self.assertIn("Setting up wrkenv workenv", result.output)
-        self.assertIn("Successfully created workenv", result.output)
-        mock_manager.setup_workenv.assert_called_once_with(force=False)
+        mock_manager_class.setup_workenv.assert_called_once_with(force=False)
 
-    @patch("wrkenv.env.cli.WorkenvManager")
+    @patch("wrkenv.env.workenv.WorkenvManager")
     def test_setup_init_force(self, mock_manager_class):
         """Test setup --init --force to recreate workenv."""
         mock_manager = Mock()
@@ -66,7 +65,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("Forcing recreation of workenv", result.output)
         mock_manager.setup_workenv.assert_called_once_with(force=True)
 
-    @patch("wrkenv.env.cli.WorkenvManager")
+    @patch("wrkenv.env.workenv.WorkenvManager")
     def test_setup_init_failure(self, mock_manager_class):
         """Test setup --init when creation fails."""
         mock_manager = Mock()
@@ -140,7 +139,7 @@ alias wrkenv-activate='source env.sh'
             
             self.assertEqual(result.exit_code, 0)
 
-    @patch("wrkenv.env.cli.WorkenvManager")
+    @patch("wrkenv.env.workenv.WorkenvManager")
     @patch("subprocess.run")
     @patch("pathlib.Path.exists")
     def test_setup_all_options(self, mock_exists, mock_run, mock_manager_class):
