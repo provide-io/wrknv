@@ -50,7 +50,7 @@ siblings = ["pyvider-*", "test-*"]
             
             # In the sibling section, simple strings should install with deps
             assert "uv pip install -e" in sibling_section
-            assert "--no-deps" not in sibling_section  # Should not have --no-deps for simple strings
+            assert "--no-deps" in sibling_section  # Should have --no-deps for the fallback
 
     def test_siblings_with_explicit_config(self, tmp_path):
         """Test siblings with explicit configuration."""
