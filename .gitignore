@@ -110,3 +110,4 @@ Desktop.ini
 # UV
 .venv/
 uv.lockworkenv/
+*bfiles*
