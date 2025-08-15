@@ -68,7 +68,7 @@ class TestContainerManager(unittest.TestCase):
     def test_container_exists_true(self, mock_run):
         """Test container_exists when container exists."""
         mock_run.return_value = Mock(
-            returncode=0, stdout="wrkenv-dev\nother-container\n"
+            returncode=0, stdout="test-project-dev\nother-container\n"
         )
         
         result = self.manager.container_exists()
@@ -93,7 +93,7 @@ class TestContainerManager(unittest.TestCase):
     @patch("subprocess.run")
     def test_container_running_true(self, mock_run):
         """Test container_running when container is running."""
-        mock_run.return_value = Mock(returncode=0, stdout="wrkenv-dev\n")
+        mock_run.return_value = Mock(returncode=0, stdout="test-project-dev\n")
         
         result = self.manager.container_running()
         
@@ -118,7 +118,7 @@ class TestContainerManager(unittest.TestCase):
     def test_image_exists_true(self, mock_run):
         """Test image_exists when image exists."""
         mock_run.return_value = Mock(
-            returncode=0, stdout="wrkenv-dev:latest\nother:tag\n"
+            returncode=0, stdout="test-project-dev:latest\nother:tag\n"
         )
         
         result = self.manager.image_exists()
@@ -228,7 +228,7 @@ class TestContainerManager(unittest.TestCase):
         self.assertEqual(docker_run_cmd[1], "run")
         self.assertIn("-d", docker_run_cmd)
         self.assertIn("--name", docker_run_cmd)
-        self.assertIn("wrkenv-dev", docker_run_cmd)
+        self.assertIn("test-project-dev", docker_run_cmd)
 
     @patch("wrkenv.container.manager.ContainerManager.check_docker")
     def test_start_container_docker_not_available(self, mock_check_docker):
@@ -275,7 +275,7 @@ class TestContainerManager(unittest.TestCase):
         self.manager.enter()
         
         mock_system.assert_called_once_with(
-            "docker exec -it wrkenv-dev /bin/bash"
+            "docker exec -it test-project-dev /bin/bash"
         )
 
     @patch("wrkenv.container.manager.ContainerManager.container_running")
@@ -287,7 +287,7 @@ class TestContainerManager(unittest.TestCase):
         self.manager.enter(["ls", "-la"])
         
         mock_system.assert_called_once_with(
-            "docker exec -it wrkenv-dev ls -la"
+            "docker exec -it test-project-dev ls -la"
         )
 
     @patch("wrkenv.container.manager.ContainerManager.container_running")
@@ -372,7 +372,7 @@ class TestContainerManager(unittest.TestCase):
         self.assertTrue(status["container_exists"])
         self.assertEqual(status["container_info"]["state"], "running")
         mock_run.assert_called_once_with(
-            ["docker", "inspect", "wrkenv-dev"],
+            ["docker", "inspect", "test-project-dev"],
             capture_output=True,
             text=True,
             check=False,
@@ -398,7 +398,7 @@ class TestContainerManager(unittest.TestCase):
         self.manager.logs(follow=False, tail=10)
         
         mock_run.assert_called_once_with(
-            ["docker", "logs", "--tail", "10", "wrkenv-dev"]
+            ["docker", "logs", "--tail", "10", "test-project-dev"]
         )
 
     @patch("subprocess.run")
@@ -410,7 +410,7 @@ class TestContainerManager(unittest.TestCase):
         self.manager.logs(follow=True)
         
         mock_run.assert_called_once_with(
-            ["docker", "logs", "-f", "--tail", "100", "wrkenv-dev"]
+            ["docker", "logs", "-f", "--tail", "100", "test-project-dev"]
         )
 
     @patch("subprocess.run")
@@ -483,7 +483,7 @@ class TestContainerManager(unittest.TestCase):
             # Check that docker rm was called
             rm_calls = [c for c in mock_run.call_args_list if c[0][0][:2] == ["docker", "rm"]]
             self.assertEqual(len(rm_calls), 1)
-            self.assertEqual(rm_calls[0][0][0], ["docker", "rm", "wrkenv-dev"])
+            self.assertEqual(rm_calls[0][0][0], ["docker", "rm", "test-project-dev"])
 
 
 if __name__ == "__main__":
