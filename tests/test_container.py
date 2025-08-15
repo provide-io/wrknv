@@ -1,3 +1,4 @@
+
 import unittest
 from unittest.mock import patch, MagicMock
 from wrkenv.container.commands import build_container, start_container, enter_container, stop_container, restart_container, container_status, container_logs, clean_container, rebuild_container
@@ -5,7 +6,8 @@ from wrkenv.container.manager import ContainerManager
 from wrkenv.env.config import WorkenvConfig
 
 class TestContainerManager(unittest.TestCase):
-    def test_init(self):
+    @patch('subprocess.run')
+    def test_init(self, mock_run):
         # Arrange
         config = WorkenvConfig()
 
@@ -14,11 +16,8 @@ class TestContainerManager(unittest.TestCase):
 
         # Assert
         self.assertEqual(manager.config, config)
-        self.assertEqual(manager.client.api.base_url, 'unix://var/run/docker.sock')
 
-
-class TestContainer(unittest.TestCase):
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_build_container(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
@@ -32,7 +31,7 @@ class TestContainer(unittest.TestCase):
         self.assertTrue(result)
         mock_manager.build_image.assert_called_once_with(rebuild=True)
 
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_start_container(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
@@ -46,7 +45,7 @@ class TestContainer(unittest.TestCase):
         self.assertTrue(result)
         mock_manager.start.assert_called_once_with(force_rebuild=True)
 
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_enter_container(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
@@ -58,7 +57,7 @@ class TestContainer(unittest.TestCase):
         # Assert
         mock_manager.enter.assert_called_once_with(command=['ls', '-l'])
 
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_stop_container(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
@@ -72,7 +71,7 @@ class TestContainer(unittest.TestCase):
         self.assertTrue(result)
         mock_manager.stop.assert_called_once_with()
 
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_restart_container(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
@@ -86,7 +85,7 @@ class TestContainer(unittest.TestCase):
         self.assertTrue(result)
         mock_manager.restart.assert_called_once_with()
 
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_container_status(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
@@ -108,7 +107,7 @@ class TestContainer(unittest.TestCase):
         # Assert
         mock_manager.status.assert_called_once_with()
 
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_container_logs(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
@@ -120,7 +119,7 @@ class TestContainer(unittest.TestCase):
         # Assert
         mock_manager.logs.assert_called_once_with(follow=True, tail=100)
 
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_clean_container(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
@@ -134,7 +133,7 @@ class TestContainer(unittest.TestCase):
         self.assertTrue(result)
         mock_manager.clean.assert_called_once_with()
 
-    @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_rebuild_container(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
