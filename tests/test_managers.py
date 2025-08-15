@@ -31,20 +31,38 @@ class TestManagers(unittest.TestCase):
         # Assert
         self.assertEqual(manager.config, config)
 
-    def test_get_install_dir(self):
+    def test_get_binary_path(self):
         # Arrange
         config = WorkenvConfig()
         manager = ConcreteToolManager(config)
+        expected_path = manager.install_path / manager.tool_name / '1.0.0' / 'bin' / manager.executable_name
 
         # Act
-        install_dir = manager.install_path / manager.tool_name / '1.0.0'
+        binary_path = manager.get_binary_path('1.0.0')
 
         # Assert
-        self.assertEqual(install_dir.name, '1.0.0')
-        self.assertEqual(install_dir.parent.name, 'test')
-        self.assertEqual(install_dir.parent.parent.name, 'tools')
-        self.assertEqual(install_dir.parent.parent.parent.name, '.wrkenv')
-        self.assertEqual(install_dir.parent.parent.parent.parent, manager.home_dir)
+        self.assertEqual(binary_path, expected_path)
+
+    @patch('pathlib.Path.iterdir')
+    @patch('pathlib.Path.exists', return_value=True)
+    def test_get_installed_versions(self, mock_exists, mock_iterdir):
+        # Arrange
+        config = WorkenvConfig()
+        manager = ConcreteToolManager(config)
+        
+        # Mock iterdir to return dummy version directories
+        mock_iterdir.return_value = [
+            MagicMock(is_dir=MagicMock(return_value=True), name='1.0.0'),
+            MagicMock(is_dir=MagicMock(return_value=True), name='1.1.0'),
+            MagicMock(is_dir=MagicMock(return_value=True), name='invalid'),
+            MagicMock(is_dir=MagicMock(return_value=True), name='2.0.0'),
+        ]
+
+        # Act
+        versions = manager.get_installed_versions()
+
+        # Assert
+        self.assertEqual(versions, ['2.0.0', '1.1.0', '1.0.0'])
 
 if __name__ == '__main__':
     unittest.main()
