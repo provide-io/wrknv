@@ -37,7 +37,7 @@ class TestManagers(unittest.TestCase):
         manager = ConcreteToolManager(config)
 
         # Act
-        install_dir = manager.get_install_dir('1.0.0')
+        install_dir = manager._get_install_path('1.0.0')
 
         # Assert
         self.assertEqual(install_dir.name, '1.0.0')
