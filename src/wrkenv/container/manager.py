@@ -16,8 +16,8 @@ from pathlib import Path
 from pyvider.telemetry import logger
 from rich.console import Console
 
-from wrkenv.env.config import WorkenvConfig
-from wrkenv.env.schema import ContainerConfig, get_default_config
+from wrkenv.wenv.config import WorkenvConfig
+from wrkenv.wenv.schema import ContainerConfig, get_default_config
 
 
 class ContainerManager:
@@ -39,13 +39,16 @@ class ContainerManager:
     def __init__(self, config: WorkenvConfig | None = None):
         self.config = config or get_default_config()
         self.console = Console()
-        
+
         # Get container configuration
         self.container_config = self.config.container or ContainerConfig()
-        
+
         # Set container and image names (can be customized in config)
         project_name = self.config.project_name.replace(" ", "-").lower()
-        self.CONTAINER_NAME = f"{project_name}-dev" if project_name != "my-project" else self.DEFAULT_CONTAINER_NAME
+        if project_name != "my-project":
+            self.CONTAINER_NAME = f"{project_name}-dev"
+        else:
+            self.CONTAINER_NAME = self.DEFAULT_CONTAINER_NAME
         self.IMAGE_NAME = self.CONTAINER_NAME
         self.IMAGE_TAG = self.DEFAULT_IMAGE_TAG
         self.full_image = f"{self.IMAGE_NAME}:{self.IMAGE_TAG}"
@@ -133,14 +136,16 @@ class ContainerManager:
             return False
 
         # Build image if needed
-        if force_rebuild or not self.image_exists():
-            if not self.build_image(rebuild=force_rebuild):
-                return False
+        if (force_rebuild or not self.image_exists()) and not self.build_image(
+            rebuild=force_rebuild
+        ):
+            return False
 
         # Check if container is already running
         if self.container_running():
             self.console.print(
-                f"[yellow]⚠️  Container {self.CONTAINER_NAME} is already running[/yellow]"
+                f"[yellow]⚠️  Container {self.CONTAINER_NAME} "
+                "is already running[/yellow]"
             )
             return True
 
@@ -164,42 +169,45 @@ class ContainerManager:
             "--name",
             self.CONTAINER_NAME,
         ]
-        
+
         # Add default volumes
         cmd.extend(["-v", f"{home_dir}:/host-home"])
         cmd.extend(["-v", "/var/run/docker.sock:/var/run/docker.sock"])
-        
+
         # Add configured volumes
         for volume in self.container_config.volumes:
             cmd.extend(["-v", volume])
-        
+
         # Add default environment variables
         cmd.extend(["-e", f"HOST_USER={os.environ.get('USER', 'user')}"])
         cmd.extend(["-e", f"HOST_UID={os.getuid()}"])
         cmd.extend(["-e", f"HOST_GID={os.getgid()}"])
-        
+
         # Add configured environment variables
         for key, value in self.container_config.environment.items():
             cmd.extend(["-e", f"{key}={value}"])
-        
+
         # Add configured port mappings
         for port_mapping in self.container_config.ports:
             cmd.extend(["-p", port_mapping])
-        
+
         # Add workdir and image
-        cmd.extend([
-            "--workdir",
-            "/workspace",
-            self.full_image,
-            "tail",
-            "-f",
-            "/dev/null",
-        ])
+        cmd.extend(
+            [
+                "--workdir",
+                "/workspace",
+                self.full_image,
+                "tail",
+                "-f",
+                "/dev/null",
+            ]
+        )
 
         try:
             subprocess.run(cmd, check=True)
             self.console.print(
-                f"[green]✅ Container {self.CONTAINER_NAME} started successfully[/green]"
+                f"[green]✅ Container {self.CONTAINER_NAME} "
+                "started successfully[/green]"
             )
             return True
         except subprocess.CalledProcessError as e:
@@ -336,7 +344,7 @@ class ContainerManager:
         python_version = self.container_config.python_version
         additional_packages = self.container_config.additional_packages
         environment_vars = self.container_config.environment
-        
+
         # Build package list
         base_packages = [
             "curl",
@@ -351,16 +359,18 @@ class ContainerManager:
             "sudo",
             "zsh",
         ]
-        
+
         all_packages = base_packages + additional_packages
         packages_str = " \\\n    ".join(all_packages)
-        
+
         # Build environment variables section
         env_vars_section = ""
         if environment_vars:
-            env_lines = [f"ENV {key}={value}" for key, value in environment_vars.items()]
+            env_lines = [
+                f"ENV {key}={value}" for key, value in environment_vars.items()
+            ]
             env_vars_section = "\n".join(env_lines) + "\n"
-        
+
         return f"""FROM {base_image}
 
 # Avoid prompts from apt

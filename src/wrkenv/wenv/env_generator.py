@@ -13,7 +13,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pyvider.telemetry import logger
 
-from wrkenv.env.visual import Emoji, print_info, print_success
+from wrkenv.wenv.visual import Emoji, print_success
 
 
 class EnvScriptGenerator:
@@ -113,7 +113,10 @@ class EnvScriptGenerator:
                     "description": f"{project_name} CLI",
                 },
                 {"command": "wrkenv status", "description": "Check tool versions"},
-                {"command": "wrkenv container status", "description": "Container status"},
+                {
+                    "command": "wrkenv container status",
+                    "description": "Container status",
+                },
                 {"command": "pytest", "description": "Run tests"},
                 {"command": "deactivate", "description": "Exit environment"},
             ],
@@ -162,11 +165,11 @@ def create_project_env_scripts(
     project_dir: Path, workenv_name: str | None = None
 ) -> tuple[Path, Path]:
     """Create environment scripts for a project based on its pyproject.toml.
-    
+
     Args:
         project_dir: The project directory
         workenv_name: Optional workenv name override
-        
+
     Returns:
         Tuple of (env.sh path, env.ps1 path)
     """
@@ -192,21 +195,24 @@ def create_project_env_scripts(
     if workenv_name:
         extra_config["workenv_name"] = workenv_name
         extra_config["venv_prefix"] = workenv_name
-    
+
     # Add Python requirement if present
     if python_requirement:
         extra_config["python_requirement"] = python_requirement
 
     # Get wrkenv configuration
-    from wrkenv.env.config import WorkenvConfig
+    from wrkenv.wenv.config import WorkenvConfig
+
     config = WorkenvConfig()
     env_config = config.get_env_config()
-    
+
     # Use configuration from wrkenv.toml if available
     if env_config:
-        logger.info(f"Using env configuration from wrkenv.toml", env_config=env_config)
-        extra_config["include_tool_verification"] = env_config.get("include_tool_verification", True)
-        
+        logger.info("Using env configuration from wrkenv.toml", env_config=env_config)
+        extra_config["include_tool_verification"] = env_config.get(
+            "include_tool_verification", True
+        )
+
         # Handle new unified siblings format
         siblings_config = env_config.get("siblings", [])
         if siblings_config:
@@ -221,7 +227,7 @@ def create_project_env_scripts(
             extra_config["siblings"] = []
     else:
         # Default configuration - empty by default
-        logger.info(f"No env configuration found in wrkenv.toml, using defaults")
+        logger.info("No env configuration found in wrkenv.toml, using defaults")
         extra_config["include_tool_verification"] = True
         extra_config["sibling_patterns"] = []
         extra_config["special_siblings"] = []

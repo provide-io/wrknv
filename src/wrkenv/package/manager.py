@@ -13,8 +13,8 @@ from pathlib import Path
 
 from pyvider.telemetry import logger
 
-from wrkenv.env.config import WorkenvConfig
-from wrkenv.env.managers.factory import get_tool_manager
+from wrkenv.wenv.config import WorkenvConfig
+from wrkenv.wenv.managers.factory import get_tool_manager
 
 
 class PackageManager:

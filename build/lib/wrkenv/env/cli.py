@@ -13,9 +13,9 @@ import sys
 
 import click
 
-from wrkenv.env.config import WorkenvConfig
-from wrkenv.env.managers.factory import get_tool_manager
-from wrkenv.env.visual import (
+from wrkenv.wenv.config import WorkenvConfig
+from wrkenv.wenv.managers.factory import get_tool_manager
+from wrkenv.wenv.visual import (
     Emoji,
     get_console,
     get_tool_emoji,
@@ -50,7 +50,7 @@ def setup_command(shell_integration: bool, init: bool, force: bool):
     import subprocess
     from pathlib import Path
 
-    from wrkenv.env.workenv import WorkenvManager
+    from wrkenv.wenv.workenv import WorkenvManager
 
     if init:
         # Set up wrkenv's own workenv
@@ -229,7 +229,7 @@ def sync_command():
 )
 def generate_env_command(output: pathlib.Path, shell: str, project_dir: pathlib.Path):
     """🌍 Generate optimized environment setup script."""
-    from wrkenv.env.env_generator import create_project_env_scripts
+    from wrkenv.wenv.env_generator import create_project_env_scripts
     
     click.echo(f"🔧 Generating environment scripts for {project_dir.name}...")
     

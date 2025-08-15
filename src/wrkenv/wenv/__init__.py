@@ -18,7 +18,7 @@ This module can be used standalone or integrated with other tools.
 __version__ = "0.1.0"
 
 # Submodules are available but not imported to avoid circular imports
-# Use explicit imports: from wrkenv.env import config, managers, etc.
+# Use explicit imports: from wrkenv.wenv import config, managers, etc.
 
 __all__ = ["config", "managers", "operations"]
 

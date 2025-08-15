@@ -460,7 +460,7 @@ test = "package verify {artifact}"
         """)
         
         runner = CliRunner()
-        with patch("wrkenv.env.config.WorkenvConfig._get_config_path") as mock_path:
+        with patch("wrkenv.wenv.config.WorkenvConfig._get_config_path") as mock_path:
             mock_path.return_value = config_file
             
             result = runner.invoke(

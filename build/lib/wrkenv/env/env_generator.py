@@ -13,7 +13,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pyvider.telemetry import logger
 
-from wrkenv.env.visual import Emoji, print_info, print_success
+from wrkenv.wenv.visual import Emoji, print_info, print_success
 
 
 class EnvScriptGenerator:

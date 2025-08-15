@@ -8,11 +8,9 @@ Type-safe configuration models with validation for wrkenv.toml using attrs.
 
 from __future__ import annotations
 
-import copy
 import pathlib
-from typing import Any, Optional
+from typing import Any
 
-import attrs
 import cattrs
 from attrs import define, field, validators
 
@@ -100,23 +98,37 @@ def convert_log_level(value):
 @define
 class ToolConfig:
     """Configuration for a specific tool."""
-    
+
     version: str = field(validator=[validators.instance_of(str), validate_version])
     enabled: bool = field(default=True, validator=validators.instance_of(bool))
-    source_url: Optional[str] = field(default=None, validator=validators.optional(validators.instance_of(str)))
-    install_path: Optional[str] = field(default=None, validator=validators.optional(validators.instance_of(str)))
-    environment: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
+    source_url: str | None = field(
+        default=None, validator=validators.optional(validators.instance_of(str))
+    )
+    install_path: str | None = field(
+        default=None, validator=validators.optional(validators.instance_of(str))
+    )
+    environment: dict[str, str] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
 
 
 @define
 class ContainerConfig:
     """Configuration for container operations."""
-    
+
     enabled: bool = field(default=False, validator=validators.instance_of(bool))
-    base_image: str = field(default="ubuntu:22.04", validator=validators.instance_of(str))
-    python_version: str = field(default="3.11", validator=[validators.instance_of(str), validate_python_version])
-    additional_packages: list[str] = field(factory=list, validator=validators.instance_of(list))
-    environment: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
+    base_image: str = field(
+        default="ubuntu:22.04", validator=validators.instance_of(str)
+    )
+    python_version: str = field(
+        default="3.11", validator=[validators.instance_of(str), validate_python_version]
+    )
+    additional_packages: list[str] = field(
+        factory=list, validator=validators.instance_of(list)
+    )
+    environment: dict[str, str] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
     volumes: list[str] = field(factory=list, validator=validators.instance_of(list))
     ports: list[str] = field(factory=list, validator=validators.instance_of(list))
 
@@ -124,14 +136,23 @@ class ContainerConfig:
 @define
 class ProfileConfig:
     """Configuration for a workenv profile."""
-    
+
     name: str = field(validator=[validators.instance_of(str), validate_profile_name])
     description: str = field(default="", validator=validators.instance_of(str))
-    tools: dict[str, ToolConfig] = field(factory=dict, validator=validators.instance_of(dict))
-    container: Optional[ContainerConfig] = field(default=None, validator=validators.optional(validators.instance_of(ContainerConfig)))
-    environment: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
-    scripts: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
-    
+    tools: dict[str, ToolConfig] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
+    container: ContainerConfig | None = field(
+        default=None,
+        validator=validators.optional(validators.instance_of(ContainerConfig)),
+    )
+    environment: dict[str, str] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
+    scripts: dict[str, str] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
+
     def model_dump(self) -> dict[str, Any]:
         """Convert to dictionary (compatibility method)."""
         return cattrs.unstructure(self)
@@ -140,104 +161,141 @@ class ProfileConfig:
 @define
 class PackageConfig:
     """Configuration for package operations."""
-    
-    name: str = field(validator=validators.instance_of(str), converter=convert_package_name)
+
+    name: str = field(
+        validator=validators.instance_of(str), converter=convert_package_name
+    )
     version: str = field(validator=validators.instance_of(str))
     entry_point: str = field(validator=validators.instance_of(str))
     author: str = field(default="", validator=validators.instance_of(str))
     description: str = field(default="", validator=validators.instance_of(str))
     license: str = field(default="MIT", validator=validators.instance_of(str))
-    dependencies: list[str] = field(factory=list, validator=validators.instance_of(list))
-    metadata: dict[str, Any] = field(factory=dict, validator=validators.instance_of(dict))
+    dependencies: list[str] = field(
+        factory=list, validator=validators.instance_of(list)
+    )
+    metadata: dict[str, Any] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
 
 
 @define
 class RegistryConfig:
     """Configuration for package registry."""
-    
-    url: str = field(default="https://registry.wrkenv.io", converter=convert_registry_url)
-    username: Optional[str] = field(default=None, validator=validators.optional(validators.instance_of(str)))
-    token: Optional[str] = field(default=None, validator=validators.optional(validators.instance_of(str)))
+
+    url: str = field(
+        default="https://registry.wrkenv.io", converter=convert_registry_url
+    )
+    username: str | None = field(
+        default=None, validator=validators.optional(validators.instance_of(str))
+    )
+    token: str | None = field(
+        default=None, validator=validators.optional(validators.instance_of(str))
+    )
     verify_ssl: bool = field(default=True, validator=validators.instance_of(bool))
-    timeout: int = field(default=30, validator=[validators.instance_of(int), validate_timeout])
+    timeout: int = field(
+        default=30, validator=[validators.instance_of(int), validate_timeout]
+    )
 
 
 @define
 class WorkenvConfig:
     """Main wrkenv configuration model."""
-    
-    project_name: str = field(validator=[validators.instance_of(str), validate_project_name])
+
+    project_name: str = field(
+        validator=[validators.instance_of(str), validate_project_name]
+    )
     version: str = field(default="1.0.0", validator=validators.instance_of(str))
     description: str = field(default="", validator=validators.instance_of(str))
-    
+
     # Tool configurations
-    tools: dict[str, ToolConfig] = field(factory=dict, validator=validators.instance_of(dict))
-    
+    tools: dict[str, ToolConfig] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
+
     # Container configuration
-    container: Optional[ContainerConfig] = field(default=None, validator=validators.optional(validators.instance_of(ContainerConfig)))
-    
+    container: ContainerConfig | None = field(
+        default=None,
+        validator=validators.optional(validators.instance_of(ContainerConfig)),
+    )
+
     # Package configuration
-    package: Optional[PackageConfig] = field(default=None, validator=validators.optional(validators.instance_of(PackageConfig)))
-    
+    package: PackageConfig | None = field(
+        default=None,
+        validator=validators.optional(validators.instance_of(PackageConfig)),
+    )
+
     # Registry configuration
-    registry: Optional[RegistryConfig] = field(default=None, validator=validators.optional(validators.instance_of(RegistryConfig)))
-    
+    registry: RegistryConfig | None = field(
+        default=None,
+        validator=validators.optional(validators.instance_of(RegistryConfig)),
+    )
+
     # Profiles
-    profiles: dict[str, ProfileConfig] = field(factory=dict, validator=validators.instance_of(dict))
-    
+    profiles: dict[str, ProfileConfig] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
+
     # Global settings
     install_dir: str = field(default="~/.wrkenv", validator=validators.instance_of(str))
-    cache_dir: str = field(default="~/.wrkenv/cache", validator=validators.instance_of(str))
+    cache_dir: str = field(
+        default="~/.wrkenv/cache", validator=validators.instance_of(str)
+    )
     log_level: str = field(default="INFO", converter=convert_log_level)
-    telemetry_enabled: bool = field(default=True, validator=validators.instance_of(bool))
+    telemetry_enabled: bool = field(
+        default=True, validator=validators.instance_of(bool)
+    )
     auto_update: bool = field(default=False, validator=validators.instance_of(bool))
-    
+
     # Environment variables
-    environment: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
-    
+    environment: dict[str, str] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
+
     # Custom scripts
-    scripts: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
-    
+    scripts: dict[str, str] = field(
+        factory=dict, validator=validators.instance_of(dict)
+    )
+
     def __attrs_post_init__(self):
         """Post-initialization processing."""
         # Expand user home directory
         self.install_dir = str(pathlib.Path(self.install_dir).expanduser())
         self.cache_dir = str(pathlib.Path(self.cache_dir).expanduser())
-    
-    def get_tool_config(self, tool_name: str) -> Optional[ToolConfig]:
+
+    def get_tool_config(self, tool_name: str) -> ToolConfig | None:
         """Get configuration for a specific tool."""
         return self.tools.get(tool_name)
-    
-    def get_profile(self, profile_name: str) -> Optional[ProfileConfig]:
+
+    def get_profile(self, profile_name: str) -> ProfileConfig | None:
         """Get a specific profile configuration."""
         return self.profiles.get(profile_name)
-    
-    def merge_with_profile(self, profile_name: str) -> "WorkenvConfig":
+
+    def merge_with_profile(self, profile_name: str) -> WorkenvConfig:
         """Create a new config merged with a profile."""
         profile = self.get_profile(profile_name)
         if not profile:
             return self
-        
+
         # Create a copy of the current config
         merged_dict = cattrs.unstructure(self)
-        
+
         # Merge tool configurations
         for tool_name, tool_config in profile.tools.items():
             merged_dict["tools"][tool_name] = cattrs.unstructure(tool_config)
-        
+
         # Merge container config if present
         if profile.container:
             merged_dict["container"] = cattrs.unstructure(profile.container)
-        
+
         # Merge environment variables
         merged_dict["environment"].update(profile.environment)
-        
+
         # Merge scripts
         merged_dict["scripts"].update(profile.scripts)
-        
+
         # Create new instance from merged dict
         return cattrs.structure(merged_dict, WorkenvConfig)
-    
+
     def model_dump(self, exclude_none: bool = False) -> dict[str, Any]:
         """Convert to dictionary (compatibility method)."""
         data = cattrs.unstructure(self)
@@ -259,12 +317,12 @@ def remove_none_values(d):
 def validate_config_dict(config_dict: dict[str, Any]) -> tuple[bool, list[str]]:
     """
     Validate a configuration dictionary.
-    
+
     Returns:
         Tuple of (is_valid, error_messages)
     """
     errors = []
-    
+
     try:
         converter = cattrs.Converter()
         converter.structure(config_dict, WorkenvConfig)
@@ -275,22 +333,24 @@ def validate_config_dict(config_dict: dict[str, Any]) -> tuple[bool, list[str]]:
             errors.append(str(e.__cause__))
         else:
             errors.append(str(e))
-        
+
         return False, errors
 
 
 def load_config_from_dict(config_dict: dict[str, Any]) -> WorkenvConfig:
     """
     Load configuration from a dictionary with validation.
-    
+
     Raises:
         ValueError: If configuration is invalid
     """
     is_valid, errors = validate_config_dict(config_dict)
     if not is_valid:
-        error_msg = "Configuration validation failed:\n" + "\n".join(f"  - {e}" for e in errors)
+        error_msg = "Configuration validation failed:\n" + "\n".join(
+            f"  - {e}" for e in errors
+        )
         raise ValueError(error_msg)
-    
+
     converter = cattrs.Converter()
     return converter.structure(config_dict, WorkenvConfig)
 
@@ -316,21 +376,24 @@ def get_default_config(project_name: str = "my-project") -> WorkenvConfig:
 def config_to_toml(config: WorkenvConfig) -> str:
     """Convert configuration to TOML format."""
     import tomli_w
-    
+
     # Convert to dictionary
     config_dict = config.model_dump(exclude_none=True)
-    
+
     # Remove empty collections
     def remove_empty(d):
         if isinstance(d, dict):
-            return {k: remove_empty(v) for k, v in d.items() 
-                    if v and (not isinstance(v, (dict, list)) or v)}
+            return {
+                k: remove_empty(v)
+                for k, v in d.items()
+                if v and (not isinstance(v, (dict, list)) or v)
+            }
         elif isinstance(d, list):
             return [remove_empty(item) for item in d if item]
         else:
             return d
-    
+
     config_dict = remove_empty(config_dict)
-    
+
     # Convert to TOML
     return tomli_w.dumps(config_dict)

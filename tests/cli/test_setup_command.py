@@ -39,7 +39,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("--init", result.output)
         self.assertIn("--shell-integration", result.output)
 
-    @patch("wrkenv.env.workenv.WorkenvManager")
+    @patch("wrkenv.wenv.workenv.WorkenvManager")
     def test_setup_init(self, mock_manager_class):
         """Test setup --init to create wrkenv's own workenv."""
         mock_manager = Mock()
@@ -52,7 +52,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("Setting up wrkenv workenv", result.output)
         mock_manager_class.setup_workenv.assert_called_once_with(force=False)
 
-    @patch("wrkenv.env.workenv.WorkenvManager")
+    @patch("wrkenv.wenv.workenv.WorkenvManager")
     def test_setup_init_force(self, mock_manager_class):
         """Test setup --init --force to recreate workenv."""
         mock_manager = Mock()
@@ -65,7 +65,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("Forcing recreation of workenv", result.output)
         mock_manager.setup_workenv.assert_called_once_with(force=True)
 
-    @patch("wrkenv.env.workenv.WorkenvManager")
+    @patch("wrkenv.wenv.workenv.WorkenvManager")
     def test_setup_init_failure(self, mock_manager_class):
         """Test setup --init when creation fails."""
         mock_manager = Mock()
@@ -139,7 +139,7 @@ alias wrkenv-activate='source env.sh'
             
             self.assertEqual(result.exit_code, 0)
 
-    @patch("wrkenv.env.workenv.WorkenvManager")
+    @patch("wrkenv.wenv.workenv.WorkenvManager")
     @patch("subprocess.run")
     @patch("pathlib.Path.exists")
     def test_setup_all_options(self, mock_exists, mock_run, mock_manager_class):
@@ -250,7 +250,7 @@ class TestSetupCommandIntegration(unittest.TestCase):
         with patch("pathlib.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
             
-            with patch("wrkenv.env.cli.uv_available") as mock_uv:
+            with patch("wrkenv.wenv.cli.uv_available") as mock_uv:
                 mock_uv.return_value = True
                 
                 result = self.runner.invoke(workenv_cli, ["setup", "--init"])

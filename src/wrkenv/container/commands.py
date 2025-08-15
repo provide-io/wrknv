@@ -10,7 +10,7 @@ Command implementations for container management.
 from rich.console import Console
 from rich.table import Table
 
-from wrkenv.env.config import WorkenvConfig
+from wrkenv.wenv.config import WorkenvConfig
 
 from .manager import ContainerManager
 

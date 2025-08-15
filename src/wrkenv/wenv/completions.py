@@ -4,15 +4,14 @@ Shell Completion Generation
 Generate shell completion scripts for various shells.
 """
 
-import click
 
 
 def generate_completions(shell: str) -> str:
     """Generate shell completion script for the specified shell.
-    
+
     Args:
         shell: Shell type ('bash', 'zsh', or 'fish')
-        
+
     Returns:
         Completion script as a string
     """
@@ -28,7 +27,7 @@ def generate_completions(shell: str) -> str:
 
 def generate_bash_completions() -> str:
     """Generate Bash completion script."""
-    return '''# Bash completion for wrkenv
+    return """# Bash completion for wrkenv
 _wrkenv_completion() {
     local cur prev words cword
     _init_completion || return
@@ -89,12 +88,12 @@ _wrkenv_completion() {
 }
 
 complete -F _wrkenv_completion wrkenv
-'''
+"""
 
 
 def generate_zsh_completions() -> str:
     """Generate Zsh completion script."""
-    return '''#compdef wrkenv
+    return """#compdef wrkenv
 # Zsh completion for wrkenv
 
 _wrkenv() {
@@ -213,12 +212,12 @@ _wrkenv() {
 }
 
 _wrkenv "$@"
-'''
+"""
 
 
 def generate_fish_completions() -> str:
     """Generate Fish completion script."""
-    return '''# Fish completion for wrkenv
+    return """# Fish completion for wrkenv
 
 # Disable file completions by default
 complete -c wrkenv -f
@@ -288,4 +287,4 @@ complete -c wrkenv -n "__fish_seen_subcommand_from package; and not __fish_seen_
 complete -c wrkenv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "sign" -d "Sign package"
 complete -c wrkenv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "publish" -d "Publish package"
 complete -c wrkenv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "config" -d "Show config"
-'''
+"""

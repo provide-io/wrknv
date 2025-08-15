@@ -26,12 +26,8 @@ from pyvider.telemetry import logger
 
 from .schema import (
     WorkenvConfig,
-    ToolConfig,
-    ContainerConfig,
-    ProfileConfig,
     load_config_from_dict,
     validate_config_dict,
-    get_default_config,
 )
 
 
@@ -59,7 +55,7 @@ class ConfigSource:
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
         return default
-    
+
     def get_env_config(self) -> dict[str, Any]:
         """Get env configuration section."""
         return {}
@@ -116,25 +112,26 @@ class FileConfigSource(ConfigSource):
         profiles = self._data.get("profiles", {})
         if profile_name in profiles:
             return profiles[profile_name]
-        
+
         # If not found, try to load from the top-level profiles
         if self.file_path and self.file_path.exists():
             try:
                 with open(self.file_path, "rb") as f:
                     import tomllib
+
                     all_data = tomllib.load(f)
                     top_profiles = all_data.get("profiles", {})
                     return top_profiles.get(profile_name, {})
             except Exception:
                 pass
-        
+
         return {}
 
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
         settings = self._data.get("settings", {})
         return settings.get(key, default)
-    
+
     def get_env_config(self) -> dict[str, Any]:
         """Get env configuration section."""
         return self._data.get("env", {})
@@ -155,14 +152,16 @@ class ValidatedTomlSource(ConfigSource):
             try:
                 with open(self.file_path, "rb") as f:
                     self._raw_data = tomllib.load(f)
-                
+
                 # Validate the configuration
                 is_valid, errors = validate_config_dict(self._raw_data)
                 if not is_valid:
                     error_msg = "\n".join(errors)
                     logger.error(f"Configuration validation failed: {error_msg}")
-                    raise WorkenvConfigError(f"Invalid configuration in {self.file_path}:\n{error_msg}")
-                
+                    raise WorkenvConfigError(
+                        f"Invalid configuration in {self.file_path}:\n{error_msg}"
+                    )
+
                 # Load into typed config
                 self._config = load_config_from_dict(self._raw_data)
                 logger.debug(f"Loaded and validated config from {self.file_path}")
@@ -172,28 +171,28 @@ class ValidatedTomlSource(ConfigSource):
                 logger.warning(f"Failed to load {self.file_path}", error=str(e))
                 self._config = None
                 self._raw_data = {}
-    
+
     def get_config(self) -> WorkenvConfig | None:
         """Get the validated configuration object."""
         return self._config
-    
+
     def get_tool_version(self, tool_name: str) -> str | None:
         """Get version for a specific tool."""
         if self._config:
             tool_config = self._config.get_tool_config(tool_name)
             return tool_config.version if tool_config else None
         return None
-    
+
     def get_all_tools(self) -> dict[str, str]:
         """Get all tool versions."""
         if self._config:
             return {
-                name: config.version 
+                name: config.version
                 for name, config in self._config.tools.items()
                 if config.enabled
             }
         return {}
-    
+
     def get_profile(self, profile_name: str) -> dict[str, Any]:
         """Get a configuration profile."""
         if self._config:
@@ -201,13 +200,13 @@ class ValidatedTomlSource(ConfigSource):
             if profile:
                 return profile.model_dump()
         return {}
-    
+
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
         if self._config:
             return getattr(self._config, key, default)
         return default
-    
+
     def get_env_config(self) -> dict[str, Any]:
         """Get env configuration section."""
         if self._config:
@@ -351,7 +350,7 @@ class WorkenvConfig:
             if value is not None:
                 return value
         return default
-    
+
     def get_env_config(self) -> dict[str, Any]:
         """Get merged env configuration from all sources."""
         merged = {}
@@ -406,29 +405,30 @@ class WorkenvConfig:
     ) -> None:
         """Save a profile to the configuration file."""
         import tomli_w
-        
+
         # Get the primary config file (wrkenv.toml)
         config_file = Path.cwd() / "wrkenv.toml"
-        
+
         # Load existing config or create new one
         if config_file.exists():
             with open(config_file, "rb") as f:
                 import tomllib
+
                 config_data = tomllib.load(f)
         else:
             config_data = {"project_name": Path.cwd().name}
-        
+
         # Ensure profiles section exists
         if "profiles" not in config_data:
             config_data["profiles"] = {}
-        
+
         # Save the profile
         if tools is None:
             # Get current tool versions
             tools = self.get_all_tools()
-        
+
         config_data["profiles"][profile_name] = tools
-        
+
         # Write back to file
         with open(config_file, "w") as f:
             f.write(tomli_w.dumps(config_data))
@@ -440,24 +440,25 @@ class WorkenvConfig:
             # Also check top-level profiles
             profiles = self._config_data.get("profiles", {})
         return list(profiles.keys()) if profiles else []
-    
+
     def profile_exists(self, profile_name: str) -> bool:
         """Check if a profile exists."""
         profiles = self.list_profiles()
         return profile_name in profiles
-    
+
     def delete_profile(self, profile_name: str) -> bool:
         """Delete a profile."""
         import tomli_w
-        
+
         config_file = Path.cwd() / "wrkenv.toml"
         if not config_file.exists():
             return False
-        
+
         with open(config_file, "rb") as f:
             import tomllib
+
             config_data = tomllib.load(f)
-        
+
         # Check both locations for profiles
         deleted = False
         if "profiles" in config_data and profile_name in config_data["profiles"]:
@@ -467,52 +468,53 @@ class WorkenvConfig:
             if profile_name in config_data["workenv"]["profiles"]:
                 del config_data["workenv"]["profiles"][profile_name]
                 deleted = True
-        
+
         if deleted:
             with open(config_file, "w") as f:
                 f.write(tomli_w.dumps(config_data))
-        
+
         return deleted
-    
+
     def get_config_path(self) -> Path:
         """Get the path to the configuration file."""
         return Path.cwd() / "wrkenv.toml"
-    
+
     def config_exists(self) -> bool:
         """Check if configuration file exists."""
         return self.get_config_path().exists()
-    
+
     def get_raw_config(self) -> str:
         """Get raw configuration file content."""
         config_file = self.get_config_path()
         if config_file.exists():
             return config_file.read_text()
         return ""
-    
+
     def to_dict(self) -> dict[str, Any]:
         """Convert configuration to dictionary."""
         return self._config_data.copy()
-    
+
     def validate(self) -> tuple[bool, list[str]]:
         """Validate the configuration."""
         from .schema import validate_config_dict
+
         return validate_config_dict(self._config_data)
-    
-    
+
     def set_setting(self, key: str, value: Any) -> bool:
         """Set a configuration setting."""
         import tomli_w
-        
+
         config_file = self.get_config_path()
-        
+
         # Load existing config or create new one
         if config_file.exists():
             with open(config_file, "rb") as f:
                 import tomllib
+
                 config_data = tomllib.load(f)
         else:
             config_data = {"project_name": Path.cwd().name}
-        
+
         # Set the value (supports nested keys with dots)
         keys = key.split(".")
         current = config_data
@@ -521,21 +523,21 @@ class WorkenvConfig:
                 current[k] = {}
             current = current[k]
         current[keys[-1]] = value
-        
+
         # Write back to file
         with open(config_file, "w") as f:
             f.write(tomli_w.dumps(config_data))
-        
+
         return True
 
     def show_config(self) -> None:
         """Display current configuration to console."""
         from rich.console import Console
         from rich.syntax import Syntax
-        
+
         console = Console()
         config_file = Path.cwd() / "wrkenv.toml"
-        
+
         if config_file.exists():
             content = config_file.read_text()
             syntax = Syntax(content, "toml", theme="monokai", line_numbers=True)
@@ -547,20 +549,22 @@ class WorkenvConfig:
         """Open configuration file for editing."""
         import os
         import subprocess
-        
+
         config_file = Path.cwd() / "wrkenv.toml"
-        
+
         # Get editor from environment
         editor = os.environ.get("EDITOR", os.environ.get("VISUAL", ""))
-        
+
         if not editor:
-            raise RuntimeError("No editor configured. Set EDITOR or VISUAL environment variable.")
-        
+            raise RuntimeError(
+                "No editor configured. Set EDITOR or VISUAL environment variable."
+            )
+
         # Create file if it doesn't exist
         if not config_file.exists():
             # Create a basic template
-            template = """# wrkenv configuration file
-project_name = "{}"
+            template = f"""# wrkenv configuration file
+project_name = "{Path.cwd().name}"
 version = "1.0.0"
 log_level = "INFO"
 
@@ -573,28 +577,26 @@ log_level = "INFO"
 enabled = false
 base_image = "ubuntu:22.04"
 python_version = "3.11"
-""".format(Path.cwd().name)
+"""
             config_file.write_text(template)
-        
+
         # Open in editor
         subprocess.run([editor, str(config_file)])
 
     def get_command_option(self, command: str, option: str, default: Any = None) -> Any:
         """Get a command-specific option from configuration.
-        
+
         Args:
             command: The command path (e.g., "workenv.terraform")
             option: The option name (e.g., "create_symlinks")
             default: Default value if not found
-            
+
         Returns:
             The option value or default
         """
         # For now, return the default value
         # In the future, this could look up command-specific settings
         return default
-
-
 
 
 # 🧰🌍🖥️🪄

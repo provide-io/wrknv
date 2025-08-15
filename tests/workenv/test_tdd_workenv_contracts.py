@@ -270,7 +270,7 @@ class TestTDDConfiguration:
     def mock_network_calls(self):
         """Mock all network calls for isolated testing."""
         with patch('urllib.request.urlopen'), \
-             patch('wrkenv.env.operations.download.download_file'):
+             patch('wrkenv.wenv.operations.download.download_file'):
             yield
 
     def test_tdd_fixtures_available(self, temp_workenv_dir, mock_network_calls):

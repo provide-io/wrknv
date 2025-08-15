@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 
 from pyvider.telemetry import logger
 
-from wrkenv.env.config import WorkenvConfig, WorkenvConfigError
+from wrkenv.wenv.config import WorkenvConfig, WorkenvConfigError
 
 
 class ToolManagerError(Exception):

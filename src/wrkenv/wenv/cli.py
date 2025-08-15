@@ -16,15 +16,13 @@ from pathlib import Path
 
 import click
 
-from wrkenv.env.config import WorkenvConfig
-from wrkenv.env.exceptions import (
-    ConfigurationError,
+from wrkenv.wenv.config import WorkenvConfig
+from wrkenv.wenv.exceptions import (
     DependencyError,
     ProfileError,
-    ValidationError,
 )
-from wrkenv.env.managers.factory import get_tool_manager
-from wrkenv.env.visual import (
+from wrkenv.wenv.managers.factory import get_tool_manager
+from wrkenv.wenv.visual import (
     Emoji,
     get_console,
     get_tool_emoji,
@@ -55,50 +53,63 @@ def workenv_cli(ctx):
 @click.option("--init", is_flag=True, help="Initialize wrkenv's own workenv")
 @click.option("--force", is_flag=True, help="Force recreate workenv")
 @click.option("--check", is_flag=True, help="Check system dependencies")
-@click.option("--completions", type=click.Choice(["bash", "zsh", "fish"]), help="Generate shell completions")
-@click.option("--install", is_flag=True, help="Install completions (use with --completions)")
-def setup_command(shell_integration: bool, init: bool, force: bool, check: bool, completions: str, install: bool):
+@click.option(
+    "--completions",
+    type=click.Choice(["bash", "zsh", "fish"]),
+    help="Generate shell completions",
+)
+@click.option(
+    "--install", is_flag=True, help="Install completions (use with --completions)"
+)
+def setup_command(
+    shell_integration: bool,
+    init: bool,
+    force: bool,
+    check: bool,
+    completions: str,
+    install: bool,
+):
     """Set up wrkenv environment and integrations."""
     import subprocess
     from pathlib import Path
 
-    from wrkenv.env.workenv import WorkenvManager
+    from wrkenv.wenv.workenv import WorkenvManager
 
     if check:
         # Check system dependencies
         print_info("Checking system dependencies...", Emoji.INFO)
-        
+
         required_deps = ["git", "curl", "python3"]
         optional_deps = ["docker", "wget"]
         missing_required = []
         missing_optional = []
-        
+
         for dep in required_deps:
             if shutil.which(dep):
                 print_success(f"  ✓ {dep}")
             else:
                 print_error(f"  ✗ {dep} (required)")
                 missing_required.append(dep)
-        
+
         for dep in optional_deps:
             if shutil.which(dep):
                 print_info(f"  ✓ {dep} (optional)")
             else:
                 print_warning(f"  ✗ {dep} (optional)")
                 missing_optional.append(dep)
-        
+
         if missing_required:
             raise DependencyError(missing_required, "wrkenv core functionality")
         else:
             print_success("All required dependencies are installed!")
         return
-    
+
     if completions:
         # Generate shell completions
-        from wrkenv.env.completions import generate_completions
-        
+        from wrkenv.wenv.completions import generate_completions
+
         completion_script = generate_completions(completions)
-        
+
         if install:
             # Install completions to appropriate location
             install_path = None
@@ -112,13 +123,13 @@ def setup_command(shell_integration: bool, init: bool, force: bool, check: bool,
                     if path.exists() and path.is_dir():
                         install_path = path / "wrkenv"
                         break
-                
+
                 if not install_path:
                     # Create user directory
                     user_dir = Path.home() / ".bash_completion.d"
                     user_dir.mkdir(exist_ok=True)
                     install_path = user_dir / "wrkenv"
-                    
+
             elif completions == "zsh":
                 # Zsh completion paths
                 for path in [
@@ -128,23 +139,25 @@ def setup_command(shell_integration: bool, init: bool, force: bool, check: bool,
                     if path.exists() and path.is_dir():
                         install_path = path / "_wrkenv"
                         break
-                
+
                 if not install_path:
                     # Create user directory
                     user_dir = Path.home() / ".zsh/completions"
                     user_dir.mkdir(parents=True, exist_ok=True)
                     install_path = user_dir / "_wrkenv"
-                    
+
             elif completions == "fish":
                 # Fish completion path
                 fish_dir = Path.home() / ".config/fish/completions"
                 fish_dir.mkdir(parents=True, exist_ok=True)
                 install_path = fish_dir / "wrkenv.fish"
-            
+
             if install_path:
                 install_path.write_text(completion_script)
-                print_success(f"✅ Installed {completions} completions to {install_path}")
-                
+                print_success(
+                    f"✅ Installed {completions} completions to {install_path}"
+                )
+
                 if completions == "bash":
                     print_info("Add this to your ~/.bashrc:")
                     print_info(f"  source {install_path}")
@@ -197,10 +210,12 @@ def setup_command(shell_integration: bool, init: bool, force: bool, check: bool,
 @click.option("--list", is_flag=True, help="List available versions")
 @click.option("--dry-run", is_flag=True, help="Show what would be installed")
 @click.option("--terraform", is_flag=True, help="Install Terraform instead of OpenTofu")
-def tf_command(version: str | None, latest: bool, list: bool, dry_run: bool, terraform: bool):
+def tf_command(
+    version: str | None, latest: bool, list: bool, dry_run: bool, terraform: bool
+):
     """Install or manage Terraform/OpenTofu versions."""
     config = WorkenvConfig()
-    
+
     # Determine which tool to manage
     tool_name = "terraform" if terraform else "tofu"
     tool_display = "Terraform" if terraform else "OpenTofu"
@@ -243,13 +258,11 @@ def tf_command(version: str | None, latest: bool, list: bool, dry_run: bool, ter
     else:
         print_warning("Please specify a version, --latest, or --list")
         print_info("Examples:")
-        print_info(f"  wrkenv tf --list              # List OpenTofu versions")
-        print_info(f"  wrkenv tf 1.8.0               # Install OpenTofu 1.8.0")
-        print_info(f"  wrkenv tf --terraform 1.5.7   # Install Terraform 1.5.7")
-        print_info(f"  wrkenv tf --terraform --list  # List Terraform versions")
+        print_info("  wrkenv tf --list              # List OpenTofu versions")
+        print_info("  wrkenv tf 1.8.0               # Install OpenTofu 1.8.0")
+        print_info("  wrkenv tf --terraform 1.5.7   # Install Terraform 1.5.7")
+        print_info("  wrkenv tf --terraform --list  # List Terraform versions")
         sys.exit(1)
-
-
 
 
 # === Status Command ===
@@ -336,31 +349,33 @@ def sync_command():
 )
 def generate_env_command(output: pathlib.Path, shell: str, project_dir: pathlib.Path):
     """🌍 Generate optimized environment setup script."""
-    from wrkenv.env.env_generator import create_project_env_scripts
-    
+    from wrkenv.wenv.env_generator import create_project_env_scripts
+
     click.echo(f"🔧 Generating environment scripts for {project_dir.name}...")
-    
+
     try:
         # Use the existing function that works
         sh_path, ps1_path = create_project_env_scripts(project_dir)
-        
+
         # Move to requested output location if different
         if shell in ["powershell", "ps1"]:
             if output != ps1_path:
                 import shutil
+
                 shutil.move(str(ps1_path), str(output))
                 ps1_path = output
             click.echo(f"✅ Generated {ps1_path}")
         else:
             if output != sh_path:
                 import shutil
+
                 shutil.move(str(sh_path), str(output))
                 sh_path = output
             click.echo(f"✅ Generated {sh_path}")
-        
+
         click.echo("\nTo use the environment:")
         click.echo(f"  source {output}")
-        
+
     except FileNotFoundError as e:
         click.echo(f"❌ Error: {e}")
         click.echo("Make sure you're in a project directory with pyproject.toml")
@@ -528,12 +543,12 @@ def profile_list():
 def profile_save(name: str, force: bool):
     """Save current tool versions as a profile."""
     config = WorkenvConfig()
-    
+
     # Check if profile exists
     if not force and config.profile_exists(name):
         if not click.confirm(f"Profile '{name}' already exists. Overwrite?"):
             return
-    
+
     # Get current tools
     tools = config.get_all_tools()
     config.save_profile(name, tools)
@@ -567,12 +582,12 @@ def profile_load(name: str):
 def profile_show(name: str):
     """Show details of a profile."""
     config = WorkenvConfig()
-    
+
     profile = config.get_profile(name)
     if not profile:
         click.echo(f"Profile '{name}' not found")
         sys.exit(1)
-    
+
     click.echo(f"Profile: {name}")
     for tool_name, version in profile.items():
         click.echo(f"  {tool_name}: {version}")
@@ -583,11 +598,11 @@ def profile_show(name: str):
 def profile_delete(name: str):
     """Delete a profile."""
     config = WorkenvConfig()
-    
+
     if not config.profile_exists(name):
         click.echo(f"Profile '{name}' not found")
         sys.exit(1)
-    
+
     if click.confirm(f"Delete profile '{name}'?"):
         if config.delete_profile(name):
             click.echo(f"Profile '{name}' deleted")
@@ -602,27 +617,24 @@ def profile_delete(name: str):
 def profile_export(name: str, output: str):
     """Export a profile to a file."""
     import tomli_w
-    
+
     config = WorkenvConfig()
     profile = config.get_profile(name)
-    
+
     if not profile:
         click.echo(f"Profile '{name}' not found")
         sys.exit(1)
-    
-    profile_data = {
-        "name": name,
-        "tools": profile
-    }
-    
+
+    profile_data = {"name": name, "tools": profile}
+
     if output:
         output_path = pathlib.Path(output)
     else:
         output_path = pathlib.Path(f"{name}-profile.toml")
-    
+
     with open(output_path, "w") as f:
         f.write(tomli_w.dumps(profile_data))
-    
+
     click.echo(f"Exported profile '{name}' to {output_path}")
 
 
@@ -631,21 +643,21 @@ def profile_export(name: str, output: str):
 def profile_import(file: str):
     """Import a profile from a file."""
     import tomllib
-    
+
     file_path = pathlib.Path(file)
     if not file_path.exists():
         click.echo(f"File '{file}' not found")
         sys.exit(1)
-    
+
     with open(file_path, "rb") as f:
         profile_data = tomllib.load(f)
-    
+
     name = profile_data.get("name", file_path.stem)
     tools = profile_data.get("tools", {})
-    
+
     config = WorkenvConfig()
     config.save_profile(name, tools)
-    
+
     click.echo(f"Imported profile '{name}'")
 
 
@@ -664,15 +676,17 @@ def config_group():
 def config_show(output_json: bool, profile: str):
     """Show current configuration."""
     config = WorkenvConfig()
-    
+
     if profile:
         # Show specific profile
         profile_data = config.get_profile(profile)
         if not profile_data:
             raise ProfileError(profile, available_profiles=config.list_profiles())
-        
+
         if output_json:
-            click.echo(json.dumps({"profile": profile, "tools": profile_data}, indent=2))
+            click.echo(
+                json.dumps({"profile": profile, "tools": profile_data}, indent=2)
+            )
         else:
             click.echo(f"Profile: {profile}")
             for tool_name, version in profile_data.items():
@@ -702,15 +716,15 @@ def config_edit():
 def config_validate(strict: bool):
     """Validate configuration file syntax and values."""
     config = WorkenvConfig()
-    
+
     if not config.config_exists():
         print_error("No configuration file found")
-        print_info(f"Create one with: wrkenv config init")
+        print_info("Create one with: wrkenv config init")
         sys.exit(1)
-    
+
     try:
         is_valid, errors = config.validate()
-        
+
         if is_valid:
             print_success("✅ Configuration is valid")
         else:
@@ -718,7 +732,7 @@ def config_validate(strict: bool):
             for error in errors:
                 click.echo(f"  • {error}", err=True)
             sys.exit(1)
-            
+
     except Exception as e:
         print_error(f"Validation error: {e}")
         sys.exit(1)
@@ -729,43 +743,53 @@ def config_validate(strict: bool):
 def config_init(force: bool):
     """Initialize a new configuration file interactively."""
     config_path = Path.cwd() / "wrkenv.toml"
-    
+
     if config_path.exists() and not force:
         print_error("Configuration file already exists")
         print_info("Use --force to overwrite")
         sys.exit(1)
-    
+
     # Interactive prompts
     project_name = click.prompt("Project name", default=Path.cwd().name)
     version = click.prompt("Version", default="1.0.0")
-    log_level = click.prompt("Log level", default="INFO", type=click.Choice(["DEBUG", "INFO", "WARNING", "ERROR"]))
-    
+    log_level = click.prompt(
+        "Log level",
+        default="INFO",
+        type=click.Choice(["DEBUG", "INFO", "WARNING", "ERROR"]),
+    )
+
     # Ask about common tools
     tools = {}
     if click.confirm("Do you want to configure Terraform/OpenTofu?"):
-        tool_choice = click.prompt("Which tool?", type=click.Choice(["terraform", "tofu"]), default="tofu")
-        version = click.prompt(f"{tool_choice} version", default="1.8.0" if tool_choice == "tofu" else "1.5.7")
+        tool_choice = click.prompt(
+            "Which tool?", type=click.Choice(["terraform", "tofu"]), default="tofu"
+        )
+        version = click.prompt(
+            f"{tool_choice} version",
+            default="1.8.0" if tool_choice == "tofu" else "1.5.7",
+        )
         tools[tool_choice] = {"version": version}
-    
+
     if click.confirm("Do you want to configure Go?"):
         version = click.prompt("Go version", default="1.22.1")
         tools["go"] = {"version": version}
-    
+
     if click.confirm("Do you want to configure UV?"):
         version = click.prompt("UV version", default="0.4.0")
         tools["uv"] = {"version": version}
-    
+
     # Create configuration
     import tomli_w
+
     config_data = {
         "project_name": project_name,
         "version": version,
         "log_level": log_level,
     }
-    
+
     if tools:
         config_data["tools"] = tools
-    
+
     # Add container section if requested
     if click.confirm("Enable container support?"):
         config_data["container"] = {
@@ -773,11 +797,11 @@ def config_init(force: bool):
             "base_image": "ubuntu:22.04",
             "python_version": "3.11",
         }
-    
+
     # Write configuration
     with open(config_path, "w") as f:
         f.write(tomli_w.dumps(config_data))
-    
+
     print_success(f"✅ Created configuration file: {config_path}")
     print_info("You can edit it with: wrkenv config edit")
 
@@ -787,18 +811,18 @@ def config_init(force: bool):
 def config_get(key: str):
     """Get a configuration value."""
     config = WorkenvConfig()
-    
+
     try:
         value = config.get_setting(key)
         if value is None:
             print_warning(f"Key '{key}' not found")
             sys.exit(1)
-        
+
         if isinstance(value, (dict, list)):
             click.echo(json.dumps(value, indent=2))
         else:
             click.echo(value)
-            
+
     except Exception as e:
         print_error(f"Error getting config value: {e}")
         sys.exit(1)
@@ -810,7 +834,7 @@ def config_get(key: str):
 def config_set(key: str, value: str):
     """Set a configuration value."""
     config = WorkenvConfig()
-    
+
     try:
         # Try to parse value as JSON first (for complex types)
         try:
@@ -818,13 +842,13 @@ def config_set(key: str, value: str):
         except json.JSONDecodeError:
             # Not JSON, treat as string
             parsed_value = value
-        
+
         if config.set_setting(key, parsed_value):
             print_success(f"✅ Set {key} to {value}")
         else:
             print_error(f"Failed to set {key}")
             sys.exit(1)
-            
+
     except Exception as e:
         print_error(f"Error setting config value: {e}")
         sys.exit(1)
@@ -835,7 +859,7 @@ def config_path():
     """Show path to configuration file."""
     config = WorkenvConfig()
     config_file = config.get_config_path()
-    
+
     if config_file.exists():
         click.echo(str(config_file.absolute()))
     else:
@@ -1084,8 +1108,6 @@ def package_config():
     click.echo("📦 Package configuration:")
     for key, value in package_config.items():
         click.echo(f"  {key}: {value}")
-
-
 
 
 # === TF Subcommands (moved to tf command above) ===

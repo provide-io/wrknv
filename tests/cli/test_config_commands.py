@@ -33,7 +33,7 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_show_no_config(self):
         """Test showing config when no config file exists."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.show_config.return_value = None
             mock_config_class.return_value = mock_config
@@ -45,7 +45,7 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_show_with_config(self):
         """Test showing existing configuration."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.show_config.return_value = None
             mock_config_class.return_value = mock_config
@@ -57,7 +57,7 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_show_json_format(self):
         """Test showing config in JSON format."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.to_dict.return_value = {
                 "project_name": "test-project",
@@ -77,7 +77,7 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_show_with_profile_filter(self):
         """Test showing only specific profile configuration."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_profile.return_value = {
                 "terraform": "1.5.0",
@@ -95,7 +95,7 @@ class TestConfigCommands(unittest.TestCase):
         """Test editing config file with default editor."""
         self.config_file.write_text("project_name = \"test-project\"")
         
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.edit_config.return_value = None
@@ -110,7 +110,7 @@ class TestConfigCommands(unittest.TestCase):
         """Test editing config when no EDITOR is set."""
         self.config_file.write_text("project_name = \"test-project\"")
         
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             with patch.dict(os.environ, {}, clear=True):
                 # Remove EDITOR from environment
                 if "EDITOR" in os.environ:
@@ -128,7 +128,7 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_edit_creates_file_if_missing(self):
         """Test that edit creates a config file if it doesn't exist."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             with patch("subprocess.run") as mock_run:
                 with patch.dict(os.environ, {"EDITOR": "nano"}):
                     mock_config = Mock()
@@ -153,7 +153,7 @@ version = "1.0.0"
 terraform = { version = "1.5.0" }
 """)
         
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.validate.return_value = (True, [])
@@ -171,7 +171,7 @@ terraform = { version = "1.5.0" }
 version = "1.0.0"
 """)
         
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.validate.return_value = (False, [
@@ -188,7 +188,7 @@ version = "1.0.0"
 
     def test_config_init(self):
         """Test initializing a new configuration file."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.config_exists.return_value = False
@@ -207,7 +207,7 @@ version = "1.0.0"
         """Test initializing when config already exists."""
         self.config_file.write_text("project_name = \"existing\"")
         
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.config_exists.return_value = True
@@ -220,7 +220,7 @@ version = "1.0.0"
 
     def test_config_get_setting(self):
         """Test getting a specific configuration setting."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_setting.return_value = "INFO"
             mock_config_class.return_value = mock_config
@@ -232,7 +232,7 @@ version = "1.0.0"
 
     def test_config_set_setting(self):
         """Test setting a configuration value."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.set_setting.return_value = True
             mock_config_class.return_value = mock_config
@@ -248,7 +248,7 @@ version = "1.0.0"
 
     def test_config_path(self):
         """Test showing configuration file path."""
-        with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config_class.return_value = mock_config
@@ -277,7 +277,7 @@ class TestConfigCommandIntegration(unittest.TestCase):
         """Test creating and validating a config file."""
         config_file = self.temp_path / "wrkenv.toml"
         
-        with patch("wrkenv.env.config.Path.cwd") as mock_cwd:
+        with patch("wrkenv.wenv.config.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
             
             # Initialize config
