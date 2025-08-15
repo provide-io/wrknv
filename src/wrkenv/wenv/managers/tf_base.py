@@ -594,34 +594,5 @@ class TfVersionsManager(BaseToolManager):
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
 
-        # Install terraform wrapper
-        self._install_terraform_wrapper()
-
-    def _install_terraform_wrapper(self) -> None:
-        """Install the terraform wrapper script."""
-        if not self.venv_bin_dir:
-            return
-
-        # Find the wrapper script
-        wrapper_source = (
-            pathlib.Path(__file__).parent.parent / "scripts" / "terraform-wrapper.py"
-        )
-        if not wrapper_source.exists():
-            logger.debug("Terraform wrapper script not found")
-            return
-
-        target_name = "terraform"
-        if os.name == "nt":
-            target_name += ".bat"
-            # Create a batch file wrapper for Windows
-            target_path = self.venv_bin_dir / target_name
-            with open(target_path, "w") as f:
-                f.write(f'@echo off\npython "{wrapper_source}" %*\n')
-        else:
-            # Copy the Python script
-            target_path = self.venv_bin_dir / target_name
-            shutil.copy2(wrapper_source, target_path)
-            target_path.chmod(0o755)
-
 
 # 🍲🥄📄🪄
