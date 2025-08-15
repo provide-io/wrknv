@@ -820,9 +820,10 @@ def config_get(key: str):
             sys.exit(1)
 
         if isinstance(value, (dict, list)):
-            secho(json.dumps(value, indent=2))
+            secho(json.dumps(value, indent=2), fg="cyan")
         else:
-            secho(f"{key}: {value}", fg="green")
+            # Output format expected by tests
+            click.echo(f"{key}: {value}")
 
     except Exception as e:
         print_error(f"Error getting config value: {e}")

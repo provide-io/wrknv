@@ -11,11 +11,14 @@ from pathlib import Path
 from unittest.mock import MagicMock, Mock, mock_open, patch
 
 import click.testing
+import pytest
 
 from wrkenv.wenv.cli import workenv_cli
 from wrkenv.wenv.schema import WorkenvConfig
 
 
+@pytest.mark.cli
+@pytest.mark.config
 class TestConfigCommands(unittest.TestCase):
     """Test config show and edit CLI commands."""
 
