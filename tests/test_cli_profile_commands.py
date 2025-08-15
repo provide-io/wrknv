@@ -14,7 +14,7 @@ import click.testing
 import tomli_w
 
 from wrkenv.env.cli import workenv_cli
-from wrkenv.env.config import ConfigurationManager
+from wrkenv.env.config import WorkenvConfig as ConfigWorkenvConfig
 from wrkenv.env.schema import ProfileConfig, ToolConfig, WorkenvConfig
 
 
