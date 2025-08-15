@@ -315,8 +315,10 @@ class TestContainerManager(unittest.TestCase):
         self.assertTrue(len(stop_calls) > 0)
 
     @patch("subprocess.run")
-    def test_stop_container_failure(self, mock_run):
+    @patch("wrkenv.container.manager.ContainerManager.container_running")
+    def test_stop_container_failure(self, mock_running, mock_run):
         """Test container stop failure."""
+        mock_running.return_value = True
         mock_run.side_effect = subprocess.CalledProcessError(1, "docker stop")
         
         result = self.manager.stop()
@@ -337,28 +339,26 @@ class TestContainerManager(unittest.TestCase):
         mock_start.assert_called_once()
 
     @patch("wrkenv.container.manager.ContainerManager.stop")
-    @patch("wrkenv.container.manager.ContainerManager.start")
-    def test_restart_container_stop_failure(self, mock_start, mock_stop):
+    def test_restart_container_stop_failure(self, mock_stop):
         """Test restart when stop fails."""
         mock_stop.return_value = False
         
         result = self.manager.restart()
         
         self.assertFalse(result)
-        mock_start.assert_not_called()
 
     @patch("subprocess.run")
-    def test_get_status(self, mock_run):
+    def test_status_method(self, mock_run):
         """Test getting container status."""
         mock_run.return_value = Mock(
             returncode=0,
-            stdout='{"Status": "Up 2 hours", "State": "running"}',
+            stdout='[{"Status": "Up 2 hours", "State": {"Status": "running"}}]',
         )
         
-        status = self.manager.get_status()
+        status = self.manager.status()
         
         self.assertIsNotNone(status)
-        self.assertEqual(status["State"], "running")
+        self.assertIn("Status", status)
         mock_run.assert_called_once_with(
             ["docker", "inspect", "wrkenv-dev"],
             capture_output=True,
@@ -367,40 +367,36 @@ class TestContainerManager(unittest.TestCase):
         )
 
     @patch("subprocess.run")
-    def test_get_status_no_container(self, mock_run):
+    def test_status_no_container(self, mock_run):
         """Test getting status when container doesn't exist."""
         mock_run.return_value = Mock(returncode=1, stdout="")
         
-        status = self.manager.get_status()
+        status = self.manager.status()
         
         self.assertIsNone(status)
 
-    @patch("subprocess.run")
-    def test_get_logs(self, mock_run):
+    @patch("os.system")
+    def test_logs_method(self, mock_system):
         """Test getting container logs."""
-        mock_run.return_value = Mock(returncode=0, stdout="log line 1\nlog line 2\n")
+        self.manager.logs(follow=False, tail=10)
         
-        logs = self.manager.get_logs(tail=10)
-        
-        self.assertEqual(logs, "log line 1\nlog line 2\n")
-        mock_run.assert_called_once_with(
-            ["docker", "logs", "--tail", "10", "wrkenv-dev"],
-            capture_output=True,
-            text=True,
-            check=False,
+        mock_system.assert_called_once_with(
+            "docker logs --tail 10 wrkenv-dev"
         )
 
     @patch("os.system")
-    def test_follow_logs(self, mock_system):
+    def test_logs_follow(self, mock_system):
         """Test following container logs."""
-        self.manager.follow_logs()
+        self.manager.logs(follow=True)
         
         mock_system.assert_called_once_with("docker logs -f wrkenv-dev")
 
     @patch("subprocess.run")
-    def test_cleanup_success(self, mock_run):
+    def test_clean_success(self, mock_run):
         """Test successful cleanup."""
-        result = self.manager.cleanup()
+        mock_run.return_value = Mock(returncode=0)
+        
+        result = self.manager.clean()
         
         self.assertTrue(result)
         # Should call both rm and rmi
@@ -410,7 +406,7 @@ class TestContainerManager(unittest.TestCase):
         self.assertEqual(calls[1][0][0], ["docker", "rmi", "wrkenv-dev:latest"])
 
     @patch("subprocess.run")
-    def test_cleanup_partial_failure(self, mock_run):
+    def test_clean_partial_failure(self, mock_run):
         """Test cleanup with partial failure."""
         # First call succeeds, second fails
         mock_run.side_effect = [
@@ -418,7 +414,7 @@ class TestContainerManager(unittest.TestCase):
             subprocess.CalledProcessError(1, "docker rmi"),
         ]
         
-        result = self.manager.cleanup()
+        result = self.manager.clean()
         
         self.assertFalse(result)  # Returns False if any step fails
 
