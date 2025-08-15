@@ -17,14 +17,16 @@ from pyvider.telemetry import logger
 from rich.console import Console
 
 from wrkenv.env.config import WorkenvConfig
+from wrkenv.env.schema import ContainerConfig, get_default_config
 
 
 class ContainerManager:
     """Manages Docker containers for wrkenv development environments."""
 
-    CONTAINER_NAME = "wrkenv-dev"
-    IMAGE_NAME = "wrkenv-dev"
-    IMAGE_TAG = "latest"
+    # Default values (can be overridden by config)
+    DEFAULT_CONTAINER_NAME = "wrkenv-dev"
+    DEFAULT_IMAGE_NAME = "wrkenv-dev"
+    DEFAULT_IMAGE_TAG = "latest"
 
     # Emoji constants for visual feedback
     CONTAINER_EMOJI = "🐳"
@@ -35,8 +37,17 @@ class ContainerManager:
     STATUS_EMOJI = "📊"
 
     def __init__(self, config: WorkenvConfig | None = None):
-        self.config = config or WorkenvConfig()
+        self.config = config or get_default_config()
         self.console = Console()
+        
+        # Get container configuration
+        self.container_config = self.config.container or ContainerConfig()
+        
+        # Set container and image names (can be customized in config)
+        project_name = self.config.project_name.replace(" ", "-").lower()
+        self.CONTAINER_NAME = f"{project_name}-dev" if project_name != "my-project" else self.DEFAULT_CONTAINER_NAME
+        self.IMAGE_NAME = self.CONTAINER_NAME
+        self.IMAGE_TAG = self.DEFAULT_IMAGE_TAG
         self.full_image = f"{self.IMAGE_NAME}:{self.IMAGE_TAG}"
 
     def check_docker(self) -> bool:
@@ -152,23 +163,38 @@ class ContainerManager:
             "-d",
             "--name",
             self.CONTAINER_NAME,
-            "-v",
-            f"{home_dir}:/host-home",
-            "-v",
-            "/var/run/docker.sock:/var/run/docker.sock",
-            "-e",
-            f"HOST_USER={os.environ.get('USER', 'user')}",
-            "-e",
-            f"HOST_UID={os.getuid()}",
-            "-e",
-            f"HOST_GID={os.getgid()}",
+        ]
+        
+        # Add default volumes
+        cmd.extend(["-v", f"{home_dir}:/host-home"])
+        cmd.extend(["-v", "/var/run/docker.sock:/var/run/docker.sock"])
+        
+        # Add configured volumes
+        for volume in self.container_config.volumes:
+            cmd.extend(["-v", volume])
+        
+        # Add default environment variables
+        cmd.extend(["-e", f"HOST_USER={os.environ.get('USER', 'user')}"])
+        cmd.extend(["-e", f"HOST_UID={os.getuid()}"])
+        cmd.extend(["-e", f"HOST_GID={os.getgid()}"])
+        
+        # Add configured environment variables
+        for key, value in self.container_config.environment.items():
+            cmd.extend(["-e", f"{key}={value}"])
+        
+        # Add configured port mappings
+        for port_mapping in self.container_config.ports:
+            cmd.extend(["-p", port_mapping])
+        
+        # Add workdir and image
+        cmd.extend([
             "--workdir",
             "/workspace",
             self.full_image,
             "tail",
             "-f",
             "/dev/null",
-        ]
+        ])
 
         try:
             subprocess.run(cmd, check=True)
@@ -305,24 +331,44 @@ class ContainerManager:
 
     def _generate_dockerfile(self) -> str:
         """Generate Dockerfile content for the development container."""
-        return """FROM ubuntu:22.04
+        # Get configuration values
+        base_image = self.container_config.base_image
+        python_version = self.container_config.python_version
+        additional_packages = self.container_config.additional_packages
+        environment_vars = self.container_config.environment
+        
+        # Build package list
+        base_packages = [
+            "curl",
+            "git",
+            "wget",
+            "unzip",
+            "build-essential",
+            f"python{python_version}" if python_version != "3" else "python3",
+            f"python{python_version}-pip" if python_version != "3" else "python3-pip",
+            f"python{python_version}-venv" if python_version != "3" else "python3-venv",
+            "docker.io",
+            "sudo",
+            "zsh",
+        ]
+        
+        all_packages = base_packages + additional_packages
+        packages_str = " \\\n    ".join(all_packages)
+        
+        # Build environment variables section
+        env_vars_section = ""
+        if environment_vars:
+            env_lines = [f"ENV {key}={value}" for key, value in environment_vars.items()]
+            env_vars_section = "\n".join(env_lines) + "\n"
+        
+        return f"""FROM {base_image}
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
-
+{env_vars_section}
 # Install base dependencies
 RUN apt-get update && apt-get install -y \\
-    curl \\
-    git \\
-    wget \\
-    unzip \\
-    build-essential \\
-    python3 \\
-    python3-pip \\
-    python3-venv \\
-    docker.io \\
-    sudo \\
-    zsh \\
+    {packages_str} \\
     && rm -rf /var/lib/apt/lists/*
 
 # Install UV package manager
