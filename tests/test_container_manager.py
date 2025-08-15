@@ -16,7 +16,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, Mock, call, patch
 
 from wrkenv.container.manager import ContainerManager
-from wrkenv.env.config import WorkenvConfig
+from wrkenv.env.schema import WorkenvConfig
 
 
 class TestContainerManager(unittest.TestCase):
@@ -24,7 +24,7 @@ class TestContainerManager(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures."""
-        self.config = WorkenvConfig()
+        self.config = WorkenvConfig(project_name="test-project")
         self.manager = ContainerManager(self.config)
 
     def tearDown(self):

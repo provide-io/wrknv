@@ -2,14 +2,14 @@ import unittest
 from unittest.mock import patch, MagicMock
 from wrkenv.container.commands import build_container, start_container, enter_container, stop_container, restart_container, container_status, container_logs, clean_container, rebuild_container
 from wrkenv.container.manager import ContainerManager
-from wrkenv.env.config import WorkenvConfig
+from wrkenv.env.schema import WorkenvConfig
 
 class TestContainerManager(unittest.TestCase):
     @patch('wrkenv.container.manager.ContainerManager.build_image')
     def test_build_container(self, mock_build_image):
         # Arrange
         mock_build_image.return_value = True
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         result = build_container(config, rebuild=True)
@@ -22,7 +22,7 @@ class TestContainerManager(unittest.TestCase):
     def test_start_container(self, mock_start):
         # Arrange
         mock_start.return_value = True
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         result = start_container(config, rebuild=True)
@@ -34,7 +34,7 @@ class TestContainerManager(unittest.TestCase):
     @patch('wrkenv.container.manager.ContainerManager.enter')
     def test_enter_container(self, mock_enter):
         # Arrange
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         enter_container(config, command=['ls', '-l'])
@@ -46,7 +46,7 @@ class TestContainerManager(unittest.TestCase):
     def test_stop_container(self, mock_stop):
         # Arrange
         mock_stop.return_value = True
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         result = stop_container(config)
@@ -59,7 +59,7 @@ class TestContainerManager(unittest.TestCase):
     def test_restart_container(self, mock_restart):
         # Arrange
         mock_restart.return_value = True
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         result = restart_container(config)
@@ -81,7 +81,7 @@ class TestContainerManager(unittest.TestCase):
                 'state': 'running'
             }
         }
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         container_status(config)
@@ -92,7 +92,7 @@ class TestContainerManager(unittest.TestCase):
     @patch('wrkenv.container.manager.ContainerManager.logs')
     def test_container_logs(self, mock_logs):
         # Arrange
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         container_logs(config, follow=True, tail=100)
@@ -104,7 +104,7 @@ class TestContainerManager(unittest.TestCase):
     def test_clean_container(self, mock_clean):
         # Arrange
         mock_clean.return_value = True
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         result = clean_container(config)
@@ -121,7 +121,7 @@ class TestContainerManager(unittest.TestCase):
         mock_clean.return_value = True
         mock_build_image.return_value = True
         mock_start.return_value = True
-        config = WorkenvConfig()
+        config = WorkenvConfig(project_name="test-project")
 
         # Act
         result = rebuild_container(config)
