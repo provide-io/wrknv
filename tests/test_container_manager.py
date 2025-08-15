@@ -256,10 +256,12 @@ class TestContainerManager(unittest.TestCase):
         mock_build.assert_called_once_with(rebuild=False)
 
     @patch("wrkenv.container.manager.ContainerManager.check_docker")
+    @patch("wrkenv.container.manager.ContainerManager.image_exists")
     @patch("wrkenv.container.manager.ContainerManager.container_running")
-    def test_start_container_already_running(self, mock_running, mock_check_docker):
+    def test_start_container_already_running(self, mock_running, mock_image_exists, mock_check_docker):
         """Test start when container is already running."""
         mock_check_docker.return_value = True
+        mock_image_exists.return_value = True
         mock_running.return_value = True
         
         result = self.manager.start()
