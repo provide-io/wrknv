@@ -1,11 +1,10 @@
-
 import unittest
 from unittest.mock import patch, MagicMock
 from wrkenv.container.commands import build_container
 from wrkenv.env.config import WorkenvConfig
 
 class TestContainer(unittest.TestCase):
-        @patch('wrkenv.container.commands.ContainerManager')
+    @patch('wrkenv.container.manager.ContainerManager')
     def test_build_container(self, MockContainerManager):
         # Arrange
         mock_manager = MockContainerManager.return_value
