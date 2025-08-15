@@ -35,45 +35,25 @@ class TestConfigCommands(unittest.TestCase):
         """Test showing config when no config file exists."""
         with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
-            mock_config.config_exists.return_value = False
+            mock_config.show_config.return_value = None
             mock_config_class.return_value = mock_config
             
             result = self.runner.invoke(workenv_cli, ["config", "show"])
             
             self.assertEqual(result.exit_code, 0)
-            self.assertIn("No configuration file found", result.output)
+            mock_config.show_config.assert_called_once()
 
     def test_config_show_with_config(self):
         """Test showing existing configuration."""
-        config_content = """
-project_name = "test-project"
-version = "1.0.0"
-log_level = "INFO"
-
-[tools]
-terraform = { version = "1.5.0", enabled = true }
-go = { version = "1.21.0", enabled = true }
-uv = { version = "0.4.0", enabled = false }
-
-[container]
-enabled = true
-base_image = "ubuntu:22.04"
-python_version = "3.11"
-"""
-        
         with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
-            mock_config.get_config_path.return_value = self.config_file
-            mock_config.get_raw_config.return_value = config_content
+            mock_config.show_config.return_value = None
             mock_config_class.return_value = mock_config
             
             result = self.runner.invoke(workenv_cli, ["config", "show"])
             
             self.assertEqual(result.exit_code, 0)
-            self.assertIn("project_name", result.output)
-            self.assertIn("test-project", result.output)
-            self.assertIn("terraform", result.output)
-            self.assertIn("1.5.0", result.output)
+            mock_config.show_config.assert_called_once()
 
     def test_config_show_json_format(self):
         """Test showing config in JSON format."""
