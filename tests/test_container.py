@@ -1,7 +1,21 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from wrkenv.container.commands import build_container, start_container, enter_container, stop_container, restart_container, container_status, container_logs, clean_container
+from wrkenv.container.commands import build_container, start_container, enter_container, stop_container, restart_container, container_status, container_logs, clean_container, rebuild_container
+from wrkenv.container.manager import ContainerManager
 from wrkenv.env.config import WorkenvConfig
+
+class TestContainerManager(unittest.TestCase):
+    def test_init(self):
+        # Arrange
+        config = WorkenvConfig()
+
+        # Act
+        manager = ContainerManager(config)
+
+        # Assert
+        self.assertEqual(manager.config, config)
+        self.assertEqual(manager.client.api.base_url, 'unix://var/run/docker.sock')
+
 
 class TestContainer(unittest.TestCase):
     @patch('wrkenv.container.commands.ContainerManager')
@@ -119,6 +133,24 @@ class TestContainer(unittest.TestCase):
         # Assert
         self.assertTrue(result)
         mock_manager.clean.assert_called_once_with()
+
+    @patch('wrkenv.container.commands.ContainerManager')
+    def test_rebuild_container(self, MockContainerManager):
+        # Arrange
+        mock_manager = MockContainerManager.return_value
+        mock_manager.clean.return_value = True
+        mock_manager.build_image.return_value = True
+        mock_manager.start.return_value = True
+        config = WorkenvConfig()
+
+        # Act
+        result = rebuild_container(config)
+
+        # Assert
+        self.assertTrue(result)
+        mock_manager.clean.assert_called_once_with()
+        mock_manager.build_image.assert_called_once_with(rebuild=True)
+        mock_manager.start.assert_called_once_with()
 
 if __name__ == '__main__':
     unittest.main()
