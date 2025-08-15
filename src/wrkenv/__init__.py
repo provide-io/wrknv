@@ -11,11 +11,11 @@ Can be used standalone or integrated with other tools.
 __version__ = "0.1.0"
 
 # Public API exports
-from wrkenv.env.config import WorkenvConfig, WorkenvConfigError
-from wrkenv.env.managers.factory import get_supported_tools, get_tool_manager
+from wrkenv.wenv.config import WorkenvConfig, WorkenvConfigError
+from wrkenv.wenv.managers.factory import get_supported_tools, get_tool_manager
 
 __all__ = [
-    "env",
+    "wenv",
     "package",
     "container",
     "WorkenvConfig",
