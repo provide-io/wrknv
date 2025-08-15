@@ -14,7 +14,7 @@ import stat
 import platform
 from unittest.mock import patch, Mock, MagicMock, call
 
-from wrkenv.env.operations.install import (
+from wrkenv.wenv.operations.install import (
     extract_archive,
     make_executable,
     create_symlink,

@@ -12,8 +12,8 @@ from click.testing import CliRunner
 
 # These will fail initially - expected in TDD
 try:
-    from wrkenv.env.cli import workenv_cli
-    from wrkenv.env.config import WorkenvConfig
+    from wrkenv.wenv.cli import workenv_cli
+    from wrkenv.wenv.config import WorkenvConfig
 except ImportError:
     workenv_cli = Mock()
     WorkenvConfig = Mock()

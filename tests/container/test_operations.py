@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from wrkenv.container.commands import build_container, start_container, enter_container, stop_container, restart_container, container_status, container_logs, clean_container, rebuild_container
 from wrkenv.container.manager import ContainerManager
-from wrkenv.env.schema import WorkenvConfig
+from wrkenv.wenv.schema import WorkenvConfig
 
 class TestContainerManager(unittest.TestCase):
     @patch('wrkenv.container.manager.ContainerManager.build_image')

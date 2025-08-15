@@ -26,7 +26,7 @@ MANIFEST
 .venv/
 venv/
 ENV/
-env/
+/env/
 workenv/
 workenv_*/
 

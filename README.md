@@ -2,6 +2,12 @@
 
 **Work Environment Tool** - A flexible, cross-platform solution for managing development tool versions and Python environments, specialized for the Pyvider ecosystem.
 
+## Requirements
+
+- **Python 3.11 or later** - wrkenv uses modern Python features including native type hints with pipe operators (`str | None`), native TOML support via `tomllib`, and other Python 3.11+ improvements.
+- Git (for version control operations)
+- curl or wget (for downloading tools)
+
 ## Overview
 
 `wrkenv` manages development tools like Terraform, OpenTofu, Go, and `uv`. Its primary purpose is to generate optimized, standalone shell scripts (`env.sh`, `env.ps1`) that configure a development session without requiring `wrkenv` at runtime.

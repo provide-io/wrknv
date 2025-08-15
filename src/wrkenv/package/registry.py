@@ -4,21 +4,21 @@
 Package Registry Client
 =======================
 Client for interacting with package registries.
+
+Requires Python 3.11+ for native type hint support with pipe operators.
 """
 
 import hashlib
 import json
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 from urllib.parse import urljoin
-
-from pyvider.telemetry import logger
 
 
 class RegistryClient:
     """Client for package registry operations."""
     
-    def __init__(self, registry_url: str, auth_token: Optional[str] = None):
+    def __init__(self, registry_url: str, auth_token: str | None = None):
         """
         Initialize registry client.
         
@@ -67,7 +67,7 @@ class RegistryClient:
     def upload_package(
         self, 
         package_path: Path, 
-        metadata: Optional[dict[str, Any]] = None
+        metadata: dict[str, Any] | None = None
     ) -> dict[str, Any]:
         """
         Upload a package to the registry.
@@ -217,7 +217,7 @@ class RegistryClient:
     def get_package_info(
         self, 
         package_name: str, 
-        version: Optional[str] = None
+        version: str | None = None
     ) -> dict[str, Any]:
         """
         Get information about a package.
@@ -358,7 +358,7 @@ class LocalRegistry:
             "path": str(dest_path)
         }
     
-    def get_package(self, package_name: str, version: str) -> Optional[Path]:
+    def get_package(self, package_name: str, version: str) -> Path | None:
         """
         Get a package from the local registry.
         

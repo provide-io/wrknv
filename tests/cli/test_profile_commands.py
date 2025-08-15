@@ -13,9 +13,9 @@ from unittest.mock import MagicMock, Mock, patch
 import click.testing
 import tomli_w
 
-from wrkenv.env.cli import workenv_cli
-from wrkenv.env.config import WorkenvConfig as ConfigWorkenvConfig
-from wrkenv.env.schema import ProfileConfig, ToolConfig, WorkenvConfig
+from wrkenv.wenv.cli import workenv_cli
+from wrkenv.wenv.config import WorkenvConfig as ConfigWorkenvConfig
+from wrkenv.wenv.schema import ProfileConfig, ToolConfig, WorkenvConfig
 
 
 class TestProfileCommands(unittest.TestCase):

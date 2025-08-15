@@ -13,10 +13,10 @@ from unittest.mock import Mock, patch, MagicMock
 
 # These imports will fail initially - that's expected in TDD
 try:
-    from wrkenv.env.config import WorkenvConfig
-    from wrkenv.env.managers.base import BaseToolManager
-    from wrkenv.env.managers.ibm_tf import IbmTfManager as TerraformManager
-    from wrkenv.env.managers.tofu import TofuManager
+    from wrkenv.wenv.config import WorkenvConfig
+    from wrkenv.wenv.managers.base import BaseToolManager
+    from wrkenv.wenv.managers.ibm_tf import IbmTfManager as TerraformManager
+    from wrkenv.wenv.managers.tofu import TofuManager
 except ImportError:
     # Expected during TDD - we'll implement these
     WorkenvConfig = Mock
@@ -26,7 +26,7 @@ except ImportError:
 
 # PlatformDetector doesn't exist, but we have platform functions
 try:
-    from wrkenv.env.operations.platform import get_platform_info
+    from wrkenv.wenv.operations.platform import get_platform_info
     PlatformDetector = None  # We'll use the functions directly
 except ImportError:
     PlatformDetector = Mock

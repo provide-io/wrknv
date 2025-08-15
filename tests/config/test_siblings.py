@@ -8,8 +8,8 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from wrkenv.env.config import WorkenvConfig
-from wrkenv.env.env_generator import EnvScriptGenerator, create_project_env_scripts
+from wrkenv.wenv.config import WorkenvConfig
+from wrkenv.wenv.env_generator import EnvScriptGenerator, create_project_env_scripts
 
 
 class TestSiblingsConfiguration:

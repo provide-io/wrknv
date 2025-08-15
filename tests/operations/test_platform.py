@@ -9,7 +9,7 @@ import sys
 import unittest
 from unittest.mock import Mock, patch
 
-from wrkenv.env.operations.platform import (
+from wrkenv.wenv.operations.platform import (
     format_platform_string,
     get_architecture,
     get_archive_extension,

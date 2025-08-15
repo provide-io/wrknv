@@ -12,7 +12,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, Mock, patch
 
-from wrkenv.env.operations.verify import (
+from wrkenv.wenv.operations.verify import (
     check_binary_compatibility,
     get_installed_version_info,
     get_version_command_args,

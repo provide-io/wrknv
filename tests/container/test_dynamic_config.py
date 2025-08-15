@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from wrkenv.container.manager import ContainerManager
-from wrkenv.env.schema import ContainerConfig, WorkenvConfig
+from wrkenv.wenv.schema import ContainerConfig, WorkenvConfig
 
 
 class TestDynamicContainerConfiguration(unittest.TestCase):

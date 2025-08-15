@@ -12,8 +12,8 @@ from unittest.mock import MagicMock, Mock, mock_open, patch
 
 import click.testing
 
-from wrkenv.env.cli import workenv_cli
-from wrkenv.env.schema import WorkenvConfig
+from wrkenv.wenv.cli import workenv_cli
+from wrkenv.wenv.schema import WorkenvConfig
 
 
 class TestConfigCommands(unittest.TestCase):

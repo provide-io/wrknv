@@ -11,7 +11,7 @@ from unittest.mock import MagicMock, Mock, patch
 import pytest
 from click.testing import CliRunner
 
-from wrkenv.env.cli import workenv_cli
+from wrkenv.wenv.cli import workenv_cli
 
 
 class TestWorkenvPackageCommands:
@@ -375,7 +375,7 @@ class TestPackageManagerIntegration:
     def test_package_manager_requires_flavor(self):
         """PackageManager should check for flavor availability."""
         from wrkenv.package.manager import PackageManager
-        from wrkenv.env.config import WorkenvConfig
+        from wrkenv.wenv.config import WorkenvConfig
         
         config = WorkenvConfig()
         manager = PackageManager(config)
@@ -394,7 +394,7 @@ class TestPackageManagerIntegration:
     def test_package_manager_tool_integration(self):
         """PackageManager should integrate with tool managers."""
         from wrkenv.package.manager import PackageManager
-        from wrkenv.env.config import WorkenvConfig
+        from wrkenv.wenv.config import WorkenvConfig
         
         config = WorkenvConfig()
         manager = PackageManager(config)
@@ -414,7 +414,7 @@ class TestPackageManagerIntegration:
     def test_package_manager_environment_setup(self):
         """PackageManager should set up build environment."""
         from wrkenv.package.manager import PackageManager
-        from wrkenv.env.config import WorkenvConfig
+        from wrkenv.wenv.config import WorkenvConfig
         
         config = WorkenvConfig()
         manager = PackageManager(config)

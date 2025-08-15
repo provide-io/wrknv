@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from wrkenv.env.schema import (
+from wrkenv.wenv.schema import (
     ContainerConfig,
     PackageConfig,
     ProfileConfig,
@@ -21,7 +21,7 @@ from wrkenv.env.schema import (
     load_config_from_dict,
     validate_config_dict,
 )
-from wrkenv.env.config import ValidatedTomlSource, WorkenvConfigError
+from wrkenv.wenv.config import ValidatedTomlSource, WorkenvConfigError
 
 
 class TestToolConfig(unittest.TestCase):

@@ -16,7 +16,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, Mock, call, patch
 
 from wrkenv.container.manager import ContainerManager
-from wrkenv.env.schema import WorkenvConfig
+from wrkenv.wenv.schema import WorkenvConfig
 
 
 class TestContainerManager(unittest.TestCase):

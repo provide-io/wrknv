@@ -12,7 +12,7 @@ from unittest.mock import patch, Mock, MagicMock
 import urllib.request
 import urllib.error
 
-from wrkenv.env.operations.download import (
+from wrkenv.wenv.operations.download import (
     download_file,
     verify_checksum,
     download_checksum_file,

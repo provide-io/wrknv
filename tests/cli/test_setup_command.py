@@ -13,7 +13,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 import click.testing
 
-from wrkenv.env.cli import workenv_cli
+from wrkenv.wenv.cli import workenv_cli
 
 
 class TestSetupCommand(unittest.TestCase):
