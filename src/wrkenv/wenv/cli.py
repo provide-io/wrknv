@@ -34,6 +34,11 @@ from wrkenv.wenv.visual import (
 )
 
 
+def uv_available() -> bool:
+    """Check if UV is available."""
+    return shutil.which("uv") is not None
+
+
 @click.group(name="workenv", invoke_without_command=True)
 @click.pass_context
 def workenv_cli(ctx):
