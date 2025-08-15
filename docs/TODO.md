@@ -4,10 +4,6 @@ This document tracks prioritized development tasks.
 
 ## High Priority - Reliability & Correctness
 
-- [ ] **Fix Failing Sibling Installation Test**
-  - The `test_simple_string_siblings` test is failing due to a regression.
-  - The logic in `sibling_packages.sh.j2` must be revised to respect the `with_deps` default for simple string patterns while still gracefully handling Python version conflicts.
-
 - [ ] **Increase Test Coverage on Critical Infrastructure**
   - **`container` module (0% coverage):** Add comprehensive tests for Dockerfile generation, container lifecycle (build, start, stop), and command execution.
   - **`operations.download` (11% coverage):** Add tests for various download scenarios, error handling (404s, timeouts), and checksum verification.
