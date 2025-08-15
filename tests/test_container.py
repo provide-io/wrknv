@@ -4,11 +4,10 @@ from wrkenv.container.commands import build_container
 from wrkenv.env.config import WorkenvConfig
 
 class TestContainer(unittest.TestCase):
-    @patch('wrkenv.container.manager.ContainerManager')
-    def test_build_container(self, MockContainerManager):
+    @patch('wrkenv.container.commands.build_container')
+    def test_build_container(self, mock_build_container):
         # Arrange
-        mock_manager = MockContainerManager.return_value
-        mock_manager.build.return_value = True
+        mock_build_container.return_value = True
         config = WorkenvConfig()
 
         # Act
@@ -16,7 +15,7 @@ class TestContainer(unittest.TestCase):
 
         # Assert
         self.assertTrue(result)
-        mock_manager.build.assert_called_once_with(rebuild=True)
+        mock_build_container.assert_called_once_with(config, rebuild=True)
 
 if __name__ == '__main__':
     unittest.main()
