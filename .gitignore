@@ -111,3 +111,4 @@ Desktop.ini
 .venv/
 uv.lockworkenv/
 *bfiles*
+ai_studio*
