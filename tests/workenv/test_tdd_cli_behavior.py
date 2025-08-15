@@ -157,6 +157,8 @@ class TestWorkenvProfileManagement:
         """
         with patch('wrkenv.env.cli.WorkenvConfig') as mock_config:
             mock_config_instance = Mock()
+            mock_config_instance.profile_exists.return_value = False
+            mock_config_instance.get_all_tools.return_value = {}
             mock_config.return_value = mock_config_instance
 
             result = self.runner.invoke(workenv_cli, ['profile', 'save', 'dev'])
@@ -166,7 +168,7 @@ class TestWorkenvProfileManagement:
                 print(f"Output: {result.output}")
                 print(f"Exception: {result.exception}")
             assert result.exit_code == 0
-            mock_config_instance.save_profile.assert_called_once_with('dev')
+            mock_config_instance.save_profile.assert_called_once_with('dev', {})
 
     def test_profile_load_command(self):
         """

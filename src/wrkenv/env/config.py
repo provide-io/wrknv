@@ -9,6 +9,7 @@ Flexible configuration system that supports multiple sources.
 
 import os
 import pathlib
+from pathlib import Path
 from typing import Any
 
 try:
@@ -79,7 +80,12 @@ class FileConfigSource(ConfigSource):
             try:
                 with open(self.file_path, "rb") as f:
                     all_data = tomllib.load(f)
-                    self._data = all_data.get(self.section, {})
+                    # If section exists, use it, otherwise use the whole file
+                    if self.section in all_data:
+                        self._data = all_data.get(self.section, {})
+                    else:
+                        # Use the whole file if section doesn't exist
+                        self._data = all_data
                 logger.debug(
                     f"Loaded config from {self.file_path}", section=self.section
                 )
@@ -94,12 +100,35 @@ class FileConfigSource(ConfigSource):
 
     def get_all_tools(self) -> dict[str, str]:
         """Get all tool versions."""
-        return self._data.get("tools", {})
+        tools_data = self._data.get("tools", {})
+        # Extract versions from tool configs
+        result = {}
+        for tool_name, tool_config in tools_data.items():
+            if isinstance(tool_config, dict):
+                result[tool_name] = tool_config.get("version", "")
+            else:
+                result[tool_name] = tool_config
+        return result
 
     def get_profile(self, profile_name: str) -> dict[str, Any]:
         """Get a configuration profile."""
+        # Try to get from the section data first
         profiles = self._data.get("profiles", {})
-        return profiles.get(profile_name, {})
+        if profile_name in profiles:
+            return profiles[profile_name]
+        
+        # If not found, try to load from the top-level profiles
+        if self.file_path and self.file_path.exists():
+            try:
+                with open(self.file_path, "rb") as f:
+                    import tomllib
+                    all_data = tomllib.load(f)
+                    top_profiles = all_data.get("profiles", {})
+                    return top_profiles.get(profile_name, {})
+            except Exception:
+                pass
+        
+        return {}
 
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
@@ -376,24 +405,179 @@ class WorkenvConfig:
         self, profile_name: str, tools: dict[str, str] | None = None
     ) -> None:
         """Save a profile to the configuration file."""
-        # This would need to determine which file to save to
-        # For now, we'll raise NotImplementedError
-        raise NotImplementedError("Profile saving not yet implemented")
+        import tomli_w
+        
+        # Get the primary config file (wrkenv.toml)
+        config_file = Path.cwd() / "wrkenv.toml"
+        
+        # Load existing config or create new one
+        if config_file.exists():
+            with open(config_file, "rb") as f:
+                import tomllib
+                config_data = tomllib.load(f)
+        else:
+            config_data = {"project_name": Path.cwd().name}
+        
+        # Ensure profiles section exists
+        if "profiles" not in config_data:
+            config_data["profiles"] = {}
+        
+        # Save the profile
+        if tools is None:
+            # Get current tool versions
+            tools = self.get_all_tools()
+        
+        config_data["profiles"][profile_name] = tools
+        
+        # Write back to file
+        with open(config_file, "w") as f:
+            f.write(tomli_w.dumps(config_data))
 
     def list_profiles(self) -> list[str]:
         """List all available profile names."""
         profiles = self._config_data.get("workenv", {}).get("profiles", {})
+        if not profiles:
+            # Also check top-level profiles
+            profiles = self._config_data.get("profiles", {})
         return list(profiles.keys()) if profiles else []
+    
+    def profile_exists(self, profile_name: str) -> bool:
+        """Check if a profile exists."""
+        profiles = self.list_profiles()
+        return profile_name in profiles
+    
+    def delete_profile(self, profile_name: str) -> bool:
+        """Delete a profile."""
+        import tomli_w
+        
+        config_file = Path.cwd() / "wrkenv.toml"
+        if not config_file.exists():
+            return False
+        
+        with open(config_file, "rb") as f:
+            import tomllib
+            config_data = tomllib.load(f)
+        
+        # Check both locations for profiles
+        deleted = False
+        if "profiles" in config_data and profile_name in config_data["profiles"]:
+            del config_data["profiles"][profile_name]
+            deleted = True
+        elif "workenv" in config_data and "profiles" in config_data["workenv"]:
+            if profile_name in config_data["workenv"]["profiles"]:
+                del config_data["workenv"]["profiles"][profile_name]
+                deleted = True
+        
+        if deleted:
+            with open(config_file, "w") as f:
+                f.write(tomli_w.dumps(config_data))
+        
+        return deleted
+    
+    def get_config_path(self) -> Path:
+        """Get the path to the configuration file."""
+        return Path.cwd() / "wrkenv.toml"
+    
+    def config_exists(self) -> bool:
+        """Check if configuration file exists."""
+        return self.get_config_path().exists()
+    
+    def get_raw_config(self) -> str:
+        """Get raw configuration file content."""
+        config_file = self.get_config_path()
+        if config_file.exists():
+            return config_file.read_text()
+        return ""
+    
+    def to_dict(self) -> dict[str, Any]:
+        """Convert configuration to dictionary."""
+        return self._config_data.copy()
+    
+    def validate(self) -> tuple[bool, list[str]]:
+        """Validate the configuration."""
+        from .schema import validate_config_dict
+        return validate_config_dict(self._config_data)
+    
+    
+    def set_setting(self, key: str, value: Any) -> bool:
+        """Set a configuration setting."""
+        import tomli_w
+        
+        config_file = self.get_config_path()
+        
+        # Load existing config or create new one
+        if config_file.exists():
+            with open(config_file, "rb") as f:
+                import tomllib
+                config_data = tomllib.load(f)
+        else:
+            config_data = {"project_name": Path.cwd().name}
+        
+        # Set the value (supports nested keys with dots)
+        keys = key.split(".")
+        current = config_data
+        for k in keys[:-1]:
+            if k not in current:
+                current[k] = {}
+            current = current[k]
+        current[keys[-1]] = value
+        
+        # Write back to file
+        with open(config_file, "w") as f:
+            f.write(tomli_w.dumps(config_data))
+        
+        return True
 
     def show_config(self) -> None:
         """Display current configuration to console."""
-        # This is a placeholder for tests
-        pass
+        from rich.console import Console
+        from rich.syntax import Syntax
+        
+        console = Console()
+        config_file = Path.cwd() / "wrkenv.toml"
+        
+        if config_file.exists():
+            content = config_file.read_text()
+            syntax = Syntax(content, "toml", theme="monokai", line_numbers=True)
+            console.print(syntax)
+        else:
+            console.print("[yellow]No configuration file found[/yellow]")
 
     def edit_config(self) -> None:
         """Open configuration file for editing."""
-        # This is a placeholder for tests
-        pass
+        import os
+        import subprocess
+        
+        config_file = Path.cwd() / "wrkenv.toml"
+        
+        # Get editor from environment
+        editor = os.environ.get("EDITOR", os.environ.get("VISUAL", ""))
+        
+        if not editor:
+            raise RuntimeError("No editor configured. Set EDITOR or VISUAL environment variable.")
+        
+        # Create file if it doesn't exist
+        if not config_file.exists():
+            # Create a basic template
+            template = """# wrkenv configuration file
+project_name = "{}"
+version = "1.0.0"
+log_level = "INFO"
+
+[tools]
+# terraform = {{ version = "1.5.0" }}
+# go = {{ version = "1.21.0" }}
+# uv = {{ version = "0.4.0" }}
+
+[container]
+enabled = false
+base_image = "ubuntu:22.04"
+python_version = "3.11"
+""".format(Path.cwd().name)
+            config_file.write_text(template)
+        
+        # Open in editor
+        subprocess.run([editor, str(config_file)])
 
     def get_command_option(self, command: str, option: str, default: Any = None) -> Any:
         """Get a command-specific option from configuration.

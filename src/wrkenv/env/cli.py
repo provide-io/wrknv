@@ -8,12 +8,21 @@ wrkenv CLI Commands
 Command-line interface for wrkenv tool management.
 """
 
+import json
 import pathlib
+import shutil
 import sys
+from pathlib import Path
 
 import click
 
 from wrkenv.env.config import WorkenvConfig
+from wrkenv.env.exceptions import (
+    ConfigurationError,
+    DependencyError,
+    ProfileError,
+    ValidationError,
+)
 from wrkenv.env.managers.factory import get_tool_manager
 from wrkenv.env.visual import (
     Emoji,
@@ -45,12 +54,108 @@ def workenv_cli(ctx):
 @click.option("--shell-integration", is_flag=True, help="Set up shell aliases")
 @click.option("--init", is_flag=True, help="Initialize wrkenv's own workenv")
 @click.option("--force", is_flag=True, help="Force recreate workenv")
-def setup_command(shell_integration: bool, init: bool, force: bool):
+@click.option("--check", is_flag=True, help="Check system dependencies")
+@click.option("--completions", type=click.Choice(["bash", "zsh", "fish"]), help="Generate shell completions")
+@click.option("--install", is_flag=True, help="Install completions (use with --completions)")
+def setup_command(shell_integration: bool, init: bool, force: bool, check: bool, completions: str, install: bool):
     """Set up wrkenv environment and integrations."""
     import subprocess
     from pathlib import Path
 
     from wrkenv.env.workenv import WorkenvManager
+
+    if check:
+        # Check system dependencies
+        print_info("Checking system dependencies...", Emoji.INFO)
+        
+        required_deps = ["git", "curl", "python3"]
+        optional_deps = ["docker", "wget"]
+        missing_required = []
+        missing_optional = []
+        
+        for dep in required_deps:
+            if shutil.which(dep):
+                print_success(f"  ✓ {dep}")
+            else:
+                print_error(f"  ✗ {dep} (required)")
+                missing_required.append(dep)
+        
+        for dep in optional_deps:
+            if shutil.which(dep):
+                print_info(f"  ✓ {dep} (optional)")
+            else:
+                print_warning(f"  ✗ {dep} (optional)")
+                missing_optional.append(dep)
+        
+        if missing_required:
+            raise DependencyError(missing_required, "wrkenv core functionality")
+        else:
+            print_success("All required dependencies are installed!")
+        return
+    
+    if completions:
+        # Generate shell completions
+        from wrkenv.env.completions import generate_completions
+        
+        completion_script = generate_completions(completions)
+        
+        if install:
+            # Install completions to appropriate location
+            install_path = None
+            if completions == "bash":
+                # Try common bash completion directories
+                for path in [
+                    Path.home() / ".bash_completion.d",
+                    Path("/etc/bash_completion.d"),
+                    Path("/usr/local/etc/bash_completion.d"),
+                ]:
+                    if path.exists() and path.is_dir():
+                        install_path = path / "wrkenv"
+                        break
+                
+                if not install_path:
+                    # Create user directory
+                    user_dir = Path.home() / ".bash_completion.d"
+                    user_dir.mkdir(exist_ok=True)
+                    install_path = user_dir / "wrkenv"
+                    
+            elif completions == "zsh":
+                # Zsh completion paths
+                for path in [
+                    Path.home() / ".zsh/completions",
+                    Path("/usr/local/share/zsh/site-functions"),
+                ]:
+                    if path.exists() and path.is_dir():
+                        install_path = path / "_wrkenv"
+                        break
+                
+                if not install_path:
+                    # Create user directory
+                    user_dir = Path.home() / ".zsh/completions"
+                    user_dir.mkdir(parents=True, exist_ok=True)
+                    install_path = user_dir / "_wrkenv"
+                    
+            elif completions == "fish":
+                # Fish completion path
+                fish_dir = Path.home() / ".config/fish/completions"
+                fish_dir.mkdir(parents=True, exist_ok=True)
+                install_path = fish_dir / "wrkenv.fish"
+            
+            if install_path:
+                install_path.write_text(completion_script)
+                print_success(f"✅ Installed {completions} completions to {install_path}")
+                
+                if completions == "bash":
+                    print_info("Add this to your ~/.bashrc:")
+                    print_info(f"  source {install_path}")
+                elif completions == "zsh":
+                    print_info("Add this to your ~/.zshrc:")
+                    print_info(f"  fpath=({install_path.parent} $fpath)")
+                    print_info("  autoload -U compinit && compinit")
+        else:
+            # Just output the completion script
+            click.echo(completion_script)
+        return
 
     if init:
         # Set up wrkenv's own workenv
@@ -79,6 +184,8 @@ def setup_command(shell_integration: bool, init: bool, force: bool):
         print_info("Available setup options:")
         print_info("  --init                Create wrkenv's own workenv")
         print_info("  --shell-integration   Set up shell aliases and shortcuts")
+        print_info("  --check               Check system dependencies")
+        print_info("  --completions SHELL   Generate shell completions (bash/zsh/fish)")
 
 
 # === Direct Tool Commands ===
@@ -412,16 +519,24 @@ def profile_list():
             else:
                 click.echo(f"    {name}")
     else:
-        click.echo("No profiles configured")
+        click.echo("No profiles found")
 
 
 @profile_group.command(name="save")
 @click.argument("name")
-def profile_save(name: str):
+@click.option("--force", is_flag=True, help="Overwrite existing profile")
+def profile_save(name: str, force: bool):
     """Save current tool versions as a profile."""
     config = WorkenvConfig()
-
-    config.save_profile(name)
+    
+    # Check if profile exists
+    if not force and config.profile_exists(name):
+        if not click.confirm(f"Profile '{name}' already exists. Overwrite?"):
+            return
+    
+    # Get current tools
+    tools = config.get_all_tools()
+    config.save_profile(name, tools)
     click.echo(f"Saved profile '{name}'")
 
 
@@ -447,6 +562,93 @@ def profile_load(name: str):
             click.echo(f"❌ Error installing {tool_name} {version}: {e}")
 
 
+@profile_group.command(name="show")
+@click.argument("name")
+def profile_show(name: str):
+    """Show details of a profile."""
+    config = WorkenvConfig()
+    
+    profile = config.get_profile(name)
+    if not profile:
+        click.echo(f"Profile '{name}' not found")
+        sys.exit(1)
+    
+    click.echo(f"Profile: {name}")
+    for tool_name, version in profile.items():
+        click.echo(f"  {tool_name}: {version}")
+
+
+@profile_group.command(name="delete")
+@click.argument("name")
+def profile_delete(name: str):
+    """Delete a profile."""
+    config = WorkenvConfig()
+    
+    if not config.profile_exists(name):
+        click.echo(f"Profile '{name}' not found")
+        sys.exit(1)
+    
+    if click.confirm(f"Delete profile '{name}'?"):
+        if config.delete_profile(name):
+            click.echo(f"Profile '{name}' deleted")
+        else:
+            click.echo(f"Failed to delete profile '{name}'")
+            sys.exit(1)
+
+
+@profile_group.command(name="export")
+@click.argument("name")
+@click.option("--output", "-o", help="Output file path")
+def profile_export(name: str, output: str):
+    """Export a profile to a file."""
+    import tomli_w
+    
+    config = WorkenvConfig()
+    profile = config.get_profile(name)
+    
+    if not profile:
+        click.echo(f"Profile '{name}' not found")
+        sys.exit(1)
+    
+    profile_data = {
+        "name": name,
+        "tools": profile
+    }
+    
+    if output:
+        output_path = pathlib.Path(output)
+    else:
+        output_path = pathlib.Path(f"{name}-profile.toml")
+    
+    with open(output_path, "w") as f:
+        f.write(tomli_w.dumps(profile_data))
+    
+    click.echo(f"Exported profile '{name}' to {output_path}")
+
+
+@profile_group.command(name="import")
+@click.argument("file")
+def profile_import(file: str):
+    """Import a profile from a file."""
+    import tomllib
+    
+    file_path = pathlib.Path(file)
+    if not file_path.exists():
+        click.echo(f"File '{file}' not found")
+        sys.exit(1)
+    
+    with open(file_path, "rb") as f:
+        profile_data = tomllib.load(f)
+    
+    name = profile_data.get("name", file_path.stem)
+    tools = profile_data.get("tools", {})
+    
+    config = WorkenvConfig()
+    config.save_profile(name, tools)
+    
+    click.echo(f"Imported profile '{name}'")
+
+
 # === Config Commands ===
 
 
@@ -457,17 +659,189 @@ def config_group():
 
 
 @config_group.command(name="show")
-def config_show():
+@click.option("--json", "output_json", is_flag=True, help="Output in JSON format")
+@click.option("--profile", help="Show specific profile configuration")
+def config_show(output_json: bool, profile: str):
     """Show current configuration."""
     config = WorkenvConfig()
-    config.show_config()
+    
+    if profile:
+        # Show specific profile
+        profile_data = config.get_profile(profile)
+        if not profile_data:
+            raise ProfileError(profile, available_profiles=config.list_profiles())
+        
+        if output_json:
+            click.echo(json.dumps({"profile": profile, "tools": profile_data}, indent=2))
+        else:
+            click.echo(f"Profile: {profile}")
+            for tool_name, version in profile_data.items():
+                click.echo(f"  {tool_name}: {version}")
+    elif output_json:
+        # Output entire config as JSON
+        config_data = config.to_dict()
+        click.echo(json.dumps(config_data, indent=2))
+    else:
+        # Default formatted output
+        config.show_config()
 
 
 @config_group.command(name="edit")
 def config_edit():
     """Edit configuration file."""
     config = WorkenvConfig()
-    config.edit_config()
+    try:
+        config.edit_config()
+    except RuntimeError as e:
+        click.echo(f"Error: {e}", err=True)
+        sys.exit(1)
+
+
+@config_group.command(name="validate")
+@click.option("--strict", is_flag=True, help="Strict validation mode")
+def config_validate(strict: bool):
+    """Validate configuration file syntax and values."""
+    config = WorkenvConfig()
+    
+    if not config.config_exists():
+        print_error("No configuration file found")
+        print_info(f"Create one with: wrkenv config init")
+        sys.exit(1)
+    
+    try:
+        is_valid, errors = config.validate()
+        
+        if is_valid:
+            print_success("✅ Configuration is valid")
+        else:
+            print_error("❌ Configuration validation failed:")
+            for error in errors:
+                click.echo(f"  • {error}", err=True)
+            sys.exit(1)
+            
+    except Exception as e:
+        print_error(f"Validation error: {e}")
+        sys.exit(1)
+
+
+@config_group.command(name="init")
+@click.option("--force", is_flag=True, help="Overwrite existing configuration")
+def config_init(force: bool):
+    """Initialize a new configuration file interactively."""
+    config_path = Path.cwd() / "wrkenv.toml"
+    
+    if config_path.exists() and not force:
+        print_error("Configuration file already exists")
+        print_info("Use --force to overwrite")
+        sys.exit(1)
+    
+    # Interactive prompts
+    project_name = click.prompt("Project name", default=Path.cwd().name)
+    version = click.prompt("Version", default="1.0.0")
+    log_level = click.prompt("Log level", default="INFO", type=click.Choice(["DEBUG", "INFO", "WARNING", "ERROR"]))
+    
+    # Ask about common tools
+    tools = {}
+    if click.confirm("Do you want to configure Terraform/OpenTofu?"):
+        tool_choice = click.prompt("Which tool?", type=click.Choice(["terraform", "tofu"]), default="tofu")
+        version = click.prompt(f"{tool_choice} version", default="1.8.0" if tool_choice == "tofu" else "1.5.7")
+        tools[tool_choice] = {"version": version}
+    
+    if click.confirm("Do you want to configure Go?"):
+        version = click.prompt("Go version", default="1.22.1")
+        tools["go"] = {"version": version}
+    
+    if click.confirm("Do you want to configure UV?"):
+        version = click.prompt("UV version", default="0.4.0")
+        tools["uv"] = {"version": version}
+    
+    # Create configuration
+    import tomli_w
+    config_data = {
+        "project_name": project_name,
+        "version": version,
+        "log_level": log_level,
+    }
+    
+    if tools:
+        config_data["tools"] = tools
+    
+    # Add container section if requested
+    if click.confirm("Enable container support?"):
+        config_data["container"] = {
+            "enabled": True,
+            "base_image": "ubuntu:22.04",
+            "python_version": "3.11",
+        }
+    
+    # Write configuration
+    with open(config_path, "w") as f:
+        f.write(tomli_w.dumps(config_data))
+    
+    print_success(f"✅ Created configuration file: {config_path}")
+    print_info("You can edit it with: wrkenv config edit")
+
+
+@config_group.command(name="get")
+@click.argument("key")
+def config_get(key: str):
+    """Get a configuration value."""
+    config = WorkenvConfig()
+    
+    try:
+        value = config.get_setting(key)
+        if value is None:
+            print_warning(f"Key '{key}' not found")
+            sys.exit(1)
+        
+        if isinstance(value, (dict, list)):
+            click.echo(json.dumps(value, indent=2))
+        else:
+            click.echo(value)
+            
+    except Exception as e:
+        print_error(f"Error getting config value: {e}")
+        sys.exit(1)
+
+
+@config_group.command(name="set")
+@click.argument("key")
+@click.argument("value")
+def config_set(key: str, value: str):
+    """Set a configuration value."""
+    config = WorkenvConfig()
+    
+    try:
+        # Try to parse value as JSON first (for complex types)
+        try:
+            parsed_value = json.loads(value)
+        except json.JSONDecodeError:
+            # Not JSON, treat as string
+            parsed_value = value
+        
+        if config.set_setting(key, parsed_value):
+            print_success(f"✅ Set {key} to {value}")
+        else:
+            print_error(f"Failed to set {key}")
+            sys.exit(1)
+            
+    except Exception as e:
+        print_error(f"Error setting config value: {e}")
+        sys.exit(1)
+
+
+@config_group.command(name="path")
+def config_path():
+    """Show path to configuration file."""
+    config = WorkenvConfig()
+    config_file = config.get_config_path()
+    
+    if config_file.exists():
+        click.echo(str(config_file.absolute()))
+    else:
+        print_warning(f"Configuration file not found: {config_file}")
+        print_info("Create one with: wrkenv config init")
+        sys.exit(1)
 
 
 # === Package Commands ===
