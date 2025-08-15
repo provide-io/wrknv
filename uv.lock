@@ -437,7 +437,7 @@ wheels = [
 
 [[package]]
 name = "pyvider-telemetry"
-version = "0.1.0"
+version = "0.0.15"
 source = { directory = "../pyvider-telemetry" }
 dependencies = [
     { name = "attrs" },
