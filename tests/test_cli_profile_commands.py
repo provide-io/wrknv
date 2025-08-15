@@ -74,6 +74,7 @@ project_name = "test-project"
                 "uv": "0.4.0"
             }
             mock_config.save_profile.return_value = None
+            mock_config.profile_exists.return_value = False
             mock_config_class.return_value = mock_config
             
             result = self.runner.invoke(workenv_cli, ["profile", "save", "dev"])
@@ -175,6 +176,7 @@ project_name = "test-project"
         """Test deleting a profile."""
         with patch("wrkenv.env.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
+            mock_config.profile_exists.return_value = True
             mock_config.delete_profile.return_value = True
             mock_config_class.return_value = mock_config
             
