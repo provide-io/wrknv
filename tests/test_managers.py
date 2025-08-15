@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from wrkenv.env.managers.base import BaseToolManager
 from wrkenv.env.config import WorkenvConfig
+from pathlib import Path
 
 class ConcreteToolManager(BaseToolManager):
     tool_name = 'test'
@@ -49,13 +50,17 @@ class TestManagers(unittest.TestCase):
         config = WorkenvConfig()
         manager = ConcreteToolManager(config)
         
-        # Mock iterdir to return dummy version directories
-        mock_iterdir.return_value = [
-            MagicMock(is_dir=MagicMock(return_value=True), name='1.0.0'),
-            MagicMock(is_dir=MagicMock(return_value=True), name='1.1.0'),
-            MagicMock(is_dir=MagicMock(return_value=True), name='invalid'),
-            MagicMock(is_dir=MagicMock(return_value=True), name='2.0.0'),
+        # Create dummy directories for mocking
+        mock_install_path = MagicMock(spec=Path)
+        mock_tool_install_dir = MagicMock(spec=Path)
+        mock_tool_install_dir.iterdir.return_value = [
+            MagicMock(spec=Path, name='1.0.0', is_dir=MagicMock(return_value=True)),
+            MagicMock(spec=Path, name='1.1.0', is_dir=MagicMock(return_value=True)),
+            MagicMock(spec=Path, name='invalid', is_dir=MagicMock(return_value=True)),
+            MagicMock(spec=Path, name='2.0.0', is_dir=MagicMock(return_value=True)),
         ]
+        mock_install_path.__truediv__.return_value = mock_tool_install_dir
+        manager.install_path = mock_install_path
 
         # Act
         versions = manager.get_installed_versions()
