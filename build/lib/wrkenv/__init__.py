@@ -15,7 +15,7 @@ from wrkenv.wenv.config import WorkenvConfig, WorkenvConfigError
 from wrkenv.wenv.managers.factory import get_supported_tools, get_tool_manager
 
 __all__ = [
-    "env",
+    "wenv",
     "package",
     "container",
     "WorkenvConfig",

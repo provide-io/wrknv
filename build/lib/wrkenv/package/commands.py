@@ -26,7 +26,7 @@ def _get_flavor_api():
     except ImportError:
         raise ImportError(
             "flavor package not found. Install it with: pip install flavor"
-        )
+        ) from None
 
 
 def build_package(
@@ -102,7 +102,7 @@ def init_provider(project_dir: Path, config: WorkenvConfig | None = None) -> Pat
     # Create basic pyproject.toml
     pyproject = project_dir / "pyproject.toml"
     pyproject.write_text(
-            """[project]
+        """[project]
 name = "provider-example"
 version = "0.1.0"
 description = "Example Terraform provider"
