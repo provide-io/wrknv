@@ -1117,6 +1117,62 @@ def package_config():
         click.echo(f"  {key}: {value}")
 
 
+# === Gitignore Commands ===
+
+
+@workenv_cli.group(name="gitignore")
+def gitignore_group():
+    """🚫 Manage .gitignore files."""
+    pass
+
+
+@gitignore_group.command(name="build")
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(path_type=pathlib.Path),
+    default=pathlib.Path(".gitignore"),
+    help="Output path for the .gitignore file",
+)
+@click.option(
+    "--templates",
+    "-t",
+    multiple=True,
+    help="Specify templates to include (e.g., Python, Node). Overrides config.",
+)
+def gitignore_build(output: pathlib.Path, templates: tuple[str, ...]):
+    """Build a .gitignore file from templates."""
+    config = WorkenvConfig()
+    gitignore_content = []
+
+    # Determine templates to use
+    if templates:
+        selected_templates = list(templates)
+    elif config.get_config().gitignore and config.get_config().gitignore.templates:
+        selected_templates = config.get_config().gitignore.templates
+    else:
+        click.echo("No gitignore templates specified in config or via --templates.")
+        return
+
+    gitignore_dir = pathlib.Path("/Users/tim/code/gh/provide-io/gitignore")
+
+    for template_name in selected_templates:
+        template_file = gitignore_dir / f"{template_name}.gitignore"
+        if template_file.exists():
+            gitignore_content.append(f"# --- {template_name} ---")
+            gitignore_content.append(template_file.read_text())
+            gitignore_content.append("\n") # Add a newline for separation
+        else:
+            click.echo(f"Warning: Gitignore template '{template_name}' not found at {template_file}", err=True)
+
+    if gitignore_content:
+        output.write_text("\n".join(gitignore_content))
+        click.echo(f"✅ .gitignore built successfully at {output}")
+    else:
+        click.echo("No content generated for .gitignore.")
+
+
+
 # === TF Subcommands (moved to tf command above) ===
 # Removed tf group to avoid conflict with tf command
 

@@ -96,6 +96,12 @@ def convert_log_level(value):
 
 
 @define
+class GitignoreConfig:
+    """Configuration for gitignore generation."""
+    templates: list[str] = field(factory=list, validator=validators.instance_of(list))
+
+
+@define
 class ToolConfig:
     """Configuration for a specific tool."""
 
@@ -254,6 +260,12 @@ class WorkenvConfig:
     # Custom scripts
     scripts: dict[str, str] = field(
         factory=dict, validator=validators.instance_of(dict)
+    )
+
+    # Gitignore configuration
+    gitignore: GitignoreConfig | None = field(
+        default=None,
+        validator=validators.optional(validators.instance_of(GitignoreConfig)),
     )
 
     def __attrs_post_init__(self):
