@@ -20,7 +20,7 @@ def gitignore_templates_dir(tmp_path):
 
 
 class TestGitignoreCommands:
-    def test_gitignore_build_from_config(self, runner, tmp_path, gitignore_templates_dir, monkeypatch):
+    def test_gitignore_build_from_config(self, runner, tmp_path, gitignore_templates_dir):
         """Test building .gitignore from wrkenv.toml config."""
         # Create a dummy wrkenv.toml in the temporary directory
         config_content = f"""
@@ -32,7 +32,6 @@ templates = ["Python", "Node"]
 templates_path = "{gitignore_templates_dir}"
 """
         (tmp_path / "wrkenv.toml").write_text(config_content)
-        monkeypatch.setenv("WRKENV_CONFIG_PATH", str(tmp_path / "wrkenv.toml"))
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path):
@@ -53,7 +52,7 @@ templates_path = "{gitignore_templates_dir}"
             assert "npm-debug.log" in content
             assert ".DS_Store" not in content # Should not include Global.gitignore
 
-    def test_gitignore_build_with_templates_option(self, runner, tmp_path, gitignore_templates_dir, monkeypatch):
+    def test_gitignore_build_with_templates_option(self, runner, tmp_path, gitignore_templates_dir):
         """Test building .gitignore using --templates option (should override config)."""
         # Create a dummy wrkenv.toml (with different templates)
         config_content = f"""
@@ -65,7 +64,6 @@ templates = ["Python", "Node"]
 templates_path = "{gitignore_templates_dir}"
 """
         (tmp_path / "wrkenv.toml").write_text(config_content)
-        monkeypatch.setenv("WRKENV_CONFIG_PATH", str(tmp_path / "wrkenv.toml"))
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path):
@@ -99,7 +97,7 @@ templates_path = "{gitignore_templates_dir}"
             assert "*.pyc" in content
             assert "node_modules/" not in content # Should not include Node.gitignore
 
-    def test_gitignore_build_no_templates_specified(self, runner, tmp_path, monkeypatch):
+    def test_gitignore_build_no_templates_specified(self, runner, tmp_path):
         """Test building .gitignore when no templates are specified in config or via option."""
         # Create a dummy wrkenv.toml without gitignore section
         config_content = f"""
@@ -107,7 +105,6 @@ project_name = "test-project"
 version = "0.1.0"
 """
         (tmp_path / "wrkenv.toml").write_text(config_content)
-        monkeypatch.setenv("WRKENV_CONFIG_PATH", str(tmp_path / "wrkenv.toml"))
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path):
@@ -121,7 +118,7 @@ version = "0.1.0"
             assert "No gitignore templates specified in config or via --templates." in result.output
             assert not (tmp_path / ".gitignore").exists()
 
-    def test_gitignore_build_with_non_existent_template(self, runner, tmp_path, gitignore_templates_dir, monkeypatch):
+    def test_gitignore_build_with_non_existent_template(self, runner, tmp_path, gitignore_templates_dir):
         """Test building .gitignore with a non-existent template."""
         config_content = f"""
 project_name = "test-project"
@@ -132,10 +129,19 @@ templates = ["Python", "NonExistent"]
 templates_path = "{gitignore_templates_dir}"
 """
         (tmp_path / "wrkenv.toml").write_text(config_content)
-        monkeypatch.setenv("WRKENV_CONFIG_PATH", str(tmp_path / "wrkenv.toml"))
 
         with runner.isolated_filesystem(tmp_path):
             result = runner.invoke(workenv_cli, ["gitignore", "build"], catch_exceptions=False)
+
+            assert result.exit_code == 0
+            assert "Warning: Gitignore template 'NonExistent' not found" in result.stderr
+            assert "✅ .gitignore built successfully" in result.output
+
+            gitignore_file = tmp_path / ".gitignore"
+            assert gitignore_file.exists()
+            content = gitignore_file.read_text()
+            assert "# --- Python ---" in content
+            assert "# --- NonExistent ---" not in content # Should not include header for non-existent
 
             assert result.exit_code == 0
             assert "Warning: Gitignore template 'NonExistent' not found" in result.stderr
