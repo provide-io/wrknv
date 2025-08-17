@@ -173,9 +173,9 @@ templates_path = "{templates_path_actual}"
                 result = runner.invoke(workenv_cli, ["gitignore", "build"], catch_exceptions=False)
 
             assert result.exit_code == 0
-            captured = capsys.readouterr()
-            assert "Warning: Gitignore template 'NonExistent' not found" in captured.err
-            assert "✅ .gitignore built successfully" in result.output
+            out, err = capsys.readouterr()
+            assert "Warning: Gitignore template 'NonExistent' not found" in err
+            assert "✅ .gitignore built successfully" in out
 
             gitignore_file = tmp_path / ".gitignore"
             assert gitignore_file.exists()
