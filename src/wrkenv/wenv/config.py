@@ -300,7 +300,7 @@ class WorkenvConfig:
         for source in reversed(self.sources):  # Start with lowest priority
             if isinstance(source, FileConfigSource):
                 # Get the raw data from the file source
-                merged.update({"workenv": source._data})
+                merged.update(source._data)
         return merged
 
     def get_tool_version(self, tool_name: str) -> str | None:

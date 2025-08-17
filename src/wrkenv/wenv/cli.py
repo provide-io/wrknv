@@ -1145,16 +1145,27 @@ def gitignore_build(output: pathlib.Path, templates: tuple[str, ...]):
     config = WorkenvConfig()
     gitignore_content = []
 
+    config_data = config.to_dict()
+    gitignore_config = config_data.get("gitignore", {})
+
     # Determine templates to use
     if templates:
         selected_templates = list(templates)
-    elif config._config.gitignore and config._config.gitignore.templates:
-        selected_templates = config.get_config().gitignore.templates
+    elif gitignore_config.get("templates"):
+        selected_templates = gitignore_config.get("templates")
     else:
+        selected_templates = [] # Ensure it's an empty list if no templates found
+
+    if not selected_templates:
         click.echo("No gitignore templates specified in config or via --templates.")
         return
 
-    gitignore_dir = pathlib.Path("/Users/tim/code/gh/provide-io/gitignore")
+    # Determine the gitignore templates directory
+    if gitignore_config.get("templates_path"):
+        gitignore_dir = pathlib.Path(gitignore_config.get("templates_path"))
+    else:
+        # Fallback to the hardcoded path if not configured
+        gitignore_dir = pathlib.Path("/Users/tim/code/gh/provide-io/gitignore")
 
     for template_name in selected_templates:
         template_file = gitignore_dir / f"{template_name}.gitignore"
