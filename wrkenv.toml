@@ -1,0 +1,20 @@
+project_name = "wrkenv"
+version = "0.1.0"
+log_level = "INFO"
+
+[tools]
+# Example tool configurations
+# terraform = { version = "1.5.0" }
+# go = { version = "1.21.0" }
+
+[gitignore]
+templates = ["Python", "Node", "Global"]
+
+[container]
+enabled = false
+
+[package]
+# Example package configuration
+# name = "my-provider"
+# version = "0.1.0"
+# entry_point = "src/my_provider/__init__.py"

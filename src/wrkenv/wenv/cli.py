@@ -1148,7 +1148,7 @@ def gitignore_build(output: pathlib.Path, templates: tuple[str, ...]):
     # Determine templates to use
     if templates:
         selected_templates = list(templates)
-    elif config.get_config().gitignore and config.get_config().gitignore.templates:
+    elif config._config.gitignore and config._config.gitignore.templates:
         selected_templates = config.get_config().gitignore.templates
     else:
         click.echo("No gitignore templates specified in config or via --templates.")
