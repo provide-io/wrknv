@@ -194,15 +194,9 @@ templates_path = "{templates_path_actual}"
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
             isolated_path = Path(isolated_path_str)
             # Create dummy template files inside the isolated path
-            (isolated_path / "Python.gitignore").write_text("# Python ignores
-*.pyc
-__pycache__/")
-            (isolated_path / "Node.gitignore").write_text("# Node ignores
-node_modules/
-npm-debug.log")
-            (isolated_path / "Global.gitignore").write_text("# Global ignores
-.DS_Store
-.env")
+            (isolated_path / "Python.gitignore").write_text("# Python ignores\n*.pyc\n__pycache__/")
+            (isolated_path / "Node.gitignore").write_text("# Node ignores\nnode_modules/\nnpm-debug.log")
+            (isolated_path / "Global.gitignore").write_text("# Global ignores\n.DS_Store\n.env")
             (isolated_path / "NonExistent.gitignore").write_text("# This file should not be used") # For negative test cases
 
             # Write config content with the actual isolated path
