@@ -154,7 +154,14 @@ templates_path = "{templates_path_actual}"
         from wrkenv.wenv.config import WorkenvConfig, FileConfigSource
 
         # Change current working directory to tmp_path for the test
-        with runner.isolated_filesystem(tmp_path) as isolated_path:
+        with runner.isolated_filesystem(tmp_path) as isolated_path_str:
+            isolated_path = Path(isolated_path_str)
+            # Create dummy template files inside the isolated path
+            (isolated_path / "Python.gitignore").write_text("# Python ignores\n*.pyc\n__pycache__/")
+            (isolated_path / "Node.gitignore").write_text("# Node ignores\nnode_modules/\nnpm-debug.log")
+            (isolated_path / "Global.gitignore").write_text("# Global ignores\n.DS_Store\n.env")
+            (isolated_path / "NonExistent.gitignore").write_text("# This file should not be used") # For negative test cases
+
             # Write config content with the actual isolated path
             config_content = config_content_template.format(templates_path_actual=isolated_path)
             config_path.write_text(config_content)
