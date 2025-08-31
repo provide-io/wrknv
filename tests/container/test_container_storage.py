@@ -96,12 +96,10 @@ class TestContainerMetadata:
     """Test container metadata management."""
 
     @pytest.fixture
-    def mock_home(self, tmp_path):
-        """Mock home directory for testing."""
-        mock_home = tmp_path / "home"
-        mock_home.mkdir()
-        with patch("pathlib.Path.home", return_value=mock_home):
-            yield mock_home
+    def test_storage_path(self, tmp_path):
+        """Create a test storage path."""
+        storage_path = tmp_path / "test_wrknv_containers"
+        return str(storage_path)
 
     @pytest.fixture
     def container_manager(self, test_storage_path):
@@ -112,6 +110,7 @@ class TestContainerMetadata:
                 enabled=True,
                 python_version="3.11",
                 additional_packages=["git", "curl"],
+                storage_path=test_storage_path
             ),
         )
         manager = ContainerManager(config)
@@ -170,19 +169,20 @@ class TestVolumeManagement:
     """Test container volume management."""
 
     @pytest.fixture
-    def mock_home(self, tmp_path):
-        """Mock home directory for testing."""
-        mock_home = tmp_path / "home"
-        mock_home.mkdir()
-        with patch("pathlib.Path.home", return_value=mock_home):
-            yield mock_home
+    def test_storage_path(self, tmp_path):
+        """Create a test storage path."""
+        storage_path = tmp_path / "test_wrknv_containers"
+        return str(storage_path)
 
     @pytest.fixture
     def container_manager(self, test_storage_path):
         """Create a ContainerManager instance."""
         config = WorkenvConfig(
             project_name="test-project",
-            container=ContainerConfig(enabled=True),
+            container=ContainerConfig(
+                enabled=True,
+                storage_path=test_storage_path
+            ),
         )
         manager = ContainerManager(config)
         manager._setup_storage()
@@ -266,7 +266,7 @@ class TestVolumeManagement:
         assert "test-project-dev" in backup_path.name
         
         # Check backup location
-        backups_dir = mock_home / ".wrknv" / "containers" / container_manager.CONTAINER_NAME / "backups"
+        backups_dir = Path(test_storage_path) / container_manager.CONTAINER_NAME / "backups"
         assert backups_dir.exists()
         assert backup_path.parent == backups_dir
 
@@ -328,19 +328,20 @@ class TestDockerIntegration:
     """Test Docker integration with new storage structure."""
 
     @pytest.fixture
-    def mock_home(self, tmp_path):
-        """Mock home directory for testing."""
-        mock_home = tmp_path / "home"
-        mock_home.mkdir()
-        with patch("pathlib.Path.home", return_value=mock_home):
-            yield mock_home
+    def test_storage_path(self, tmp_path):
+        """Create a test storage path."""
+        storage_path = tmp_path / "test_wrknv_containers"
+        return str(storage_path)
 
     @pytest.fixture
     def container_manager(self, test_storage_path):
         """Create a ContainerManager instance."""
         config = WorkenvConfig(
             project_name="test-project",
-            container=ContainerConfig(enabled=True),
+            container=ContainerConfig(
+                enabled=True,
+                storage_path=test_storage_path
+            ),
         )
         manager = ContainerManager(config)
         manager._setup_storage()
@@ -389,7 +390,7 @@ class TestDockerIntegration:
         assert any(cache_mount_prefix in arg for arg in call_args)
         
         # Check for shared downloads (read-only)
-        shared_path = mock_home / ".wrknv" / "containers" / "shared" / "downloads"
+        shared_path = Path(test_storage_path) / "shared" / "downloads"
         shared_mount = f"{shared_path}:/downloads:ro"
         assert any(shared_mount in arg for arg in call_args)
 
