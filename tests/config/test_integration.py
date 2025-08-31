@@ -1,7 +1,7 @@
 """
-TDD Tests for wrkenv Configuration Integration
+TDD Tests for wrknv Configuration Integration
 ==============================================
-These tests define the expected behavior for wrkenv's flexible configuration system.
+These tests define the expected behavior for wrknv's flexible configuration system.
 """
 
 import pathlib
@@ -10,8 +10,8 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from wrkenv import WorkenvConfig
-from wrkenv.wenv.config import (
+from wrknv import WorkenvConfig
+from wrknv.wenv.config import (
     ConfigSource,
     EnvironmentConfigSource,
     FileConfigSource,
@@ -39,7 +39,7 @@ class TestConfigSourceContracts:
         CONTRACT: FileConfigSource should load configuration from TOML files
         """
         with tempfile.TemporaryDirectory() as tmpdir:
-            config_file = pathlib.Path(tmpdir) / "wrkenv.toml"
+            config_file = pathlib.Path(tmpdir) / "wrknv.toml"
             config_file.write_text("""
 [workenv.tools]
 terraform = "1.5.7"
@@ -51,7 +51,7 @@ tofu = "1.7.0"
 
 [workenv.settings]
 verify_checksums = true
-install_path = "~/.wrkenv/tools"
+install_path = "~/.wrknv/tools"
 """)
             
             source = FileConfigSource(config_file, "workenv")
@@ -72,7 +72,7 @@ install_path = "~/.wrkenv/tools"
             
             # Should load settings
             assert source.get_setting("verify_checksums") is True
-            assert source.get_setting("install_path") == "~/.wrkenv/tools"
+            assert source.get_setting("install_path") == "~/.wrknv/tools"
     
     def test_environment_config_source(self):
         """
@@ -118,9 +118,9 @@ class TestWorkenvConfigIntegration:
         CONTRACT: WorkenvConfig should have sensible defaults
         """
         with tempfile.TemporaryDirectory() as tmpdir:
-            # Create a wrkenv.toml to have multiple sources
-            wrkenv_toml = pathlib.Path(tmpdir) / "wrkenv.toml"
-            wrkenv_toml.write_text("""
+            # Create a wrknv.toml to have multiple sources
+            wrknv_toml = pathlib.Path(tmpdir) / "wrknv.toml"
+            wrknv_toml.write_text("""
 [workenv.tools]
 terraform = "1.5.0"
 """)
@@ -149,8 +149,8 @@ terraform = "1.5.0"
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             # Create config files
-            wrkenv_toml = pathlib.Path(tmpdir) / "wrkenv.toml"
-            wrkenv_toml.write_text("""
+            wrknv_toml = pathlib.Path(tmpdir) / "wrknv.toml"
+            wrknv_toml.write_text("""
 [workenv.tools]
 terraform = "1.5.0"
 tofu = "1.6.0"
@@ -224,11 +224,11 @@ class TestPlatformSpecificBehavior:
         
         with patch('platform.system', return_value='Linux'):
             with patch('platform.machine', return_value='x86_64'):
-                assert config.get_workenv_dir_name() == "workenv/wrkenv_linux_amd64"
+                assert config.get_workenv_dir_name() == "workenv/wrknv_linux_amd64"
         
         with patch('platform.system', return_value='Darwin'):
             with patch('platform.machine', return_value='arm64'):
-                assert config.get_workenv_dir_name() == "workenv/wrkenv_darwin_arm64"
+                assert config.get_workenv_dir_name() == "workenv/wrknv_darwin_arm64"
     
     def test_workenv_dir_with_profile(self):
         """
@@ -241,7 +241,7 @@ class TestPlatformSpecificBehavior:
         
         with patch('platform.system', return_value='Linux'):
             with patch('platform.machine', return_value='x86_64'):
-                assert config.get_workenv_dir_name() == "workenv/development_wrkenv_linux_amd64"
+                assert config.get_workenv_dir_name() == "workenv/development_wrknv_linux_amd64"
 
 
 class TestVersionValidation:

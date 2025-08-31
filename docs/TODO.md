@@ -1,4 +1,4 @@
-# TODO.md - wrkenv Development Tasks
+# TODO.md - wrknv Development Tasks
 
 This document tracks prioritized development tasks.
 
@@ -12,8 +12,21 @@ This document tracks prioritized development tasks.
 
 ## Medium Priority - Feature Completeness & Architecture
 
+- [ ] **Implement Ecosystem Test Matrix Command**
+  - Add `wrknv test-matrix` command to run tests across all sibling packages
+  - Generate comprehensive test report in markdown format
+  - Include pass/fail rates, coverage metrics, and identified issues
+  - Support parallel test execution for faster results
+  - Integrate with CI/CD for automated ecosystem health checks
+
+- [ ] **Fix Test Environment Integration**
+  - Tests should use wrknv-managed `workenv/` directories (e.g., `workenv/wrknv_darwin_arm64`)
+  - Currently tests are creating `.venv` instead of using wrknv's workenv pattern
+  - Update test runners to properly activate and use wrknv environments
+  - Ensure consistent environment usage across all packages
+
 - [ ] **Implement Type-Safe Configuration**
-  - Define a validation schema for the `wrkenv.toml` structure.
+  - Define a validation schema for the `wrknv.toml` structure.
   - Refactor `env.config` to validate loaded configuration against this schema, providing clear errors on invalid input. This will improve reliability and user experience.
 
 - [ ] **Complete `package` Command Implementation**
@@ -22,7 +35,7 @@ This document tracks prioritized development tasks.
   - Mark commands as experimental in the CLI help text until fully functional.
 
 - [ ] **Make Container Configuration Dynamic**
-  - Refactor `ContainerManager._generate_dockerfile` to source its base image and packages from `wrkenv.toml` instead of using hardcoded values.
+  - Refactor `ContainerManager._generate_dockerfile` to source its base image and packages from `wrknv.toml` instead of using hardcoded values.
 
 - [ ] **Refactor Data Classes to Use `attrs`**
   - Systematically replace standard classes and dataclasses used for configuration and data modeling with `attrs` classes for improved validation and robustness.

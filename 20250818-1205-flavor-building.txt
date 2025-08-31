@@ -3,7 +3,7 @@
 │                                                   │
 │   /help for help, /status for your current setup  │
 │                                                   │
-│   cwd: /Users/tim/code/gh/provide-io/wrkenv       │
+│   cwd: /Users/tim/code/gh/provide-io/wrknv       │
 ╰───────────────────────────────────────────────────╯
 
 > Load @WORKFLOW_PLAN.md and provide a plan of what you're doing next based on that.

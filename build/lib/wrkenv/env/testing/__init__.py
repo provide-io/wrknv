@@ -1,8 +1,8 @@
 #
-# wrkenv/workenv/testing/__init__.py
+# wrknv/workenv/testing/__init__.py
 #
 """
-wrkenv Testing Modules
+wrknv Testing Modules
 ======================
 Testing functionality for workenv tool version matrix testing.
 """

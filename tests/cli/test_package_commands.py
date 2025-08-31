@@ -1,5 +1,5 @@
 """
-TDD Tests for wrkenv Package Commands
+TDD Tests for wrknv Package Commands
 =====================================
 Test-driven development for package management functionality.
 """
@@ -11,7 +11,7 @@ from unittest.mock import MagicMock, Mock, patch
 import pytest
 from click.testing import CliRunner
 
-from wrkenv.wenv.cli import workenv_cli
+from wrknv.wenv.cli import workenv_cli
 
 
 class TestWorkenvPackageCommands:
@@ -84,13 +84,13 @@ entry_point = "test.main:serve"
         
         runner = CliRunner()
         # Patch the function that imports flavor API
-        with patch("wrkenv.package.commands._get_flavor_api") as mock_get_api:
+        with patch("wrknv.package.commands._get_flavor_api") as mock_get_api:
             mock_api = MagicMock()
             mock_api.build_package_from_manifest.return_value = [tmp_path / "dist" / "test.flavor"]
             mock_get_api.return_value = mock_api
             
             # Also patch the manager to avoid tool checks in this unit test
-            with patch("wrkenv.package.commands.PackageManager") as mock_manager:
+            with patch("wrknv.package.commands.PackageManager") as mock_manager:
                 mock_manager.return_value.is_flavor_available.return_value = True
                 mock_manager.return_value.check_required_tools.return_value = {"go": "1.21", "uv": "0.4"}
                 mock_manager.return_value.setup_build_environment.return_value = None
@@ -118,13 +118,13 @@ version = "0.1.0"
             """)
             
             # Patch the function that imports flavor API
-            with patch("wrkenv.package.commands._get_flavor_api") as mock_get_api:
+            with patch("wrknv.package.commands._get_flavor_api") as mock_get_api:
                 mock_api = MagicMock()
                 mock_api.build_package_from_manifest.return_value = [Path("dist/test.flavor")]
                 mock_get_api.return_value = mock_api
                 
                 # Also patch the manager to avoid tool checks in this unit test
-                with patch("wrkenv.package.commands.PackageManager") as mock_manager:
+                with patch("wrknv.package.commands.PackageManager") as mock_manager:
                     mock_manager.return_value.is_flavor_available.return_value = True
                     mock_manager.return_value.check_required_tools.return_value = {"go": "1.21", "uv": "0.4"}
                     mock_manager.return_value.setup_build_environment.return_value = None
@@ -139,7 +139,7 @@ version = "0.1.0"
         runner = CliRunner()
         
         # Patch the flavor API getter to avoid import error
-        with patch("wrkenv.package.commands._get_flavor_api") as mock_get_api:
+        with patch("wrknv.package.commands._get_flavor_api") as mock_get_api:
             mock_api = MagicMock()
             mock_api.generate_keys.return_value = (
                 tmp_path / "provider-private.key",
@@ -167,7 +167,7 @@ version = "0.1.0"
         
         runner = CliRunner()
         # Patch the flavor API getter to avoid import error
-        with patch("wrkenv.package.commands._get_flavor_api") as mock_get_api:
+        with patch("wrknv.package.commands._get_flavor_api") as mock_get_api:
             mock_api = MagicMock()
             mock_api.verify_package.return_value = None
             mock_get_api.return_value = mock_api
@@ -188,7 +188,7 @@ version = "0.1.0"
         
         runner = CliRunner()
         # Patch the flavor API getter to simulate verification failure
-        with patch("wrkenv.package.commands._get_flavor_api") as mock_get_api:
+        with patch("wrknv.package.commands._get_flavor_api") as mock_get_api:
             mock_api = MagicMock()
             mock_api.verify_package.side_effect = Exception("Invalid signature")
             mock_get_api.return_value = mock_api
@@ -206,12 +206,12 @@ version = "0.1.0"
         runner = CliRunner()
         
         # Patch both the flavor API and the manager
-        with patch("wrkenv.package.commands._get_flavor_api") as mock_get_api:
+        with patch("wrknv.package.commands._get_flavor_api") as mock_get_api:
             mock_api = MagicMock()
             mock_api.clean_cache.return_value = None
             mock_get_api.return_value = mock_api
             
-            with patch("wrkenv.package.commands.PackageManager") as mock_manager:
+            with patch("wrknv.package.commands.PackageManager") as mock_manager:
                 mock_instance = MagicMock()
                 mock_instance.get_package_cache_dir.return_value = Path("/tmp/cache")
                 mock_manager.return_value = mock_instance
@@ -227,7 +227,7 @@ version = "0.1.0"
         project_dir = tmp_path / "terraform-provider-example"
         
         runner = CliRunner()
-        # No need to mock tofusoup anymore - it's removed from wrkenv
+        # No need to mock tofusoup anymore - it's removed from wrknv
         result = runner.invoke(
             workenv_cli,
             ["package", "init", str(project_dir)]
@@ -268,7 +268,7 @@ version = "0.1.0"
         runner = CliRunner()
         
         # Patch where the CLI imports the function
-        with patch("wrkenv.package.list_packages") as mock_list:
+        with patch("wrknv.package.list_packages") as mock_list:
             mock_list.return_value = [
                 {"name": "provider-aws", "version": "5.0.0", "size": "45MB"},
                 {"name": "provider-gcp", "version": "4.2.0", "size": "38MB"},
@@ -288,7 +288,7 @@ version = "0.1.0"
         
         runner = CliRunner()
         # Patch where the CLI imports the function
-        with patch("wrkenv.package.get_package_info") as mock_info:
+        with patch("wrknv.package.get_package_info") as mock_info:
             mock_info.return_value = {
                 "name": "test-provider",
                 "version": "1.0.0",
@@ -315,7 +315,7 @@ version = "0.1.0"
         package_file.write_text("data")
         
         runner = CliRunner()
-        with patch("wrkenv.package.publish_package") as mock_pub:
+        with patch("wrknv.package.publish_package") as mock_pub:
             mock_pub.return_value = {
                 "url": "https://registry.example.com/provider",
                 "sha256": "abc123",
@@ -340,7 +340,7 @@ version = "1.0.0"
         """)
         
         runner = CliRunner()
-        with patch("wrkenv.package.commands.build_package") as mock_build:
+        with patch("wrknv.package.commands.build_package") as mock_build:
             result = runner.invoke(
                 workenv_cli,
                 ["package", "build", "--manifest", str(manifest), "--dry-run"]
@@ -353,7 +353,7 @@ version = "1.0.0"
 
     def test_package_config_integration(self, tmp_path):
         """Package should use workenv configuration."""
-        config_file = tmp_path / "wrkenv.toml"
+        config_file = tmp_path / "wrknv.toml"
         config_file.write_text("""
 [workenv.settings]
 package = { default_out_dir = "build", signing_curve = "P-521", verify_on_build = true, metadata = { author = "Test Author", license = "MIT" } }
@@ -374,8 +374,8 @@ class TestPackageManagerIntegration:
     
     def test_package_manager_requires_flavor(self):
         """PackageManager should check for flavor availability."""
-        from wrkenv.package.manager import PackageManager
-        from wrkenv.wenv.config import WorkenvConfig
+        from wrknv.package.manager import PackageManager
+        from wrknv.wenv.config import WorkenvConfig
         
         config = WorkenvConfig()
         manager = PackageManager(config)
@@ -393,8 +393,8 @@ class TestPackageManagerIntegration:
 
     def test_package_manager_tool_integration(self):
         """PackageManager should integrate with tool managers."""
-        from wrkenv.package.manager import PackageManager
-        from wrkenv.wenv.config import WorkenvConfig
+        from wrknv.package.manager import PackageManager
+        from wrknv.wenv.config import WorkenvConfig
         
         config = WorkenvConfig()
         manager = PackageManager(config)
@@ -413,8 +413,8 @@ class TestPackageManagerIntegration:
 
     def test_package_manager_environment_setup(self):
         """PackageManager should set up build environment."""
-        from wrkenv.package.manager import PackageManager
-        from wrkenv.wenv.config import WorkenvConfig
+        from wrknv.package.manager import PackageManager
+        from wrknv.wenv.config import WorkenvConfig
         
         config = WorkenvConfig()
         manager = PackageManager(config)
@@ -448,7 +448,7 @@ class TestPackageCommandsWithWorkenv:
 
     def test_package_with_matrix_testing(self, tmp_path):
         """Package should support matrix testing with different tool versions."""
-        config_file = tmp_path / "wrkenv.toml"
+        config_file = tmp_path / "wrknv.toml"
         config_file.write_text("""
 [workenv.matrix.package_test]
 go = ["1.20", "1.21", "1.22"]
@@ -460,7 +460,7 @@ test = "package verify {artifact}"
         """)
         
         runner = CliRunner()
-        with patch("wrkenv.wenv.config.WorkenvConfig._get_config_path") as mock_path:
+        with patch("wrknv.wenv.config.WorkenvConfig._get_config_path") as mock_path:
             mock_path.return_value = config_file
             
             result = runner.invoke(

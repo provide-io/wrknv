@@ -1,8 +1,8 @@
 #
-# wrkenv/workenv/operations/verify.py
+# wrknv/workenv/operations/verify.py
 #
 """
-wrkenv Verification Operations
+wrknv Verification Operations
 ========================================
 Functions for verifying tool installations.
 """

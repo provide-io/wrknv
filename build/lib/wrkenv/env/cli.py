@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 #
-# wrkenv/env/cli.py
+# wrknv/env/cli.py
 #
 """
-wrkenv CLI Commands
+wrknv CLI Commands
 ===================
-Command-line interface for wrkenv tool management.
+Command-line interface for wrknv tool management.
 """
 
 import pathlib
@@ -13,9 +13,9 @@ import sys
 
 import click
 
-from wrkenv.wenv.config import WorkenvConfig
-from wrkenv.wenv.managers.factory import get_tool_manager
-from wrkenv.wenv.visual import (
+from wrknv.wenv.config import WorkenvConfig
+from wrknv.wenv.managers.factory import get_tool_manager
+from wrknv.wenv.visual import (
     Emoji,
     get_console,
     get_tool_emoji,
@@ -31,7 +31,7 @@ from wrkenv.wenv.visual import (
 def workenv_cli(ctx):
     """🧰🌍 Manage development environment tools and versions.
 
-    wrkenv provides cross-platform tool installation and version management
+    wrknv provides cross-platform tool installation and version management
     for development environments, including Terraform, OpenTofu, Go, UV, and more.
     """
     if ctx.invoked_subcommand is None:
@@ -43,18 +43,18 @@ def workenv_cli(ctx):
 
 @workenv_cli.command(name="setup")
 @click.option("--shell-integration", is_flag=True, help="Set up shell aliases")
-@click.option("--init", is_flag=True, help="Initialize wrkenv's own workenv")
+@click.option("--init", is_flag=True, help="Initialize wrknv's own workenv")
 @click.option("--force", is_flag=True, help="Force recreate workenv")
 def setup_command(shell_integration: bool, init: bool, force: bool):
-    """Set up wrkenv environment and integrations."""
+    """Set up wrknv environment and integrations."""
     import subprocess
     from pathlib import Path
 
-    from wrkenv.wenv.workenv import WorkenvManager
+    from wrknv.wenv.workenv import WorkenvManager
 
     if init:
-        # Set up wrkenv's own workenv
-        print_info("Setting up wrkenv workenv...", Emoji.CONFIG)
+        # Set up wrknv's own workenv
+        print_info("Setting up wrknv workenv...", Emoji.CONFIG)
         WorkenvManager.setup_workenv(force=force)
         return
 
@@ -77,7 +77,7 @@ def setup_command(shell_integration: bool, init: bool, force: bool):
             sys.exit(1)
     else:
         print_info("Available setup options:")
-        print_info("  --init                Create wrkenv's own workenv")
+        print_info("  --init                Create wrknv's own workenv")
         print_info("  --shell-integration   Set up shell aliases and shortcuts")
 
 
@@ -136,10 +136,10 @@ def tf_command(version: str | None, latest: bool, list: bool, dry_run: bool, ter
     else:
         print_warning("Please specify a version, --latest, or --list")
         print_info("Examples:")
-        print_info(f"  wrkenv tf --list              # List OpenTofu versions")
-        print_info(f"  wrkenv tf 1.8.0               # Install OpenTofu 1.8.0")
-        print_info(f"  wrkenv tf --terraform 1.5.7   # Install Terraform 1.5.7")
-        print_info(f"  wrkenv tf --terraform --list  # List Terraform versions")
+        print_info(f"  wrknv tf --list              # List OpenTofu versions")
+        print_info(f"  wrknv tf 1.8.0               # Install OpenTofu 1.8.0")
+        print_info(f"  wrknv tf --terraform 1.5.7   # Install Terraform 1.5.7")
+        print_info(f"  wrknv tf --terraform --list  # List Terraform versions")
         sys.exit(1)
 
 
@@ -229,7 +229,7 @@ def sync_command():
 )
 def generate_env_command(output: pathlib.Path, shell: str, project_dir: pathlib.Path):
     """🌍 Generate optimized environment setup script."""
-    from wrkenv.wenv.env_generator import create_project_env_scripts
+    from wrknv.wenv.env_generator import create_project_env_scripts
     
     click.echo(f"🔧 Generating environment scripts for {project_dir.name}...")
     
@@ -272,7 +272,7 @@ def container_group():
 @click.option("--rebuild", is_flag=True, help="Force rebuild without cache")
 def container_build(rebuild: bool):
     """Build the development container image."""
-    from wrkenv.container import build_container
+    from wrknv.container import build_container
 
     config = WorkenvConfig()
 
@@ -287,13 +287,13 @@ def container_build(rebuild: bool):
 @click.option("--rebuild", is_flag=True, help="Rebuild image before starting")
 def container_start(rebuild: bool):
     """Start the development container."""
-    from wrkenv.container import start_container
+    from wrknv.container import start_container
 
     config = WorkenvConfig()
 
     if start_container(config, rebuild=rebuild):
         click.echo("✅ Container started successfully")
-        click.echo("Run 'wrkenv container enter' to access the container")
+        click.echo("Run 'wrknv container enter' to access the container")
     else:
         click.echo("❌ Failed to start container", err=True)
         sys.exit(1)
@@ -303,7 +303,7 @@ def container_start(rebuild: bool):
 @click.argument("command", nargs=-1, required=False)
 def container_enter(command: tuple):
     """Enter the running container."""
-    from wrkenv.container import enter_container
+    from wrknv.container import enter_container
 
     config = WorkenvConfig()
 
@@ -315,7 +315,7 @@ def container_enter(command: tuple):
 @container_group.command(name="stop")
 def container_stop():
     """Stop the development container."""
-    from wrkenv.container import stop_container
+    from wrknv.container import stop_container
 
     config = WorkenvConfig()
 
@@ -329,7 +329,7 @@ def container_stop():
 @container_group.command(name="restart")
 def container_restart():
     """Restart the development container."""
-    from wrkenv.container import restart_container
+    from wrknv.container import restart_container
 
     config = WorkenvConfig()
 
@@ -343,7 +343,7 @@ def container_restart():
 @container_group.command(name="status")
 def container_status_cmd():
     """Show container status."""
-    from wrkenv.container import container_status
+    from wrknv.container import container_status
 
     config = WorkenvConfig()
     container_status(config)
@@ -354,7 +354,7 @@ def container_status_cmd():
 @click.option("-n", "--tail", default=100, help="Number of lines to show")
 def container_logs_cmd(follow: bool, tail: int):
     """Show container logs."""
-    from wrkenv.container import container_logs
+    from wrknv.container import container_logs
 
     config = WorkenvConfig()
     container_logs(config, follow=follow, tail=tail)
@@ -363,7 +363,7 @@ def container_logs_cmd(follow: bool, tail: int):
 @container_group.command(name="clean")
 def container_clean():
     """Remove container and image."""
-    from wrkenv.container import clean_container
+    from wrknv.container import clean_container
 
     config = WorkenvConfig()
 
@@ -377,7 +377,7 @@ def container_clean():
 @container_group.command(name="rebuild")
 def container_rebuild():
     """Rebuild container from scratch."""
-    from wrkenv.container import rebuild_container
+    from wrknv.container import rebuild_container
 
     config = WorkenvConfig()
 
@@ -493,7 +493,7 @@ def package_group():
 )
 def package_build(manifest: pathlib.Path, dry_run: bool):
     """Build a provider package from manifest."""
-    from wrkenv.package import build_package
+    from wrknv.package import build_package
 
     config = WorkenvConfig()
 
@@ -525,7 +525,7 @@ def package_build(manifest: pathlib.Path, dry_run: bool):
 )
 def package_verify(package_file: pathlib.Path):
     """Verify a package file's integrity and signature."""
-    from wrkenv.package import verify_package
+    from wrknv.package import verify_package
 
     config = WorkenvConfig()
 
@@ -549,7 +549,7 @@ def package_verify(package_file: pathlib.Path):
 )
 def package_keygen(out_dir: pathlib.Path):
     """Generate signing keys for packages."""
-    from wrkenv.package import generate_keys
+    from wrknv.package import generate_keys
 
     config = WorkenvConfig()
 
@@ -566,7 +566,7 @@ def package_keygen(out_dir: pathlib.Path):
 @package_group.command(name="clean")
 def package_clean():
     """Clean package build cache."""
-    from wrkenv.package import clean_cache
+    from wrknv.package import clean_cache
 
     config = WorkenvConfig()
 
@@ -586,7 +586,7 @@ def package_clean():
 )
 def package_init(project_dir: pathlib.Path):
     """Initialize a new provider project."""
-    from wrkenv.package import init_provider
+    from wrknv.package import init_provider
 
     config = WorkenvConfig()
 
@@ -601,7 +601,7 @@ def package_init(project_dir: pathlib.Path):
 @package_group.command(name="list")
 def package_list():
     """List built packages."""
-    from wrkenv.package import list_packages
+    from wrknv.package import list_packages
 
     config = WorkenvConfig()
 
@@ -624,7 +624,7 @@ def package_list():
 )
 def package_info(package_file: pathlib.Path):
     """Show detailed information about a package."""
-    from wrkenv.package import get_package_info
+    from wrknv.package import get_package_info
 
     config = WorkenvConfig()
 
@@ -657,7 +657,7 @@ def package_info(package_file: pathlib.Path):
 )
 def package_sign(package_file: pathlib.Path, key: pathlib.Path):
     """Sign an existing package."""
-    from wrkenv.package import sign_package
+    from wrknv.package import sign_package
 
     config = WorkenvConfig()
 
@@ -682,7 +682,7 @@ def package_sign(package_file: pathlib.Path, key: pathlib.Path):
 @click.option("--registry", default="default", help="Registry to publish to")
 def package_publish(package_file: pathlib.Path, registry: str):
     """Publish package to registry."""
-    from wrkenv.package import publish_package
+    from wrknv.package import publish_package
 
     config = WorkenvConfig()
 
@@ -722,7 +722,7 @@ def package_config():
 
 
 def entry_point():
-    """Main entry point for the wrkenv CLI."""
+    """Main entry point for the wrknv CLI."""
     workenv_cli()
 
 

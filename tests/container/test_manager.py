@@ -15,8 +15,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, Mock, call, patch
 
-from wrkenv.container.manager import ContainerManager
-from wrkenv.wenv.schema import WorkenvConfig
+from wrknv.container.manager import ContainerManager
+from wrknv.wenv.schema import WorkenvConfig
 
 
 class TestContainerManager(unittest.TestCase):
@@ -30,7 +30,7 @@ class TestContainerManager(unittest.TestCase):
     def tearDown(self):
         """Clean up after tests."""
         # Clean up any test directories
-        test_build_dir = Path.home() / ".wrkenv" / "container-build"
+        test_build_dir = Path.home() / ".wrknv" / "container-build"
         if test_build_dir.exists():
             shutil.rmtree(test_build_dir, ignore_errors=True)
 
@@ -189,11 +189,11 @@ class TestContainerManager(unittest.TestCase):
         # Ensure cleanup still happens
         mock_rmtree.assert_called_once()
 
-    @patch("wrkenv.container.manager.ContainerManager.check_docker")
-    @patch("wrkenv.container.manager.ContainerManager.image_exists")
-    @patch("wrkenv.container.manager.ContainerManager.build_image")
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
-    @patch("wrkenv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.build_image")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
     @patch("subprocess.run")
     @patch("os.getuid")
     @patch("os.getgid")
@@ -230,7 +230,7 @@ class TestContainerManager(unittest.TestCase):
         self.assertIn("--name", docker_run_cmd)
         self.assertIn("test-project-dev", docker_run_cmd)
 
-    @patch("wrkenv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
     def test_start_container_docker_not_available(self, mock_check_docker):
         """Test container start when Docker is not available."""
         mock_check_docker.return_value = False
@@ -239,9 +239,9 @@ class TestContainerManager(unittest.TestCase):
         
         self.assertFalse(result)
 
-    @patch("wrkenv.container.manager.ContainerManager.check_docker")
-    @patch("wrkenv.container.manager.ContainerManager.image_exists")
-    @patch("wrkenv.container.manager.ContainerManager.build_image")
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.build_image")
     def test_start_container_build_image_if_missing(
         self, mock_build, mock_image_exists, mock_check_docker
     ):
@@ -255,9 +255,9 @@ class TestContainerManager(unittest.TestCase):
         self.assertFalse(result)
         mock_build.assert_called_once_with(rebuild=False)
 
-    @patch("wrkenv.container.manager.ContainerManager.check_docker")
-    @patch("wrkenv.container.manager.ContainerManager.image_exists")
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
     def test_start_container_already_running(self, mock_running, mock_image_exists, mock_check_docker):
         """Test start when container is already running."""
         mock_check_docker.return_value = True
@@ -268,7 +268,7 @@ class TestContainerManager(unittest.TestCase):
         
         self.assertTrue(result)  # Returns True but doesn't try to start again
 
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
     def test_enter_container_running(self, mock_system, mock_running):
         """Test entering a running container."""
@@ -280,7 +280,7 @@ class TestContainerManager(unittest.TestCase):
             "docker exec -it test-project-dev /bin/bash"
         )
 
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
     def test_enter_container_with_command(self, mock_system, mock_running):
         """Test entering container with specific command."""
@@ -292,7 +292,7 @@ class TestContainerManager(unittest.TestCase):
             "docker exec -it test-project-dev ls -la"
         )
 
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
     def test_enter_container_not_running(self, mock_system, mock_running):
         """Test entering when container is not running."""
@@ -303,7 +303,7 @@ class TestContainerManager(unittest.TestCase):
         mock_system.assert_not_called()
 
     @patch("subprocess.run")
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
     def test_stop_container_success(self, mock_running, mock_run):
         """Test successful container stop."""
         mock_running.return_value = True
@@ -317,7 +317,7 @@ class TestContainerManager(unittest.TestCase):
         self.assertTrue(len(stop_calls) > 0)
 
     @patch("subprocess.run")
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
     def test_stop_container_failure(self, mock_running, mock_run):
         """Test container stop failure."""
         mock_running.return_value = True
@@ -327,8 +327,8 @@ class TestContainerManager(unittest.TestCase):
         
         self.assertFalse(result)
 
-    @patch("wrkenv.container.manager.ContainerManager.stop")
-    @patch("wrkenv.container.manager.ContainerManager.start")
+    @patch("wrknv.container.manager.ContainerManager.stop")
+    @patch("wrknv.container.manager.ContainerManager.start")
     def test_restart_container_success(self, mock_start, mock_stop):
         """Test successful container restart."""
         mock_stop.return_value = True
@@ -340,8 +340,8 @@ class TestContainerManager(unittest.TestCase):
         mock_stop.assert_called_once()
         mock_start.assert_called_once()
 
-    @patch("wrkenv.container.manager.ContainerManager.start")
-    @patch("wrkenv.container.manager.ContainerManager.stop")
+    @patch("wrknv.container.manager.ContainerManager.start")
+    @patch("wrknv.container.manager.ContainerManager.stop")
     def test_restart_container_stop_failure(self, mock_stop, mock_start):
         """Test restart when stop fails."""
         mock_stop.return_value = False
@@ -352,10 +352,10 @@ class TestContainerManager(unittest.TestCase):
         mock_start.assert_called_once()
 
     @patch("subprocess.run")
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
-    @patch("wrkenv.container.manager.ContainerManager.container_exists") 
-    @patch("wrkenv.container.manager.ContainerManager.image_exists")
-    @patch("wrkenv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists") 
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
     def test_status_method(self, mock_docker, mock_image, mock_exists, mock_running, mock_run):
         """Test getting container status."""
         mock_docker.return_value = True
@@ -380,7 +380,7 @@ class TestContainerManager(unittest.TestCase):
             check=False,
         )
 
-    @patch("wrkenv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
     def test_status_no_docker(self, mock_check):
         """Test getting status when Docker is not available."""
         mock_check.return_value = False
@@ -392,7 +392,7 @@ class TestContainerManager(unittest.TestCase):
         self.assertFalse(status["container_exists"])
 
     @patch("subprocess.run")
-    @patch("wrkenv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
     def test_logs_method(self, mock_exists, mock_run):
         """Test getting container logs."""
         mock_exists.return_value = True
@@ -404,7 +404,7 @@ class TestContainerManager(unittest.TestCase):
         )
 
     @patch("subprocess.run")
-    @patch("wrkenv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
     def test_logs_follow(self, mock_exists, mock_run):
         """Test following container logs."""
         mock_exists.return_value = True
@@ -416,9 +416,9 @@ class TestContainerManager(unittest.TestCase):
         )
 
     @patch("subprocess.run")
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
-    @patch("wrkenv.container.manager.ContainerManager.container_exists")
-    @patch("wrkenv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
     def test_clean_success(self, mock_image_exists, mock_container_exists, mock_running, mock_run):
         """Test successful cleanup."""
         mock_running.return_value = False
@@ -436,9 +436,9 @@ class TestContainerManager(unittest.TestCase):
         self.assertTrue(len(rmi_calls) > 0)
 
     @patch("subprocess.run")
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
-    @patch("wrkenv.container.manager.ContainerManager.container_exists")
-    @patch("wrkenv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
     def test_clean_partial_failure(self, mock_image_exists, mock_container_exists, mock_running, mock_run):
         """Test cleanup with partial failure."""
         mock_running.return_value = False
@@ -465,9 +465,9 @@ class TestContainerManager(unittest.TestCase):
         self.assertIn("/workspace", dockerfile)
         self.assertIn("zsh", dockerfile)
 
-    @patch("wrkenv.container.manager.ContainerManager.check_docker")
-    @patch("wrkenv.container.manager.ContainerManager.image_exists")
-    @patch("wrkenv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
     @patch("subprocess.run")
     def test_start_removes_stopped_container(
         self, mock_run, mock_exists, mock_image_exists, mock_check_docker
@@ -477,7 +477,7 @@ class TestContainerManager(unittest.TestCase):
         mock_image_exists.return_value = True
         mock_exists.return_value = True  # Container exists but not running
         
-        with patch("wrkenv.container.manager.ContainerManager.container_running") as mock_running:
+        with patch("wrknv.container.manager.ContainerManager.container_running") as mock_running:
             mock_running.return_value = False
             
             self.manager.start()

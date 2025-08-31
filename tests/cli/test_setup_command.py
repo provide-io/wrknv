@@ -13,7 +13,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 import click.testing
 
-from wrkenv.wenv.cli import workenv_cli
+from wrknv.wenv.cli import workenv_cli
 
 
 class TestSetupCommand(unittest.TestCase):
@@ -39,9 +39,9 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("--init", result.output)
         self.assertIn("--shell-integration", result.output)
 
-    @patch("wrkenv.wenv.workenv.WorkenvManager")
+    @patch("wrknv.wenv.workenv.WorkenvManager")
     def test_setup_init(self, mock_manager_class):
-        """Test setup --init to create wrkenv's own workenv."""
+        """Test setup --init to create wrknv's own workenv."""
         mock_manager = Mock()
         mock_manager.setup_workenv.return_value = True
         mock_manager_class.return_value = mock_manager
@@ -49,10 +49,10 @@ class TestSetupCommand(unittest.TestCase):
         result = self.runner.invoke(workenv_cli, ["setup", "--init"])
         
         self.assertEqual(result.exit_code, 0)
-        self.assertIn("Setting up wrkenv workenv", result.output)
+        self.assertIn("Setting up wrknv workenv", result.output)
         mock_manager_class.setup_workenv.assert_called_once_with(force=False)
 
-    @patch("wrkenv.wenv.workenv.WorkenvManager")
+    @patch("wrknv.wenv.workenv.WorkenvManager")
     def test_setup_init_force(self, mock_manager_class):
         """Test setup --init --force to recreate workenv."""
         mock_manager = Mock()
@@ -65,7 +65,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("Forcing recreation of workenv", result.output)
         mock_manager.setup_workenv.assert_called_once_with(force=True)
 
-    @patch("wrkenv.wenv.workenv.WorkenvManager")
+    @patch("wrknv.wenv.workenv.WorkenvManager")
     def test_setup_init_failure(self, mock_manager_class):
         """Test setup --init when creation fails."""
         mock_manager = Mock()
@@ -124,8 +124,8 @@ class TestSetupCommand(unittest.TestCase):
         script_path.parent.mkdir(parents=True)
         script_path.write_text("""#!/bin/bash
 # Shell integration script
-alias wenv='wrkenv'
-alias wrkenv-activate='source env.sh'
+alias wenv='wrknv'
+alias wrknv-activate='source env.sh'
 """)
         
         with patch("pathlib.Path") as mock_path_class:
@@ -139,7 +139,7 @@ alias wrkenv-activate='source env.sh'
             
             self.assertEqual(result.exit_code, 0)
 
-    @patch("wrkenv.wenv.workenv.WorkenvManager")
+    @patch("wrknv.wenv.workenv.WorkenvManager")
     @patch("subprocess.run")
     @patch("pathlib.Path.exists")
     def test_setup_all_options(self, mock_exists, mock_run, mock_manager_class):
@@ -156,7 +156,7 @@ alias wrkenv-activate='source env.sh'
         )
         
         self.assertEqual(result.exit_code, 0)
-        self.assertIn("Setting up wrkenv workenv", result.output)
+        self.assertIn("Setting up wrknv workenv", result.output)
         self.assertIn("Setting up shell integration", result.output)
         mock_manager.setup_workenv.assert_called_once()
         mock_run.assert_called_once()
@@ -192,7 +192,7 @@ alias wrkenv-activate='source env.sh'
         result = self.runner.invoke(workenv_cli, ["setup", "--completions", "bash"])
         
         self.assertEqual(result.exit_code, 0)
-        self.assertIn("_wrkenv_completion", result.output)
+        self.assertIn("_wrknv_completion", result.output)
         self.assertIn("complete -F", result.output)
 
     def test_setup_completions_zsh(self):
@@ -200,14 +200,14 @@ alias wrkenv-activate='source env.sh'
         result = self.runner.invoke(workenv_cli, ["setup", "--completions", "zsh"])
         
         self.assertEqual(result.exit_code, 0)
-        self.assertIn("#compdef wrkenv", result.output)
+        self.assertIn("#compdef wrknv", result.output)
 
     def test_setup_completions_fish(self):
         """Test generating fish completions."""
         result = self.runner.invoke(workenv_cli, ["setup", "--completions", "fish"])
         
         self.assertEqual(result.exit_code, 0)
-        self.assertIn("complete -c wrkenv", result.output)
+        self.assertIn("complete -c wrknv", result.output)
 
     def test_setup_completions_install(self):
         """Test installing shell completions."""
@@ -228,7 +228,7 @@ alias wrkenv-activate='source env.sh'
             
             # Verify completions were added to bashrc
             content = bashrc.read_text()
-            self.assertIn("wrkenv completion", content)
+            self.assertIn("wrknv completion", content)
 
 
 class TestSetupCommandIntegration(unittest.TestCase):
@@ -250,7 +250,7 @@ class TestSetupCommandIntegration(unittest.TestCase):
         with patch("pathlib.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
             
-            with patch("wrkenv.wenv.cli.uv_available") as mock_uv:
+            with patch("wrknv.wenv.cli.uv_available") as mock_uv:
                 mock_uv.return_value = True
                 
                 result = self.runner.invoke(workenv_cli, ["setup", "--init"])

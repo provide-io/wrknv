@@ -13,10 +13,10 @@ from unittest.mock import Mock, patch, MagicMock
 
 # These imports will fail initially - that's expected in TDD
 try:
-    from wrkenv.wenv.config import WorkenvConfig
-    from wrkenv.wenv.managers.base import BaseToolManager
-    from wrkenv.wenv.managers.ibm_tf import IbmTfManager as TerraformManager
-    from wrkenv.wenv.managers.tofu import TofuManager
+    from wrknv.wenv.config import WorkenvConfig
+    from wrknv.wenv.managers.base import BaseToolManager
+    from wrknv.wenv.managers.ibm_tf import IbmTfManager as TerraformManager
+    from wrknv.wenv.managers.tofu import TofuManager
 except ImportError:
     # Expected during TDD - we'll implement these
     WorkenvConfig = Mock
@@ -26,7 +26,7 @@ except ImportError:
 
 # PlatformDetector doesn't exist, but we have platform functions
 try:
-    from wrkenv.wenv.operations.platform import get_platform_info
+    from wrknv.wenv.operations.platform import get_platform_info
     PlatformDetector = None  # We'll use the functions directly
 except ImportError:
     PlatformDetector = Mock
@@ -270,7 +270,7 @@ class TestTDDConfiguration:
     def mock_network_calls(self):
         """Mock all network calls for isolated testing."""
         with patch('urllib.request.urlopen'), \
-             patch('wrkenv.wenv.operations.download.download_file'):
+             patch('wrknv.wenv.operations.download.download_file'):
             yield
 
     def test_tdd_fixtures_available(self, temp_workenv_dir, mock_network_calls):

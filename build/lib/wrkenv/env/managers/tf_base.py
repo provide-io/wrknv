@@ -1,5 +1,5 @@
 #
-# wrkenv/workenv/managers/tf_base.py
+# wrknv/workenv/managers/tf_base.py
 #
 """
 Tf Manager Base
@@ -384,7 +384,7 @@ class TfVersionsManager(BaseToolManager):
             "binary_sha256": binary_hash,
             "signature_files": [str(f) for f in signature_files],
             "platform": self.get_platform_info(),
-            "wrkenv_version": "0.1.0",  # Track which version of wrkenv installed this
+            "wrknv_version": "0.1.0",  # Track which version of wrknv installed this
         }
 
         self._save_metadata()
@@ -509,7 +509,7 @@ class TfVersionsManager(BaseToolManager):
             # We're in a virtual environment
             venv_path = pathlib.Path(sys.prefix)
 
-            # Check if this is a wrkenv (has 'workenv' in the path)
+            # Check if this is a wrknv (has 'workenv' in the path)
             if "workenv" in str(venv_path):
                 # Use the workenv structure
                 if os.name == "nt":  # Windows

@@ -13,9 +13,9 @@ from unittest.mock import MagicMock, Mock, patch
 import click.testing
 import tomli_w
 
-from wrkenv.wenv.cli import workenv_cli
-from wrkenv.wenv.config import WorkenvConfig as ConfigWorkenvConfig
-from wrkenv.wenv.schema import ProfileConfig, ToolConfig, WorkenvConfig
+from wrknv.wenv.cli import workenv_cli
+from wrknv.wenv.config import WorkenvConfig as ConfigWorkenvConfig
+from wrknv.wenv.schema import ProfileConfig, ToolConfig, WorkenvConfig
 
 
 class TestProfileCommands(unittest.TestCase):
@@ -26,7 +26,7 @@ class TestProfileCommands(unittest.TestCase):
         self.runner = click.testing.CliRunner()
         self.temp_dir = tempfile.mkdtemp()
         self.temp_path = Path(self.temp_dir)
-        self.config_file = self.temp_path / "wrkenv.toml"
+        self.config_file = self.temp_path / "wrknv.toml"
 
     def tearDown(self):
         """Clean up test fixtures."""
@@ -40,7 +40,7 @@ class TestProfileCommands(unittest.TestCase):
 project_name = "test-project"
 """)
         
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.list_profiles.return_value = []
             mock_config_class.return_value = mock_config
@@ -52,7 +52,7 @@ project_name = "test-project"
 
     def test_profile_list_with_profiles(self):
         """Test listing profiles when they exist."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.list_profiles.return_value = ["dev", "prod", "staging"]
             mock_config_class.return_value = mock_config
@@ -66,7 +66,7 @@ project_name = "test-project"
 
     def test_profile_save_current_tools(self):
         """Test saving current tool versions as a profile."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_all_tools.return_value = {
                 "terraform": "1.5.0",
@@ -92,7 +92,7 @@ project_name = "test-project"
 
     def test_profile_save_overwrites_existing(self):
         """Test that saving a profile overwrites an existing one."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_all_tools.return_value = {"terraform": "1.6.0"}
             mock_config.profile_exists.return_value = True
@@ -111,7 +111,7 @@ project_name = "test-project"
 
     def test_profile_load_not_found(self):
         """Test loading a profile that doesn't exist."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_profile.return_value = None
             mock_config_class.return_value = mock_config
@@ -123,8 +123,8 @@ project_name = "test-project"
 
     def test_profile_load_success(self):
         """Test successfully loading a profile."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
-            with patch("wrkenv.wenv.cli.get_tool_manager") as mock_get_manager:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
+            with patch("wrknv.wenv.cli.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_profile.return_value = {
                     "terraform": "1.5.0",
@@ -148,8 +148,8 @@ project_name = "test-project"
 
     def test_profile_load_partial_failure(self):
         """Test loading a profile when some tools fail to install."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
-            with patch("wrkenv.wenv.cli.get_tool_manager") as mock_get_manager:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
+            with patch("wrknv.wenv.cli.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_profile.return_value = {
                     "terraform": "1.5.0",
@@ -174,7 +174,7 @@ project_name = "test-project"
 
     def test_profile_delete(self):
         """Test deleting a profile."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.profile_exists.return_value = True
             mock_config.delete_profile.return_value = True
@@ -192,7 +192,7 @@ project_name = "test-project"
 
     def test_profile_show(self):
         """Test showing details of a profile."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_profile.return_value = {
                 "terraform": "1.5.0",
@@ -211,7 +211,7 @@ project_name = "test-project"
 
     def test_profile_export(self):
         """Test exporting a profile to a file."""
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.get_profile.return_value = {
                 "terraform": "1.5.0",
@@ -248,7 +248,7 @@ project_name = "test-project"
         }
         profile_file.write_text(tomli_w.dumps(profile_data))
         
-        with patch("wrkenv.wenv.cli.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.wenv.cli.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
             mock_config.save_profile.return_value = None
             mock_config_class.return_value = mock_config
@@ -282,7 +282,7 @@ class TestProfileCommandIntegration(unittest.TestCase):
 
     def test_profile_save_and_load_integration(self):
         """Test full save and load cycle with real config file."""
-        config_file = self.temp_path / "wrkenv.toml"
+        config_file = self.temp_path / "wrknv.toml"
         config_file.write_text("""
 project_name = "test-project"
 
@@ -292,7 +292,7 @@ go = { version = "1.21.0" }
 """)
         
         # Mock the config file location
-        with patch("wrkenv.wenv.config.Path.cwd") as mock_cwd:
+        with patch("wrknv.wenv.config.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
             
             # Save profile
@@ -305,7 +305,7 @@ go = { version = "1.21.0" }
             self.assertIn("test-profile", config_content)
             
             # Load profile
-            with patch("wrkenv.wenv.cli.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.wenv.cli.get_tool_manager") as mock_get_manager:
                 mock_manager = Mock()
                 mock_manager.install_version.return_value = None
                 mock_get_manager.return_value = mock_manager

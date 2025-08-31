@@ -1,7 +1,7 @@
 """
 Tests for Install Operations
 =============================
-Tests for the install functionality in wrkenv.
+Tests for the install functionality in wrknv.
 """
 
 import pytest
@@ -14,7 +14,7 @@ import stat
 import platform
 from unittest.mock import patch, Mock, MagicMock, call
 
-from wrkenv.wenv.operations.install import (
+from wrknv.wenv.operations.install import (
     extract_archive,
     make_executable,
     create_symlink,

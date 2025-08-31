@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from wrkenv.wenv.managers.base import BaseToolManager
-from wrkenv.wenv.config import WorkenvConfig
+from wrknv.wenv.managers.base import BaseToolManager
+from wrknv.wenv.config import WorkenvConfig
 from pathlib import Path
 
 class ConcreteToolManager(BaseToolManager):

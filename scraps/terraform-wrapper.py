@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# wrkenv/workenv/scripts/tf-wrapper.py
+# wrknv/workenv/scripts/tf-wrapper.py
 #
 """
 Tf Wrapper Script
@@ -31,22 +31,22 @@ def get_workenv_root():
 
 
 def get_tf_flavor():
-    """Get the configured Tf flavor from wrkenv.toml."""
-    # Check for wrkenv.toml
-    wrkenv_toml = None
+    """Get the configured Tf flavor from wrknv.toml."""
+    # Check for wrknv.toml
+    wrknv_toml = None
     current = pathlib.Path.cwd()
     while current != current.parent:
-        candidate = current / "wrkenv.toml"
+        candidate = current / "wrknv.toml"
         if candidate.exists():
-            wrkenv_toml = candidate
+            wrknv_toml = candidate
             break
         current = current.parent
 
-    if wrkenv_toml:
+    if wrknv_toml:
         try:
             import tomllib
 
-            with open(wrkenv_toml, "rb") as f:
+            with open(wrknv_toml, "rb") as f:
                 config = tomllib.load(f)
 
             # Check for tf_flavor setting
@@ -85,12 +85,12 @@ def main():
             print(f"Error: {flavor} binary not found at {binary_path}", file=sys.stderr)
             if flavor == "opentofu":
                 print(
-                    "Run 'wrkenv tofu <version>' to install OpenTofu",
+                    "Run 'wrknv tofu <version>' to install OpenTofu",
                     file=sys.stderr,
                 )
             else:
                 print(
-                    "Run 'wrkenv ibmtf <version>' to install IBM Terraform",
+                    "Run 'wrknv ibmtf <version>' to install IBM Terraform",
                     file=sys.stderr,
                 )
             sys.exit(1)

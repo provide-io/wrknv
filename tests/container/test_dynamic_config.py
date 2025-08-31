@@ -7,19 +7,19 @@ Test suite for dynamic container configuration.
 import unittest
 from unittest.mock import MagicMock, patch
 
-from wrkenv.container.manager import ContainerManager
-from wrkenv.wenv.schema import ContainerConfig, WorkenvConfig
+from wrknv.container.manager import ContainerManager
+from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 
 
 class TestDynamicContainerConfiguration(unittest.TestCase):
-    """Test that container manager uses dynamic configuration from wrkenv.toml."""
+    """Test that container manager uses dynamic configuration from wrknv.toml."""
 
     def test_default_container_config(self):
         """Test container manager with default configuration."""
         manager = ContainerManager()
         
-        self.assertEqual(manager.CONTAINER_NAME, "wrkenv-dev")
-        self.assertEqual(manager.IMAGE_NAME, "wrkenv-dev")
+        self.assertEqual(manager.CONTAINER_NAME, "wrknv-dev")
+        self.assertEqual(manager.IMAGE_NAME, "wrknv-dev")
         self.assertIsNotNone(manager.container_config)
         self.assertFalse(manager.container_config.enabled)
 
@@ -77,9 +77,9 @@ class TestDynamicContainerConfiguration(unittest.TestCase):
         self.assertIn("ENV DEBUG=true", dockerfile)
 
     @patch("subprocess.run")
-    @patch("wrkenv.container.manager.ContainerManager.container_running")
-    @patch("wrkenv.container.manager.ContainerManager.container_exists")
-    @patch("wrkenv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
     def test_start_with_custom_volumes_and_ports(
         self, mock_image_exists, mock_container_exists, mock_container_running, mock_run
     ):

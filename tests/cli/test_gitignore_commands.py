@@ -4,7 +4,7 @@ from pathlib import Path
 import shutil
 from unittest.mock import patch
 
-from wrkenv.wenv.cli import workenv_cli
+from wrknv.wenv.cli import workenv_cli
 
 @pytest.fixture
 def runner():
@@ -18,9 +18,9 @@ def gitignore_templates_dir(tmp_path):
 
 class TestGitignoreCommands:
     def test_gitignore_build_from_config(self, runner, tmp_path, gitignore_templates_dir):
-        """Test building .gitignore from wrkenv.toml config."""
-        # Create a dummy wrkenv.toml in the temporary directory
-        config_path = tmp_path / "wrkenv.toml"
+        """Test building .gitignore from wrknv.toml config."""
+        # Create a dummy wrknv.toml in the temporary directory
+        config_path = tmp_path / "wrknv.toml"
         config_content_template = """
 project_name = "test-project"
 version = "0.1.0"
@@ -31,7 +31,7 @@ templates_path = "{templates_path_actual}"
 """
 
         # Create a pre-configured WorkenvConfig instance
-        from wrkenv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -49,7 +49,7 @@ templates_path = "{templates_path_actual}"
             mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
-            with patch("wrkenv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
+            with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 result = runner.invoke(workenv_cli, ["gitignore", "build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
@@ -69,8 +69,8 @@ templates_path = "{templates_path_actual}"
 
     def test_gitignore_build_with_templates_option(self, runner, tmp_path, gitignore_templates_dir):
         """Test building .gitignore using --templates option (should override config)."""
-        # Create a dummy wrkenv.toml (with different templates)
-        config_path = tmp_path / "wrkenv.toml"
+        # Create a dummy wrknv.toml (with different templates)
+        config_path = tmp_path / "wrknv.toml"
         config_content_template = """
 project_name = "test-project"
 version = "0.1.0"
@@ -80,7 +80,7 @@ templates = ["Python", "Node"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrkenv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -98,7 +98,7 @@ templates_path = "{templates_path_actual}"
             mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
-            with patch("wrkenv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
+            with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 result = runner.invoke(workenv_cli, ["gitignore", "build", "--templates", "Global", "--templates", "Python"], catch_exceptions=False)
 
             assert result.exit_code == 0
@@ -117,8 +117,8 @@ templates_path = "{templates_path_actual}"
 
     def test_gitignore_build_no_templates_specified(self, runner, tmp_path):
         """Test building .gitignore when no templates are specified in config or via option."""
-        # Create a dummy wrkenv.toml without gitignore section
-        config_path = tmp_path / "wrkenv.toml"
+        # Create a dummy wrknv.toml without gitignore section
+        config_path = tmp_path / "wrknv.toml"
         config_content = f"""
 project_name = "test-project"
 version = "0.1.0"
@@ -126,11 +126,11 @@ version = "0.1.0"
         config_path.write_text(config_content)
 
         # Create a pre-configured WorkenvConfig instance
-        from wrkenv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
         mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
 
         # Patch WorkenvConfig in cli.py to return our pre-configured instance
-        with patch("wrkenv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
+        with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
             # Change current working directory to tmp_path for the test
             with runner.isolated_filesystem(tmp_path):
                 result = runner.invoke(workenv_cli, ["gitignore", "build"], catch_exceptions=False)
@@ -141,7 +141,7 @@ version = "0.1.0"
 
     def test_gitignore_build_with_non_existent_template(self, runner, tmp_path, gitignore_templates_dir, capsys):
         """Test building .gitignore with a non-existent template."""
-        config_path = tmp_path / "wrkenv.toml"
+        config_path = tmp_path / "wrknv.toml"
         config_content_template = """
 project_name = "test-project"
 version = "0.1.0"
@@ -151,7 +151,7 @@ templates = ["Python", "NonExistent"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrkenv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -169,7 +169,7 @@ templates_path = "{templates_path_actual}"
             mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
-            with patch("wrkenv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
+            with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 result = runner.invoke(workenv_cli, ["gitignore", "build"], catch_exceptions=False)
 
             assert result.exit_code == 0
@@ -185,7 +185,7 @@ templates_path = "{templates_path_actual}"
 
     def test_gitignore_build_with_output_option(self, runner, tmp_path, gitignore_templates_dir, capsys):
         """Test building .gitignore to a custom output path."""
-        config_path = tmp_path / "wrkenv.toml"
+        config_path = tmp_path / "wrknv.toml"
         config_content_template = """
 project_name = "test-project"
 version = "0.1.0"
@@ -195,7 +195,7 @@ templates = ["Python"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrkenv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -213,7 +213,7 @@ templates_path = "{templates_path_actual}"
             mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
-            with patch("wrkenv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
+            with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 custom_output_path = tmp_path / "my_custom.ignore"
 
                 result = runner.invoke(workenv_cli, ["gitignore", "build", "--output", str(custom_output_path)], catch_exceptions=False)

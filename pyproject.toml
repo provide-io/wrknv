@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "wrkenv"
+name = "wrknv"
 version = "0.1.0"
-description = "🧰🌍 Work Environment Tool - Manage development tools and versions"
+description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"
 authors = [
     {name = "Provide.io", email = "engineering@provide.io"},
 ]
@@ -50,26 +50,26 @@ dev = [
 ]
 
 [project.scripts]
-wrkenv = "wrkenv.wenv.cli:entry_point"
+wrknv = "wrknv.wenv.cli:entry_point"
 
 [project.urls]
-"Homepage" = "https://github.com/provide-io/wrkenv"
-"Bug Tracker" = "https://github.com/provide-io/wrkenv/issues"
-"Documentation" = "https://github.com/provide-io/wrkenv#readme"
-"Source Code" = "https://github.com/provide-io/wrkenv"
+"Homepage" = "https://github.com/provide-io/wrknv"
+"Bug Tracker" = "https://github.com/provide-io/wrknv/issues"
+"Documentation" = "https://github.com/provide-io/wrknv#readme"
+"Source Code" = "https://github.com/provide-io/wrknv"
 
 [tool.setuptools]
 packages = [
-    "wrkenv", 
-    "wrkenv.wenv", 
-    "wrkenv.wenv.managers", 
-    "wrkenv.wenv.operations", 
-    "wrkenv.package"
+    "wrknv", 
+    "wrknv.wenv", 
+    "wrknv.wenv.managers", 
+    "wrknv.wenv.operations", 
+    "wrknv.package"
 ]
 package-dir = {"" = "src"}
 
 [tool.setuptools.package-data]
-wrkenv = ["py.typed"]
+wrknv = ["py.typed"]
 
 [tool.black]
 line-length = 88
@@ -126,7 +126,7 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["src/wrkenv"]
+source = ["src/wrknv"]
 omit = ["*/tests/*", "*/__pycache__/*"]
 
 [tool.coverage.report]

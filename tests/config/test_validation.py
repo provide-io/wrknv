@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from wrkenv.wenv.schema import (
+from wrknv.wenv.schema import (
     ContainerConfig,
     PackageConfig,
     ProfileConfig,
@@ -21,7 +21,7 @@ from wrkenv.wenv.schema import (
     load_config_from_dict,
     validate_config_dict,
 )
-from wrkenv.wenv.config import ValidatedTomlSource, WorkenvConfigError
+from wrknv.wenv.config import ValidatedTomlSource, WorkenvConfigError
 
 
 class TestToolConfig(unittest.TestCase):
@@ -171,7 +171,7 @@ class TestRegistryConfig(unittest.TestCase):
     def test_default_registry_config(self):
         """Test default registry configuration."""
         config = RegistryConfig()
-        self.assertEqual(config.url, "https://registry.wrkenv.io")
+        self.assertEqual(config.url, "https://registry.wrknv.io")
         self.assertTrue(config.verify_ssl)
         self.assertEqual(config.timeout, 30)
 
@@ -393,7 +393,7 @@ class TestValidatedTomlSource(unittest.TestCase):
 
     def test_load_valid_config(self):
         """Test loading valid configuration file."""
-        config_file = self.temp_path / "wrkenv.toml"
+        config_file = self.temp_path / "wrknv.toml"
         config_file.write_text("""
 project_name = "test-project"
 version = "1.0.0"

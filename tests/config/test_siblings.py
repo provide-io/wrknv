@@ -1,5 +1,5 @@
 """
-Test siblings configuration handling in wrkenv
+Test siblings configuration handling in wrknv
 """
 
 import pathlib
@@ -8,8 +8,8 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from wrkenv.wenv.config import WorkenvConfig
-from wrkenv.wenv.env_generator import EnvScriptGenerator, create_project_env_scripts
+from wrknv.wenv.config import WorkenvConfig
+from wrknv.wenv.env_generator import EnvScriptGenerator, create_project_env_scripts
 
 
 class TestSiblingsConfiguration:
@@ -24,15 +24,15 @@ class TestSiblingsConfiguration:
 name = "test-project"
 """)
 
-        # Create test wrkenv.toml
-        wrkenv_toml = tmp_path / "wrkenv.toml"
-        wrkenv_toml.write_text("""
+        # Create test wrknv.toml
+        wrknv_toml = tmp_path / "wrknv.toml"
+        wrknv_toml.write_text("""
 [workenv.env]
 siblings = ["pyvider-*", "test-*"]
 """)
 
-        with patch("wrkenv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
-            mock_find.return_value = wrkenv_toml
+        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+            mock_find.return_value = wrknv_toml
             
             # Generate scripts
             sh_path, ps1_path = create_project_env_scripts(tmp_path)
@@ -61,9 +61,9 @@ siblings = ["pyvider-*", "test-*"]
 name = "test-project"
 """)
 
-        # Create test wrkenv.toml
-        wrkenv_toml = tmp_path / "wrkenv.toml"
-        wrkenv_toml.write_text("""
+        # Create test wrknv.toml
+        wrknv_toml = tmp_path / "wrknv.toml"
+        wrknv_toml.write_text("""
 [workenv.env]
 siblings = [
     {"name" = "pyvider-cty", "with_deps" = true},
@@ -71,8 +71,8 @@ siblings = [
 ]
 """)
 
-        with patch("wrkenv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
-            mock_find.return_value = wrkenv_toml
+        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+            mock_find.return_value = wrknv_toml
             
             # Generate scripts
             sh_path, ps1_path = create_project_env_scripts(tmp_path)
@@ -106,9 +106,9 @@ siblings = [
 name = "test-project"
 """)
 
-        # Create test wrkenv.toml
-        wrkenv_toml = tmp_path / "wrkenv.toml"
-        wrkenv_toml.write_text("""
+        # Create test wrknv.toml
+        wrknv_toml = tmp_path / "wrknv.toml"
+        wrknv_toml.write_text("""
 [workenv.env]
 siblings = [
     {"pattern" = "pyvider-*", "with_deps" = false},
@@ -116,8 +116,8 @@ siblings = [
 ]
 """)
 
-        with patch("wrkenv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
-            mock_find.return_value = wrkenv_toml
+        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+            mock_find.return_value = wrknv_toml
             
             # Generate scripts
             sh_path, ps1_path = create_project_env_scripts(tmp_path)
@@ -138,9 +138,9 @@ siblings = [
 name = "test-project"
 """)
 
-        # Create test wrkenv.toml
-        wrkenv_toml = tmp_path / "wrkenv.toml"
-        wrkenv_toml.write_text("""
+        # Create test wrknv.toml
+        wrknv_toml = tmp_path / "wrknv.toml"
+        wrknv_toml.write_text("""
 [workenv.env]
 siblings = [
     "simple-pattern-*",
@@ -149,8 +149,8 @@ siblings = [
 ]
 """)
 
-        with patch("wrkenv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
-            mock_find.return_value = wrkenv_toml
+        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+            mock_find.return_value = wrknv_toml
             
             # Generate scripts
             sh_path, ps1_path = create_project_env_scripts(tmp_path)
@@ -171,9 +171,9 @@ siblings = [
 name = "test-project"
 """)
 
-        # Create test wrkenv.toml with old format
-        wrkenv_toml = tmp_path / "wrkenv.toml"
-        wrkenv_toml.write_text("""
+        # Create test wrknv.toml with old format
+        wrknv_toml = tmp_path / "wrknv.toml"
+        wrknv_toml.write_text("""
 [workenv.env]
 sibling_patterns = ["pyvider-*"]
 special_siblings = [
@@ -181,8 +181,8 @@ special_siblings = [
 ]
 """)
 
-        with patch("wrkenv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
-            mock_find.return_value = wrkenv_toml
+        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+            mock_find.return_value = wrknv_toml
             
             # Generate scripts
             sh_path, ps1_path = create_project_env_scripts(tmp_path)
@@ -230,9 +230,9 @@ special_siblings = [
 name = "test-project"
 """)
 
-        # Create test wrkenv.toml
-        wrkenv_toml = tmp_path / "wrkenv.toml"
-        wrkenv_toml.write_text("""
+        # Create test wrknv.toml
+        wrknv_toml = tmp_path / "wrknv.toml"
+        wrknv_toml.write_text("""
 [workenv.env]
 siblings = [
     "simple-*",
@@ -240,8 +240,8 @@ siblings = [
 ]
 """)
 
-        with patch("wrkenv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
-            mock_find.return_value = wrkenv_toml
+        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+            mock_find.return_value = wrknv_toml
             
             # Generate scripts
             sh_path, ps1_path = create_project_env_scripts(tmp_path)
@@ -266,8 +266,8 @@ class TestSiblingsConfigIntegration:
 name = "complex-project"
 """)
 
-        wrkenv_toml = tmp_path / "wrkenv.toml"
-        wrkenv_toml.write_text("""
+        wrknv_toml = tmp_path / "wrknv.toml"
+        wrknv_toml.write_text("""
 [workenv.env]
 include_tool_verification = false
 siblings = [
@@ -277,8 +277,8 @@ siblings = [
 ]
 """)
 
-        with patch("wrkenv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
-            mock_find.return_value = wrkenv_toml
+        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+            mock_find.return_value = wrknv_toml
             
             sh_path, ps1_path = create_project_env_scripts(tmp_path)
             

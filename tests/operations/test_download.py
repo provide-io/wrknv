@@ -1,7 +1,7 @@
 """
 Tests for Download Operations
 =============================
-Tests for the download functionality in wrkenv.
+Tests for the download functionality in wrknv.
 """
 
 import pytest
@@ -12,7 +12,7 @@ from unittest.mock import patch, Mock, MagicMock
 import urllib.request
 import urllib.error
 
-from wrkenv.wenv.operations.download import (
+from wrknv.wenv.operations.download import (
     download_file,
     verify_checksum,
     download_checksum_file,

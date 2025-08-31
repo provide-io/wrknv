@@ -1,17 +1,17 @@
-# GEMINI.md: Your AI Assistant for the `wrkenv` Project
+# GEMINI.md: Your AI Assistant for the `wrknv` Project
 
-This document provides context and instructions for interacting with the `wrkenv` project. It is intended to be used by the Gemini AI assistant to help with development tasks.
+This document provides context and instructions for interacting with the `wrknv` project. It is intended to be used by the Gemini AI assistant to help with development tasks.
 
 ## Project Overview
 
-`wrkenv` is a command-line tool for managing development tool versions and orchestrating developer workflows, with a focus on the Terraform provider ecosystem. It is written in Python and uses the `click` library for its command-line interface.
+`wrknv` is a command-line tool for managing development tool versions and orchestrating developer workflows, with a focus on the Terraform provider ecosystem. It is written in Python and uses the `click` library for its command-line interface.
 
-The main features of `wrkenv` include:
+The main features of `wrknv` include:
 
 *   **Tool Version Management**: Manage Terraform, OpenTofu, Go, UV, and more.
 *   **Workflow Orchestration**: Integrated support for containerized environments and package building.
 *   **Flexible Configuration**: Support for multiple configuration sources, with a plan to move to a schema-validated system.
-*   **Portable Environments**: Generates self-contained `env.sh` and `env.ps1` scripts that do not require `wrkenv` at runtime.
+*   **Portable Environments**: Generates self-contained `env.sh` and `env.ps1` scripts that do not require `wrknv` at runtime.
 
 ## Key Documentation
 

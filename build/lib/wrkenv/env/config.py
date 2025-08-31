@@ -1,8 +1,8 @@
 #
-# wrkenv/workenv/config.py
+# wrknv/workenv/config.py
 #
 """
-wrkenv Configuration Management
+wrknv Configuration Management
 ==============================
 Flexible configuration system that supports multiple sources.
 """
@@ -128,7 +128,7 @@ class WorkenvConfig:
     Supports multiple configuration sources with priority ordering.
     Default priority (highest to lowest):
     1. Environment variables (WRKENV_*)
-    2. wrkenv.toml [workenv] section
+    2. wrknv.toml [workenv] section
     3. Built-in defaults
     """
 
@@ -145,10 +145,10 @@ class WorkenvConfig:
             # Environment variables (highest priority)
             sources.append(EnvironmentConfigSource("WRKENV"))
 
-            # Look for wrkenv.toml
-            wrkenv_toml = self._find_config_file("wrkenv.toml")
-            if wrkenv_toml:
-                sources.append(FileConfigSource(wrkenv_toml, "workenv"))
+            # Look for wrknv.toml
+            wrknv_toml = self._find_config_file("wrknv.toml")
+            if wrknv_toml:
+                sources.append(FileConfigSource(wrknv_toml, "workenv"))
 
         self.sources = sources
         self.config_path = self._get_config_path()
@@ -248,11 +248,11 @@ class WorkenvConfig:
         else:
             arch = machine
 
-        # Build directory name: workenv/[profile_]wrkenv_os_arch
+        # Build directory name: workenv/[profile_]wrknv_os_arch
         if profile == "default":
-            return f"workenv/wrkenv_{system}_{arch}"
+            return f"workenv/wrknv_{system}_{arch}"
         else:
-            return f"workenv/{profile}_wrkenv_{system}_{arch}"
+            return f"workenv/{profile}_wrknv_{system}_{arch}"
 
     def validate_version(self, tool_name: str, version: str) -> bool:
         """Validate that a version string is valid for a tool."""

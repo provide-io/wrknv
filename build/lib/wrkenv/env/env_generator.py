@@ -1,5 +1,5 @@
 #
-# wrkenv/env/env_generator.py
+# wrknv/env/env_generator.py
 #
 """
 Environment Script Generator
@@ -13,7 +13,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pyvider.telemetry import logger
 
-from wrkenv.wenv.visual import Emoji, print_info, print_success
+from wrknv.wenv.visual import Emoji, print_info, print_success
 
 
 class EnvScriptGenerator:
@@ -68,7 +68,7 @@ class EnvScriptGenerator:
             "special_siblings": [],  # No default peers - specified in config
             "create_log_dir": True,
             "deduplicate_path": True,
-            "include_tool_verification": True,  # Enable for wrkenv
+            "include_tool_verification": True,  # Enable for wrknv
             "cleanup_logs": True,
             "tools_to_verify": [
                 {
@@ -86,11 +86,11 @@ class EnvScriptGenerator:
                     "version_cmd": "uv --version 2>&1",
                 },
                 {
-                    "name": "wrkenv",
-                    "command": "wrkenv",
+                    "name": "wrknv",
+                    "command": "wrknv",
                     "check_type": "command",
                     "var_name": "WRKENV",
-                    "version_cmd": "wrkenv --version 2>&1 || echo 'No version info'",
+                    "version_cmd": "wrknv --version 2>&1 || echo 'No version info'",
                 },
                 {
                     "name": "ibmtf",
@@ -112,8 +112,8 @@ class EnvScriptGenerator:
                     "command": f"{project_name.lower()} --help",
                     "description": f"{project_name} CLI",
                 },
-                {"command": "wrkenv status", "description": "Check tool versions"},
-                {"command": "wrkenv container status", "description": "Container status"},
+                {"command": "wrknv status", "description": "Check tool versions"},
+                {"command": "wrknv container status", "description": "Container status"},
                 {"command": "pytest", "description": "Run tests"},
                 {"command": "deactivate", "description": "Exit environment"},
             ],
@@ -186,15 +186,15 @@ def create_project_env_scripts(
 
     project_name = pyproject.get("project", {}).get("name", project_dir.name)
 
-    # Additional config for wrkenv projects
+    # Additional config for wrknv projects
     extra_config = {}
     if workenv_name:
         extra_config["workenv_name"] = workenv_name
         extra_config["venv_prefix"] = workenv_name
 
-    # Check if this is wrkenv itself
-    if project_name == "wrkenv":
-        extra_config["is_wrkenv"] = True
+    # Check if this is wrknv itself
+    if project_name == "wrknv":
+        extra_config["is_wrknv"] = True
         extra_config["include_tool_verification"] = True
         extra_config["sibling_patterns"] = ["pyvider*", "tofusoup", "flavor"]
         extra_config["special_siblings"] = []
@@ -204,7 +204,7 @@ def create_project_env_scripts(
         extra_config["special_siblings"] = [
             {"name": "tofusoup", "var_name": "tofusoup", "with_deps": False},
             {"name": "flavor", "var_name": "flavor", "with_deps": False},
-            {"name": "wrkenv", "var_name": "wrkenv", "with_deps": False}
+            {"name": "wrknv", "var_name": "wrknv", "with_deps": False}
         ]
 
     # Generate scripts

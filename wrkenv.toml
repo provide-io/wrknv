@@ -1,4 +1,4 @@
-project_name = "wrkenv"
+project_name = "wrknv"
 version = "0.1.0"
 log_level = "INFO"
 
