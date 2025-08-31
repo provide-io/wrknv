@@ -188,10 +188,6 @@ class ContainerConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "ContainerConfig":
         """Create ContainerConfig from dictionary."""
-        # Handle old configs without new fields
-        data.setdefault("storage_path", "~/.wrknv/containers")
-        data.setdefault("persistent_volumes", ["workspace", "cache", "config"])
-        data.setdefault("volume_mappings", {})
         return cattrs.structure(data, cls)
 
 

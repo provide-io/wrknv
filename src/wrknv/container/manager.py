@@ -87,27 +87,6 @@ class ContainerManager:
         (container_dir / "build").mkdir(exist_ok=True)
         (container_dir / "logs").mkdir(exist_ok=True)
         (container_dir / "backups").mkdir(exist_ok=True)
-        
-        # Migrate old structure if needed
-        self._migrate_old_structure()
-    
-    def _migrate_old_structure(self) -> None:
-        """Migrate from old container-build directory to new structure."""
-        old_build = Path.home() / ".wrknv" / "container-build"
-        if not old_build.exists():
-            return
-        
-        new_build = self.get_container_path("build")
-        
-        # If new build directory is empty, move old content
-        if not any(new_build.iterdir()):
-            logger.info(f"Migrating old build directory to {new_build}")
-            for item in old_build.iterdir():
-                shutil.move(str(item), str(new_build / item.name))
-        
-        # Remove old directory
-        shutil.rmtree(old_build, ignore_errors=True)
-        logger.info("Removed old container-build directory")
     
     def get_container_path(self, subpath: str = "") -> Path:
         """Get path to container-specific directory or file.

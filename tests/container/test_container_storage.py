@@ -22,49 +22,45 @@ class TestContainerStorageStructure:
     """Test container storage directory structure."""
 
     @pytest.fixture
-    def mock_home(self, tmp_path):
-        """Mock home directory for testing."""
-        mock_home = tmp_path / "home"
-        mock_home.mkdir()
-        with patch("pathlib.Path.home", return_value=mock_home):
-            yield mock_home
+    def test_storage_path(self, tmp_path):
+        """Create a test storage path."""
+        storage_path = tmp_path / "test_wrknv_containers"
+        return str(storage_path)
 
     @pytest.fixture
-    def container_manager(self, mock_home):
+    def container_manager(self, test_storage_path):
         """Create a ContainerManager instance with test config."""
         config = WorkenvConfig(
             project_name="test-project",
-            container=ContainerConfig(enabled=True),
+            container=ContainerConfig(
+                enabled=True,
+                storage_path=test_storage_path
+            ),
         )
         return ContainerManager(config)
 
-    def test_wrknv_base_directory_exists(self, container_manager, mock_home):
-        """Test that ~/.wrknv directory is created."""
-        container_manager._setup_storage()
-        
-        wrknv_dir = mock_home / ".wrknv"
-        assert wrknv_dir.exists()
-        assert wrknv_dir.is_dir()
+    def test_storage_directory_exists(self, container_manager, test_storage_path):
+        """Test that storage directory is created."""
+        # The directory should be created during __init__
+        storage_dir = Path(test_storage_path)
+        assert storage_dir.exists()
+        assert storage_dir.is_dir()
 
-    def test_containers_directory_structure(self, container_manager, mock_home):
+    def test_containers_directory_structure(self, container_manager, test_storage_path):
         """Test that containers directory structure is created correctly."""
-        container_manager._setup_storage()
-        
-        containers_dir = mock_home / ".wrknv" / "containers"
-        assert containers_dir.exists()
-        assert containers_dir.is_dir()
+        storage_dir = Path(test_storage_path)
         
         # Check for shared directory
-        shared_dir = containers_dir / "shared"
+        shared_dir = storage_dir / "shared"
         assert shared_dir.exists()
         assert (shared_dir / "downloads").exists()
 
-    def test_container_specific_directories(self, container_manager, mock_home):
+    def test_container_specific_directories(self, container_manager, test_storage_path):
         """Test that container-specific directories are created."""
         container_name = container_manager.CONTAINER_NAME
-        container_manager._setup_storage()
+        storage_dir = Path(test_storage_path)
         
-        container_dir = mock_home / ".wrknv" / "containers" / container_name
+        container_dir = storage_dir / container_name
         assert container_dir.exists()
         
         # Check all required subdirectories
@@ -74,8 +70,9 @@ class TestContainerStorageStructure:
         assert (container_dir / "volumes" / "config").exists()
         assert (container_dir / "build").exists()
         assert (container_dir / "logs").exists()
+        assert (container_dir / "backups").exists()
 
-    def test_get_container_path(self, container_manager, mock_home):
+    def test_get_container_path(self, container_manager, test_storage_path):
         """Test getting container-specific paths."""
         container_manager._setup_storage()
         
@@ -107,7 +104,7 @@ class TestContainerMetadata:
             yield mock_home
 
     @pytest.fixture
-    def container_manager(self, mock_home):
+    def container_manager(self, test_storage_path):
         """Create a ContainerManager instance."""
         config = WorkenvConfig(
             project_name="test-project",
@@ -121,7 +118,7 @@ class TestContainerMetadata:
         manager._setup_storage()
         return manager
 
-    def test_save_metadata(self, container_manager, mock_home):
+    def test_save_metadata(self, container_manager, test_storage_path):
         """Test saving container metadata."""
         container_manager.save_metadata()
         
@@ -137,7 +134,7 @@ class TestContainerMetadata:
         assert "git" in metadata["config"]["additional_packages"]
         assert metadata["image"] == f"{container_manager.IMAGE_NAME}:{container_manager.IMAGE_TAG}"
 
-    def test_load_metadata(self, container_manager, mock_home):
+    def test_load_metadata(self, container_manager, test_storage_path):
         """Test loading container metadata."""
         # Save metadata first
         container_manager.save_metadata()
@@ -150,7 +147,7 @@ class TestContainerMetadata:
         assert "config" in metadata
         assert metadata["config"]["python_version"] == "3.11"
 
-    def test_update_metadata(self, container_manager, mock_home):
+    def test_update_metadata(self, container_manager, test_storage_path):
         """Test updating container metadata."""
         # Save initial metadata
         container_manager.save_metadata()
@@ -181,7 +178,7 @@ class TestVolumeManagement:
             yield mock_home
 
     @pytest.fixture
-    def container_manager(self, mock_home):
+    def container_manager(self, test_storage_path):
         """Create a ContainerManager instance."""
         config = WorkenvConfig(
             project_name="test-project",
@@ -208,7 +205,7 @@ class TestVolumeManagement:
         # Shared downloads should be read-only
         assert mappings["shared_downloads"].endswith(":ro")
 
-    def test_custom_volume_mappings(self, mock_home):
+    def test_custom_volume_mappings(self, test_storage_path):
         """Test custom volume mappings from config."""
         config = WorkenvConfig(
             project_name="test-project",
@@ -234,7 +231,7 @@ class TestVolumeManagement:
         assert "logs" in mappings
         assert mappings["logs"] == "/host/logs:/container/logs:ro"
 
-    def test_list_volumes(self, container_manager, mock_home):
+    def test_list_volumes(self, container_manager, test_storage_path):
         """Test listing container volumes."""
         # Create some test files in volumes
         workspace = container_manager.get_container_path("volumes/workspace")
@@ -255,7 +252,7 @@ class TestVolumeManagement:
         assert workspace_vol["exists"] is True
         assert workspace_vol["size"] > 0
 
-    def test_backup_volumes(self, container_manager, mock_home):
+    def test_backup_volumes(self, container_manager, test_storage_path):
         """Test backing up container volumes."""
         # Create test data
         workspace = container_manager.get_container_path("volumes/workspace")
@@ -273,7 +270,7 @@ class TestVolumeManagement:
         assert backups_dir.exists()
         assert backup_path.parent == backups_dir
 
-    def test_restore_volumes(self, container_manager, mock_home):
+    def test_restore_volumes(self, container_manager, test_storage_path):
         """Test restoring container volumes from backup."""
         # Create and backup test data
         workspace = container_manager.get_container_path("volumes/workspace")
@@ -291,7 +288,7 @@ class TestVolumeManagement:
         # Check restoration
         assert test_file.read_text() == "original data"
 
-    def test_clean_volumes(self, container_manager, mock_home):
+    def test_clean_volumes(self, container_manager, test_storage_path):
         """Test cleaning container volumes."""
         # Create test data
         workspace = container_manager.get_container_path("volumes/workspace")
@@ -309,7 +306,7 @@ class TestVolumeManagement:
         assert not (workspace / "test.txt").exists()
         assert not (cache / "package.tar").exists()
 
-    def test_clean_volumes_with_preserve(self, container_manager, mock_home):
+    def test_clean_volumes_with_preserve(self, container_manager, test_storage_path):
         """Test cleaning volumes with preservation of specific volumes."""
         # Create test data
         workspace = container_manager.get_container_path("volumes/workspace")
@@ -326,71 +323,6 @@ class TestVolumeManagement:
         assert not (cache / "temp.txt").exists()
 
 
-class TestBuildDirectoryMigration:
-    """Test migration from old build directory structure."""
-
-    @pytest.fixture
-    def mock_home(self, tmp_path):
-        """Mock home directory for testing."""
-        mock_home = tmp_path / "home"
-        mock_home.mkdir()
-        
-        # Create old structure
-        old_build = mock_home / ".wrknv" / "container-build"
-        old_build.mkdir(parents=True)
-        (old_build / "Dockerfile").write_text("FROM ubuntu:22.04")
-        
-        with patch("pathlib.Path.home", return_value=mock_home):
-            yield mock_home
-
-    def test_migrate_old_build_directory(self, mock_home):
-        """Test migration of old container-build directory."""
-        config = WorkenvConfig(
-            project_name="test-project",
-            container=ContainerConfig(enabled=True),
-        )
-        manager = ContainerManager(config)
-        
-        # Setup should trigger migration
-        manager._setup_storage()
-        
-        # Old directory should be gone
-        old_build = mock_home / ".wrknv" / "container-build"
-        assert not old_build.exists()
-        
-        # New directory should exist with migrated content
-        new_build = manager.get_container_path("build")
-        assert new_build.exists()
-        assert (new_build / "Dockerfile").exists()
-        assert (new_build / "Dockerfile").read_text() == "FROM ubuntu:22.04"
-
-    def test_migration_with_existing_new_structure(self, mock_home):
-        """Test migration when new structure already exists."""
-        config = WorkenvConfig(
-            project_name="test-project",
-            container=ContainerConfig(enabled=True),
-        )
-        manager = ContainerManager(config)
-        
-        # Create new structure first
-        manager._setup_storage()
-        new_build = manager.get_container_path("build")
-        (new_build / "Dockerfile").write_text("FROM ubuntu:24.04")
-        
-        # Old directory content should not overwrite
-        old_build = mock_home / ".wrknv" / "container-build"
-        old_build.mkdir(parents=True, exist_ok=True)
-        (old_build / "Dockerfile").write_text("FROM ubuntu:22.04")
-        
-        # Run setup again
-        manager._setup_storage()
-        
-        # New structure should be preserved
-        assert (new_build / "Dockerfile").read_text() == "FROM ubuntu:24.04"
-        
-        # Old directory should still be removed
-        assert not old_build.exists()
-
 
 class TestDockerIntegration:
     """Test Docker integration with new storage structure."""
@@ -404,7 +336,7 @@ class TestDockerIntegration:
             yield mock_home
 
     @pytest.fixture
-    def container_manager(self, mock_home):
+    def container_manager(self, test_storage_path):
         """Create a ContainerManager instance."""
         config = WorkenvConfig(
             project_name="test-project",
@@ -415,7 +347,7 @@ class TestDockerIntegration:
         return manager
 
     @patch("subprocess.run")
-    def test_build_uses_new_path(self, mock_run, container_manager, mock_home):
+    def test_build_uses_new_path(self, mock_run, container_manager, test_storage_path):
         """Test that Docker build uses new build directory."""
         mock_run.return_value = Mock(returncode=0)
         
@@ -431,7 +363,7 @@ class TestDockerIntegration:
         assert str(build_path) in call_args
 
     @patch("subprocess.run")
-    def test_start_mounts_persistent_volumes(self, mock_run, container_manager, mock_home):
+    def test_start_mounts_persistent_volumes(self, mock_run, container_manager, test_storage_path):
         """Test that Docker start mounts persistent volumes."""
         mock_run.return_value = Mock(returncode=0)
         
