@@ -7,6 +7,10 @@ Container Command Implementations
 Command implementations for container management.
 """
 
+from pathlib import Path
+from typing import Optional
+
+import click
 from rich.console import Console
 from rich.table import Table
 
