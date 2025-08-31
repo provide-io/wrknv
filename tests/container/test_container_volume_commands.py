@@ -317,9 +317,19 @@ class TestVolumeCommandsCLI:
             yield mock
 
     @pytest.fixture
-    def mock_container_manager(self):
+    def mock_container_manager(self, tmp_path):
         """Mock ContainerManager."""
         with patch("wrknv.container.commands.ContainerManager") as mock:
+            manager = mock.return_value
+            # Setup backup return value
+            backup_path = tmp_path / "backup.tar.gz"
+            backup_path.write_text("")
+            manager.backup_volumes.return_value = backup_path
+            # Setup other methods
+            manager.get_latest_backup.return_value = backup_path
+            manager.restore_volumes.return_value = True
+            manager.clean_volumes.return_value = True
+            manager.list_volumes.return_value = []
             yield mock
 
     def test_cli_volumes_list(self, mock_load_config, mock_container_manager):
@@ -337,6 +347,13 @@ class TestVolumeCommandsCLI:
         
         runner = CliRunner()
         result = runner.invoke(cli, ["container", "volumes", "backup"])
+        
+        # Debug output
+        if result.exit_code != 0:
+            print(f"Exit code: {result.exit_code}")
+            print(f"Output: {result.output}")
+            if result.exception:
+                print(f"Exception: {result.exception}")
         
         assert result.exit_code == 0
 
