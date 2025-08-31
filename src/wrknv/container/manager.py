@@ -549,7 +549,11 @@ class ContainerManager:
             with tarfile.open(backup_path, "r:*") as tar:
                 # Extract to container directory
                 container_dir = self.get_container_path()
-                tar.extractall(container_dir)
+                # Use data filter for safety (Python 3.12+)
+                if hasattr(tarfile, 'data_filter'):
+                    tar.extractall(container_dir, filter='data')
+                else:
+                    tar.extractall(container_dir)
             
             logger.info(f"Restored volumes from: {backup_path}")
             return True
