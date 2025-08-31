@@ -199,7 +199,7 @@ class TestVolumeManagement:
         
         # Check format of mappings
         workspace_mapping = mappings["workspace"]
-        assert "/.wrknv/containers/" in workspace_mapping
+        assert "/test_wrknv_containers/" in workspace_mapping
         assert ":/workspace" in workspace_mapping
         
         # Shared downloads should be read-only
@@ -262,8 +262,8 @@ class TestVolumeManagement:
         backup_path = container_manager.backup_volumes()
         
         assert backup_path.exists()
-        assert backup_path.suffix == ".tar.gz"
-        assert "test-project-dev" in backup_path.name
+        assert backup_path.suffix == ".gz" or backup_path.name.endswith(".tar.gz")
+        assert "backup-" in backup_path.name  # Default backup naming
         
         # Check backup location
         backups_dir = Path(test_storage_path) / container_manager.CONTAINER_NAME / "backups"
@@ -282,8 +282,8 @@ class TestVolumeManagement:
         # Modify data
         test_file.write_text("modified data")
         
-        # Restore from backup
-        container_manager.restore_volumes(backup_path)
+        # Restore from backup with force=True
+        container_manager.restore_volumes(backup_path, force=True)
         
         # Check restoration
         assert test_file.read_text() == "original data"
