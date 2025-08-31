@@ -143,8 +143,7 @@ class TestContainerManager(unittest.TestCase):
     @patch("subprocess.run")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    @patch("shutil.rmtree")
-    def test_build_image_success(self, mock_rmtree, mock_mkdir, mock_write, mock_run):
+    def test_build_image_success(self, mock_mkdir, mock_write, mock_run):
         """Test successful image build."""
         mock_run.return_value = Mock(returncode=0)
         
@@ -157,14 +156,12 @@ class TestContainerManager(unittest.TestCase):
         dockerfile_content = mock_write.call_args[0][0]
         self.assertIn("FROM ubuntu:22.04", dockerfile_content)
         self.assertIn("docker.io", dockerfile_content)
-        # Verify cleanup was called
-        mock_rmtree.assert_called_once()
+        # Build directory is now persistent, no cleanup
 
     @patch("subprocess.run")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    @patch("shutil.rmtree")
-    def test_build_image_with_rebuild(self, mock_rmtree, mock_mkdir, mock_write, mock_run):
+    def test_build_image_with_rebuild(self, mock_mkdir, mock_write, mock_run):
         """Test image build with rebuild flag."""
         mock_run.return_value = Mock(returncode=0)
         
@@ -178,16 +175,14 @@ class TestContainerManager(unittest.TestCase):
     @patch("subprocess.run")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    @patch("shutil.rmtree")
-    def test_build_image_failure(self, mock_rmtree, mock_mkdir, mock_write, mock_run):
+    def test_build_image_failure(self, mock_mkdir, mock_write, mock_run):
         """Test image build failure."""
         mock_run.side_effect = subprocess.CalledProcessError(1, "docker build")
         
         result = self.manager.build_image()
         
         self.assertFalse(result)
-        # Ensure cleanup still happens
-        mock_rmtree.assert_called_once()
+        # Build directory is now persistent, no cleanup
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
