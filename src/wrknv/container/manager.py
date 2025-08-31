@@ -241,13 +241,19 @@ class ContainerManager:
             self.CONTAINER_NAME,
         ]
 
-        # Add default volumes
+        # Add persistent volumes using new mapping system
+        volume_mappings = self.get_volume_mappings()
+        for volume_name, mapping in volume_mappings.items():
+            cmd.extend(["-v", mapping])
+        
+        # Add default host volumes
         cmd.extend(["-v", f"{home_dir}:/host-home"])
         cmd.extend(["-v", "/var/run/docker.sock:/var/run/docker.sock"])
 
-        # Add configured volumes
+        # Add old-style configured volumes (for backward compatibility)
         for volume in self.container_config.volumes:
-            cmd.extend(["-v", volume])
+            if volume not in volume_mappings.values():
+                cmd.extend(["-v", volume])
 
         # Add default environment variables
         cmd.extend(["-e", f"HOST_USER={os.environ.get('USER', 'user')}"])
@@ -412,6 +418,214 @@ class ContainerManager:
         metadata_file = self.get_container_path("metadata.json")
         with open(metadata_file, "w") as f:
             json.dump(metadata, f, indent=2)
+    
+    def get_volume_mappings(self) -> dict[str, str]:
+        """Get volume mappings for the container.
+        
+        Returns:
+            Dictionary of volume name to Docker volume mount string
+        """
+        mappings = {}
+        volumes_dir = self.get_container_path("volumes")
+        
+        # Add persistent volumes
+        for volume_name in self.container_config.persistent_volumes:
+            volume_path = volumes_dir / volume_name
+            volume_path.mkdir(parents=True, exist_ok=True)
+            
+            # Map workspace to /workspace, others to /home/user/.{name}
+            if volume_name == "workspace":
+                container_path = "/workspace"
+            elif volume_name == "cache":
+                container_path = "/home/user/.cache"
+            elif volume_name == "config":
+                container_path = "/home/user/.config"
+            else:
+                container_path = f"/volumes/{volume_name}"
+            
+            mappings[volume_name] = f"{volume_path}:{container_path}"
+        
+        # Add shared downloads (read-only)
+        shared_downloads = Path(self.container_config.storage_path).expanduser() / "shared" / "downloads"
+        shared_downloads.mkdir(parents=True, exist_ok=True)
+        mappings["shared_downloads"] = f"{shared_downloads}:/downloads:ro"
+        
+        # Add custom volume mappings
+        for name, mapping in self.container_config.volume_mappings.items():
+            mappings[name] = mapping
+        
+        return mappings
+    
+    def list_volumes(self) -> list[dict[str, Any]]:
+        """List all container volumes with information.
+        
+        Returns:
+            List of volume information dictionaries
+        """
+        volumes = []
+        volumes_dir = self.get_container_path("volumes")
+        
+        for volume_name in self.container_config.persistent_volumes:
+            volume_path = volumes_dir / volume_name
+            
+            volume_info = {
+                "name": volume_name,
+                "path": str(volume_path),
+                "exists": volume_path.exists(),
+                "size": 0,
+                "files": 0,
+            }
+            
+            if volume_path.exists() and volume_path.is_dir():
+                # Calculate size and file count
+                total_size = 0
+                file_count = 0
+                for item in volume_path.rglob("*"):
+                    if item.is_file():
+                        file_count += 1
+                        total_size += item.stat().st_size
+                
+                volume_info["size"] = total_size
+                volume_info["files"] = file_count
+            
+            volumes.append(volume_info)
+        
+        return volumes
+    
+    def backup_volumes(
+        self,
+        compress: bool = True,
+        include_metadata: bool = True,
+        name: Optional[str] = None
+    ) -> Path:
+        """Create a backup of container volumes.
+        
+        Args:
+            compress: Whether to compress the backup
+            include_metadata: Whether to include metadata in backup
+            name: Custom name for the backup file
+            
+        Returns:
+            Path to the created backup file
+        """
+        backups_dir = self.get_container_path("backups")
+        backups_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Generate backup filename
+        if name:
+            backup_name = name
+            if not backup_name.endswith((".tar", ".tar.gz")):
+                backup_name += ".tar.gz" if compress else ".tar"
+        else:
+            timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+            extension = ".tar.gz" if compress else ".tar"
+            backup_name = f"backup-{timestamp}{extension}"
+        
+        backup_path = backups_dir / backup_name
+        
+        # Create backup
+        mode = "w:gz" if compress else "w"
+        with tarfile.open(backup_path, mode) as tar:
+            # Add volumes
+            volumes_dir = self.get_container_path("volumes")
+            if volumes_dir.exists():
+                tar.add(volumes_dir, arcname="volumes")
+            
+            # Add metadata if requested
+            if include_metadata:
+                metadata_file = self.get_container_path("metadata.json")
+                if metadata_file.exists():
+                    tar.add(metadata_file, arcname="metadata.json")
+        
+        logger.info(f"Created backup: {backup_path}")
+        return backup_path
+    
+    def restore_volumes(self, backup_path: Path, force: bool = False) -> bool:
+        """Restore container volumes from a backup.
+        
+        Args:
+            backup_path: Path to the backup file
+            force: Whether to overwrite existing volumes
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        if not backup_path.exists():
+            logger.error(f"Backup file not found: {backup_path}")
+            return False
+        
+        # Check if volumes exist and force is not set
+        volumes_dir = self.get_container_path("volumes")
+        if volumes_dir.exists() and any(volumes_dir.iterdir()) and not force:
+            logger.warning("Volumes directory not empty. Use force=True to overwrite.")
+            return False
+        
+        # Clear existing volumes if force is set
+        if force and volumes_dir.exists():
+            shutil.rmtree(volumes_dir)
+            volumes_dir.mkdir(parents=True)
+        
+        # Extract backup
+        try:
+            with tarfile.open(backup_path, "r:*") as tar:
+                # Extract to container directory
+                container_dir = self.get_container_path()
+                tar.extractall(container_dir)
+            
+            logger.info(f"Restored volumes from: {backup_path}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to restore backup: {e}")
+            return False
+    
+    def get_latest_backup(self) -> Optional[Path]:
+        """Get the path to the most recent backup file.
+        
+        Returns:
+            Path to latest backup or None if no backups exist
+        """
+        backups_dir = self.get_container_path("backups")
+        if not backups_dir.exists():
+            return None
+        
+        backups = list(backups_dir.glob("backup-*.tar*"))
+        if not backups:
+            return None
+        
+        # Sort by modification time
+        return max(backups, key=lambda p: p.stat().st_mtime)
+    
+    def clean_volumes(self, preserve: list[str] = None) -> bool:
+        """Clean container volumes.
+        
+        Args:
+            preserve: List of volume names to preserve
+            
+        Returns:
+            True if successful
+        """
+        preserve = preserve or []
+        volumes_dir = self.get_container_path("volumes")
+        
+        if not volumes_dir.exists():
+            return True
+        
+        for volume_path in volumes_dir.iterdir():
+            if volume_path.name not in preserve:
+                if volume_path.is_dir():
+                    shutil.rmtree(volume_path)
+                else:
+                    volume_path.unlink()
+                logger.info(f"Cleaned volume: {volume_path.name}")
+            else:
+                logger.info(f"Preserved volume: {volume_path.name}")
+        
+        # Recreate default volume directories
+        for volume_name in self.container_config.persistent_volumes:
+            if volume_name not in preserve:
+                (volumes_dir / volume_name).mkdir(exist_ok=True)
+        
+        return True
 
     def logs(self, follow: bool = False, tail: int = 100) -> None:
         """Show container logs."""
@@ -428,8 +642,15 @@ class ContainerManager:
 
         subprocess.run(cmd)
 
-    def clean(self) -> bool:
-        """Remove container and optionally the image."""
+    def clean(self, preserve_volumes: bool = False) -> bool:
+        """Remove container and optionally the image.
+        
+        Args:
+            preserve_volumes: Whether to preserve container volumes
+            
+        Returns:
+            True if successful
+        """
         self.console.print(f"{self.CLEAN_EMOJI} Cleaning up container resources...")
 
         # Stop container if running
@@ -454,6 +675,13 @@ class ContainerManager:
                 self.console.print(
                     "[yellow]⚠️  Failed to remove image (may be in use)[/yellow]"
                 )
+        
+        # Clean volumes unless preserving
+        if not preserve_volumes:
+            self.clean_volumes()
+            self.console.print("[green]✅ Volumes cleaned[/green]")
+        else:
+            self.console.print("[yellow]⚠️  Volumes preserved[/yellow]")
 
         return True
 
