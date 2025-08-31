@@ -516,6 +516,65 @@ def container_rebuild():
         sys.exit(1)
 
 
+# === Container Volume Commands ===
+
+
+@container_group.group(name="volumes")
+def volumes_group():
+    """📦 Manage container volumes."""
+    pass
+
+
+@volumes_group.command(name="list")
+def volumes_list():
+    """List container volumes."""
+    from wrknv.container.commands import list_volumes
+    
+    config = WorkenvConfig()
+    list_volumes(config)
+
+
+@volumes_group.command(name="backup")
+@click.option("--name", help="Custom name for the backup")
+def volumes_backup(name: str | None):
+    """Create a backup of container volumes."""
+    from wrknv.container.commands import backup_volumes
+    
+    config = WorkenvConfig()
+    if backup_volumes(config, name=name):
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+
+@volumes_group.command(name="restore")
+@click.option("--backup", help="Path to specific backup file")
+@click.option("--force", is_flag=True, help="Overwrite existing volumes")
+def volumes_restore(backup: str | None, force: bool):
+    """Restore container volumes from backup."""
+    from wrknv.container.commands import restore_volumes
+    
+    config = WorkenvConfig()
+    if restore_volumes(config, backup_path=backup, force=force):
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+
+@volumes_group.command(name="clean")
+@click.option("--preserve", multiple=True, help="Volume names to preserve")
+def volumes_clean(preserve: tuple[str]):
+    """Clean container volumes."""
+    from wrknv.container.commands import clean_volumes
+    
+    config = WorkenvConfig()
+    preserve_list = list(preserve) if preserve else []
+    if clean_volumes(config, preserve=preserve_list):
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+
 # === Profile Commands ===
 
 
