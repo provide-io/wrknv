@@ -19,9 +19,7 @@ def load_commands():
     from wrknv.cli.commands import setup  # noqa: F401
     from wrknv.cli.commands import terraform  # noqa: F401
     from wrknv.cli.commands import tools  # noqa: F401
-    
-    # TODO: Import these once they're migrated to @register_command
-    # from wrknv.cli.commands import config  # noqa: F401
+    from wrknv.cli.commands import config  # noqa: F401
     # from wrknv.cli.commands import container  # noqa: F401
     # from wrknv.cli.commands import gitignore  # noqa: F401
     # from wrknv.cli.commands import package  # noqa: F401
