@@ -31,6 +31,7 @@ def config_group():
     "show",
     parent="config",
     description="Show current configuration",
+)
 def config_show(
     output_json: bool = False,
     profile: str | None = None,
@@ -65,6 +66,7 @@ def config_show(
     "edit",
     parent="config",
     description="Edit configuration file",
+)
 def config_edit():
     """Edit configuration file."""
     config = WorkenvConfig()
@@ -79,6 +81,7 @@ def config_edit():
     "validate",
     parent="config",
     description="Validate configuration file syntax and values",
+)
 def config_validate(strict: bool = False):
     """Validate configuration file syntax and values."""
     config = WorkenvConfig()
