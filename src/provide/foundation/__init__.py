@@ -5,7 +5,7 @@ Foundation utilities for the Provide ecosystem.
 """
 
 import logging
-from typing import Any
+from typing import Any, Dict, Optional
 
 
 class Logger:
@@ -43,5 +43,29 @@ class Logger:
         self._logger.critical(message, extra=kwargs)
 
 
-# Create a global logger instance
+class Config:
+    """Simple configuration container for provide.foundation compatibility."""
+    
+    def __init__(self, data: Optional[Dict[str, Any]] = None):
+        self._data = data or {}
+    
+    def get(self, key: str, default: Any = None) -> Any:
+        """Get configuration value."""
+        return self._data.get(key, default)
+    
+    def set(self, key: str, value: Any) -> None:
+        """Set configuration value."""
+        self._data[key] = value
+    
+    def update(self, data: Dict[str, Any]) -> None:
+        """Update configuration with dictionary."""
+        self._data.update(data)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Get configuration as dictionary."""
+        return self._data.copy()
+
+
+# Create global instances
 logger = Logger()
+config = Config()

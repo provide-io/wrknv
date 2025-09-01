@@ -3,5 +3,7 @@ Provide namespace package
 ========================
 """
 
-# This is a namespace package
-__path__ = __import__('pkgutil').extend_path(__path__, __name__)
+# Import from foundation and expose at package level
+from provide.foundation import logger, config
+
+__all__ = ['logger', 'config']
