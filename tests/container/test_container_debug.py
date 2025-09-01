@@ -3,9 +3,12 @@
 Debug container volume mounting
 """
 
+import sys
 import subprocess
 import time
 from pathlib import Path
+
+sys.path.insert(0, 'src')
 
 from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
@@ -99,14 +102,6 @@ def test_volume_debug():
 
 
 if __name__ == "__main__":
-    import sys
-    sys.path.insert(0, 'src')
-    
-    # Mock the logger
-    import unittest.mock
-    sys.modules['provide'] = unittest.mock.MagicMock()
-    sys.modules['provide.foundation'] = unittest.mock.MagicMock()
-    
     success = test_volume_debug()
     print(f"\nTest {'PASSED' if success else 'FAILED'}")
     sys.exit(0 if success else 1)
