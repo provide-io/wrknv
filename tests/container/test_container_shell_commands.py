@@ -52,6 +52,9 @@ class TestShellCommand:
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
         
+        # Mock subprocess.run to return successful result
+        mock_run.return_value = Mock(returncode=0)
+        
         result = shell_into_container(test_config)
         
         assert result is True
@@ -68,6 +71,9 @@ class TestShellCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
+        
+        # Mock subprocess.run to return successful result
+        mock_run.return_value = Mock(returncode=0)
         
         result = shell_into_container(test_config, shell="/bin/zsh")
         
