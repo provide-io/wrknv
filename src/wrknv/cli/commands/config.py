@@ -12,24 +12,23 @@ import json
 import sys
 from pathlib import Path
 
-import click
-from click import secho
+from provide.foundation.hub import register_command
+from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation import logger
 
 from wrknv.wenv.config import WorkenvConfig
 from wrknv.wenv.exceptions import ProfileError
-from wrknv.wenv.visual import print_error, print_info, print_success, print_warning
 
 
-@click.group(name="config")
-def config_group():
-    """⚙️ Manage workenv configuration."""
-    pass
-
-
-@config_group.command(name="show")
-@click.option("--json", "output_json", is_flag=True, help="Output in JSON format")
-@click.option("--profile", help="Show specific profile configuration")
-def config_show(output_json: bool, profile: str):
+@register_command(
+    "config show",
+    description="Show current configuration",
+    category="config",
+)
+def config_show(
+    output_json: bool = False,
+    profile: str | None = None,
+):
     """Show current configuration."""
     config = WorkenvConfig()
 
@@ -40,186 +39,174 @@ def config_show(output_json: bool, profile: str):
             raise ProfileError(profile, available_profiles=config.list_profiles())
 
         if output_json:
-            click.echo(
+            echo_info(
                 json.dumps({"profile": profile, "tools": profile_data}, indent=2)
             )
         else:
-            click.echo(f"Profile: {profile}")
+            echo_info(f"Profile: {profile}")
             for tool_name, version in profile_data.items():
-                click.echo(f"  {tool_name}: {version}")
+                echo_info(f"  {tool_name}: {version}")
     elif output_json:
         # Output entire config as JSON
         config_data = config.to_dict()
-        click.echo(json.dumps(config_data, indent=2))
+        echo_info(json.dumps(config_data, indent=2))
     else:
         # Default formatted output
         config.show_config()
 
 
-@config_group.command(name="edit")
+@register_command(
+    "config edit",
+    description="Edit configuration file",
+    category="config",
+)
 def config_edit():
     """Edit configuration file."""
     config = WorkenvConfig()
     try:
         config.edit_config()
     except RuntimeError as e:
-        click.echo(f"Error: {e}", err=True)
+        echo_error(f"Error: {e}")
         sys.exit(1)
 
 
-@config_group.command(name="validate")
-@click.option("--strict", is_flag=True, help="Strict validation mode")
-def config_validate(strict: bool):
+@register_command(
+    "config validate",
+    description="Validate configuration file syntax and values",
+    category="config",
+)
+def config_validate(strict: bool = False):
     """Validate configuration file syntax and values."""
     config = WorkenvConfig()
 
     if not config.config_exists():
-        print_error("No configuration file found")
-        print_info("Create one with: wrknv config init")
+        echo_error("No configuration file found")
+        echo_info("Create one with: wrknv config init")
         sys.exit(1)
 
     try:
         is_valid, errors = config.validate()
 
         if is_valid:
-            print_success("✅ Configuration is valid")
+            echo_success("✅ Configuration is valid")
         else:
-            print_error("❌ Configuration validation failed:")
+            echo_error("❌ Configuration validation failed:")
             for error in errors:
-                click.echo(f"  • {error}", err=True)
+                echo_error(f"  • {error}")
             sys.exit(1)
 
     except Exception as e:
-        print_error(f"Validation error: {e}")
+        echo_error(f"Validation error: {e}")
         sys.exit(1)
 
 
-@config_group.command(name="init")
-@click.option("--force", is_flag=True, help="Overwrite existing configuration")
-def config_init(force: bool):
+@register_command(
+    "config init",
+    description="Initialize a new configuration file interactively",
+    category="config",
+)
+def config_init(force: bool = False):
     """Initialize a new configuration file interactively."""
-    config_path = Path.cwd() / "wrknv.toml"
-
-    if config_path.exists() and not force:
-        print_error("Configuration file already exists")
-        print_info("Use --force to overwrite")
-        sys.exit(1)
-
-    # Interactive prompts
-    project_name = click.prompt("Project name", default=Path.cwd().name)
-    version = click.prompt("Version", default="1.0.0")
-    log_level = click.prompt(
-        "Log level",
-        default="INFO",
-        type=click.Choice(["DEBUG", "INFO", "WARNING", "ERROR"]),
-    )
-
-    # Ask about common tools
-    tools = {}
-    if click.confirm("Do you want to configure Terraform/OpenTofu?"):
-        tool_choice = click.prompt(
-            "Which tool?", type=click.Choice(["terraform", "tofu"]), default="tofu"
-        )
-        version = click.prompt(
-            f"{tool_choice} version",
-            default="1.8.0" if tool_choice == "tofu" else "1.5.7",
-        )
-        tools[tool_choice] = {"version": version}
-
-    if click.confirm("Do you want to configure Go?"):
-        version = click.prompt("Go version", default="1.22.1")
-        tools["go"] = {"version": version}
-
-    if click.confirm("Do you want to configure UV?"):
-        version = click.prompt("UV version", default="0.4.0")
-        tools["uv"] = {"version": version}
-
-    # Create configuration
-    import tomli_w
-
-    config_data = {
-        "project_name": project_name,
-        "version": version,
-        "log_level": log_level,
-    }
-
-    if tools:
-        config_data["tools"] = tools
-
-    # Add container section if requested
-    if click.confirm("Enable container support?"):
-        config_data["container"] = {
-            "enabled": True,
-            "base_image": "ubuntu:22.04",
-            "python_version": "3.11",
-        }
-
-    # Write configuration
-    with open(config_path, "w") as f:
-        f.write(tomli_w.dumps(config_data))
-
-    print_success(f"✅ Created configuration file: {config_path}")
-    print_info("You can edit it with: wrknv config edit")
-
-
-@config_group.command(name="get")
-@click.argument("key")
-def config_get(key: str):
-    """Get a configuration value."""
     config = WorkenvConfig()
 
-    try:
-        value = config.get_setting(key)
-        if value is None:
-            print_warning(f"Key '{key}' not found")
-            sys.exit(1)
+    if config.config_exists() and not force:
+        echo_warning("Configuration file already exists")
+        echo_info("Use --force to overwrite")
+        sys.exit(1)
 
-        if isinstance(value, (dict, list)):
-            secho(json.dumps(value, indent=2), fg="cyan")
-        else:
-            # Output format expected by tests
-            click.echo(f"{key}: {value}")
+    try:
+        # Interactive initialization
+        echo_info("Creating new wrknv configuration...")
+
+        # Prompt for basic settings
+        project_name = input("Project name [my-project]: ").strip() or "my-project"
+
+        # Create default config structure
+        config_data = {
+            "project_name": project_name,
+            "workenv": {
+                "settings": {
+                    "auto_install": True,
+                    "use_cache": True,
+                    "cache_ttl": "7d",
+                }
+            },
+            "tools": {},
+            "profiles": {},
+        }
+
+        # Write configuration
+        config.write_config(config_data)
+        echo_success(f"✅ Configuration created at {config.config_path}")
 
     except Exception as e:
-        print_error(f"Error getting config value: {e}")
+        echo_error(f"Failed to create configuration: {e}")
         sys.exit(1)
 
 
-@config_group.command(name="set")
-@click.argument("key")
-@click.argument("value")
+@register_command(
+    "config path",
+    description="Show path to configuration file",
+    category="config",
+)
+def config_path():
+    """Show path to configuration file."""
+    config = WorkenvConfig()
+    if config.config_exists():
+        echo_info(str(config.config_path))
+    else:
+        echo_warning("No configuration file found")
+        echo_info("Create one with: wrknv config init")
+
+
+@register_command(
+    "config get",
+    description="Get a specific configuration setting",
+    category="config",
+)
+def config_get(key: str):
+    """Get a specific configuration setting."""
+    config = WorkenvConfig()
+    
+    try:
+        value = config.get_setting(key)
+        if value is not None:
+            if isinstance(value, (dict, list)):
+                echo_info(json.dumps(value, indent=2))
+            else:
+                echo_info(str(value))
+        else:
+            echo_warning(f"Setting '{key}' not found")
+    except Exception as e:
+        echo_error(f"Error getting setting: {e}")
+        sys.exit(1)
+
+
+@register_command(
+    "config set",
+    description="Set a configuration value",
+    category="config",
+)
 def config_set(key: str, value: str):
     """Set a configuration value."""
     config = WorkenvConfig()
-
+    
     try:
         # Try to parse value as JSON first (for complex types)
         try:
             parsed_value = json.loads(value)
         except json.JSONDecodeError:
-            # Not JSON, treat as string
-            parsed_value = value
-
-        if config.set_setting(key, parsed_value):
-            print_success(f"✅ Set {key} to {value}")
-        else:
-            print_error(f"Failed to set {key}")
-            sys.exit(1)
-
+            # If not JSON, treat as string
+            # Check for boolean strings
+            if value.lower() in ("true", "yes", "on"):
+                parsed_value = True
+            elif value.lower() in ("false", "no", "off"):
+                parsed_value = False
+            else:
+                parsed_value = value
+        
+        config.set_setting(key, parsed_value)
+        echo_success(f"✅ Set {key} = {parsed_value}")
     except Exception as e:
-        print_error(f"Error setting config value: {e}")
-        sys.exit(1)
-
-
-@config_group.command(name="path")
-def config_path():
-    """Show path to configuration file."""
-    config = WorkenvConfig()
-    config_file = config.get_config_path()
-
-    if config_file.exists():
-        click.echo(str(config_file.absolute()))
-    else:
-        print_warning("No configuration file found")
-        print_info("Create one with: wrknv config init")
+        echo_error(f"Error setting value: {e}")
         sys.exit(1)
