@@ -46,7 +46,7 @@ project_name = "test-project"
             mock_config.list_profiles.return_value = []
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(self.cli, ["profile", "list"])
+            result = self.runner.invoke(self.cli, ["profile-list"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("No profiles found", result.output)
@@ -58,7 +58,7 @@ project_name = "test-project"
             mock_config.list_profiles.return_value = ["dev", "prod", "staging"]
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(self.cli, ["profile", "list"])
+            result = self.runner.invoke(self.cli, ["profile-list"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("dev", result.output)
@@ -78,7 +78,7 @@ project_name = "test-project"
             mock_config.profile_exists.return_value = False
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(self.cli, ["profile", "save", "dev"])
+            result = self.runner.invoke(self.cli, ["profile-save", "dev"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Saved profile 'dev'", result.output)
@@ -103,7 +103,7 @@ project_name = "test-project"
             # Should prompt for confirmation
             result = self.runner.invoke(
                 workenv_cli, 
-                ["profile", "save", "dev", "--force"],
+                ["profile-save", "dev", "--force"],
                 input="y\n"
             )
             
@@ -117,7 +117,7 @@ project_name = "test-project"
             mock_config.get_profile.return_value = None
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(self.cli, ["profile", "load", "nonexistent"])
+            result = self.runner.invoke(self.cli, ["profile-load", "nonexistent"])
             
             self.assertEqual(result.exit_code, 1)
             self.assertIn("Profile 'nonexistent' not found", result.output)
@@ -137,7 +137,7 @@ project_name = "test-project"
                 mock_manager.install_version.return_value = None
                 mock_get_manager.return_value = mock_manager
                 
-                result = self.runner.invoke(self.cli, ["profile", "load", "dev"])
+                result = self.runner.invoke(self.cli, ["profile-load", "dev"])
                 
                 self.assertEqual(result.exit_code, 0)
                 self.assertIn("Loading profile 'dev'", result.output)
@@ -166,7 +166,7 @@ project_name = "test-project"
                 ]
                 mock_get_manager.return_value = mock_manager
                 
-                result = self.runner.invoke(self.cli, ["profile", "load", "dev"])
+                result = self.runner.invoke(self.cli, ["profile-load", "dev"])
                 
                 # Should not exit with error, but show error message
                 self.assertEqual(result.exit_code, 0)
@@ -183,7 +183,7 @@ project_name = "test-project"
             
             result = self.runner.invoke(
                 workenv_cli, 
-                ["profile", "delete", "dev"],
+                ["profile-delete", "dev"],
                 input="y\n"  # Confirm deletion
             )
             
@@ -202,7 +202,7 @@ project_name = "test-project"
             }
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(self.cli, ["profile", "show", "dev"])
+            result = self.runner.invoke(self.cli, ["profile-show", "dev"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Profile: dev", result.output)

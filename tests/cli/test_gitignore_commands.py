@@ -51,7 +51,7 @@ templates_path = "{templates_path_actual}"
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 cli = create_cli()
-                result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore-build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 assert "✅ .gitignore built successfully" in result.output
@@ -101,7 +101,7 @@ templates_path = "{templates_path_actual}"
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 cli = create_cli()
-                result = runner.invoke(cli, ["gitignore", "build", "--templates", "Global", "--templates", "Python"], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore-build", "--templates", "Global", "--templates", "Python"], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 assert "✅ .gitignore built successfully" in result.output
@@ -136,7 +136,7 @@ version = "0.1.0"
             # Change current working directory to tmp_path for the test
             with runner.isolated_filesystem(tmp_path):
                 cli = create_cli()
-                result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore-build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 assert "No gitignore templates specified in config or via --templates." in result.output
@@ -174,7 +174,7 @@ templates_path = "{templates_path_actual}"
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 cli = create_cli()
-                result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore-build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 out, err = capsys.readouterr()

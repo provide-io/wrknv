@@ -31,7 +31,7 @@ class TestWorkenvPackageCommands:
         """Package build command should be available."""
         runner = CliRunner()
         cli = create_cli()
-        result = runner.invoke(cli, ["package", "build", "--help"])
+        result = runner.invoke(cli, ["package-build", "--help"])
         
         assert result.exit_code == 0
         assert "Build" in result.output
@@ -41,7 +41,7 @@ class TestWorkenvPackageCommands:
         """Package verify command should be available."""
         runner = CliRunner()
         cli = create_cli()
-        result = runner.invoke(cli, ["package", "verify", "--help"])
+        result = runner.invoke(cli, ["package-verify", "--help"])
         
         assert result.exit_code == 0
         assert "Verify" in result.output
@@ -50,7 +50,7 @@ class TestWorkenvPackageCommands:
         """Package keygen command should be available."""
         runner = CliRunner()
         cli = create_cli()
-        result = runner.invoke(cli, ["package", "keygen", "--help"])
+        result = runner.invoke(cli, ["package-keygen", "--help"])
         
         assert result.exit_code == 0
         assert "Generate" in result.output
@@ -60,7 +60,7 @@ class TestWorkenvPackageCommands:
         """Package clean command should be available."""
         runner = CliRunner()
         cli = create_cli()
-        result = runner.invoke(cli, ["package", "clean", "--help"])
+        result = runner.invoke(cli, ["package-clean", "--help"])
         
         assert result.exit_code == 0
         assert "Clean" in result.output or "Remove" in result.output
@@ -69,7 +69,7 @@ class TestWorkenvPackageCommands:
         """Package init command should be available."""
         runner = CliRunner()
         cli = create_cli()
-        result = runner.invoke(cli, ["package", "init", "--help"])
+        result = runner.invoke(cli, ["package-init", "--help"])
         
         assert result.exit_code == 0
         assert "Initialize" in result.output or "Create" in result.output
@@ -135,7 +135,7 @@ version = "0.1.0"
                     mock_manager.return_value.check_required_tools.return_value = {"go": "1.21", "uv": "0.4"}
                     mock_manager.return_value.setup_build_environment.return_value = None
 
-                    result = runner.invoke(cli, ["package", "build"])
+                    result = runner.invoke(cli, ["package-build"])
             
             assert result.exit_code == 0, f"CLI exited with code {result.exit_code}: {result.output}"
             mock_api.build_package_from_manifest.assert_called_once()
@@ -222,7 +222,7 @@ version = "0.1.0"
                 mock_instance.get_package_cache_dir.return_value = Path("/tmp/cache")
                 mock_manager.return_value = mock_instance
                 
-                result = runner.invoke(cli, ["package", "clean"])
+                result = runner.invoke(cli, ["package-clean"])
         
         assert result.exit_code == 0
         assert "cleaned" in result.output.lower()
@@ -280,7 +280,7 @@ version = "0.1.0"
                 {"name": "provider-gcp", "version": "4.2.0", "size": "38MB"},
             ]
             
-            result = runner.invoke(cli, ["package", "list"])
+            result = runner.invoke(cli, ["package-list"])
         
         assert result.exit_code == 0
         assert "provider-aws" in result.output
@@ -369,7 +369,7 @@ package = { default_out_dir = "build", signing_curve = "P-521", verify_on_build 
         # Change to the tmp directory so config is found
         with patch("os.getcwd", return_value=str(tmp_path)):
             # Show package config
-            result = runner.invoke(cli, ["package", "config"])
+            result = runner.invoke(cli, ["package-config"])
             
             assert result.exit_code == 0
             assert "P-521" in result.output or "signing_curve" in result.output
@@ -445,7 +445,7 @@ class TestPackageCommandsWithWorkenv:
         runner = CliRunner()
         
         # Test that the package build command exists with --auto-install flag
-        result = runner.invoke(workenv_cli, ["package", "build", "--help"])
+        result = runner.invoke(workenv_cli, ["package-build", "--help"])
         
         # For now, just verify the command exists
         # The --auto-install feature needs to be implemented
@@ -471,7 +471,7 @@ test = "package verify {artifact}"
             
             result = runner.invoke(
                 cli,
-                ["package", "matrix-test", "--matrix", "package_test"]
+                ["package-matrix-test", "--matrix", "package_test"]
             )
             
             # Should run builds with different tool combinations
