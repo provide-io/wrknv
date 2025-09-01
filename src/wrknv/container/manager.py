@@ -683,13 +683,21 @@ class ContainerManager:
             "wget",
             "unzip",
             "build-essential",
-            f"python{python_version}" if python_version != "3" else "python3",
-            f"python{python_version}-pip" if python_version != "3" else "python3-pip",
-            f"python{python_version}-venv" if python_version != "3" else "python3-venv",
-            "docker.io",
+        ]
+        
+        # Only add Python packages if not using a Python base image
+        if not base_image.startswith("python:"):
+            base_packages.extend([
+                f"python{python_version}" if python_version != "3" else "python3",
+                f"python{python_version}-pip" if python_version != "3" else "python3-pip",
+                f"python{python_version}-venv" if python_version != "3" else "python3-venv",
+            ])
+        
+        # Add other packages
+        base_packages.extend([
             "sudo",
             "zsh",
-        ]
+        ])
 
         all_packages = base_packages + additional_packages
         packages_str = " \\\n    ".join(all_packages)
