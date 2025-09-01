@@ -21,7 +21,7 @@ from wrknv.wenv.exceptions import ProfileError
 
 
 @register_command(
-    "config show",
+    "config-show",
     description="Show current configuration",
     category="config",
 )
@@ -56,7 +56,7 @@ def config_show(
 
 
 @register_command(
-    "config edit",
+    "config-edit",
     description="Edit configuration file",
     category="config",
 )
@@ -71,7 +71,7 @@ def config_edit():
 
 
 @register_command(
-    "config validate",
+    "config-validate",
     description="Validate configuration file syntax and values",
     category="config",
 )
@@ -101,7 +101,7 @@ def config_validate(strict: bool = False):
 
 
 @register_command(
-    "config init",
+    "config-init",
     description="Initialize a new configuration file interactively",
     category="config",
 )
@@ -145,7 +145,7 @@ def config_init(force: bool = False):
 
 
 @register_command(
-    "config path",
+    "config-path",
     description="Show path to configuration file",
     category="config",
 )
@@ -160,7 +160,7 @@ def config_path():
 
 
 @register_command(
-    "config get",
+    "config-get",
     description="Get a specific configuration setting",
     category="config",
 )
@@ -183,7 +183,7 @@ def config_get(key: str):
 
 
 @register_command(
-    "config set",
+    "config-set",
     description="Set a configuration value",
     category="config",
 )
