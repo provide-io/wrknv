@@ -8,9 +8,18 @@ Hub-based CLI Entry Point
 Main CLI using provide.foundation.hub for command registration.
 """
 
+import os
+import logging
+
+# Configure logging before importing foundation
+logging.getLogger("provide.foundation").setLevel(logging.WARNING)
+
 from provide.foundation.hub import Hub, get_hub
 from provide.foundation.context import Context
-from provide.foundation.logger import get_logger
+from provide.foundation.logger import get_logger, setup_logging
+
+# Set up logging with appropriate level
+setup_logging(log_level="WARNING")
 
 log = get_logger(__name__)
 
