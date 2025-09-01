@@ -42,7 +42,7 @@ class TestConfigCommands(unittest.TestCase):
             mock_config.show_config.return_value = None
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(self.cli, ["config", "show"])
+            result = self.runner.invoke(self.cli, ["config-show"])
             
             self.assertEqual(result.exit_code, 0)
             mock_config.show_config.assert_called_once()
@@ -54,7 +54,7 @@ class TestConfigCommands(unittest.TestCase):
             mock_config.show_config.return_value = None
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(self.cli, ["config", "show"])
+            result = self.runner.invoke(self.cli, ["config-show"])
             
             self.assertEqual(result.exit_code, 0)
             mock_config.show_config.assert_called_once()
