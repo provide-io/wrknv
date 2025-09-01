@@ -51,7 +51,7 @@ templates_path = "{templates_path_actual}"
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 cli = create_cli()
-            result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 assert "✅ .gitignore built successfully" in result.output
@@ -101,21 +101,21 @@ templates_path = "{templates_path_actual}"
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 cli = create_cli()
-            result = runner.invoke(cli, ["gitignore", "build", "--templates", "Global", "--templates", "Python"], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore", "build", "--templates", "Global", "--templates", "Python"], catch_exceptions=False)
 
-            assert result.exit_code == 0
-            assert "✅ .gitignore built successfully" in result.output
+                assert result.exit_code == 0
+                assert "✅ .gitignore built successfully" in result.output
 
-            gitignore_file = tmp_path / ".gitignore"
-            assert gitignore_file.exists()
+                gitignore_file = tmp_path / ".gitignore"
+                assert gitignore_file.exists()
 
-            content = gitignore_file.read_text()
-            assert "# --- Global ---" in content
-            assert ".DS_Store" in content
-            assert ".env" in content
-            assert "# --- Python ---" in content
-            assert "*.pyc" in content
-            assert "node_modules/" not in content # Should not include Node.gitignore
+                content = gitignore_file.read_text()
+                assert "# --- Global ---" in content
+                assert ".DS_Store" in content
+                assert ".env" in content
+                assert "# --- Python ---" in content
+                assert "*.pyc" in content
+                assert "node_modules/" not in content # Should not include Node.gitignore
 
     def test_gitignore_build_no_templates_specified(self, runner, tmp_path):
         """Test building .gitignore when no templates are specified in config or via option."""
@@ -136,11 +136,11 @@ version = "0.1.0"
             # Change current working directory to tmp_path for the test
             with runner.isolated_filesystem(tmp_path):
                 cli = create_cli()
-            result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
-            assert result.exit_code == 0
-            assert "No gitignore templates specified in config or via --templates." in result.output
-            assert not (tmp_path / ".gitignore").exists()
+                assert result.exit_code == 0
+                assert "No gitignore templates specified in config or via --templates." in result.output
+                assert not (tmp_path / ".gitignore").exists()
 
     def test_gitignore_build_with_non_existent_template(self, runner, tmp_path, gitignore_templates_dir, capsys):
         """Test building .gitignore with a non-existent template."""
@@ -174,18 +174,18 @@ templates_path = "{templates_path_actual}"
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 cli = create_cli()
-            result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
-            assert result.exit_code == 0
-            out, err = capsys.readouterr()
-            assert "Warning: Gitignore template 'NonExistent' not found" in err
-            assert "✅ .gitignore built successfully" in out
+                assert result.exit_code == 0
+                out, err = capsys.readouterr()
+                assert "Warning: Gitignore template 'NonExistent' not found" in err
+                assert "✅ .gitignore built successfully" in out
 
-            gitignore_file = tmp_path / ".gitignore"
-            assert gitignore_file.exists()
-            content = gitignore_file.read_text()
-            assert "# --- Python ---" in content
-            assert "# --- NonExistent ---" not in content # Should not include header for non-existent
+                gitignore_file = tmp_path / ".gitignore"
+                assert gitignore_file.exists()
+                content = gitignore_file.read_text()
+                assert "# --- Python ---" in content
+                assert "# --- NonExistent ---" not in content # Should not include header for non-existent
 
     def test_gitignore_build_with_output_option(self, runner, tmp_path, gitignore_templates_dir, capsys):
         """Test building .gitignore to a custom output path."""
@@ -221,7 +221,7 @@ templates_path = "{templates_path_actual}"
                 custom_output_path = tmp_path / "my_custom.ignore"
 
                 cli = create_cli()
-            result = runner.invoke(cli, ["gitignore", "build", "--output", str(custom_output_path)], catch_exceptions=False)
+                result = runner.invoke(cli, ["gitignore", "build", "--output", str(custom_output_path)], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 assert f"✅ .gitignore built successfully at {custom_output_path}" in result.output
