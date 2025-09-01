@@ -133,7 +133,7 @@ class TestContainerVolumeIntegration:
         cmd = [
             "docker", "exec", container_manager.CONTAINER_NAME,
             "sh", "-c",
-            "echo 'cached data' > /cache/data.txt"
+            "echo 'cached data' > /home/user/.cache/data.txt"
         ]
         result = subprocess.run(cmd, capture_output=True)
         assert result.returncode == 0
@@ -211,8 +211,8 @@ class TestContainerVolumeIntegration:
         files_to_create = [
             ("/workspace/project.py", "print('Hello World')"),
             ("/workspace/data/config.json", '{"setting": "value"}'),
-            ("/cache/package.tar.gz", "binary data here"),
-            ("/config/settings.ini", "[section]\nkey=value"),
+            ("/home/user/.cache/package.tar.gz", "binary data here"),
+            ("/home/user/.config/settings.ini", "[section]\nkey=value"),
         ]
         
         for filepath, content in files_to_create:
@@ -404,8 +404,8 @@ class TestContainerVolumeIntegration:
         # Test writing as the container user
         volumes_to_test = [
             "/workspace",
-            "/cache",
-            "/config"
+            "/home/user/.cache",
+            "/home/user/.config"
         ]
         
         for volume in volumes_to_test:
