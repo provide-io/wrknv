@@ -129,6 +129,9 @@ class GitignoreConfig:
     """Configuration for gitignore generation."""
     templates: list[str] = field(factory=list, validator=validators.instance_of(list))
     templates_path: str | None = field(default=None, validator=validators.optional(validators.instance_of(str)))
+    auto_detect: bool = field(default=False, validator=validators.instance_of(bool))
+    custom_rules: list[str] = field(factory=list, validator=validators.instance_of(list))
+    exclude_patterns: list[str] = field(factory=list, validator=validators.instance_of(list))
 
 
 @define
