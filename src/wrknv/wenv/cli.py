@@ -429,15 +429,43 @@ def container_start(rebuild: bool):
 
 @container_group.command(name="enter")
 @click.argument("command", nargs=-1, required=False)
-def container_enter(command: tuple):
-    """Enter the running container."""
+@click.option("-s", "--shell", default="/bin/bash", help="Shell to use")
+@click.option("-w", "--working-dir", help="Working directory in container")
+@click.option("-e", "--env", multiple=True, help="Environment variables (KEY=VALUE)")
+@click.option("-u", "--user", help="User to run as")
+@click.option("--auto-start", is_flag=True, help="Auto-start container if not running")
+def container_enter(
+    command: tuple,
+    shell: str,
+    working_dir: str | None,
+    env: tuple,
+    user: str | None,
+    auto_start: bool,
+):
+    """Enter the running container with an interactive shell."""
     from wrknv.container import enter_container
 
     config = WorkenvConfig()
 
     # Convert tuple to list
     cmd_list = list(command) if command else None
-    enter_container(config, command=cmd_list)
+    
+    # Parse environment variables
+    environment = {}
+    for env_var in env:
+        if "=" in env_var:
+            key, value = env_var.split("=", 1)
+            environment[key] = value
+    
+    enter_container(
+        config,
+        command=cmd_list,
+        shell=shell,
+        working_dir=working_dir,
+        environment=environment if environment else None,
+        user=user,
+        auto_start=auto_start,
+    )
 
 
 @container_group.command(name="stop")
@@ -480,12 +508,107 @@ def container_status_cmd():
 @container_group.command(name="logs")
 @click.option("-f", "--follow", is_flag=True, help="Follow log output")
 @click.option("-n", "--tail", default=100, help="Number of lines to show")
-def container_logs_cmd(follow: bool, tail: int):
+@click.option("--since", help="Show logs since timestamp (e.g., '1h', '2023-01-01')")
+@click.option("-t", "--timestamps", is_flag=True, help="Show timestamps")
+@click.option("--details", is_flag=True, help="Show extra details")
+def container_logs_cmd(
+    follow: bool,
+    tail: int,
+    since: str | None,
+    timestamps: bool,
+    details: bool,
+):
     """Show container logs."""
     from wrknv.container import container_logs
 
     config = WorkenvConfig()
-    container_logs(config, follow=follow, tail=tail)
+    container_logs(
+        config,
+        follow=follow,
+        tail=tail,
+        since=since,
+        timestamps=timestamps,
+        details=details,
+    )
+
+
+@container_group.command(name="exec")
+@click.argument("command", nargs=-1, required=True)
+@click.option("-w", "--working-dir", help="Working directory in container")
+@click.option("-e", "--env", multiple=True, help="Environment variables (KEY=VALUE)")
+@click.option("-u", "--user", help="User to run as")
+@click.option("-i", "--interactive", is_flag=True, help="Keep STDIN open")
+def container_exec(
+    command: tuple,
+    working_dir: str | None,
+    env: tuple,
+    user: str | None,
+    interactive: bool,
+):
+    """Execute a command in the container."""
+    from wrknv.container.shell_commands import exec_in_container
+    
+    config = WorkenvConfig()
+    
+    # Parse environment variables
+    environment = {}
+    for env_var in env:
+        if "=" in env_var:
+            key, value = env_var.split("=", 1)
+            environment[key] = value
+    
+    result = exec_in_container(
+        config,
+        command=list(command),
+        working_dir=working_dir,
+        environment=environment if environment else None,
+        user=user,
+        interactive=interactive,
+    )
+    
+    if result:
+        if not interactive and result.stdout:
+            click.echo(result.stdout)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
+    else:
+        click.echo("❌ Failed to execute command", err=True)
+        sys.exit(1)
+
+
+@container_group.command(name="stats")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+def container_stats(as_json: bool):
+    """Show container resource usage statistics."""
+    from wrknv.container.shell_commands import get_container_stats
+    from rich.console import Console
+    from rich.table import Table
+    import json
+    
+    config = WorkenvConfig()
+    stats = get_container_stats(config)
+    
+    if not stats:
+        click.echo("❌ Container is not running or stats unavailable", err=True)
+        sys.exit(1)
+    
+    if as_json:
+        click.echo(json.dumps(stats, indent=2))
+    else:
+        console = Console()
+        table = Table(title="Container Resource Usage")
+        
+        table.add_column("Resource", style="cyan")
+        table.add_column("Usage", style="green")
+        
+        table.add_row("Container", stats["name"])
+        table.add_row("CPU", stats["cpu"])
+        table.add_row("Memory", f"{stats['memory']['usage']} ({stats['memory']['percent']})")
+        table.add_row("Network I/O", stats["network"])
+        table.add_row("Disk I/O", stats["disk"])
+        table.add_row("PIDs", stats["pids"])
+        
+        console.print(table)
 
 
 @container_group.command(name="clean")
