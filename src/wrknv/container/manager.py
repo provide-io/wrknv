@@ -270,23 +270,72 @@ class ContainerManager:
             self.console.print(f"[red]❌ Failed to start container: {e}[/red]")
             return False
 
-    def enter(self, command: list[str] | None = None) -> None:
-        """Enter the running container."""
+    def enter(
+        self,
+        command: list[str] | None = None,
+        shell: str | None = None,
+        working_dir: str | None = None,
+        environment: dict[str, str] | None = None,
+        user: str | None = None,
+        auto_start: bool = False,
+    ) -> bool:
+        """Enter the running container with enhanced options.
+        
+        Args:
+            command: Command to execute (defaults to shell)
+            shell: Shell to use (defaults to /bin/bash)
+            working_dir: Working directory in container
+            environment: Environment variables to set
+            user: User to run as
+            auto_start: Auto-start container if not running
+            
+        Returns:
+            True if successful
+        """
         if not self.container_running():
-            self.console.print(
-                f"[red]❌ Container {self.CONTAINER_NAME} is not running[/red]"
-            )
-            self.console.print("Run 'wrknv container start' first")
-            return
+            if auto_start and self.container_exists():
+                self.console.print(
+                    f"[yellow]⚠️  Container {self.CONTAINER_NAME} is not running. Starting...[/yellow]"
+                )
+                if not self.start():
+                    self.console.print("[red]❌ Failed to start container[/red]")
+                    return False
+            else:
+                self.console.print(
+                    f"[red]❌ Container {self.CONTAINER_NAME} is not running[/red]"
+                )
+                self.console.print("Run 'wrknv container start' first or use --auto-start")
+                return False
 
-        # Default to interactive bash shell
-        if not command:
-            command = ["/bin/bash"]
-
-        cmd = ["docker", "exec", "-it", self.CONTAINER_NAME] + command
+        # Build docker exec command
+        cmd = ["docker", "exec", "-it"]
+        
+        # Add working directory if specified
+        if working_dir:
+            cmd.extend(["-w", working_dir])
+        
+        # Add user if specified
+        if user:
+            cmd.extend(["-u", user])
+        
+        # Add environment variables
+        if environment:
+            for key, value in environment.items():
+                cmd.extend(["-e", f"{key}={value}"])
+        
+        # Add container name
+        cmd.append(self.CONTAINER_NAME)
+        
+        # Add command or shell
+        if command:
+            cmd.extend(command)
+        else:
+            # Use specified shell or default to /bin/bash
+            cmd.append(shell or "/bin/bash")
 
         # Use os.system for interactive terminal
-        os.system(" ".join(cmd))
+        result = os.system(" ".join(cmd))
+        return result == 0
 
     def stop(self) -> bool:
         """Stop the container."""
@@ -610,20 +659,66 @@ class ContainerManager:
         
         return True
 
-    def logs(self, follow: bool = False, tail: int = 100) -> None:
-        """Show container logs."""
+    def logs(
+        self,
+        follow: bool = False,
+        tail: int | None = 100,
+        since: str | None = None,
+        timestamps: bool = False,
+        details: bool = False,
+    ) -> str | None:
+        """Show container logs with enhanced options.
+        
+        Args:
+            follow: Follow log output
+            tail: Number of lines to show from the end
+            since: Show logs since timestamp (e.g., "1h", "2023-01-01")
+            timestamps: Show timestamps
+            details: Show extra details
+            
+        Returns:
+            Log output as string (if not following), None otherwise
+        """
         if not self.container_exists():
             self.console.print(
                 f"[red]❌ Container {self.CONTAINER_NAME} does not exist[/red]"
             )
-            return
+            return None
 
         cmd = ["docker", "logs"]
+        
+        # Add options
         if follow:
             cmd.append("-f")
-        cmd.extend(["--tail", str(tail), self.CONTAINER_NAME])
+        
+        if timestamps:
+            cmd.append("-t")
+            
+        if details:
+            cmd.append("--details")
+        
+        if tail is not None:
+            cmd.extend(["--tail", str(tail)])
+        
+        if since:
+            cmd.extend(["--since", since])
+        
+        # Add container name
+        cmd.append(self.CONTAINER_NAME)
 
-        subprocess.run(cmd)
+        logger.info(f"Getting container logs: {' '.join(cmd)}")
+        
+        if follow:
+            # Stream logs without capturing
+            subprocess.run(cmd)
+            return None
+        else:
+            # Capture and return logs
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            if result.returncode != 0:
+                self.console.print(f"[red]Failed to get logs: {result.stderr}[/red]")
+                return None
+            return result.stdout
 
     def clean(self, preserve_volumes: bool = False) -> bool:
         """Remove container and optionally the image.
