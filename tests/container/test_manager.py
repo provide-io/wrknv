@@ -390,11 +390,14 @@ class TestContainerManager(unittest.TestCase):
     def test_logs_method(self, mock_exists, mock_run):
         """Test getting container logs."""
         mock_exists.return_value = True
+        mock_run.return_value = Mock(returncode=0, stdout="logs", stderr="")
         
         self.manager.logs(follow=False, tail=10)
         
         mock_run.assert_called_once_with(
-            ["docker", "logs", "--tail", "10", "test-project-dev"]
+            ["docker", "logs", "--tail", "10", "test-project-dev"],
+            capture_output=True,
+            text=True
         )
 
     @patch("subprocess.run")
@@ -402,6 +405,7 @@ class TestContainerManager(unittest.TestCase):
     def test_logs_follow(self, mock_exists, mock_run):
         """Test following container logs."""
         mock_exists.return_value = True
+        mock_run.return_value = Mock(returncode=0)
         
         self.manager.logs(follow=True)
         
