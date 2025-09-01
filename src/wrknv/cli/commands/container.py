@@ -57,6 +57,7 @@ def container_status_command():
     "build",
     parent="container",
     description="Build container image",
+)
 def container_build_command(rebuild: bool = False):
     """Build the development container image."""
     config = WorkenvConfig()
@@ -79,6 +80,7 @@ def container_build_command(rebuild: bool = False):
     "start",
     parent="container",
     description="Start development container",
+)
 def container_start_command(rebuild: bool = False):
     """Start the development container."""
     config = WorkenvConfig()
@@ -99,6 +101,7 @@ def container_start_command(rebuild: bool = False):
     "stop",
     parent="container",
     description="Stop development container",
+)
 def container_stop_command():
     """Stop the development container."""
     config = WorkenvConfig()
@@ -118,6 +121,7 @@ def container_stop_command():
     "restart",
     parent="container",
     description="Restart development container",
+)
 def container_restart_command():
     """Restart the development container."""
     config = WorkenvConfig()
@@ -137,6 +141,7 @@ def container_restart_command():
     "enter",
     parent="container",
     description="Enter running container",
+)
 def container_enter_command(
     command: Optional[str] = None,
     shell: Optional[str] = None,
@@ -164,6 +169,7 @@ def container_enter_command(
     "logs",
     parent="container",
     description="Show container logs",
+)
 def container_logs_command(
     follow: bool = False,
     tail: int = 100,
@@ -188,6 +194,7 @@ def container_logs_command(
     "clean",
     parent="container",
     description="Clean up container and image",
+)
 def container_clean_command():
     """Clean up container and image."""
     config = WorkenvConfig()
@@ -215,6 +222,7 @@ def container_clean_command():
     "rebuild",
     parent="container",
     description="Rebuild container from scratch",
+)
 def container_rebuild_command():
     """Rebuild the container from scratch."""
     config = WorkenvConfig()
@@ -237,6 +245,7 @@ def container_rebuild_command():
     "volumes",
     parent="container",
     description="List container volumes",
+)
 def container_volumes_command():
     """List container volumes with information."""
     config = WorkenvConfig()
@@ -247,6 +256,7 @@ def container_volumes_command():
     "volumes-backup",
     parent="container",
     description="Backup container volumes",
+)
 def container_volumes_backup_command(name: Optional[str] = None):
     """Create a backup of container volumes."""
     config = WorkenvConfig()
@@ -261,6 +271,7 @@ def container_volumes_backup_command(name: Optional[str] = None):
     "volumes-restore",
     parent="container",
     description="Restore container volumes from backup",
+)
 def container_volumes_restore_command(
     backup_path: Optional[str] = None,
     force: bool = False,
@@ -278,6 +289,7 @@ def container_volumes_restore_command(
     "volumes-clean",
     parent="container",
     description="Clean container volumes",
+)
 def container_volumes_clean_command(preserve: Optional[str] = None):
     """Clean container volumes."""
     config = WorkenvConfig()
@@ -298,6 +310,7 @@ def container_volumes_clean_command(preserve: Optional[str] = None):
     parent="container",
     description="Open shell in container (alias for enter)",
     hidden=True,
+)
 def container_shell_command():
     """Open an interactive shell in the container."""
     config = WorkenvConfig()
@@ -314,6 +327,7 @@ def container_shell_command():
     "exec",
     parent="container",
     description="Execute command in container",
+)
 def container_exec_command(command: str):
     """Execute a command in the container."""
     config = WorkenvConfig()
