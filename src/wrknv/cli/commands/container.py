@@ -43,8 +43,7 @@ def container_group():
 
 
 @register_command(
-    "status",
-    parent="container",
+    "container.status",
     description="Show container status",
 )
 def container_status_command():
@@ -54,8 +53,7 @@ def container_status_command():
 
 
 @register_command(
-    "build",
-    parent="container",
+    "container.build",
     description="Build container image",
 )
 def container_build_command(rebuild: bool = False):
@@ -77,8 +75,7 @@ def container_build_command(rebuild: bool = False):
 
 
 @register_command(
-    "start",
-    parent="container",
+    "container.start",
     description="Start development container",
 )
 def container_start_command(rebuild: bool = False):
@@ -98,8 +95,7 @@ def container_start_command(rebuild: bool = False):
 
 
 @register_command(
-    "stop",
-    parent="container",
+    "container.stop",
     description="Stop development container",
 )
 def container_stop_command():
@@ -118,8 +114,7 @@ def container_stop_command():
 
 
 @register_command(
-    "restart",
-    parent="container",
+    "container.restart",
     description="Restart development container",
 )
 def container_restart_command():
@@ -138,8 +133,7 @@ def container_restart_command():
 
 
 @register_command(
-    "enter",
-    parent="container",
+    "container.enter",
     description="Enter running container",
 )
 def container_enter_command(
@@ -166,8 +160,7 @@ def container_enter_command(
 
 
 @register_command(
-    "logs",
-    parent="container",
+    "container.logs",
     description="Show container logs",
 )
 def container_logs_command(
@@ -191,8 +184,7 @@ def container_logs_command(
 
 
 @register_command(
-    "clean",
-    parent="container",
+    "container.clean",
     description="Clean up container and image",
 )
 def container_clean_command():
@@ -219,8 +211,7 @@ def container_clean_command():
 
 
 @register_command(
-    "rebuild",
-    parent="container",
+    "container.rebuild",
     description="Rebuild container from scratch",
 )
 def container_rebuild_command():
@@ -243,8 +234,7 @@ def container_rebuild_command():
 
 # Create a volumes subgroup under container
 @register_command(
-    "volumes",
-    parent="container",
+    "container.volumes",
     group=True,
     description="Container volume management",
 )
@@ -254,8 +244,7 @@ def container_volumes_group():
 
 
 @register_command(
-    "list",
-    parent="container.volumes",
+    "container.volumes.list",
     description="List container volumes",
 )
 def container_volumes_list_command():
@@ -265,8 +254,7 @@ def container_volumes_list_command():
 
 
 @register_command(
-    "backup",
-    parent="container.volumes",
+    "container.volumes.backup",
     description="Backup container volumes",
 )
 def container_volumes_backup_command(name: Optional[str] = None):
@@ -280,8 +268,7 @@ def container_volumes_backup_command(name: Optional[str] = None):
 
 
 @register_command(
-    "restore",
-    parent="container.volumes",
+    "container.volumes.restore",
     description="Restore container volumes from backup",
 )
 def container_volumes_restore_command(
@@ -298,8 +285,7 @@ def container_volumes_restore_command(
 
 
 @register_command(
-    "clean",
-    parent="container.volumes",
+    "container.volumes.clean",
     description="Clean container volumes",
 )
 def container_volumes_clean_command(preserve: Optional[str] = None):
@@ -318,8 +304,7 @@ def container_volumes_clean_command(preserve: Optional[str] = None):
 # Convenience shortcuts
 
 @register_command(
-    "shell",
-    parent="container",
+    "container.shell",
     description="Open shell in container (alias for enter)",
     hidden=True,
 )
@@ -336,8 +321,7 @@ def container_shell_command():
 
 
 @register_command(
-    "exec",
-    parent="container",
+    "container.exec",
     description="Execute command in container",
 )
 def container_exec_command(command: str):
