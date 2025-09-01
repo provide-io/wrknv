@@ -241,20 +241,32 @@ def container_rebuild_command():
 
 # Volume management commands
 
+# Create a volumes subgroup under container
 @register_command(
     "volumes",
     parent="container",
+    group=True,
+    description="Container volume management",
+)
+def container_volumes_group():
+    """Container volume management commands."""
+    pass
+
+
+@register_command(
+    "list",
+    parent="container.volumes",
     description="List container volumes",
 )
-def container_volumes_command():
+def container_volumes_list_command():
     """List container volumes with information."""
     config = WorkenvConfig()
     list_volumes(config)
 
 
 @register_command(
-    "volumes-backup",
-    parent="container",
+    "backup",
+    parent="container.volumes",
     description="Backup container volumes",
 )
 def container_volumes_backup_command(name: Optional[str] = None):
@@ -268,8 +280,8 @@ def container_volumes_backup_command(name: Optional[str] = None):
 
 
 @register_command(
-    "volumes-restore",
-    parent="container",
+    "restore",
+    parent="container.volumes",
     description="Restore container volumes from backup",
 )
 def container_volumes_restore_command(
@@ -286,8 +298,8 @@ def container_volumes_restore_command(
 
 
 @register_command(
-    "volumes-clean",
-    parent="container",
+    "clean",
+    parent="container.volumes",
     description="Clean container volumes",
 )
 def container_volumes_clean_command(preserve: Optional[str] = None):
