@@ -13,44 +13,42 @@ import subprocess
 import sys
 from pathlib import Path
 
-import click
+from provide.foundation.hub import register_command
+from provide.foundation.cli import echo_error, echo_info, echo_success
+from provide.foundation.logger import get_logger
 
 from wrknv.wenv.exceptions import DependencyError
-from wrknv.wenv.visual import (
-    Emoji,
-    print_error,
-    print_info,
-    print_success,
-    print_warning,
-)
 from wrknv.wenv.workenv import WorkenvManager
 
+log = get_logger(__name__)
 
-@click.command(name="setup")
-@click.option("--shell-integration", is_flag=True, help="Set up shell aliases")
-@click.option("--init", is_flag=True, help="Initialize wrknv's own workenv")
-@click.option("--force", is_flag=True, help="Force recreate workenv")
-@click.option("--check", is_flag=True, help="Check system dependencies")
-@click.option(
-    "--completions",
-    type=click.Choice(["bash", "zsh", "fish"]),
-    help="Generate shell completions",
-)
-@click.option(
-    "--install", is_flag=True, help="Install completions (use with --completions)"
+
+@register_command(
+    "setup",
+    description="Set up wrknv environment and integrations",
+    category="core",
 )
 def setup_command(
-    shell_integration: bool,
-    init: bool,
-    force: bool,
-    check: bool,
-    completions: str,
-    install: bool,
+    shell_integration: bool = False,
+    init: bool = False,
+    force: bool = False,
+    check: bool = False,
+    completions: str | None = None,
+    install: bool = False,
 ):
-    """Set up wrknv environment and integrations."""
+    """Set up wrknv environment and integrations.
+    
+    Args:
+        shell_integration: Set up shell aliases
+        init: Initialize wrknv's own workenv
+        force: Force recreate workenv
+        check: Check system dependencies
+        completions: Generate shell completions (bash/zsh/fish)
+        install: Install completions (use with --completions)
+    """
     if check:
         # Check system dependencies
-        print_info("Checking system dependencies...", Emoji.INFO)
+        echo_info("Checking system dependencies...")
 
         required_deps = ["git", "curl", "python3"]
         optional_deps = ["docker", "wget"]
@@ -59,22 +57,22 @@ def setup_command(
 
         for dep in required_deps:
             if shutil.which(dep):
-                print_success(f"  ✓ {dep}")
+                echo_success(f"  ✓ {dep}")
             else:
-                print_error(f"  ✗ {dep} (required)")
+                echo_error(f"  ✗ {dep} (required)")
                 missing_required.append(dep)
 
         for dep in optional_deps:
             if shutil.which(dep):
-                print_info(f"  ✓ {dep} (optional)")
+                echo_info(f"  ✓ {dep} (optional)")
             else:
-                print_warning(f"  ✗ {dep} (optional)")
+                echo_info(f"  ✗ {dep} (optional)")
                 missing_optional.append(dep)
 
         if missing_required:
             raise DependencyError(missing_required, "wrknv core functionality")
         else:
-            print_success("All required dependencies are installed!")
+            echo_success("All required dependencies are installed!")
         return
 
     if completions:
@@ -127,25 +125,23 @@ def setup_command(
 
             if install_path:
                 install_path.write_text(completion_script)
-                print_success(
-                    f"✅ Installed {completions} completions to {install_path}"
-                )
+                echo_success(f"✅ Installed {completions} completions to {install_path}")
 
                 if completions == "bash":
-                    print_info("Add this to your ~/.bashrc:")
-                    print_info(f"  source {install_path}")
+                    echo_info("Add this to your ~/.bashrc:")
+                    echo_info(f"  source {install_path}")
                 elif completions == "zsh":
-                    print_info("Add this to your ~/.zshrc:")
-                    print_info(f"  fpath=({install_path.parent} $fpath)")
-                    print_info("  autoload -U compinit && compinit")
+                    echo_info("Add this to your ~/.zshrc:")
+                    echo_info(f"  fpath=({install_path.parent} $fpath)")
+                    echo_info("  autoload -U compinit && compinit")
         else:
             # Just output the completion script
-            click.echo(completion_script)
+            print(completion_script)
         return
 
     if init:
         # Set up wrknv's own workenv
-        print_info("Setting up wrknv workenv...", Emoji.CONFIG)
+        echo_info("Setting up wrknv workenv...")
         WorkenvManager.setup_workenv(force=force)
         return
 
@@ -157,18 +153,18 @@ def setup_command(
             / "shell-integration.sh"
         )
         if script_path.exists():
-            print_info("Setting up shell integration...", Emoji.CONFIG)
+            echo_info("Setting up shell integration...")
             try:
                 subprocess.run(["bash", str(script_path)], check=True)
             except subprocess.CalledProcessError:
-                print_error("Failed to set up shell integration")
+                echo_error("Failed to set up shell integration")
                 sys.exit(1)
         else:
-            print_error(f"Shell integration script not found at {script_path}")
+            echo_error(f"Shell integration script not found at {script_path}")
             sys.exit(1)
     else:
-        print_info("Available setup options:")
-        print_info("  --init                Create wrknv's own workenv")
-        print_info("  --shell-integration   Set up shell aliases and shortcuts")
-        print_info("  --check               Check system dependencies")
-        print_info("  --completions SHELL   Generate shell completions (bash/zsh/fish)")
+        echo_info("Available setup options:")
+        echo_info("  --init                Create wrknv's own workenv")
+        echo_info("  --shell-integration   Set up shell aliases and shortcuts")
+        echo_info("  --check               Check system dependencies")
+        echo_info("  --completions SHELL   Generate shell completions (bash/zsh/fish)")
