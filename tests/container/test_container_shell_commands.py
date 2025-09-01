@@ -111,6 +111,9 @@ class TestShellCommand:
         # After start, container is running
         mock_manager.container_running.side_effect = [False, True]
         
+        # Mock subprocess.run to return successful result
+        mock_run.return_value = Mock(returncode=0)
+        
         result = shell_into_container(test_config, auto_start=True)
         
         assert result is True
@@ -125,6 +128,9 @@ class TestShellCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
+        
+        # Mock subprocess.run to return successful result
+        mock_run.return_value = Mock(returncode=0)
         
         result = shell_into_container(test_config, working_dir="/app")
         
@@ -142,6 +148,9 @@ class TestShellCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
+        
+        # Mock subprocess.run to return successful result
+        mock_run.return_value = Mock(returncode=0)
         
         env_vars = {"DEBUG": "true", "APP_ENV": "development"}
         result = shell_into_container(test_config, environment=env_vars)
@@ -471,12 +480,13 @@ class TestCLIIntegration:
             manager.container_exists.return_value = True
             yield mock
 
-    def test_cli_shell_command(self, runner, mock_config, mock_container_manager):
-        """Test CLI shell command."""
+    def test_cli_enter_command(self, runner, mock_config, mock_container_manager):
+        """Test CLI enter command."""
         with patch("subprocess.run") as mock_run:
+            mock_run.return_value = Mock(returncode=0)
             from wrknv.wenv.cli import workenv_cli as cli
             
-            result = runner.invoke(cli, ["container", "shell"])
+            result = runner.invoke(cli, ["container", "enter"])
             
             assert result.exit_code == 0
             mock_run.assert_called_once()
