@@ -64,8 +64,7 @@ class TestDynamicContainerConfiguration(unittest.TestCase):
         # Check base image
         self.assertIn("FROM python:3.12-slim", dockerfile)
         
-        # Check Python version
-        self.assertIn("python3.12", dockerfile)
+        # Python packages are not installed when using Python base image
         
         # Check additional packages
         self.assertIn("nodejs", dockerfile)

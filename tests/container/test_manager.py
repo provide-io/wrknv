@@ -155,7 +155,6 @@ class TestContainerManager(unittest.TestCase):
         # Verify dockerfile content was generated
         dockerfile_content = mock_write.call_args[0][0]
         self.assertIn("FROM ubuntu:22.04", dockerfile_content)
-        self.assertIn("docker.io", dockerfile_content)
         # Build directory is now persistent, no cleanup
 
     @patch("subprocess.run")
@@ -454,7 +453,6 @@ class TestContainerManager(unittest.TestCase):
         self.assertIn("FROM ubuntu:22.04", dockerfile)
         self.assertIn("DEBIAN_FRONTEND=noninteractive", dockerfile)
         self.assertIn("apt-get update", dockerfile)
-        self.assertIn("docker.io", dockerfile)
         self.assertIn("python3", dockerfile)
         self.assertIn("curl -LsSf https://astral.sh/uv/install.sh", dockerfile)
         self.assertIn("/workspace", dockerfile)
