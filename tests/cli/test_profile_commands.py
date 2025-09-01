@@ -13,7 +13,7 @@ from unittest.mock import MagicMock, Mock, patch
 import click.testing
 import tomli_w
 
-from wrknv.wenv.cli import workenv_cli
+from wrknv.cli.hub_cli import create_cli
 from wrknv.wenv.config import WorkenvConfig as ConfigWorkenvConfig
 from wrknv.wenv.schema import ProfileConfig, ToolConfig, WorkenvConfig
 
@@ -24,6 +24,7 @@ class TestProfileCommands(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.runner = click.testing.CliRunner()
+        self.cli = create_cli()
         self.temp_dir = tempfile.mkdtemp()
         self.temp_path = Path(self.temp_dir)
         self.config_file = self.temp_path / "wrknv.toml"
@@ -45,7 +46,7 @@ project_name = "test-project"
             mock_config.list_profiles.return_value = []
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["profile", "list"])
+            result = self.runner.invoke(self.cli, ["profile", "list"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("No profiles found", result.output)
@@ -57,7 +58,7 @@ project_name = "test-project"
             mock_config.list_profiles.return_value = ["dev", "prod", "staging"]
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["profile", "list"])
+            result = self.runner.invoke(self.cli, ["profile", "list"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("dev", result.output)
@@ -77,7 +78,7 @@ project_name = "test-project"
             mock_config.profile_exists.return_value = False
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["profile", "save", "dev"])
+            result = self.runner.invoke(self.cli, ["profile", "save", "dev"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Saved profile 'dev'", result.output)
@@ -116,7 +117,7 @@ project_name = "test-project"
             mock_config.get_profile.return_value = None
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["profile", "load", "nonexistent"])
+            result = self.runner.invoke(self.cli, ["profile", "load", "nonexistent"])
             
             self.assertEqual(result.exit_code, 1)
             self.assertIn("Profile 'nonexistent' not found", result.output)
@@ -136,7 +137,7 @@ project_name = "test-project"
                 mock_manager.install_version.return_value = None
                 mock_get_manager.return_value = mock_manager
                 
-                result = self.runner.invoke(workenv_cli, ["profile", "load", "dev"])
+                result = self.runner.invoke(self.cli, ["profile", "load", "dev"])
                 
                 self.assertEqual(result.exit_code, 0)
                 self.assertIn("Loading profile 'dev'", result.output)
@@ -165,7 +166,7 @@ project_name = "test-project"
                 ]
                 mock_get_manager.return_value = mock_manager
                 
-                result = self.runner.invoke(workenv_cli, ["profile", "load", "dev"])
+                result = self.runner.invoke(self.cli, ["profile", "load", "dev"])
                 
                 # Should not exit with error, but show error message
                 self.assertEqual(result.exit_code, 0)
@@ -201,7 +202,7 @@ project_name = "test-project"
             }
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["profile", "show", "dev"])
+            result = self.runner.invoke(self.cli, ["profile", "show", "dev"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Profile: dev", result.output)
@@ -272,6 +273,7 @@ class TestProfileCommandIntegration(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.runner = click.testing.CliRunner()
+        self.cli = create_cli()
         self.temp_dir = tempfile.mkdtemp()
         self.temp_path = Path(self.temp_dir)
         
@@ -296,7 +298,7 @@ go = { version = "1.21.0" }
             mock_cwd.return_value = self.temp_path
             
             # Save profile
-            result = self.runner.invoke(workenv_cli, ["profile", "save", "test-profile"])
+            result = self.runner.invoke(self.cli, ["profile", "save", "test-profile"])
             self.assertEqual(result.exit_code, 0)
             
             # Verify profile was saved to file
@@ -310,7 +312,7 @@ go = { version = "1.21.0" }
                 mock_manager.install_version.return_value = None
                 mock_get_manager.return_value = mock_manager
                 
-                result = self.runner.invoke(workenv_cli, ["profile", "load", "test-profile"])
+                result = self.runner.invoke(self.cli, ["profile", "load", "test-profile"])
                 self.assertEqual(result.exit_code, 0)
 
 

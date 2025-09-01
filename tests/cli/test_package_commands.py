@@ -11,7 +11,7 @@ from unittest.mock import MagicMock, Mock, patch
 import pytest
 from click.testing import CliRunner
 
-from wrknv.wenv.cli import workenv_cli
+from wrknv.cli.hub_cli import create_cli
 
 
 class TestWorkenvPackageCommands:
@@ -20,7 +20,8 @@ class TestWorkenvPackageCommands:
     def test_package_command_exists(self):
         """Package command should be available in the CLI."""
         runner = CliRunner()
-        result = runner.invoke(workenv_cli, ["package", "--help"])
+        cli = create_cli()
+        result = runner.invoke(cli, ["package", "--help"])
         
         assert result.exit_code == 0
         assert "package" in result.output or "pkg" in result.output
@@ -29,7 +30,8 @@ class TestWorkenvPackageCommands:
     def test_package_build_command_exists(self):
         """Package build command should be available."""
         runner = CliRunner()
-        result = runner.invoke(workenv_cli, ["package", "build", "--help"])
+        cli = create_cli()
+        result = runner.invoke(cli, ["package", "build", "--help"])
         
         assert result.exit_code == 0
         assert "Build" in result.output
@@ -38,7 +40,8 @@ class TestWorkenvPackageCommands:
     def test_package_verify_command_exists(self):
         """Package verify command should be available."""
         runner = CliRunner()
-        result = runner.invoke(workenv_cli, ["package", "verify", "--help"])
+        cli = create_cli()
+        result = runner.invoke(cli, ["package", "verify", "--help"])
         
         assert result.exit_code == 0
         assert "Verify" in result.output
@@ -46,7 +49,8 @@ class TestWorkenvPackageCommands:
     def test_package_keygen_command_exists(self):
         """Package keygen command should be available."""
         runner = CliRunner()
-        result = runner.invoke(workenv_cli, ["package", "keygen", "--help"])
+        cli = create_cli()
+        result = runner.invoke(cli, ["package", "keygen", "--help"])
         
         assert result.exit_code == 0
         assert "Generate" in result.output
@@ -55,7 +59,8 @@ class TestWorkenvPackageCommands:
     def test_package_clean_command_exists(self):
         """Package clean command should be available."""
         runner = CliRunner()
-        result = runner.invoke(workenv_cli, ["package", "clean", "--help"])
+        cli = create_cli()
+        result = runner.invoke(cli, ["package", "clean", "--help"])
         
         assert result.exit_code == 0
         assert "Clean" in result.output or "Remove" in result.output
@@ -63,7 +68,8 @@ class TestWorkenvPackageCommands:
     def test_package_init_command_exists(self):
         """Package init command should be available."""
         runner = CliRunner()
-        result = runner.invoke(workenv_cli, ["package", "init", "--help"])
+        cli = create_cli()
+        result = runner.invoke(cli, ["package", "init", "--help"])
         
         assert result.exit_code == 0
         assert "Initialize" in result.output or "Create" in result.output
@@ -96,7 +102,7 @@ entry_point = "test.main:serve"
                 mock_manager.return_value.setup_build_environment.return_value = None
 
                 result = runner.invoke(
-                    workenv_cli, 
+                    cli, 
                     ["package", "build", "--manifest", str(manifest)]
                 )
         
@@ -129,7 +135,7 @@ version = "0.1.0"
                     mock_manager.return_value.check_required_tools.return_value = {"go": "1.21", "uv": "0.4"}
                     mock_manager.return_value.setup_build_environment.return_value = None
 
-                    result = runner.invoke(workenv_cli, ["package", "build"])
+                    result = runner.invoke(cli, ["package", "build"])
             
             assert result.exit_code == 0, f"CLI exited with code {result.exit_code}: {result.output}"
             mock_api.build_package_from_manifest.assert_called_once()
@@ -148,7 +154,7 @@ version = "0.1.0"
             mock_get_api.return_value = mock_api
             
             result = runner.invoke(
-                workenv_cli,
+                cli,
                 ["package", "keygen", "--out-dir", str(tmp_path)]
             )
         
@@ -173,7 +179,7 @@ version = "0.1.0"
             mock_get_api.return_value = mock_api
             
             result = runner.invoke(
-                workenv_cli,
+                cli,
                 ["package", "verify", str(package_file)]
             )
         
@@ -194,7 +200,7 @@ version = "0.1.0"
             mock_get_api.return_value = mock_api
             
             result = runner.invoke(
-                workenv_cli,
+                cli,
                 ["package", "verify", str(package_file)]
             )
         
@@ -216,7 +222,7 @@ version = "0.1.0"
                 mock_instance.get_package_cache_dir.return_value = Path("/tmp/cache")
                 mock_manager.return_value = mock_instance
                 
-                result = runner.invoke(workenv_cli, ["package", "clean"])
+                result = runner.invoke(cli, ["package", "clean"])
         
         assert result.exit_code == 0
         assert "cleaned" in result.output.lower()
@@ -257,7 +263,7 @@ version = "0.1.0"
             """)
             
             # Test dry-run mode - should not require flavor
-            result = runner.invoke(workenv_cli, ["package", "build", "--manifest", str(pyproject), "--dry-run"])
+            result = runner.invoke(cli, ["package", "build", "--manifest", str(pyproject), "--dry-run"])
             
             assert result.exit_code == 0
             assert "[DRY-RUN]" in result.output
@@ -274,7 +280,7 @@ version = "0.1.0"
                 {"name": "provider-gcp", "version": "4.2.0", "size": "38MB"},
             ]
             
-            result = runner.invoke(workenv_cli, ["package", "list"])
+            result = runner.invoke(cli, ["package", "list"])
         
         assert result.exit_code == 0
         assert "provider-aws" in result.output
@@ -299,7 +305,7 @@ version = "0.1.0"
             }
             
             result = runner.invoke(
-                workenv_cli,
+                cli,
                 ["package", "info", str(package_file)]
             )
         
@@ -322,7 +328,7 @@ version = "0.1.0"
             }
             
             result = runner.invoke(
-                workenv_cli,
+                cli,
                 ["package", "publish", str(package_file), "--registry", "example"]
             )
         
@@ -342,7 +348,7 @@ version = "1.0.0"
         runner = CliRunner()
         with patch("wrknv.package.commands.build_package") as mock_build:
             result = runner.invoke(
-                workenv_cli,
+                cli,
                 ["package", "build", "--manifest", str(manifest), "--dry-run"]
             )
         
@@ -363,7 +369,7 @@ package = { default_out_dir = "build", signing_curve = "P-521", verify_on_build 
         # Change to the tmp directory so config is found
         with patch("os.getcwd", return_value=str(tmp_path)):
             # Show package config
-            result = runner.invoke(workenv_cli, ["package", "config"])
+            result = runner.invoke(cli, ["package", "config"])
             
             assert result.exit_code == 0
             assert "P-521" in result.output or "signing_curve" in result.output
@@ -464,7 +470,7 @@ test = "package verify {artifact}"
             mock_path.return_value = config_file
             
             result = runner.invoke(
-                workenv_cli,
+                cli,
                 ["package", "matrix-test", "--matrix", "package_test"]
             )
             
