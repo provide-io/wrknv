@@ -40,9 +40,11 @@ class TestContainerVolumeIntegration:
         return project_dir
 
     @pytest.fixture
-    def test_config(self, tmp_path):
+    def test_config(self):
         """Create test configuration with custom storage path."""
-        storage_path = tmp_path / "wrknv_containers"
+        # Use home directory for Docker Desktop compatibility
+        storage_path = Path.home() / ".wrknv_test_containers"
+        storage_path.mkdir(exist_ok=True)
         return WorkenvConfig(
             project_name="integration-test",
             container=ContainerConfig(
@@ -266,9 +268,11 @@ class TestContainerVolumeIntegration:
         assert result.returncode == 0
         assert "Hello World" in result.stdout
 
-    def test_multiple_containers_shared_downloads(self, tmp_path):
+    def test_multiple_containers_shared_downloads(self):
         """Test that multiple containers can share the downloads directory."""
-        storage_path = tmp_path / "wrknv_containers"
+        # Use home directory for Docker Desktop compatibility
+        storage_path = Path.home() / ".wrknv_test_multi_containers"
+        storage_path.mkdir(exist_ok=True)
         
         # Create two container configurations
         config1 = WorkenvConfig(
