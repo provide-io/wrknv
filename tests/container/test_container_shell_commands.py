@@ -463,22 +463,24 @@ class TestCLIIntegration:
     @pytest.fixture
     def mock_config(self):
         """Mock WorkenvConfig."""
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock:
-            mock.return_value = WorkenvConfig(
-                project_name="test-project",
-                container=ContainerConfig(enabled=True),
-            )
-            yield mock
+        config = WorkenvConfig(
+            project_name="test-project",
+            container=ContainerConfig(enabled=True),
+        )
+        with patch("wrknv.wenv.cli.WorkenvConfig", return_value=config):
+            yield config
 
     @pytest.fixture
     def mock_container_manager(self):
         """Mock ContainerManager."""
-        with patch("wrknv.container.shell_commands.ContainerManager") as mock:
-            manager = mock.return_value
+        with patch("wrknv.container.manager.ContainerManager") as mock:
+            manager = Mock()
             manager.CONTAINER_NAME = "test-project-dev"
             manager.container_running.return_value = True
             manager.container_exists.return_value = True
-            yield mock
+            manager.enter.return_value = True
+            mock.return_value = manager
+            yield manager
 
     def test_cli_enter_command(self, runner, mock_config, mock_container_manager):
         """Test CLI enter command."""
