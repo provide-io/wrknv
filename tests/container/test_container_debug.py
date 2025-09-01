@@ -16,8 +16,8 @@ from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 
 def test_volume_debug():
     """Debug volume mounting issues."""
-    # Create config with tmp storage
-    storage_path = Path("/tmp/wrknv_debug_test")
+    # Use a path that Docker Desktop can access (not /tmp which may be virtualized)
+    storage_path = Path.home() / ".wrknv_debug_test"
     storage_path.mkdir(exist_ok=True)
     
     config = WorkenvConfig(
