@@ -32,11 +32,24 @@ def start_container(config: WorkenvConfig | None = None, rebuild: bool = False) 
 
 
 def enter_container(
-    config: WorkenvConfig | None = None, command: list[str] | None = None
+    config: WorkenvConfig | None = None,
+    command: list[str] | None = None,
+    shell: str | None = None,
+    working_dir: str | None = None,
+    environment: dict[str, str] | None = None,
+    user: str | None = None,
+    auto_start: bool = False,
 ) -> None:
     """Enter the running container."""
     manager = ContainerManager(config)
-    manager.enter(command=command)
+    manager.enter(
+        command=command,
+        shell=shell,
+        working_dir=working_dir,
+        environment=environment,
+        user=user,
+        auto_start=auto_start,
+    )
 
 
 def stop_container(config: WorkenvConfig | None = None) -> bool:
@@ -105,11 +118,22 @@ def container_status(config: WorkenvConfig | None = None) -> None:
 
 
 def container_logs(
-    config: WorkenvConfig | None = None, follow: bool = False, tail: int = 100
+    config: WorkenvConfig | None = None,
+    follow: bool = False,
+    tail: int = 100,
+    since: str | None = None,
+    timestamps: bool = False,
+    details: bool = False,
 ) -> None:
     """Show container logs."""
     manager = ContainerManager(config)
-    manager.logs(follow=follow, tail=tail)
+    manager.logs(
+        follow=follow,
+        tail=tail,
+        since=since,
+        timestamps=timestamps,
+        details=details,
+    )
 
 
 def clean_container(config: WorkenvConfig | None = None) -> bool:
