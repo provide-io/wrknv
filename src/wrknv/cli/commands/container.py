@@ -46,6 +46,7 @@ def container_group():
     "status",
     parent="container",
     description="Show container status",
+)
 def container_status_command():
     """Display container status information."""
     config = WorkenvConfig()
