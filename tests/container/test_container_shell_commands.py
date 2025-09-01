@@ -505,16 +505,18 @@ class TestCLIIntegration:
         """Test CLI exec command."""
         from wrknv.wenv.cli import workenv_cli as cli
         
-        # Mock exec_in_container since it's imported directly
-        with patch("wrknv.wenv.cli.exec_in_container") as mock_exec:
+        # Mock exec_in_container at the source
+        with patch("wrknv.container.shell_commands.exec_in_container") as mock_exec:
             mock_exec.return_value = Mock(
                 returncode=0,
                 stdout="exec output",
                 stderr=""
             )
             
-            result = runner.invoke(cli, ["container", "exec", "ls", "-la"])
+            result = runner.invoke(cli, ["container", "exec", "--", "ls", "-la"])
             
+            if result.exit_code != 0:
+                print(f"Error: {result.output}")
             assert result.exit_code == 0
             assert "exec output" in result.output
             mock_exec.assert_called_once()
@@ -548,8 +550,8 @@ class TestCLIIntegration:
         """Test CLI stats command."""
         from wrknv.wenv.cli import workenv_cli as cli
         
-        # Mock get_container_stats since it's imported directly
-        with patch("wrknv.wenv.cli.get_container_stats") as mock_stats:
+        # Mock get_container_stats at the source
+        with patch("wrknv.container.shell_commands.get_container_stats") as mock_stats:
             mock_stats.return_value = {
                 "name": "test-project-dev",
                 "cpu": "5.2%",
