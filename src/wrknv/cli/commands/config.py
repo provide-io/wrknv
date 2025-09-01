@@ -20,11 +20,17 @@ from wrknv.wenv.config import WorkenvConfig
 from wrknv.wenv.exceptions import ProfileError
 
 
+# Register the config group first
+@register_command("config", group=True, description="Configuration management")
+def config_group():
+    """Configuration management commands."""
+    pass
+
+
 @register_command(
-    "config-show",
+    "show",
+    parent="config",
     description="Show current configuration",
-    category="config",
-)
 def config_show(
     output_json: bool = False,
     profile: str | None = None,
@@ -56,10 +62,9 @@ def config_show(
 
 
 @register_command(
-    "config-edit",
+    "edit",
+    parent="config",
     description="Edit configuration file",
-    category="config",
-)
 def config_edit():
     """Edit configuration file."""
     config = WorkenvConfig()
@@ -71,10 +76,9 @@ def config_edit():
 
 
 @register_command(
-    "config-validate",
+    "validate",
+    parent="config",
     description="Validate configuration file syntax and values",
-    category="config",
-)
 def config_validate(strict: bool = False):
     """Validate configuration file syntax and values."""
     config = WorkenvConfig()
