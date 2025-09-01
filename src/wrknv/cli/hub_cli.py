@@ -8,20 +8,9 @@ Hub-based CLI Entry Point
 Main CLI using provide.foundation.hub for command registration.
 """
 
-import os
-import logging
-
-# Configure logging before importing foundation
-logging.getLogger("provide.foundation").setLevel(logging.WARNING)
-
 from provide.foundation.hub import Hub, get_hub
 from provide.foundation.context import Context
-from provide.foundation.logger import get_logger, setup_logging
-
-# Set up logging with appropriate level
-setup_logging(log_level="WARNING")
-
-log = get_logger(__name__)
+from provide.foundation import logger
 
 
 def load_commands():
@@ -38,7 +27,7 @@ def load_commands():
     # from wrknv.cli.commands import package  # noqa: F401
     # from wrknv.cli.commands import profile  # noqa: F401
     
-    log.debug("Loaded wrknv command modules")
+    logger.debug("Loaded wrknv command modules")
 
 
 def create_cli():

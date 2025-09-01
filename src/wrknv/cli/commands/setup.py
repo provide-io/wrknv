@@ -15,12 +15,10 @@ from pathlib import Path
 
 from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success
-from provide.foundation.logger import get_logger
+from provide.foundation import logger
 
 from wrknv.wenv.exceptions import DependencyError
 from wrknv.wenv.workenv import WorkenvManager
-
-log = get_logger(__name__)
 
 
 @register_command(

@@ -12,13 +12,11 @@ import sys
 
 from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
-from provide.foundation.logger import get_logger
+from provide.foundation import logger
 
 from wrknv.wenv.config import WorkenvConfig
 from wrknv.wenv.managers.factory import get_tool_manager
 from wrknv.wenv.visual import Emoji
-
-log = get_logger(__name__)
 
 
 @register_command("tf", description="Install or manage Terraform/OpenTofu versions", category="tools")
