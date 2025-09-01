@@ -35,11 +35,17 @@ from wrknv.container.commands import (
 from wrknv.wenv.config import WorkenvConfig
 
 
+# Register the container group first
+@register_command("container", group=True, description="Docker container management")
+def container_group():
+    """Docker container management commands."""
+    pass
+
+
 @register_command(
-    "container-status",
+    "status",
+    parent="container",
     description="Show container status",
-    category="container",
-)
 def container_status_command():
     """Display container status information."""
     config = WorkenvConfig()
@@ -47,10 +53,9 @@ def container_status_command():
 
 
 @register_command(
-    "container-build",
+    "build",
+    parent="container",
     description="Build container image",
-    category="container",
-)
 def container_build_command(rebuild: bool = False):
     """Build the development container image."""
     config = WorkenvConfig()
@@ -70,10 +75,9 @@ def container_build_command(rebuild: bool = False):
 
 
 @register_command(
-    "container-start",
+    "start",
+    parent="container",
     description="Start development container",
-    category="container",
-)
 def container_start_command(rebuild: bool = False):
     """Start the development container."""
     config = WorkenvConfig()
@@ -84,17 +88,16 @@ def container_start_command(rebuild: bool = False):
     
     if success:
         echo_success("✅ Container started successfully")
-        echo_info("Run 'wrknv container-enter' to access the container")
+        echo_info("Run 'wrknv container enter' to access the container")
     else:
         echo_error("❌ Failed to start container")
         sys.exit(1)
 
 
 @register_command(
-    "container-stop",
+    "stop",
+    parent="container",
     description="Stop development container",
-    category="container",
-)
 def container_stop_command():
     """Stop the development container."""
     config = WorkenvConfig()
@@ -111,10 +114,9 @@ def container_stop_command():
 
 
 @register_command(
-    "container-restart",
+    "restart",
+    parent="container",
     description="Restart development container",
-    category="container",
-)
 def container_restart_command():
     """Restart the development container."""
     config = WorkenvConfig()
@@ -131,10 +133,9 @@ def container_restart_command():
 
 
 @register_command(
-    "container-enter",
+    "enter",
+    parent="container",
     description="Enter running container",
-    category="container",
-)
 def container_enter_command(
     command: Optional[str] = None,
     shell: Optional[str] = None,
@@ -159,10 +160,9 @@ def container_enter_command(
 
 
 @register_command(
-    "container-logs",
+    "logs",
+    parent="container",
     description="Show container logs",
-    category="container",
-)
 def container_logs_command(
     follow: bool = False,
     tail: int = 100,
@@ -184,10 +184,9 @@ def container_logs_command(
 
 
 @register_command(
-    "container-clean",
+    "clean",
+    parent="container",
     description="Clean up container and image",
-    category="container",
-)
 def container_clean_command():
     """Clean up container and image."""
     config = WorkenvConfig()
@@ -212,10 +211,9 @@ def container_clean_command():
 
 
 @register_command(
-    "container-rebuild",
+    "rebuild",
+    parent="container",
     description="Rebuild container from scratch",
-    category="container",
-)
 def container_rebuild_command():
     """Rebuild the container from scratch."""
     config = WorkenvConfig()
@@ -226,7 +224,7 @@ def container_rebuild_command():
     
     if success:
         echo_success("✅ Container rebuilt successfully")
-        echo_info("Run 'wrknv container-enter' to access the new container")
+        echo_info("Run 'wrknv container enter' to access the new container")
     else:
         echo_error("❌ Failed to rebuild container")
         sys.exit(1)
@@ -235,10 +233,9 @@ def container_rebuild_command():
 # Volume management commands
 
 @register_command(
-    "container-volumes",
+    "volumes",
+    parent="container",
     description="List container volumes",
-    category="container",
-)
 def container_volumes_command():
     """List container volumes with information."""
     config = WorkenvConfig()
@@ -246,10 +243,9 @@ def container_volumes_command():
 
 
 @register_command(
-    "container-volumes-backup",
+    "volumes-backup",
+    parent="container",
     description="Backup container volumes",
-    category="container",
-)
 def container_volumes_backup_command(name: Optional[str] = None):
     """Create a backup of container volumes."""
     config = WorkenvConfig()
@@ -261,10 +257,9 @@ def container_volumes_backup_command(name: Optional[str] = None):
 
 
 @register_command(
-    "container-volumes-restore",
+    "volumes-restore",
+    parent="container",
     description="Restore container volumes from backup",
-    category="container",
-)
 def container_volumes_restore_command(
     backup_path: Optional[str] = None,
     force: bool = False,
@@ -279,10 +274,9 @@ def container_volumes_restore_command(
 
 
 @register_command(
-    "container-volumes-clean",
+    "volumes-clean",
+    parent="container",
     description="Clean container volumes",
-    category="container",
-)
 def container_volumes_clean_command(preserve: Optional[str] = None):
     """Clean container volumes."""
     config = WorkenvConfig()
@@ -299,11 +293,10 @@ def container_volumes_clean_command(preserve: Optional[str] = None):
 # Convenience shortcuts
 
 @register_command(
-    "container-shell",
+    "shell",
+    parent="container",
     description="Open shell in container (alias for enter)",
-    category="container",
     hidden=True,
-)
 def container_shell_command():
     """Open an interactive shell in the container."""
     config = WorkenvConfig()
@@ -317,17 +310,16 @@ def container_shell_command():
 
 
 @register_command(
-    "container-exec",
+    "exec",
+    parent="container",
     description="Execute command in container",
-    category="container",
-)
 def container_exec_command(command: str):
     """Execute a command in the container."""
     config = WorkenvConfig()
     
     if not command:
         echo_error("No command specified")
-        echo_info("Usage: wrknv container-exec 'command to run'")
+        echo_info("Usage: wrknv container exec 'command to run'")
         sys.exit(1)
     
     enter_container(
