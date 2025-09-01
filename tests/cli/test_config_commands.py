@@ -13,7 +13,7 @@ from unittest.mock import MagicMock, Mock, mock_open, patch
 import click.testing
 import pytest
 
-from wrknv.wenv.cli import workenv_cli
+from wrknv.cli.hub_cli import create_cli
 from wrknv.wenv.schema import WorkenvConfig
 
 
@@ -25,6 +25,7 @@ class TestConfigCommands(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.runner = click.testing.CliRunner()
+        self.cli = create_cli()
         self.temp_dir = tempfile.mkdtemp()
         self.temp_path = Path(self.temp_dir)
         self.config_file = self.temp_path / "wrknv.toml"
@@ -41,7 +42,7 @@ class TestConfigCommands(unittest.TestCase):
             mock_config.show_config.return_value = None
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "show"])
+            result = self.runner.invoke(self.cli, ["config", "show"])
             
             self.assertEqual(result.exit_code, 0)
             mock_config.show_config.assert_called_once()
@@ -53,7 +54,7 @@ class TestConfigCommands(unittest.TestCase):
             mock_config.show_config.return_value = None
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "show"])
+            result = self.runner.invoke(self.cli, ["config", "show"])
             
             self.assertEqual(result.exit_code, 0)
             mock_config.show_config.assert_called_once()
@@ -70,7 +71,7 @@ class TestConfigCommands(unittest.TestCase):
             }
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "show", "--json"])
+            result = self.runner.invoke(self.cli, ["config", "show", "--json"])
             
             self.assertEqual(result.exit_code, 0)
             # Output should be valid JSON
@@ -88,7 +89,7 @@ class TestConfigCommands(unittest.TestCase):
             }
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "show", "--profile", "dev"])
+            result = self.runner.invoke(self.cli, ["config", "show", "--profile", "dev"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Profile: dev", result.output)
@@ -104,7 +105,7 @@ class TestConfigCommands(unittest.TestCase):
             mock_config.edit_config.return_value = None
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "edit"])
+            result = self.runner.invoke(self.cli, ["config", "edit"])
             
             self.assertEqual(result.exit_code, 0)
             mock_config.edit_config.assert_called_once()
@@ -124,7 +125,7 @@ class TestConfigCommands(unittest.TestCase):
                 mock_config.edit_config.side_effect = RuntimeError("No editor configured. Set EDITOR or VISUAL environment variable.")
                 mock_config_class.return_value = mock_config
                 
-                result = self.runner.invoke(workenv_cli, ["config", "edit"])
+                result = self.runner.invoke(self.cli, ["config", "edit"])
                 
                 # The command catches the exception and shows error message
                 self.assertIn("No editor configured", result.output)
@@ -141,7 +142,7 @@ class TestConfigCommands(unittest.TestCase):
                     mock_config_class.return_value = mock_config
                     mock_run.return_value = Mock(returncode=0)
                     
-                    result = self.runner.invoke(workenv_cli, ["config", "edit"])
+                    result = self.runner.invoke(self.cli, ["config", "edit"])
                     
                     self.assertEqual(result.exit_code, 0)
                     mock_config.edit_config.assert_called_once()
@@ -162,7 +163,7 @@ terraform = { version = "1.5.0" }
             mock_config.validate.return_value = (True, [])
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "validate"])
+            result = self.runner.invoke(self.cli, ["config", "validate"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Configuration is valid", result.output)
@@ -183,7 +184,7 @@ version = "1.0.0"
             ])
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "validate"])
+            result = self.runner.invoke(self.cli, ["config", "validate"])
             
             self.assertEqual(result.exit_code, 1)
             self.assertIn("Configuration validation failed", result.output)
@@ -216,7 +217,7 @@ version = "1.0.0"
             mock_config.config_exists.return_value = True
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "init"])
+            result = self.runner.invoke(self.cli, ["config", "init"])
             
             self.assertEqual(result.exit_code, 1)
             self.assertIn("Configuration file already exists", result.output)
@@ -228,7 +229,7 @@ version = "1.0.0"
             mock_config.get_setting.return_value = "INFO"
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "get", "log_level"])
+            result = self.runner.invoke(self.cli, ["config", "get", "log_level"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn("log_level: INFO", result.output)
@@ -256,7 +257,7 @@ version = "1.0.0"
             mock_config.get_config_path.return_value = self.config_file
             mock_config_class.return_value = mock_config
             
-            result = self.runner.invoke(workenv_cli, ["config", "path"])
+            result = self.runner.invoke(self.cli, ["config", "path"])
             
             self.assertEqual(result.exit_code, 0)
             self.assertIn(str(self.config_file), result.output)
@@ -295,7 +296,7 @@ class TestConfigCommandIntegration(unittest.TestCase):
             self.assertTrue(config_file.exists())
             
             # Validate the config
-            result = self.runner.invoke(workenv_cli, ["config", "validate"])
+            result = self.runner.invoke(self.cli, ["config", "validate"])
             self.assertEqual(result.exit_code, 0)
 
 

@@ -3,19 +3,12 @@
 # wrknv/wenv/cli.py
 #
 """
-CLI Entry Point
-===============
-Entry point for the wrknv CLI using foundation hub.
+CLI Stub
+========
+Stub for old CLI location - to be removed.
 """
 
-from wrknv.cli.hub_cli import main, create_cli
-
-# Export for compatibility
-entry_point = main
-workenv_cli = create_cli()
-
-if __name__ == "__main__":
-    main()
-
+# This file is intentionally left minimal
+# The CLI has been moved to wrknv.cli.hub_cli
 
 # 🧰🌍🖥️🪄

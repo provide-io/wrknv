@@ -4,7 +4,7 @@ from pathlib import Path
 import shutil
 from unittest.mock import patch
 
-from wrknv.wenv.cli import workenv_cli
+from wrknv.cli.hub_cli import create_cli
 
 @pytest.fixture
 def runner():
@@ -50,7 +50,8 @@ templates_path = "{templates_path_actual}"
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
-                result = runner.invoke(workenv_cli, ["gitignore", "build"], catch_exceptions=False)
+                cli = create_cli()
+            result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 assert "✅ .gitignore built successfully" in result.output
@@ -99,7 +100,8 @@ templates_path = "{templates_path_actual}"
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
-                result = runner.invoke(workenv_cli, ["gitignore", "build", "--templates", "Global", "--templates", "Python"], catch_exceptions=False)
+                cli = create_cli()
+            result = runner.invoke(cli, ["gitignore", "build", "--templates", "Global", "--templates", "Python"], catch_exceptions=False)
 
             assert result.exit_code == 0
             assert "✅ .gitignore built successfully" in result.output
@@ -133,7 +135,8 @@ version = "0.1.0"
         with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
             # Change current working directory to tmp_path for the test
             with runner.isolated_filesystem(tmp_path):
-                result = runner.invoke(workenv_cli, ["gitignore", "build"], catch_exceptions=False)
+                cli = create_cli()
+            result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
             assert result.exit_code == 0
             assert "No gitignore templates specified in config or via --templates." in result.output
@@ -170,7 +173,8 @@ templates_path = "{templates_path_actual}"
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
-                result = runner.invoke(workenv_cli, ["gitignore", "build"], catch_exceptions=False)
+                cli = create_cli()
+            result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
             assert result.exit_code == 0
             out, err = capsys.readouterr()
@@ -216,7 +220,8 @@ templates_path = "{templates_path_actual}"
             with patch("wrknv.wenv.cli.WorkenvConfig", return_value=mock_config_instance):
                 custom_output_path = tmp_path / "my_custom.ignore"
 
-                result = runner.invoke(workenv_cli, ["gitignore", "build", "--output", str(custom_output_path)], catch_exceptions=False)
+                cli = create_cli()
+            result = runner.invoke(cli, ["gitignore", "build", "--output", str(custom_output_path)], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 assert f"✅ .gitignore built successfully at {custom_output_path}" in result.output
