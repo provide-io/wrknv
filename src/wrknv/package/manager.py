@@ -11,7 +11,7 @@ import importlib.util
 import os
 from pathlib import Path
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 from wrknv.wenv.config import WorkenvConfig
 from wrknv.wenv.managers.factory import get_tool_manager

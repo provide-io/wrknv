@@ -14,7 +14,7 @@ import subprocess
 from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 from wrknv.wenv.config import WorkenvConfig, WorkenvConfigError
 

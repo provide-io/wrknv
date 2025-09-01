@@ -10,7 +10,7 @@ Functions for verifying tool installations.
 import pathlib
 import subprocess
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 
 def verify_tool_installation(

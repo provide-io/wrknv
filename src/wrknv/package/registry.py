@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 
 class RegistryClient:

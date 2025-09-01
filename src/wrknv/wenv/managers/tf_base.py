@@ -19,7 +19,7 @@ from abc import abstractmethod
 from datetime import datetime
 
 import semver
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 from .base import BaseToolManager, ToolManagerError
 

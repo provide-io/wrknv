@@ -12,7 +12,7 @@ import re
 from urllib.request import urlopen
 
 import semver
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 from .tf_base import TfVersionsManager, ToolManagerError
 

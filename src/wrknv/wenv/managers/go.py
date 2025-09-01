@@ -12,7 +12,7 @@ import pathlib
 import re
 from urllib.request import urlopen
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 from .base import BaseToolManager, ToolManagerError
 

@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 from wrknv.wenv.visual import Emoji, print_success
 

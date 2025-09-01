@@ -12,7 +12,7 @@ import stat
 import tarfile
 import zipfile
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 
 def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:

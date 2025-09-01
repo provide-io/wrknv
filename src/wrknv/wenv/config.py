@@ -22,7 +22,7 @@ try:
 except ImportError:
     tomli_w = None
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 from .schema import (
     WorkenvConfig,

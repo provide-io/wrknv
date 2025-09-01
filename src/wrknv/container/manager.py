@@ -16,7 +16,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 from rich.console import Console
 
 from wrknv.wenv.config import WorkenvConfig

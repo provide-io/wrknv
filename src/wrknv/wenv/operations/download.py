@@ -12,7 +12,7 @@ import pathlib
 import urllib.request
 from urllib.parse import urlparse
 
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 
 def download_file(
