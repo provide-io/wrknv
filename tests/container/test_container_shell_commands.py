@@ -490,6 +490,12 @@ class TestCLIIntegration:
             
             result = runner.invoke(cli, ["container", "enter"])
             
+            if result.exit_code != 0:
+                print(f"Error: {result.output}")
+                if result.exception:
+                    import traceback
+                    traceback.print_exception(type(result.exception), result.exception, result.exception.__traceback__)
+            
             assert result.exit_code == 0
             mock_run.assert_called_once()
 
