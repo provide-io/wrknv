@@ -34,7 +34,7 @@ dependencies = [
     "cattrs>=23.0.0",
     # provide-foundation is not on PyPI yet, install locally with:
     # uv pip install -e ../provide-foundation
-    "provide-foundation>=0.0.16",
+    #"provide-foundation>=0.0.16",
 ]
 
 [project.optional-dependencies]

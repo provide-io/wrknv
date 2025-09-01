@@ -449,19 +449,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pyvider-telemetry"
-version = "0.0.15"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "attrs" },
-    { name = "structlog" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/b2/02/61a14e18b63ef0f1aa5504d26f9f1dcafda900f6a471041d47e58497853a/pyvider_telemetry-0.0.15.tar.gz", hash = "sha256:a4e461636f6db70aadad8503b47a48e6d23ab083075342e9400107c4c69e2bd3", size = 96416, upload-time = "2025-08-15T03:09:51.734Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/d5/5b7df09f0b998684e70b829ddca32e3769db072a5e7286395a676662dbf4/pyvider_telemetry-0.0.15-py3-none-any.whl", hash = "sha256:12ac9fee8da9dbb8965908e88f22128fa1802ec1af73ce6eb58042cb0ac3bdc5", size = 42410, upload-time = "2025-08-15T03:09:50.262Z" },
-]
-
-[[package]]
 name = "pyyaml"
 version = "6.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -566,15 +553,6 @@ wheels = [
 ]
 
 [[package]]
-name = "structlog"
-version = "25.4.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/79/b9/6e672db4fec07349e7a8a8172c1a6ae235c58679ca29c3f86a61b5e59ff3/structlog-25.4.0.tar.gz", hash = "sha256:186cd1b0a8ae762e29417095664adf1d6a31702160a46dacb7796ea82f7409e4", size = 1369138, upload-time = "2025-06-02T08:21:12.971Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/4a/97ee6973e3a73c74c8120d59829c3861ea52210667ec3e7a16045c62b64d/structlog-25.4.0-py3-none-any.whl", hash = "sha256:fe809ff5c27e557d14e613f45ca441aabda051d119ee5a0102aaba6ce40eed2c", size = 68720, upload-time = "2025-06-02T08:21:11.43Z" },
-]
-
-[[package]]
 name = "tomli"
 version = "2.2.1"
 source = { registry = "https://pypi.org/simple" }
@@ -641,7 +619,6 @@ dependencies = [
     { name = "click" },
     { name = "jinja2" },
     { name = "packaging" },
-    { name = "pyvider-telemetry" },
     { name = "rich" },
     { name = "semver" },
     { name = "tomli-w" },
@@ -680,7 +657,6 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=0.21" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
-    { name = "pyvider-telemetry", specifier = ">=0.0.15" },
     { name = "rich", specifier = ">=13.0.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.1.0" },
     { name = "semver", specifier = ">=3.0.0" },
