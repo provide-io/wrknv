@@ -10,31 +10,30 @@ Commands for managing development tools (status, sync, doctor, etc).
 
 import pathlib
 import sys
-
-import click
 from rich.table import Table
+
+from provide.foundation.hub import register_command
+from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.logger import get_logger
 
 from wrknv.wenv.config import WorkenvConfig
 from wrknv.wenv.doctor import run_doctor
 from wrknv.wenv.env_generator import create_project_env_scripts
 from wrknv.wenv.managers.factory import get_tool_manager
-from wrknv.wenv.visual import (
-    Emoji,
-    get_console,
-    get_tool_emoji,
-    print_warning,
-)
+from wrknv.wenv.visual import Emoji, get_console, get_tool_emoji
+
+log = get_logger(__name__)
 
 
-@click.command(name="status")
+@register_command("status", description="Show status of all managed tools", category="tools")
 def status_command():
-    """📊 Show status of all managed tools."""
+    """Show status of all managed tools."""
     config = WorkenvConfig()
     tools = config.get_all_tools()
     console = get_console()
 
     if not tools:
-        print_warning("No tools configured")
+        echo_warning("No tools configured")
         return
 
     # Create status table
@@ -55,51 +54,46 @@ def status_command():
     console.print(table)
 
 
-@click.command(name="sync")
+@register_command("sync", description="Install all tools defined in configuration", category="tools")
 def sync_command():
-    """🔄 Install all tools defined in configuration."""
+    """Install all tools defined in configuration."""
     config = WorkenvConfig()
     tools = config.get_all_tools()
 
     if not tools:
-        click.echo("No tools configured in workenv configuration")
+        echo_info("No tools configured in workenv configuration")
         return
 
-    click.echo("Syncing tools from configuration...")
+    echo_info("Syncing tools from configuration...")
 
     for tool_name, version in tools.items():
         try:
             manager = get_tool_manager(tool_name, config)
-            click.echo(f"\nInstalling {tool_name} {version}...")
+            echo_info(f"\nInstalling {tool_name} {version}...")
             manager.install_version(version, dry_run=False)
-            click.echo(f"✅ Successfully installed {tool_name} {version}")
+            echo_success(f"✅ Successfully installed {tool_name} {version}")
         except Exception as e:
-            click.echo(f"❌ Error installing {tool_name} {version}: {e}")
+            echo_error(f"❌ Error installing {tool_name} {version}: {e}")
 
 
-@click.command(name="generate-env")
-@click.option(
-    "--output",
-    "-o",
-    type=click.Path(path_type=pathlib.Path),
-    default=pathlib.Path("env.sh"),
-    help="Output path for the environment script",
+@register_command(
+    "generate-env",
+    description="Generate optimized environment setup script",
+    category="tools",
 )
-@click.option(
-    "--shell",
-    type=click.Choice(["bash", "zsh", "sh", "powershell", "ps1"]),
-    default="sh",
-    help="Target shell type",
-)
-@click.option(
-    "--project-dir",
-    type=click.Path(exists=True, dir_okay=True, path_type=pathlib.Path),
-    default=pathlib.Path.cwd(),
-    help="Project directory to generate env script for",
-)
-def generate_env_command(output: pathlib.Path, shell: str, project_dir: pathlib.Path):
-    """🌍 Generate optimized environment setup script."""
-    click.echo(f"🔧 Generating environment scripts for {project_dir.name}...")
+def generate_env_command(
+    output: pathlib.Path = pathlib.Path("env.sh"),
+    shell: str = "sh",
+    project_dir: pathlib.Path = pathlib.Path.cwd(),
+):
+    """Generate optimized environment setup script.
+    
+    Args:
+        output: Output path for the environment script
+        shell: Target shell type (bash/zsh/sh/powershell/ps1)
+        project_dir: Project directory to generate env script for
+    """
+    echo_info(f"🔧 Generating environment scripts for {project_dir.name}...")
 
     try:
         # Use the existing function that works
@@ -109,30 +103,27 @@ def generate_env_command(output: pathlib.Path, shell: str, project_dir: pathlib.
         if shell in ["powershell", "ps1"]:
             if output != ps1_path:
                 import shutil
-
                 shutil.move(str(ps1_path), str(output))
                 ps1_path = output
-            click.echo(f"✅ Generated {ps1_path}")
+            echo_success(f"✅ Generated {ps1_path}")
         else:
             if output != sh_path:
                 import shutil
-
                 shutil.move(str(sh_path), str(output))
                 sh_path = output
-            click.echo(f"✅ Generated {sh_path}")
+            echo_success(f"✅ Generated {sh_path}")
 
-        click.echo("\nTo use the environment:")
-        click.echo(f"  source {output}")
+        echo_info("\nTo use the environment:")
+        echo_info(f"  source {output}")
 
     except FileNotFoundError as e:
-        click.echo(f"❌ Error: {e}")
-        click.echo("Make sure you're in a project directory with pyproject.toml")
+        echo_error(f"❌ Error: {e}")
+        echo_error("Make sure you're in a project directory with pyproject.toml")
 
 
-@click.command()
-@click.option("--verbose", "-v", is_flag=True, help="Show detailed diagnostic output")
-def doctor(verbose):
-    """🩺 Diagnose and fix common wrknv environment issues.
+@register_command("doctor", description="Diagnose and fix common wrknv environment issues", category="tools")
+def doctor(verbose: bool = False):
+    """Diagnose and fix common wrknv environment issues.
     
     Checks for:
     - Correct workenv directory structure
@@ -140,5 +131,8 @@ def doctor(verbose):
     - Required dependencies (uv, git, etc.)
     - Configuration file validity
     - Common problems and their solutions
+    
+    Args:
+        verbose: Show detailed diagnostic output
     """
     sys.exit(run_doctor(verbose))

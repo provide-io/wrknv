@@ -3,19 +3,18 @@
 # wrknv/wenv/cli.py
 #
 """
-Legacy CLI Entry Point
-======================
-This file now just imports from the new modular CLI structure.
-Kept for backwards compatibility.
+CLI Entry Point
+===============
+Entry point for the wrknv CLI using foundation hub.
 """
 
-from wrknv.cli.main import entry_point, workenv_cli
+from wrknv.cli.hub_cli import main
 
-# Export the same interface for backwards compatibility
-__all__ = ["workenv_cli", "entry_point"]
+# Export for compatibility
+entry_point = main
 
 if __name__ == "__main__":
-    entry_point()
+    main()
 
 
 # 🧰🌍🖥️🪄
