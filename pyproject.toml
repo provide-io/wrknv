@@ -32,7 +32,9 @@ dependencies = [
     "jinja2>=3.0.0",
     "attrs>=23.0.0",
     "cattrs>=23.0.0",
-    "pyvider-telemetry>=0.0.15",
+    # provide-foundation is not on PyPI yet, install locally with:
+    # uv pip install -e ../provide-foundation
+    "provide-foundation>=0.0.16",
 ]
 
 [project.optional-dependencies]
@@ -50,7 +52,7 @@ dev = [
 ]
 
 [project.scripts]
-wrknv = "wrknv.wenv.cli:entry_point"
+wrknv = "wrknv.cli.hub_cli:main"
 
 [project.urls]
 "Homepage" = "https://github.com/provide-io/wrknv"
