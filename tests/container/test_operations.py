@@ -40,7 +40,14 @@ class TestContainerManager(unittest.TestCase):
         enter_container(config, command=['ls', '-l'])
 
         # Assert
-        mock_enter.assert_called_once_with(command=['ls', '-l'])
+        mock_enter.assert_called_once_with(
+            command=['ls', '-l'],
+            shell=None,
+            working_dir=None,
+            environment=None,
+            user=None,
+            auto_start=False
+        )
 
     @patch('wrknv.container.manager.ContainerManager.stop')
     def test_stop_container(self, mock_stop):
@@ -98,7 +105,13 @@ class TestContainerManager(unittest.TestCase):
         container_logs(config, follow=True, tail=100)
 
         # Assert
-        mock_logs.assert_called_once_with(follow=True, tail=100)
+        mock_logs.assert_called_once_with(
+            follow=True,
+            tail=100,
+            since=None,
+            timestamps=False,
+            details=False
+        )
 
     @patch('wrknv.container.manager.ContainerManager.clean')
     def test_clean_container(self, mock_clean):
