@@ -105,9 +105,9 @@ def config_validate(strict: bool = False):
 
 
 @register_command(
-    "config-init",
+    "init",
+    parent="config",
     description="Initialize a new configuration file interactively",
-    category="config",
 )
 def config_init(force: bool = False):
     """Initialize a new configuration file interactively."""
@@ -149,9 +149,9 @@ def config_init(force: bool = False):
 
 
 @register_command(
-    "config-path",
+    "path",
+    parent="config",
     description="Show path to configuration file",
-    category="config",
 )
 def config_path():
     """Show path to configuration file."""
@@ -164,9 +164,9 @@ def config_path():
 
 
 @register_command(
-    "config-get",
+    "get",
+    parent="config",
     description="Get a specific configuration setting",
-    category="config",
 )
 def config_get(key: str):
     """Get a specific configuration setting."""
@@ -187,9 +187,9 @@ def config_get(key: str):
 
 
 @register_command(
-    "config-set",
+    "set",
+    parent="config",
     description="Set a configuration value",
-    category="config",
 )
 def config_set(key: str, value: str):
     """Set a configuration value."""
