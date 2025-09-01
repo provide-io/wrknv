@@ -473,80 +473,94 @@ class TestCLIIntegration:
     @pytest.fixture
     def mock_container_manager(self):
         """Mock ContainerManager."""
-        with patch("wrknv.container.manager.ContainerManager") as mock:
+        with patch("wrknv.container.manager.ContainerManager") as mock_class:
             manager = Mock()
             manager.CONTAINER_NAME = "test-project-dev"
             manager.container_running.return_value = True
             manager.container_exists.return_value = True
             manager.enter.return_value = True
-            mock.return_value = manager
-            yield manager
+            manager.logs.return_value = None
+            manager.status.return_value = {
+                "docker_available": True,
+                "image_exists": True,
+                "container_exists": True,
+                "container_running": True,
+                "container_info": {"id": "abc123", "state": "running"}
+            }
+            mock_class.return_value = manager
+            # Also patch in commands module where it's imported
+            with patch("wrknv.container.commands.ContainerManager", return_value=manager):
+                yield manager
 
     def test_cli_enter_command(self, runner, mock_config, mock_container_manager):
         """Test CLI enter command."""
-        with patch("subprocess.run") as mock_run:
-            mock_run.return_value = Mock(returncode=0)
-            from wrknv.wenv.cli import workenv_cli as cli
-            
-            result = runner.invoke(cli, ["container", "enter"])
-            
-            if result.exit_code != 0:
-                print(f"Error: {result.output}")
-                if result.exception:
-                    import traceback
-                    traceback.print_exception(type(result.exception), result.exception, result.exception.__traceback__)
-            
-            assert result.exit_code == 0
-            mock_run.assert_called_once()
+        from wrknv.wenv.cli import workenv_cli as cli
+        
+        result = runner.invoke(cli, ["container", "enter"])
+        
+        assert result.exit_code == 0
+        mock_container_manager.enter.assert_called_once()
 
     def test_cli_exec_command(self, runner, mock_config, mock_container_manager):
         """Test CLI exec command."""
-        with patch("subprocess.run") as mock_run:
-            mock_run.return_value = Mock(
+        from wrknv.wenv.cli import workenv_cli as cli
+        
+        # Mock exec_in_container since it's imported directly
+        with patch("wrknv.wenv.cli.exec_in_container") as mock_exec:
+            mock_exec.return_value = Mock(
                 returncode=0,
                 stdout="exec output",
                 stderr=""
             )
             
-            from wrknv.wenv.cli import workenv_cli as cli
-            
             result = runner.invoke(cli, ["container", "exec", "ls", "-la"])
             
             assert result.exit_code == 0
             assert "exec output" in result.output
+            mock_exec.assert_called_once()
 
     def test_cli_logs_command(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command."""
-        with patch("subprocess.run") as mock_run:
-            mock_run.return_value = Mock(
-                returncode=0,
-                stdout="container logs",
-                stderr=""
-            )
-            
-            from wrknv.wenv.cli import workenv_cli as cli
-            
-            result = runner.invoke(cli, ["container", "logs"])
-            
-            assert result.exit_code == 0
-            assert "container logs" in result.output
+        from wrknv.wenv.cli import workenv_cli as cli
+        
+        result = runner.invoke(cli, ["container", "logs"])
+        
+        assert result.exit_code == 0
+        mock_container_manager.logs.assert_called_once()
 
     def test_cli_logs_with_options(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command with options."""
-        with patch("subprocess.run") as mock_run:
-            mock_run.return_value = Mock(
-                returncode=0,
-                stdout="filtered logs",
-                stderr=""
-            )
+        from wrknv.wenv.cli import workenv_cli as cli
+        
+        result = runner.invoke(cli, ["container", "logs", "--tail", "50", "--timestamps"])
+        
+        assert result.exit_code == 0
+        # Check that options were passed through
+        mock_container_manager.logs.assert_called_once_with(
+            follow=False,
+            tail=50,
+            since=None,
+            timestamps=True,
+            details=False
+        )
+
+    def test_cli_stats_command(self, runner, mock_config, mock_container_manager):
+        """Test CLI stats command."""
+        from wrknv.wenv.cli import workenv_cli as cli
+        
+        # Mock get_container_stats since it's imported directly
+        with patch("wrknv.wenv.cli.get_container_stats") as mock_stats:
+            mock_stats.return_value = {
+                "name": "test-project-dev",
+                "cpu": "5.2%",
+                "memory": {"usage": "256MB / 1GB", "percent": "25%"},
+                "network": "1KB / 2KB",
+                "disk": "10MB / 20MB",
+                "pids": "10"
+            }
             
-            from wrknv.wenv.cli import workenv_cli as cli
-            
-            result = runner.invoke(cli, ["container", "logs", "--tail", "50", "--timestamps"])
+            result = runner.invoke(cli, ["container", "stats"])
             
             assert result.exit_code == 0
-            # Check that options were passed through
-            call_args = mock_run.call_args[0][0]
-            assert "--tail" in call_args
-            assert "50" in call_args
-            assert "-t" in call_args
+            assert "Container Resource Usage" in result.output
+            mock_stats.assert_called_once()
