@@ -17,9 +17,10 @@ from urllib.parse import urlparse
 from provide.foundation import logger
 
 from wrknv.wenv.config import WorkenvConfig, WorkenvConfigError
+from wrknv.wenv.exceptions import WrkenvError
 
 
-class ToolManagerError(Exception):
+class ToolManagerError(WrkenvError):
     """Raised when there's an error in tool management."""
 
     pass

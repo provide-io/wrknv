@@ -6,8 +6,10 @@ Centralized exception definitions with helpful error messages and suggestions.
 Requires Python 3.11+ for native type hint support with pipe operators.
 """
 
+from provide.foundation.errors import FoundationError
 
-class WrkenvError(Exception):
+
+class WrkenvError(FoundationError):
     """Base exception for all wrknv errors."""
 
     def __init__(self, message: str, suggestion: str | None = None, exit_code: int = 1):

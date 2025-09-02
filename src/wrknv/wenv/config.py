@@ -24,6 +24,7 @@ except ImportError:
 
 from provide.foundation import logger
 
+from .exceptions import ConfigurationError
 from .schema import (
     WorkenvConfig,
     load_config_from_dict,
@@ -31,7 +32,7 @@ from .schema import (
 )
 
 
-class WorkenvConfigError(Exception):
+class WorkenvConfigError(ConfigurationError):
     """Raised when there's an error in workenv configuration."""
 
     pass
