@@ -28,8 +28,7 @@ def config_group():
 
 
 @register_command(
-    "show",
-    parent="config",
+    "config.show",
     description="Show current configuration",
 )
 def config_show(
@@ -63,8 +62,7 @@ def config_show(
 
 
 @register_command(
-    "edit",
-    parent="config",
+    "config.edit",
     description="Edit configuration file",
 )
 def config_edit():
@@ -78,8 +76,7 @@ def config_edit():
 
 
 @register_command(
-    "validate",
-    parent="config",
+    "config.validate",
     description="Validate configuration file syntax and values",
 )
 def config_validate(strict: bool = False):
@@ -108,8 +105,7 @@ def config_validate(strict: bool = False):
 
 
 @register_command(
-    "init",
-    parent="config",
+    "config.init",
     description="Initialize a new configuration file interactively",
 )
 def config_init(force: bool = False):
@@ -152,8 +148,7 @@ def config_init(force: bool = False):
 
 
 @register_command(
-    "path",
-    parent="config",
+    "config.path",
     description="Show path to configuration file",
 )
 def config_path():
@@ -167,8 +162,7 @@ def config_path():
 
 
 @register_command(
-    "get",
-    parent="config",
+    "config.get",
     description="Get a specific configuration setting",
 )
 def config_get(key: str):
@@ -190,8 +184,7 @@ def config_get(key: str):
 
 
 @register_command(
-    "set",
-    parent="config",
+    "config.set",
     description="Set a configuration value",
 )
 def config_set(key: str, value: str):
