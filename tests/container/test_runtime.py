@@ -243,7 +243,8 @@ class TestDockerRuntime(unittest.TestCase):
     def test_error_handling(self, mock_run):
         """Test error handling when command fails."""
         mock_run.side_effect = ProcessError(
-            cmd=["docker", "start", "nonexistent"],
+            message="Error: No such container: nonexistent",
+            command=["docker", "start", "nonexistent"],
             returncode=1,
             stdout="",
             stderr="Error: No such container: nonexistent"
