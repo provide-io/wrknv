@@ -71,7 +71,11 @@ class ContainerLifecycle:
                     image=image,
                     name=self.container_name,
                     detach=True,
-                    **run_options
+                    volumes=run_options.get("volumes"),
+                    environment=run_options.get("environment"),
+                    ports=run_options.get("ports"),
+                    workdir=run_options.get("workdir"),
+                    command=run_options.get("command"),
                 )
                 
                 self.console.print(
