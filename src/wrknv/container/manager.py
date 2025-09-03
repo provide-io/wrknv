@@ -10,13 +10,13 @@ Core container management functionality for wrknv.
 import json
 import os
 import shutil
-import subprocess
 import tarfile
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
 from provide.foundation import logger
+from provide.foundation.process import run_command, ProcessError
 from rich.console import Console
 
 from wrknv.wenv.config import WorkenvConfig
@@ -107,8 +107,8 @@ class ContainerManager:
     def check_docker(self) -> bool:
         """Check if Docker is available and running."""
         try:
-            result = subprocess.run(
-                ["docker", "info"], capture_output=True, text=True, check=False
+            result = run_command(
+                ["docker", "info"], check=False
             )
             if result.returncode != 0:
                 logger.error("Docker daemon is not running")
@@ -120,30 +120,24 @@ class ContainerManager:
 
     def container_exists(self) -> bool:
         """Check if the container exists."""
-        result = subprocess.run(
+        result = run_command(
             ["docker", "ps", "-a", "--format", "{{.Names}}"],
-            capture_output=True,
-            text=True,
             check=False,
         )
         return self.CONTAINER_NAME in result.stdout.splitlines()
 
     def container_running(self) -> bool:
         """Check if the container is running."""
-        result = subprocess.run(
+        result = run_command(
             ["docker", "ps", "--format", "{{.Names}}"],
-            capture_output=True,
-            text=True,
             check=False,
         )
         return self.CONTAINER_NAME in result.stdout.splitlines()
 
     def image_exists(self) -> bool:
         """Check if the Docker image exists."""
-        result = subprocess.run(
+        result = run_command(
             ["docker", "images", "--format", "{{.Repository}}:{{.Tag}}"],
-            capture_output=True,
-            text=True,
             check=False,
         )
         return self.full_image in result.stdout.splitlines()
@@ -169,7 +163,7 @@ class ContainerManager:
             cmd.extend(["--no-cache"])
 
         try:
-            subprocess.run(cmd, check=True)
+            run_command(cmd, check=True)
             self.console.print(
                 f"[green]✅ Successfully built image {self.full_image}[/green]"
             )
@@ -202,7 +196,7 @@ class ContainerManager:
         # Remove existing container if it exists but is not running
         if self.container_exists():
             self.console.print(f"{self.CLEAN_EMOJI} Removing existing container...")
-            subprocess.run(["docker", "rm", self.CONTAINER_NAME], check=False)
+            run_command(["docker", "rm", self.CONTAINER_NAME], check=False)
 
         # Start new container
         self.console.print(
@@ -260,7 +254,7 @@ class ContainerManager:
         )
 
         try:
-            subprocess.run(cmd, check=True)
+            run_command(cmd, check=True)
             self.console.print(
                 f"[green]✅ Container {self.CONTAINER_NAME} "
                 "started successfully[/green]"
@@ -350,7 +344,7 @@ class ContainerManager:
         )
 
         try:
-            subprocess.run(["docker", "stop", self.CONTAINER_NAME], check=True)
+            run_command(["docker", "stop", self.CONTAINER_NAME], check=True)
             self.console.print("[green]✅ Container stopped successfully[/green]")
             return True
         except subprocess.CalledProcessError as e:
@@ -381,10 +375,8 @@ class ContainerManager:
 
         if status["container_exists"]:
             # Get detailed container info
-            result = subprocess.run(
+            result = run_command(
                 ["docker", "inspect", self.CONTAINER_NAME],
-                capture_output=True,
-                text=True,
                 check=False,
             )
             if result.returncode == 0:
@@ -710,11 +702,11 @@ class ContainerManager:
         
         if follow:
             # Stream logs without capturing
-            subprocess.run(cmd)
+            run_command(cmd, check=False)
             return None
         else:
             # Capture and return logs
-            result = subprocess.run(cmd, capture_output=True, text=True)
+            result = run_command(cmd)
             if result.returncode != 0:
                 self.console.print(f"[red]Failed to get logs: {result.stderr}[/red]")
                 return None
@@ -738,7 +730,7 @@ class ContainerManager:
         # Remove container
         if self.container_exists():
             try:
-                subprocess.run(["docker", "rm", self.CONTAINER_NAME], check=True)
+                run_command(["docker", "rm", self.CONTAINER_NAME], check=True)
                 self.console.print("[green]✅ Container removed[/green]")
             except subprocess.CalledProcessError:
                 self.console.print("[red]❌ Failed to remove container[/red]")
@@ -747,7 +739,7 @@ class ContainerManager:
         # Remove image
         if self.image_exists():
             try:
-                subprocess.run(["docker", "rmi", self.full_image], check=True)
+                run_command(["docker", "rmi", self.full_image], check=True)
                 self.console.print("[green]✅ Image removed[/green]")
             except subprocess.CalledProcessError:
                 self.console.print(
