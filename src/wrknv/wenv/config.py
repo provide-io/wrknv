@@ -550,7 +550,7 @@ class WorkenvConfig:
     def edit_config(self) -> None:
         """Open configuration file for editing."""
         import os
-        import subprocess
+        from provide.foundation.process import run_command
 
         config_file = Path.cwd() / "wrknv.toml"
 
@@ -583,7 +583,7 @@ python_version = "3.11"
             config_file.write_text(template)
 
         # Open in editor
-        subprocess.run([editor, str(config_file)])
+        run_command([editor, str(config_file)])
 
     def get_command_option(self, command: str, option: str, default: Any = None) -> Any:
         """Get a command-specific option from configuration.

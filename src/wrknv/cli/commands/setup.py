@@ -9,13 +9,13 @@ Commands for setting up wrknv environment and integrations.
 """
 
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
 from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation import logger
+from provide.foundation.process import run_command, ProcessError
 
 from wrknv.wenv.exceptions import DependencyError
 from wrknv.wenv.workenv import WorkenvManager
@@ -153,8 +153,8 @@ def setup_command(
         if script_path.exists():
             echo_info("Setting up shell integration...")
             try:
-                subprocess.run(["bash", str(script_path)], check=True)
-            except subprocess.CalledProcessError:
+                run_command(["bash", str(script_path)], check=True)
+            except ProcessError:
                 echo_error("Failed to set up shell integration")
                 sys.exit(1)
         else:
