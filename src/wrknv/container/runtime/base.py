@@ -19,7 +19,7 @@ from provide.foundation.process import CompletedProcess
 class ContainerRuntime(ABC):
     """Abstract base class for container runtimes (Docker, Podman, etc.)."""
     
-    runtime_name: str = "base"
+    runtime_name: str
     
     @abstractmethod
     def run_container(
