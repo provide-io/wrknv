@@ -1,8 +1,8 @@
 """Python version checking and compatibility utilities."""
 
 import json
-import subprocess
 import sys
+from provide.foundation.process import run_command
 import tomllib
 from pathlib import Path
 
@@ -33,7 +33,7 @@ def get_venv_python_version(venv_dir: Path) -> dict[str, any] | None:
             "-c",
             "import sys, json; print(json.dumps({'version': '.'.join(map(str, sys.version_info[:3])), 'major': sys.version_info.major, 'minor': sys.version_info.minor, 'micro': sys.version_info.micro}))",
         ]
-        result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        result = run_command(cmd, check=False)
 
         if result.returncode == 0:
             return json.loads(result.stdout)

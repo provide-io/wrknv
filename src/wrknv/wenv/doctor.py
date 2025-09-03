@@ -8,8 +8,8 @@ common problems with their wrknv setup.
 import os
 import sys
 import platform
-import subprocess
 import shutil
+from provide.foundation.process import run_command
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional
 import json
@@ -87,10 +87,8 @@ class WrknvDoctor:
             self.checks_passed.append(("wrknv Installation", f"Version {version}"))
             
             # Check if wrknv CLI is available
-            result = subprocess.run(
+            result = run_command(
                 ["wrknv", "--version"],
-                capture_output=True,
-                text=True,
                 timeout=5
             )
             if result.returncode == 0:
@@ -226,10 +224,8 @@ class WrknvDoctor:
         """Test if env.sh can be executed successfully."""
         try:
             # Try to source env.sh and check if VIRTUAL_ENV is set
-            result = subprocess.run(
+            result = run_command(
                 ["bash", "-c", f"source {env_script} && echo $VIRTUAL_ENV"],
-                capture_output=True,
-                text=True,
                 timeout=10
             )
             
@@ -252,7 +248,7 @@ class WrknvDoctor:
                         "env.sh Execution",
                         f"Points to non-existent workenv: {workenv_path}"
                     ))
-        except subprocess.TimeoutExpired:
+        except TimeoutError:
             self.checks_failed.append((
                 "env.sh Execution",
                 "Timed out - possible infinite loop. Regenerate with 'wrknv generate'"
