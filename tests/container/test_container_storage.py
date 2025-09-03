@@ -347,7 +347,7 @@ class TestDockerIntegration:
         manager._setup_storage()
         return manager
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_build_uses_new_path(self, mock_run, container_manager, test_storage_path):
         """Test that Docker build uses new build directory."""
         mock_run.return_value = Mock(returncode=0)
@@ -363,7 +363,7 @@ class TestDockerIntegration:
         assert "build" in call_args[1]
         assert str(build_path) in call_args
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_start_mounts_persistent_volumes(self, mock_run, container_manager, test_storage_path):
         """Test that Docker start mounts persistent volumes."""
         mock_run.return_value = Mock(returncode=0)
@@ -394,7 +394,7 @@ class TestDockerIntegration:
         shared_mount = f"{shared_path}:/downloads:ro"
         assert any(shared_mount in arg for arg in call_args)
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_clean_preserves_volumes_optionally(self, mock_run, container_manager):
         """Test that clean can optionally preserve volumes."""
         mock_run.return_value = Mock(returncode=0)

@@ -105,7 +105,7 @@ class TestVerifyOperations(unittest.TestCase):
         self.assertFalse(result)
 
     # Test run_version_check
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_run_version_check_success(self, mock_run):
         """Test successful version check."""
         binary_path = self.temp_path / "terraform"
@@ -133,7 +133,7 @@ class TestVerifyOperations(unittest.TestCase):
         
         self.assertIsNone(result)
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_run_version_check_failure(self, mock_run):
         """Test version check with non-zero return code."""
         binary_path = self.temp_path / "terraform"
@@ -147,7 +147,7 @@ class TestVerifyOperations(unittest.TestCase):
         
         self.assertIsNone(result)
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_run_version_check_timeout(self, mock_run):
         """Test version check with timeout."""
         binary_path = self.temp_path / "terraform"
@@ -159,7 +159,7 @@ class TestVerifyOperations(unittest.TestCase):
         
         self.assertIsNone(result)
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_run_version_check_exception(self, mock_run):
         """Test version check with general exception."""
         binary_path = self.temp_path / "terraform"
@@ -198,7 +198,7 @@ class TestVerifyOperations(unittest.TestCase):
         self.assertEqual(args, ["--version"])
 
     # Test check_binary_compatibility
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_check_binary_compatibility_success(self, mock_run):
         """Test successful binary compatibility check."""
         binary_path = self.temp_path / "terraform"
@@ -223,7 +223,7 @@ class TestVerifyOperations(unittest.TestCase):
         self.assertFalse(result["compatible"])
         self.assertEqual(result["error"], "Binary not found")
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_check_binary_compatibility_incompatible(self, mock_run):
         """Test incompatible binary."""
         binary_path = self.temp_path / "terraform"
@@ -238,7 +238,7 @@ class TestVerifyOperations(unittest.TestCase):
         self.assertFalse(result["compatible"])
         self.assertEqual(result["returncode"], 127)
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_check_binary_compatibility_timeout(self, mock_run):
         """Test compatibility check with timeout."""
         binary_path = self.temp_path / "terraform"
@@ -251,7 +251,7 @@ class TestVerifyOperations(unittest.TestCase):
         self.assertFalse(result["compatible"])
         self.assertEqual(result["error"], "Binary execution timed out")
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_check_binary_compatibility_exception(self, mock_run):
         """Test compatibility check with exception."""
         binary_path = self.temp_path / "terraform"

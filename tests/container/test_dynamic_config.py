@@ -75,7 +75,7 @@ class TestDynamicContainerConfiguration(unittest.TestCase):
         self.assertIn("ENV NODE_ENV=development", dockerfile)
         self.assertIn("ENV DEBUG=true", dockerfile)
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("wrknv.container.manager.ContainerManager.container_exists")
     @patch("wrknv.container.manager.ContainerManager.image_exists")

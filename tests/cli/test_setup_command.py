@@ -79,7 +79,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("Failed to set up workenv", result.output)
         self.assertIn("Failed to create virtualenv", result.output)
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.exists")
     def test_setup_shell_integration_success(self, mock_exists, mock_run):
         """Test successful shell integration setup."""
@@ -93,7 +93,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("Shell integration configured successfully", result.output)
         mock_run.assert_called_once()
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.exists")
     def test_setup_shell_integration_script_not_found(self, mock_exists, mock_run):
         """Test shell integration when script is missing."""
@@ -105,7 +105,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertIn("Shell integration script not found", result.output)
         mock_run.assert_not_called()
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.exists")
     def test_setup_shell_integration_script_fails(self, mock_exists, mock_run):
         """Test shell integration when script execution fails."""
@@ -117,7 +117,7 @@ class TestSetupCommand(unittest.TestCase):
         self.assertEqual(result.exit_code, 1)
         self.assertIn("Failed to set up shell integration", result.output)
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     def test_setup_shell_integration_creates_aliases(self, mock_run):
         """Test that shell integration creates proper aliases."""
         # Create a mock shell integration script
@@ -141,7 +141,7 @@ alias wrknv-activate='source env.sh'
             self.assertEqual(result.exit_code, 0)
 
     @patch("wrknv.wenv.workenv.WorkenvManager")
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.exists")
     def test_setup_all_options(self, mock_exists, mock_run, mock_manager_class):
         """Test setup with both --init and --shell-integration."""

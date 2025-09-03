@@ -43,7 +43,7 @@ class TestShellCommand:
             container=ContainerConfig(enabled=True),
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic shell command execution."""
@@ -52,7 +52,7 @@ class TestShellCommand:
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
         
-        # Mock subprocess.run to return successful result
+        # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
         
         result = shell_into_container(test_config)
@@ -63,7 +63,7 @@ class TestShellCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_with_custom_shell(self, mock_manager_class, mock_run, test_config):
         """Test shell command with custom shell."""
@@ -72,7 +72,7 @@ class TestShellCommand:
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
         
-        # Mock subprocess.run to return successful result
+        # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
         
         result = shell_into_container(test_config, shell="/bin/zsh")
@@ -97,7 +97,7 @@ class TestShellCommand:
         
         assert result is False
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_auto_start(self, mock_manager_class, mock_run, test_config):
         """Test shell with auto-start when container is stopped."""
@@ -111,7 +111,7 @@ class TestShellCommand:
         # After start, container is running
         mock_manager.container_running.side_effect = [False, True]
         
-        # Mock subprocess.run to return successful result
+        # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
         
         result = shell_into_container(test_config, auto_start=True)
@@ -120,7 +120,7 @@ class TestShellCommand:
         mock_manager.start.assert_called_once()
         mock_run.assert_called_once()
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_with_working_dir(self, mock_manager_class, mock_run, test_config):
         """Test shell with custom working directory."""
@@ -129,7 +129,7 @@ class TestShellCommand:
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
         
-        # Mock subprocess.run to return successful result
+        # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
         
         result = shell_into_container(test_config, working_dir="/app")
@@ -140,7 +140,7 @@ class TestShellCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_with_environment(self, mock_manager_class, mock_run, test_config):
         """Test shell with environment variables."""
@@ -149,7 +149,7 @@ class TestShellCommand:
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
         
-        # Mock subprocess.run to return successful result
+        # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
         
         env_vars = {"DEBUG": "true", "APP_ENV": "development"}
@@ -176,7 +176,7 @@ class TestExecCommand:
             container=ContainerConfig(enabled=True),
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic command execution."""
@@ -202,7 +202,7 @@ class TestExecCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_with_working_dir(self, mock_manager_class, mock_run, test_config):
         """Test exec with working directory."""
@@ -222,7 +222,7 @@ class TestExecCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_with_environment(self, mock_manager_class, mock_run, test_config):
         """Test exec with environment variables."""
@@ -246,7 +246,7 @@ class TestExecCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_interactive(self, mock_manager_class, mock_run, test_config):
         """Test interactive command execution."""
@@ -266,7 +266,7 @@ class TestExecCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_with_user(self, mock_manager_class, mock_run, test_config):
         """Test exec with specific user."""
@@ -309,7 +309,7 @@ class TestLogsCommand:
             container=ContainerConfig(enabled=True),
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic logs retrieval."""
@@ -334,7 +334,7 @@ class TestLogsCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_with_follow(self, mock_manager_class, mock_run, test_config):
         """Test logs with follow option."""
@@ -351,7 +351,7 @@ class TestLogsCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_with_tail(self, mock_manager_class, mock_run, test_config):
         """Test logs with tail option."""
@@ -372,7 +372,7 @@ class TestLogsCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_with_timestamps(self, mock_manager_class, mock_run, test_config):
         """Test logs with timestamps."""
@@ -393,7 +393,7 @@ class TestLogsCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_with_since(self, mock_manager_class, mock_run, test_config):
         """Test logs with since option."""
@@ -414,7 +414,7 @@ class TestLogsCommand:
             check=False
         )
 
-    @patch("subprocess.run")
+    @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_combined_options(self, mock_manager_class, mock_run, test_config):
         """Test logs with multiple options combined."""
