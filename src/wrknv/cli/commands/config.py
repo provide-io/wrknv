@@ -173,9 +173,9 @@ def config_get(key: str):
         value = config.get_setting(key)
         if value is not None:
             if isinstance(value, (dict, list)):
-                echo_info(json.dumps(value, indent=2))
+                echo_info(f"{key}: {json.dumps(value, indent=2)}")
             else:
-                echo_info(str(value))
+                echo_info(f"{key}: {value}")
         else:
             echo_warning(f"Setting '{key}' not found")
     except Exception as e:
