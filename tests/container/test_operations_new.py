@@ -302,7 +302,7 @@ class TestContainerExec(unittest.TestCase):
         result = self.exec.enter(shell=None)
         
         self.assertTrue(result)
-        mock_run.assert_called_once()  # For find_shell
+        self.assertEqual(mock_run.call_count, 2)  # Container running + shell detection
         mock_system.assert_called_once()
         system_cmd = mock_system.call_args[0][0]
         self.assertIn("docker exec", system_cmd)
