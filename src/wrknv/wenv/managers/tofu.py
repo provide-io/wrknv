@@ -106,9 +106,9 @@ class TofuManager(TfVersionsManager):
             return False
 
         try:
-            import subprocess
+            from provide.foundation.process import run_command
 
-            result = subprocess.run(
+            result = run_command(
                 [str(binary_path), "-version"],
                 capture_output=True,
                 text=True,

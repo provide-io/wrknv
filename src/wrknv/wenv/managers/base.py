@@ -10,7 +10,7 @@ Common functionality for all tool managers.
 import pathlib
 import platform
 import shutil
-import subprocess
+from provide.foundation.process import run_command
 from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
@@ -361,10 +361,8 @@ class BaseToolManager(ABC):
 
         try:
             # Try to run the tool with version flag
-            result = subprocess.run(
+            result = run_command(
                 [str(binary_path), "--version"],
-                capture_output=True,
-                text=True,
                 timeout=10,
             )
 

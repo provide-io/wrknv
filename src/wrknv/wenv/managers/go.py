@@ -127,16 +127,14 @@ class GoManager(BaseToolManager):
             return False
 
         try:
-            import subprocess
+            from provide.foundation.process import run_command
 
             # Set GOROOT for this Go installation
             go_root = binary_path.parent.parent / "go"
             env = {"GOROOT": str(go_root)}
 
-            result = subprocess.run(
+            result = run_command(
                 [str(binary_path), "version"],
-                capture_output=True,
-                text=True,
                 timeout=10,
                 env=env,
             )

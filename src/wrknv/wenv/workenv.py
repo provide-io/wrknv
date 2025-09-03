@@ -9,10 +9,10 @@ Manages wrknv's own virtual environment.
 
 import platform
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
+from provide.foundation.process import run_command
 from wrknv.wenv.visual import Emoji, print_info, print_success
 
 
@@ -69,7 +69,7 @@ class WorkenvManager:
         workenv_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Create virtual environment
-        subprocess.run(
+        run_command(
             [sys.executable, "-m", "venv", str(workenv_path)],
             check=True,
         )
@@ -79,14 +79,14 @@ class WorkenvManager:
         wrknv_root = Path(__file__).parent.parent.parent.parent
 
         print_info("Installing wrknv in development mode...", Emoji.INSTALL)
-        subprocess.run(
+        run_command(
             [str(pip_path), "install", "-e", str(wrknv_root)],
             check=True,
         )
 
         # Install development dependencies
         print_info("Installing development dependencies...", Emoji.PACKAGE)
-        subprocess.run(
+        run_command(
             [str(pip_path), "install", "-e", f"{wrknv_root}[dev]"],
             check=True,
         )
