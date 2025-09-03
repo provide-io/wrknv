@@ -1,0 +1,272 @@
+#!/usr/bin/env python3
+#
+# wrknv/container/operations/volumes.py
+#
+"""
+Container Volume Operations
+===========================
+Manage container volumes and mounts.
+"""
+
+import json
+import tarfile
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from attrs import define
+from provide.foundation import logger
+from provide.foundation.process import ProcessError, run_command
+from rich.console import Console
+from rich.table import Table
+
+
+@define
+class VolumeManager:
+    """Manages container volume operations."""
+    
+    runtime: ContainerRuntime
+    console: Console
+    backup_dir: Path
+    
+    def create_volume(self, name: str, driver: str | None, options: dict[str, str] | None) -> bool:
+        """Create a named volume.
+        
+        Args:
+            name: Volume name
+            driver: Volume driver (e.g., "local")
+            options: Driver options
+            
+        Returns:
+            True if successful
+        """
+        try:
+            cmd = [self.runtime.runtime_command, "volume", "create"]
+            
+            if driver:
+                cmd.extend(["--driver", driver])
+            
+            for key, value in (options or {}).items():
+                cmd.extend(["--opt", f"{key}={value}"])
+            
+            cmd.append(name)
+            
+            result = run_command(cmd, check=True)
+            
+            logger.info("Volume created", name=name, driver=driver)
+            self.console.print(f"[green]✅ Volume {name} created[/green]")
+            return True
+            
+        except ProcessError as e:
+            logger.error("Failed to create volume", name=name, error=str(e))
+            self.console.print(f"[red]❌ Failed to create volume: {e}[/red]")
+            return False
+    
+    def remove_volume(self, name: str, force: bool) -> bool:
+        """Remove a named volume.
+        
+        Args:
+            name: Volume name
+            force: Force removal
+            
+        Returns:
+            True if successful
+        """
+        try:
+            cmd = [self.runtime.runtime_command, "volume", "rm"]
+            
+            if force:
+                cmd.append("-f")
+            
+            cmd.append(name)
+            
+            result = run_command(cmd, check=True)
+            
+            logger.info("Volume removed", name=name)
+            self.console.print(f"[green]✅ Volume {name} removed[/green]")
+            return True
+            
+        except ProcessError as e:
+            logger.error("Failed to remove volume", name=name, error=str(e))
+            self.console.print(f"[red]❌ Failed to remove volume: {e}[/red]")
+            return False
+    
+    def list_volumes(self, filter_label: str | None) -> list[dict[str, Any]]:
+        """List all volumes.
+        
+        Args:
+            filter_label: Filter by label
+            
+        Returns:
+            List of volume information
+        """
+        try:
+            cmd = [self.runtime.runtime_command, "volume", "ls", "--format", "json"]
+            
+            if filter_label:
+                cmd.extend(["--filter", f"label={filter_label}"])
+            
+            result = run_command(cmd, check=True)
+            
+            volumes = []
+            if result.stdout:
+                for line in result.stdout.strip().splitlines():
+                    if line:
+                        volumes.append(json.loads(line))
+            
+            return volumes
+            
+        except (ProcessError, json.JSONDecodeError) as e:
+            logger.error("Failed to list volumes", error=str(e))
+            return []
+    
+    def inspect_volume(self, name: str) -> dict[str, Any]:
+        """Get detailed volume information.
+        
+        Args:
+            name: Volume name
+            
+        Returns:
+            Volume information
+        """
+        try:
+            result = run_command(
+                [self.runtime.runtime_command, "volume", "inspect", name],
+                check=True
+            )
+            
+            if result.stdout:
+                data = json.loads(result.stdout)
+                return data[0] if data else {}
+            return {}
+            
+        except (ProcessError, json.JSONDecodeError) as e:
+            logger.error("Failed to inspect volume", name=name, error=str(e))
+            return {}
+    
+    def backup_volume(
+        self,
+        volume_name: str,
+        container_name: str,
+        mount_path: str,
+    ) -> Path | None:
+        """Backup a volume to a tar file.
+        
+        Args:
+            volume_name: Volume to backup
+            container_name: Container using the volume
+            mount_path: Mount path inside container
+            
+        Returns:
+            Path to backup file if successful
+        """
+        try:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            backup_file = self.backup_dir / f"{volume_name}_{timestamp}.tar"
+            
+            self.console.print(f"[cyan]💾 Backing up volume {volume_name}...[/cyan]")
+            
+            # Create backup using tar inside container
+            cmd = [
+                self.runtime.runtime_command, "run", "--rm",
+                "-v", f"{volume_name}:{mount_path}",
+                "-v", f"{self.backup_dir}:/backup",
+                "alpine",
+                "tar", "-czf", f"/backup/{backup_file.name}", "-C", mount_path, "."
+            ]
+            
+            result = run_command(cmd, check=True)
+            
+            logger.info(
+                "Volume backed up",
+                volume=volume_name,
+                backup_file=str(backup_file),
+            )
+            self.console.print(
+                f"[green]✅ Volume backed up to {backup_file}[/green]"
+            )
+            return backup_file
+            
+        except ProcessError as e:
+            logger.error("Failed to backup volume", volume=volume_name, error=str(e))
+            self.console.print(f"[red]❌ Backup failed: {e}[/red]")
+            return None
+    
+    def restore_volume(
+        self,
+        volume_name: str,
+        backup_file: Path,
+        mount_path: str,
+    ) -> bool:
+        """Restore a volume from a tar file.
+        
+        Args:
+            volume_name: Volume to restore to
+            backup_file: Backup tar file
+            mount_path: Mount path inside container
+            
+        Returns:
+            True if successful
+        """
+        try:
+            if not backup_file.exists():
+                self.console.print(f"[red]❌ Backup file not found: {backup_file}[/red]")
+                return False
+            
+            self.console.print(f"[cyan]📥 Restoring volume {volume_name}...[/cyan]")
+            
+            # Restore using tar inside container
+            cmd = [
+                self.runtime.runtime_command, "run", "--rm",
+                "-v", f"{volume_name}:{mount_path}",
+                "-v", f"{backup_file.parent}:/backup",
+                "alpine",
+                "tar", "-xzf", f"/backup/{backup_file.name}", "-C", mount_path
+            ]
+            
+            result = run_command(cmd, check=True)
+            
+            logger.info(
+                "Volume restored",
+                volume=volume_name,
+                backup_file=str(backup_file),
+            )
+            self.console.print(
+                f"[green]✅ Volume restored from {backup_file}[/green]"
+            )
+            return True
+            
+        except ProcessError as e:
+            logger.error(
+                "Failed to restore volume",
+                volume=volume_name,
+                backup_file=str(backup_file),
+                error=str(e),
+            )
+            self.console.print(f"[red]❌ Restore failed: {e}[/red]")
+            return False
+    
+    def show_volumes(self) -> None:
+        """Display volumes in a table."""
+        volumes = self.list_volumes(filter_label=None)
+        
+        if not volumes:
+            self.console.print("[yellow]No volumes found[/yellow]")
+            return
+        
+        table = Table(title="Container Volumes")
+        table.add_column("Name", style="cyan")
+        table.add_column("Driver", style="green")
+        table.add_column("Mountpoint", style="yellow")
+        
+        for volume in volumes:
+            table.add_row(
+                volume.get("Name", ""),
+                volume.get("Driver", ""),
+                volume.get("Mountpoint", "")[:50] + "..." if len(volume.get("Mountpoint", "")) > 50 else volume.get("Mountpoint", ""),
+            )
+        
+        self.console.print(table)
+
+
+from wrknv.container.runtime.base import ContainerRuntime
