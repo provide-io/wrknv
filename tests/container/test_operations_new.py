@@ -127,8 +127,16 @@ class TestContainerLifecycle(unittest.TestCase):
     @patch("wrknv.container.runtime.docker.run_command")
     def test_restart_container(self, mock_run):
         """Test restarting a container."""
-        # Container is running (for stop)
+        # Container is running (for stop check)
         mock_run.side_effect = [
+            # Check if running (for restart)
+            CompletedProcess(
+                args=["docker", "ps"],
+                returncode=0,
+                stdout="test-container",
+                stderr=""
+            ),
+            # Check if running again (for stop)
             CompletedProcess(
                 args=["docker", "ps"],
                 returncode=0,
@@ -142,14 +150,14 @@ class TestContainerLifecycle(unittest.TestCase):
                 stdout="test-container",
                 stderr=""
             ),
-            # Container exists (for start)
+            # Check if container exists (for start)
             CompletedProcess(
-                args=["docker", "ps"],
+                args=["docker", "ps", "-a"],
                 returncode=0,
                 stdout="test-container",
                 stderr=""
             ),
-            # Container not running
+            # Check if running (should be stopped)
             CompletedProcess(
                 args=["docker", "ps"],
                 returncode=0,
@@ -168,7 +176,7 @@ class TestContainerLifecycle(unittest.TestCase):
         result = self.lifecycle.restart(timeout=10)
         
         self.assertTrue(result)
-        self.assertEqual(mock_run.call_count, 5)
+        self.assertEqual(mock_run.call_count, 6)
     
     @patch("wrknv.container.runtime.docker.run_command")
     def test_status(self, mock_run):
