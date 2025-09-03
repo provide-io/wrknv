@@ -10,7 +10,7 @@ Commands for interacting with running containers.
 from typing import Any, Dict, List, Optional
 
 from provide.foundation import logger
-from provide.foundation.process import run_command
+from provide.foundation.process import run_command, CompletedProcess, stream_command
 from rich.console import Console
 
 from wrknv.container.manager import ContainerManager
@@ -100,7 +100,7 @@ def exec_in_container(
     environment: Optional[Dict[str, str]] = None,
     user: Optional[str] = None,
     interactive: bool = False,
-) -> Optional[subprocess.CompletedProcess]:
+) -> Optional[CompletedProcess]:
     """
     Execute a command in the container.
     
@@ -287,17 +287,7 @@ def stream_container_logs(
         import re
         
         # Start streaming process
-        process = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            bufsize=1,
-            universal_newlines=True
-        )
-        
-        # Process each line
-        for line in process.stdout:
+        for line in stream_command(cmd):
             # Apply filter if specified
             if filter_pattern and not re.search(filter_pattern, line):
                 continue
@@ -347,7 +337,7 @@ def get_container_stats(config: WorkenvConfig) -> Optional[Dict[str, Any]]:
     try:
         # Get container stats
         cmd = ["docker", "stats", "--no-stream", "--format", "json", manager.CONTAINER_NAME]
-        result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        result = run_command(cmd, check=False)
         
         if result.returncode == 0 and result.stdout:
             import json
