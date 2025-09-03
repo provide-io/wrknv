@@ -25,17 +25,19 @@ class ContainerExec:
     
     runtime: ContainerRuntime
     container_name: str
-    console: Console = Console()
+    console: Console
+    available_shells: list[str]
+    default_shell: str
     
     def exec(
         self,
-        command: list[str] | None = None,
-        shell: str | None = None,
-        interactive: bool = True,
-        tty: bool = True,
-        user: str | None = None,
-        workdir: str | None = None,
-        environment: dict[str, str] | None = None,
+        command: list[str] | None,
+        shell: str | None,
+        interactive: bool,
+        tty: bool,
+        user: str | None,
+        workdir: str | None,
+        environment: dict[str, str] | None,
     ) -> bool:
         """Execute a command in the container.
         
@@ -117,7 +119,7 @@ class ContainerExec:
             self.console.print(f"[red]❌ Exec failed: {e}[/red]")
             return False
     
-    def enter(self, shell: str | None = None, **kwargs) -> bool:
+    def enter(self, shell: str | None, **kwargs) -> bool:
         """Enter the container with an interactive shell.
         
         Args:
@@ -138,7 +140,7 @@ class ContainerExec:
     def run_command(
         self,
         command: list[str],
-        capture_output: bool = True,
+        capture_output: bool,
         **kwargs
     ) -> str | None:
         """Run a command in the container and return output.
@@ -186,9 +188,7 @@ class ContainerExec:
         Returns:
             Path to available shell
         """
-        shells = ["/bin/bash", "/bin/sh", "/bin/zsh", "/bin/ash"]
-        
-        for shell in shells:
+        for shell in self.available_shells:
             try:
                 # Check if shell exists
                 result = self.runtime.exec_in_container(
@@ -196,23 +196,26 @@ class ContainerExec:
                     command=["test", "-f", shell],
                     interactive=False,
                     tty=False,
+                    user=None,
+                    workdir=None,
+                    environment=None,
                 )
                 # If command succeeds, shell exists
                 return shell
             except ProcessError:
                 continue
         
-        # Default to sh if nothing found
-        return "/bin/sh"
+        # Return configured default if nothing found
+        return self.default_shell
     
     def _build_exec_command(
         self,
         command: list[str],
-        interactive: bool = False,
-        tty: bool = False,
-        user: str | None = None,
-        workdir: str | None = None,
-        environment: dict[str, str] | None = None,
+        interactive: bool,
+        tty: bool,
+        user: str | None,
+        workdir: str | None,
+        environment: dict[str, str] | None,
     ) -> str:
         """Build docker exec command string for os.system.
         
@@ -227,7 +230,7 @@ class ContainerExec:
         Returns:
             Command string
         """
-        parts = ["docker", "exec"]
+        parts = [self.runtime.runtime_command, "exec"]
         
         if interactive:
             parts.append("-i")
