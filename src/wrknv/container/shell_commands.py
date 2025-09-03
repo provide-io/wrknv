@@ -7,10 +7,10 @@ Container Shell Commands
 Commands for interacting with running containers.
 """
 
-import subprocess
 from typing import Any, Dict, List, Optional
 
 from provide.foundation import logger
+from provide.foundation.process import run_command
 from rich.console import Console
 
 from wrknv.container.manager import ContainerManager
@@ -82,7 +82,7 @@ def shell_into_container(
     
     try:
         # Run interactively without capturing output
-        result = subprocess.run(cmd, check=False)
+        result = run_command(cmd, check=False)
         return result.returncode == 0
     except KeyboardInterrupt:
         console.print("\n[yellow]Shell session interrupted[/yellow]")
@@ -158,10 +158,10 @@ def exec_in_container(
     try:
         if interactive:
             # Run interactively without capturing output
-            result = subprocess.run(cmd, capture_output=False, text=True, check=False)
+            result = run_command(cmd, check=False)
         else:
             # Capture output for non-interactive commands
-            result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+            result = run_command(cmd, check=False)
             
         if result.returncode != 0 and result.stderr:
             console.print(f"[red]Command failed: {result.stderr}[/red]")
@@ -231,11 +231,11 @@ def get_container_logs(
     try:
         if follow:
             # Stream logs without capturing (for follow mode)
-            subprocess.run(cmd, check=False)
+            run_command(cmd, check=False)
             return None
         else:
             # Capture and return logs
-            result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+            result = run_command(cmd, check=False)
             
             if result.returncode != 0:
                 console.print(f"[red]Failed to get logs: {result.stderr}[/red]")
