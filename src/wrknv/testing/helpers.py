@@ -8,10 +8,10 @@ that wrknv is designed to manage.
 import os
 import sys
 import platform
-import subprocess
 from pathlib import Path
 from typing import Optional, Dict, Any
 import contextlib
+from provide.foundation.process import run_command
 
 
 def get_workenv_dir(package_name: Optional[str] = None) -> Path:
@@ -150,10 +150,8 @@ class WorkenvTestRunner:
         
         # Source env.sh - this will create the workenv directory automatically
         print(f"Setting up workenv by sourcing env.sh...")
-        result = subprocess.run(
-            ["bash", "-c", f"source {env_script} && echo 'Workenv ready at: $VIRTUAL_ENV'"],
-            capture_output=True,
-            text=True
+        result = run_command(
+            ["bash", "-c", f"source {env_script} && echo 'Workenv ready at: $VIRTUAL_ENV'"]
         )
         
         if result.returncode != 0:
@@ -187,7 +185,7 @@ class WorkenvTestRunner:
         cmd.append(package_spec)
         
         print(f"Installing dependencies: {' '.join(cmd)}")
-        subprocess.run(cmd, env=env, check=True)
+        run_command(cmd, env=env, check=True)
     
     def run_pytest(self, *args, **kwargs) -> subprocess.CompletedProcess:
         """
@@ -210,7 +208,7 @@ class WorkenvTestRunner:
         pytest_cmd.extend(args)
         
         print(f"Running tests: {' '.join(pytest_cmd)}")
-        return subprocess.run(pytest_cmd, env=env, **kwargs)
+        return run_command(pytest_cmd, env=env, **kwargs)
     
     def run_command(self, cmd: list, **kwargs) -> subprocess.CompletedProcess:
         """
@@ -224,7 +222,7 @@ class WorkenvTestRunner:
             CompletedProcess instance with the result.
         """
         env = activate_workenv(self.package_name)
-        return subprocess.run(cmd, env=env, **kwargs)
+        return run_command(cmd, env=env, **kwargs)
 
 
 def pytest_with_workenv(package_name: Optional[str] = None, *pytest_args) -> int:
