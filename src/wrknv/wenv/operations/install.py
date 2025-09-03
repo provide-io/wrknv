@@ -13,6 +13,13 @@ import tarfile
 import zipfile
 
 from provide.foundation import logger
+from provide.foundation.file import (
+    ensure_dir,
+    safe_copy,
+    safe_rmtree,
+    get_size,
+    safe_delete,
+)
 
 
 def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
@@ -143,31 +150,16 @@ def copy_file(
     source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True
 ) -> None:
     """Copy file with optional permission preservation."""
-
-    if not source.exists():
-        raise FileNotFoundError(f"Source file not found: {source}")
-
-    # Create parent directories
-    destination.parent.mkdir(parents=True, exist_ok=True)
-
-    import shutil
-
-    if preserve_permissions:
-        shutil.copy2(source, destination)
-    else:
-        shutil.copy(source, destination)
-
+    # Use foundation's safe_copy which handles all edge cases
+    safe_copy(source, destination, overwrite=True, preserve_mode=preserve_permissions)
     logger.debug(f"Copied {source} to {destination}")
 
 
 def ensure_directory(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
-
-    if not dir_path.exists():
-        dir_path.mkdir(parents=True, mode=mode)
-        logger.debug(f"Created directory: {dir_path}")
-    elif not dir_path.is_dir():
-        raise Exception(f"Path exists but is not a directory: {dir_path}")
+    # Use foundation's ensure_dir which handles all edge cases
+    ensure_dir(dir_path, mode=mode)
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -179,17 +171,15 @@ def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
     if not dir_path.is_dir():
         raise Exception(f"Path is not a directory: {dir_path}")
 
-    import shutil
-
     for item in dir_path.iterdir():
         if keep_hidden and item.name.startswith("."):
             continue
 
         try:
             if item.is_dir():
-                shutil.rmtree(item)
+                safe_rmtree(item, missing_ok=True)
             else:
-                item.unlink()
+                safe_delete(item, missing_ok=True)
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
@@ -198,11 +188,11 @@ def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
 
 def get_file_size(file_path: pathlib.Path) -> int:
     """Get file size in bytes."""
-
-    if not file_path.exists():
+    # Use foundation's get_size which returns 0 for missing files
+    size = get_size(file_path)
+    if size == 0 and not file_path.exists():
         raise FileNotFoundError(f"File not found: {file_path}")
-
-    return file_path.stat().st_size
+    return size
 
 
 def is_executable(file_path: pathlib.Path) -> bool:
