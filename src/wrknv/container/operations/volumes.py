@@ -20,6 +20,8 @@ from provide.foundation.process import ProcessError, run_command
 from rich.console import Console
 from rich.table import Table
 
+from wrknv.container.runtime.base import ContainerRuntime
+
 
 @define
 class VolumeManager:
@@ -267,6 +269,3 @@ class VolumeManager:
             )
         
         self.console.print(table)
-
-
-from wrknv.container.runtime.base import ContainerRuntime
