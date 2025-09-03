@@ -306,7 +306,8 @@ class TestContainerExec(unittest.TestCase):
         mock_system.assert_called_once()
         system_cmd = mock_system.call_args[0][0]
         self.assertIn("docker exec", system_cmd)
-        self.assertIn("-it", system_cmd)
+        self.assertIn("-i", system_cmd)
+        self.assertIn("-t", system_cmd)
         self.assertIn("test-container", system_cmd)
         self.assertIn("/bin/bash", system_cmd)
 
