@@ -157,7 +157,7 @@
        20 -      # Fallback if pyvider-telemetry is not available
        21 -      import logging
        22 -      logger = logging.getLogger(__name__)
-       16 +  from pyvider.telemetry import logger
+       16 +  from provide.foundation import logger
        17    
        18    
        19    class RegistryClient:
