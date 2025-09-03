@@ -370,7 +370,7 @@ class TestContainerBuilder(unittest.TestCase):
         self.assertIn("--platform", cmd)
         self.assertIn("linux/amd64", cmd)
     
-    @patch("provide.foundation.process.stream_command")
+    @patch("wrknv.container.operations.build.stream_command")
     def test_build_with_stream(self, mock_stream):
         """Test build with streaming output."""
         mock_stream.return_value = iter([
@@ -433,7 +433,7 @@ class TestContainerLogs(unittest.TestCase):
         self.assertIn("--timestamps", cmd)
         self.assertIn("test-container", cmd)
     
-    @patch("provide.foundation.process.stream_command")
+    @patch("wrknv.container.operations.logs.stream_command")
     def test_stream_logs(self, mock_stream):
         """Test streaming container logs."""
         mock_stream.return_value = iter([
@@ -467,7 +467,7 @@ class TestVolumeManager(unittest.TestCase):
             backup_dir=Path("/tmp/backups")
         )
     
-    @patch("provide.foundation.process.run_command")
+    @patch("wrknv.container.operations.volumes.run_command")
     def test_create_volume(self, mock_run):
         """Test creating a volume."""
         mock_run.return_value = CompletedProcess(
@@ -494,7 +494,7 @@ class TestVolumeManager(unittest.TestCase):
         self.assertIn("type=tmpfs", cmd)
         self.assertIn("test-volume", cmd)
     
-    @patch("provide.foundation.process.run_command")
+    @patch("wrknv.container.operations.volumes.run_command")
     def test_list_volumes(self, mock_run):
         """Test listing volumes."""
         mock_run.return_value = CompletedProcess(
@@ -511,7 +511,7 @@ class TestVolumeManager(unittest.TestCase):
         self.assertEqual(volumes[1]["Name"], "vol2")
         mock_run.assert_called_once()
     
-    @patch("provide.foundation.process.run_command")
+    @patch("wrknv.container.operations.volumes.run_command")
     def test_backup_volume(self, mock_run):
         """Test backing up a volume."""
         mock_run.return_value = CompletedProcess(

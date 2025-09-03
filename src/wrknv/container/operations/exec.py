@@ -31,13 +31,13 @@ class ContainerExec:
     
     def exec(
         self,
-        command: list[str] | None,
-        shell: str | None,
-        interactive: bool,
-        tty: bool,
-        user: str | None,
-        workdir: str | None,
-        environment: dict[str, str] | None,
+        command: list[str] | None = None,
+        shell: str | None = None,
+        interactive: bool = False,
+        tty: bool = False,
+        user: str | None = None,
+        workdir: str | None = None,
+        environment: dict[str, str] | None = None,
     ) -> bool:
         """Execute a command in the container.
         
