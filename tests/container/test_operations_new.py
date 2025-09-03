@@ -328,7 +328,9 @@ class TestContainerBuilder(unittest.TestCase):
         result = self.builder.build(
             dockerfile="Dockerfile",
             tag="myapp:latest",
-            context="."
+            context=".",
+            build_args=None,
+            stream_output=False
         )
         
         self.assertTrue(result)
@@ -356,6 +358,7 @@ class TestContainerBuilder(unittest.TestCase):
             tag="myapp:latest",
             context=".",
             build_args={"VERSION": "1.0", "ENV": "production"},
+            stream_output=False,
             no_cache=True,
             platform="linux/amd64"
         )
@@ -383,6 +386,7 @@ class TestContainerBuilder(unittest.TestCase):
             dockerfile="Dockerfile",
             tag="myapp:latest",
             context=".",
+            build_args=None,
             stream_output=True
         )
         
