@@ -228,6 +228,8 @@ class EnvironmentConfigSource(ConfigSource):
 
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
+        from provide.foundation.utils.parsing import parse_bool
+        
         env_var = f"{self.prefix}_{key.upper()}"
         value = os.environ.get(env_var)
 
@@ -235,12 +237,11 @@ class EnvironmentConfigSource(ConfigSource):
             return default
 
         # Try to parse as boolean
-        if value.lower() in ("true", "1", "yes", "on"):
-            return True
-        elif value.lower() in ("false", "0", "no", "off"):
-            return False
-
-        return value
+        try:
+            return parse_bool(value)
+        except ValueError:
+            # Not a boolean, return as string
+            return value
 
 
 class WorkenvConfig:
