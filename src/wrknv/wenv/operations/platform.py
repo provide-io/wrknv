@@ -4,177 +4,82 @@
 """
 wrknv Platform Detection
 ===================================
-Functions for detecting platform and architecture information.
+Platform and architecture information using provide.foundation.
 """
 
-import platform
-import sys
+from provide.foundation.platform import (
+    get_os_name,
+    get_arch_name,
+    get_platform_string,
+    get_system_info,
+)
 
 
 def get_platform_info() -> dict[str, str]:
-    """Get platform information for tool downloads."""
-
-    os_name = get_os_name()
-    arch = get_architecture()
-
+    """Get platform information for tool downloads.
+    
+    Returns:
+        Dictionary with platform details for tool compatibility.
+    """
+    # Get comprehensive system info from foundation
+    sys_info = get_system_info()
+    
     return {
-        "os": os_name,
-        "arch": arch,
-        "platform": f"{os_name}_{arch}",
-        "python_platform": sys.platform,
-        "machine": platform.machine(),
-        "system": platform.system(),
+        "os": sys_info.os_name,
+        "arch": sys_info.arch,
+        "platform": sys_info.platform,
+        "python_platform": sys_info.platform,
+        "machine": sys_info.arch,
+        "system": sys_info.os_name,
     }
-
-
-def get_os_name() -> str:
-    """Get normalized OS name for tool downloads."""
-
-    system = platform.system().lower()
-
-    if system == "darwin":
-        return "darwin"
-    elif system == "linux":
-        return "linux"
-    elif system == "windows":
-        return "windows"
-    else:
-        # Try to map other platforms
-        if "bsd" in system:
-            return "freebsd"
-        else:
-            return system
 
 
 def get_architecture() -> str:
-    """Get normalized architecture name for tool downloads."""
-
-    machine = platform.machine().lower()
-
-    # Normalize common architecture names
-    if machine in ["x86_64", "amd64"]:
-        return "amd64"
-    elif machine in ["aarch64", "arm64"]:
-        return "arm64"
-    elif machine in ["i386", "i686", "x86"]:
-        return "386"
-    elif machine.startswith("arm"):
-        # For ARM variants, default to arm64 for modern systems
-        if "64" in machine:
-            return "arm64"
-        else:
-            return "arm"
-    else:
-        # Return as-is for unknown architectures
-        return machine
+    """Get normalized architecture name for tool downloads.
+    
+    Returns:
+        Architecture string suitable for tool downloads (amd64, arm64, etc).
+    """
+    return get_arch_name()
 
 
-def is_supported_platform() -> bool:
-    """Check if current platform is supported by workenv."""
-
-    os_name = get_os_name()
-    arch = get_architecture()
-
-    # Define supported combinations
-    supported_combinations = [
-        ("darwin", "amd64"),
-        ("darwin", "arm64"),
-        ("linux", "amd64"),
-        ("linux", "arm64"),
-        ("linux", "386"),
-        ("windows", "amd64"),
-        ("windows", "386"),
-        ("freebsd", "amd64"),
-        ("freebsd", "arm64"),
-    ]
-
-    return (os_name, arch) in supported_combinations
+def get_workenv_platform() -> str:
+    """Get platform string for workenv directory naming.
+    
+    Returns:
+        Platform string in format: {os}_{arch}
+    """
+    return get_platform_string()
 
 
-def get_executable_extension() -> str:
-    """Get executable file extension for current platform."""
-
-    if get_os_name() == "windows":
-        return ".exe"
-    else:
-        return ""
-
-
-def get_archive_extension() -> str:
-    """Get typical archive extension for current platform."""
-
-    if get_os_name() == "windows":
-        return ".zip"
-    else:
-        return ".tar.gz"
+def is_arm_mac() -> bool:
+    """Check if running on Apple Silicon Mac.
+    
+    Returns:
+        True if running on ARM-based Mac (M1/M2/M3).
+    """
+    from provide.foundation.platform import is_macos, is_arm
+    return is_macos() and is_arm()
 
 
-def format_platform_string(os_name: str, arch: str) -> str:
-    """Format platform string in standard format."""
-    return f"{os_name}_{arch}"
+def is_windows() -> bool:
+    """Check if running on Windows.
+    
+    Returns:
+        True if running on Windows.
+    """
+    from provide.foundation.platform import is_windows as foundation_is_windows
+    return foundation_is_windows()
 
 
-def parse_platform_string(platform_str: str) -> dict[str, str]:
-    """Parse platform string into components."""
-
-    if "_" in platform_str:
-        parts = platform_str.split("_", 1)
-        return {"os": parts[0], "arch": parts[1]}
-    else:
-        # Try to guess if it's OS or architecture
-        if platform_str in ["darwin", "linux", "windows", "freebsd"]:
-            return {"os": platform_str, "arch": "unknown"}
-        elif platform_str in ["amd64", "arm64", "386", "arm"]:
-            return {"os": "unknown", "arch": platform_str}
-        else:
-            return {"os": "unknown", "arch": "unknown"}
+# Re-export for backward compatibility (remove these later)
+def get_os_name() -> str:
+    """Get normalized OS name for tool downloads.
+    
+    DEPRECATED: Use provide.foundation.platform.get_os_name directly.
+    """
+    from provide.foundation.platform import get_os_name as foundation_get_os_name
+    return foundation_get_os_name()
 
 
-def get_download_platform_mappings() -> dict[str, dict[str, str]]:
-    """Get platform mappings for different tools."""
-
-    return {
-        "terraform": {
-            "darwin": "darwin",
-            "linux": "linux",
-            "windows": "windows",
-            "freebsd": "freebsd",
-        },
-        "tofu": {
-            "darwin": "darwin",
-            "linux": "linux",
-            "windows": "windows",
-            "freebsd": "freebsd",
-        },
-        "go": {
-            "darwin": "darwin",
-            "linux": "linux",
-            "windows": "windows",
-            "freebsd": "freebsd",
-        },
-        "uv": {
-            "darwin": "apple-darwin",
-            "linux": "unknown-linux-gnu",
-            "windows": "pc-windows-msvc",
-        },
-    }
-
-
-def get_platform_mapping(
-    tool_name: str, platform_component: str, component_type: str
-) -> str:
-    """Get platform mapping for a specific tool."""
-
-    mappings = get_download_platform_mappings()
-    tool_mappings = mappings.get(tool_name, {})
-
-    if component_type == "os":
-        return tool_mappings.get(platform_component, platform_component)
-    elif component_type == "arch":
-        # Most tools use standard arch names
-        return platform_component
-    else:
-        return platform_component
-
-
-# 🍲🥄📄🪄
+# 🧰🌍🔍🪄
