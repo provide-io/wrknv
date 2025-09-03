@@ -467,7 +467,7 @@ class TestVolumeManager(unittest.TestCase):
             backup_dir=Path("/tmp/backups")
         )
     
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("provide.foundation.process.run_command")
     def test_create_volume(self, mock_run):
         """Test creating a volume."""
         mock_run.return_value = CompletedProcess(
@@ -494,7 +494,7 @@ class TestVolumeManager(unittest.TestCase):
         self.assertIn("type=tmpfs", cmd)
         self.assertIn("test-volume", cmd)
     
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("provide.foundation.process.run_command")
     def test_list_volumes(self, mock_run):
         """Test listing volumes."""
         mock_run.return_value = CompletedProcess(
@@ -511,7 +511,7 @@ class TestVolumeManager(unittest.TestCase):
         self.assertEqual(volumes[1]["Name"], "vol2")
         mock_run.assert_called_once()
     
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("provide.foundation.process.run_command")
     def test_backup_volume(self, mock_run):
         """Test backing up a volume."""
         mock_run.return_value = CompletedProcess(
