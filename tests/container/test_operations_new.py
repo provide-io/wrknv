@@ -209,7 +209,7 @@ class TestContainerLifecycle(unittest.TestCase):
         
         self.assertTrue(status["exists"])
         self.assertTrue(status["running"])
-        self.assertIsNotNone(status["info"])
+        self.assertIn("id", status)
         self.assertEqual(mock_run.call_count, 3)
 
 
@@ -271,7 +271,7 @@ class TestContainerExec(unittest.TestCase):
             )
         ]
         
-        shell = self.exec.find_shell()
+        shell = self.exec._detect_shell()
         
         self.assertEqual(shell, "/bin/sh")
         self.assertEqual(mock_run.call_count, 2)
@@ -289,7 +289,7 @@ class TestContainerExec(unittest.TestCase):
         )
         mock_system.return_value = 0
         
-        result = self.exec.enter()
+        result = self.exec.enter(shell=None)
         
         self.assertTrue(result)
         mock_run.assert_called_once()  # For find_shell
@@ -370,7 +370,7 @@ class TestContainerBuilder(unittest.TestCase):
         self.assertIn("--platform", cmd)
         self.assertIn("linux/amd64", cmd)
     
-    @patch("wrknv.container.operations.build.stream_command")
+    @patch("provide.foundation.process.stream_command")
     def test_build_with_stream(self, mock_stream):
         """Test build with streaming output."""
         mock_stream.return_value = iter([
@@ -433,7 +433,7 @@ class TestContainerLogs(unittest.TestCase):
         self.assertIn("--timestamps", cmd)
         self.assertIn("test-container", cmd)
     
-    @patch("wrknv.container.operations.logs.stream_command")
+    @patch("provide.foundation.process.stream_command")
     def test_stream_logs(self, mock_stream):
         """Test streaming container logs."""
         mock_stream.return_value = iter([
