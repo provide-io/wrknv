@@ -69,6 +69,10 @@ class WorkenvConfig(BaseConfig):
     
     # Env configuration
     env: dict[str, Any] = field(factory=dict)
+
+    # Internal state
+    config_path: Path | None = field(init=False, repr=False, default=None)
+    _manager: SyncConfigManager | None = field(init=False, repr=False, default=None)
     
     def __init__(self, config_file: Path | None = None):
         """Initialize configuration manager."""
