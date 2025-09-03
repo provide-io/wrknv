@@ -31,7 +31,7 @@ templates_path = "{templates_path_actual}"
 """
 
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -46,7 +46,7 @@ templates_path = "{templates_path_actual}"
             config_content = config_content_template.format(templates_path_actual=isolated_path)
             config_path.write_text(config_content)
 
-            mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
+            mock_config_instance = WorkenvConfig(config_file=config_path)
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
@@ -81,7 +81,7 @@ templates = ["Python", "Node"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -96,7 +96,7 @@ templates_path = "{templates_path_actual}"
             config_content = config_content_template.format(templates_path_actual=isolated_path)
             config_path.write_text(config_content)
 
-            mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
+            mock_config_instance = WorkenvConfig(config_file=config_path)
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
@@ -128,8 +128,8 @@ version = "0.1.0"
         config_path.write_text(config_content)
 
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
-        mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
+        from wrknv.wenv.config import WorkenvConfig
+        mock_config_instance = WorkenvConfig(config_file=config_path)
 
         # Patch WorkenvConfig in cli.py to return our pre-configured instance
         with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
@@ -154,7 +154,7 @@ templates = ["Python", "NonExistent"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -169,7 +169,7 @@ templates_path = "{templates_path_actual}"
             config_content = config_content_template.format(templates_path_actual=isolated_path)
             config_path.write_text(config_content)
 
-            mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
+            mock_config_instance = WorkenvConfig(config_file=config_path)
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
@@ -199,7 +199,7 @@ templates = ["Python"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig, FileConfigSource
+        from wrknv.wenv.config import WorkenvConfig
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -214,7 +214,7 @@ templates_path = "{templates_path_actual}"
             config_content = config_content_template.format(templates_path_actual=isolated_path)
             config_path.write_text(config_content)
 
-            mock_config_instance = WorkenvConfig(sources=[FileConfigSource(config_path)])
+            mock_config_instance = WorkenvConfig(config_file=config_path)
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
