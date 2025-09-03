@@ -7,12 +7,12 @@ wrknv Download Operations
 Functions for downloading and verifying tool archives.
 """
 
-import hashlib
 import pathlib
 import urllib.request
 from urllib.parse import urlparse
 
 from provide.foundation import logger
+from provide.foundation.crypto import verify_file
 
 
 def download_file(
@@ -50,44 +50,9 @@ def verify_checksum(
     file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256"
 ) -> bool:
     """Verify file checksum using specified algorithm."""
-
-    if not file_path.exists():
-        logger.error(f"File not found for checksum verification: {file_path}")
-        return False
-
-    logger.debug(f"Verifying {algorithm} checksum for {file_path}")
-
-    try:
-        # Create hash object
-        if algorithm.lower() == "sha256":
-            hasher = hashlib.sha256()
-        elif algorithm.lower() == "sha1":
-            hasher = hashlib.sha1()
-        elif algorithm.lower() == "md5":
-            hasher = hashlib.md5()
-        else:
-            raise ValueError(f"Unsupported hash algorithm: {algorithm}")
-
-        # Read file in chunks to handle large files
-        with open(file_path, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                hasher.update(chunk)
-
-        actual_checksum = hasher.hexdigest()
-
-        # Compare checksums (case-insensitive)
-        if actual_checksum.lower() == expected_checksum.lower():
-            logger.debug(f"Checksum verification successful for {file_path}")
-            return True
-        else:
-            logger.error(
-                f"Checksum mismatch for {file_path}: expected {expected_checksum}, got {actual_checksum}"
-            )
-            return False
-
-    except Exception as e:
-        logger.error(f"Failed to verify checksum for {file_path}: {e}")
-        return False
+    
+    # Use foundation's verify_file which handles all the details
+    return verify_file(file_path, expected_checksum, algorithm)
 
 
 def download_checksum_file(
