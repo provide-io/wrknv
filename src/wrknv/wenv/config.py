@@ -26,6 +26,11 @@ from provide.foundation.process import run_command
 from .exceptions import ConfigurationError, ProfileError
 
 
+class WorkenvConfigError(ConfigurationError):
+    """Raised when there's an error in workenv configuration."""
+    pass
+
+
 @define
 class WorkenvToolConfig:
     """Configuration for a single tool."""
