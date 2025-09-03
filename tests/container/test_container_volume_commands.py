@@ -25,6 +25,7 @@ from wrknv.container.commands import (
 )
 from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+from wrknv.cli.hub_cli import create_cli
 
 
 class TestVolumeCommands:
@@ -38,7 +39,7 @@ class TestVolumeCommands:
         with patch("pathlib.Path.home", return_value=mock_home):
             yield mock_home
 
-    @pytest.fixture
+    @pytest.pytest.fixture
     def test_config(self):
         """Create test configuration."""
         return WorkenvConfig(
@@ -332,20 +333,18 @@ class TestVolumeCommandsCLI:
             manager.list_volumes.return_value = []
             yield mock
 
-    def test_cli_volumes_list(self, mock_load_config, mock_container_manager):
+    def test_cli_volumes_list(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes list command."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        cli = create_cli()
         
-        runner = CliRunner()
         result = runner.invoke(cli, ["container", "volumes", "list"])
         
         assert result.exit_code == 0
 
-    def test_cli_volumes_backup(self, mock_load_config, mock_container_manager):
+    def test_cli_volumes_backup(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes backup command."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        cli = create_cli()
         
-        runner = CliRunner()
         result = runner.invoke(cli, ["container", "volumes", "backup"])
         
         # Debug output
@@ -357,49 +356,44 @@ class TestVolumeCommandsCLI:
         
         assert result.exit_code == 0
 
-    def test_cli_volumes_backup_with_name(self, mock_load_config, mock_container_manager):
+    def test_cli_volumes_backup_with_name(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes backup command with name."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        cli = create_cli()
         
-        runner = CliRunner()
         result = runner.invoke(cli, ["container", "volumes", "backup", "--name", "my-backup"])
         
         assert result.exit_code == 0
 
-    def test_cli_volumes_restore(self, mock_load_config, mock_container_manager):
+    def test_cli_volumes_restore(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes restore command."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        cli = create_cli()
         
-        runner = CliRunner()
         result = runner.invoke(cli, ["container", "volumes", "restore"])
         
         assert result.exit_code == 0
 
-    def test_cli_volumes_restore_with_path(self, mock_load_config, mock_container_manager):
+    def test_cli_volumes_restore_with_path(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes restore command with path."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        cli = create_cli()
         
-        runner = CliRunner()
         backup_path = "/path/to/backup.tar.gz"
         result = runner.invoke(cli, ["container", "volumes", "restore", "--backup", backup_path])
         
         assert result.exit_code == 0
 
-    def test_cli_volumes_clean(self, mock_load_config, mock_container_manager):
+    def test_cli_volumes_clean(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes clean command."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        cli = create_cli()
         
-        runner = CliRunner()
         # Auto-confirm for testing
         result = runner.invoke(cli, ["container", "volumes", "clean"], input="y\n")
         
         assert result.exit_code == 0
 
-    def test_cli_volumes_clean_with_preserve(self, mock_load_config, mock_container_manager):
+    def test_cli_volumes_clean_with_preserve(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes clean command with preserve."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        cli = create_cli()
         
-        runner = CliRunner()
         result = runner.invoke(
             cli, 
             ["container", "volumes", "clean", "--preserve", "workspace", "--preserve", "config"],
