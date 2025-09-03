@@ -133,7 +133,7 @@ class TestConfigCommands(unittest.TestCase):
     def test_config_edit_creates_file_if_missing(self):
         """Test that edit creates a config file if it doesn't exist."""
         with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
-            with patch("subprocess.run") as mock_run:
+            with patch("provide.foundation.process.run_command") as mock_run:
                 with patch.dict(os.environ, {"EDITOR": "nano"}):
                     mock_config = Mock()
                     mock_config.get_config_path.return_value = self.config_file
