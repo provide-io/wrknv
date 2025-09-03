@@ -23,15 +23,13 @@ class ContainerLifecycle:
     
     runtime: ContainerRuntime
     container_name: str
-    console: Console = Console()
+    console: Console
+    start_emoji: str
+    stop_emoji: str
+    restart_emoji: str
+    status_emoji: str
     
-    # Emoji constants
-    START_EMOJI = "🚀"
-    STOP_EMOJI = "⏹️"
-    RESTART_EMOJI = "🔄"
-    STATUS_EMOJI = "📊"
-    
-    def start(self, create_if_missing: bool = True, **run_options) -> bool:
+    def start(self, create_if_missing: bool, **run_options) -> bool:
         """Start the container.
         
         Args:
@@ -52,7 +50,7 @@ class ContainerLifecycle:
                     return True
                 
                 self.console.print(
-                    f"{self.START_EMOJI} Starting container {self.container_name}..."
+                    f"{self.start_emoji} Starting container {self.container_name}..."
                 )
                 self.runtime.start_container(self.container_name)
                 self.console.print(
@@ -63,7 +61,7 @@ class ContainerLifecycle:
             elif create_if_missing and "image" in run_options:
                 # Container doesn't exist, create and start it
                 self.console.print(
-                    f"{self.START_EMOJI} Creating and starting container {self.container_name}..."
+                    f"{self.start_emoji} Creating and starting container {self.container_name}..."
                 )
                 
                 image = run_options.pop("image")
@@ -95,7 +93,7 @@ class ContainerLifecycle:
             self.console.print(f"[red]❌ Failed to start container: {e}[/red]")
             return False
     
-    def stop(self, timeout: int = 10) -> bool:
+    def stop(self, timeout: int) -> bool:
         """Stop the container.
         
         Args:
@@ -112,7 +110,7 @@ class ContainerLifecycle:
                 return True
             
             self.console.print(
-                f"{self.STOP_EMOJI} Stopping container {self.container_name}..."
+                f"{self.stop_emoji} Stopping container {self.container_name}..."
             )
             
             self.runtime.stop_container(self.container_name, timeout=timeout)
@@ -131,7 +129,7 @@ class ContainerLifecycle:
             self.console.print(f"[red]❌ Failed to stop container: {e}[/red]")
             return False
     
-    def restart(self, timeout: int = 10) -> bool:
+    def restart(self, timeout: int) -> bool:
         """Restart the container.
         
         Args:
@@ -141,7 +139,7 @@ class ContainerLifecycle:
             True if successful
         """
         self.console.print(
-            f"{self.RESTART_EMOJI} Restarting container {self.container_name}..."
+            f"{self.restart_emoji} Restarting container {self.container_name}..."
         )
         
         # Stop if running
@@ -200,7 +198,7 @@ class ContainerLifecycle:
                 "error": str(e),
             }
     
-    def remove(self, force: bool = False) -> bool:
+    def remove(self, force: bool) -> bool:
         """Remove the container.
         
         Args:
