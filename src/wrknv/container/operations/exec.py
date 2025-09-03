@@ -159,7 +159,9 @@ class ContainerExec:
                 command=command,
                 interactive=False,
                 tty=False,
-                **kwargs
+                user=kwargs.get("user"),
+                workdir=kwargs.get("workdir"),
+                environment=kwargs.get("environment"),
             )
             
             if capture_output:
