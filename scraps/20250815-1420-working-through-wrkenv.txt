@@ -81,7 +81,7 @@
      115:                logger.error(f"Failed to upload package: {e}")
      131:        logger.info(f"[EXPERIMENTAL] Would upload {package_path.name} to {self.registry_url}")
      … +7 lines (ctrl+r to expand)
-
+:
 ⏺ I need to add the logger import and also fix the unused urljoin import. Let me also check for line length issues:
 
 ⏺ Bash(ruff check src/wrknv/package/registry.py 2>&1 | head -20)
