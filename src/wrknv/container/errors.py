@@ -28,6 +28,7 @@ class ContainerNotFoundError(NotFoundError):
             resource_id=container_name,
             hint="Use 'docker ps -a' to list all containers"
         )
+        self.container_name = container_name
 
 
 class ContainerNotRunningError(StateError):
@@ -37,10 +38,10 @@ class ContainerNotRunningError(StateError):
         super().__init__(
             message=f"Container '{container_name}' is not running",
             expected_state="running",
-            actual_state="stopped",
-            resource_id=container_name,
+            current_state="stopped",
             hint=f"Start the container with 'docker start {container_name}'"
         )
+        self.container_name = container_name
 
 
 class ContainerAlreadyExistsError(AlreadyExistsError):
@@ -53,6 +54,7 @@ class ContainerAlreadyExistsError(AlreadyExistsError):
             resource_id=container_name,
             hint=f"Use 'docker rm {container_name}' to remove existing container"
         )
+        self.container_name = container_name
 
 
 class ImageNotFoundError(NotFoundError):
@@ -65,6 +67,7 @@ class ImageNotFoundError(NotFoundError):
             resource_id=image_name,
             hint=f"Pull the image with 'docker pull {image_name}'"
         )
+        self.image_name = image_name
 
 
 class VolumeNotFoundError(NotFoundError):
@@ -77,6 +80,7 @@ class VolumeNotFoundError(NotFoundError):
             resource_id=volume_name,
             hint="Use 'docker volume ls' to list available volumes"
         )
+        self.volume_name = volume_name
 
 
 class ContainerRuntimeError(RuntimeError):
@@ -89,10 +93,12 @@ class ContainerRuntimeError(RuntimeError):
         
         super().__init__(
             message=message,
-            component="container_runtime",
-            runtime_context={"runtime": runtime, "reason": reason},
+            operation="container_runtime_check",
+            retry_possible=True,
             hint="Ensure Docker is installed and running"
         )
+        self.runtime = runtime
+        self.reason = reason
 
 
 class ContainerBuildError(ResourceError):
@@ -106,7 +112,8 @@ class ContainerBuildError(ResourceError):
         super().__init__(
             message=message,
             resource_type="image",
-            resource_id=image_tag,
-            operation="build",
+            resource_path=image_tag,
             hint="Check Dockerfile syntax and build context"
         )
+        self.image_tag = image_tag
+        self.reason = reason
