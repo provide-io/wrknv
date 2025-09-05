@@ -19,7 +19,7 @@ from provide.foundation.config import (
     SyncConfigManager,
     field as config_field,
 )
-from provide.foundation.config.env import EnvConfig, env_field
+from provide.foundation.config.env import RuntimeConfig, env_field
 from provide.foundation import logger
 from provide.foundation.process import run_command
 
