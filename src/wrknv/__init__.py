@@ -8,13 +8,14 @@ Supports Terraform, OpenTofu, Go, UV, and more.
 Can be used standalone or integrated with other tools.
 """
 
-__version__ = "0.1.0"
+from wrknv._version import __version__
 
 # Public API exports
 from wrknv.wenv.config import WorkenvConfig, WorkenvConfigError
 from wrknv.wenv.managers.factory import get_supported_tools, get_tool_manager
 
 __all__ = [
+    "__version__",
     "wenv",
     "package",
     "container",
