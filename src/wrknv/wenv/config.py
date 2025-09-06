@@ -42,12 +42,36 @@ class WorkenvToolConfig:
 @define
 class WorkenvSettings(BaseConfig):
     """Workenv-specific settings."""
-    auto_install: bool = True
-    use_cache: bool = True
-    cache_ttl: str = "7d"
-    log_level: str = "INFO"
-    container_runtime: str = "docker"
-    container_registry: str = "ghcr.io"
+    auto_install: bool = config_field(
+        default=True,
+        description="Automatically install missing tools",
+        env_var="WRKNV_AUTO_INSTALL"
+    )
+    use_cache: bool = config_field(
+        default=True,
+        description="Use cached tool installations",
+        env_var="WRKNV_USE_CACHE"
+    )
+    cache_ttl: str = config_field(
+        default="7d",
+        description="Cache time-to-live",
+        env_var="WRKNV_CACHE_TTL"
+    )
+    log_level: str = config_field(
+        default="INFO",
+        description="Logging level",
+        env_var="WRKNV_LOG_LEVEL"
+    )
+    container_runtime: str = config_field(
+        default="docker",
+        description="Container runtime to use",
+        env_var="WRKNV_CONTAINER_RUNTIME"
+    )
+    container_registry: str = config_field(
+        default="ghcr.io",
+        description="Default container registry",
+        env_var="WRKNV_CONTAINER_REGISTRY"
+    )
 
 
 @define
@@ -55,8 +79,16 @@ class WorkenvConfig(BaseConfig):
     """Main workenv configuration."""
     
     # Project metadata
-    project_name: str = "my-project"
-    version: str = "1.0.0"
+    project_name: str = config_field(
+        default="my-project",
+        description="Project name",
+        env_var="WRKNV_PROJECT_NAME"
+    )
+    version: str = config_field(
+        default="1.0.0", 
+        description="Project version",
+        env_var="WRKNV_VERSION"
+    )
     
     # Tool configurations
     tools: dict[str, dict[str, Any]] = field(factory=dict)
