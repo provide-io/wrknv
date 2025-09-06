@@ -15,6 +15,7 @@ from pathlib import Path
 from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation import logger
+from provide.foundation.errors import ConfigurationError, with_error_handling
 
 from wrknv.wenv.config import WorkenvConfig
 from wrknv.wenv.exceptions import ProfileError
@@ -65,14 +66,14 @@ def config_show(
     "config.edit",
     description="Edit configuration file",
 )
+@with_error_handling
 def config_edit():
     """Edit configuration file."""
     config = WorkenvConfig()
     try:
         config.edit_config()
     except RuntimeError as e:
-        echo_error(f"Error: {e}")
-        sys.exit(1)
+        raise ConfigurationError(f"Failed to edit config: {e}") from e
 
 
 @register_command(

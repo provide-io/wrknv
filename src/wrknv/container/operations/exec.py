@@ -14,6 +14,7 @@ from typing import Any
 from attrs import define
 from provide.foundation import logger
 from provide.foundation.process import ProcessError, run_command
+from provide.foundation.errors import with_error_handling, error_boundary
 from rich.console import Console
 
 from wrknv.container.runtime.base import ContainerRuntime
@@ -29,6 +30,7 @@ class ContainerExec:
     available_shells: list[str]
     default_shell: str
     
+    @with_error_handling
     def exec(
         self,
         command: list[str] | None = None,
@@ -137,6 +139,7 @@ class ContainerExec:
             **kwargs
         )
     
+    @with_error_handling
     def run_command(
         self,
         command: list[str],

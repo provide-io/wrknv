@@ -13,6 +13,7 @@ import tarfile
 import zipfile
 
 from provide.foundation import logger
+from provide.foundation.errors import ResourceError, ValidationError, with_error_handling
 from provide.foundation.file import (
     ensure_dir,
     safe_copy,
@@ -22,11 +23,12 @@ from provide.foundation.file import (
 )
 
 
+@with_error_handling
 def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
     """Extract archive to specified directory."""
 
     if not archive_path.exists():
-        raise FileNotFoundError(f"Archive not found: {archive_path}")
+        raise ResourceError(f"Archive not found: {archive_path}")
 
     # Create extraction directory
     extract_dir.mkdir(parents=True, exist_ok=True)
@@ -43,12 +45,12 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
         elif archive_name.endswith(".zip"):
             _extract_zip(archive_path, extract_dir)
         else:
-            raise ValueError(f"Unsupported archive format: {archive_path}")
+            raise ValidationError(f"Unsupported archive format: {archive_path}")
 
         logger.debug(f"Successfully extracted {archive_path}")
 
-    except Exception as e:
-        raise Exception(f"Failed to extract {archive_path}: {e}")
+    except (tarfile.TarError, zipfile.BadZipFile) as e:
+        raise ResourceError(f"Failed to extract {archive_path}: {e}") from e
 
 
 def _extract_tar_gz(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
@@ -87,11 +89,12 @@ def _extract_zip(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
         zip_file.extractall(path=extract_dir)
 
 
+@with_error_handling
 def make_executable(file_path: pathlib.Path) -> None:
     """Make file executable on Unix-like systems."""
 
     if not file_path.exists():
-        raise FileNotFoundError(f"File not found: {file_path}")
+        raise ResourceError(f"File not found: {file_path}")
 
     # Only needed on Unix-like systems
     import platform
@@ -116,11 +119,12 @@ def make_executable(file_path: pathlib.Path) -> None:
         logger.warning(f"Failed to make {file_path} executable: {e}")
 
 
+@with_error_handling
 def create_symlink(target: pathlib.Path, link_path: pathlib.Path) -> None:
     """Create symbolic link, handling platform differences."""
 
     if not target.exists():
-        raise FileNotFoundError(f"Target does not exist: {target}")
+        raise ResourceError(f"Target does not exist: {target}")
 
     # Remove existing link if it exists
     if link_path.exists() or link_path.is_symlink():
@@ -186,12 +190,13 @@ def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
     logger.debug(f"Cleaned directory: {dir_path}")
 
 
+@with_error_handling
 def get_file_size(file_path: pathlib.Path) -> int:
     """Get file size in bytes."""
     # Use foundation's get_size which returns 0 for missing files
     size = get_size(file_path)
     if size == 0 and not file_path.exists():
-        raise FileNotFoundError(f"File not found: {file_path}")
+        raise ResourceError(f"File not found: {file_path}")
     return size
 
 
