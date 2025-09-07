@@ -68,7 +68,8 @@
       "Bash(PROVIDE_LOG_LEVEL=ERROR PROVIDE_LOG_MODULE_LEVELS=\"wrknv.wenv.version_resolver:DEBUG\" wrknv status)",
       "Bash(PROVIDE_LOG_LEVEL=DEBUG wrknv status)",
       "Bash(PROVIDE_LOG_LEVEL=DEBUG PROVIDE_LOG_MODULE_LEVELS=\"provide.foundation.logger:DEBUG\" wrknv status)",
-      "Bash(PROVIDE_LOG_LEVEL=ERROR PROVIDE_LOG_MODULE_LEVELS=\"wrknv.cli.commands.tools:DEBUG,wrknv.config:DEBUG\" wrknv status)"
+      "Bash(PROVIDE_LOG_LEVEL=ERROR PROVIDE_LOG_MODULE_LEVELS=\"wrknv.cli.commands.tools:DEBUG,wrknv.config:DEBUG\" wrknv status)",
+      "Bash(WRKNV_LOG_LEVEL=DEBUG PROVIDE_LOG_LEVEL=DEBUG wrknv status)"
     ],
     "deny": [],
     "additionalDirectories": [
