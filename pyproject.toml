@@ -33,7 +33,7 @@ classifiers = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "provide-foundation[cli]",
+    "provide-foundation[all]>=0.0.0",
     "cattrs>=23.0.0",
     "packaging>=23.0",
     "semver>=3.0.0",
