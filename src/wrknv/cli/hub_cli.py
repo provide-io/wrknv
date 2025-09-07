@@ -22,8 +22,8 @@ def load_commands():
     from wrknv.cli.commands import config  # noqa: F401
     from wrknv.cli.commands import container  # noqa: F401
     from wrknv.cli.commands import gitignore  # noqa: F401
-    from wrknv.cli.commands import package  # noqa: F401
     from wrknv.cli.commands import profile  # noqa: F401
+    from wrknv.cli.commands import package  # noqa: F401
     
     logger.debug("Loaded wrknv command modules")
 
