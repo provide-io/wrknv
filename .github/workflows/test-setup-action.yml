@@ -3,7 +3,7 @@ name: Test Setup Action
 on:
   pull_request:
     paths:
-      - '.github/actions/setup-wrkenv/**'
+      - '.github/actions/setup-wrknv/**'
       - '.github/workflows/test-setup-action.yml'
   workflow_dispatch:
 
@@ -14,8 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup wrkenv from PyPI
-        uses: ./.github/actions/setup-wrkenv
+      - name: Setup wrknv from PyPI
+        uses: ./.github/actions/setup-wrknv
         with:
           python-version: '3.11'
           install-from: 'pypi'
@@ -23,9 +23,9 @@ jobs:
       
       - name: Verify installation
         run: |
-          wrkenv --version
-          wrkenv --help
-          wrkenv status
+          wrknv --version
+          wrknv --help
+          wrknv status
 
   test-setup-local:
     name: Test Setup from Local
@@ -37,17 +37,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup wrkenv from local
-        uses: ./.github/actions/setup-wrkenv
+      - name: Setup wrknv from local
+        uses: ./.github/actions/setup-wrknv
         with:
           python-version: ${{ matrix.python }}
           install-from: 'local'
       
       - name: Test with tools
         run: |
-          wrkenv --version
-          wrkenv setup --check
-          wrkenv config path
+          wrknv --version
+          wrknv setup --check
+          wrknv config path
 
   test-setup-with-config:
     name: Test Setup with Configuration
@@ -57,7 +57,7 @@ jobs:
       
       - name: Create test configuration
         run: |
-          cat > test-wrkenv.toml << EOF
+          cat > test-wrknv.toml << EOF
           project_name = "test-project"
           version = "1.0.0"
           
@@ -65,16 +65,16 @@ jobs:
           tofu = { version = "1.8.0" }
           EOF
       
-      - name: Setup wrkenv with config
-        uses: ./.github/actions/setup-wrkenv
+      - name: Setup wrknv with config
+        uses: ./.github/actions/setup-wrknv
         with:
           install-from: 'local'
-          config-file: 'test-wrkenv.toml'
+          config-file: 'test-wrknv.toml'
           tofu-version: '1.8.0'
       
       - name: Verify tools
         run: |
-          wrkenv status
+          wrknv status
           which tofu || echo "tofu not found"
 
   test-setup-with-profile:
@@ -83,16 +83,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup wrkenv
-        uses: ./.github/actions/setup-wrkenv
+      - name: Setup wrknv
+        uses: ./.github/actions/setup-wrknv
         with:
           install-from: 'local'
       
       - name: Create and load profile
         run: |
           # Create a test profile
-          wrkenv profile save test-profile --force || true
-          wrkenv profile list
+          wrknv profile save test-profile --force || true
+          wrknv profile list
           
           # Test loading (even if it doesn't have tools)
-          wrkenv profile load test-profile || true
+          wrknv profile load test-profile || true

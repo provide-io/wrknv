@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# env.sh - wrkenv Development Environment Setup
+# env.sh - wrknv Development Environment Setup
 #
-# This script sets up a clean, isolated development environment for wrkenv
+# This script sets up a clean, isolated development environment for wrknv
 # using 'uv' for high-performance virtual environment and dependency management.
 #
 # Usage: source ./env.sh
@@ -63,7 +63,7 @@ print_success "Cleared Python aliases and PYTHONPATH"
 # --- Project Validation ---
 if [ ! -f "pyproject.toml" ]; then
     print_error "No 'pyproject.toml' found in current directory"
-    echo "Please run this script from the wrkenv root directory"
+    echo "Please run this script from the wrknv root directory"
     return 1 2>/dev/null || exit 1
 fi
 
@@ -106,7 +106,7 @@ esac
 # Workenv directory setup
 PROFILE="${WRKENV_PROFILE:-default}"
 if [ "$PROFILE" = "default" ]; then
-    VENV_DIR="workenv/wrkenv_${TFOS}_${TFARCH}"
+    VENV_DIR="workenv/wrknv_${TFOS}_${TFARCH}"
 else
     VENV_DIR="workenv/${PROFILE}_${TFOS}_${TFARCH}"
 fi
@@ -228,10 +228,10 @@ export UV_PROJECT_ENVIRONMENT="${VENV_DIR}"
 print_header "📦 Installing Dependencies"
 
 # Create log directory
-mkdir -p /tmp/wrkenv_setup
+mkdir -p /tmp/wrknv_setup
 
 echo -n "Syncing dependencies..."
-uv sync --all-groups > /tmp/wrkenv_setup/sync.log 2>&1 &
+uv sync --all-groups > /tmp/wrknv_setup/sync.log 2>&1 &
 SYNC_PID=$!
 spinner $SYNC_PID
 wait $SYNC_PID
@@ -241,26 +241,26 @@ if [ $SYNC_EXIT_CODE -eq 0 ]; then
     print_success "Dependencies synced"
 else
     print_warning "Dependency sync failed - will install project and siblings manually"
-    echo "Check /tmp/wrkenv_setup/sync.log for details"
+    echo "Check /tmp/wrknv_setup/sync.log for details"
     
     # Try to install just the project without dependencies first
-    echo -n "Installing wrkenv without dependencies..."
-    uv pip install --no-deps -e . > /tmp/wrkenv_setup/install_nodeps.log 2>&1 &
+    echo -n "Installing wrknv without dependencies..."
+    uv pip install --no-deps -e . > /tmp/wrknv_setup/install_nodeps.log 2>&1 &
     INSTALL_PID=$!
     spinner $INSTALL_PID
     wait $INSTALL_PID
     if [ $? -eq 0 ]; then
-        print_success "wrkenv installed (no deps)"
+        print_success "wrknv installed (no deps)"
     else
-        print_error "Failed to install wrkenv"
+        print_error "Failed to install wrknv"
         return 1 2>/dev/null || exit 1
     fi
 fi
 
-echo -n "Installing wrkenv in editable mode..."
-uv pip install --no-deps -e . > /tmp/wrkenv_setup/install.log 2>&1 &
+echo -n "Installing wrknv in editable mode..."
+uv pip install --no-deps -e . > /tmp/wrknv_setup/install.log 2>&1 &
 spinner $!
-print_success "wrkenv installed"
+print_success "wrknv installed"
 # --- Sibling Packages ---
 print_header "🤝 Installing Sibling Packages"
 
@@ -270,7 +270,7 @@ SIBLING_COUNT=0
 # Install provide-foundation if it exists
 if [ -d "$PARENT_DIR/provide-foundation" ]; then
     echo -n "Installing provide-foundation..."
-    uv pip install -e "$PARENT_DIR/provide-foundation" > /tmp/wrkenv_setup/provide-foundation.log 2>&1 &
+    uv pip install -e "$PARENT_DIR/provide-foundation" > /tmp/wrknv_setup/provide-foundation.log 2>&1 &
     spinner $!
     if [ $? -eq 0 ]; then
         print_success "provide-foundation installed"
@@ -325,11 +325,11 @@ if command -v uv &> /dev/null; then
     printf "%-12s  %s\n" "" "$(uv --version 2>&1)"
 fi
 
-# wrkenv
-if command -v wrkenv &> /dev/null; then
-    WRKENV_PATH=$(command -v wrkenv 2>/dev/null || which wrkenv 2>/dev/null || echo "wrkenv")
-    printf "%-12s: %s\n" "wrkenv" "$WRKENV_PATH"
-    printf "%-12s  %s\n" "" "$(wrkenv --version 2>&1 || echo 'No version info')"
+# wrknv
+if command -v wrknv &> /dev/null; then
+    WRKENV_PATH=$(command -v wrknv 2>/dev/null || which wrknv 2>/dev/null || echo "wrknv")
+    printf "%-12s: %s\n" "wrknv" "$WRKENV_PATH"
+    printf "%-12s  %s\n" "" "$(wrknv --version 2>&1 || echo 'No version info')"
 fi
 
 # ibmtf
@@ -351,19 +351,19 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 # --- Final Summary ---
 print_header "✅ Environment Ready!"
 
-echo -e "\n${COLOR_GREEN}wrkenv development environment activated${COLOR_NC}"
+echo -e "\n${COLOR_GREEN}wrknv development environment activated${COLOR_NC}"
 echo "Virtual environment: ${VENV_DIR}"
 echo "Profile: ${PROFILE}"
 echo -e "\nUseful commands:"
-echo "  wrkenv --help  # wrkenv CLI"
-echo "  wrkenv status  # Check tool versions"
-echo "  wrkenv container status  # Container status"
+echo "  wrknv --help  # wrknv CLI"
+echo "  wrknv status  # Check tool versions"
+echo "  wrknv container status  # Container status"
 echo "  pytest  # Run tests"
 echo "  deactivate  # Exit environment"
 
 # --- Cleanup ---
 # Remove temporary log files older than 1 day
-find /tmp/wrkenv_setup -name "*.log" -mtime +1 -delete 2>/dev/null
+find /tmp/wrknv_setup -name "*.log" -mtime +1 -delete 2>/dev/null
 
 # Return success
 return 0 2>/dev/null || exit 0

@@ -92,13 +92,13 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           source .venv/bin/activate
-          pytest tests/ -v --cov=src/wrkenv --cov-report=xml --cov-report=term
+          pytest tests/ -v --cov=src/wrknv --cov-report=xml --cov-report=term
       
       - name: Run tests with coverage (Windows)
         if: runner.os == 'Windows'
         run: |
           .venv\Scripts\activate
-          pytest tests/ -v --cov=src/wrkenv --cov-report=xml --cov-report=term
+          pytest tests/ -v --cov=src/wrknv --cov-report=xml --cov-report=term
       
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
@@ -135,22 +135,22 @@ jobs:
       - name: Test CLI commands
         run: |
           source .venv/bin/activate
-          wrkenv --help
-          wrkenv config path
-          wrkenv setup --check
+          wrknv --help
+          wrknv config path
+          wrknv setup --check
       
       - name: Test config initialization
         run: |
           source .venv/bin/activate
           cd /tmp
-          echo -e "test-project\n1.0.0\nINFO\nn\nn\nn\nn\n" | wrkenv config init
-          cat wrkenv.toml
+          echo -e "test-project\n1.0.0\nINFO\nn\nn\nn\nn\n" | wrknv config init
+          cat wrknv.toml
       
       - name: Test profile operations
         run: |
           source .venv/bin/activate
-          wrkenv profile list
-          wrkenv profile save test-profile --force || true
+          wrknv profile list
+          wrknv profile save test-profile --force || true
 
   build:
     name: Build Distribution
