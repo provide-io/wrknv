@@ -24,8 +24,7 @@ def profile():
 
 
 @register_command(
-    "list",
-    parent="profile",
+    "profile.list",
     description="List available profiles",
 )
 def profile_list():
