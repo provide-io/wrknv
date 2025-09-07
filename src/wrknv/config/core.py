@@ -156,29 +156,46 @@ class WorkenvConfig(RuntimeConfig):
     
     def _create_manager(self) -> SyncConfigManager:
         """Create configuration manager with loaders."""
+        # Current foundation version doesn't support loader parameter
+        # Store loader for manual use
         loaders = []
         
         # Add file loader if config file exists
         if self.config_path and self.config_path.exists():
-            loaders.append(
-                FileConfigLoader(
-                    str(self.config_path),
-                    format="toml" if str(self.config_path).endswith(".toml") else "auto"
-                )
+            self._file_loader = FileConfigLoader(
+                str(self.config_path),
+                format="toml" if str(self.config_path).endswith(".toml") else "auto"
             )
+            loaders.append(self._file_loader)
+        else:
+            self._file_loader = None
         
         # Create multi-source loader
         if loaders:
-            loader = MultiSourceLoader(*loaders)
+            self._loader = MultiSourceLoader(*loaders)
         else:
-            loader = None
+            self._loader = None
         
-        return SyncConfigManager(loader=loader)
+        return SyncConfigManager()
     
     def _load_config(self):
         """Load configuration from all sources."""
-        if self._manager and self._manager._loader:
-            config_dict = self._manager.load()
+        if self._loader:
+            # Use our stored loader manually - it returns a dict, not a config object
+            from provide.foundation.config.sync import run_async
+            try:
+                # FileConfigLoader and MultiSourceLoader return dicts, not config objects
+                if hasattr(self._loader, 'load_dict'):
+                    config_dict = run_async(self._loader.load_dict())
+                else:
+                    # Try calling load without config_class to get raw dict
+                    config_dict = run_async(self._loader.load_dict())
+            except (TypeError, AttributeError):
+                # Fallback - just load from file directly
+                if self._file_loader:
+                    config_dict = run_async(self._file_loader.load_dict())
+                else:
+                    config_dict = {}
             
             # Update attributes from loaded config
             if "project_name" in config_dict:
