@@ -61,7 +61,8 @@
       "Bash(uv pip:*)",
       "Bash(./verify_container.sh:*)",
       "Bash(timeout:*)",
-      "Bash(WRKNV_LOG_LEVEL=DEBUG wrknv status)"
+      "Bash(WRKNV_LOG_LEVEL=DEBUG wrknv status)",
+      "Bash(PROVIDE_LOG_LEVEL=WARNING wrknv status)"
     ],
     "deny": [],
     "additionalDirectories": [
