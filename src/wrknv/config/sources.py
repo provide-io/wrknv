@@ -92,16 +92,33 @@ class EnvironmentConfigSource(ConfigSource):
     
     def get_tool_version(self, tool_name: str) -> str | None:
         """Get version for a specific tool."""
-        env_var = f"{self.prefix}_TOOL_{tool_name.upper()}_VERSION"
-        return os.environ.get(env_var)
+        # Try both formats for compatibility
+        env_var = f"{self.prefix}_{tool_name.upper()}_VERSION"
+        value = os.environ.get(env_var)
+        if value is None:
+            # Also try with TOOL_ prefix
+            env_var = f"{self.prefix}_TOOL_{tool_name.upper()}_VERSION"
+            value = os.environ.get(env_var)
+        return value
     
     def get_all_tools(self) -> dict[str, str]:
         """Get all tool versions from environment."""
         tools = {}
-        prefix = f"{self.prefix}_TOOL_"
+        # Check both formats
         for key, value in os.environ.items():
-            if key.startswith(prefix) and key.endswith("_VERSION"):
-                tool_name = key[len(prefix):-8].lower()
+            if key.startswith(self.prefix) and key.endswith("_VERSION"):
+                # Try to extract tool name from both formats
+                if f"{self.prefix}_TOOL_" in key:
+                    # Format: PREFIX_TOOL_TOOLNAME_VERSION
+                    prefix = f"{self.prefix}_TOOL_"
+                    tool_name = key[len(prefix):-8].lower()
+                else:
+                    # Format: PREFIX_TOOLNAME_VERSION
+                    prefix = f"{self.prefix}_"
+                    tool_name = key[len(prefix):-8].lower()
+                    # Skip if it's not a tool (e.g., PROJECT_VERSION)
+                    if tool_name in ("project", "wrknv"):
+                        continue
                 tools[tool_name] = value
         return tools
     

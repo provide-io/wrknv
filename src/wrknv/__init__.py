@@ -11,7 +11,7 @@ Can be used standalone or integrated with other tools.
 from wrknv._version import __version__
 
 # Public API exports
-from wrknv.wenv.config import WorkenvConfig, WorkenvConfigError
+from wrknv.config import WorkenvConfig, WorkenvConfigError
 from wrknv.wenv.managers.factory import get_supported_tools, get_tool_manager
 
 __all__ = [
