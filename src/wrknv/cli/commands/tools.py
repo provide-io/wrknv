@@ -20,6 +20,7 @@ from wrknv.config import WorkenvConfig
 from wrknv.wenv.doctor import run_doctor
 from wrknv.wenv.env_generator import create_project_env_scripts
 from wrknv.wenv.managers.factory import get_tool_manager
+from wrknv.wenv.version_resolver import resolve_tool_versions
 from wrknv.wenv.visual import Emoji, get_console, get_tool_emoji
 
 
@@ -42,11 +43,35 @@ def status_command():
 
     for tool_name, version in tools.items():
         tool_emoji = get_tool_emoji(tool_name)
-        # Handle matrix format (list of versions)
+        
+        # Handle matrix format (list of versions) and resolve patterns
         if isinstance(version, list):
             version_str = ", ".join(version)
+            try:
+                manager = get_tool_manager(tool_name, config)
+                resolved_versions = resolve_tool_versions(manager, version)
+                if resolved_versions:
+                    resolved_str = ", ".join(resolved_versions)
+                    # Show both pattern and resolved if different
+                    if set(version) != set(resolved_versions):
+                        version_str = f"{version_str} → {resolved_str}"
+                    else:
+                        version_str = resolved_str
+            except Exception as e:
+                logger.debug(f"Could not resolve versions for {tool_name}: {e}")
         else:
             version_str = version or "Not specified"
+            # Try to resolve single version pattern
+            if version and version != "Not specified":
+                try:
+                    manager = get_tool_manager(tool_name, config)
+                    resolved_versions = resolve_tool_versions(manager, version)
+                    if resolved_versions and resolved_versions[0] != version:
+                        version_str = f"{version} → {resolved_versions[0]}"
+                    else:
+                        version_str = resolved_versions[0] if resolved_versions else version
+                except Exception as e:
+                    logger.debug(f"Could not resolve version for {tool_name}: {e}")
         
         table.add_row(
             f"{tool_emoji} {tool_name}",
@@ -75,14 +100,28 @@ def sync_command():
             
             # Handle matrix format (list of versions)
             if isinstance(version, list):
-                for v in version:
-                    echo_info(f"\nInstalling {tool_name} {v}...")
+                # Resolve version patterns to specific versions
+                resolved_versions = resolve_tool_versions(manager, version)
+                echo_info(f"\nResolved {tool_name} patterns {version} to {resolved_versions}")
+                
+                for v in resolved_versions:
+                    echo_info(f"Installing {tool_name} {v}...")
                     manager.install_version(v, dry_run=False)
                     echo_success(f"✅ Successfully installed {tool_name} {v}")
             else:
-                echo_info(f"\nInstalling {tool_name} {version}...")
-                manager.install_version(version, dry_run=False)
-                echo_success(f"✅ Successfully installed {tool_name} {version}")
+                # Resolve single version pattern
+                resolved_versions = resolve_tool_versions(manager, version)
+                if resolved_versions:
+                    resolved_version = resolved_versions[0]
+                    if resolved_version != version:
+                        echo_info(f"Resolved {tool_name} pattern '{version}' to '{resolved_version}'")
+                    
+                    echo_info(f"Installing {tool_name} {resolved_version}...")
+                    manager.install_version(resolved_version, dry_run=False)
+                    echo_success(f"✅ Successfully installed {tool_name} {resolved_version}")
+                else:
+                    echo_error(f"❌ Could not resolve version pattern '{version}' for {tool_name}")
+                    
         except Exception as e:
             version_str = ", ".join(version) if isinstance(version, list) else version
             echo_error(f"❌ Error installing {tool_name} {version_str}: {e}")
