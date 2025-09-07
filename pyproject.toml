@@ -146,3 +146,6 @@ dev = [
     "pytest-cov>=6.2.1",
     "pytest-xdist>=3.8.0",
 ]
+
+[tool.uv.sources]
+provide-foundation = { path = "../provide-foundation", editable = true }
