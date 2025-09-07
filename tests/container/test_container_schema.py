@@ -1,3 +1,4 @@
+import pytest
 #
 # tests/container/test_container_schema.py
 #
@@ -13,6 +14,7 @@ from attrs import fields
 from wrknv.wenv.schema import ContainerConfig, validate_volume_mapping
 
 
+@pytest.mark.container
 class TestContainerConfigSchema:
     """Test ContainerConfig schema enhancements."""
 
@@ -91,6 +93,7 @@ class TestContainerConfigSchema:
         assert config.volume_mappings["config"] == "~/config:/app/config"
 
 
+@pytest.mark.container
 class TestVolumeMapping:
     """Test volume mapping validation."""
 
@@ -139,6 +142,7 @@ class TestVolumeMapping:
         assert validate_volume_mapping("data-volume:/app/data:ro") is True
 
 
+@pytest.mark.container
 class TestContainerConfigValidation:
     """Test ContainerConfig validation."""
 
@@ -181,6 +185,7 @@ class TestContainerConfigValidation:
         assert ":/app/data" in config.volume_mappings["relative"]
 
 
+@pytest.mark.container
 class TestContainerConfigSerialization:
     """Test ContainerConfig serialization/deserialization."""
 

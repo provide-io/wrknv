@@ -1,3 +1,4 @@
+import pytest
 #!/usr/bin/env python3
 #
 # tests/test_container_manager.py
@@ -19,6 +20,7 @@ from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import WorkenvConfig
 
 
+@pytest.mark.container
 class TestContainerManager(unittest.TestCase):
     """Test suite for ContainerManager class."""
 

@@ -1,3 +1,4 @@
+import pytest
 #
 # tests/container/test_container_shell_commands.py
 #
@@ -23,6 +24,7 @@ from wrknv.container.shell_commands import (
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 
 
+@pytest.mark.container
 class TestShellCommand:
     """Test shell command for interactive container access."""
 
@@ -165,6 +167,7 @@ class TestShellCommand:
         mock_run.assert_called_once_with(expected_cmd, check=False)
 
 
+@pytest.mark.container
 class TestExecCommand:
     """Test exec command for running commands in containers."""
 
@@ -298,6 +301,7 @@ class TestExecCommand:
         assert result is None
 
 
+@pytest.mark.container
 class TestLogsCommand:
     """Test logs command for viewing container logs."""
 
@@ -452,6 +456,7 @@ class TestLogsCommand:
         assert result is None
 
 
+@pytest.mark.container
 class TestCLIIntegration:
     """Test CLI integration for shell commands."""
 

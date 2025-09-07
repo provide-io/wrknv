@@ -1,3 +1,4 @@
+import pytest
 #!/usr/bin/env python3
 """Test container operations modules."""
 
@@ -18,6 +19,7 @@ from wrknv.container.operations.volumes import VolumeManager
 from wrknv.container.runtime.docker import DockerRuntime
 
 
+@pytest.mark.container
 class TestContainerLifecycle(unittest.TestCase):
     """Test container lifecycle operations."""
     
@@ -213,6 +215,7 @@ class TestContainerLifecycle(unittest.TestCase):
         self.assertEqual(mock_run.call_count, 3)
 
 
+@pytest.mark.container
 class TestContainerExec(unittest.TestCase):
     """Test container exec operations."""
     
@@ -312,6 +315,7 @@ class TestContainerExec(unittest.TestCase):
         self.assertIn("/bin/bash", system_cmd)
 
 
+@pytest.mark.container
 class TestContainerBuilder(unittest.TestCase):
     """Test container build operations."""
     
@@ -405,6 +409,7 @@ class TestContainerBuilder(unittest.TestCase):
         mock_stream.assert_called_once()
 
 
+@pytest.mark.container
 class TestContainerLogs(unittest.TestCase):
     """Test container logs operations."""
     
@@ -468,6 +473,7 @@ class TestContainerLogs(unittest.TestCase):
         mock_stream.assert_called_once()
 
 
+@pytest.mark.container
 class TestVolumeManager(unittest.TestCase):
     """Test volume management operations."""
     

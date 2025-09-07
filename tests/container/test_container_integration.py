@@ -1,3 +1,4 @@
+import pytest
 #
 # tests/container/test_container_integration.py
 #
@@ -29,6 +30,7 @@ def docker_available():
 
 @pytest.mark.integration
 @skipIf(not docker_available(), "Docker not available")
+@pytest.mark.container
 class TestContainerVolumeIntegration:
     """Test actual container volume interactions with the host filesystem."""
 

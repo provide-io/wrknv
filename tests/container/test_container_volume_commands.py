@@ -1,3 +1,4 @@
+import pytest
 #
 # tests/container/test_container_volume_commands.py
 #
@@ -28,6 +29,7 @@ from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 from wrknv.cli.hub_cli import create_cli
 
 
+@pytest.mark.container
 class TestVolumeCommands:
     """Test volume management commands."""
 
@@ -299,6 +301,7 @@ class TestVolumeCommands:
         assert "Failed to clean volumes" in captured.out
 
 
+@pytest.mark.container
 class TestVolumeCommandsCLI:
     """Test volume commands CLI integration."""
 

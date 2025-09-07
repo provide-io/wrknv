@@ -1,3 +1,4 @@
+import pytest
 #!/usr/bin/env python3
 
 """
@@ -11,6 +12,7 @@ from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 
 
+@pytest.mark.container
 class TestDynamicContainerConfiguration(unittest.TestCase):
     """Test that container manager uses dynamic configuration from wrknv.toml."""
 

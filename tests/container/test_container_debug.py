@@ -1,3 +1,4 @@
+import pytest
 #!/usr/bin/env python3
 """
 Debug container volume mounting
@@ -14,6 +15,7 @@ from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 
 
+@pytest.mark.container
 def test_volume_debug():
     """Debug volume mounting issues."""
     # Use a path that Docker Desktop can access (not /tmp which may be virtualized)

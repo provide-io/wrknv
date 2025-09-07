@@ -1,9 +1,11 @@
+import pytest
 import unittest
 from unittest.mock import patch, MagicMock
 from wrknv.container.commands import build_container, start_container, enter_container, stop_container, restart_container, container_status, container_logs, clean_container, rebuild_container
 from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import WorkenvConfig
 
+@pytest.mark.container
 class TestContainerManager(unittest.TestCase):
     @patch('wrknv.container.manager.ContainerManager.build_image')
     def test_build_container(self, mock_build_image):

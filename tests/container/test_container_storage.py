@@ -1,3 +1,4 @@
+import pytest
 #
 # tests/container/test_container_storage.py
 #
@@ -18,6 +19,7 @@ from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 
 
+@pytest.mark.container
 class TestContainerStorageStructure:
     """Test container storage directory structure."""
 
@@ -92,6 +94,7 @@ class TestContainerStorageStructure:
         assert root_path.name == container_manager.CONTAINER_NAME
 
 
+@pytest.mark.container
 class TestContainerMetadata:
     """Test container metadata management."""
 
@@ -165,6 +168,7 @@ class TestContainerMetadata:
         assert metadata is None
 
 
+@pytest.mark.container
 class TestVolumeManagement:
     """Test container volume management."""
 
@@ -324,6 +328,7 @@ class TestVolumeManagement:
 
 
 
+@pytest.mark.container
 class TestDockerIntegration:
     """Test Docker integration with new storage structure."""
 
@@ -421,6 +426,7 @@ class TestDockerIntegration:
         assert (workspace / "data.txt").exists()
 
 
+@pytest.mark.container
 class TestContainerStorageConfig:
     """Test container storage configuration."""
 
@@ -457,6 +463,7 @@ class TestContainerStorageConfig:
 
 # Integration test placeholder
 @pytest.mark.integration
+@pytest.mark.container
 class TestContainerStorageIntegration:
     """Integration tests for container storage (requires Docker)."""
 

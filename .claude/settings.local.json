@@ -59,7 +59,8 @@
       "Bash(pyvider:*)",
       "Bash(uv sync:*)",
       "Bash(uv pip:*)",
-      "Bash(./verify_container.sh:*)"
+      "Bash(./verify_container.sh:*)",
+      "Bash(timeout:*)"
     ],
     "deny": [],
     "additionalDirectories": [

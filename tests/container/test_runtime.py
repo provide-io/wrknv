@@ -1,3 +1,4 @@
+import pytest
 #!/usr/bin/env python3
 """Test container runtime implementations."""
 
@@ -10,6 +11,7 @@ from provide.foundation.process import CompletedProcess, ProcessError
 from wrknv.container.runtime.docker import DockerRuntime
 
 
+@pytest.mark.container
 class TestDockerRuntime(unittest.TestCase):
     """Test Docker runtime implementation."""
     
