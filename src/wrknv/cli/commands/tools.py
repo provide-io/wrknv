@@ -16,7 +16,7 @@ from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation import logger
 
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 from wrknv.wenv.doctor import run_doctor
 from wrknv.wenv.env_generator import create_project_env_scripts
 from wrknv.wenv.managers.factory import get_tool_manager

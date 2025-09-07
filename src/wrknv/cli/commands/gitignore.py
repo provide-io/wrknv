@@ -17,7 +17,7 @@ from provide.foundation.cli import echo_error, echo_info, echo_success, echo_war
 from provide.foundation import logger
 
 from wrknv.gitignore import GitignoreManager, ProjectDetector
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 
 
 @register_command(

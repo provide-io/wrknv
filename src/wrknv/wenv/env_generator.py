@@ -201,7 +201,7 @@ def create_project_env_scripts(
         extra_config["python_requirement"] = python_requirement
 
     # Get wrknv configuration
-    from wrknv.wenv.config import WorkenvConfig
+    from wrknv.config import WorkenvConfig
 
     config = WorkenvConfig()
     env_config = config.get_env_config()

@@ -17,7 +17,7 @@ from provide.foundation.cli import echo_error, echo_info, echo_success, echo_war
 from provide.foundation import logger
 from provide.foundation.errors import ConfigurationError, with_error_handling
 
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 from wrknv.wenv.exceptions import ProfileError
 
 

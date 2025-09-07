@@ -19,7 +19,7 @@ from provide.foundation import logger
 from provide.foundation.process import run_command, ProcessError
 from rich.console import Console
 
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 from wrknv.wenv.schema import ContainerConfig, get_default_config
 
 

@@ -14,7 +14,7 @@ import click
 from rich.console import Console
 from rich.table import Table
 
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 
 from .manager import ContainerManager
 

@@ -25,7 +25,7 @@ from wrknv.container.operations import (
 )
 from wrknv.container.runtime.docker import DockerRuntime
 from wrknv.container.storage import ContainerStorage
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 
 
 @define

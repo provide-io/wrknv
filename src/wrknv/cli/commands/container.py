@@ -32,7 +32,7 @@ from wrknv.container.commands import (
     restore_volumes,
     clean_volumes,
 )
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 
 
 # Register the container group first

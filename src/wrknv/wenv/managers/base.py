@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 
 from provide.foundation import logger
 
-from wrknv.wenv.config import WorkenvConfig, WorkenvConfigError
+from wrknv.config import WorkenvConfig, WorkenvConfigError
 from wrknv.wenv.exceptions import WrkenvError
 
 
