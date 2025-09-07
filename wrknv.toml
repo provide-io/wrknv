@@ -4,7 +4,8 @@ log_level = "INFO"
 
 [tools]
 # Example tool configurations
-# terraform = { version = "1.5.0" }
+terraform = "1.13"
+tofu = "1.10"
 # go = { version = "1.21.0" }
 
 [gitignore]
