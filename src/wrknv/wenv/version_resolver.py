@@ -6,7 +6,9 @@ Handles resolution of version patterns like "1.11.x" to specific versions.
 
 import re
 import semver
-from provide.foundation import logger
+from provide.foundation.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class VersionResolver:
