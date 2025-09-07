@@ -14,7 +14,9 @@ from rich.table import Table
 
 from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
-from provide.foundation import logger
+from provide.foundation.logger import get_logger
+
+logger = get_logger(__name__)
 
 from wrknv.config import WorkenvConfig
 from wrknv.wenv.doctor import run_doctor

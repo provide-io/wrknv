@@ -10,7 +10,9 @@ Main CLI using provide.foundation.hub for command registration.
 
 from provide.foundation.hub import Hub, get_hub
 from provide.foundation.context import Context
-from provide.foundation import logger
+from provide.foundation.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def load_commands():
@@ -50,6 +52,10 @@ def create_cli():
 
 def main():
     """Main entry point for the CLI."""
+    # Set up wrknv logging before any other initialization
+    from wrknv.logging.setup import setup_wrknv_logging
+    setup_wrknv_logging()
+    
     cli = create_cli()
     cli()
 

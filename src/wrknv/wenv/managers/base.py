@@ -14,7 +14,9 @@ from provide.foundation.process import run_command
 from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
-from provide.foundation import logger
+from provide.foundation.logger import get_logger
+
+logger = get_logger(__name__)
 
 from wrknv.config import WorkenvConfig, WorkenvConfigError
 from wrknv.wenv.exceptions import WrkenvError

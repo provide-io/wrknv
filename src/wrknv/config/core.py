@@ -17,8 +17,10 @@ from provide.foundation.config import (
     field as config_field,
 )
 from provide.foundation.config.env import RuntimeConfig
-from provide.foundation import logger
+from provide.foundation.logger import get_logger
 from provide.foundation.process import run_command
+
+logger = get_logger(__name__)
 
 
 class WorkenvConfigError(Exception):

@@ -12,7 +12,9 @@ import re
 from urllib.request import urlopen
 
 import semver
-from provide.foundation import logger
+from provide.foundation.logger import get_logger
+
+logger = get_logger(__name__)
 
 from .tf_base import TfVersionsManager, ToolManagerError
 
