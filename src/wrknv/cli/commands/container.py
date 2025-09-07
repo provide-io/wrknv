@@ -48,7 +48,7 @@ def container_group():
 )
 def container_status_command():
     """Display container status information."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     container_status(config)
 
 
@@ -58,7 +58,7 @@ def container_status_command():
 )
 def container_build_command(rebuild: bool = False):
     """Build the development container image."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     if rebuild:
         echo_info("🔨 Rebuilding container image from scratch...")
@@ -80,7 +80,7 @@ def container_build_command(rebuild: bool = False):
 )
 def container_start_command(rebuild: bool = False):
     """Start the development container."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     echo_info("🚀 Starting container...")
     
@@ -100,7 +100,7 @@ def container_start_command(rebuild: bool = False):
 )
 def container_stop_command():
     """Stop the development container."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     echo_info("🛑 Stopping container...")
     
@@ -119,7 +119,7 @@ def container_stop_command():
 )
 def container_restart_command():
     """Restart the development container."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     echo_info("🔄 Restarting container...")
     
@@ -144,7 +144,7 @@ def container_enter_command(
     auto_start: bool = False,
 ):
     """Enter the running container."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     # Parse command if provided
     command_list = command.split() if command else None
@@ -171,7 +171,7 @@ def container_logs_command(
     details: bool = False,
 ):
     """Show container logs."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     container_logs(
         config=config,
@@ -189,7 +189,7 @@ def container_logs_command(
 )
 def container_clean_command():
     """Clean up container and image."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     echo_warning("⚠️  This will remove the container and image")
     
@@ -216,7 +216,7 @@ def container_clean_command():
 )
 def container_rebuild_command():
     """Rebuild the container from scratch."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     echo_info("🔨 Rebuilding container from scratch...")
     
@@ -249,7 +249,7 @@ def container_volumes_group():
 )
 def container_volumes_list_command():
     """List container volumes with information."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     list_volumes(config)
 
 
@@ -259,7 +259,7 @@ def container_volumes_list_command():
 )
 def container_volumes_backup_command(name: Optional[str] = None):
     """Create a backup of container volumes."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     success = backup_volumes(config, name=name)
     
@@ -276,7 +276,7 @@ def container_volumes_restore_command(
     force: bool = False,
 ):
     """Restore container volumes from a backup."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     success = restore_volumes(config, backup_path=backup_path, force=force)
     
@@ -290,7 +290,7 @@ def container_volumes_restore_command(
 )
 def container_volumes_clean_command(preserve: Optional[str] = None):
     """Clean container volumes."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     # Parse preserve list
     preserve_list = preserve.split(',') if preserve else []
@@ -310,7 +310,7 @@ def container_volumes_clean_command(preserve: Optional[str] = None):
 )
 def container_shell_command():
     """Open an interactive shell in the container."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     enter_container(
         config=config,
@@ -326,7 +326,7 @@ def container_shell_command():
 )
 def container_exec_command(command: str):
     """Execute a command in the container."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     if not command:
         echo_error("No command specified")

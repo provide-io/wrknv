@@ -26,7 +26,7 @@ from wrknv.wenv.managers.factory import get_tool_manager
 )
 def profile_list():
     """List available profiles."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     profiles = config.list_profiles()
 
     if profiles:
@@ -47,7 +47,7 @@ def profile_list():
 )
 def profile_save(name: str, force: bool = False):
     """Save current tool versions as a profile."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
 
     if config.profile_exists(name) and not force:
         echo_warning(f"Profile '{name}' already exists")
@@ -73,7 +73,7 @@ def profile_save(name: str, force: bool = False):
 )
 def profile_load(name: str):
     """Load and apply a profile."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     profile_data = config.get_profile(name)
     if not profile_data:
@@ -111,7 +111,7 @@ def profile_load(name: str):
 )
 def profile_delete(name: str):
     """Delete a profile."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     if not config.profile_exists(name):
         echo_error(f"Profile '{name}' not found")
@@ -134,7 +134,7 @@ def profile_delete(name: str):
 )
 def profile_show(name: str):
     """Show profile details."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     profile_data = config.get_profile(name)
     if not profile_data:
@@ -156,7 +156,7 @@ def profile_export(name: str, output: str):
     import json
     import tomli_w
     
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     profile_data = config.get_profile(name)
     if not profile_data:
@@ -214,7 +214,7 @@ def profile_import(file: str):
             echo_error("Invalid profile format: missing 'name' or 'tools'")
             sys.exit(1)
         
-        config = WorkenvConfig()
+        config = WorkenvConfig.load()
         config.save_profile(name, tools)
         echo_success(f"✅ Imported profile '{name}'")
         

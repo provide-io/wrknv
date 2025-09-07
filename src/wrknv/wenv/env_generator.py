@@ -203,7 +203,7 @@ def create_project_env_scripts(
     # Get wrknv configuration
     from wrknv.config import WorkenvConfig
 
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     env_config = config.get_env_config()
 
     # Use configuration from wrknv.toml if available

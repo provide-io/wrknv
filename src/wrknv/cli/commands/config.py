@@ -37,7 +37,7 @@ def config_show(
     profile: str | None = None,
 ):
     """Show current configuration."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
 
     if profile:
         # Show specific profile
@@ -69,7 +69,7 @@ def config_show(
 @with_error_handling
 def config_edit():
     """Edit configuration file."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     try:
         config.edit_config()
     except RuntimeError as e:
@@ -82,7 +82,7 @@ def config_edit():
 )
 def config_validate(strict: bool = False):
     """Validate configuration file syntax and values."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
 
     if not config.config_exists():
         echo_error("No configuration file found")
@@ -111,7 +111,7 @@ def config_validate(strict: bool = False):
 )
 def config_init(force: bool = False):
     """Initialize a new configuration file interactively."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
 
     if config.config_exists() and not force:
         echo_warning("Configuration file already exists")
@@ -154,7 +154,7 @@ def config_init(force: bool = False):
 )
 def config_path():
     """Show path to configuration file."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     if config.config_exists():
         echo_info(str(config.config_path))
     else:
@@ -168,7 +168,7 @@ def config_path():
 )
 def config_get(key: str):
     """Get a specific configuration setting."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     try:
         value = config.get_setting(key)
@@ -190,7 +190,7 @@ def config_get(key: str):
 )
 def config_set(key: str, value: str):
     """Set a configuration value."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     
     try:
         # Try to parse value as JSON first (for complex types)

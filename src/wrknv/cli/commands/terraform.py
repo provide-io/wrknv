@@ -36,7 +36,7 @@ def tf_command(
         dry_run: Show what would be installed
         terraform: Install Terraform instead of OpenTofu
     """
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
 
     # Determine which tool to manage
     tool_name = "terraform" if terraform else "tofu"

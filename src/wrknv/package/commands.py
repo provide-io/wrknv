@@ -39,7 +39,7 @@ def build_package(
 
     # Check if flavor is available
     if config is None:
-        config = WorkenvConfig()
+        config = WorkenvConfig.load()
 
     manager = PackageManager(config)
     if not manager.is_flavor_available():
@@ -81,7 +81,7 @@ def clean_cache(config: WorkenvConfig | None = None) -> None:
 
     # Clean wrknv package cache
     if config is None:
-        config = WorkenvConfig()
+        config = WorkenvConfig.load()
     manager = PackageManager(config)
     cache_dir = manager.get_package_cache_dir()
     if cache_dir.exists():
@@ -125,7 +125,7 @@ curve = "P-256"
 def list_packages(config: WorkenvConfig | None = None) -> list[dict[str, str]]:
     """List built packages."""
     if config is None:
-        config = WorkenvConfig()
+        config = WorkenvConfig.load()
 
     manager = PackageManager(config)
     output_dir = manager.get_package_output_dir()

@@ -26,7 +26,7 @@ from wrknv.wenv.visual import Emoji, get_console, get_tool_emoji
 @register_command("status", description="Show status of all managed tools", category="tools")
 def status_command():
     """Show status of all managed tools."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     tools = config.get_all_tools()
     console = get_console()
 
@@ -55,7 +55,7 @@ def status_command():
 @register_command("sync", description="Install all tools defined in configuration", category="tools")
 def sync_command():
     """Install all tools defined in configuration."""
-    config = WorkenvConfig()
+    config = WorkenvConfig.load()
     tools = config.get_all_tools()
 
     if not tools:
