@@ -42,10 +42,15 @@ def status_command():
 
     for tool_name, version in tools.items():
         tool_emoji = get_tool_emoji(tool_name)
-        # Check if tool is installed (simplified for now)
+        # Handle matrix format (list of versions)
+        if isinstance(version, list):
+            version_str = ", ".join(version)
+        else:
+            version_str = version or "Not specified"
+        
         table.add_row(
             f"{tool_emoji} {tool_name}",
-            version or "Not specified",
+            version_str,
             f"{Emoji.INFO} Configured",
         )
 
@@ -67,11 +72,20 @@ def sync_command():
     for tool_name, version in tools.items():
         try:
             manager = get_tool_manager(tool_name, config)
-            echo_info(f"\nInstalling {tool_name} {version}...")
-            manager.install_version(version, dry_run=False)
-            echo_success(f"✅ Successfully installed {tool_name} {version}")
+            
+            # Handle matrix format (list of versions)
+            if isinstance(version, list):
+                for v in version:
+                    echo_info(f"\nInstalling {tool_name} {v}...")
+                    manager.install_version(v, dry_run=False)
+                    echo_success(f"✅ Successfully installed {tool_name} {v}")
+            else:
+                echo_info(f"\nInstalling {tool_name} {version}...")
+                manager.install_version(version, dry_run=False)
+                echo_success(f"✅ Successfully installed {tool_name} {version}")
         except Exception as e:
-            echo_error(f"❌ Error installing {tool_name} {version}: {e}")
+            version_str = ", ".join(version) if isinstance(version, list) else version
+            echo_error(f"❌ Error installing {tool_name} {version_str}: {e}")
 
 
 @register_command(

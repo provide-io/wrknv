@@ -207,7 +207,7 @@ class WorkenvConfig(RuntimeConfig):
             return tool_config.get("version")
         return tool_config if isinstance(tool_config, str) else None
     
-    def get_all_tools(self) -> dict[str, str]:
+    def get_all_tools(self) -> dict[str, str | list[str]]:
         """Get all tool versions."""
         result = {}
         for tool_name, config in self.tools.items():
