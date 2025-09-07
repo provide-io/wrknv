@@ -155,46 +155,42 @@ class WorkenvConfig(RuntimeConfig):
         return Path.cwd() / ".wrknv.toml"
     
     def _create_manager(self) -> SyncConfigManager:
-        """Create configuration manager with loaders."""
-        loaders = []
-        
-        # Add file loader if config file exists
-        if self.config_path and self.config_path.exists():
-            loaders.append(
-                FileConfigLoader(
-                    str(self.config_path),
-                    format="toml" if str(self.config_path).endswith(".toml") else "auto"
-                )
-            )
-        
-        # Create multi-source loader
-        if loaders:
-            loader = MultiSourceLoader(*loaders)
-        else:
-            loader = None
-        
-        return SyncConfigManager(loader=loader)
+        """Create configuration manager."""
+        # For now, just create a basic manager
+        # We'll load files manually to avoid complexity
+        return SyncConfigManager()
     
     def _load_config(self):
-        """Load configuration from all sources."""
-        if self._manager and self._manager._loader:
-            config_dict = self._manager.load()
-            
-            # Update attributes from loaded config
-            if "project_name" in config_dict:
-                self.project_name = config_dict["project_name"]
-            if "version" in config_dict:
-                self.version = config_dict["version"]
-            if "tools" in config_dict:
-                self.tools = config_dict["tools"]
-            if "profiles" in config_dict:
-                self.profiles = config_dict["profiles"]
-            if "workenv" in config_dict and isinstance(config_dict["workenv"], dict):
-                for key, value in config_dict["workenv"].items():
-                    if hasattr(self.workenv, key):
-                        setattr(self.workenv, key, value)
-            if "env" in config_dict:
-                self.env = config_dict["env"]
+        """Load configuration from file."""
+        if self.config_path and self.config_path.exists():
+            try:
+                # Load TOML directly - simple and reliable
+                try:
+                    import tomli
+                except ImportError:
+                    import tomllib as tomli
+                    
+                with open(self.config_path, "rb") as f:
+                    config_dict = tomli.load(f)
+                    
+                # Update attributes from loaded config
+                if "project_name" in config_dict:
+                    self.project_name = config_dict["project_name"]
+                if "version" in config_dict:
+                    self.version = config_dict["version"]
+                if "tools" in config_dict:
+                    self.tools = config_dict["tools"]
+                if "profiles" in config_dict:
+                    self.profiles = config_dict["profiles"]
+                if "workenv" in config_dict and isinstance(config_dict["workenv"], dict):
+                    for key, value in config_dict["workenv"].items():
+                        if hasattr(self.workenv, key):
+                            setattr(self.workenv, key, value)
+                if "env" in config_dict:
+                    self.env = config_dict["env"]
+                    
+            except Exception as e:
+                logger.warning(f"Failed to load config from {self.config_path}: {e}")
     
     def config_exists(self) -> bool:
         """Check if configuration file exists."""
