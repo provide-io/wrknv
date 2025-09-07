@@ -3,6 +3,15 @@ revision = 3
 requires-python = ">=3.11"
 
 [[package]]
+name = "aiofiles"
+version = "24.1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/03/a88171e277e8caa88a4c77808c20ebb04ba74cc4681bf1e9416c862de237/aiofiles-24.1.0.tar.gz", hash = "sha256:22a075c9e5a3810f0c2e48f3008c94d68c65d763b9b03857924c99e57355166c", size = 30247, upload-time = "2024-06-24T11:02:03.584Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a5/45/30bb92d442636f570cb5651bc661f52b610e2eec3f891a5dc3a4c3667db0/aiofiles-24.1.0-py3-none-any.whl", hash = "sha256:b4ec55f4195e3eb5d7abd1bf7e061763e864dd4954231fb8539a0ef8bb8260e5", size = 15896, upload-time = "2024-06-24T11:02:01.529Z" },
+]
+
+[[package]]
 name = "attrs"
 version = "25.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -363,6 +372,26 @@ wheels = [
 ]
 
 [[package]]
+name = "provide-foundation"
+version = "0.0.0.dev0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiofiles" },
+    { name = "attrs" },
+    { name = "structlog" },
+    { name = "tomli-w" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/21/8e/ea92a36960e2d1e7f066216ebc72595938349d260c549196f216f9171d3b/provide_foundation-0.0.0.dev0.tar.gz", hash = "sha256:e8d9485da207c62cc8b01405e2abf71b0e839b6caa3ae6f03b33712499357320", size = 198689, upload-time = "2025-09-06T22:46:40.842Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/51/2a/af1636a0e36d51b71dd4a5d0472de714fb1db3296d4ea1eeb01d2f514cad/provide_foundation-0.0.0.dev0-py3-none-any.whl", hash = "sha256:5e16b74dd49c21cd3c7cfd82a0f52846aa78417e1f0db34404a1f2e80e89011d", size = 242336, upload-time = "2025-09-06T22:46:39.115Z" },
+]
+
+[package.optional-dependencies]
+cli = [
+    { name = "click" },
+]
+
+[[package]]
 name = "py-cpuinfo"
 version = "9.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -553,6 +582,15 @@ wheels = [
 ]
 
 [[package]]
+name = "structlog"
+version = "25.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/79/b9/6e672db4fec07349e7a8a8172c1a6ae235c58679ca29c3f86a61b5e59ff3/structlog-25.4.0.tar.gz", hash = "sha256:186cd1b0a8ae762e29417095664adf1d6a31702160a46dacb7796ea82f7409e4", size = 1369138, upload-time = "2025-06-02T08:21:12.971Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a0/4a/97ee6973e3a73c74c8120d59829c3861ea52210667ec3e7a16045c62b64d/structlog-25.4.0-py3-none-any.whl", hash = "sha256:fe809ff5c27e557d14e613f45ca441aabda051d119ee5a0102aaba6ce40eed2c", size = 68720, upload-time = "2025-06-02T08:21:11.43Z" },
+]
+
+[[package]]
 name = "tomli"
 version = "2.2.1"
 source = { registry = "https://pypi.org/simple" }
@@ -611,14 +649,12 @@ wheels = [
 
 [[package]]
 name = "wrknv"
-version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "attrs" },
     { name = "cattrs" },
-    { name = "click" },
     { name = "jinja2" },
     { name = "packaging" },
+    { name = "provide-foundation", extra = ["cli"] },
     { name = "rich" },
     { name = "semver" },
     { name = "tomli-w" },
@@ -646,14 +682,13 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "attrs", specifier = ">=23.0.0" },
     { name = "bandit", marker = "extra == 'dev'", specifier = ">=1.7.0" },
     { name = "black", marker = "extra == 'dev'", specifier = ">=23.0" },
     { name = "cattrs", specifier = ">=23.0.0" },
-    { name = "click", specifier = ">=8.0" },
     { name = "jinja2", specifier = ">=3.0.0" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.0" },
     { name = "packaging", specifier = ">=23.0" },
+    { name = "provide-foundation", extras = ["cli"] },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
     { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=0.21" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
