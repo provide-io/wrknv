@@ -1,230 +1,223 @@
+#!/usr/bin/env python3
+#
+# wrknv/cli/commands/profile.py
+#
 """
-Profile Commands for wrknv
-===========================
-Commands for managing configuration profiles.
+Profile Commands
+================
+Commands for managing workenv profiles.
 """
 
+import sys
 from pathlib import Path
-from typing import Optional
 
-from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.hub import register_command
+from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation import logger
 
 from wrknv.config import WorkenvConfig
+from wrknv.wenv.managers.factory import get_tool_manager
 
 
 @register_command(
-    "profile",
-    description="Manage configuration profiles",
-    group=True,
-)
-def profile():
-    """Manage configuration profiles."""
-    pass
-
-
-@register_command(
-    "profile.list",
+    "profile-list",
     description="List available profiles",
+    category="profile",
 )
 def profile_list():
-    """List all available profiles."""
+    """List available profiles."""
     config = WorkenvConfig.load()
     profiles = config.list_profiles()
-    
-    if not profiles:
-        echo_info("No profiles defined")
-        return
-    
-    echo_info("Available profiles:")
-    for profile_name in profiles:
-        profile_data = config.get_profile(profile_name)
-        tool_count = len(profile_data) if profile_data else 0
-        echo_info(f"  • {profile_name} ({tool_count} tools)")
 
-
-@register_command(
-    "show",
-    parent="profile",
-    description="Show profile details",
-)
-def profile_show(name: str):
-    """Show details of a specific profile."""
-    config = WorkenvConfig.load()
-    profile_data = config.get_profile(name)
-    
-    if not profile_data:
-        echo_error(f"Profile '{name}' not found")
-        return
-    
-    echo_info(f"Profile: {name}")
-    for tool, version in profile_data.items():
-        echo_info(f"  {tool}: {version}")
-
-
-@register_command(
-    "load",
-    parent="profile",
-    description="Load and apply a profile",
-)
-def profile_load(name: str, save: bool = False):
-    """
-    Load and apply a profile to the current configuration.
-    
-    Args:
-        name: Name of the profile to load
-        save: Save the profile to the configuration file
-    """
-    config = WorkenvConfig.load()
-    profile_data = config.get_profile(name)
-    
-    if not profile_data:
-        echo_error(f"Profile '{name}' not found")
-        return
-    
-    # Apply profile tools
-    for tool, version in profile_data.items():
-        if isinstance(config.tools.get(tool), dict):
-            config.tools[tool]["version"] = version
-        else:
-            config.tools[tool] = version
-    
-    if save:
-        config.save_config()
-        echo_success(f"Profile '{name}' applied and saved")
+    if profiles:
+        echo_info("Available profiles:")
+        for name in profiles:
+            if name == config.get_current_profile():
+                echo_info(f"  * {name} (active)")
+            else:
+                echo_info(f"    {name}")
     else:
-        echo_success(f"Profile '{name}' applied (not saved)")
+        echo_info("No profiles found")
 
 
 @register_command(
-    "save",
-    parent="profile",
-    description="Save current configuration as a profile",
+    "profile-save",
+    description="Save current tool versions as a profile",
+    category="profile",
 )
-def profile_save(name: str):
-    """Save the current tool configuration as a profile."""
+def profile_save(name: str, force: bool = False):
+    """Save current tool versions as a profile."""
     config = WorkenvConfig.load()
-    
-    # Get current tools
+
+    if config.profile_exists(name) and not force:
+        echo_warning(f"Profile '{name}' already exists")
+        echo_info("Use --force to overwrite")
+        sys.exit(1)
+
+    # Get current tool versions
     tools = config.get_all_tools()
     
     if not tools:
-        echo_error("No tools configured to save")
-        return
-    
-    # Save as profile
-    config.profiles[name] = tools
-    config.save_config()
-    
-    echo_success(f"Saved current configuration as profile '{name}'")
-    echo_info(f"Tools in profile: {', '.join(tools.keys())}")
+        echo_warning("No tools configured to save")
+        sys.exit(1)
+
+    # Save profile
+    config.save_profile(name, tools)
+    echo_success(f"✅ Saved profile '{name}' with {len(tools)} tools")
 
 
 @register_command(
-    "delete",
-    parent="profile",
-    description="Delete a profile",
+    "profile-load",
+    description="Load and apply a profile",
+    category="profile",
 )
-def profile_delete(name: str):
-    """Delete a profile from the configuration."""
+def profile_load(name: str):
+    """Load and apply a profile."""
     config = WorkenvConfig.load()
     
-    if name not in config.profiles:
-        echo_error(f"Profile '{name}' not found")
-        return
-    
-    del config.profiles[name]
-    config.save_config()
-    
-    echo_success(f"Deleted profile '{name}'")
-
-
-@register_command(
-    "export",
-    parent="profile",
-    description="Export a profile to a file",
-)
-def profile_export(name: str, output: Path):
-    """
-    Export a profile to a TOML file.
-    
-    Args:
-        name: Name of the profile to export
-        output: Output file path
-    """
-    config = WorkenvConfig.load()
     profile_data = config.get_profile(name)
-    
     if not profile_data:
         echo_error(f"Profile '{name}' not found")
-        return
+        available = config.list_profiles()
+        if available:
+            echo_info(f"Available profiles: {', '.join(available)}")
+        sys.exit(1)
+
+    echo_info(f"Loading profile '{name}'...")
     
-    try:
-        import tomli_w
-    except ImportError:
-        echo_error("tomli-w is required for exporting profiles")
-        return
+    failed_tools = []
+    for tool_name, version in profile_data.items():
+        try:
+            manager = get_tool_manager(tool_name, config)
+            manager.install_version(version)
+            echo_success(f"✅ Successfully installed {tool_name} {version}")
+        except Exception as e:
+            logger.error(f"Failed to install {tool_name} {version}: {e}")
+            failed_tools.append((tool_name, version, str(e)))
+            echo_error(f"❌ Error installing {tool_name} {version}: {e}")
     
-    # Create profile structure
-    export_data = {
-        "profile": {
-            "name": name,
-            "tools": profile_data
-        }
-    }
-    
-    # Write to file
-    with open(output, "wb") as f:
-        tomli_w.dump(export_data, f)
-    
-    echo_success(f"Exported profile '{name}' to {output}")
+    if failed_tools:
+        echo_warning(f"Failed to install {len(failed_tools)} tools")
+        for tool, version, error in failed_tools:
+            echo_error(f"  - {tool} {version}: {error}")
+    else:
+        echo_success(f"✅ Profile '{name}' loaded successfully")
 
 
 @register_command(
-    "import",
-    parent="profile",
-    description="Import a profile from a file",
+    "profile-delete",
+    description="Delete a profile",
+    category="profile",
 )
-def profile_import(input: Path, name: Optional[str] = None):
-    """
-    Import a profile from a TOML file.
-    
-    Args:
-        input: Input file path
-        name: Override the profile name (optional)
-    """
+def profile_delete(name: str):
+    """Delete a profile."""
     config = WorkenvConfig.load()
     
-    if not input.exists():
-        echo_error(f"File not found: {input}")
-        return
+    if not config.profile_exists(name):
+        echo_error(f"Profile '{name}' not found")
+        sys.exit(1)
+    
+    # Confirm deletion
+    response = input(f"Delete profile '{name}'? [y/N]: ").strip().lower()
+    if response != 'y':
+        echo_info("Cancelled")
+        sys.exit(0)
+    
+    config.delete_profile(name)
+    echo_success(f"✅ Profile '{name}' deleted")
+
+
+@register_command(
+    "profile-show",
+    description="Show profile details",
+    category="profile",
+)
+def profile_show(name: str):
+    """Show profile details."""
+    config = WorkenvConfig.load()
+    
+    profile_data = config.get_profile(name)
+    if not profile_data:
+        echo_error(f"Profile '{name}' not found")
+        sys.exit(1)
+    
+    echo_info(f"Profile: {name}")
+    for tool_name, version in profile_data.items():
+        echo_info(f"  {tool_name}: {version}")
+
+
+@register_command(
+    "profile-export",
+    description="Export a profile to a file",
+    category="profile",
+)
+def profile_export(name: str, output: str):
+    """Export a profile to a file."""
+    import json
+    import tomli_w
+    
+    config = WorkenvConfig.load()
+    
+    profile_data = config.get_profile(name)
+    if not profile_data:
+        echo_error(f"Profile '{name}' not found")
+        sys.exit(1)
+    
+    output_path = Path(output)
+    
+    # Determine format from extension
+    if output_path.suffix == '.json':
+        output_path.write_text(json.dumps({
+            "name": name,
+            "tools": profile_data
+        }, indent=2))
+    else:
+        # Default to TOML
+        output_path.write_text(tomli_w.dumps({
+            "name": name,
+            "tools": profile_data
+        }))
+    
+    echo_success(f"✅ Exported profile '{name}' to {output_path}")
+
+
+@register_command(
+    "profile-import",
+    description="Import a profile from a file",
+    category="profile",
+)
+def profile_import(file: str):
+    """Import a profile from a file."""
+    import json
+    import tomli
+    
+    file_path = Path(file)
+    
+    if not file_path.exists():
+        echo_error(f"File not found: {file_path}")
+        sys.exit(1)
     
     try:
-        import tomllib
-    except ImportError:
+        content = file_path.read_text()
+        
+        # Try to parse as JSON first
         try:
-            import tomli as tomllib
-        except ImportError:
-            echo_error("tomli or Python 3.11+ is required for importing profiles")
-            return
-    
-    # Read profile data
-    with open(input, "rb") as f:
-        data = tomllib.load(f)
-    
-    if "profile" not in data:
-        echo_error("Invalid profile file format")
-        return
-    
-    profile_data = data["profile"]
-    profile_name = name or profile_data.get("name")
-    
-    if not profile_name:
-        echo_error("Profile name not specified")
-        return
-    
-    # Import profile
-    config.profiles[profile_name] = profile_data.get("tools", {})
-    config.save_config()
-    
-    echo_success(f"Imported profile '{profile_name}' from {input}")
+            data = json.loads(content)
+        except json.JSONDecodeError:
+            # Try TOML
+            data = tomli.loads(content)
+        
+        name = data.get("name")
+        tools = data.get("tools")
+        
+        if not name or not tools:
+            echo_error("Invalid profile format: missing 'name' or 'tools'")
+            sys.exit(1)
+        
+        config = WorkenvConfig.load()
+        config.save_profile(name, tools)
+        echo_success(f"✅ Imported profile '{name}'")
+        
+    except Exception as e:
+        echo_error(f"Failed to import profile: {e}")
+        sys.exit(1)
