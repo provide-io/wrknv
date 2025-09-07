@@ -8,9 +8,22 @@ Hub-based CLI Entry Point
 Main CLI using provide.foundation.hub for command registration.
 """
 
+import os
 from provide.foundation.hub import Hub, get_hub
 from provide.foundation.context import Context
 from provide.foundation import logger
+
+
+def setup_logging_environment():
+    """Set up logging environment variables to bridge WRKNV_ to PROVIDE_ variables."""
+    # Bridge WRKNV_LOG_LEVEL to PROVIDE_LOG_LEVEL if set
+    wrknv_log_level = os.environ.get("WRKNV_LOG_LEVEL")
+    if wrknv_log_level and not os.environ.get("PROVIDE_LOG_LEVEL"):
+        os.environ["PROVIDE_LOG_LEVEL"] = wrknv_log_level
+    
+    # Set default if neither is set
+    if not os.environ.get("PROVIDE_LOG_LEVEL") and not wrknv_log_level:
+        os.environ["PROVIDE_LOG_LEVEL"] = "WARNING"
 
 
 def load_commands():
@@ -50,6 +63,9 @@ def create_cli():
 
 def main():
     """Main entry point for the CLI."""
+    # Set up logging environment before foundation initialization
+    setup_logging_environment()
+    
     cli = create_cli()
     cli()
 
