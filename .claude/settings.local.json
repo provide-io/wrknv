@@ -63,7 +63,8 @@
       "Bash(timeout:*)",
       "Bash(WRKNV_LOG_LEVEL=DEBUG wrknv status)",
       "Bash(PROVIDE_LOG_LEVEL=WARNING wrknv status)",
-      "Bash(PROVIDE_LOG_LEVEL=ERROR wrknv status)"
+      "Bash(PROVIDE_LOG_LEVEL=ERROR wrknv status)",
+      "Bash(PROVIDE_LOG_LEVEL=ERROR PROVIDE_LOG_MODULE_LEVELS=\"wrknv:DEBUG\" wrknv status)"
     ],
     "deny": [],
     "additionalDirectories": [
