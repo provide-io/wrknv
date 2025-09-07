@@ -60,7 +60,8 @@
       "Bash(uv sync:*)",
       "Bash(uv pip:*)",
       "Bash(./verify_container.sh:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(WRKNV_LOG_LEVEL=DEBUG wrknv status)"
     ],
     "deny": [],
     "additionalDirectories": [
