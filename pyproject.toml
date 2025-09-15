@@ -72,33 +72,46 @@ target-version = ['py311', 'py312', 'py313']
 include = '\.pyi?$'
 
 [tool.ruff]
-line-length = 88
+line-length = 111
+indent-width = 4
 target-version = "py311"
 
 [tool.ruff.lint]
-select = [
-    "E",    # pycodestyle
-    "F",    # pyflakes
-    "UP",   # pyupgrade
-    "B",    # flake8-bugbear
-    "SIM",  # flake8-simplify
-    "I",    # isort
-]
+select = ["E", "F", "W", "I", "UP", "ANN", "B", "C90", "SIM", "PTH", "RUF"]
+ignore = ["ANN401", "B008", "E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["wrknv", "tests"]
+force-sort-within-sections = true
+combine-as-imports = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
 
 [tool.mypy]
 python_version = "3.11"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-warn_redundant_casts = true
+mypy_path = "src"
+strict = true
+pretty = true
+show_error_codes = true
+show_column_numbers = true
 warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-strict_equality = true
+warn_unused_configs = true
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = [
+    "packaging.*",
+    "semver.*",
+    "rich.*",
+    "jinja2.*",
+    "cattrs.*",
+    "tomli_w.*",
+]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 minversion = "7.0"
