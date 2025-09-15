@@ -144,4 +144,4 @@ dev = [
 ]
 
 [tool.uv.sources]
-provide-foundation = { path = "../provide-foundation", editable = true }
+provide-foundation = { workspace = true }
