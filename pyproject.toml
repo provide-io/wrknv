@@ -140,11 +140,7 @@ exclude_lines = [
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.1",
-    "pytest-asyncio>=1.1.0",
-    "pytest-benchmark>=5.1.0",
-    "pytest-cov>=6.2.1",
-    "pytest-xdist>=3.8.0",
+    "provide-testkit[standard,advanced-testing,build]",
 ]
 
 [tool.uv.sources]
