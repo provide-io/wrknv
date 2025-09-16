@@ -51,6 +51,9 @@ package = [
 dev = [
     "provide-testkit[standard,build]",
 ]
+docs = [
+    "provide-testkit[docs]",
+]
 
 [tool.uv.sources]
 provide-foundation = { workspace = true }
