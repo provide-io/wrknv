@@ -1,4 +1,5 @@
 import pytest
+
 #!/usr/bin/env python3
 #
 # tests/test_container_manager.py
@@ -7,14 +8,11 @@ import pytest
 Comprehensive tests for the ContainerManager class.
 """
 
-import json
-import os
+from pathlib import Path
 import shutil
 import subprocess
-import tempfile
 import unittest
-from pathlib import Path
-from unittest.mock import MagicMock, Mock, call, patch
+from unittest.mock import Mock, patch
 
 from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import WorkenvConfig
@@ -40,41 +38,37 @@ class TestContainerManager(unittest.TestCase):
     def test_check_docker_success(self, mock_run):
         """Test check_docker when Docker is available and running."""
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = self.manager.check_docker()
-        
+
         self.assertTrue(result)
-        mock_run.assert_called_once_with(
-            ["docker", "info"], capture_output=True, text=True, check=False
-        )
+        mock_run.assert_called_once_with(["docker", "info"], capture_output=True, text=True, check=False)
 
     @patch("provide.foundation.process.run_command")
     def test_check_docker_daemon_not_running(self, mock_run):
         """Test check_docker when Docker daemon is not running."""
         mock_run.return_value = Mock(returncode=1)
-        
+
         result = self.manager.check_docker()
-        
+
         self.assertFalse(result)
 
     @patch("provide.foundation.process.run_command")
     def test_check_docker_not_installed(self, mock_run):
         """Test check_docker when Docker is not installed."""
         mock_run.side_effect = FileNotFoundError()
-        
+
         result = self.manager.check_docker()
-        
+
         self.assertFalse(result)
 
     @patch("provide.foundation.process.run_command")
     def test_container_exists_true(self, mock_run):
         """Test container_exists when container exists."""
-        mock_run.return_value = Mock(
-            returncode=0, stdout="test-project-dev\nother-container\n"
-        )
-        
+        mock_run.return_value = Mock(returncode=0, stdout="test-project-dev\nother-container\n")
+
         result = self.manager.container_exists()
-        
+
         self.assertTrue(result)
         mock_run.assert_called_once_with(
             ["docker", "ps", "-a", "--format", "{{.Names}}"],
@@ -87,18 +81,18 @@ class TestContainerManager(unittest.TestCase):
     def test_container_exists_false(self, mock_run):
         """Test container_exists when container doesn't exist."""
         mock_run.return_value = Mock(returncode=0, stdout="other-container\n")
-        
+
         result = self.manager.container_exists()
-        
+
         self.assertFalse(result)
 
     @patch("provide.foundation.process.run_command")
     def test_container_running_true(self, mock_run):
         """Test container_running when container is running."""
         mock_run.return_value = Mock(returncode=0, stdout="test-project-dev\n")
-        
+
         result = self.manager.container_running()
-        
+
         self.assertTrue(result)
         mock_run.assert_called_once_with(
             ["docker", "ps", "--format", "{{.Names}}"],
@@ -111,20 +105,18 @@ class TestContainerManager(unittest.TestCase):
     def test_container_running_false(self, mock_run):
         """Test container_running when container is not running."""
         mock_run.return_value = Mock(returncode=0, stdout="")
-        
+
         result = self.manager.container_running()
-        
+
         self.assertFalse(result)
 
     @patch("provide.foundation.process.run_command")
     def test_image_exists_true(self, mock_run):
         """Test image_exists when image exists."""
-        mock_run.return_value = Mock(
-            returncode=0, stdout="test-project-dev:latest\nother:tag\n"
-        )
-        
+        mock_run.return_value = Mock(returncode=0, stdout="test-project-dev:latest\nother:tag\n")
+
         result = self.manager.image_exists()
-        
+
         self.assertTrue(result)
         mock_run.assert_called_once_with(
             ["docker", "images", "--format", "{{.Repository}}:{{.Tag}}"],
@@ -137,9 +129,9 @@ class TestContainerManager(unittest.TestCase):
     def test_image_exists_false(self, mock_run):
         """Test image_exists when image doesn't exist."""
         mock_run.return_value = Mock(returncode=0, stdout="other:tag\n")
-        
+
         result = self.manager.image_exists()
-        
+
         self.assertFalse(result)
 
     @patch("provide.foundation.process.run_command")
@@ -148,9 +140,9 @@ class TestContainerManager(unittest.TestCase):
     def test_build_image_success(self, mock_mkdir, mock_write, mock_run):
         """Test successful image build."""
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = self.manager.build_image()
-        
+
         self.assertTrue(result)
         mock_mkdir.assert_called_once_with(parents=True, exist_ok=True)
         mock_write.assert_called_once()
@@ -165,9 +157,9 @@ class TestContainerManager(unittest.TestCase):
     def test_build_image_with_rebuild(self, mock_mkdir, mock_write, mock_run):
         """Test image build with rebuild flag."""
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = self.manager.build_image(rebuild=True)
-        
+
         self.assertTrue(result)
         # Check that --no-cache was added to the command
         build_cmd = mock_run.call_args[0][0]
@@ -179,9 +171,9 @@ class TestContainerManager(unittest.TestCase):
     def test_build_image_failure(self, mock_mkdir, mock_write, mock_run):
         """Test image build failure."""
         mock_run.side_effect = subprocess.CalledProcessError(1, "docker build")
-        
+
         result = self.manager.build_image()
-        
+
         self.assertFalse(result)
         # Build directory is now persistent, no cleanup
 
@@ -211,9 +203,9 @@ class TestContainerManager(unittest.TestCase):
         mock_exists.return_value = False
         mock_getuid.return_value = 1000
         mock_getgid.return_value = 1000
-        
+
         result = self.manager.start()
-        
+
         self.assertTrue(result)
         mock_check_docker.assert_called_once()
         mock_image_exists.assert_called_once()
@@ -230,24 +222,22 @@ class TestContainerManager(unittest.TestCase):
     def test_start_container_docker_not_available(self, mock_check_docker):
         """Test container start when Docker is not available."""
         mock_check_docker.return_value = False
-        
+
         result = self.manager.start()
-        
+
         self.assertFalse(result)
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
     @patch("wrknv.container.manager.ContainerManager.build_image")
-    def test_start_container_build_image_if_missing(
-        self, mock_build, mock_image_exists, mock_check_docker
-    ):
+    def test_start_container_build_image_if_missing(self, mock_build, mock_image_exists, mock_check_docker):
         """Test that start builds image if it doesn't exist."""
         mock_check_docker.return_value = True
         mock_image_exists.return_value = False
         mock_build.return_value = False  # Build fails
-        
+
         result = self.manager.start()
-        
+
         self.assertFalse(result)
         mock_build.assert_called_once_with(rebuild=False)
 
@@ -259,9 +249,9 @@ class TestContainerManager(unittest.TestCase):
         mock_check_docker.return_value = True
         mock_image_exists.return_value = True
         mock_running.return_value = True
-        
+
         result = self.manager.start()
-        
+
         self.assertTrue(result)  # Returns True but doesn't try to start again
 
     @patch("wrknv.container.manager.ContainerManager.container_running")
@@ -269,33 +259,29 @@ class TestContainerManager(unittest.TestCase):
     def test_enter_container_running(self, mock_system, mock_running):
         """Test entering a running container."""
         mock_running.return_value = True
-        
+
         self.manager.enter()
-        
-        mock_system.assert_called_once_with(
-            "docker exec -it test-project-dev /bin/bash"
-        )
+
+        mock_system.assert_called_once_with("docker exec -it test-project-dev /bin/bash")
 
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
     def test_enter_container_with_command(self, mock_system, mock_running):
         """Test entering container with specific command."""
         mock_running.return_value = True
-        
+
         self.manager.enter(["ls", "-la"])
-        
-        mock_system.assert_called_once_with(
-            "docker exec -it test-project-dev ls -la"
-        )
+
+        mock_system.assert_called_once_with("docker exec -it test-project-dev ls -la")
 
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
     def test_enter_container_not_running(self, mock_system, mock_running):
         """Test entering when container is not running."""
         mock_running.return_value = False
-        
+
         self.manager.enter()
-        
+
         mock_system.assert_not_called()
 
     @patch("provide.foundation.process.run_command")
@@ -304,9 +290,9 @@ class TestContainerManager(unittest.TestCase):
         """Test successful container stop."""
         mock_running.return_value = True
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = self.manager.stop()
-        
+
         self.assertTrue(result)
         # Check that docker stop was called
         stop_calls = [c for c in mock_run.call_args_list if "stop" in str(c)]
@@ -318,9 +304,9 @@ class TestContainerManager(unittest.TestCase):
         """Test container stop failure."""
         mock_running.return_value = True
         mock_run.side_effect = subprocess.CalledProcessError(1, "docker stop")
-        
+
         result = self.manager.stop()
-        
+
         self.assertFalse(result)
 
     @patch("wrknv.container.manager.ContainerManager.stop")
@@ -329,9 +315,9 @@ class TestContainerManager(unittest.TestCase):
         """Test successful container restart."""
         mock_stop.return_value = True
         mock_start.return_value = True
-        
+
         result = self.manager.restart()
-        
+
         self.assertTrue(result)
         mock_stop.assert_called_once()
         mock_start.assert_called_once()
@@ -341,15 +327,15 @@ class TestContainerManager(unittest.TestCase):
     def test_restart_container_stop_failure(self, mock_stop, mock_start):
         """Test restart when stop fails."""
         mock_stop.return_value = False
-        
+
         result = self.manager.restart()
-        
+
         self.assertTrue(result)  # restart continues even if stop fails
         mock_start.assert_called_once()
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
-    @patch("wrknv.container.manager.ContainerManager.container_exists") 
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
     @patch("wrknv.container.manager.ContainerManager.check_docker")
     def test_status_method(self, mock_docker, mock_image, mock_exists, mock_running, mock_run):
@@ -362,9 +348,9 @@ class TestContainerManager(unittest.TestCase):
             returncode=0,
             stdout='[{"Id": "abc123456789", "Created": "2024-01-01", "State": {"Status": "running"}, "NetworkSettings": {"Ports": {}}}]',
         )
-        
+
         status = self.manager.status()
-        
+
         self.assertIsNotNone(status)
         self.assertTrue(status["docker_available"])
         self.assertTrue(status["container_exists"])
@@ -380,9 +366,9 @@ class TestContainerManager(unittest.TestCase):
     def test_status_no_docker(self, mock_check):
         """Test getting status when Docker is not available."""
         mock_check.return_value = False
-        
+
         status = self.manager.status()
-        
+
         self.assertIsNotNone(status)
         self.assertFalse(status["docker_available"])
         self.assertFalse(status["container_exists"])
@@ -393,13 +379,11 @@ class TestContainerManager(unittest.TestCase):
         """Test getting container logs."""
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0, stdout="logs", stderr="")
-        
+
         self.manager.logs(follow=False, tail=10)
-        
+
         mock_run.assert_called_once_with(
-            ["docker", "logs", "--tail", "10", "test-project-dev"],
-            capture_output=True,
-            text=True
+            ["docker", "logs", "--tail", "10", "test-project-dev"], capture_output=True, text=True
         )
 
     @patch("provide.foundation.process.run_command")
@@ -408,12 +392,10 @@ class TestContainerManager(unittest.TestCase):
         """Test following container logs."""
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0)
-        
+
         self.manager.logs(follow=True)
-        
-        mock_run.assert_called_once_with(
-            ["docker", "logs", "-f", "--tail", "100", "test-project-dev"]
-        )
+
+        mock_run.assert_called_once_with(["docker", "logs", "-f", "--tail", "100", "test-project-dev"])
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
@@ -425,13 +407,13 @@ class TestContainerManager(unittest.TestCase):
         mock_container_exists.side_effect = [True, False]  # Exists first, then doesn't after rm
         mock_image_exists.side_effect = [True, False]  # Exists first, then doesn't after rmi
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = self.manager.clean()
-        
+
         self.assertTrue(result)
         # Should call both rm and rmi
-        rm_calls = [c for c in mock_run.call_args_list if 'rm' in str(c)]
-        rmi_calls = [c for c in mock_run.call_args_list if 'rmi' in str(c)]
+        rm_calls = [c for c in mock_run.call_args_list if "rm" in str(c)]
+        rmi_calls = [c for c in mock_run.call_args_list if "rmi" in str(c)]
         self.assertTrue(len(rm_calls) > 0)
         self.assertTrue(len(rmi_calls) > 0)
 
@@ -446,15 +428,15 @@ class TestContainerManager(unittest.TestCase):
         mock_image_exists.return_value = False
         # Container removal fails
         mock_run.side_effect = subprocess.CalledProcessError(1, "docker rm")
-        
+
         result = self.manager.clean()
-        
+
         self.assertFalse(result)  # Returns False if container removal fails
 
     def test_generate_dockerfile(self):
         """Test Dockerfile generation."""
         dockerfile = self.manager._generate_dockerfile()
-        
+
         # Check for essential components
         self.assertIn("FROM ubuntu:22.04", dockerfile)
         self.assertIn("DEBIAN_FRONTEND=noninteractive", dockerfile)
@@ -475,12 +457,12 @@ class TestContainerManager(unittest.TestCase):
         mock_check_docker.return_value = True
         mock_image_exists.return_value = True
         mock_exists.return_value = True  # Container exists but not running
-        
+
         with patch("wrknv.container.manager.ContainerManager.container_running") as mock_running:
             mock_running.return_value = False
-            
+
             self.manager.start()
-            
+
             # Check that docker rm was called
             rm_calls = [c for c in mock_run.call_args_list if c[0][0][:2] == ["docker", "rm"]]
             self.assertEqual(len(rm_calls), 1)

@@ -8,7 +8,6 @@ Defines the emoji hierarchy for wrknv modules.
 WRKNV_EMOJI_HIERARCHY = {
     # Core wrknv
     "wrknv": "🧰",
-    
     # CLI interface
     "wrknv.cli": "⌨️",
     "wrknv.cli.commands": "🎯",
@@ -20,7 +19,6 @@ WRKNV_EMOJI_HIERARCHY = {
     "wrknv.cli.commands.profile": "👤",
     "wrknv.cli.commands.package": "📤",
     "wrknv.cli.commands.setup": "🌱",
-    
     # Work environment management
     "wrknv.wenv": "🌍",
     "wrknv.wenv.managers": "📦",
@@ -33,19 +31,15 @@ WRKNV_EMOJI_HIERARCHY = {
     "wrknv.wenv.env_generator": "📝",
     "wrknv.wenv.doctor": "🩺",
     "wrknv.wenv.operations": "⚙️",
-    
     # Configuration system
     "wrknv.config": "⚙️",
     "wrknv.config.core": "🔩",
     "wrknv.config.sources": "📋",
-    
     # Package management
     "wrknv.package": "📤",
     "wrknv.package.manager": "📦",
-    
     # Container operations
     "wrknv.container": "🐳",
-    
     # Gitignore management
     "wrknv.gitignore": "📄",
     "wrknv.gitignore.manager": "📝",

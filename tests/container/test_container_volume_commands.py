@@ -1,4 +1,5 @@
 import pytest
+
 #
 # tests/container/test_container_volume_commands.py
 #
@@ -8,25 +9,19 @@ Test Container Volume Commands
 Tests for container volume management commands.
 """
 
-import json
 import tarfile
-from datetime import datetime
-from pathlib import Path
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
-import pytest
 from click.testing import CliRunner
-from rich.console import Console
 
+from wrknv.cli.hub_cli import create_cli
 from wrknv.container.commands import (
     backup_volumes,
     clean_volumes,
     list_volumes,
     restore_volumes,
 )
-from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
-from wrknv.cli.hub_cli import create_cli
 
 
 @pytest.mark.container
@@ -55,8 +50,10 @@ class TestVolumeCommands:
         with patch("wrknv.container.commands.ContainerManager") as MockManager:
             manager = MockManager.return_value
             manager.CONTAINER_NAME = "test-project-dev"
-            manager.get_container_path = Mock(side_effect=lambda p="": mock_home / ".wrknv" / "containers" / "test-project-dev" / p)
-            
+            manager.get_container_path = Mock(
+                side_effect=lambda p="": mock_home / ".wrknv" / "containers" / "test-project-dev" / p
+            )
+
             # Setup mock storage
             container_dir = mock_home / ".wrknv" / "containers" / "test-project-dev"
             container_dir.mkdir(parents=True, exist_ok=True)
@@ -64,7 +61,7 @@ class TestVolumeCommands:
             (container_dir / "volumes" / "workspace").mkdir(exist_ok=True)
             (container_dir / "volumes" / "cache").mkdir(exist_ok=True)
             (container_dir / "volumes" / "config").mkdir(exist_ok=True)
-            
+
             yield manager
 
     def test_list_volumes_command(self, mock_manager, test_config, capsys):
@@ -94,10 +91,10 @@ class TestVolumeCommands:
             },
         ]
         mock_manager.list_volumes.return_value = mock_volumes
-        
+
         # Run command
         list_volumes(test_config)
-        
+
         # Check output
         captured = capsys.readouterr()
         assert "Container Volumes" in captured.out
@@ -112,34 +109,41 @@ class TestVolumeCommands:
     def test_list_volumes_empty(self, mock_manager, test_config, capsys):
         """Test list_volumes with no volumes."""
         mock_manager.list_volumes.return_value = []
-        
+
         list_volumes(test_config)
-        
+
         captured = capsys.readouterr()
         assert "No volumes found" in captured.out
 
     def test_backup_volumes_command(self, mock_manager, test_config, mock_home, capsys):
         """Test backup_volumes command."""
         # Setup mock backup
-        backup_path = mock_home / ".wrknv" / "containers" / "test-project-dev" / "backups" / "backup-20250831-150000.tar.gz"
+        backup_path = (
+            mock_home
+            / ".wrknv"
+            / "containers"
+            / "test-project-dev"
+            / "backups"
+            / "backup-20250831-150000.tar.gz"
+        )
         backup_path.parent.mkdir(parents=True, exist_ok=True)
-        
+
         # Create a real tar file for testing
         with tarfile.open(backup_path, "w:gz") as tar:
             # Add a test file
             test_file = mock_home / "test.txt"
             test_file.write_text("test")
             tar.add(test_file, arcname="volumes/workspace/test.txt")
-        
+
         mock_manager.backup_volumes.return_value = backup_path
-        
+
         # Run command
         result = backup_volumes(test_config)
-        
+
         # Check result
         assert result is True
         mock_manager.backup_volumes.assert_called_once_with(compress=True, include_metadata=True, name=None)
-        
+
         # Check output
         captured = capsys.readouterr()
         assert "Backing up volumes" in captured.out
@@ -148,28 +152,28 @@ class TestVolumeCommands:
 
     def test_backup_volumes_with_name(self, mock_manager, test_config, mock_home, capsys):
         """Test backup_volumes with custom name."""
-        backup_path = mock_home / ".wrknv" / "containers" / "test-project-dev" / "backups" / "custom-backup.tar.gz"
+        backup_path = (
+            mock_home / ".wrknv" / "containers" / "test-project-dev" / "backups" / "custom-backup.tar.gz"
+        )
         backup_path.parent.mkdir(parents=True, exist_ok=True)
         backup_path.write_text("")  # Create empty file
-        
+
         mock_manager.backup_volumes.return_value = backup_path
-        
+
         # Run command with custom name
         result = backup_volumes(test_config, name="custom-backup")
-        
+
         assert result is True
         mock_manager.backup_volumes.assert_called_once_with(
-            compress=True, 
-            include_metadata=True,
-            name="custom-backup"
+            compress=True, include_metadata=True, name="custom-backup"
         )
 
     def test_backup_volumes_failure(self, mock_manager, test_config, capsys):
         """Test backup_volumes command failure."""
         mock_manager.backup_volumes.side_effect = Exception("Backup failed")
-        
+
         result = backup_volumes(test_config)
-        
+
         assert result is False
         captured = capsys.readouterr()
         assert "Failed to create backup" in captured.out
@@ -180,22 +184,20 @@ class TestVolumeCommands:
         # Create backup file
         backup_path = mock_home / ".wrknv" / "containers" / "test-project-dev" / "backups" / "backup.tar.gz"
         backup_path.parent.mkdir(parents=True, exist_ok=True)
-        
+
         with tarfile.open(backup_path, "w:gz") as tar:
             test_file = mock_home / "test.txt"
             test_file.write_text("restored data")
             tar.add(test_file, arcname="volumes/workspace/test.txt")
-        
+
         mock_manager.restore_volumes.return_value = True
-        
+
         # Run command
         result = restore_volumes(test_config, backup_path=str(backup_path))
-        
+
         assert result is True
-        mock_manager.restore_volumes.assert_called_once_with(
-            backup_path, force=False
-        )
-        
+        mock_manager.restore_volumes.assert_called_once_with(backup_path, force=False)
+
         captured = capsys.readouterr()
         assert "Restoring volumes from" in captured.out
         assert "backup.tar.gz" in captured.out
@@ -206,33 +208,31 @@ class TestVolumeCommands:
         # Create multiple backups
         backups_dir = mock_home / ".wrknv" / "containers" / "test-project-dev" / "backups"
         backups_dir.mkdir(parents=True, exist_ok=True)
-        
+
         older_backup = backups_dir / "backup-20250830-120000.tar.gz"
         latest_backup = backups_dir / "backup-20250831-150000.tar.gz"
-        
+
         for backup in [older_backup, latest_backup]:
             with tarfile.open(backup, "w:gz") as tar:
                 test_file = mock_home / "test.txt"
                 test_file.write_text("data")
                 tar.add(test_file, arcname="test.txt")
-        
+
         mock_manager.get_latest_backup.return_value = latest_backup
         mock_manager.restore_volumes.return_value = True
-        
+
         # Run without specifying backup
         result = restore_volumes(test_config)
-        
+
         assert result is True
-        mock_manager.restore_volumes.assert_called_once_with(
-            latest_backup, force=False
-        )
+        mock_manager.restore_volumes.assert_called_once_with(latest_backup, force=False)
 
     def test_restore_volumes_no_backups(self, mock_manager, test_config, capsys):
         """Test restore_volumes with no backups available."""
         mock_manager.get_latest_backup.return_value = None
-        
+
         result = restore_volumes(test_config)
-        
+
         assert result is False
         captured = capsys.readouterr()
         assert "No backups found" in captured.out
@@ -242,60 +242,56 @@ class TestVolumeCommands:
         backup_path = mock_home / ".wrknv" / "containers" / "test-project-dev" / "backups" / "backup.tar.gz"
         backup_path.parent.mkdir(parents=True, exist_ok=True)
         backup_path.write_text("")
-        
+
         mock_manager.restore_volumes.return_value = True
-        
+
         result = restore_volumes(test_config, backup_path=str(backup_path), force=True)
-        
+
         assert result is True
-        mock_manager.restore_volumes.assert_called_once_with(
-            backup_path, force=True
-        )
+        mock_manager.restore_volumes.assert_called_once_with(backup_path, force=True)
 
     def test_clean_volumes_command(self, mock_manager, test_config, capsys):
         """Test clean_volumes command."""
         mock_manager.clean_volumes.return_value = True
-        
+
         # Mock user confirmation
         with patch("click.confirm", return_value=True):
             result = clean_volumes(test_config)
-        
+
         assert result is True
         mock_manager.clean_volumes.assert_called_once_with(preserve=[])
-        
+
         captured = capsys.readouterr()
         assert "Successfully cleaned volumes" in captured.out
 
     def test_clean_volumes_with_preserve(self, mock_manager, test_config):
         """Test clean_volumes with preserved volumes."""
         mock_manager.clean_volumes.return_value = True
-        
+
         with patch("click.confirm", return_value=True):
             result = clean_volumes(test_config, preserve=["workspace", "config"])
-        
+
         assert result is True
-        mock_manager.clean_volumes.assert_called_once_with(
-            preserve=["workspace", "config"]
-        )
+        mock_manager.clean_volumes.assert_called_once_with(preserve=["workspace", "config"])
 
     def test_clean_volumes_cancelled(self, mock_manager, test_config, capsys):
         """Test clean_volumes when user cancels."""
         with patch("click.confirm", return_value=False):
             result = clean_volumes(test_config)
-        
+
         assert result is False
         mock_manager.clean_volumes.assert_not_called()
-        
+
         captured = capsys.readouterr()
         assert "Cancelled" in captured.out
 
     def test_clean_volumes_failure(self, mock_manager, test_config, capsys):
         """Test clean_volumes command failure."""
         mock_manager.clean_volumes.side_effect = Exception("Clean failed")
-        
+
         with patch("click.confirm", return_value=True):
             result = clean_volumes(test_config)
-        
+
         assert result is False
         captured = capsys.readouterr()
         assert "Failed to clean volumes" in captured.out
@@ -339,68 +335,68 @@ class TestVolumeCommandsCLI:
     def test_cli_volumes_list(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes list command."""
         cli = create_cli()
-        
+
         result = runner.invoke(cli, ["container", "volumes", "list"])
-        
+
         assert result.exit_code == 0
 
     def test_cli_volumes_backup(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes backup command."""
         cli = create_cli()
-        
+
         result = runner.invoke(cli, ["container", "volumes", "backup"])
-        
+
         # Debug output
         if result.exit_code != 0:
             print(f"Exit code: {result.exit_code}")
             print(f"Output: {result.output}")
             if result.exception:
                 print(f"Exception: {result.exception}")
-        
+
         assert result.exit_code == 0
 
     def test_cli_volumes_backup_with_name(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes backup command with name."""
         cli = create_cli()
-        
+
         result = runner.invoke(cli, ["container", "volumes", "backup", "--name", "my-backup"])
-        
+
         assert result.exit_code == 0
 
     def test_cli_volumes_restore(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes restore command."""
         cli = create_cli()
-        
+
         result = runner.invoke(cli, ["container", "volumes", "restore"])
-        
+
         assert result.exit_code == 0
 
     def test_cli_volumes_restore_with_path(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes restore command with path."""
         cli = create_cli()
-        
+
         backup_path = "/path/to/backup.tar.gz"
         result = runner.invoke(cli, ["container", "volumes", "restore", "--backup", backup_path])
-        
+
         assert result.exit_code == 0
 
     def test_cli_volumes_clean(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes clean command."""
         cli = create_cli()
-        
+
         # Auto-confirm for testing
         result = runner.invoke(cli, ["container", "volumes", "clean"], input="y\n")
-        
+
         assert result.exit_code == 0
 
     def test_cli_volumes_clean_with_preserve(self, runner, mock_load_config, mock_container_manager):
         """Test CLI volumes clean command with preserve."""
         cli = create_cli()
-        
+
         result = runner.invoke(
-            cli, 
+            cli,
             ["container", "volumes", "clean", "--preserve", "workspace", "--preserve", "config"],
-            input="y\n"
+            input="y\n",
         )
-        
+
         assert result.exit_code == 0

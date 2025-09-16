@@ -68,9 +68,7 @@ class ProfileError(WrkenvError):
 class ToolNotFoundError(WrkenvError):
     """Tool or version not found errors."""
 
-    def __init__(
-        self, tool: str, version: str = None, available_versions: list[str] = None
-    ):
+    def __init__(self, tool: str, version: str = None, available_versions: list[str] = None):
         if version:
             message = f"{tool} version {version} not found"
         else:
@@ -171,9 +169,7 @@ class ContainerError(WrkenvError):
     def __init__(self, message: str, container_name: str = None):
         suggestion = "Make sure Docker is installed and running"
         if container_name:
-            suggestion += (
-                f"\nCheck container status: docker ps -a | grep {container_name}"
-            )
+            suggestion += f"\nCheck container status: docker ps -a | grep {container_name}"
 
         super().__init__(message, suggestion)
         self.container_name = container_name

@@ -8,13 +8,12 @@ Functions for verifying tool installations.
 """
 
 import pathlib
+
 from provide.foundation import logger
 from provide.foundation.process import run_command
 
 
-def verify_tool_installation(
-    binary_path: pathlib.Path, expected_version: str, tool_name: str
-) -> bool:
+def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, tool_name: str) -> bool:
     """Verify that tool installation works and version matches."""
 
     if not binary_path.exists():
@@ -43,9 +42,7 @@ def verify_tool_installation(
         return False
 
 
-def run_version_check(
-    binary_path: pathlib.Path, tool_name: str, timeout: int = 10
-) -> str | None:
+def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 10) -> str | None:
     """Run version check command for a tool and return output."""
 
     if not binary_path.exists():
@@ -101,9 +98,7 @@ def check_binary_compatibility(binary_path: pathlib.Path) -> dict[str, any]:
 
     try:
         # Try to run the binary with help/version flag
-        result = run_command(
-            [str(binary_path), "--help"], timeout=5
-        )
+        result = run_command([str(binary_path), "--help"], timeout=5)
 
         # If it runs without error, it's likely compatible
         compatible = result.returncode == 0
@@ -121,9 +116,7 @@ def check_binary_compatibility(binary_path: pathlib.Path) -> dict[str, any]:
         return {"compatible": False, "error": str(e)}
 
 
-def validate_installation_directory(
-    install_dir: pathlib.Path, tool_name: str, version: str
-) -> bool:
+def validate_installation_directory(install_dir: pathlib.Path, tool_name: str, version: str) -> bool:
     """Validate that installation directory has expected structure."""
 
     if not install_dir.exists():
@@ -157,9 +150,7 @@ def validate_installation_directory(
     return True
 
 
-def get_installed_version_info(
-    binary_path: pathlib.Path, tool_name: str
-) -> dict[str, str] | None:
+def get_installed_version_info(binary_path: pathlib.Path, tool_name: str) -> dict[str, str] | None:
     """Get detailed version information from installed tool."""
 
     version_output = run_version_check(binary_path, tool_name)

@@ -11,8 +11,8 @@ import json
 import re
 from urllib.request import urlopen
 
-import semver
 from provide.foundation import logger
+import semver
 
 from .tf_base import TfVersionsManager, ToolManagerError
 
@@ -101,17 +101,13 @@ class IbmTfManager(TfVersionsManager):
         arch = platform_info["arch"]
 
         # Use custom mirror if configured
-        mirror_url = self.config.get_setting(
-            "terraform_mirror", "https://releases.hashicorp.com/terraform"
-        )
+        mirror_url = self.config.get_setting("terraform_mirror", "https://releases.hashicorp.com/terraform")
 
         return f"{mirror_url.rstrip('/')}/{version}/terraform_{version}_{os_name}_{arch}.zip"
 
     def get_checksum_url(self, version: str) -> str | None:
         """Get checksum URL for IBM Terraform version."""
-        mirror_url = self.config.get_setting(
-            "terraform_mirror", "https://releases.hashicorp.com/terraform"
-        )
+        mirror_url = self.config.get_setting("terraform_mirror", "https://releases.hashicorp.com/terraform")
         return f"{mirror_url.rstrip('/')}/{version}/terraform_{version}_SHA256SUMS"
 
     # _install_from_archive is inherited from TfVersionsManager
@@ -140,9 +136,7 @@ class IbmTfManager(TfVersionsManager):
                     logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
-                    logger.error(
-                        f"Version mismatch in IBM Terraform output: {result.stdout}"
-                    )
+                    logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
             else:
                 logger.error(f"IBM Terraform version command failed: {result.stderr}")
 

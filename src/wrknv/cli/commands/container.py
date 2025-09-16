@@ -9,12 +9,11 @@ Commands for managing development containers.
 """
 
 import sys
-from typing import Optional
 
-from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
-from provide.foundation import logger
+from provide.foundation.hub import register_command
 
+from wrknv.config import WorkenvConfig
 from wrknv.container import (
     build_container,
     clean_container,
@@ -27,12 +26,11 @@ from wrknv.container import (
     stop_container,
 )
 from wrknv.container.commands import (
-    list_volumes,
     backup_volumes,
-    restore_volumes,
     clean_volumes,
+    list_volumes,
+    restore_volumes,
 )
-from wrknv.config import WorkenvConfig
 
 
 # Register the container group first
@@ -59,14 +57,14 @@ def container_status_command():
 def container_build_command(rebuild: bool = False):
     """Build the development container image."""
     config = WorkenvConfig.load()
-    
+
     if rebuild:
         echo_info("🔨 Rebuilding container image from scratch...")
     else:
         echo_info("🔨 Building container image...")
-    
+
     success = build_container(config, rebuild=rebuild)
-    
+
     if success:
         echo_success("✅ Container image built successfully")
     else:
@@ -81,11 +79,11 @@ def container_build_command(rebuild: bool = False):
 def container_start_command(rebuild: bool = False):
     """Start the development container."""
     config = WorkenvConfig.load()
-    
+
     echo_info("🚀 Starting container...")
-    
+
     success = start_container(config, rebuild=rebuild)
-    
+
     if success:
         echo_success("✅ Container started successfully")
         echo_info("Run 'wrknv container enter' to access the container")
@@ -101,11 +99,11 @@ def container_start_command(rebuild: bool = False):
 def container_stop_command():
     """Stop the development container."""
     config = WorkenvConfig.load()
-    
+
     echo_info("🛑 Stopping container...")
-    
+
     success = stop_container(config)
-    
+
     if success:
         echo_success("✅ Container stopped successfully")
     else:
@@ -120,11 +118,11 @@ def container_stop_command():
 def container_restart_command():
     """Restart the development container."""
     config = WorkenvConfig.load()
-    
+
     echo_info("🔄 Restarting container...")
-    
+
     success = restart_container(config)
-    
+
     if success:
         echo_success("✅ Container restarted successfully")
     else:
@@ -137,18 +135,18 @@ def container_restart_command():
     description="Enter running container",
 )
 def container_enter_command(
-    command: Optional[str] = None,
-    shell: Optional[str] = None,
-    working_dir: Optional[str] = None,
-    user: Optional[str] = None,
+    command: str | None = None,
+    shell: str | None = None,
+    working_dir: str | None = None,
+    user: str | None = None,
     auto_start: bool = False,
 ):
     """Enter the running container."""
     config = WorkenvConfig.load()
-    
+
     # Parse command if provided
     command_list = command.split() if command else None
-    
+
     enter_container(
         config=config,
         command=command_list,
@@ -166,13 +164,13 @@ def container_enter_command(
 def container_logs_command(
     follow: bool = False,
     tail: int = 100,
-    since: Optional[str] = None,
+    since: str | None = None,
     timestamps: bool = False,
     details: bool = False,
 ):
     """Show container logs."""
     config = WorkenvConfig.load()
-    
+
     container_logs(
         config=config,
         follow=follow,
@@ -190,19 +188,19 @@ def container_logs_command(
 def container_clean_command():
     """Clean up container and image."""
     config = WorkenvConfig.load()
-    
+
     echo_warning("⚠️  This will remove the container and image")
-    
+
     # Confirm with user
     response = input("Continue? [y/N]: ").strip().lower()
-    if response != 'y':
+    if response != "y":
         echo_info("Cancelled")
         return
-    
+
     echo_info("🧹 Cleaning container resources...")
-    
+
     success = clean_container(config)
-    
+
     if success:
         echo_success("✅ Container resources cleaned successfully")
     else:
@@ -217,11 +215,11 @@ def container_clean_command():
 def container_rebuild_command():
     """Rebuild the container from scratch."""
     config = WorkenvConfig.load()
-    
+
     echo_info("🔨 Rebuilding container from scratch...")
-    
+
     success = rebuild_container(config)
-    
+
     if success:
         echo_success("✅ Container rebuilt successfully")
         echo_info("Run 'wrknv container enter' to access the new container")
@@ -231,6 +229,7 @@ def container_rebuild_command():
 
 
 # Volume management commands
+
 
 # Create a volumes subgroup under container
 @register_command(
@@ -257,12 +256,12 @@ def container_volumes_list_command():
     "container.volumes.backup",
     description="Backup container volumes",
 )
-def container_volumes_backup_command(name: Optional[str] = None):
+def container_volumes_backup_command(name: str | None = None):
     """Create a backup of container volumes."""
     config = WorkenvConfig.load()
-    
+
     success = backup_volumes(config, name=name)
-    
+
     if not success:
         sys.exit(1)
 
@@ -272,14 +271,14 @@ def container_volumes_backup_command(name: Optional[str] = None):
     description="Restore container volumes from backup",
 )
 def container_volumes_restore_command(
-    backup_path: Optional[str] = None,
+    backup_path: str | None = None,
     force: bool = False,
 ):
     """Restore container volumes from a backup."""
     config = WorkenvConfig.load()
-    
+
     success = restore_volumes(config, backup_path=backup_path, force=force)
-    
+
     if not success:
         sys.exit(1)
 
@@ -288,20 +287,21 @@ def container_volumes_restore_command(
     "container.volumes.clean",
     description="Clean container volumes",
 )
-def container_volumes_clean_command(preserve: Optional[str] = None):
+def container_volumes_clean_command(preserve: str | None = None):
     """Clean container volumes."""
     config = WorkenvConfig.load()
-    
+
     # Parse preserve list
-    preserve_list = preserve.split(',') if preserve else []
-    
+    preserve_list = preserve.split(",") if preserve else []
+
     success = clean_volumes(config, preserve=preserve_list)
-    
+
     if not success:
         sys.exit(1)
 
 
 # Convenience shortcuts
+
 
 @register_command(
     "container.shell",
@@ -311,7 +311,7 @@ def container_volumes_clean_command(preserve: Optional[str] = None):
 def container_shell_command():
     """Open an interactive shell in the container."""
     config = WorkenvConfig.load()
-    
+
     enter_container(
         config=config,
         command=None,
@@ -327,12 +327,12 @@ def container_shell_command():
 def container_exec_command(command: str):
     """Execute a command in the container."""
     config = WorkenvConfig.load()
-    
+
     if not command:
         echo_error("No command specified")
         echo_info("Usage: wrknv container exec 'command to run'")
         sys.exit(1)
-    
+
     enter_container(
         config=config,
         command=command.split(),

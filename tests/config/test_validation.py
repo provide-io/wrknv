@@ -7,8 +7,8 @@ Test suite for configuration schema validation.
 import pathlib
 import tempfile
 import unittest
-from unittest.mock import patch
 
+from wrknv.wenv.config import ValidatedTomlSource, WorkenvConfigError
 from wrknv.wenv.schema import (
     ContainerConfig,
     PackageConfig,
@@ -21,7 +21,6 @@ from wrknv.wenv.schema import (
     load_config_from_dict,
     validate_config_dict,
 )
-from wrknv.wenv.config import ValidatedTomlSource, WorkenvConfigError
 
 
 class TestToolConfig(unittest.TestCase):
@@ -40,7 +39,7 @@ class TestToolConfig(unittest.TestCase):
             enabled=False,
             source_url="https://example.com/tool.tar.gz",
             install_path="/opt/tools/custom",
-            environment={"TOOL_HOME": "/opt/tools/custom"}
+            environment={"TOOL_HOME": "/opt/tools/custom"},
         )
         self.assertEqual(config.version, "2.0.0")
         self.assertFalse(config.enabled)
@@ -82,7 +81,7 @@ class TestContainerConfig(unittest.TestCase):
             additional_packages=["git", "curl"],
             environment={"PATH": "/custom/path:$PATH"},
             volumes=["/host/path:/container/path"],
-            ports=["8080:80"]
+            ports=["8080:80"],
         )
         self.assertTrue(config.enabled)
         self.assertEqual(config.base_image, "python:3.11-slim")
@@ -107,10 +106,7 @@ class TestProfileConfig(unittest.TestCase):
         profile = ProfileConfig(
             name="development",
             description="Development environment",
-            tools={
-                "terraform": ToolConfig(version="1.5.0"),
-                "go": ToolConfig(version="1.21.0")
-            }
+            tools={"terraform": ToolConfig(version="1.5.0"), "go": ToolConfig(version="1.21.0")},
         )
         self.assertEqual(profile.name, "development")
         self.assertEqual(len(profile.tools), 2)
@@ -118,9 +114,7 @@ class TestProfileConfig(unittest.TestCase):
     def test_profile_with_container(self):
         """Test profile with container configuration."""
         profile = ProfileConfig(
-            name="docker-dev",
-            container=ContainerConfig(enabled=True),
-            environment={"ENV": "development"}
+            name="docker-dev", container=ContainerConfig(enabled=True), environment={"ENV": "development"}
         )
         self.assertIsNotNone(profile.container)
         self.assertTrue(profile.container.enabled)
@@ -140,11 +134,7 @@ class TestPackageConfig(unittest.TestCase):
 
     def test_valid_package_config(self):
         """Test creating valid package configuration."""
-        config = PackageConfig(
-            name="my-package",
-            version="1.0.0",
-            entry_point="my_package.main:app"
-        )
+        config = PackageConfig(name="my-package", version="1.0.0", entry_point="my_package.main:app")
         self.assertEqual(config.name, "my-package")
         self.assertEqual(config.version, "1.0.0")
         self.assertEqual(config.license, "MIT")
@@ -158,7 +148,7 @@ class TestPackageConfig(unittest.TestCase):
             description="Test package",
             entry_point="main:run",
             dependencies=["dep1", "dep2"],
-            metadata={"key": "value"}
+            metadata={"key": "value"},
         )
         # Name should be normalized to lowercase
         self.assertEqual(config.name, "complex-package")
@@ -182,7 +172,7 @@ class TestRegistryConfig(unittest.TestCase):
             username="user",
             token="secret-token",
             verify_ssl=False,
-            timeout=60
+            timeout=60,
         )
         # URL should be normalized (trailing slash removed)
         self.assertEqual(config.url, "https://custom.registry.com")
@@ -214,27 +204,18 @@ class TestWorkenvConfig(unittest.TestCase):
             project_name="full-project",
             version="2.0.0",
             description="Full test project",
-            tools={
-                "terraform": ToolConfig(version="1.5.0"),
-                "go": ToolConfig(version="1.21.0")
-            },
+            tools={"terraform": ToolConfig(version="1.5.0"), "go": ToolConfig(version="1.21.0")},
             container=ContainerConfig(enabled=True),
-            package=PackageConfig(
-                name="test-package",
-                version="1.0.0",
-                entry_point="main:app"
-            ),
+            package=PackageConfig(name="test-package", version="1.0.0", entry_point="main:app"),
             registry=RegistryConfig(),
-            profiles={
-                "dev": ProfileConfig(name="dev")
-            },
+            profiles={"dev": ProfileConfig(name="dev")},
             install_dir="~/custom/install",
             cache_dir="~/custom/cache",
             log_level="DEBUG",
             telemetry_enabled=False,
             auto_update=True,
             environment={"KEY": "value"},
-            scripts={"test": "pytest"}
+            scripts={"test": "pytest"},
         )
         self.assertEqual(config.project_name, "full-project")
         self.assertEqual(len(config.tools), 2)
@@ -244,31 +225,23 @@ class TestWorkenvConfig(unittest.TestCase):
 
     def test_get_tool_config(self):
         """Test getting tool configuration."""
-        config = WorkenvConfig(
-            project_name="test",
-            tools={
-                "terraform": ToolConfig(version="1.5.0")
-            }
-        )
+        config = WorkenvConfig(project_name="test", tools={"terraform": ToolConfig(version="1.5.0")})
         tool = config.get_tool_config("terraform")
         self.assertIsNotNone(tool)
         self.assertEqual(tool.version, "1.5.0")
-        
+
         missing = config.get_tool_config("missing")
         self.assertIsNone(missing)
 
     def test_get_profile(self):
         """Test getting profile configuration."""
         config = WorkenvConfig(
-            project_name="test",
-            profiles={
-                "dev": ProfileConfig(name="dev", description="Dev profile")
-            }
+            project_name="test", profiles={"dev": ProfileConfig(name="dev", description="Dev profile")}
         )
         profile = config.get_profile("dev")
         self.assertIsNotNone(profile)
         self.assertEqual(profile.name, "dev")
-        
+
         missing = config.get_profile("missing")
         self.assertIsNone(missing)
 
@@ -276,42 +249,33 @@ class TestWorkenvConfig(unittest.TestCase):
         """Test merging configuration with profile."""
         config = WorkenvConfig(
             project_name="test",
-            tools={
-                "terraform": ToolConfig(version="1.4.0")
-            },
+            tools={"terraform": ToolConfig(version="1.4.0")},
             profiles={
                 "dev": ProfileConfig(
                     name="dev",
-                    tools={
-                        "terraform": ToolConfig(version="1.5.0"),
-                        "go": ToolConfig(version="1.21.0")
-                    },
-                    environment={"ENV": "dev"}
+                    tools={"terraform": ToolConfig(version="1.5.0"), "go": ToolConfig(version="1.21.0")},
+                    environment={"ENV": "dev"},
                 )
-            }
+            },
         )
-        
+
         merged = config.merge_with_profile("dev")
-        
+
         # Profile tools should override base tools
         terraform = merged.get_tool_config("terraform")
         self.assertEqual(terraform.version, "1.5.0")
-        
+
         # New tools from profile should be added
         go = merged.get_tool_config("go")
         self.assertIsNotNone(go)
         self.assertEqual(go.version, "1.21.0")
-        
+
         # Environment should be merged
         self.assertEqual(merged.environment["ENV"], "dev")
 
     def test_path_expansion(self):
         """Test path expansion in configuration."""
-        config = WorkenvConfig(
-            project_name="test",
-            install_dir="~/test/install",
-            cache_dir="~/test/cache"
-        )
+        config = WorkenvConfig(project_name="test", install_dir="~/test/install", cache_dir="~/test/cache")
         # Paths should be expanded
         self.assertNotIn("~", config.install_dir)
         self.assertNotIn("~", config.cache_dir)
@@ -332,12 +296,7 @@ class TestConfigValidation(unittest.TestCase):
 
     def test_validate_valid_config(self):
         """Test validating valid configuration."""
-        config_dict = {
-            "project_name": "test-project",
-            "tools": {
-                "terraform": {"version": "1.5.0"}
-            }
-        }
+        config_dict = {"project_name": "test-project", "tools": {"terraform": {"version": "1.5.0"}}}
         is_valid, errors = validate_config_dict(config_dict)
         self.assertTrue(is_valid)
         self.assertEqual(len(errors), 0)
@@ -361,10 +320,7 @@ class TestConfigValidation(unittest.TestCase):
 
     def test_load_config_from_dict(self):
         """Test loading configuration from dictionary."""
-        config_dict = {
-            "project_name": "test-project",
-            "version": "2.0.0"
-        }
+        config_dict = {"project_name": "test-project", "version": "2.0.0"}
         config = load_config_from_dict(config_dict)
         self.assertEqual(config.project_name, "test-project")
         self.assertEqual(config.version, "2.0.0")
@@ -389,6 +345,7 @@ class TestValidatedTomlSource(unittest.TestCase):
     def tearDown(self):
         """Clean up test fixtures."""
         import shutil
+
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_load_valid_config(self):
@@ -405,17 +362,17 @@ enabled = true
 [tools.go]
 version = "1.21.0"
 """)
-        
+
         source = ValidatedTomlSource(config_file)
         config = source.get_config()
-        
+
         self.assertIsNotNone(config)
         self.assertEqual(config.project_name, "test-project")
-        
+
         # Test getting tool versions
         self.assertEqual(source.get_tool_version("terraform"), "1.5.0")
         self.assertEqual(source.get_tool_version("go"), "1.21.0")
-        
+
         # Test getting all tools
         tools = source.get_all_tools()
         self.assertEqual(len(tools), 2)
@@ -431,7 +388,7 @@ version = "1.0.0"
 [tools.terraform]
 version = ""  # Invalid empty version
 """)
-        
+
         try:
             # Should raise error with pydantic validation
             with self.assertRaises(WorkenvConfigError):
@@ -445,10 +402,10 @@ version = ""  # Invalid empty version
     def test_missing_config_file(self):
         """Test handling missing configuration file."""
         config_file = self.temp_path / "missing.toml"
-        
+
         source = ValidatedTomlSource(config_file)
         config = source.get_config()
-        
+
         self.assertIsNone(config)
         self.assertIsNone(source.get_tool_version("terraform"))
         self.assertEqual(source.get_all_tools(), {})
@@ -466,10 +423,10 @@ description = "Development profile"
 [profiles.dev.tools.terraform]
 version = "1.6.0"
 """)
-        
+
         source = ValidatedTomlSource(config_file)
         profile = source.get_profile("dev")
-        
+
         if profile:  # Profile support depends on schema implementation
             self.assertEqual(profile.get("name"), "dev")
 
@@ -480,15 +437,12 @@ class TestConfigToToml(unittest.TestCase):
     def test_config_to_toml(self):
         """Test converting configuration to TOML."""
         config = WorkenvConfig(
-            project_name="test-project",
-            version="1.0.0",
-            tools={
-                "terraform": ToolConfig(version="1.5.0")
-            }
+            project_name="test-project", version="1.0.0", tools={"terraform": ToolConfig(version="1.5.0")}
         )
-        
+
         try:
             import tomli_w
+
             toml_str = config_to_toml(config)
             self.assertIn("project_name", toml_str)
             self.assertIn("test-project", toml_str)

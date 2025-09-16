@@ -7,16 +7,16 @@ Container Manager Implementation
 Core container management functionality for wrknv.
 """
 
+from datetime import datetime
 import json
 import os
+from pathlib import Path
 import shutil
 import tarfile
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from provide.foundation import logger
-from provide.foundation.process import run_command, ProcessError
+from provide.foundation.process import run_command
 from rich.console import Console
 
 from wrknv.config import WorkenvConfig
@@ -55,7 +55,7 @@ class ContainerManager:
         self.IMAGE_NAME = self.CONTAINER_NAME
         self.IMAGE_TAG = self.DEFAULT_IMAGE_TAG
         self.full_image = f"{self.IMAGE_NAME}:{self.IMAGE_TAG}"
-        
+
         # Initialize storage on creation
         self._setup_storage()
 
@@ -63,43 +63,43 @@ class ContainerManager:
         """Set up the container storage directory structure."""
         # Expand storage path
         storage_base = Path(self.container_config.storage_path).expanduser()
-        
+
         # Create base directories
         storage_base.mkdir(parents=True, exist_ok=True)
-        
+
         # Create shared directories
         shared_dir = storage_base / "shared"
         shared_dir.mkdir(exist_ok=True)
         (shared_dir / "downloads").mkdir(exist_ok=True)
-        
+
         # Create container-specific directories
         container_dir = storage_base / self.CONTAINER_NAME
         container_dir.mkdir(exist_ok=True)
-        
+
         # Create subdirectories
         volumes_dir = container_dir / "volumes"
         volumes_dir.mkdir(exist_ok=True)
-        
+
         # Create persistent volume directories
         for volume_name in self.container_config.persistent_volumes:
             (volumes_dir / volume_name).mkdir(exist_ok=True)
-        
+
         (container_dir / "build").mkdir(exist_ok=True)
         (container_dir / "logs").mkdir(exist_ok=True)
         (container_dir / "backups").mkdir(exist_ok=True)
-    
+
     def get_container_path(self, subpath: str = "") -> Path:
         """Get path to container-specific directory or file.
-        
+
         Args:
             subpath: Relative path within the container directory
-            
+
         Returns:
             Path object pointing to the requested location
         """
         storage_base = Path(self.container_config.storage_path).expanduser()
         container_dir = storage_base / self.CONTAINER_NAME
-        
+
         if subpath:
             return container_dir / subpath
         return container_dir
@@ -107,9 +107,7 @@ class ContainerManager:
     def check_docker(self) -> bool:
         """Check if Docker is available and running."""
         try:
-            result = run_command(
-                ["docker", "info"], check=False
-            )
+            result = run_command(["docker", "info"], check=False)
             if result.returncode != 0:
                 logger.error("Docker daemon is not running")
                 return False
@@ -164,9 +162,7 @@ class ContainerManager:
 
         try:
             run_command(cmd, check=True)
-            self.console.print(
-                f"[green]✅ Successfully built image {self.full_image}[/green]"
-            )
+            self.console.print(f"[green]✅ Successfully built image {self.full_image}[/green]")
             # Save metadata after successful build
             self.save_metadata()
             return True
@@ -180,17 +176,12 @@ class ContainerManager:
             return False
 
         # Build image if needed
-        if (force_rebuild or not self.image_exists()) and not self.build_image(
-            rebuild=force_rebuild
-        ):
+        if (force_rebuild or not self.image_exists()) and not self.build_image(rebuild=force_rebuild):
             return False
 
         # Check if container is already running
         if self.container_running():
-            self.console.print(
-                f"[yellow]⚠️  Container {self.CONTAINER_NAME} "
-                "is already running[/yellow]"
-            )
+            self.console.print(f"[yellow]⚠️  Container {self.CONTAINER_NAME} is already running[/yellow]")
             return True
 
         # Remove existing container if it exists but is not running
@@ -199,9 +190,7 @@ class ContainerManager:
             run_command(["docker", "rm", self.CONTAINER_NAME], check=False)
 
         # Start new container
-        self.console.print(
-            f"{self.START_EMOJI} Starting container {self.CONTAINER_NAME}..."
-        )
+        self.console.print(f"{self.START_EMOJI} Starting container {self.CONTAINER_NAME}...")
 
         # Get current user's home directory for volume mounting
         home_dir = str(Path.home())
@@ -218,7 +207,7 @@ class ContainerManager:
         volume_mappings = self.get_volume_mappings()
         for volume_name, mapping in volume_mappings.items():
             cmd.extend(["-v", mapping])
-        
+
         # Add default host volumes
         cmd.extend(["-v", f"{home_dir}:/host-home"])
         cmd.extend(["-v", "/var/run/docker.sock:/var/run/docker.sock"])
@@ -255,10 +244,7 @@ class ContainerManager:
 
         try:
             run_command(cmd, check=True)
-            self.console.print(
-                f"[green]✅ Container {self.CONTAINER_NAME} "
-                "started successfully[/green]"
-            )
+            self.console.print(f"[green]✅ Container {self.CONTAINER_NAME} started successfully[/green]")
             return True
         except subprocess.CalledProcessError as e:
             self.console.print(f"[red]❌ Failed to start container: {e}[/red]")
@@ -274,7 +260,7 @@ class ContainerManager:
         auto_start: bool = False,
     ) -> bool:
         """Enter the running container with enhanced options.
-        
+
         Args:
             command: Command to execute (defaults to shell)
             shell: Shell to use (defaults to /bin/bash)
@@ -282,7 +268,7 @@ class ContainerManager:
             environment: Environment variables to set
             user: User to run as
             auto_start: Auto-start container if not running
-            
+
         Returns:
             True if successful
         """
@@ -295,31 +281,29 @@ class ContainerManager:
                     self.console.print("[red]❌ Failed to start container[/red]")
                     return False
             else:
-                self.console.print(
-                    f"[red]❌ Container {self.CONTAINER_NAME} is not running[/red]"
-                )
+                self.console.print(f"[red]❌ Container {self.CONTAINER_NAME} is not running[/red]")
                 self.console.print("Run 'wrknv container start' first or use --auto-start")
                 return False
 
         # Build docker exec command
         cmd = ["docker", "exec", "-it"]
-        
+
         # Add working directory if specified
         if working_dir:
             cmd.extend(["-w", working_dir])
-        
+
         # Add user if specified
         if user:
             cmd.extend(["-u", user])
-        
+
         # Add environment variables
         if environment:
             for key, value in environment.items():
                 cmd.extend(["-e", f"{key}={value}"])
-        
+
         # Add container name
         cmd.append(self.CONTAINER_NAME)
-        
+
         # Add command or shell
         if command:
             cmd.extend(command)
@@ -334,14 +318,10 @@ class ContainerManager:
     def stop(self) -> bool:
         """Stop the container."""
         if not self.container_running():
-            self.console.print(
-                f"[yellow]⚠️  Container {self.CONTAINER_NAME} is not running[/yellow]"
-            )
+            self.console.print(f"[yellow]⚠️  Container {self.CONTAINER_NAME} is not running[/yellow]")
             return True
 
-        self.console.print(
-            f"{self.STOP_EMOJI} Stopping container {self.CONTAINER_NAME}..."
-        )
+        self.console.print(f"{self.STOP_EMOJI} Stopping container {self.CONTAINER_NAME}...")
 
         try:
             run_command(["docker", "stop", self.CONTAINER_NAME], check=True)
@@ -389,7 +369,7 @@ class ContainerManager:
                 }
 
         return status
-    
+
     def save_metadata(self) -> None:
         """Save container metadata to JSON file."""
         metadata = {
@@ -405,54 +385,54 @@ class ContainerManager:
                 "ports": self.container_config.ports,
                 "persistent_volumes": self.container_config.persistent_volumes,
                 "volume_mappings": self.container_config.volume_mappings,
-            }
+            },
         }
-        
+
         metadata_file = self.get_container_path("metadata.json")
         with open(metadata_file, "w") as f:
             json.dump(metadata, f, indent=2)
-    
-    def load_metadata(self) -> Optional[dict[str, Any]]:
+
+    def load_metadata(self) -> dict[str, Any] | None:
         """Load container metadata from JSON file.
-        
+
         Returns:
             Metadata dictionary or None if file doesn't exist
         """
         metadata_file = self.get_container_path("metadata.json")
         if not metadata_file.exists():
             return None
-        
+
         with open(metadata_file) as f:
             return json.load(f)
-    
+
     def update_metadata(self, updates: dict[str, Any]) -> None:
         """Update existing metadata with new values.
-        
+
         Args:
             updates: Dictionary of values to update in metadata
         """
         metadata = self.load_metadata() or {}
         metadata.update(updates)
         metadata["last_updated"] = datetime.now().isoformat()
-        
+
         metadata_file = self.get_container_path("metadata.json")
         with open(metadata_file, "w") as f:
             json.dump(metadata, f, indent=2)
-    
+
     def get_volume_mappings(self) -> dict[str, str]:
         """Get volume mappings for the container.
-        
+
         Returns:
             Dictionary of volume name to Docker volume mount string
         """
         mappings = {}
         volumes_dir = self.get_container_path("volumes")
-        
+
         # Add persistent volumes
         for volume_name in self.container_config.persistent_volumes:
             volume_path = volumes_dir / volume_name
             volume_path.mkdir(parents=True, exist_ok=True)
-            
+
             # Map workspace to /workspace, others to /home/user/.{name}
             if volume_name == "workspace":
                 container_path = "/workspace"
@@ -462,32 +442,32 @@ class ContainerManager:
                 container_path = "/home/user/.config"
             else:
                 container_path = f"/volumes/{volume_name}"
-            
+
             mappings[volume_name] = f"{volume_path}:{container_path}"
-        
+
         # Add shared downloads (read-only)
         shared_downloads = Path(self.container_config.storage_path).expanduser() / "shared" / "downloads"
         shared_downloads.mkdir(parents=True, exist_ok=True)
         mappings["shared_downloads"] = f"{shared_downloads}:/downloads:ro"
-        
+
         # Add custom volume mappings
         for name, mapping in self.container_config.volume_mappings.items():
             mappings[name] = mapping
-        
+
         return mappings
-    
+
     def list_volumes(self) -> list[dict[str, Any]]:
         """List all container volumes with information.
-        
+
         Returns:
             List of volume information dictionaries
         """
         volumes = []
         volumes_dir = self.get_container_path("volumes")
-        
+
         for volume_name in self.container_config.persistent_volumes:
             volume_path = volumes_dir / volume_name
-            
+
             volume_info = {
                 "name": volume_name,
                 "path": str(volume_path),
@@ -495,7 +475,7 @@ class ContainerManager:
                 "size": 0,
                 "files": 0,
             }
-            
+
             if volume_path.exists() and volume_path.is_dir():
                 # Calculate size and file count
                 total_size = 0
@@ -504,33 +484,30 @@ class ContainerManager:
                     if item.is_file():
                         file_count += 1
                         total_size += item.stat().st_size
-                
+
                 volume_info["size"] = total_size
                 volume_info["files"] = file_count
-            
+
             volumes.append(volume_info)
-        
+
         return volumes
-    
+
     def backup_volumes(
-        self,
-        compress: bool = True,
-        include_metadata: bool = True,
-        name: Optional[str] = None
+        self, compress: bool = True, include_metadata: bool = True, name: str | None = None
     ) -> Path:
         """Create a backup of container volumes.
-        
+
         Args:
             compress: Whether to compress the backup
             include_metadata: Whether to include metadata in backup
             name: Custom name for the backup file
-            
+
         Returns:
             Path to the created backup file
         """
         backups_dir = self.get_container_path("backups")
         backups_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Generate backup filename
         if name:
             backup_name = name
@@ -540,9 +517,9 @@ class ContainerManager:
             timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
             extension = ".tar.gz" if compress else ".tar"
             backup_name = f"backup-{timestamp}{extension}"
-        
+
         backup_path = backups_dir / backup_name
-        
+
         # Create backup
         mode = "w:gz" if compress else "w"
         with tarfile.open(backup_path, mode) as tar:
@@ -550,90 +527,90 @@ class ContainerManager:
             volumes_dir = self.get_container_path("volumes")
             if volumes_dir.exists():
                 tar.add(volumes_dir, arcname="volumes")
-            
+
             # Add metadata if requested
             if include_metadata:
                 metadata_file = self.get_container_path("metadata.json")
                 if metadata_file.exists():
                     tar.add(metadata_file, arcname="metadata.json")
-        
+
         logger.info(f"Created backup: {backup_path}")
         return backup_path
-    
+
     def restore_volumes(self, backup_path: Path, force: bool = False) -> bool:
         """Restore container volumes from a backup.
-        
+
         Args:
             backup_path: Path to the backup file
             force: Whether to overwrite existing volumes
-            
+
         Returns:
             True if successful, False otherwise
         """
         if not backup_path.exists():
             logger.error(f"Backup file not found: {backup_path}")
             return False
-        
+
         # Check if volumes exist and force is not set
         volumes_dir = self.get_container_path("volumes")
         if volumes_dir.exists() and any(volumes_dir.iterdir()) and not force:
             logger.warning("Volumes directory not empty. Use force=True to overwrite.")
             return False
-        
+
         # Clear existing volumes if force is set
         if force and volumes_dir.exists():
             shutil.rmtree(volumes_dir)
             volumes_dir.mkdir(parents=True)
-        
+
         # Extract backup
         try:
             with tarfile.open(backup_path, "r:*") as tar:
                 # Extract to container directory
                 container_dir = self.get_container_path()
                 # Use data filter for safety (Python 3.12+)
-                if hasattr(tarfile, 'data_filter'):
-                    tar.extractall(container_dir, filter='data')
+                if hasattr(tarfile, "data_filter"):
+                    tar.extractall(container_dir, filter="data")
                 else:
                     tar.extractall(container_dir)
-            
+
             logger.info(f"Restored volumes from: {backup_path}")
             return True
         except Exception as e:
             logger.error(f"Failed to restore backup: {e}")
             return False
-    
-    def get_latest_backup(self) -> Optional[Path]:
+
+    def get_latest_backup(self) -> Path | None:
         """Get the path to the most recent backup file.
-        
+
         Returns:
             Path to latest backup or None if no backups exist
         """
         backups_dir = self.get_container_path("backups")
         if not backups_dir.exists():
             return None
-        
+
         backups = list(backups_dir.glob("backup-*.tar*"))
         if not backups:
             return None
-        
+
         # Sort by modification time
         return max(backups, key=lambda p: p.stat().st_mtime)
-    
+
     def clean_volumes(self, preserve: list[str] = None) -> bool:
         """Clean container volumes.
-        
+
         Args:
             preserve: List of volume names to preserve
-            
+
         Returns:
             True if successful
         """
         preserve = preserve or []
         volumes_dir = self.get_container_path("volumes")
-        
+
         if not volumes_dir.exists():
             return True
-        
+
         for volume_path in volumes_dir.iterdir():
             if volume_path.name not in preserve:
                 if volume_path.is_dir():
@@ -643,12 +620,12 @@ class ContainerManager:
                 logger.info(f"Cleaned volume: {volume_path.name}")
             else:
                 logger.info(f"Preserved volume: {volume_path.name}")
-        
+
         # Recreate default volume directories
         for volume_name in self.container_config.persistent_volumes:
             if volume_name not in preserve:
                 (volumes_dir / volume_name).mkdir(exist_ok=True)
-        
+
         return True
 
     def logs(
@@ -660,46 +637,44 @@ class ContainerManager:
         details: bool = False,
     ) -> str | None:
         """Show container logs with enhanced options.
-        
+
         Args:
             follow: Follow log output
             tail: Number of lines to show from the end
             since: Show logs since timestamp (e.g., "1h", "2023-01-01")
             timestamps: Show timestamps
             details: Show extra details
-            
+
         Returns:
             Log output as string (if not following), None otherwise
         """
         if not self.container_exists():
-            self.console.print(
-                f"[red]❌ Container {self.CONTAINER_NAME} does not exist[/red]"
-            )
+            self.console.print(f"[red]❌ Container {self.CONTAINER_NAME} does not exist[/red]")
             return None
 
         cmd = ["docker", "logs"]
-        
+
         # Add options
         if follow:
             cmd.append("-f")
-        
+
         if timestamps:
             cmd.append("-t")
-            
+
         if details:
             cmd.append("--details")
-        
+
         if tail is not None:
             cmd.extend(["--tail", str(tail)])
-        
+
         if since:
             cmd.extend(["--since", since])
-        
+
         # Add container name
         cmd.append(self.CONTAINER_NAME)
 
         logger.info(f"Getting container logs: {' '.join(cmd)}")
-        
+
         if follow:
             # Stream logs without capturing
             run_command(cmd, check=False)
@@ -714,10 +689,10 @@ class ContainerManager:
 
     def clean(self, preserve_volumes: bool = False) -> bool:
         """Remove container and optionally the image.
-        
+
         Args:
             preserve_volumes: Whether to preserve container volumes
-            
+
         Returns:
             True if successful
         """
@@ -742,10 +717,8 @@ class ContainerManager:
                 run_command(["docker", "rmi", self.full_image], check=True)
                 self.console.print("[green]✅ Image removed[/green]")
             except subprocess.CalledProcessError:
-                self.console.print(
-                    "[yellow]⚠️  Failed to remove image (may be in use)[/yellow]"
-                )
-        
+                self.console.print("[yellow]⚠️  Failed to remove image (may be in use)[/yellow]")
+
         # Clean volumes unless preserving
         if not preserve_volumes:
             self.clean_volumes()
@@ -771,20 +744,24 @@ class ContainerManager:
             "unzip",
             "build-essential",
         ]
-        
+
         # Only add Python packages if not using a Python base image
         if not base_image.startswith("python:"):
-            base_packages.extend([
-                f"python{python_version}" if python_version != "3" else "python3",
-                f"python{python_version}-pip" if python_version != "3" else "python3-pip",
-                f"python{python_version}-venv" if python_version != "3" else "python3-venv",
-            ])
-        
+            base_packages.extend(
+                [
+                    f"python{python_version}" if python_version != "3" else "python3",
+                    f"python{python_version}-pip" if python_version != "3" else "python3-pip",
+                    f"python{python_version}-venv" if python_version != "3" else "python3-venv",
+                ]
+            )
+
         # Add other packages
-        base_packages.extend([
-            "sudo",
-            "zsh",
-        ])
+        base_packages.extend(
+            [
+                "sudo",
+                "zsh",
+            ]
+        )
 
         all_packages = base_packages + additional_packages
         packages_str = " \\\n    ".join(all_packages)
@@ -792,9 +769,7 @@ class ContainerManager:
         # Build environment variables section
         env_vars_section = ""
         if environment_vars:
-            env_lines = [
-                f"ENV {key}={value}" for key, value in environment_vars.items()
-            ]
+            env_lines = [f"ENV {key}={value}" for key, value in environment_vars.items()]
             env_vars_section = "\n".join(env_lines) + "\n"
 
         return f"""FROM {base_image}

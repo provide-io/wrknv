@@ -1,4 +1,5 @@
 import pytest
+
 #
 # tests/container/test_container_shell_commands.py
 #
@@ -8,11 +9,8 @@ Test Container Shell Commands
 Tests for container shell, exec, and logs commands.
 """
 
-import subprocess
-from pathlib import Path
-from unittest.mock import MagicMock, Mock, call, patch
+from unittest.mock import Mock, patch
 
-import pytest
 from click.testing import CliRunner
 
 from wrknv.container.manager import ContainerManager
@@ -53,16 +51,15 @@ class TestShellCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = shell_into_container(test_config)
-        
+
         assert result is True
         mock_run.assert_called_once_with(
-            ["docker", "exec", "-it", "test-project-dev", "/bin/bash"],
-            check=False
+            ["docker", "exec", "-it", "test-project-dev", "/bin/bash"], check=False
         )
 
     @patch("provide.foundation.process.run_command")
@@ -73,16 +70,15 @@ class TestShellCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = shell_into_container(test_config, shell="/bin/zsh")
-        
+
         assert result is True
         mock_run.assert_called_once_with(
-            ["docker", "exec", "-it", "test-project-dev", "/bin/zsh"],
-            check=False
+            ["docker", "exec", "-it", "test-project-dev", "/bin/zsh"], check=False
         )
 
     @patch("wrknv.container.shell_commands.ContainerManager")
@@ -94,9 +90,9 @@ class TestShellCommand:
         mock_manager.container_exists.return_value = True
         mock_manager.start.return_value = False
         mock_manager_class.return_value = mock_manager
-        
+
         result = shell_into_container(test_config)
-        
+
         assert result is False
 
     @patch("provide.foundation.process.run_command")
@@ -109,15 +105,15 @@ class TestShellCommand:
         mock_manager.container_exists.return_value = True
         mock_manager.start.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         # After start, container is running
         mock_manager.container_running.side_effect = [False, True]
-        
+
         # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = shell_into_container(test_config, auto_start=True)
-        
+
         assert result is True
         mock_manager.start.assert_called_once()
         mock_run.assert_called_once()
@@ -130,16 +126,15 @@ class TestShellCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
-        
+
         result = shell_into_container(test_config, working_dir="/app")
-        
+
         assert result is True
         mock_run.assert_called_once_with(
-            ["docker", "exec", "-it", "-w", "/app", "test-project-dev", "/bin/bash"],
-            check=False
+            ["docker", "exec", "-it", "-w", "/app", "test-project-dev", "/bin/bash"], check=False
         )
 
     @patch("provide.foundation.process.run_command")
@@ -150,19 +145,24 @@ class TestShellCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         # Mock run_command to return successful result
         mock_run.return_value = Mock(returncode=0)
-        
+
         env_vars = {"DEBUG": "true", "APP_ENV": "development"}
         result = shell_into_container(test_config, environment=env_vars)
-        
+
         assert result is True
         expected_cmd = [
-            "docker", "exec", "-it",
-            "-e", "DEBUG=true",
-            "-e", "APP_ENV=development",
-            "test-project-dev", "/bin/bash"
+            "docker",
+            "exec",
+            "-it",
+            "-e",
+            "DEBUG=true",
+            "-e",
+            "APP_ENV=development",
+            "test-project-dev",
+            "/bin/bash",
         ]
         mock_run.assert_called_once_with(expected_cmd, check=False)
 
@@ -187,22 +187,15 @@ class TestExecCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
-        mock_run.return_value = Mock(
-            returncode=0,
-            stdout="command output",
-            stderr=""
-        )
-        
+
+        mock_run.return_value = Mock(returncode=0, stdout="command output", stderr="")
+
         result = exec_in_container(test_config, ["ls", "-la"])
-        
+
         assert result.returncode == 0
         assert result.stdout == "command output"
         mock_run.assert_called_once_with(
-            ["docker", "exec", "test-project-dev", "ls", "-la"],
-            capture_output=True,
-            text=True,
-            check=False
+            ["docker", "exec", "test-project-dev", "ls", "-la"], capture_output=True, text=True, check=False
         )
 
     @patch("provide.foundation.process.run_command")
@@ -213,16 +206,16 @@ class TestExecCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         mock_run.return_value = Mock(returncode=0)
-        
+
         exec_in_container(test_config, ["pwd"], working_dir="/app")
-        
+
         mock_run.assert_called_once_with(
             ["docker", "exec", "-w", "/app", "test-project-dev", "pwd"],
             capture_output=True,
             text=True,
-            check=False
+            check=False,
         )
 
     @patch("provide.foundation.process.run_command")
@@ -233,20 +226,16 @@ class TestExecCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         mock_run.return_value = Mock(returncode=0)
-        
-        exec_in_container(
-            test_config,
-            ["echo", "$DEBUG"],
-            environment={"DEBUG": "1"}
-        )
-        
+
+        exec_in_container(test_config, ["echo", "$DEBUG"], environment={"DEBUG": "1"})
+
         mock_run.assert_called_once_with(
             ["docker", "exec", "-e", "DEBUG=1", "test-project-dev", "echo", "$DEBUG"],
             capture_output=True,
             text=True,
-            check=False
+            check=False,
         )
 
     @patch("provide.foundation.process.run_command")
@@ -257,16 +246,16 @@ class TestExecCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         mock_run.return_value = Mock(returncode=0)
-        
+
         exec_in_container(test_config, ["python"], interactive=True)
-        
+
         mock_run.assert_called_once_with(
             ["docker", "exec", "-it", "test-project-dev", "python"],
             capture_output=False,
             text=True,
-            check=False
+            check=False,
         )
 
     @patch("provide.foundation.process.run_command")
@@ -277,16 +266,16 @@ class TestExecCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         mock_run.return_value = Mock(returncode=0)
-        
+
         exec_in_container(test_config, ["whoami"], user="nobody")
-        
+
         mock_run.assert_called_once_with(
             ["docker", "exec", "-u", "nobody", "test-project-dev", "whoami"],
             capture_output=True,
             text=True,
-            check=False
+            check=False,
         )
 
     @patch("wrknv.container.shell_commands.ContainerManager")
@@ -295,9 +284,9 @@ class TestExecCommand:
         mock_manager = Mock()
         mock_manager.container_running.return_value = False
         mock_manager_class.return_value = mock_manager
-        
+
         result = exec_in_container(test_config, ["ls"])
-        
+
         assert result is None
 
 
@@ -321,21 +310,14 @@ class TestLogsCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
-        
-        mock_run.return_value = Mock(
-            returncode=0,
-            stdout="container logs here",
-            stderr=""
-        )
-        
+
+        mock_run.return_value = Mock(returncode=0, stdout="container logs here", stderr="")
+
         result = get_container_logs(test_config)
-        
+
         assert result == "container logs here"
         mock_run.assert_called_once_with(
-            ["docker", "logs", "test-project-dev"],
-            capture_output=True,
-            text=True,
-            check=False
+            ["docker", "logs", "test-project-dev"], capture_output=True, text=True, check=False
         )
 
     @patch("provide.foundation.process.run_command")
@@ -346,14 +328,11 @@ class TestLogsCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         # For follow mode, we don't capture output
         get_container_logs(test_config, follow=True)
-        
-        mock_run.assert_called_once_with(
-            ["docker", "logs", "-f", "test-project-dev"],
-            check=False
-        )
+
+        mock_run.assert_called_once_with(["docker", "logs", "-f", "test-project-dev"], check=False)
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.shell_commands.ContainerManager")
@@ -363,17 +342,14 @@ class TestLogsCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         mock_run.return_value = Mock(returncode=0, stdout="last lines")
-        
+
         result = get_container_logs(test_config, tail=50)
-        
+
         assert result == "last lines"
         mock_run.assert_called_once_with(
-            ["docker", "logs", "--tail", "50", "test-project-dev"],
-            capture_output=True,
-            text=True,
-            check=False
+            ["docker", "logs", "--tail", "50", "test-project-dev"], capture_output=True, text=True, check=False
         )
 
     @patch("provide.foundation.process.run_command")
@@ -384,17 +360,14 @@ class TestLogsCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         mock_run.return_value = Mock(returncode=0, stdout="timestamped logs")
-        
+
         result = get_container_logs(test_config, timestamps=True)
-        
+
         assert result == "timestamped logs"
         mock_run.assert_called_once_with(
-            ["docker", "logs", "-t", "test-project-dev"],
-            capture_output=True,
-            text=True,
-            check=False
+            ["docker", "logs", "-t", "test-project-dev"], capture_output=True, text=True, check=False
         )
 
     @patch("provide.foundation.process.run_command")
@@ -405,17 +378,17 @@ class TestLogsCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         mock_run.return_value = Mock(returncode=0, stdout="recent logs")
-        
+
         result = get_container_logs(test_config, since="1h")
-        
+
         assert result == "recent logs"
         mock_run.assert_called_once_with(
             ["docker", "logs", "--since", "1h", "test-project-dev"],
             capture_output=True,
             text=True,
-            check=False
+            check=False,
         )
 
     @patch("provide.foundation.process.run_command")
@@ -426,22 +399,17 @@ class TestLogsCommand:
         mock_manager.CONTAINER_NAME = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
-        
+
         mock_run.return_value = Mock(returncode=0, stdout="filtered logs")
-        
-        result = get_container_logs(
-            test_config,
-            tail=100,
-            timestamps=True,
-            since="30m"
-        )
-        
+
+        result = get_container_logs(test_config, tail=100, timestamps=True, since="30m")
+
         assert result == "filtered logs"
         mock_run.assert_called_once_with(
             ["docker", "logs", "-t", "--tail", "100", "--since", "30m", "test-project-dev"],
             capture_output=True,
             text=True,
-            check=False
+            check=False,
         )
 
     @patch("wrknv.container.shell_commands.ContainerManager")
@@ -450,9 +418,9 @@ class TestLogsCommand:
         mock_manager = Mock()
         mock_manager.container_exists.return_value = False
         mock_manager_class.return_value = mock_manager
-        
+
         result = get_container_logs(test_config)
-        
+
         assert result is None
 
 
@@ -490,7 +458,7 @@ class TestCLIIntegration:
                 "image_exists": True,
                 "container_exists": True,
                 "container_running": True,
-                "container_info": {"id": "abc123", "state": "running"}
+                "container_info": {"id": "abc123", "state": "running"},
             }
             mock_class.return_value = manager
             # Also patch in commands module where it's imported
@@ -500,26 +468,22 @@ class TestCLIIntegration:
     def test_cli_enter_command(self, runner, mock_config, mock_container_manager):
         """Test CLI enter command."""
         from wrknv.wenv.cli import workenv_cli as cli
-        
+
         result = runner.invoke(cli, ["container", "enter"])
-        
+
         assert result.exit_code == 0
         mock_container_manager.enter.assert_called_once()
 
     def test_cli_exec_command(self, runner, mock_config, mock_container_manager):
         """Test CLI exec command."""
         from wrknv.wenv.cli import workenv_cli as cli
-        
+
         # Mock exec_in_container at the source
         with patch("wrknv.container.shell_commands.exec_in_container") as mock_exec:
-            mock_exec.return_value = Mock(
-                returncode=0,
-                stdout="exec output",
-                stderr=""
-            )
-            
+            mock_exec.return_value = Mock(returncode=0, stdout="exec output", stderr="")
+
             result = runner.invoke(cli, ["container", "exec", "--", "ls", "-la"])
-            
+
             if result.exit_code != 0:
                 print(f"Error: {result.output}")
             assert result.exit_code == 0
@@ -529,32 +493,28 @@ class TestCLIIntegration:
     def test_cli_logs_command(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command."""
         from wrknv.wenv.cli import workenv_cli as cli
-        
+
         result = runner.invoke(cli, ["container", "logs"])
-        
+
         assert result.exit_code == 0
         mock_container_manager.logs.assert_called_once()
 
     def test_cli_logs_with_options(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command with options."""
         from wrknv.wenv.cli import workenv_cli as cli
-        
+
         result = runner.invoke(cli, ["container", "logs", "--tail", "50", "--timestamps"])
-        
+
         assert result.exit_code == 0
         # Check that options were passed through
         mock_container_manager.logs.assert_called_once_with(
-            follow=False,
-            tail=50,
-            since=None,
-            timestamps=True,
-            details=False
+            follow=False, tail=50, since=None, timestamps=True, details=False
         )
 
     def test_cli_stats_command(self, runner, mock_config, mock_container_manager):
         """Test CLI stats command."""
         from wrknv.wenv.cli import workenv_cli as cli
-        
+
         # Mock get_container_stats at the source
         with patch("wrknv.container.shell_commands.get_container_stats") as mock_stats:
             mock_stats.return_value = {
@@ -563,11 +523,11 @@ class TestCLIIntegration:
                 "memory": {"usage": "256MB / 1GB", "percent": "25%"},
                 "network": "1KB / 2KB",
                 "disk": "10MB / 20MB",
-                "pids": "10"
+                "pids": "10",
             }
-            
+
             result = runner.invoke(cli, ["container", "stats"])
-            
+
             assert result.exit_code == 0
             assert "Container Resource Usage" in result.output
             mock_stats.assert_called_once()

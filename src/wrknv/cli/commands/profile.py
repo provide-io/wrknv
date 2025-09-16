@@ -8,12 +8,12 @@ Profile Commands
 Commands for managing workenv profiles.
 """
 
-import sys
 from pathlib import Path
+import sys
 
-from provide.foundation.hub import register_command
-from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation import logger
+from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.hub import register_command
 
 from wrknv.config import WorkenvConfig
 from wrknv.wenv.managers.factory import get_tool_manager
@@ -56,7 +56,7 @@ def profile_save(name: str, force: bool = False):
 
     # Get current tool versions
     tools = config.get_all_tools()
-    
+
     if not tools:
         echo_warning("No tools configured to save")
         sys.exit(1)
@@ -74,7 +74,7 @@ def profile_save(name: str, force: bool = False):
 def profile_load(name: str):
     """Load and apply a profile."""
     config = WorkenvConfig.load()
-    
+
     profile_data = config.get_profile(name)
     if not profile_data:
         echo_error(f"Profile '{name}' not found")
@@ -84,7 +84,7 @@ def profile_load(name: str):
         sys.exit(1)
 
     echo_info(f"Loading profile '{name}'...")
-    
+
     failed_tools = []
     for tool_name, version in profile_data.items():
         try:
@@ -95,7 +95,7 @@ def profile_load(name: str):
             logger.error(f"Failed to install {tool_name} {version}: {e}")
             failed_tools.append((tool_name, version, str(e)))
             echo_error(f"❌ Error installing {tool_name} {version}: {e}")
-    
+
     if failed_tools:
         echo_warning(f"Failed to install {len(failed_tools)} tools")
         for tool, version, error in failed_tools:
@@ -112,17 +112,17 @@ def profile_load(name: str):
 def profile_delete(name: str):
     """Delete a profile."""
     config = WorkenvConfig.load()
-    
+
     if not config.profile_exists(name):
         echo_error(f"Profile '{name}' not found")
         sys.exit(1)
-    
+
     # Confirm deletion
     response = input(f"Delete profile '{name}'? [y/N]: ").strip().lower()
-    if response != 'y':
+    if response != "y":
         echo_info("Cancelled")
         sys.exit(0)
-    
+
     config.delete_profile(name)
     echo_success(f"✅ Profile '{name}' deleted")
 
@@ -135,12 +135,12 @@ def profile_delete(name: str):
 def profile_show(name: str):
     """Show profile details."""
     config = WorkenvConfig.load()
-    
+
     profile_data = config.get_profile(name)
     if not profile_data:
         echo_error(f"Profile '{name}' not found")
         sys.exit(1)
-    
+
     echo_info(f"Profile: {name}")
     for tool_name, version in profile_data.items():
         echo_info(f"  {tool_name}: {version}")
@@ -154,30 +154,25 @@ def profile_show(name: str):
 def profile_export(name: str, output: str):
     """Export a profile to a file."""
     import json
+
     import tomli_w
-    
+
     config = WorkenvConfig.load()
-    
+
     profile_data = config.get_profile(name)
     if not profile_data:
         echo_error(f"Profile '{name}' not found")
         sys.exit(1)
-    
+
     output_path = Path(output)
-    
+
     # Determine format from extension
-    if output_path.suffix == '.json':
-        output_path.write_text(json.dumps({
-            "name": name,
-            "tools": profile_data
-        }, indent=2))
+    if output_path.suffix == ".json":
+        output_path.write_text(json.dumps({"name": name, "tools": profile_data}, indent=2))
     else:
         # Default to TOML
-        output_path.write_text(tomli_w.dumps({
-            "name": name,
-            "tools": profile_data
-        }))
-    
+        output_path.write_text(tomli_w.dumps({"name": name, "tools": profile_data}))
+
     echo_success(f"✅ Exported profile '{name}' to {output_path}")
 
 
@@ -189,35 +184,36 @@ def profile_export(name: str, output: str):
 def profile_import(file: str):
     """Import a profile from a file."""
     import json
+
     import tomli
-    
+
     file_path = Path(file)
-    
+
     if not file_path.exists():
         echo_error(f"File not found: {file_path}")
         sys.exit(1)
-    
+
     try:
         content = file_path.read_text()
-        
+
         # Try to parse as JSON first
         try:
             data = json.loads(content)
         except json.JSONDecodeError:
             # Try TOML
             data = tomli.loads(content)
-        
+
         name = data.get("name")
         tools = data.get("tools")
-        
+
         if not name or not tools:
             echo_error("Invalid profile format: missing 'name' or 'tools'")
             sys.exit(1)
-        
+
         config = WorkenvConfig.load()
         config.save_profile(name, tools)
         echo_success(f"✅ Imported profile '{name}'")
-        
+
     except Exception as e:
         echo_error(f"Failed to import profile: {e}")
         sys.exit(1)

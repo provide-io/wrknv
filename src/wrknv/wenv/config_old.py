@@ -83,9 +83,7 @@ class FileConfigSource(ConfigSource):
                     else:
                         # Use the whole file if section doesn't exist
                         self._data = all_data
-                logger.debug(
-                    f"Loaded config from {self.file_path}", section=self.section
-                )
+                logger.debug(f"Loaded config from {self.file_path}", section=self.section)
             except Exception as e:
                 logger.warning(f"Failed to load {self.file_path}", error=str(e))
                 self._data = {}
@@ -159,9 +157,7 @@ class ValidatedTomlSource(ConfigSource):
                 if not is_valid:
                     error_msg = "\n".join(errors)
                     logger.error(f"Configuration validation failed: {error_msg}")
-                    raise WorkenvConfigError(
-                        f"Invalid configuration in {self.file_path}:\n{error_msg}"
-                    )
+                    raise WorkenvConfigError(f"Invalid configuration in {self.file_path}:\n{error_msg}")
 
                 # Load into typed config
                 self._config = load_config_from_dict(self._raw_data)
@@ -187,11 +183,7 @@ class ValidatedTomlSource(ConfigSource):
     def get_all_tools(self) -> dict[str, str]:
         """Get all tool versions."""
         if self._config:
-            return {
-                name: config.version
-                for name, config in self._config.tools.items()
-                if config.enabled
-            }
+            return {name: config.version for name, config in self._config.tools.items() if config.enabled}
         return {}
 
     def get_profile(self, profile_name: str) -> dict[str, Any]:
@@ -229,7 +221,7 @@ class EnvironmentConfigSource(ConfigSource):
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
         from provide.foundation.utils.parsing import parse_bool
-        
+
         env_var = f"{self.prefix}_{key.upper()}"
         value = os.environ.get(env_var)
 
@@ -402,9 +394,7 @@ class WorkenvConfig:
         pattern = r"^\d+\.\d+(\.\d+)?(-[\w\.-]+)?(\+[\w\.-]+)?$"
         return bool(re.match(pattern, version))
 
-    def save_profile(
-        self, profile_name: str, tools: dict[str, str] | None = None
-    ) -> None:
+    def save_profile(self, profile_name: str, tools: dict[str, str] | None = None) -> None:
         """Save a profile to the configuration file."""
         import tomli_w
 
@@ -550,6 +540,7 @@ class WorkenvConfig:
     def edit_config(self) -> None:
         """Open configuration file for editing."""
         import os
+
         from provide.foundation.process import run_command
 
         config_file = Path.cwd() / "wrknv.toml"
@@ -558,9 +549,7 @@ class WorkenvConfig:
         editor = os.environ.get("EDITOR", os.environ.get("VISUAL", ""))
 
         if not editor:
-            raise RuntimeError(
-                "No editor configured. Set EDITOR or VISUAL environment variable."
-            )
+            raise RuntimeError("No editor configured. Set EDITOR or VISUAL environment variable.")
 
         # Create file if it doesn't exist
         if not config_file.exists():

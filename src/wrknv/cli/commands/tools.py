@@ -10,11 +10,11 @@ Commands for managing development tools (status, sync, doctor, etc).
 
 import pathlib
 import sys
-from rich.table import Table
 
-from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.hub import register_command
 from provide.foundation.logger import get_logger
+from rich.table import Table
 
 logger = get_logger(__name__)
 
@@ -45,7 +45,7 @@ def status_command():
 
     for tool_name, version in tools.items():
         tool_emoji = get_tool_emoji(tool_name)
-        
+
         # Handle matrix format (list of versions) and resolve patterns
         if isinstance(version, list):
             version_str = ", ".join(version)
@@ -74,7 +74,7 @@ def status_command():
                         version_str = resolved_versions[0] if resolved_versions else version
                 except Exception as e:
                     logger.debug(f"Could not resolve version for {tool_name}: {e}")
-        
+
         table.add_row(
             f"{tool_emoji} {tool_name}",
             version_str,
@@ -99,13 +99,13 @@ def sync_command():
     for tool_name, version in tools.items():
         try:
             manager = get_tool_manager(tool_name, config)
-            
+
             # Handle matrix format (list of versions)
             if isinstance(version, list):
                 # Resolve version patterns to specific versions
                 resolved_versions = resolve_tool_versions(manager, version)
                 echo_info(f"\nResolved {tool_name} patterns {version} to {resolved_versions}")
-                
+
                 for v in resolved_versions:
                     echo_info(f"Installing {tool_name} {v}...")
                     manager.install_version(v, dry_run=False)
@@ -117,13 +117,13 @@ def sync_command():
                     resolved_version = resolved_versions[0]
                     if resolved_version != version:
                         echo_info(f"Resolved {tool_name} pattern '{version}' to '{resolved_version}'")
-                    
+
                     echo_info(f"Installing {tool_name} {resolved_version}...")
                     manager.install_version(resolved_version, dry_run=False)
                     echo_success(f"✅ Successfully installed {tool_name} {resolved_version}")
                 else:
                     echo_error(f"❌ Could not resolve version pattern '{version}' for {tool_name}")
-                    
+
         except Exception as e:
             version_str = ", ".join(version) if isinstance(version, list) else version
             echo_error(f"❌ Error installing {tool_name} {version_str}: {e}")
@@ -140,7 +140,7 @@ def generate_env_command(
     project_dir: pathlib.Path = pathlib.Path.cwd(),
 ):
     """Generate optimized environment setup script.
-    
+
     Args:
         output: Output path for the environment script
         shell: Target shell type (bash/zsh/sh/powershell/ps1)
@@ -156,12 +156,14 @@ def generate_env_command(
         if shell in ["powershell", "ps1"]:
             if output != ps1_path:
                 import shutil
+
                 shutil.move(str(ps1_path), str(output))
                 ps1_path = output
             echo_success(f"✅ Generated {ps1_path}")
         else:
             if output != sh_path:
                 import shutil
+
                 shutil.move(str(sh_path), str(output))
                 sh_path = output
             echo_success(f"✅ Generated {sh_path}")
@@ -177,14 +179,14 @@ def generate_env_command(
 @register_command("doctor", description="Diagnose and fix common wrknv environment issues", category="tools")
 def doctor(verbose: bool = False):
     """Diagnose and fix common wrknv environment issues.
-    
+
     Checks for:
     - Correct workenv directory structure
     - Valid env.sh script
     - Required dependencies (uv, git, etc.)
     - Configuration file validity
     - Common problems and their solutions
-    
+
     Args:
         verbose: Show detailed diagnostic output
     """

@@ -1,4 +1,5 @@
 import pytest
+
 #
 # tests/container/test_container_schema.py
 #
@@ -8,7 +9,6 @@ Test Container Schema Updates
 Tests for container configuration schema enhancements.
 """
 
-import pytest
 from attrs import fields
 
 from wrknv.wenv.schema import ContainerConfig, validate_volume_mapping
@@ -22,7 +22,7 @@ class TestContainerConfigSchema:
         """Test that storage_path field exists in ContainerConfig."""
         config_fields = fields(ContainerConfig)
         field_names = [f.name for f in config_fields]
-        
+
         assert "storage_path" in field_names
 
     def test_storage_path_default_value(self):
@@ -39,13 +39,13 @@ class TestContainerConfigSchema:
         """Test that persistent_volumes field exists."""
         config_fields = fields(ContainerConfig)
         field_names = [f.name for f in config_fields]
-        
+
         assert "persistent_volumes" in field_names
 
     def test_persistent_volumes_default(self):
         """Test default persistent_volumes."""
         config = ContainerConfig()
-        
+
         # Should have default volumes
         assert isinstance(config.persistent_volumes, list)
         assert "workspace" in config.persistent_volumes
@@ -54,10 +54,8 @@ class TestContainerConfigSchema:
 
     def test_persistent_volumes_custom(self):
         """Test custom persistent_volumes."""
-        config = ContainerConfig(
-            persistent_volumes=["workspace", "data", "logs"]
-        )
-        
+        config = ContainerConfig(persistent_volumes=["workspace", "data", "logs"])
+
         assert len(config.persistent_volumes) == 3
         assert "workspace" in config.persistent_volumes
         assert "data" in config.persistent_volumes
@@ -68,13 +66,13 @@ class TestContainerConfigSchema:
         """Test that volume_mappings field exists."""
         config_fields = fields(ContainerConfig)
         field_names = [f.name for f in config_fields]
-        
+
         assert "volume_mappings" in field_names
 
     def test_volume_mappings_default(self):
         """Test default volume_mappings."""
         config = ContainerConfig()
-        
+
         assert isinstance(config.volume_mappings, dict)
         assert len(config.volume_mappings) == 0  # Empty by default
 
@@ -85,9 +83,9 @@ class TestContainerConfigSchema:
             "logs": "/host/logs:/container/logs:ro",
             "config": "~/config:/app/config",
         }
-        
+
         config = ContainerConfig(volume_mappings=mappings)
-        
+
         assert config.volume_mappings["data"] == "/host/data:/container/data"
         assert config.volume_mappings["logs"] == "/host/logs:/container/logs:ro"
         assert config.volume_mappings["config"] == "~/config:/app/config"
@@ -153,10 +151,8 @@ class TestContainerConfigValidation:
 
     def test_duplicate_persistent_volumes_handled(self):
         """Test handling of duplicate persistent volumes."""
-        config = ContainerConfig(
-            persistent_volumes=["workspace", "cache", "workspace", "config", "cache"]
-        )
-        
+        config = ContainerConfig(persistent_volumes=["workspace", "cache", "workspace", "config", "cache"])
+
         # Implementation should handle deduplication
         unique_volumes = list(set(config.persistent_volumes))
         assert len(unique_volumes) == 3
@@ -164,11 +160,7 @@ class TestContainerConfigValidation:
     def test_invalid_volume_mapping_raises_error(self):
         """Test that invalid volume mapping raises error."""
         with pytest.raises(ValueError, match="Invalid volume mapping"):
-            config = ContainerConfig(
-                volume_mappings={
-                    "invalid": "not-a-valid-mapping"
-                }
-            )
+            config = ContainerConfig(volume_mappings={"invalid": "not-a-valid-mapping"})
 
     def test_volume_mapping_normalization(self):
         """Test volume mapping path normalization."""
@@ -178,7 +170,7 @@ class TestContainerConfigValidation:
                 "relative": "./local//data:/app/data",  # Double slash
             }
         )
-        
+
         # Paths should be normalized (implementation detail)
         # This test documents expected behavior
         assert ":/container/data" in config.volume_mappings["home"]
@@ -195,13 +187,11 @@ class TestContainerConfigSerialization:
             enabled=True,
             storage_path="/custom/path",
             persistent_volumes=["workspace", "data"],
-            volume_mappings={
-                "logs": "/var/logs:/container/logs:ro"
-            }
+            volume_mappings={"logs": "/var/logs:/container/logs:ro"},
         )
-        
+
         config_dict = config.to_dict()
-        
+
         assert config_dict["enabled"] is True
         assert config_dict["storage_path"] == "/custom/path"
         assert "workspace" in config_dict["persistent_volumes"]
@@ -213,16 +203,13 @@ class TestContainerConfigSerialization:
             "enabled": True,
             "storage_path": "/custom/containers",
             "persistent_volumes": ["workspace", "cache", "custom"],
-            "volume_mappings": {
-                "project": "/home/user/project:/app",
-                "data": "/mnt/data:/data:ro"
-            },
+            "volume_mappings": {"project": "/home/user/project:/app", "data": "/mnt/data:/data:ro"},
             "python_version": "3.11",
             "base_image": "ubuntu:24.04",
         }
-        
+
         config = ContainerConfig.from_dict(config_dict)
-        
+
         assert config.enabled is True
         assert config.storage_path == "/custom/containers"
         assert len(config.persistent_volumes) == 3
@@ -236,23 +223,18 @@ class TestContainerConfigSerialization:
             enabled=True,
             storage_path="~/.wrknv/special",
             persistent_volumes=["a", "b", "c"],
-            volume_mappings={
-                "x": "/x:/y",
-                "z": "/z:/w:ro"
-            },
+            volume_mappings={"x": "/x:/y", "z": "/z:/w:ro"},
             environment={"KEY": "value"},
             ports=["8080:80", "9000:9000"],
         )
-        
+
         # Convert to dict and back
         config_dict = original.to_dict()
         restored = ContainerConfig.from_dict(config_dict)
-        
+
         assert restored.enabled == original.enabled
         assert restored.storage_path == original.storage_path
         assert restored.persistent_volumes == original.persistent_volumes
         assert restored.volume_mappings == original.volume_mappings
         assert restored.environment == original.environment
         assert restored.ports == original.ports
-
-

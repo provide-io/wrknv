@@ -9,17 +9,17 @@ directory structure. This implementation is compatible with tfswitch and
 designed for managing Tf tool versions.
 """
 
+from abc import abstractmethod
+from datetime import datetime
 import hashlib
 import json
 import os
 import pathlib
 import shutil
 import sys
-from abc import abstractmethod
-from datetime import datetime
 
-import semver
 from provide.foundation import logger
+import semver
 
 from .base import BaseToolManager, ToolManagerError
 
@@ -255,9 +255,7 @@ class TfVersionsManager(BaseToolManager):
 
         # Note: actual venv copying happens in create_symlink()
 
-        logger.info(
-            f"Set {self.tool_name} active version to {version} in profile '{profile}'"
-        )
+        logger.info(f"Set {self.tool_name} active version to {version} in profile '{profile}'")
 
     def remove_version(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -283,9 +281,7 @@ class TfVersionsManager(BaseToolManager):
             except:
                 logger.debug(f"Could not clear {self.tool_name} version in config")
 
-    def _calculate_file_hash(
-        self, file_path: pathlib.Path, algorithm: str = "sha256"
-    ) -> str:
+    def _calculate_file_hash(self, file_path: pathlib.Path, algorithm: str = "sha256") -> str:
         """Calculate hash of a file."""
         hash_func = hashlib.new(algorithm)
         with open(file_path, "rb") as f:
@@ -339,17 +335,13 @@ class TfVersionsManager(BaseToolManager):
 
             # Verify installation
             if not self.verify_installation(version):
-                raise ToolManagerError(
-                    f"{self.tool_name} {version} installation verification failed"
-                )
+                raise ToolManagerError(f"{self.tool_name} {version} installation verification failed")
 
         finally:
             # Clean up extraction directory
             shutil.rmtree(extract_dir, ignore_errors=True)
 
-    def _update_install_metadata(
-        self, version: str, archive_path: pathlib.Path, binary_hash: str
-    ) -> None:
+    def _update_install_metadata(self, version: str, archive_path: pathlib.Path, binary_hash: str) -> None:
         """Update metadata for installed version with comprehensive information."""
         version_key = f"{self.tool_prefix}_{version}"
 
@@ -413,9 +405,7 @@ class TfVersionsManager(BaseToolManager):
         """Set a version as the global system version by copying to ~/.local/bin/."""
         binary_path = self.get_binary_path(version)
         if not binary_path.exists():
-            logger.warning(
-                f"Binary not found at {binary_path}, cannot set global version"
-            )
+            logger.warning(f"Binary not found at {binary_path}, cannot set global version")
             return
 
         # Ensure ~/.local/bin directory exists
@@ -449,9 +439,7 @@ class TfVersionsManager(BaseToolManager):
         self.metadata["global"][tool_key] = version
         self._save_metadata()
 
-        logger.info(
-            f"Set {self.tool_name} {version} as global system version at {target_path}"
-        )
+        logger.info(f"Set {self.tool_name} {version} as global system version at {target_path}")
 
     def get_global_version(self) -> str | None:
         """Get the currently set global version."""
@@ -491,10 +479,7 @@ class TfVersionsManager(BaseToolManager):
             return profile
 
         # Check metadata for current profile setting
-        if (
-            "workenv" in self.metadata
-            and "_current_profile" in self.metadata["workenv"]
-        ):
+        if "workenv" in self.metadata and "_current_profile" in self.metadata["workenv"]:
             return self.metadata["workenv"]["_current_profile"]
 
         # Default to 'default' profile
@@ -503,9 +488,7 @@ class TfVersionsManager(BaseToolManager):
     def _get_venv_bin_dir(self) -> pathlib.Path:
         """Get the current virtual environment's bin directory."""
         # First check if we're in a virtual environment
-        if hasattr(sys, "real_prefix") or (
-            hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix
-        ):
+        if hasattr(sys, "real_prefix") or (hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix):
             # We're in a virtual environment
             venv_path = pathlib.Path(sys.prefix)
 
@@ -587,9 +570,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        logger.debug(
-                            f"Copied {tool_name} {active_version} to {target_path}"
-                        )
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")

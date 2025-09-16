@@ -15,12 +15,12 @@ from wrknv.config import WorkenvConfig, WorkenvConfigError
 from wrknv.wenv.managers.factory import get_supported_tools, get_tool_manager
 
 __all__ = [
-    "__version__",
-    "wenv",
-    "package",
-    "container",
     "WorkenvConfig",
     "WorkenvConfigError",
-    "get_tool_manager",
+    "__version__",
+    "container",
     "get_supported_tools",
+    "get_tool_manager",
+    "package",
+    "wenv",
 ]

@@ -10,12 +10,10 @@ Commands for managing workenv configuration.
 
 import json
 import sys
-from pathlib import Path
 
-from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
-from provide.foundation import logger
 from provide.foundation.errors import ConfigurationError, with_error_handling
+from provide.foundation.hub import register_command
 
 from wrknv.config import WorkenvConfig
 from wrknv.wenv.exceptions import ProfileError
@@ -46,9 +44,7 @@ def config_show(
             raise ProfileError(profile, available_profiles=config.list_profiles())
 
         if output_json:
-            echo_info(
-                json.dumps({"profile": profile, "tools": profile_data}, indent=2)
-            )
+            echo_info(json.dumps({"profile": profile, "tools": profile_data}, indent=2))
         else:
             echo_info(f"Profile: {profile}")
             for tool_name, version in profile_data.items():
@@ -169,7 +165,7 @@ def config_path():
 def config_get(key: str):
     """Get a specific configuration setting."""
     config = WorkenvConfig.load()
-    
+
     try:
         value = config.get_setting(key)
         if value is not None:
@@ -191,7 +187,7 @@ def config_get(key: str):
 def config_set(key: str, value: str):
     """Set a configuration value."""
     config = WorkenvConfig.load()
-    
+
     try:
         # Try to parse value as JSON first (for complex types)
         try:
@@ -205,7 +201,7 @@ def config_set(key: str, value: str):
                 parsed_value = False
             else:
                 parsed_value = value
-        
+
         config.set_setting(key, parsed_value)
         echo_success(f"✅ Set {key} = {parsed_value}")
     except Exception as e:

@@ -7,8 +7,8 @@ Package Commands Implementation
 Command implementations for package management.
 """
 
-import shutil
 from pathlib import Path
+import shutil
 
 from provide.foundation import logger
 
@@ -24,9 +24,7 @@ def _get_flavor_api():
 
         return flavor_api
     except ImportError:
-        raise ImportError(
-            "flavor package not found. Install it with: pip install flavor"
-        ) from None
+        raise ImportError("flavor package not found. Install it with: pip install flavor") from None
 
 
 def build_package(
@@ -65,9 +63,7 @@ def verify_package(package_path: Path, config: WorkenvConfig | None = None) -> N
     flavor_api.verify_package(package_path)
 
 
-def generate_keys(
-    output_dir: Path, config: WorkenvConfig | None = None
-) -> tuple[Path, Path]:
+def generate_keys(output_dir: Path, config: WorkenvConfig | None = None) -> tuple[Path, Path]:
     """Generate signing key pair."""
     flavor_api = _get_flavor_api()
     return flavor_api.generate_keys(output_dir)
@@ -146,9 +142,7 @@ def list_packages(config: WorkenvConfig | None = None) -> list[dict[str, str]]:
     return packages
 
 
-def get_package_info(
-    package_path: Path, config: WorkenvConfig | None = None
-) -> dict[str, any]:
+def get_package_info(package_path: Path, config: WorkenvConfig | None = None) -> dict[str, any]:
     """Get detailed information about a package."""
     # This would need flavor API enhancement to read package metadata
     # For now, return basic info
@@ -163,9 +157,7 @@ def get_package_info(
     }
 
 
-def sign_package(
-    package_path: Path, key_path: Path, config: WorkenvConfig | None = None
-) -> None:
+def sign_package(package_path: Path, key_path: Path, config: WorkenvConfig | None = None) -> None:
     """Sign an existing package."""
     # This would need flavor API enhancement
     logger.info(f"Signing {package_path} with {key_path}")
@@ -173,9 +165,7 @@ def sign_package(
     raise NotImplementedError("Package signing not yet implemented in flavor API")
 
 
-def publish_package(
-    package_path: Path, registry: str, config: WorkenvConfig | None = None
-) -> dict[str, str]:
+def publish_package(package_path: Path, registry: str, config: WorkenvConfig | None = None) -> dict[str, str]:
     """Publish package to a registry."""
     # This would need a registry client implementation
     logger.info(f"Publishing {package_path} to {registry}")

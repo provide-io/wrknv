@@ -1,13 +1,13 @@
 """Python version checking and compatibility utilities."""
 
 import json
-import sys
-from provide.foundation.process import run_command
-import tomllib
 from pathlib import Path
+import sys
+import tomllib
 
 from packaging.specifiers import SpecifierSet
 from packaging.version import Version
+from provide.foundation.process import run_command
 
 
 def get_venv_python_version(venv_dir: Path) -> dict[str, any] | None:
@@ -86,9 +86,7 @@ def check_python_version_compatibility(version: str, requirement: str) -> bool:
         return True
 
 
-def should_recreate_venv(
-    venv_dir: Path, project_requirement: str | None
-) -> tuple[bool, str | None]:
+def should_recreate_venv(venv_dir: Path, project_requirement: str | None) -> tuple[bool, str | None]:
     """Determine if virtual environment should be recreated.
 
     Args:
@@ -126,9 +124,7 @@ def save_venv_python_version(venv_dir: Path):
     version used to create the venv.
     """
     version_file = venv_dir / ".python-version"
-    version = (
-        f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
-    )
+    version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     version_file.write_text(version)
 
 

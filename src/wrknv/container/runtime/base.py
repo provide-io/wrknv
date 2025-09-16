@@ -18,9 +18,9 @@ from provide.foundation.process import CompletedProcess
 @define
 class ContainerRuntime(ABC):
     """Abstract base class for container runtimes (Docker, Podman, etc.)."""
-    
+
     runtime_name: str
-    
+
     @abstractmethod
     def run_container(
         self,
@@ -35,7 +35,7 @@ class ContainerRuntime(ABC):
         **extra_options: Any,
     ) -> CompletedProcess:
         """Start a new container.
-        
+
         Args:
             image: Container image to run
             name: Container name
@@ -46,50 +46,50 @@ class ContainerRuntime(ABC):
             workdir: Working directory inside container
             command: Command to run in container
             **extra_options: Runtime-specific options
-            
+
         Returns:
             CompletedProcess with container ID in stdout
         """
         pass
-    
+
     @abstractmethod
     def start_container(self, name: str) -> CompletedProcess:
         """Start an existing container.
-        
+
         Args:
             name: Container name
-            
+
         Returns:
             CompletedProcess
         """
         pass
-    
+
     @abstractmethod
     def stop_container(self, name: str, timeout: int = 10) -> CompletedProcess:
         """Stop a running container.
-        
+
         Args:
             name: Container name
             timeout: Seconds to wait before force stopping
-            
+
         Returns:
             CompletedProcess
         """
         pass
-    
+
     @abstractmethod
     def remove_container(self, name: str, force: bool = False) -> CompletedProcess:
         """Remove a container.
-        
+
         Args:
             name: Container name
             force: Force removal of running container
-            
+
         Returns:
             CompletedProcess
         """
         pass
-    
+
     @abstractmethod
     def exec_in_container(
         self,
@@ -102,7 +102,7 @@ class ContainerRuntime(ABC):
         environment: dict[str, str] | None = None,
     ) -> CompletedProcess:
         """Execute command in a running container.
-        
+
         Args:
             name: Container name
             command: Command to execute
@@ -111,36 +111,36 @@ class ContainerRuntime(ABC):
             user: User to run as
             workdir: Working directory
             environment: Environment variables
-            
+
         Returns:
             CompletedProcess with command output
         """
         pass
-    
+
     @abstractmethod
     def container_exists(self, name: str) -> bool:
         """Check if container exists.
-        
+
         Args:
             name: Container name
-            
+
         Returns:
             True if container exists
         """
         pass
-    
+
     @abstractmethod
     def container_running(self, name: str) -> bool:
         """Check if container is running.
-        
+
         Args:
             name: Container name
-            
+
         Returns:
             True if container is running
         """
         pass
-    
+
     @abstractmethod
     def get_container_logs(
         self,
@@ -150,18 +150,18 @@ class ContainerRuntime(ABC):
         since: str | None = None,
     ) -> CompletedProcess:
         """Get container logs.
-        
+
         Args:
             name: Container name
             follow: Follow log output
             tail: Number of lines to tail
             since: Show logs since timestamp
-            
+
         Returns:
             CompletedProcess with logs in stdout
         """
         pass
-    
+
     @abstractmethod
     def build_image(
         self,
@@ -172,38 +172,38 @@ class ContainerRuntime(ABC):
         **extra_options: Any,
     ) -> CompletedProcess:
         """Build a container image.
-        
+
         Args:
             dockerfile: Path to Dockerfile
             tag: Image tag
             context: Build context directory
             build_args: Build arguments
             **extra_options: Runtime-specific options
-            
+
         Returns:
             CompletedProcess
         """
         pass
-    
+
     @abstractmethod
     def list_containers(self, all: bool = False) -> list[dict[str, Any]]:
         """List containers.
-        
+
         Args:
             all: Include stopped containers
-            
+
         Returns:
             List of container information dicts
         """
         pass
-    
+
     @abstractmethod
     def inspect_container(self, name: str) -> dict[str, Any]:
         """Get detailed container information.
-        
+
         Args:
             name: Container name
-            
+
         Returns:
             Container inspection data
         """

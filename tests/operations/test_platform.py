@@ -4,10 +4,8 @@
 Test suite for platform detection operations.
 """
 
-import platform
-import sys
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 from wrknv.wenv.operations.platform import (
     format_platform_string,
@@ -117,9 +115,9 @@ class TestPlatformOperations(unittest.TestCase):
         """Test getting complete platform info."""
         mock_system.return_value = "Darwin"
         mock_machine.return_value = "arm64"
-        
+
         info = get_platform_info()
-        
+
         self.assertEqual(info["os"], "darwin")
         self.assertEqual(info["arch"], "arm64")
         self.assertEqual(info["platform"], "darwin_arm64")
@@ -215,12 +213,12 @@ class TestPlatformOperations(unittest.TestCase):
     def test_get_download_platform_mappings(self):
         """Test getting platform mappings."""
         mappings = get_download_platform_mappings()
-        
+
         self.assertIn("terraform", mappings)
         self.assertIn("tofu", mappings)
         self.assertIn("go", mappings)
         self.assertIn("uv", mappings)
-        
+
         # Check UV has special mappings
         self.assertEqual(mappings["uv"]["darwin"], "apple-darwin")
         self.assertEqual(mappings["uv"]["linux"], "unknown-linux-gnu")

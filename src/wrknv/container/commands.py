@@ -8,7 +8,6 @@ Command implementations for container management.
 """
 
 from pathlib import Path
-from typing import Optional
 
 import click
 from rich.console import Console
@@ -104,17 +103,11 @@ def container_status(config: WorkenvConfig | None = None) -> None:
 
     # Show helpful commands
     if not status["docker_available"]:
-        console.print(
-            "\n[yellow]Please install Docker to use container features[/yellow]"
-        )
+        console.print("\n[yellow]Please install Docker to use container features[/yellow]")
     elif not status["container_running"]:
-        console.print(
-            "\n[dim]Run 'wrknv container start' to start the container[/dim]"
-        )
+        console.print("\n[dim]Run 'wrknv container start' to start the container[/dim]")
     else:
-        console.print(
-            "\n[dim]Run 'wrknv container enter' to access the container[/dim]"
-        )
+        console.print("\n[dim]Run 'wrknv container enter' to access the container[/dim]")
 
 
 def container_logs(
@@ -165,13 +158,13 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
     """List container volumes with information."""
     manager = ContainerManager(config)
     console = Console()
-    
+
     volumes = manager.list_volumes()
-    
+
     if not volumes:
         console.print("[yellow]No volumes found[/yellow]")
         return
-    
+
     # Create table
     table = Table(title="📦 Container Volumes", show_header=True)
     table.add_column("Volume", style="cyan")
@@ -179,10 +172,10 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
     table.add_column("Status", style="green")
     table.add_column("Size", justify="right")
     table.add_column("Files", justify="right")
-    
+
     for volume in volumes:
         status = "✅ Exists" if volume["exists"] else "❌ Not Created"
-        
+
         # Format size
         size = volume["size"]
         if size > 1024 * 1024 * 1024:  # GB
@@ -193,64 +186,47 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
             size_str = f"{size / 1024:.1f} KB"
         else:
             size_str = f"{size} B"
-        
+
         files_str = f"{volume['files']} files" if volume["exists"] else "-"
-        
-        table.add_row(
-            volume["name"],
-            volume["path"],
-            status,
-            size_str if volume["exists"] else "-",
-            files_str
-        )
-    
+
+        table.add_row(volume["name"], volume["path"], status, size_str if volume["exists"] else "-", files_str)
+
     console.print(table)
 
 
-def backup_volumes(
-    config: WorkenvConfig | None = None,
-    name: Optional[str] = None
-) -> bool:
+def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None) -> bool:
     """Create a backup of container volumes."""
     manager = ContainerManager(config)
     console = Console()
-    
+
     console.print("📦 Backing up volumes...")
-    
+
     try:
-        backup_path = manager.backup_volumes(
-            compress=True,
-            include_metadata=True,
-            name=name
-        )
-        
+        backup_path = manager.backup_volumes(compress=True, include_metadata=True, name=name)
+
         # Get backup size
         size = backup_path.stat().st_size
         if size > 1024 * 1024:
             size_str = f"{size / (1024 * 1024):.1f} MB"
         else:
             size_str = f"{size / 1024:.1f} KB"
-        
-        console.print(
-            f"[green]✅ Successfully created backup: {backup_path.name} ({size_str})[/green]"
-        )
+
+        console.print(f"[green]✅ Successfully created backup: {backup_path.name} ({size_str})[/green]")
         console.print(f"[dim]Location: {backup_path}[/dim]")
         return True
-        
+
     except Exception as e:
         console.print(f"[red]❌ Failed to create backup: {e}[/red]")
         return False
 
 
 def restore_volumes(
-    config: WorkenvConfig | None = None,
-    backup_path: Optional[str] = None,
-    force: bool = False
+    config: WorkenvConfig | None = None, backup_path: str | None = None, force: bool = False
 ) -> bool:
     """Restore container volumes from a backup."""
     manager = ContainerManager(config)
     console = Console()
-    
+
     # Get backup path
     if backup_path:
         backup = Path(backup_path)
@@ -261,9 +237,9 @@ def restore_volumes(
             console.print("[red]❌ No backups found[/red]")
             console.print("[dim]Create a backup first with 'wrknv container volumes backup'[/dim]")
             return False
-    
+
     console.print(f"📦 Restoring volumes from: {backup.name}")
-    
+
     try:
         success = manager.restore_volumes(backup, force=force)
         if success:
@@ -273,38 +249,35 @@ def restore_volumes(
             if not force:
                 console.print("[dim]Use --force to overwrite existing volumes[/dim]")
         return success
-        
+
     except Exception as e:
         console.print(f"[red]❌ Failed to restore volumes: {e}[/red]")
         return False
 
 
-def clean_volumes(
-    config: WorkenvConfig | None = None,
-    preserve: list[str] = None
-) -> bool:
+def clean_volumes(config: WorkenvConfig | None = None, preserve: list[str] = None) -> bool:
     """Clean container volumes."""
     manager = ContainerManager(config)
     console = Console()
-    
+
     preserve = preserve or []
-    
+
     # Confirm with user
     if preserve:
         console.print(f"[yellow]⚠️  This will clean all volumes except: {', '.join(preserve)}[/yellow]")
     else:
         console.print("[yellow]⚠️  This will clean ALL container volumes[/yellow]")
-    
+
     if not click.confirm("Are you sure you want to continue?"):
         console.print("[dim]Cancelled[/dim]")
         return False
-    
+
     try:
         success = manager.clean_volumes(preserve=preserve)
         if success:
             console.print("[green]✅ Successfully cleaned volumes[/green]")
         return success
-        
+
     except Exception as e:
         console.print(f"[red]❌ Failed to clean volumes: {e}[/red]")
         return False

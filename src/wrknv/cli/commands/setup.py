@@ -8,14 +8,13 @@ Setup Commands
 Commands for setting up wrknv environment and integrations.
 """
 
+from pathlib import Path
 import shutil
 import sys
-from pathlib import Path
 
-from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success
-from provide.foundation import logger
-from provide.foundation.process import run_command, ProcessError
+from provide.foundation.hub import register_command
+from provide.foundation.process import ProcessError, run_command
 
 from wrknv.wenv.exceptions import DependencyError
 from wrknv.wenv.workenv import WorkenvManager
@@ -35,7 +34,7 @@ def setup_command(
     install: bool = False,
 ):
     """Set up wrknv environment and integrations.
-    
+
     Args:
         shell_integration: Set up shell aliases
         init: Initialize wrknv's own workenv
@@ -145,11 +144,7 @@ def setup_command(
 
     if shell_integration:
         # Look for script in the repository root
-        script_path = (
-            Path(__file__).parent.parent.parent.parent.parent
-            / "scripts"
-            / "shell-integration.sh"
-        )
+        script_path = Path(__file__).parent.parent.parent.parent.parent / "scripts" / "shell-integration.sh"
         if script_path.exists():
             echo_info("Setting up shell integration...")
             try:

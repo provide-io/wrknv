@@ -8,13 +8,11 @@ Gitignore Commands
 Commands for managing .gitignore files.
 """
 
-import sys
 from pathlib import Path
-from typing import Optional
+import sys
 
-from provide.foundation.hub import register_command
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
-from provide.foundation import logger
+from provide.foundation.hub import register_command
 
 from wrknv.gitignore import GitignoreManager, ProjectDetector
 from wrknv.wenv.config import WorkenvConfig
@@ -25,23 +23,23 @@ from wrknv.wenv.config import WorkenvConfig
     description="List available gitignore templates",
     category="gitignore",
 )
-def gitignore_list(category: Optional[str] = None):
+def gitignore_list(category: str | None = None):
     """List available gitignore templates."""
     manager = GitignoreManager()
     templates = manager.list_available_templates(category=category)
-    
+
     if not templates:
         echo_info("No templates found")
         return
-    
+
     if category:
         echo_info(f"Templates in category '{category}':")
     else:
         echo_info("Available templates:")
-    
+
     for template in templates:
         echo_info(f"  • {template}")
-    
+
     echo_info(f"\nTotal: {len(templates)} templates")
 
 
@@ -54,15 +52,15 @@ def gitignore_search(pattern: str):
     """Search for gitignore templates matching a pattern."""
     manager = GitignoreManager()
     results = manager.search_templates(pattern)
-    
+
     if not results:
         echo_info(f"No templates found matching '{pattern}'")
         return
-    
+
     echo_info(f"Templates matching '{pattern}':")
     for template in results:
         echo_info(f"  • {template}")
-    
+
     echo_info(f"\nFound: {len(results)} templates")
 
 
@@ -71,26 +69,26 @@ def gitignore_search(pattern: str):
     description="Detect project types and suggest templates",
     category="gitignore",
 )
-def gitignore_detect(path: Optional[str] = None):
+def gitignore_detect(path: str | None = None):
     """Detect project types and suggest appropriate gitignore templates."""
     target_path = Path(path) if path else Path.cwd()
-    
+
     if not target_path.exists():
         echo_error(f"Path does not exist: {target_path}")
         sys.exit(1)
-    
+
     detector = ProjectDetector()
     detected = detector.detect_project_types(target_path)
-    
+
     if not detected:
         echo_info("No specific project types detected")
         echo_info("Consider using 'Global' template for general patterns")
         return
-    
+
     echo_info("Detected project types:")
     for project_type in detected:
         echo_info(f"  • {project_type}")
-    
+
     echo_info("\nSuggested templates:")
     manager = GitignoreManager()
     for project_type in detected:
@@ -111,42 +109,42 @@ def gitignore_detect(path: Optional[str] = None):
     category="gitignore",
 )
 def gitignore_build(
-    templates: Optional[list[str]] = None,
-    output: Optional[str] = None,
+    templates: list[str] | None = None,
+    output: str | None = None,
     append: bool = False,
     auto_detect: bool = False,
 ):
     """Build a .gitignore file from templates."""
     config = WorkenvConfig()
     manager = GitignoreManager(config)
-    
+
     # Determine templates to use
     template_list = []
-    
+
     if auto_detect:
         detector = ProjectDetector()
         detected = detector.detect_project_types(Path.cwd())
         if detected:
             template_list.extend(detected)
             echo_info(f"Auto-detected: {', '.join(detected)}")
-    
+
     if templates:
         template_list.extend(templates)
-    
+
     if not template_list:
         # Try to get from config
         gitignore_config = config.get_setting("gitignore", {})
         template_list = gitignore_config.get("templates", [])
-    
+
     if not template_list:
         echo_warning("No gitignore templates specified in config or via --templates.")
         echo_info("Use --templates or configure in wrknv.toml")
         sys.exit(0)
-    
+
     # Build gitignore content
     try:
         builder = manager.create_builder()
-        
+
         # Add templates
         for template_name in template_list:
             added = builder.add_template(template_name)
@@ -154,24 +152,24 @@ def gitignore_build(
                 echo_success(f"  ✓ Added template: {template_name}")
             else:
                 echo_warning(f"  ? Template not found: {template_name}")
-        
+
         # Build the content
         content = builder.build()
-        
+
         if not content:
             echo_error("No content generated")
             sys.exit(1)
-        
+
         # Write to output
         output_path = Path(output) if output else Path(".gitignore")
-        
+
         if append and output_path.exists():
             existing = output_path.read_text()
             content = existing + "\n" + content
-        
+
         output_path.write_text(content)
         echo_success(f"✅ .gitignore built successfully at {output_path}")
-        
+
     except Exception as e:
         echo_error(f"Failed to build .gitignore: {e}")
         sys.exit(1)
@@ -185,15 +183,15 @@ def gitignore_build(
 def gitignore_show(template: str):
     """Show the content of a specific gitignore template."""
     manager = GitignoreManager()
-    
+
     content = manager.get_template_content(template)
-    
+
     if content:
         echo_info(f"# Template: {template}")
         echo_info(content)
     else:
         echo_error(f"Template not found: {template}")
-        
+
         # Suggest similar templates
         similar = manager.search_templates(template)
         if similar:
@@ -209,9 +207,9 @@ def gitignore_show(template: str):
 def gitignore_update():
     """Update the local gitignore template cache from GitHub."""
     manager = GitignoreManager()
-    
+
     echo_info("Updating gitignore templates from GitHub...")
-    
+
     try:
         count = manager.update_templates()
         echo_success(f"✅ Updated {count} templates")

@@ -23,12 +23,12 @@ from .manager import ContainerManager
 __all__ = [
     "ContainerManager",
     "build_container",
-    "start_container",
-    "enter_container",
-    "stop_container",
-    "restart_container",
-    "container_status",
-    "container_logs",
     "clean_container",
+    "container_logs",
+    "container_status",
+    "enter_container",
     "rebuild_container",
+    "restart_container",
+    "start_container",
+    "stop_container",
 ]

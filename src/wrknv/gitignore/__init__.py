@@ -10,8 +10,8 @@ from .manager import GitignoreManager
 from .templates import TemplateHandler
 
 __all__ = [
-    "GitignoreManager",
-    "TemplateHandler",
     "GitignoreBuilder",
+    "GitignoreManager",
     "ProjectDetector",
+    "TemplateHandler",
 ]

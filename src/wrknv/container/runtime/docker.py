@@ -25,10 +25,10 @@ from wrknv.container.runtime.base import ContainerRuntime
 @define
 class DockerRuntime(ContainerRuntime):
     """Docker implementation of container runtime."""
-    
+
     runtime_name: str
     runtime_command: str
-    
+
     def run_container(
         self,
         image: str,
@@ -43,28 +43,28 @@ class DockerRuntime(ContainerRuntime):
     ) -> CompletedProcess:
         """Start a new Docker container."""
         cmd = [self.runtime_command, "run"]
-        
+
         if detach:
             cmd.append("-d")
-        
+
         cmd.extend(["--name", name])
-        
+
         # Add volumes
         for volume in volumes or []:
             cmd.extend(["-v", volume])
-        
+
         # Add environment variables
         for key, value in (environment or {}).items():
             cmd.extend(["-e", f"{key}={value}"])
-        
+
         # Add ports
         for port in ports or []:
             cmd.extend(["-p", port])
-        
+
         # Add workdir
         if workdir:
             cmd.extend(["--workdir", workdir])
-        
+
         # Add extra Docker-specific options
         if extra_options.get("restart"):
             cmd.extend(["--restart", extra_options["restart"]])
@@ -72,14 +72,14 @@ class DockerRuntime(ContainerRuntime):
             cmd.extend(["--network", extra_options["network"]])
         if extra_options.get("hostname"):
             cmd.extend(["--hostname", extra_options["hostname"]])
-        
+
         # Add image
         cmd.append(image)
-        
+
         # Add command
         if command:
             cmd.extend(command)
-        
+
         try:
             result = run_command(cmd, check=True)
             logger.info(
@@ -98,7 +98,7 @@ class DockerRuntime(ContainerRuntime):
                 stderr=e.stderr,
             )
             raise
-    
+
     def start_container(self, name: str) -> CompletedProcess:
         """Start an existing Docker container."""
         try:
@@ -108,27 +108,24 @@ class DockerRuntime(ContainerRuntime):
         except ProcessError as e:
             logger.error("Failed to start Docker container", name=name, error=str(e))
             raise
-    
+
     def stop_container(self, name: str, timeout: int) -> CompletedProcess:
         """Stop a running Docker container."""
         try:
-            result = run_command(
-                [self.runtime_command, "stop", "-t", str(timeout), name],
-                check=True
-            )
+            result = run_command([self.runtime_command, "stop", "-t", str(timeout), name], check=True)
             logger.info("Docker container stopped", name=name)
             return result
         except ProcessError as e:
             logger.error("Failed to stop Docker container", name=name, error=str(e))
             raise
-    
+
     def remove_container(self, name: str, force: bool) -> CompletedProcess:
         """Remove a Docker container."""
         cmd = [self.runtime_command, "rm"]
         if force:
             cmd.append("-f")
         cmd.append(name)
-        
+
         try:
             result = run_command(cmd, check=True)
             logger.info("Docker container removed", name=name, forced=force)
@@ -136,7 +133,7 @@ class DockerRuntime(ContainerRuntime):
         except ProcessError as e:
             logger.error("Failed to remove Docker container", name=name, error=str(e))
             raise
-    
+
     def exec_in_container(
         self,
         name: str,
@@ -149,7 +146,7 @@ class DockerRuntime(ContainerRuntime):
     ) -> CompletedProcess:
         """Execute command in a running Docker container."""
         cmd = [self.runtime_command, "exec"]
-        
+
         if interactive:
             cmd.append("-i")
         if tty:
@@ -158,13 +155,13 @@ class DockerRuntime(ContainerRuntime):
             cmd.extend(["-u", user])
         if workdir:
             cmd.extend(["-w", workdir])
-        
+
         for key, value in (environment or {}).items():
             cmd.extend(["-e", f"{key}={value}"])
-        
+
         cmd.append(name)
         cmd.extend(command)
-        
+
         try:
             # Note: Interactive mode may need special handling
             # Check if foundation.process supports it
@@ -184,29 +181,23 @@ class DockerRuntime(ContainerRuntime):
                 error=str(e),
             )
             raise
-    
+
     def container_exists(self, name: str) -> bool:
         """Check if Docker container exists."""
         try:
-            result = run_command(
-                [self.runtime_command, "ps", "-a", "--format", "{{.Names}}"],
-                check=False
-            )
+            result = run_command([self.runtime_command, "ps", "-a", "--format", "{{.Names}}"], check=False)
             return name in result.stdout.splitlines() if result.stdout else False
         except ProcessError:
             return False
-    
+
     def container_running(self, name: str) -> bool:
         """Check if Docker container is running."""
         try:
-            result = run_command(
-                [self.runtime_command, "ps", "--format", "{{.Names}}"],
-                check=False
-            )
+            result = run_command([self.runtime_command, "ps", "--format", "{{.Names}}"], check=False)
             return name in result.stdout.splitlines() if result.stdout else False
         except ProcessError:
             return False
-    
+
     def get_container_logs(
         self,
         name: str,
@@ -216,23 +207,23 @@ class DockerRuntime(ContainerRuntime):
     ) -> CompletedProcess:
         """Get Docker container logs."""
         cmd = [self.runtime_command, "logs"]
-        
+
         if follow:
             cmd.append("-f")
         if tail is not None:
             cmd.extend(["--tail", str(tail)])
         if since:
             cmd.extend(["--since", since])
-        
+
         cmd.append(name)
-        
+
         try:
             result = run_command(cmd, check=True)
             return result
         except ProcessError as e:
             logger.error("Failed to get Docker logs", name=name, error=str(e))
             raise
-    
+
     def build_image(
         self,
         dockerfile: str,
@@ -243,17 +234,17 @@ class DockerRuntime(ContainerRuntime):
     ) -> CompletedProcess:
         """Build a Docker image."""
         cmd = [self.runtime_command, "build", "-f", dockerfile, "-t", tag]
-        
+
         for key, value in (build_args or {}).items():
             cmd.extend(["--build-arg", f"{key}={value}"])
-        
+
         if extra_options.get("no_cache"):
             cmd.append("--no-cache")
         if extra_options.get("platform"):
             cmd.extend(["--platform", extra_options["platform"]])
-        
+
         cmd.append(context)
-        
+
         try:
             result = run_command(cmd, check=True)
             logger.info("Docker image built", tag=tag, dockerfile=dockerfile)
@@ -266,13 +257,13 @@ class DockerRuntime(ContainerRuntime):
                 error=str(e),
             )
             raise
-    
+
     def list_containers(self, all: bool) -> list[dict[str, Any]]:
         """List Docker containers."""
         cmd = [self.runtime_command, "ps", "--format", "json"]
         if all:
             cmd.append("-a")
-        
+
         try:
             result = run_command(cmd, check=True)
             containers = []
@@ -284,14 +275,11 @@ class DockerRuntime(ContainerRuntime):
         except (ProcessError, json.JSONDecodeError) as e:
             logger.error("Failed to list Docker containers", error=str(e))
             return []
-    
+
     def inspect_container(self, name: str) -> dict[str, Any]:
         """Get detailed Docker container information."""
         try:
-            result = run_command(
-                [self.runtime_command, "inspect", name],
-                check=True
-            )
+            result = run_command([self.runtime_command, "inspect", name], check=True)
             if result.stdout:
                 data = json.loads(result.stdout)
                 return data[0] if data else {}

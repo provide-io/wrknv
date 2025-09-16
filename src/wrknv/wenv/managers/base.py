@@ -7,14 +7,14 @@ Base Tool Manager for wrknv
 Common functionality for all tool managers.
 """
 
+from abc import ABC, abstractmethod
 import pathlib
 import platform
 import shutil
-from provide.foundation.process import run_command
-from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
 from provide.foundation.logger import get_logger
+from provide.foundation.process import run_command
 
 logger = get_logger(__name__)
 
@@ -108,9 +108,7 @@ class BaseToolManager(ABC):
         """Create symlink to make tool available in PATH."""
         binary_path = self.get_binary_path(version)
         if not binary_path.exists():
-            logger.warning(
-                f"Binary not found at {binary_path}, skipping symlink creation"
-            )
+            logger.warning(f"Binary not found at {binary_path}, skipping symlink creation")
             return
 
         # Create symlink in ~/.wrknv/tools/bin/
@@ -129,9 +127,7 @@ class BaseToolManager(ABC):
         except OSError as e:
             logger.warning(f"Could not create symlink: {e}")
 
-    def download_file(
-        self, url: str, destination: pathlib.Path, show_progress: bool = True
-    ) -> None:
+    def download_file(self, url: str, destination: pathlib.Path, show_progress: bool = True) -> None:
         """Download a file with optional progress display."""
         from ..operations.download import download_file
 
@@ -149,9 +145,7 @@ class BaseToolManager(ABC):
 
         return verify_checksum(file_path, expected_checksum, algorithm)
 
-    def extract_archive(
-        self, archive_path: pathlib.Path, extract_to: pathlib.Path
-    ) -> None:
+    def extract_archive(self, archive_path: pathlib.Path, extract_to: pathlib.Path) -> None:
         """Extract an archive file."""
         from ..operations.install import extract_archive
 
@@ -174,15 +168,11 @@ class BaseToolManager(ABC):
         # Check if already installed
         binary_path = self.get_binary_path(version)
         if binary_path.exists():
-            logger.info(
-                f"{self.tool_name} {version} is already installed at {binary_path}"
-            )
+            logger.info(f"{self.tool_name} {version} is already installed at {binary_path}")
             self.set_installed_version(version)
 
             # Create symlink if configured
-            if self.config.get_command_option(
-                f"workenv.{self.tool_name}", "create_symlinks", True
-            ):
+            if self.config.get_command_option(f"workenv.{self.tool_name}", "create_symlinks", True):
                 self.create_symlink(version)
             return
 
@@ -192,9 +182,7 @@ class BaseToolManager(ABC):
             filename = pathlib.Path(urlparse(download_url).path).name
             download_path = self.cache_dir / filename
 
-            if not download_path.exists() or not self.config.get_setting(
-                "cache_downloads", True
-            ):
+            if not download_path.exists() or not self.config.get_setting("cache_downloads", True):
                 self.download_file(download_url, download_path)
             else:
                 logger.info(f"Using cached download: {download_path}")
@@ -211,9 +199,7 @@ class BaseToolManager(ABC):
             self.set_installed_version(version)
 
             # Create symlink if configured
-            if self.config.get_command_option(
-                f"workenv.{self.tool_name}", "create_symlinks", True
-            ):
+            if self.config.get_command_option(f"workenv.{self.tool_name}", "create_symlinks", True):
                 self.create_symlink(version)
 
             logger.info(f"✅ {self.tool_name} {version} installed successfully")
@@ -225,9 +211,7 @@ class BaseToolManager(ABC):
 
             raise ToolManagerError(f"Failed to install {self.tool_name} {version}: {e}")
 
-    def _verify_download_checksum(
-        self, download_path: pathlib.Path, checksum_url: str
-    ) -> None:
+    def _verify_download_checksum(self, download_path: pathlib.Path, checksum_url: str) -> None:
         """Download and verify checksum file."""
         checksum_filename = pathlib.Path(urlparse(checksum_url).path).name
         checksum_path = self.cache_dir / checksum_filename
@@ -247,9 +231,7 @@ class BaseToolManager(ABC):
                 if len(parts) >= 2:
                     expected_checksum = parts[0]
                     if not self.verify_checksum(download_path, expected_checksum):
-                        raise ToolManagerError(
-                            f"Checksum verification failed for {download_path}"
-                        )
+                        raise ToolManagerError(f"Checksum verification failed for {download_path}")
                     return
 
         logger.warning(f"No checksum found for {download_filename} in {checksum_path}")
@@ -293,9 +275,7 @@ class BaseToolManager(ABC):
                 print(f"... and {len(versions) - limit} more versions available")
 
         except Exception as e:
-            raise ToolManagerError(
-                f"Failed to fetch versions for {self.tool_name}: {e}"
-            )
+            raise ToolManagerError(f"Failed to fetch versions for {self.tool_name}: {e}")
 
     def show_current(self) -> None:
         """Show current installed version."""

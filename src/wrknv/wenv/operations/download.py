@@ -8,16 +8,14 @@ Functions for downloading and verifying tool archives.
 """
 
 import pathlib
-import urllib.request
 from urllib.parse import urlparse
+import urllib.request
 
 from provide.foundation import logger
 from provide.foundation.crypto import verify_file
 
 
-def download_file(
-    url: str, output_path: pathlib.Path, show_progress: bool = True
-) -> None:
+def download_file(url: str, output_path: pathlib.Path, show_progress: bool = True) -> None:
     """Download a file from URL to output path with optional progress display."""
 
     logger.info(f"Downloading {url} to {output_path}")
@@ -31,9 +29,7 @@ def download_file(
             downloaded = block_num * block_size
             percent = min(100, (downloaded * 100) // total_size)
             if block_num % 50 == 0:  # Only log every 50 blocks to avoid spam
-                logger.debug(
-                    f"Download progress: {percent}% ({downloaded}/{total_size} bytes)"
-                )
+                logger.debug(f"Download progress: {percent}% ({downloaded}/{total_size} bytes)")
 
     try:
         urllib.request.urlretrieve(url, output_path, reporthook=progress_hook)
@@ -46,18 +42,14 @@ def download_file(
         raise Exception(f"Failed to download {url}: {e}")
 
 
-def verify_checksum(
-    file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256"
-) -> bool:
+def verify_checksum(file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256") -> bool:
     """Verify file checksum using specified algorithm."""
-    
+
     # Use foundation's verify_file which handles all the details
     return verify_file(file_path, expected_checksum, algorithm)
 
 
-def download_checksum_file(
-    checksum_url: str, output_dir: pathlib.Path
-) -> pathlib.Path | None:
+def download_checksum_file(checksum_url: str, output_dir: pathlib.Path) -> pathlib.Path | None:
     """Download checksum file and return path."""
 
     if not checksum_url:
@@ -80,9 +72,7 @@ def download_checksum_file(
         return None
 
 
-def parse_checksum_file(
-    checksum_path: pathlib.Path, target_filename: str
-) -> str | None:
+def parse_checksum_file(checksum_path: pathlib.Path, target_filename: str) -> str | None:
     """Parse checksum file to find checksum for target filename."""
 
     if not checksum_path.exists():
@@ -105,12 +95,8 @@ def parse_checksum_file(
                     filename = filename.lstrip("*")
 
                     # Match target filename
-                    if filename == target_filename or filename.endswith(
-                        target_filename
-                    ):
-                        logger.debug(
-                            f"Found checksum for {target_filename}: {checksum}"
-                        )
+                    if filename == target_filename or filename.endswith(target_filename):
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")

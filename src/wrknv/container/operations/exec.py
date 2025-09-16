@@ -9,12 +9,11 @@ Execute commands inside running containers.
 """
 
 import os
-from typing import Any
 
 from attrs import define
 from provide.foundation import logger
-from provide.foundation.process import ProcessError, run_command
-from provide.foundation.errors import with_error_handling, error_boundary
+from provide.foundation.errors import with_error_handling
+from provide.foundation.process import ProcessError
 from rich.console import Console
 
 from wrknv.container.runtime.base import ContainerRuntime
@@ -23,13 +22,13 @@ from wrknv.container.runtime.base import ContainerRuntime
 @define
 class ContainerExec:
     """Handles container exec operations."""
-    
+
     runtime: ContainerRuntime
     container_name: str
     console: Console
     available_shells: list[str]
     default_shell: str
-    
+
     @with_error_handling
     def exec(
         self,
@@ -42,7 +41,7 @@ class ContainerExec:
         environment: dict[str, str] | None = None,
     ) -> bool:
         """Execute a command in the container.
-        
+
         Args:
             command: Command to execute (defaults to shell)
             shell: Shell to use (defaults to /bin/bash or /bin/sh)
@@ -51,18 +50,16 @@ class ContainerExec:
             user: User to run as
             workdir: Working directory
             environment: Environment variables
-            
+
         Returns:
             True if successful
         """
         try:
             # Check if container is running
             if not self.runtime.container_running(self.container_name):
-                self.console.print(
-                    f"[red]❌ Container {self.container_name} is not running[/red]"
-                )
+                self.console.print(f"[red]❌ Container {self.container_name} is not running[/red]")
                 return False
-            
+
             # Determine command to run
             if command is None:
                 # Use shell
@@ -70,12 +67,10 @@ class ContainerExec:
                     # Try to detect available shell
                     shell = self._detect_shell()
                 command = [shell]
-            
+
             # Execute command
-            self.console.print(
-                f"[cyan]🔧 Executing in container {self.container_name}...[/cyan]"
-            )
-            
+            self.console.print(f"[cyan]🔧 Executing in container {self.container_name}...[/cyan]")
+
             # For interactive commands, we need to use os.system or similar
             # as foundation.process might not support interactive TTY yet
             if interactive and tty:
@@ -88,11 +83,11 @@ class ContainerExec:
                     workdir=workdir,
                     environment=environment,
                 )
-                
+
                 # Use os.system for interactive TTY support
                 result = os.system(cmd_str)
                 return result == 0
-            
+
             else:
                 # Non-interactive, use foundation.process
                 result = self.runtime.exec_in_container(
@@ -104,12 +99,12 @@ class ContainerExec:
                     workdir=workdir,
                     environment=environment,
                 )
-                
+
                 if result.stdout:
                     self.console.print(result.stdout)
-                
+
                 return True
-                
+
         except ProcessError as e:
             logger.error(
                 "Container exec failed",
@@ -120,39 +115,28 @@ class ContainerExec:
             )
             self.console.print(f"[red]❌ Exec failed: {e}[/red]")
             return False
-    
+
     def enter(self, shell: str | None, **kwargs) -> bool:
         """Enter the container with an interactive shell.
-        
+
         Args:
             shell: Shell to use
             **kwargs: Additional exec options
-            
+
         Returns:
             True if successful
         """
-        return self.exec(
-            command=None,
-            shell=shell,
-            interactive=True,
-            tty=True,
-            **kwargs
-        )
-    
+        return self.exec(command=None, shell=shell, interactive=True, tty=True, **kwargs)
+
     @with_error_handling
-    def run_command(
-        self,
-        command: list[str],
-        capture_output: bool,
-        **kwargs
-    ) -> str | None:
+    def run_command(self, command: list[str], capture_output: bool, **kwargs) -> str | None:
         """Run a command in the container and return output.
-        
+
         Args:
             command: Command to run
             capture_output: Whether to capture output
             **kwargs: Additional exec options
-            
+
         Returns:
             Command output if capture_output is True, else None
         """
@@ -166,15 +150,15 @@ class ContainerExec:
                 workdir=kwargs.get("workdir"),
                 environment=kwargs.get("environment"),
             )
-            
+
             if capture_output:
                 return result.stdout
-            
+
             if result.stdout:
                 self.console.print(result.stdout)
-            
+
             return None
-            
+
         except ProcessError as e:
             logger.error(
                 "Command execution failed",
@@ -186,10 +170,10 @@ class ContainerExec:
                 return None
             self.console.print(f"[red]❌ Command failed: {e}[/red]")
             return None
-    
+
     def _detect_shell(self) -> str:
         """Detect available shell in container.
-        
+
         Returns:
             Path to available shell
         """
@@ -209,10 +193,10 @@ class ContainerExec:
                 return shell
             except ProcessError:
                 continue
-        
+
         # Return configured default if nothing found
         return self.default_shell
-    
+
     def _build_exec_command(
         self,
         command: list[str],
@@ -223,7 +207,7 @@ class ContainerExec:
         environment: dict[str, str] | None,
     ) -> str:
         """Build docker exec command string for os.system.
-        
+
         Args:
             command: Command to execute
             interactive: Keep STDIN open
@@ -231,12 +215,12 @@ class ContainerExec:
             user: User to run as
             workdir: Working directory
             environment: Environment variables
-            
+
         Returns:
             Command string
         """
         parts = [self.runtime.runtime_command, "exec"]
-        
+
         if interactive:
             parts.append("-i")
         if tty:
@@ -245,13 +229,14 @@ class ContainerExec:
             parts.extend(["-u", user])
         if workdir:
             parts.extend(["-w", workdir])
-        
+
         for key, value in (environment or {}).items():
             parts.extend(["-e", f"{key}={value}"])
-        
+
         parts.append(self.container_name)
         parts.extend(command)
-        
+
         # Shell escape and join
         from shlex import quote
+
         return " ".join(quote(part) for part in parts)

@@ -5,7 +5,6 @@ Generate shell completion scripts for various shells.
 """
 
 
-
 def generate_completions(shell: str) -> str:
     """Generate shell completion script for the specified shell.
 

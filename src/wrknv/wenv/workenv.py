@@ -7,12 +7,13 @@ Workenv Management
 Manages wrknv's own virtual environment.
 """
 
+from pathlib import Path
 import platform
 import shutil
 import sys
-from pathlib import Path
 
 from provide.foundation.process import run_command
+
 from wrknv.wenv.visual import Emoji, print_info, print_success
 
 

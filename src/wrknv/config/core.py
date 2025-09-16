@@ -10,9 +10,6 @@ from typing import Any
 
 from attrs import define, field
 from provide.foundation.config import (
-    BaseConfig,
-    FileConfigLoader,
-    MultiSourceLoader,
     SyncConfigManager,
     field as config_field,
 )
@@ -25,12 +22,14 @@ logger = get_logger(__name__)
 
 class WorkenvConfigError(Exception):
     """Raised when there's an error in workenv configuration."""
+
     pass
 
 
 @define
 class WorkenvToolConfig:
     """Configuration for a single tool."""
+
     version: str | None = None
     path: str | None = None
     env: dict[str, str] = field(factory=dict)
@@ -39,70 +38,49 @@ class WorkenvToolConfig:
 @define
 class WorkenvSettings(RuntimeConfig):
     """Workenv-specific settings with WRKNV_ environment variable support."""
+
     auto_install: bool = config_field(
-        default=True,
-        description="Automatically install missing tools",
-        env_var="WRKNV_AUTO_INSTALL"
+        default=True, description="Automatically install missing tools", env_var="WRKNV_AUTO_INSTALL"
     )
     use_cache: bool = config_field(
-        default=True,
-        description="Use cached tool installations",
-        env_var="WRKNV_USE_CACHE"
+        default=True, description="Use cached tool installations", env_var="WRKNV_USE_CACHE"
     )
-    cache_ttl: str = config_field(
-        default="7d",
-        description="Cache time-to-live",
-        env_var="WRKNV_CACHE_TTL"
-    )
-    log_level: str = config_field(
-        default="WARNING",
-        description="Logging level",
-        env_var="WRKNV_LOG_LEVEL"
-    )
+    cache_ttl: str = config_field(default="7d", description="Cache time-to-live", env_var="WRKNV_CACHE_TTL")
+    log_level: str = config_field(default="WARNING", description="Logging level", env_var="WRKNV_LOG_LEVEL")
     container_runtime: str = config_field(
-        default="docker",
-        description="Container runtime to use",
-        env_var="WRKNV_CONTAINER_RUNTIME"
+        default="docker", description="Container runtime to use", env_var="WRKNV_CONTAINER_RUNTIME"
     )
     container_registry: str = config_field(
-        default="ghcr.io",
-        description="Default container registry",
-        env_var="WRKNV_CONTAINER_REGISTRY"
+        default="ghcr.io", description="Default container registry", env_var="WRKNV_CONTAINER_REGISTRY"
     )
 
 
 @define
 class WorkenvConfig(RuntimeConfig):
     """Main workenv configuration with WRKNV_ environment variable support."""
-    
+
     # Project metadata
     project_name: str = config_field(
-        default="my-project",
-        description="Project name",
-        env_var="WRKNV_PROJECT_NAME"
+        default="my-project", description="Project name", env_var="WRKNV_PROJECT_NAME"
     )
-    version: str = config_field(
-        default="1.0.0", 
-        description="Project version",
-        env_var="WRKNV_VERSION"
-    )
-    
+    version: str = config_field(default="1.0.0", description="Project version", env_var="WRKNV_VERSION")
+
     # Tool configurations
     tools: dict[str, dict[str, Any]] = field(factory=dict)
-    
+
     # Profiles
     profiles: dict[str, dict[str, str]] = field(factory=dict)
-    
+
     # Settings
     workenv: WorkenvSettings = field(factory=WorkenvSettings)
-    
+
     # Env configuration
     env: dict[str, Any] = field(factory=dict)
 
     # Internal state
     config_path: Path | None = field(init=False, repr=False, default=None)
     _manager: SyncConfigManager | None = field(init=False, repr=False, default=None)
-    
+
     @classmethod
     def load(cls, config_file: Path | None = None) -> "WorkenvConfig":
         """Load configuration from file and environment variables."""
@@ -110,16 +88,16 @@ class WorkenvConfig(RuntimeConfig):
         instance.config_path = config_file or instance._find_config_file()
         instance._manager = instance._create_manager()
         instance._load_config()
-        
+
         # Also load from environment variables with WRKNV_ prefix
         env_config = cls.from_env(prefix="WRKNV")
-        
+
         # Merge environment config over file config
         if env_config.project_name != "my-project":
             instance.project_name = env_config.project_name
         if env_config.version != "1.0.0":
             instance.version = env_config.version
-        
+
         # Merge workenv settings from environment
         env_settings = WorkenvSettings.from_env(prefix="WRKNV")
         if env_settings.log_level != "WARNING":
@@ -134,9 +112,9 @@ class WorkenvConfig(RuntimeConfig):
             instance.workenv.container_runtime = env_settings.container_runtime
         if env_settings.container_registry != "ghcr.io":
             instance.workenv.container_registry = env_settings.container_registry
-            
+
         return instance
-    
+
     def _find_config_file(self) -> Path:
         """Find configuration file in standard locations."""
         # Check standard locations
@@ -147,21 +125,21 @@ class WorkenvConfig(RuntimeConfig):
             Path.home() / ".config" / "wrknv" / "config.toml",
             Path.home() / ".wrknv.toml",
         ]
-        
+
         for path in locations:
             if path.exists():
                 logger.debug(f"Found config file at {path}")
                 return path
-        
+
         # Return default location for new configs
         return Path.cwd() / ".wrknv.toml"
-    
+
     def _create_manager(self) -> SyncConfigManager:
         """Create configuration manager."""
         # For now, just create a basic manager
         # We'll load files manually to avoid complexity
         return SyncConfigManager()
-    
+
     def _load_config(self):
         """Load configuration from file."""
         if self.config_path and self.config_path.exists():
@@ -171,10 +149,10 @@ class WorkenvConfig(RuntimeConfig):
                     import tomli
                 except ImportError:
                     import tomllib as tomli
-                    
+
                 with open(self.config_path, "rb") as f:
                     config_dict = tomli.load(f)
-                    
+
                 # Update attributes from loaded config
                 if "project_name" in config_dict:
                     self.project_name = config_dict["project_name"]
@@ -190,25 +168,25 @@ class WorkenvConfig(RuntimeConfig):
                             setattr(self.workenv, key, value)
                 if "env" in config_dict:
                     self.env = config_dict["env"]
-                    
+
             except Exception as e:
                 logger.warning(f"Failed to load config from {self.config_path}: {e}")
-    
+
     def config_exists(self) -> bool:
         """Check if configuration file exists."""
         return self.config_path.exists() if self.config_path else False
-    
+
     def get_config_path(self) -> Path:
         """Get path to configuration file."""
         return self.config_path
-    
+
     def get_tool_version(self, tool_name: str) -> str | None:
         """Get version for a specific tool."""
         tool_config = self.tools.get(tool_name, {})
         if isinstance(tool_config, dict):
             return tool_config.get("version")
         return tool_config if isinstance(tool_config, str) else None
-    
+
     def get_all_tools(self) -> dict[str, str | list[str]]:
         """Get all tool versions."""
         result = {}
@@ -220,20 +198,20 @@ class WorkenvConfig(RuntimeConfig):
             if version:
                 result[tool_name] = version
         return result
-    
+
     def get_profile(self, profile_name: str) -> dict[str, str] | None:
         """Get a configuration profile."""
         return self.profiles.get(profile_name)
-    
+
     def list_profiles(self) -> list[str]:
         """List all available profiles."""
         return list(self.profiles.keys())
-    
+
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting using dot notation."""
         parts = key.split(".")
         current = self
-        
+
         for part in parts:
             if hasattr(current, part):
                 current = getattr(current, part)
@@ -241,17 +219,17 @@ class WorkenvConfig(RuntimeConfig):
                 current = current[part]
             else:
                 return default
-        
+
         return current
-    
+
     def get_env_config(self) -> dict[str, Any]:
         """Get environment configuration for env generation."""
         return self.env
-    
+
     def set_setting(self, key: str, value: Any):
         """Set a configuration setting using dot notation."""
         parts = key.split(".")
-        
+
         # Navigate to the parent
         current = self
         for part in parts[:-1]:
@@ -263,7 +241,7 @@ class WorkenvConfig(RuntimeConfig):
                 current = current[part]
             else:
                 raise WorkenvConfigError(f"Cannot set {key}: parent doesn't exist")
-        
+
         # Set the value
         last_part = parts[-1]
         if hasattr(current, last_part):
@@ -272,26 +250,26 @@ class WorkenvConfig(RuntimeConfig):
             current[last_part] = value
         else:
             raise WorkenvConfigError(f"Cannot set {key}: invalid target")
-        
+
         # Save to file
         self.save_config()
-    
+
     def save_config(self):
         """Save configuration to file."""
         try:
             import tomli_w
         except ImportError:
             raise WorkenvConfigError("tomli-w is required to save TOML files")
-        
+
         # Convert to dict
         config_dict = self.to_dict()
-        
+
         # Write to file
         with open(self.config_path, "wb") as f:
             tomli_w.dump(config_dict, f)
-        
+
         logger.info(f"Saved configuration to {self.config_path}")
-    
+
     def to_dict(self) -> dict[str, Any]:
         """Convert configuration to dictionary."""
         return {
@@ -309,14 +287,14 @@ class WorkenvConfig(RuntimeConfig):
             },
             "env": self.env,
         }
-    
+
     def show_config(self):
         """Display configuration in a readable format."""
         from provide.foundation.cli import echo_info, echo_success
-        
+
         echo_success(f"Configuration: {self.config_path}")
         echo_info(f"  Project: {self.project_name} v{self.version}")
-        
+
         if self.tools:
             echo_info("\n  Tools:")
             for tool, config in self.tools.items():
@@ -325,35 +303,35 @@ class WorkenvConfig(RuntimeConfig):
                 else:
                     version = config
                 echo_info(f"    {tool}: {version}")
-        
+
         if self.profiles:
             echo_info("\n  Profiles:")
             for profile in self.profiles:
                 echo_info(f"    - {profile}")
-        
+
         echo_info("\n  Settings:")
         echo_info(f"    auto_install: {self.workenv.auto_install}")
         echo_info(f"    use_cache: {self.workenv.use_cache}")
         echo_info(f"    cache_ttl: {self.workenv.cache_ttl}")
         echo_info(f"    log_level: {self.workenv.log_level}")
-    
+
     def validate(self) -> tuple[bool, list[str]]:
         """Validate configuration."""
         errors = []
-        
+
         # Check required fields
         if not self.project_name:
             errors.append("Missing required field: project_name")
-        
+
         # Validate tool versions
         for tool, config in self.tools.items():
             if isinstance(config, dict):
                 version = config.get("version")
                 if version and not self._is_valid_version(version):
                     errors.append(f"Invalid version for {tool}: {version}")
-        
+
         return len(errors) == 0, errors
-    
+
     def _is_valid_version(self, version: str) -> bool:
         """Check if version string is valid."""
         if version in ("latest", "stable", "dev"):
@@ -361,7 +339,7 @@ class WorkenvConfig(RuntimeConfig):
         # Basic semver check
         parts = version.split(".")
         return len(parts) >= 2 and all(p.isdigit() for p in parts[:2])
-    
+
     def write_config(self, config_data: dict[str, Any]):
         """Write configuration data to file."""
         # Update current config
@@ -380,26 +358,26 @@ class WorkenvConfig(RuntimeConfig):
                         setattr(self.workenv, key, value)
         if "env" in config_data:
             self.env = config_data["env"]
-        
+
         # Save to file
         self.save_config()
-    
+
     def edit_config(self):
         """Open configuration file in editor."""
         # Ensure file exists
         if not self.config_path.exists():
             # Create with defaults
             self.save_config()
-        
+
         # Get editor from environment
         editor = os.environ.get("EDITOR") or os.environ.get("VISUAL")
         if not editor:
             raise RuntimeError("No editor configured. Set EDITOR or VISUAL environment variable.")
-        
+
         # Open in editor
         result = run_command([editor, str(self.config_path)])
         if result.returncode != 0:
             raise RuntimeError(f"Editor exited with error code {result.returncode}")
-        
+
         # Reload configuration
         self._load_config()

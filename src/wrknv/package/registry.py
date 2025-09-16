@@ -66,9 +66,7 @@ class RegistryClient:
                 sha256_hash.update(byte_block)
         return sha256_hash.hexdigest()
 
-    def upload_package(
-        self, package_path: Path, metadata: dict[str, Any] | None = None
-    ) -> dict[str, Any]:
+    def upload_package(self, package_path: Path, metadata: dict[str, Any] | None = None) -> dict[str, Any]:
         """
         Upload a package to the registry.
 
@@ -103,9 +101,7 @@ class RegistryClient:
             try:
                 # Upload with httpx
                 with open(package_path, "rb") as f:
-                    files = {
-                        "package": (package_path.name, f, "application/octet-stream")
-                    }
+                    files = {"package": (package_path.name, f, "application/octet-stream")}
                     data = {"metadata": json.dumps(metadata)}
 
                     response = session.post("/api/v1/packages", files=files, data=data)
@@ -118,15 +114,11 @@ class RegistryClient:
             # Fallback implementation
             return self._upload_fallback(package_path, metadata)
 
-    def _upload_fallback(
-        self, package_path: Path, metadata: dict[str, Any]
-    ) -> dict[str, Any]:
+    def _upload_fallback(self, package_path: Path, metadata: dict[str, Any]) -> dict[str, Any]:
         """Fallback upload implementation using urllib."""
 
         # For fallback, just simulate the upload
-        logger.info(
-            f"[EXPERIMENTAL] Would upload {package_path.name} to {self.registry_url}"
-        )
+        logger.info(f"[EXPERIMENTAL] Would upload {package_path.name} to {self.registry_url}")
 
         # Return simulated response
         return {
@@ -138,9 +130,7 @@ class RegistryClient:
             "message": "Package upload simulated (experimental feature)",
         }
 
-    def download_package(
-        self, package_name: str, version: str, output_dir: Path
-    ) -> Path:
+    def download_package(self, package_name: str, version: str, output_dir: Path) -> Path:
         """
         Download a package from the registry.
 
@@ -191,9 +181,7 @@ class RegistryClient:
         session = self._get_session()
         if session:
             try:
-                response = session.get(
-                    "/api/v1/packages/search", params={"q": query, "limit": limit}
-                )
+                response = session.get("/api/v1/packages/search", params={"q": query, "limit": limit})
                 response.raise_for_status()
                 return response.json().get("packages", [])
             except Exception as e:
@@ -204,9 +192,7 @@ class RegistryClient:
             logger.info(f"[EXPERIMENTAL] Would search for '{query}'")
             return []
 
-    def get_package_info(
-        self, package_name: str, version: str | None = None
-    ) -> dict[str, Any]:
+    def get_package_info(self, package_name: str, version: str | None = None) -> dict[str, Any]:
         """
         Get information about a package.
 

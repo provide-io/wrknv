@@ -8,8 +8,8 @@ Platform and architecture information using provide.foundation.
 """
 
 from provide.foundation.platform import (
-    get_os_name,
     get_arch_name,
+    get_os_name,
     get_platform_string,
     get_system_info,
 )
@@ -17,13 +17,13 @@ from provide.foundation.platform import (
 
 def get_platform_info() -> dict[str, str]:
     """Get platform information for tool downloads.
-    
+
     Returns:
         Dictionary with platform details for tool compatibility.
     """
     # Get comprehensive system info from foundation
     sys_info = get_system_info()
-    
+
     return {
         "os": sys_info.os_name,
         "arch": sys_info.arch,
@@ -36,7 +36,7 @@ def get_platform_info() -> dict[str, str]:
 
 def get_architecture() -> str:
     """Get normalized architecture name for tool downloads.
-    
+
     Returns:
         Architecture string suitable for tool downloads (amd64, arm64, etc).
     """
@@ -45,7 +45,7 @@ def get_architecture() -> str:
 
 def get_workenv_platform() -> str:
     """Get platform string for workenv directory naming.
-    
+
     Returns:
         Platform string in format: {os}_{arch}
     """
@@ -54,41 +54,44 @@ def get_workenv_platform() -> str:
 
 def is_arm_mac() -> bool:
     """Check if running on Apple Silicon Mac.
-    
+
     Returns:
         True if running on ARM-based Mac (M1/M2/M3).
     """
-    from provide.foundation.platform import is_macos, is_arm
+    from provide.foundation.platform import is_arm, is_macos
+
     return is_macos() and is_arm()
 
 
 def is_windows() -> bool:
     """Check if running on Windows.
-    
+
     Returns:
         True if running on Windows.
     """
     from provide.foundation.platform import is_windows as foundation_is_windows
+
     return foundation_is_windows()
 
 
 # Re-export for backward compatibility (remove these later)
 def get_os_name() -> str:
     """Get normalized OS name for tool downloads.
-    
+
     DEPRECATED: Use provide.foundation.platform.get_os_name directly.
     """
     from provide.foundation.platform import get_os_name as foundation_get_os_name
+
     return foundation_get_os_name()
 
 
 def format_platform_string(os_name: str, arch: str) -> str:
     """Format platform string for tool downloads.
-    
+
     Args:
         os_name: Operating system name
         arch: Architecture name
-        
+
     Returns:
         Formatted platform string
     """
@@ -97,10 +100,10 @@ def format_platform_string(os_name: str, arch: str) -> str:
 
 def parse_platform_string(platform_str: str) -> tuple[str, str]:
     """Parse platform string into OS and architecture.
-    
+
     Args:
         platform_str: Platform string in format os_arch
-        
+
     Returns:
         Tuple of (os_name, arch)
     """
@@ -112,7 +115,7 @@ def parse_platform_string(platform_str: str) -> tuple[str, str]:
 
 def get_archive_extension() -> str:
     """Get appropriate archive extension for current platform.
-    
+
     Returns:
         Archive extension (.zip for Windows, .tar.gz otherwise)
     """
@@ -121,7 +124,7 @@ def get_archive_extension() -> str:
 
 def get_executable_extension() -> str:
     """Get executable file extension for current platform.
-    
+
     Returns:
         Executable extension (.exe for Windows, empty string otherwise)
     """
@@ -130,25 +133,25 @@ def get_executable_extension() -> str:
 
 def is_supported_platform() -> bool:
     """Check if current platform is supported.
-    
+
     Returns:
         True if platform is supported
     """
     supported_os = ["darwin", "linux", "windows"]
     supported_arch = ["amd64", "arm64", "x86_64", "aarch64"]
-    
+
     os_name = get_os_name()
     arch = get_architecture()
-    
+
     return os_name in supported_os and arch in supported_arch
 
 
 def get_platform_mapping(tool_name: str) -> dict[str, str]:
     """Get platform mapping for a specific tool.
-    
+
     Args:
         tool_name: Name of the tool
-        
+
     Returns:
         Dictionary mapping standard names to tool-specific names
     """
@@ -158,7 +161,7 @@ def get_platform_mapping(tool_name: str) -> dict[str, str]:
 
 def get_download_platform_mappings() -> dict[str, dict[str, str]]:
     """Get platform naming mappings for various tools.
-    
+
     Returns:
         Dictionary of tool-specific platform mappings
     """

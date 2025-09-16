@@ -11,8 +11,8 @@ import json
 import re
 from urllib.request import urlopen
 
-import semver
 from provide.foundation.logger import get_logger
+import semver
 
 logger = get_logger(__name__)
 
@@ -124,9 +124,7 @@ class TofuManager(TfVersionsManager):
                     logger.debug(f"OpenTofu {version} verification successful")
                     return True
                 else:
-                    logger.error(
-                        f"Version mismatch in OpenTofu output: {result.stdout}"
-                    )
+                    logger.error(f"Version mismatch in OpenTofu output: {result.stdout}")
             else:
                 logger.error(f"OpenTofu version command failed: {result.stderr}")
 

@@ -6,7 +6,6 @@ Constructs gitignore files with proper formatting and sections.
 
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
 from provide.foundation import logger
 
@@ -20,7 +19,7 @@ class GitignoreBuilder:
         self.custom_rules = []
         logger.debug("GitignoreBuilder initialized")
 
-    def add_header(self, project_name: Optional[str] = None):
+    def add_header(self, project_name: str | None = None):
         """
         Add a header section to the gitignore.
 
@@ -36,14 +35,16 @@ class GitignoreBuilder:
         if project_name:
             header_lines.append(f"# Project: {project_name}")
 
-        header_lines.extend([
-            "# ========================",
-            "",
-            "# This file is auto-generated. Custom rules should be added",
-            "# in the 'Custom Rules' section at the bottom to preserve them",
-            "# during regeneration.",
-            "",
-        ])
+        header_lines.extend(
+            [
+                "# ========================",
+                "",
+                "# This file is auto-generated. Custom rules should be added",
+                "# in the 'Custom Rules' section at the bottom to preserve them",
+                "# during regeneration.",
+                "",
+            ]
+        )
 
         self.sections.insert(0, ("header", "\n".join(header_lines)))
         logger.debug(f"Added header for project: {project_name}")

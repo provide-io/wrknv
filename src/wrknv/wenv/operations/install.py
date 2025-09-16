@@ -16,10 +16,10 @@ from provide.foundation import logger
 from provide.foundation.errors import ResourceError, ValidationError, with_error_handling
 from provide.foundation.file import (
     ensure_dir,
-    safe_copy,
-    safe_rmtree,
     get_size,
+    safe_copy,
     safe_delete,
+    safe_rmtree,
 )
 
 
@@ -150,9 +150,7 @@ def create_symlink(target: pathlib.Path, link_path: pathlib.Path) -> None:
             raise
 
 
-def copy_file(
-    source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True
-) -> None:
+def copy_file(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=True, preserve_mode=preserve_permissions)
