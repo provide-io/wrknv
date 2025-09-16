@@ -26,6 +26,8 @@ def load_commands():
         setup,  # noqa: F401
         terraform,  # noqa: F401
         tools,  # noqa: F401
+        workenv,  # noqa: F401
+        workspace,  # noqa: F401
     )
 
     logger.debug("Loaded wrknv command modules")
