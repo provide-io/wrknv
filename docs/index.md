@@ -29,7 +29,7 @@ container.run("pip install -r requirements.txt")
 
 ## API Reference
 
-For complete API documentation, see the [API Reference](api/).
+For complete API documentation, see the [API Reference](api/index.md).
 
 ## Core Components
 
