@@ -1,0 +1,339 @@
+"""
+Workenv CLI Commands
+===================
+Commands for managing development workenvs.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any
+
+from provide.foundation.hub import command, register_command
+from provide.foundation import logger
+
+from wrknv.workenv import WorkenvExporter, WorkenvImporter, WorkenvPackager
+from wrknv.workenv.registry import WorkenvRegistry
+from wrknv.wenv.schema import WorkenvConfig
+from wrknv.wenv.workenv import WorkenvManager
+
+
+@register_command
+@command("workenv", help="Manage development workenvs")
+class WorkenvCommands:
+    """Commands for managing workenvs."""
+
+    @command("create")
+    def create(
+        self,
+        name: str = None,
+        python: str = None,
+        from_config: Path = None,
+        force: bool = False
+    ):
+        """Create a new workenv."""
+        logger.info("🚀 Creating workenv", name=name, python=python)
+
+        try:
+            manager = WorkenvManager()
+
+            if from_config and from_config.exists():
+                # Load configuration from file
+                config = WorkenvConfig.load_from_file(from_config)
+                workenv_name = name or config.project_name
+            else:
+                # Use current directory config or defaults
+                config = WorkenvConfig.load()
+                workenv_name = name or config.project_name
+
+            # Create workenv
+            workenv_path = manager.create_workenv(
+                base_path=Path.cwd(),
+                force=force
+            )
+
+            logger.success(f"✅ Workenv created: {workenv_path}")
+            logger.info(f"💡 Activate with: source {workenv_path.parent.parent}/env.sh")
+
+        except Exception as e:
+            logger.error("❌ Failed to create workenv", error=str(e))
+            raise
+
+    @command("export")
+    def export(
+        self,
+        output: Path,
+        name: str = None,
+        version: str = "1.0.0",
+        format_type: str = "psp"
+    ):
+        """Export workenv for distribution."""
+        logger.info("📦 Exporting workenv", output=str(output), format=format_type)
+
+        try:
+            # Load current configuration
+            config = WorkenvConfig.load()
+            exporter = WorkenvExporter(config)
+
+            # Export workenv
+            export_result = exporter.export(
+                output_dir=output,
+                name=name,
+                version=version
+            )
+
+            # Package if requested
+            if format_type == "psp":
+                packager = WorkenvPackager()
+                package_path = output.parent / f"{export_result.name}-{version}.psp"
+
+                packager.package(
+                    export=export_result,
+                    output_path=package_path,
+                    format_type="psp"
+                )
+
+                logger.success(f"✅ Workenv packaged: {package_path}")
+            else:
+                logger.success(f"✅ Workenv exported: {output}")
+
+        except Exception as e:
+            logger.error("❌ Failed to export workenv", error=str(e))
+            raise
+
+    @command("import")
+    async def import_workenv(
+        self,
+        package: str,
+        directory: Path = Path("."),
+        activate: bool = True,
+        verify: bool = True
+    ):
+        """Import a packaged workenv."""
+        logger.info("📦⬇️ Importing workenv", package=package)
+
+        try:
+            importer = WorkenvImporter()
+
+            if package.startswith(("http://", "https://")):
+                # Import from URL
+                workenv_path = await importer.import_from_url(
+                    url=package,
+                    target_dir=directory,
+                    verify_signature=verify
+                )
+            else:
+                # Import from local file
+                package_path = Path(package)
+                workenv_path = await importer.import_from_package(
+                    package_path=package_path,
+                    target_dir=directory,
+                    activate=activate
+                )
+
+            logger.success(f"✅ Workenv imported: {workenv_path}")
+
+            if activate:
+                env_script = directory / "env.sh"
+                if env_script.exists():
+                    logger.info(f"💡 Activate with: source {env_script}")
+
+        except Exception as e:
+            logger.error("❌ Failed to import workenv", error=str(e))
+            raise
+
+    @command("list")
+    def list_workenvs(self, registry_url: str = None):
+        """List available workenvs."""
+        logger.info("📋 Listing workenvs")
+
+        try:
+            # List local workenvs
+            workenv_dir = Path.home() / ".wrknv" / "cache" / "packages"
+            if workenv_dir.exists():
+                local_packages = list(workenv_dir.glob("*.psp"))
+                if local_packages:
+                    logger.info("🏠 Local workenvs:")
+                    for package in local_packages:
+                        logger.info(f"  - {package.stem}")
+                else:
+                    logger.info("🏠 No local workenvs found")
+
+            # List registry workenvs (placeholder)
+            if registry_url:
+                logger.info(f"🌐 Registry workenvs from {registry_url}:")
+                logger.info("  (Registry integration coming soon)")
+
+        except Exception as e:
+            logger.error("❌ Failed to list workenvs", error=str(e))
+            raise
+
+    @command("activate")
+    def activate(self, name: str = None):
+        """Show activation command for workenv."""
+        logger.info("🚀 Getting activation command", name=name)
+
+        try:
+            # Find workenv
+            if name:
+                workenv_dir = Path.cwd() / "workenv"
+                possible_paths = list(workenv_dir.glob(f"{name}_*"))
+                if possible_paths:
+                    workenv_path = possible_paths[0]
+                else:
+                    logger.error(f"❌ Workenv not found: {name}")
+                    return
+            else:
+                # Use current project workenv
+                env_script = Path.cwd() / "env.sh"
+                if env_script.exists():
+                    logger.info(f"💡 Activate with: source {env_script}")
+                    return
+                else:
+                    logger.error("❌ No workenv found in current directory")
+                    return
+
+            # Show activation command
+            if workenv_path.exists():
+                logger.info(f"💡 Activate workenv: source workenv/env.sh")
+                logger.info(f"📁 Workenv path: {workenv_path}")
+            else:
+                logger.error(f"❌ Workenv path does not exist: {workenv_path}")
+
+        except Exception as e:
+            logger.error("❌ Failed to get activation command", error=str(e))
+            raise
+
+    @command("publish")
+    async def publish(
+        self,
+        package: Path,
+        registry_url: str = None,
+        api_key: str = None
+    ):
+        """Publish workenv to registry."""
+        logger.info("📤 Publishing workenv", package=str(package))
+
+        try:
+            if not package.exists():
+                logger.error(f"❌ Package not found: {package}")
+                return
+
+            # Extract metadata from package
+            packager = WorkenvPackager()
+            metadata = packager.inspect_package(package)
+
+            if not metadata:
+                logger.error("❌ Failed to extract package metadata")
+                return
+
+            # Publish to registry
+            async with WorkenvRegistry(registry_url) as registry:
+                success = await registry.publish(
+                    package_path=package,
+                    metadata=metadata,
+                    api_key=api_key
+                )
+
+                if success:
+                    logger.success("✅ Workenv published successfully")
+                else:
+                    logger.error("❌ Failed to publish workenv")
+
+        except Exception as e:
+            logger.error("❌ Failed to publish workenv", error=str(e))
+            raise
+
+    @command("search")
+    async def search(
+        self,
+        query: str,
+        registry_url: str = None,
+        limit: int = 10
+    ):
+        """Search for workenvs in registry."""
+        logger.info("🔍 Searching workenvs", query=query)
+
+        try:
+            async with WorkenvRegistry(registry_url) as registry:
+                results = await registry.search(query)
+
+                if results:
+                    logger.info(f"🔍 Found {len(results)} workenvs:")
+                    for i, result in enumerate(results[:limit]):
+                        name = result.get("name", "unknown")
+                        version = result.get("version", "unknown")
+                        description = result.get("description", "No description")
+                        logger.info(f"  {i+1}. {name} ({version}) - {description}")
+                else:
+                    logger.info("🔍 No workenvs found matching query")
+
+        except Exception as e:
+            logger.error("❌ Failed to search workenvs", error=str(e))
+            raise
+
+    @command("verify")
+    def verify(self, package: Path):
+        """Verify workenv package integrity."""
+        logger.info("🔍 Verifying workenv package", package=str(package))
+
+        try:
+            if not package.exists():
+                logger.error(f"❌ Package not found: {package}")
+                return
+
+            packager = WorkenvPackager()
+            is_valid = packager.verify_package(package)
+
+            if is_valid:
+                logger.success("✅ Package verification passed")
+            else:
+                logger.error("❌ Package verification failed")
+
+        except Exception as e:
+            logger.error("❌ Failed to verify package", error=str(e))
+            raise
+
+    @command("info")
+    async def info(
+        self,
+        name: str,
+        registry_url: str = None
+    ):
+        """Get information about a workenv package."""
+        logger.info("ℹ️ Getting workenv info", name=name)
+
+        try:
+            async with WorkenvRegistry(registry_url) as registry:
+                info = await registry.get_package_info(name)
+
+                if info:
+                    logger.info(f"📦 Package: {info.get('name', name)}")
+                    logger.info(f"📝 Description: {info.get('description', 'No description')}")
+                    logger.info(f"🏷️ Latest version: {info.get('latest_version', 'unknown')}")
+
+                    versions = info.get("versions", [])
+                    if versions:
+                        logger.info(f"📚 Available versions: {len(versions)}")
+                        for version in versions[-5:]:  # Show last 5 versions
+                            logger.info(f"  - {version.get('version', 'unknown')}")
+                else:
+                    logger.error(f"❌ Package not found: {name}")
+
+        except Exception as e:
+            logger.error("❌ Failed to get package info", error=str(e))
+            raise
+
+    @command("clean")
+    async def clean(self, registry_url: str = None):
+        """Clean local workenv cache."""
+        logger.info("🧹 Cleaning workenv cache")
+
+        try:
+            async with WorkenvRegistry(registry_url) as registry:
+                count = await registry.clear_cache()
+                logger.success(f"✅ Cleaned {count} cached packages")
+
+        except Exception as e:
+            logger.error("❌ Failed to clean cache", error=str(e))
+            raise
