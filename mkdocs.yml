@@ -5,6 +5,9 @@ site_url: https://foundry.provide.io/wrknv/
 repo_url: https://github.com/provide-io/wrknv
 repo_name: provide-io/wrknv
 edit_uri: edit/main/docs/
+
+# Development server configuration
+dev_addr: '127.0.0.1:8008'
 copyright: Copyright &copy; 2024-2025 provide.io
 
 # Standalone mode settings
