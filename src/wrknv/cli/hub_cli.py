@@ -55,10 +55,9 @@ def create_cli():
 
 def main():
     """Main entry point for the CLI."""
-    # Set up wrknv logging before any other initialization
-    from wrknv.logging.setup import setup_wrknv_logging
-
-    setup_wrknv_logging()
+    # Note: Logging setup disabled for now due to missing dependencies
+    # from wrknv.logging.setup import setup_wrknv_logging
+    # setup_wrknv_logging()
 
     cli = create_cli()
     cli()

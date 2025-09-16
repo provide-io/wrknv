@@ -8,6 +8,5 @@ from wrknv.cli.hub_cli import create_cli, main
 
 # Compatibility aliases
 entry_point = main
-workenv_cli = create_cli()
 
-__all__ = ["create_cli", "entry_point", "main", "workenv_cli"]
+__all__ = ["create_cli", "entry_point", "main"]

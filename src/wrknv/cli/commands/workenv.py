@@ -27,9 +27,9 @@ def workenv_group():
 
 @register_command("workenv.create", description="Create a new workenv")
 def create(
-    name: str = None,
-    python: str = None,
-    from_config: Path = None,
+    name: str | None = None,
+    python: str | None = None,
+    from_config: Path | None = None,
     force: bool = False
 ):
         """Create a new workenv."""
@@ -63,7 +63,7 @@ def create(
 @register_command("workenv.export", description="Export workenv for distribution")
 def export(
     output: Path,
-    name: str = None,
+    name: str | None = None,
     version: str = "1.0.0",
     format_type: str = "psp"
 ):
@@ -142,7 +142,7 @@ async def import_workenv(
             raise
 
 @register_command("workenv.list", description="List available workenvs")
-def list_workenvs(registry_url: str = None):
+def list_workenvs(registry_url: str | None = None):
         """List available workenvs."""
         logger.info("📋 Listing workenvs")
 
@@ -168,7 +168,7 @@ def list_workenvs(registry_url: str = None):
             raise
 
 @register_command("workenv.activate", description="Show activation command for workenv")
-def activate(name: str = None):
+def activate(name: str | None = None):
         """Show activation command for workenv."""
         logger.info("🚀 Getting activation command", name=name)
 
@@ -206,8 +206,8 @@ def activate(name: str = None):
 @register_command("workenv.publish", description="Publish workenv to registry")
 async def publish(
     package: Path,
-    registry_url: str = None,
-    api_key: str = None
+    registry_url: str | None = None,
+    api_key: str | None = None
 ):
         """Publish workenv to registry."""
         logger.info("📤 Publishing workenv", package=str(package))
@@ -245,7 +245,7 @@ async def publish(
 @register_command("workenv.search", description="Search for workenvs in registry")
 async def search(
     query: str,
-    registry_url: str = None,
+    registry_url: str | None = None,
     limit: int = 10
 ):
         """Search for workenvs in registry."""
@@ -294,7 +294,7 @@ def verify(package: Path):
 @register_command("workenv.info", description="Get information about a workenv package")
 async def info(
     name: str,
-    registry_url: str = None
+    registry_url: str | None = None
 ):
         """Get information about a workenv package."""
         logger.info("ℹ️ Getting workenv info", name=name)
@@ -321,7 +321,7 @@ async def info(
             raise
 
 @register_command("workenv.clean", description="Clean local workenv cache")
-async def clean(registry_url: str = None):
+async def clean(registry_url: str | None = None):
         """Clean local workenv cache."""
         logger.info("🧹 Cleaning workenv cache")
 

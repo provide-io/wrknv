@@ -87,8 +87,8 @@ class TemplateSource:
 class WorkspaceConfig(BaseConfig):
     """Root workspace configuration."""
 
-    version: str = "1.0"
     root: Path = field(converter=Path)
+    version: str = "1.0"
     repos: list[RepoConfig] = field(factory=list)
     template_source: TemplateSource | None = None
     global_standards: dict[str, Any] = field(factory=dict)

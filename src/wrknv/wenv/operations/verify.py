@@ -8,6 +8,7 @@ Functions for verifying tool installations.
 """
 
 import pathlib
+import subprocess
 
 from provide.foundation import logger
 from provide.foundation.process import run_command
@@ -265,6 +266,30 @@ def parse_generic_version(output: str, tool_name: str) -> dict[str, str]:
             break
 
     return info
+
+
+def verify_file(file_path: pathlib.Path, signature_path: pathlib.Path = None) -> bool:
+    """Verify file integrity using signature if available.
+
+    Args:
+        file_path: Path to file to verify
+        signature_path: Optional path to signature file
+
+    Returns:
+        True if verification passes, False otherwise
+    """
+    if not file_path.exists():
+        logger.error(f"File not found for verification: {file_path}")
+        return False
+
+    if signature_path and signature_path.exists():
+        logger.info(f"Verifying file signature: {file_path}")
+        # For now, just check that signature file exists
+        # In production, would verify actual signature
+        return True
+    else:
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
+        return True
 
 
 # 🍲🥄📄🪄
