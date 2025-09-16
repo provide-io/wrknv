@@ -9,7 +9,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from provide.foundation.hub import command, register_command
+from provide.foundation.hub import register_command
 from provide.foundation import logger
 
 from wrknv.workenv import WorkenvExporter, WorkenvImporter, WorkenvPackager
@@ -18,19 +18,20 @@ from wrknv.wenv.schema import WorkenvConfig
 from wrknv.wenv.workenv import WorkenvManager
 
 
-@register_command
-@command("workenv", help="Manage development workenvs")
-class WorkenvCommands:
+# Register the workenv group first
+@register_command("workenv", group=True, description="Manage development workenvs")
+def workenv_group():
     """Commands for managing workenvs."""
+    pass
 
-    @command("create")
-    def create(
-        self,
-        name: str = None,
-        python: str = None,
-        from_config: Path = None,
-        force: bool = False
-    ):
+
+@register_command("workenv.create", description="Create a new workenv")
+def create(
+    name: str = None,
+    python: str = None,
+    from_config: Path = None,
+    force: bool = False
+):
         """Create a new workenv."""
         logger.info("🚀 Creating workenv", name=name, python=python)
 
@@ -59,14 +60,13 @@ class WorkenvCommands:
             logger.error("❌ Failed to create workenv", error=str(e))
             raise
 
-    @command("export")
-    def export(
-        self,
-        output: Path,
-        name: str = None,
-        version: str = "1.0.0",
-        format_type: str = "psp"
-    ):
+@register_command("workenv.export", description="Export workenv for distribution")
+def export(
+    output: Path,
+    name: str = None,
+    version: str = "1.0.0",
+    format_type: str = "psp"
+):
         """Export workenv for distribution."""
         logger.info("📦 Exporting workenv", output=str(output), format=format_type)
 
@@ -101,14 +101,13 @@ class WorkenvCommands:
             logger.error("❌ Failed to export workenv", error=str(e))
             raise
 
-    @command("import")
-    async def import_workenv(
-        self,
-        package: str,
-        directory: Path = Path("."),
-        activate: bool = True,
-        verify: bool = True
-    ):
+@register_command("workenv.import", description="Import a packaged workenv")
+async def import_workenv(
+    package: str,
+    directory: Path = Path("."),
+    activate: bool = True,
+    verify: bool = True
+):
         """Import a packaged workenv."""
         logger.info("📦⬇️ Importing workenv", package=package)
 
@@ -142,8 +141,8 @@ class WorkenvCommands:
             logger.error("❌ Failed to import workenv", error=str(e))
             raise
 
-    @command("list")
-    def list_workenvs(self, registry_url: str = None):
+@register_command("workenv.list", description="List available workenvs")
+def list_workenvs(registry_url: str = None):
         """List available workenvs."""
         logger.info("📋 Listing workenvs")
 
@@ -168,8 +167,8 @@ class WorkenvCommands:
             logger.error("❌ Failed to list workenvs", error=str(e))
             raise
 
-    @command("activate")
-    def activate(self, name: str = None):
+@register_command("workenv.activate", description="Show activation command for workenv")
+def activate(name: str = None):
         """Show activation command for workenv."""
         logger.info("🚀 Getting activation command", name=name)
 
@@ -204,13 +203,12 @@ class WorkenvCommands:
             logger.error("❌ Failed to get activation command", error=str(e))
             raise
 
-    @command("publish")
-    async def publish(
-        self,
-        package: Path,
-        registry_url: str = None,
-        api_key: str = None
-    ):
+@register_command("workenv.publish", description="Publish workenv to registry")
+async def publish(
+    package: Path,
+    registry_url: str = None,
+    api_key: str = None
+):
         """Publish workenv to registry."""
         logger.info("📤 Publishing workenv", package=str(package))
 
@@ -244,13 +242,12 @@ class WorkenvCommands:
             logger.error("❌ Failed to publish workenv", error=str(e))
             raise
 
-    @command("search")
-    async def search(
-        self,
-        query: str,
-        registry_url: str = None,
-        limit: int = 10
-    ):
+@register_command("workenv.search", description="Search for workenvs in registry")
+async def search(
+    query: str,
+    registry_url: str = None,
+    limit: int = 10
+):
         """Search for workenvs in registry."""
         logger.info("🔍 Searching workenvs", query=query)
 
@@ -272,8 +269,8 @@ class WorkenvCommands:
             logger.error("❌ Failed to search workenvs", error=str(e))
             raise
 
-    @command("verify")
-    def verify(self, package: Path):
+@register_command("workenv.verify", description="Verify workenv package integrity")
+def verify(package: Path):
         """Verify workenv package integrity."""
         logger.info("🔍 Verifying workenv package", package=str(package))
 
@@ -294,12 +291,11 @@ class WorkenvCommands:
             logger.error("❌ Failed to verify package", error=str(e))
             raise
 
-    @command("info")
-    async def info(
-        self,
-        name: str,
-        registry_url: str = None
-    ):
+@register_command("workenv.info", description="Get information about a workenv package")
+async def info(
+    name: str,
+    registry_url: str = None
+):
         """Get information about a workenv package."""
         logger.info("ℹ️ Getting workenv info", name=name)
 
@@ -324,8 +320,8 @@ class WorkenvCommands:
             logger.error("❌ Failed to get package info", error=str(e))
             raise
 
-    @command("clean")
-    async def clean(self, registry_url: str = None):
+@register_command("workenv.clean", description="Clean local workenv cache")
+async def clean(registry_url: str = None):
         """Clean local workenv cache."""
         logger.info("🧹 Cleaning workenv cache")
 
