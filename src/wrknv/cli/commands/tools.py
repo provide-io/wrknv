@@ -19,6 +19,7 @@ from rich.table import Table
 logger = get_logger(__name__)
 
 from wrknv.config import WorkenvConfig
+from wrknv.lockfile import LockfileManager
 from wrknv.wenv.doctor import run_doctor
 from wrknv.wenv.env_generator import create_project_env_scripts
 from wrknv.wenv.managers.factory import get_tool_manager
@@ -85,7 +86,7 @@ def status_command():
 
 
 @register_command("sync", description="Install all tools defined in configuration", category="tools")
-def sync_command():
+def sync_command(lock: bool = True):
     """Install all tools defined in configuration."""
     config = WorkenvConfig.load()
     tools = config.get_all_tools()
@@ -93,6 +94,14 @@ def sync_command():
     if not tools:
         echo_info("No tools configured in workenv configuration")
         return
+
+    # Initialize lockfile manager
+    lockfile_manager = LockfileManager()
+
+    if lock:
+        echo_info("🔒 Resolving and locking tool versions...")
+        lockfile = lockfile_manager.resolve_and_lock(config)
+        echo_success(f"✅ Lockfile updated with {len(lockfile.resolved_tools)} resolved tools")
 
     echo_info("Syncing tools from configuration...")
 
