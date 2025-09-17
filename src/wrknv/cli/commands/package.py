@@ -8,8 +8,9 @@ Package Commands
 Commands for managing provider packages.
 """
 
+import sys
 
-from provide.foundation.cli import echo_info
+from provide.foundation.cli import echo_error, echo_info
 from provide.foundation.hub import register_command
 
 
@@ -38,9 +39,13 @@ def package_keygen(**kwargs):
 @register_command("package.clean", description="Clean package cache")
 def package_clean():
     """Clean package cache."""
-    echo_info("🧹 Cleaning package cache...")
-    echo_info("  (Cache cleaning not yet implemented)")
-    echo_info("  Use 'workenv clean' for workenv cache cleaning")
+    try:
+        echo_info("🧹 Cleaning package cache...")
+        echo_info("  (Cache cleaning not yet implemented)")
+        echo_info("  Use 'workenv clean' for workenv cache cleaning")
+    except Exception as e:
+        echo_error(f"Failed to clean package cache: {e}")
+        sys.exit(1)
 
 
 @register_command("package.init", description="Initialize project", hidden=True)
@@ -51,9 +56,13 @@ def package_init(**kwargs):
 @register_command("package.list", description="List available packages")
 def package_list():
     """List available packages."""
-    echo_info("📦 Available packages:")
-    echo_info("  (Package listing not yet implemented)")
-    echo_info("  Use 'workenv list' to see available workenv packages")
+    try:
+        echo_info("📦 Available packages:")
+        echo_info("  (Package listing not yet implemented)")
+        echo_info("  Use 'workenv list' to see available workenv packages")
+    except Exception as e:
+        echo_error(f"Failed to list packages: {e}")
+        sys.exit(1)
 
 
 @register_command("package.info", description="Package info", hidden=True)
