@@ -49,10 +49,10 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_show_with_config(self):
         """Test showing existing configuration."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.show_config.return_value = None
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "show"])
 
@@ -61,13 +61,13 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_show_json_format(self):
         """Test showing config in JSON format."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.to_dict.return_value = {
                 "project_name": "test-project",
                 "tools": {"terraform": {"version": "1.5.0", "enabled": True}},
             }
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "show", "--json"])
 
@@ -80,10 +80,10 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_show_with_profile_filter(self):
         """Test showing only specific profile configuration."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "show", "--profile", "dev"])
 
@@ -196,7 +196,7 @@ version = "1.0.0"
             mock_config.config_exists.return_value = False
             mock_config_class.return_value = mock_config
 
-            result = self.runner.invoke(workenv_cli, ["config", "init"], input="my-project\n1.0.0\nINFO\n")
+            result = self.runner.invoke(self.cli, ["config", "init"], input="my-project\n1.0.0\nINFO\n")
 
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Created configuration file", result.output)
@@ -235,7 +235,7 @@ version = "1.0.0"
             mock_config.set_setting.return_value = True
             mock_config_class.return_value = mock_config
 
-            result = self.runner.invoke(workenv_cli, ["config", "set", "log_level", "DEBUG"])
+            result = self.runner.invoke(self.cli, ["config", "set", "log_level", "DEBUG"])
 
             self.assertEqual(result.exit_code, 0)
             self.assertIn("Set log_level to DEBUG", result.output)
@@ -277,7 +277,7 @@ class TestConfigCommandIntegration(unittest.TestCase):
             mock_cwd.return_value = self.temp_path
 
             # Initialize config
-            result = self.runner.invoke(workenv_cli, ["config", "init"], input="test-project\n1.0.0\nINFO\n")
+            result = self.runner.invoke(self.cli, ["config", "init"], input="test-project\n1.0.0\nINFO\n")
             self.assertEqual(result.exit_code, 0)
 
             # Verify file was created
