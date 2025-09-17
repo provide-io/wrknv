@@ -104,7 +104,7 @@ case "$TFARCH" in
 esac
 
 # Workenv directory setup
-PROFILE="${WRKENV_PROFILE:-default}"
+PROFILE="${WRKNV_PROFILE:-default}"
 if [ "$PROFILE" = "default" ]; then
     VENV_DIR="workenv/wrknv_${TFOS}_${TFARCH}"
 else
@@ -267,18 +267,6 @@ print_header "🤝 Installing Sibling Packages"
 PARENT_DIR=$(dirname "$(pwd)")
 SIBLING_COUNT=0
 
-# Install provide-foundation if it exists
-if [ -d "$PARENT_DIR/provide-foundation" ]; then
-    echo -n "Installing provide-foundation..."
-    uv pip install -e "$PARENT_DIR/provide-foundation" > /tmp/wrknv_setup/provide-foundation.log 2>&1 &
-    spinner $!
-    if [ $? -eq 0 ]; then
-        print_success "provide-foundation installed"
-        SIBLING_COUNT=$((SIBLING_COUNT + 1))
-    else
-        print_warning "Failed to install provide-foundation"
-    fi
-fi
 
 if [ $SIBLING_COUNT -eq 0 ]; then
     print_warning "No sibling packages found"
