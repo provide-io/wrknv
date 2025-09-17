@@ -35,9 +35,12 @@ def package_keygen(**kwargs):
     echo_info("Package keygen command (stub)")
 
 
-@register_command("package.clean", description="Clean cache", hidden=True)
-def package_clean(**kwargs):
-    echo_info("Package clean command (stub)")
+@register_command("package.clean", description="Clean package cache")
+def package_clean():
+    """Clean package cache."""
+    echo_info("🧹 Cleaning package cache...")
+    echo_info("  (Cache cleaning not yet implemented)")
+    echo_info("  Use 'workenv clean' for workenv cache cleaning")
 
 
 @register_command("package.init", description="Initialize project", hidden=True)
@@ -45,9 +48,12 @@ def package_init(**kwargs):
     echo_info("Package init command (stub)")
 
 
-@register_command("package.list", description="List packages", hidden=True)
-def package_list(**kwargs):
-    echo_info("Package list command (stub)")
+@register_command("package.list", description="List available packages")
+def package_list():
+    """List available packages."""
+    echo_info("📦 Available packages:")
+    echo_info("  (Package listing not yet implemented)")
+    echo_info("  Use 'workenv list' to see available workenv packages")
 
 
 @register_command("package.info", description="Package info", hidden=True)
