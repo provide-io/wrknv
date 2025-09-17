@@ -37,10 +37,10 @@ class TestConfigCommands(unittest.TestCase):
 
     def test_config_show_no_config(self):
         """Test showing config when no config file exists."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.show_config.return_value = None
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "show"])
 
@@ -218,10 +218,10 @@ version = "1.0.0"
 
     def test_config_get_setting(self):
         """Test getting a specific configuration setting."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_setting.return_value = "INFO"
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "get", "log_level"])
 
