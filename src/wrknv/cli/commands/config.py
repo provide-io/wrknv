@@ -76,28 +76,47 @@ def config_edit():
     "config.validate",
     description="Validate configuration file syntax and values",
 )
-def config_validate(strict: bool = False):
+def config_validate(strict: bool = False, verbose: bool = False):
     """Validate configuration file syntax and values."""
-    config = WorkenvConfig.load()
-
-    if not config.config_exists():
-        echo_error("No configuration file found")
-        echo_info("Create one with: wrknv config init")
-        sys.exit(1)
-
     try:
+        config = WorkenvConfig.load()
+
+        if not config.config_exists():
+            echo_error("No configuration file found")
+            echo_info("Create one with: wrknv config init")
+            sys.exit(1)
+
+        # Perform validation
         is_valid, errors = config.validate()
+
+        if verbose:
+            echo_info(f"📋 Validating configuration: {config.config_path}")
+            echo_info("   Checking project metadata...")
+            echo_info("   Checking tool configurations...")
+            echo_info("   Checking profile configurations...")
+            echo_info("   Checking workenv settings...")
+            echo_info("   Checking environment variables...")
 
         if is_valid:
             echo_success("✅ Configuration is valid")
+            if verbose:
+                echo_info("   All checks passed")
         else:
             echo_error("❌ Configuration validation failed:")
             for error in errors:
                 echo_error(f"  • {error}")
-            sys.exit(1)
+
+            if not strict:
+                echo_warning("\n💡 These are validation warnings. Use --strict to fail on validation errors.")
+                echo_info("   Fix these issues to ensure reliable operation.")
+            else:
+                sys.exit(1)
 
     except Exception as e:
         echo_error(f"Validation error: {e}")
+        if verbose:
+            import traceback
+            echo_error(f"   Traceback: {traceback.format_exc()}")
         sys.exit(1)
 
 
