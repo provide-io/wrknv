@@ -25,11 +25,9 @@ except ImportError:
 from provide.foundation import logger
 
 from .exceptions import ConfigurationError
-from .schema import (
-    WorkenvConfig,
-    load_config_from_dict,
-    validate_config_dict,
-)
+
+# Import main config class at module level for easier access
+from .schema import WorkenvConfig
 
 
 class WorkenvConfigError(ConfigurationError):

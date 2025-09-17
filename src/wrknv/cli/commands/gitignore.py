@@ -18,10 +18,16 @@ from wrknv.config import WorkenvConfig
 from wrknv.gitignore import GitignoreManager, ProjectDetector
 
 
+# Register the gitignore group first
+@register_command("gitignore", group=True, description="Manage .gitignore files")
+def gitignore_group():
+    """Commands for managing .gitignore files."""
+    pass
+
+
 @register_command(
-    "gitignore-list",
+    "gitignore.list",
     description="List available gitignore templates",
-    category="gitignore",
 )
 def gitignore_list(category: str | None = None):
     """List available gitignore templates."""
@@ -48,9 +54,8 @@ def gitignore_list(category: str | None = None):
 
 
 @register_command(
-    "gitignore-search",
+    "gitignore.search",
     description="Search for gitignore templates",
-    category="gitignore",
 )
 def gitignore_search(pattern: str):
     """Search for gitignore templates matching a pattern."""
@@ -73,9 +78,8 @@ def gitignore_search(pattern: str):
 
 
 @register_command(
-    "gitignore-detect",
+    "gitignore.detect",
     description="Detect project types and suggest templates",
-    category="gitignore",
 )
 def gitignore_detect(path: str | None = None):
     """Detect project types and suggest appropriate gitignore templates."""
@@ -117,9 +121,8 @@ def gitignore_detect(path: str | None = None):
 
 
 @register_command(
-    "gitignore-build",
+    "gitignore.build",
     description="Build a .gitignore file from templates",
-    category="gitignore",
 )
 def gitignore_build(
     templates: list[str] | None = None,
@@ -184,9 +187,8 @@ def gitignore_build(
 
 
 @register_command(
-    "gitignore-show",
+    "gitignore.show",
     description="Show content of a gitignore template",
-    category="gitignore",
 )
 def gitignore_show(template: str):
     """Show the content of a specific gitignore template."""
@@ -211,9 +213,8 @@ def gitignore_show(template: str):
 
 
 @register_command(
-    "gitignore-update",
+    "gitignore.update",
     description="Update gitignore template cache",
-    category="gitignore",
 )
 def gitignore_update():
     """Update the local gitignore template cache from GitHub."""

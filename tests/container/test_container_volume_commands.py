@@ -36,7 +36,7 @@ class TestVolumeCommands:
         with patch("pathlib.Path.home", return_value=mock_home):
             yield mock_home
 
-    @pytest.pytest.fixture
+    @pytest.fixture
     def test_config(self):
         """Create test configuration."""
         return WorkenvConfig(
