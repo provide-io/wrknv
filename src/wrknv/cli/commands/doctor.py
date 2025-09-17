@@ -215,17 +215,25 @@ def _check_dependencies() -> dict[str, Any]:
 
         # Check required dependencies
         required_deps = [
-            "attrs",
-            "cattrs",
-            "tomli",
-            "provide.foundation",
+            ("attrs", "attrs"),
+            ("cattrs", "cattrs"),
+            ("provide.foundation", "provide.foundation"),
         ]
 
-        for dep in required_deps:
+        for dep_name, import_name in required_deps:
             try:
-                __import__(dep.replace(".", "_") if "." in dep else dep)
+                __import__(import_name)
             except ImportError:
-                missing_deps.append(dep)
+                missing_deps.append(dep_name)
+
+        # Check for TOML support (tomllib in Python 3.11+, tomli as fallback)
+        try:
+            try:
+                import tomllib
+            except ImportError:
+                import tomli
+        except ImportError:
+            missing_deps.append("tomli (for TOML parsing)")
 
         # Check optional dependencies
         optional_deps = [

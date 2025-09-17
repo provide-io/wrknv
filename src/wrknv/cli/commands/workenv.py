@@ -103,44 +103,49 @@ def export(
             raise
 
 @register_command("workenv.import", description="Import a packaged workenv")
-async def import_workenv(
+def import_workenv(
     package: str,
     directory: Path = Path("."),
     activate: bool = True,
     verify: bool = True
 ):
         """Import a packaged workenv."""
-        logger.info("📦⬇️ Importing workenv", package=package)
+        import asyncio
 
-        try:
-            importer = WorkenvImporter()
+        async def _import_workenv():
+            logger.info("📦⬇️ Importing workenv", package=package)
 
-            if package.startswith(("http://", "https://")):
-                # Import from URL
-                workenv_path = await importer.import_from_url(
-                    url=package,
-                    target_dir=directory,
-                    verify_signature=verify
-                )
-            else:
-                # Import from local file
-                package_path = Path(package)
-                workenv_path = await importer.import_from_package(
-                    package_path=package_path,
-                    target_dir=directory,
-                    activate=activate
-                )
+            try:
+                importer = WorkenvImporter()
 
-            logger.success(f"✅ Workenv imported: {workenv_path}")
+                if package.startswith(("http://", "https://")):
+                    # Import from URL
+                    workenv_path = await importer.import_from_url(
+                        url=package,
+                        target_dir=directory,
+                        verify_signature=verify
+                    )
+                else:
+                    # Import from local file
+                    package_path = Path(package)
+                    workenv_path = await importer.import_from_package(
+                        package_path=package_path,
+                        target_dir=directory,
+                        activate=activate
+                    )
 
-            if activate:
-                env_script = directory / "env.sh"
-                if env_script.exists():
-                    logger.info(f"💡 Activate with: source {env_script}")
+                logger.success(f"✅ Workenv imported: {workenv_path}")
 
-        except Exception as e:
-            logger.error("❌ Failed to import workenv", error=str(e))
-            raise
+                if activate:
+                    env_script = directory / "env.sh"
+                    if env_script.exists():
+                        logger.info(f"💡 Activate with: source {env_script}")
+
+            except Exception as e:
+                logger.error("❌ Failed to import workenv", error=str(e))
+                raise
+
+        asyncio.run(_import_workenv())
 
 @register_command("workenv.list", description="List available workenvs")
 def list_workenvs(registry_url: str | None = None):
@@ -204,70 +209,80 @@ def activate(name: str | None = None):
             raise
 
 @register_command("workenv.publish", description="Publish workenv to registry")
-async def publish(
+def publish(
     package: Path,
     registry_url: str | None = None,
     api_key: str | None = None
 ):
         """Publish workenv to registry."""
-        logger.info("📤 Publishing workenv", package=str(package))
+        import asyncio
 
-        try:
-            if not package.exists():
-                logger.error(f"❌ Package not found: {package}")
-                return
+        async def _publish():
+            logger.info("📤 Publishing workenv", package=str(package))
 
-            # Extract metadata from package
-            packager = WorkenvPackager()
-            metadata = packager.inspect_package(package)
+            try:
+                if not package.exists():
+                    logger.error(f"❌ Package not found: {package}")
+                    return
 
-            if not metadata:
-                logger.error("❌ Failed to extract package metadata")
-                return
+                # Extract metadata from package
+                packager = WorkenvPackager()
+                metadata = packager.inspect_package(package)
 
-            # Publish to registry
-            async with WorkenvRegistry(registry_url) as registry:
-                success = await registry.publish(
-                    package_path=package,
-                    metadata=metadata,
-                    api_key=api_key
-                )
+                if not metadata:
+                    logger.error("❌ Failed to extract package metadata")
+                    return
 
-                if success:
-                    logger.success("✅ Workenv published successfully")
-                else:
-                    logger.error("❌ Failed to publish workenv")
+                # Publish to registry
+                async with WorkenvRegistry(registry_url) as registry:
+                    success = await registry.publish(
+                        package_path=package,
+                        metadata=metadata,
+                        api_key=api_key
+                    )
 
-        except Exception as e:
-            logger.error("❌ Failed to publish workenv", error=str(e))
-            raise
+                    if success:
+                        logger.success("✅ Workenv published successfully")
+                    else:
+                        logger.error("❌ Failed to publish workenv")
+
+            except Exception as e:
+                logger.error("❌ Failed to publish workenv", error=str(e))
+                raise
+
+        asyncio.run(_publish())
 
 @register_command("workenv.search", description="Search for workenvs in registry")
-async def search(
+def search(
     query: str,
     registry_url: str | None = None,
     limit: int = 10
 ):
         """Search for workenvs in registry."""
-        logger.info("🔍 Searching workenvs", query=query)
+        import asyncio
 
-        try:
-            async with WorkenvRegistry(registry_url) as registry:
-                results = await registry.search(query)
+        async def _search():
+            logger.info("🔍 Searching workenvs", query=query)
 
-                if results:
-                    logger.info(f"🔍 Found {len(results)} workenvs:")
-                    for i, result in enumerate(results[:limit]):
-                        name = result.get("name", "unknown")
-                        version = result.get("version", "unknown")
-                        description = result.get("description", "No description")
-                        logger.info(f"  {i+1}. {name} ({version}) - {description}")
-                else:
-                    logger.info("🔍 No workenvs found matching query")
+            try:
+                async with WorkenvRegistry(registry_url) as registry:
+                    results = await registry.search(query)
 
-        except Exception as e:
-            logger.error("❌ Failed to search workenvs", error=str(e))
-            raise
+                    if results:
+                        logger.info(f"🔍 Found {len(results)} workenvs:")
+                        for i, result in enumerate(results[:limit]):
+                            name = result.get("name", "unknown")
+                            version = result.get("version", "unknown")
+                            description = result.get("description", "No description")
+                            logger.info(f"  {i+1}. {name} ({version}) - {description}")
+                    else:
+                        logger.info("🔍 No workenvs found matching query")
+
+            except Exception as e:
+                logger.error("❌ Failed to search workenvs", error=str(e))
+                raise
+
+        asyncio.run(_search())
 
 @register_command("workenv.verify", description="Verify workenv package integrity")
 def verify(package: Path):
@@ -292,44 +307,54 @@ def verify(package: Path):
             raise
 
 @register_command("workenv.info", description="Get information about a workenv package")
-async def info(
+def info(
     name: str,
     registry_url: str | None = None
 ):
         """Get information about a workenv package."""
-        logger.info("ℹ️ Getting workenv info", name=name)
+        import asyncio
 
-        try:
-            async with WorkenvRegistry(registry_url) as registry:
-                info = await registry.get_package_info(name)
+        async def _info():
+            logger.info("ℹ️ Getting workenv info", name=name)
 
-                if info:
-                    logger.info(f"📦 Package: {info.get('name', name)}")
-                    logger.info(f"📝 Description: {info.get('description', 'No description')}")
-                    logger.info(f"🏷️ Latest version: {info.get('latest_version', 'unknown')}")
+            try:
+                async with WorkenvRegistry(registry_url) as registry:
+                    info = await registry.get_package_info(name)
 
-                    versions = info.get("versions", [])
-                    if versions:
-                        logger.info(f"📚 Available versions: {len(versions)}")
-                        for version in versions[-5:]:  # Show last 5 versions
-                            logger.info(f"  - {version.get('version', 'unknown')}")
-                else:
-                    logger.error(f"❌ Package not found: {name}")
+                    if info:
+                        logger.info(f"📦 Package: {info.get('name', name)}")
+                        logger.info(f"📝 Description: {info.get('description', 'No description')}")
+                        logger.info(f"🏷️ Latest version: {info.get('latest_version', 'unknown')}")
 
-        except Exception as e:
-            logger.error("❌ Failed to get package info", error=str(e))
-            raise
+                        versions = info.get("versions", [])
+                        if versions:
+                            logger.info(f"📚 Available versions: {len(versions)}")
+                            for version in versions[-5:]:  # Show last 5 versions
+                                logger.info(f"  - {version.get('version', 'unknown')}")
+                    else:
+                        logger.error(f"❌ Package not found: {name}")
+
+            except Exception as e:
+                logger.error("❌ Failed to get package info", error=str(e))
+                raise
+
+        asyncio.run(_info())
 
 @register_command("workenv.clean", description="Clean local workenv cache")
-async def clean(registry_url: str | None = None):
+def clean(registry_url: str | None = None):
         """Clean local workenv cache."""
-        logger.info("🧹 Cleaning workenv cache")
+        import asyncio
 
-        try:
-            async with WorkenvRegistry(registry_url) as registry:
-                count = await registry.clear_cache()
-                logger.success(f"✅ Cleaned {count} cached packages")
+        async def _clean():
+            logger.info("🧹 Cleaning workenv cache")
 
-        except Exception as e:
-            logger.error("❌ Failed to clean cache", error=str(e))
-            raise
+            try:
+                async with WorkenvRegistry(registry_url) as registry:
+                    count = await registry.clear_cache()
+                    logger.success(f"✅ Cleaned {count} cached packages")
+
+            except Exception as e:
+                logger.error("❌ Failed to clean cache", error=str(e))
+                raise
+
+        asyncio.run(_clean())

@@ -158,57 +158,67 @@ def status():
 
 
 @register_command("workspace.sync", description="Sync configurations across repositories")
-async def sync_all(dry_run: bool = False):
+def sync_all(dry_run: bool = False):
     """Sync configurations across repositories."""
-    action = "🔍 Checking" if dry_run else "🔄 Syncing"
-    logger.info(f"{action} workspace configurations", dry_run=dry_run)
+    import asyncio
 
-    try:
-        manager = WorkspaceManager()
-        results = await manager.sync_all(dry_run=dry_run)
+    async def _sync_all():
+        action = "🔍 Checking" if dry_run else "🔄 Syncing"
+        logger.info(f"{action} workspace configurations", dry_run=dry_run)
 
-        success_count = sum(1 for result in results.values() if result.get("success"))
-        total_count = len(results)
+        try:
+            manager = WorkspaceManager()
+            results = await manager.sync_all(dry_run=dry_run)
 
-        if dry_run:
-            logger.info(f"🔍 Sync check completed: {success_count}/{total_count} repos ready")
-        else:
-            logger.success(f"✅ Sync completed: {success_count}/{total_count} repos updated")
+            success_count = sum(1 for result in results.values() if result.get("success"))
+            total_count = len(results)
 
-        for repo_name, result in results.items():
-            if result.get("success"):
-                logger.info(f"  ✅ {repo_name}")
+            if dry_run:
+                logger.info(f"🔍 Sync check completed: {success_count}/{total_count} repos ready")
             else:
-                error = result.get("error", "Unknown error")
-                logger.error(f"  ❌ {repo_name}: {error}")
+                logger.success(f"✅ Sync completed: {success_count}/{total_count} repos updated")
 
-    except Exception as e:
-        logger.error("❌ Failed to sync workspace", error=str(e))
-        raise
+            for repo_name, result in results.items():
+                if result.get("success"):
+                    logger.info(f"  ✅ {repo_name}")
+                else:
+                    error = result.get("error", "Unknown error")
+                    logger.error(f"  ❌ {repo_name}: {error}")
+
+        except Exception as e:
+            logger.error("❌ Failed to sync workspace", error=str(e))
+            raise
+
+    asyncio.run(_sync_all())
 
 
 @register_command("workspace.sync-repo", description="Sync configuration for specific repository")
-async def sync_repo(name: str, dry_run: bool = False):
+def sync_repo(name: str, dry_run: bool = False):
     """Sync configuration for specific repository."""
-    action = "🔍 Checking" if dry_run else "🔄 Syncing"
-    logger.info(f"{action} repository configuration", name=name, dry_run=dry_run)
+    import asyncio
 
-    try:
-        manager = WorkspaceManager()
-        result = await manager.sync_repo(name, dry_run=dry_run)
+    async def _sync_repo():
+        action = "🔍 Checking" if dry_run else "🔄 Syncing"
+        logger.info(f"{action} repository configuration", name=name, dry_run=dry_run)
 
-        if result.get(name, {}).get("success"):
-            if dry_run:
-                logger.success(f"✅ {name} is ready for sync")
+        try:
+            manager = WorkspaceManager()
+            result = await manager.sync_repo(name, dry_run=dry_run)
+
+            if result.get(name, {}).get("success"):
+                if dry_run:
+                    logger.success(f"✅ {name} is ready for sync")
+                else:
+                    logger.success(f"✅ {name} synchronized successfully")
             else:
-                logger.success(f"✅ {name} synchronized successfully")
-        else:
-            error = result.get(name, {}).get("error", "Unknown error")
-            logger.error(f"❌ {name}: {error}")
+                error = result.get(name, {}).get("error", "Unknown error")
+                logger.error(f"❌ {name}: {error}")
 
-    except Exception as e:
-        logger.error("❌ Failed to sync repository", error=str(e))
-        raise
+        except Exception as e:
+            logger.error("❌ Failed to sync repository", error=str(e))
+            raise
+
+    asyncio.run(_sync_repo())
 
 
 @register_command("workspace.drift", description="Check for configuration drift")

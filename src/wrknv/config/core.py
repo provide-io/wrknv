@@ -418,10 +418,20 @@ class WorkenvConfig(RuntimeConfig):
             errors.append("Tool name cannot be empty")
             return errors
 
-        # Tool config can be string (version) or dict (detailed config)
+        # Tool config can be string (version), dict (detailed config), or list (matrix config)
         if isinstance(tool_config, str):
             if not self._is_valid_version(tool_config):
                 errors.append(f"Invalid version for tool '{tool_name}': {tool_config}")
+        elif isinstance(tool_config, list):
+            # Matrix configuration - validate each version in the list
+            if not tool_config:
+                errors.append(f"Tool '{tool_name}' has empty version list")
+            else:
+                for i, version in enumerate(tool_config):
+                    if not isinstance(version, str):
+                        errors.append(f"Version {i} for tool '{tool_name}' must be string")
+                    elif not self._is_valid_version(version):
+                        errors.append(f"Invalid version {i} for tool '{tool_name}': {version}")
         elif isinstance(tool_config, dict):
             # Validate version if present
             version = tool_config.get("version")
@@ -448,7 +458,7 @@ class WorkenvConfig(RuntimeConfig):
                         if not isinstance(env_value, str):
                             errors.append(f"Environment value for tool '{tool_name}' must be string")
         else:
-            errors.append(f"Tool configuration for '{tool_name}' must be string or dictionary")
+            errors.append(f"Tool configuration for '{tool_name}' must be string, list, or dictionary")
 
         return errors
 
