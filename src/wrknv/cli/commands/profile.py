@@ -19,10 +19,16 @@ from wrknv.config import WorkenvConfig
 from wrknv.wenv.managers.factory import get_tool_manager
 
 
+# Register the profile group first
+@register_command("profile", group=True, description="Manage tool version profiles")
+def profile_group():
+    """Commands for managing profiles."""
+    pass
+
+
 @register_command(
-    "profile-list",
+    "profile.list",
     description="List available profiles",
-    category="profile",
 )
 def profile_list():
     """List available profiles."""
@@ -41,9 +47,8 @@ def profile_list():
 
 
 @register_command(
-    "profile-save",
+    "profile.save",
     description="Save current tool versions as a profile",
-    category="profile",
 )
 def profile_save(name: str, force: bool = False):
     """Save current tool versions as a profile."""
@@ -67,9 +72,8 @@ def profile_save(name: str, force: bool = False):
 
 
 @register_command(
-    "profile-load",
+    "profile.load",
     description="Load and apply a profile",
-    category="profile",
 )
 def profile_load(name: str):
     """Load and apply a profile."""
@@ -105,9 +109,8 @@ def profile_load(name: str):
 
 
 @register_command(
-    "profile-delete",
+    "profile.delete",
     description="Delete a profile",
-    category="profile",
 )
 def profile_delete(name: str):
     """Delete a profile."""
@@ -128,9 +131,8 @@ def profile_delete(name: str):
 
 
 @register_command(
-    "profile-show",
+    "profile.show",
     description="Show profile details",
-    category="profile",
 )
 def profile_show(name: str):
     """Show profile details."""
@@ -147,9 +149,8 @@ def profile_show(name: str):
 
 
 @register_command(
-    "profile-export",
+    "profile.export",
     description="Export a profile to a file",
-    category="profile",
 )
 def profile_export(name: str, output: str):
     """Export a profile to a file."""
@@ -177,9 +178,8 @@ def profile_export(name: str, output: str):
 
 
 @register_command(
-    "profile-import",
+    "profile.import",
     description="Import a profile from a file",
-    category="profile",
 )
 def profile_import(file: str):
     """Import a profile from a file."""
