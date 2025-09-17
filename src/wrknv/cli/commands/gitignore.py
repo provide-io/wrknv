@@ -31,23 +31,27 @@ def gitignore_group():
 )
 def gitignore_list(category: str | None = None):
     """List available gitignore templates."""
-    config = WorkenvConfig.load()
-    gitignore_config = config.get_setting("gitignore", {})
-    templates_path = gitignore_config.get("templates_path")
-    manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)
+    try:
+        config = WorkenvConfig.load()
+        gitignore_config = config.get_setting("gitignore", {})
+        templates_path = gitignore_config.get("templates_path")
+        manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)
 
-    templates = manager.list_available_templates(category=category)
+        templates = manager.list_available_templates(category=category)
 
-    if not templates:
-        echo_info("No templates found")
-        return
+        if not templates:
+            if category:
+                echo_info(f"No templates found in category '{category}'")
+            else:
+                echo_info("No templates found")
+            return
 
-    if category:
-        echo_info(f"Templates in category '{category}':")
-    else:
-        echo_info("Available templates:")
+        if category:
+            echo_info(f"Templates in category '{category}':")
+        else:
+            echo_info("Available templates:")
 
-    for template in templates:
+        for template in templates:
         echo_info(f"  • {template}")
 
     echo_info(f"\nTotal: {len(templates)} templates")
