@@ -15,7 +15,7 @@ from provide.foundation.cli import echo_error, echo_info, echo_success, echo_war
 
 from wrknv.workenv import WorkenvExporter, WorkenvImporter, WorkenvPackager
 from wrknv.workenv.registry import WorkenvRegistry
-from wrknv.wenv.schema import WorkenvConfig
+from wrknv.config import WorkenvConfig
 from wrknv.wenv.workenv import WorkenvManager
 
 
@@ -40,8 +40,8 @@ def create(
             manager = WorkenvManager()
 
             if from_config and from_config.exists():
-                # Load configuration from file
-                config = WorkenvConfig.load_from_file(from_config)
+                # Load configuration from specific file
+                config = WorkenvConfig.load(config_file=from_config)
                 workenv_name = name or config.project_name
             else:
                 # Use current directory config or defaults
