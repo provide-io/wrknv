@@ -69,7 +69,7 @@ def export(
     format_type: str = "psp"
 ):
         """Export workenv for distribution."""
-        logger.info("📦 Exporting workenv", output=str(output), format=format_type)
+        echo_info(f"📦 Exporting workenv to {output} (format: {format_type})")
 
         try:
             # Load current configuration
@@ -94,12 +94,12 @@ def export(
                     format_type="psp"
                 )
 
-                logger.success(f"✅ Workenv packaged: {package_path}")
+                echo_success(f"✅ Workenv packaged: {package_path}")
             else:
-                logger.success(f"✅ Workenv exported: {output}")
+                echo_success(f"✅ Workenv exported: {output}")
 
         except Exception as e:
-            logger.error("❌ Failed to export workenv", error=str(e))
+            echo_error(f"❌ Failed to export workenv: {e}")
             raise
 
 @register_command("workenv.import", description="Import a packaged workenv")
