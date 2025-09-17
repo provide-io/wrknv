@@ -11,6 +11,7 @@ from typing import Any
 
 from provide.foundation.hub import register_command
 from provide.foundation import logger
+from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 
 from wrknv.workenv import WorkenvExporter, WorkenvImporter, WorkenvPackager
 from wrknv.workenv.registry import WorkenvRegistry
@@ -53,11 +54,11 @@ def create(
                 force=force
             )
 
-            logger.success(f"✅ Workenv created: {workenv_path}")
-            logger.info(f"💡 Activate with: source {workenv_path.parent.parent}/env.sh")
+            echo_success(f"✅ Workenv created: {workenv_path}")
+            echo_info(f"💡 Activate with: source {workenv_path.parent.parent}/env.sh")
 
         except Exception as e:
-            logger.error("❌ Failed to create workenv", error=str(e))
+            echo_error(f"❌ Failed to create workenv: {e}")
             raise
 
 @register_command("workenv.export", description="Export workenv for distribution")
@@ -144,34 +145,33 @@ async def import_workenv(
 @register_command("workenv.list", description="List available workenvs")
 def list_workenvs(registry_url: str | None = None):
         """List available workenvs."""
-        logger.info("📋 Listing workenvs")
-
         try:
             # List local workenvs
             workenv_dir = Path.home() / ".wrknv" / "cache" / "packages"
             if workenv_dir.exists():
                 local_packages = list(workenv_dir.glob("*.psp"))
                 if local_packages:
-                    logger.info("🏠 Local workenvs:")
+                    echo_info("🏠 Local workenvs:")
                     for package in local_packages:
-                        logger.info(f"  - {package.stem}")
+                        echo_info(f"  - {package.stem}")
                 else:
-                    logger.info("🏠 No local workenvs found")
+                    echo_info("🏠 No local workenvs found")
+            else:
+                echo_info("🏠 No local workenv cache directory found")
+                echo_info(f"   Expected at: {workenv_dir}")
 
             # List registry workenvs (placeholder)
             if registry_url:
-                logger.info(f"🌐 Registry workenvs from {registry_url}:")
-                logger.info("  (Registry integration coming soon)")
+                echo_info(f"🌐 Registry workenvs from {registry_url}:")
+                echo_info("  (Registry integration coming soon)")
 
         except Exception as e:
-            logger.error("❌ Failed to list workenvs", error=str(e))
+            echo_error(f"❌ Failed to list workenvs: {e}")
             raise
 
 @register_command("workenv.activate", description="Show activation command for workenv")
 def activate(name: str | None = None):
         """Show activation command for workenv."""
-        logger.info("🚀 Getting activation command", name=name)
-
         try:
             # Find workenv
             if name:
@@ -180,27 +180,27 @@ def activate(name: str | None = None):
                 if possible_paths:
                     workenv_path = possible_paths[0]
                 else:
-                    logger.error(f"❌ Workenv not found: {name}")
+                    echo_error(f"❌ Workenv not found: {name}")
                     return
             else:
                 # Use current project workenv
                 env_script = Path.cwd() / "env.sh"
                 if env_script.exists():
-                    logger.info(f"💡 Activate with: source {env_script}")
+                    echo_info(f"💡 Activate with: source {env_script}")
                     return
                 else:
-                    logger.error("❌ No workenv found in current directory")
+                    echo_error("❌ No workenv found in current directory")
                     return
 
             # Show activation command
             if workenv_path.exists():
-                logger.info(f"💡 Activate workenv: source workenv/env.sh")
-                logger.info(f"📁 Workenv path: {workenv_path}")
+                echo_info(f"💡 Activate workenv: source workenv/env.sh")
+                echo_info(f"📁 Workenv path: {workenv_path}")
             else:
-                logger.error(f"❌ Workenv path does not exist: {workenv_path}")
+                echo_error(f"❌ Workenv path does not exist: {workenv_path}")
 
         except Exception as e:
-            logger.error("❌ Failed to get activation command", error=str(e))
+            echo_error(f"❌ Failed to get activation command: {e}")
             raise
 
 @register_command("workenv.publish", description="Publish workenv to registry")
