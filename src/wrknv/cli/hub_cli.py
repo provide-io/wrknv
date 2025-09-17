@@ -20,6 +20,7 @@ def load_commands():
     from wrknv.cli.commands import (
         config,  # noqa: F401
         container,  # noqa: F401
+        doctor,  # noqa: F401
         gitignore,  # noqa: F401
         package,  # noqa: F401
         profile,  # noqa: F401
