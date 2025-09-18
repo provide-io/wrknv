@@ -12,7 +12,7 @@ import json
 import sys
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
-from provide.foundation.errors import ConfigurationError, with_error_handling
+from provide.foundation.errors import ConfigurationError, resilient
 from provide.foundation.hub import register_command
 
 from wrknv.config import WorkenvConfig
@@ -62,7 +62,7 @@ def config_show(
     "config.edit",
     description="Edit configuration file",
 )
-@with_error_handling
+@resilient
 def config_edit():
     """Edit configuration file."""
     config = WorkenvConfig.load()

@@ -12,7 +12,7 @@ import os
 
 from attrs import define
 from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
+from provide.foundation.errors import resilient
 from provide.foundation.process import ProcessError
 from rich.console import Console
 
@@ -29,7 +29,7 @@ class ContainerExec:
     available_shells: list[str]
     default_shell: str
 
-    @with_error_handling
+    @resilient
     def exec(
         self,
         command: list[str] | None = None,
@@ -128,7 +128,7 @@ class ContainerExec:
         """
         return self.exec(command=None, shell=shell, interactive=True, tty=True, **kwargs)
 
-    @with_error_handling
+    @resilient
     def run_command(self, command: list[str], capture_output: bool, **kwargs) -> str | None:
         """Run a command in the container and return output.
 

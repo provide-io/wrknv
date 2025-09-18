@@ -13,7 +13,7 @@ import tarfile
 import zipfile
 
 from provide.foundation import logger
-from provide.foundation.errors import ResourceError, ValidationError, with_error_handling
+from provide.foundation.errors import ResourceError, ValidationError, resilient
 from provide.foundation.file import (
     ensure_dir,
     get_size,
@@ -23,7 +23,7 @@ from provide.foundation.file import (
 )
 
 
-@with_error_handling
+@resilient
 def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
     """Extract archive to specified directory."""
 
@@ -89,7 +89,7 @@ def _extract_zip(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
         zip_file.extractall(path=extract_dir)
 
 
-@with_error_handling
+@resilient
 def make_executable(file_path: pathlib.Path) -> None:
     """Make file executable on Unix-like systems."""
 
@@ -119,7 +119,7 @@ def make_executable(file_path: pathlib.Path) -> None:
         logger.warning(f"Failed to make {file_path} executable: {e}")
 
 
-@with_error_handling
+@resilient
 def create_symlink(target: pathlib.Path, link_path: pathlib.Path) -> None:
     """Create symbolic link, handling platform differences."""
 
@@ -188,7 +188,7 @@ def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
     logger.debug(f"Cleaned directory: {dir_path}")
 
 
-@with_error_handling
+@resilient
 def get_file_size(file_path: pathlib.Path) -> int:
     """Get file size in bytes."""
     # Use foundation's get_size which returns 0 for missing files
