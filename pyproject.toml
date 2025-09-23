@@ -55,10 +55,6 @@ docs = [
     "provide-testkit[docs]",
 ]
 
-[tool.uv.sources]
-provide-foundation = { workspace = true }
-provide-testkit = { workspace = true }
-
 [project.scripts]
 wrknv = "wrknv.cli.hub_cli:main"
 
