@@ -319,7 +319,7 @@ class TestConfigValidation(FoundationTestCase):
             assert True
         else:
             assert not is_valid
-            self.assertGreater(len(errors), 0)
+            assert len(errors) > 0
 
     def test_load_config_from_dict(self) -> None:
         """Test loading configuration from dictionary."""

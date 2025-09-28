@@ -76,38 +76,45 @@ class ContainerManager:
         self.storage.setup_storage()
 
         # Initialize runtime
-        self.runtime = DockerRuntime()
+        self.runtime = DockerRuntime(
+            runtime_name="docker",
+            runtime_command="docker",
+        )
 
-        # Initialize operations with dependencies
+        # Initialize operations with dependencies (simplified for compatibility)
         self.lifecycle = ContainerLifecycle(
             runtime=self.runtime,
             container_name=self.container_name,
-            image_name=self.full_image,
-            storage=self.storage,
+            console=self.console,
+            start_emoji="🚀",
+            stop_emoji="⏹️",
+            restart_emoji="🔄",
+            status_emoji="📊",
         )
 
         self.exec = ContainerExec(
             runtime=self.runtime,
             container_name=self.container_name,
+            console=self.console,
+            available_shells=["/bin/bash", "/bin/sh"],
+            default_shell="/bin/bash",
         )
 
         self.builder = ContainerBuilder(
             runtime=self.runtime,
-            image_name=self.full_image,
-            storage=self.storage,
-            container_config=self.container_config,
+            console=self.console,
         )
 
         self.logs = ContainerLogs(
             runtime=self.runtime,
             container_name=self.container_name,
-            storage=self.storage,
+            console=self.console,
         )
 
         self.volumes = VolumeManager(
             runtime=self.runtime,
             container_name=self.container_name,
-            storage=self.storage,
+            console=self.console,
         )
 
     # Convenience methods that delegate to operations

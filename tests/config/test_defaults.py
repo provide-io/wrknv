@@ -4,8 +4,10 @@ Test config/defaults.py module
 
 from __future__ import annotations
 
-from wrknv.config.defaults import (
+from pathlib import Path
+
 import pytest
+from wrknv.config.defaults import (
     DEFAULT_ACTIVATE,
     DEFAULT_AUTO_DISCOVER,
     DEFAULT_CLI_HELP,
