@@ -3,16 +3,14 @@
 """
 Test suite for CLI config commands.
 """
+
 from __future__ import annotations
 
-
 import os
-from pathlib import Path
-import tempfile
-import unittest
 from unittest.mock import Mock, patch
 
 import click.testing
+from provide.testkit import FoundationTestCase
 import pytest
 
 from wrknv.cli.hub_cli import create_cli
@@ -20,24 +18,19 @@ from wrknv.cli.hub_cli import create_cli
 
 @pytest.mark.cli
 @pytest.mark.config
-class TestConfigCommands(unittest.TestCase):
+class TestConfigCommands(FoundationTestCase):
     """Test config show and edit CLI commands."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runner = click.testing.CliRunner()
         self.cli = create_cli()
-        self.temp_dir = tempfile.mkdtemp()
-        self.temp_path = Path(self.temp_dir)
+        self.temp_dir = self.create_temp_dir()
+        self.temp_path = self.temp_dir
         self.config_file = self.temp_path / "wrknv.toml"
 
-    def tearDown(self):
-        """Clean up test fixtures."""
-        import shutil
-
-        shutil.rmtree(self.temp_dir, ignore_errors=True)
-
-    def test_config_show_no_config(self):
+    def test_config_show_no_config(self) -> None:
         """Test showing config when no config file exists."""
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -46,10 +39,10 @@ class TestConfigCommands(unittest.TestCase):
 
             result = self.runner.invoke(self.cli, ["config", "show"])
 
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
             mock_config.show_config.assert_called_once()
 
-    def test_config_show_with_config(self):
+    def test_config_show_with_config(self) -> None:
         """Test showing existing configuration."""
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -58,10 +51,10 @@ class TestConfigCommands(unittest.TestCase):
 
             result = self.runner.invoke(self.cli, ["config", "show"])
 
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
             mock_config.show_config.assert_called_once()
 
-    def test_config_show_json_format(self):
+    def test_config_show_json_format(self) -> None:
         """Test showing config in JSON format."""
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -73,14 +66,14 @@ class TestConfigCommands(unittest.TestCase):
 
             result = self.runner.invoke(self.cli, ["config", "show", "--json"])
 
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
             # Output should be valid JSON
             import json
 
             output_data = json.loads(result.output)
-            self.assertEqual(output_data["project_name"], "test-project")
+            assert output_data["project_name"] == "test-project"
 
-    def test_config_show_with_profile_filter(self):
+    def test_config_show_with_profile_filter(self) -> None:
         """Test showing only specific profile configuration."""
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -89,11 +82,11 @@ class TestConfigCommands(unittest.TestCase):
 
             result = self.runner.invoke(self.cli, ["config", "show", "--profile", "dev"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Profile: dev", result.output)
-            self.assertIn("terraform: 1.5.0", result.output)
+            assert result.exit_code == 0
+            assert "Profile: dev" in result.output
+            assert "terraform: 1.5.0" in result.output
 
-    def test_config_edit_with_editor(self):
+    def test_config_edit_with_editor(self) -> None:
         """Test editing config file with default editor."""
         self.config_file.write_text('project_name = "test-project"')
 
@@ -105,10 +98,10 @@ class TestConfigCommands(unittest.TestCase):
 
             result = self.runner.invoke(self.cli, ["config", "edit"])
 
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
             mock_config.edit_config.assert_called_once()
 
-    def test_config_edit_no_editor_set(self):
+    def test_config_edit_no_editor_set(self) -> None:
         """Test editing config when no EDITOR is set."""
         self.config_file.write_text('project_name = "test-project"')
 
@@ -128,9 +121,9 @@ class TestConfigCommands(unittest.TestCase):
                 result = self.runner.invoke(self.cli, ["config", "edit"])
 
                 # The command catches the exception and shows error message
-                self.assertIn("No editor configured", result.output)
+                assert "No editor configured" in result.output
 
-    def test_config_edit_creates_file_if_missing(self):
+    def test_config_edit_creates_file_if_missing(self) -> None:
         """Test that edit creates a config file if it doesn't exist."""
         with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
             with patch("provide.foundation.process.run_command") as mock_run:
@@ -144,10 +137,10 @@ class TestConfigCommands(unittest.TestCase):
 
                     result = self.runner.invoke(self.cli, ["config", "edit"])
 
-                    self.assertEqual(result.exit_code, 0)
+                    assert result.exit_code == 0
                     mock_config.edit_config.assert_called_once()
 
-    def test_config_validate(self):
+    def test_config_validate(self) -> None:
         """Test validating configuration file."""
         self.config_file.write_text("""
 project_name = "test-project"
@@ -165,10 +158,10 @@ terraform = { version = "1.5.0" }
 
             result = self.runner.invoke(self.cli, ["config", "validate"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Configuration is valid", result.output)
+            assert result.exit_code == 0
+            assert "Configuration is valid" in result.output
 
-    def test_config_validate_with_errors(self):
+    def test_config_validate_with_errors(self) -> None:
         """Test validating invalid configuration."""
         self.config_file.write_text("""
 # Missing project_name
@@ -186,11 +179,11 @@ version = "1.0.0"
 
             result = self.runner.invoke(self.cli, ["config", "validate"])
 
-            self.assertEqual(result.exit_code, 1)
-            self.assertIn("Configuration validation failed", result.output)
-            self.assertIn("Missing required field: project_name", result.output)
+            assert result.exit_code == 1
+            assert "Configuration validation failed" in result.output
+            assert "Missing required field: project_name" in result.output
 
-    def test_config_init(self):
+    def test_config_init(self) -> None:
         """Test initializing a new configuration file."""
         with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -200,10 +193,10 @@ version = "1.0.0"
 
             result = self.runner.invoke(self.cli, ["config", "init"], input="my-project\n1.0.0\nINFO\n")
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Created configuration file", result.output)
+            assert result.exit_code == 0
+            assert "Created configuration file" in result.output
 
-    def test_config_init_already_exists(self):
+    def test_config_init_already_exists(self) -> None:
         """Test initializing when config already exists."""
         self.config_file.write_text('project_name = "existing"')
 
@@ -215,10 +208,10 @@ version = "1.0.0"
 
             result = self.runner.invoke(self.cli, ["config", "init"])
 
-            self.assertEqual(result.exit_code, 1)
-            self.assertIn("Configuration file already exists", result.output)
+            assert result.exit_code == 1
+            assert "Configuration file already exists" in result.output
 
-    def test_config_get_setting(self):
+    def test_config_get_setting(self) -> None:
         """Test getting a specific configuration setting."""
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -227,10 +220,10 @@ version = "1.0.0"
 
             result = self.runner.invoke(self.cli, ["config", "get", "log_level"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("log_level: INFO", result.output)
+            assert result.exit_code == 0
+            assert "log_level: INFO" in result.output
 
-    def test_config_set_setting(self):
+    def test_config_set_setting(self) -> None:
         """Test setting a configuration value."""
         with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -239,11 +232,11 @@ version = "1.0.0"
 
             result = self.runner.invoke(self.cli, ["config", "set", "log_level", "DEBUG"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Set log_level to DEBUG", result.output)
+            assert result.exit_code == 0
+            assert "Set log_level to DEBUG" in result.output
             mock_config.set_setting.assert_called_once_with("log_level", "DEBUG")
 
-    def test_config_path(self):
+    def test_config_path(self) -> None:
         """Test showing configuration file path."""
         with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -252,26 +245,21 @@ version = "1.0.0"
 
             result = self.runner.invoke(self.cli, ["config", "path"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn(str(self.config_file), result.output)
+            assert result.exit_code == 0
+            assert str(self.config_file) in result.output
 
 
-class TestConfigCommandIntegration(unittest.TestCase):
+class TestConfigCommandIntegration(FoundationTestCase):
     """Integration tests for config commands."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runner = click.testing.CliRunner()
-        self.temp_dir = tempfile.mkdtemp()
-        self.temp_path = Path(self.temp_dir)
+        self.temp_dir = self.create_temp_dir()
+        self.temp_path = self.temp_dir
 
-    def tearDown(self):
-        """Clean up test fixtures."""
-        import shutil
-
-        shutil.rmtree(self.temp_dir, ignore_errors=True)
-
-    def test_config_init_and_validate_integration(self):
+    def test_config_init_and_validate_integration(self) -> None:
         """Test creating and validating a config file."""
         config_file = self.temp_path / "wrknv.toml"
 
@@ -280,15 +268,15 @@ class TestConfigCommandIntegration(unittest.TestCase):
 
             # Initialize config
             result = self.runner.invoke(self.cli, ["config", "init"], input="test-project\n1.0.0\nINFO\n")
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
 
             # Verify file was created
-            self.assertTrue(config_file.exists())
+            assert config_file.exists()
 
             # Validate the config
             result = self.runner.invoke(self.cli, ["config", "validate"])
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])
