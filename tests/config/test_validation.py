@@ -8,9 +8,10 @@ from __future__ import annotations
 
 import pathlib
 
+from provide.testkit import FoundationTestCase
+
 from wrknv.wenv.config import ValidatedTomlSource, WorkenvConfigError
 from wrknv.wenv.schema import (
-from provide.testkit import FoundationTestCase
     ContainerConfig,
     PackageConfig,
     ProfileConfig,
