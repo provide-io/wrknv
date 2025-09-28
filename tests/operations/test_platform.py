@@ -6,12 +6,12 @@ Test suite for platform detection operations.
 from __future__ import annotations
 
 
-import unittest
 from unittest.mock import patch
 
-from wrknv.wenv.operations.platform import (
-from provide.testkit import FoundationTestCase
 import pytest
+from provide.testkit import FoundationTestCase
+
+from wrknv.wenv.operations.platform import (
     format_platform_string,
     get_architecture,
     get_archive_extension,

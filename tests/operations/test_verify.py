@@ -8,13 +8,12 @@ Comprehensive tests for the operations/verify module.
 from __future__ import annotations
 
 
-import subprocess
-import unittest
 from unittest.mock import Mock, patch
 
-from wrknv.wenv.operations.verify import (
-from provide.testkit import FoundationTestCase
 import pytest
+from provide.testkit import FoundationTestCase
+
+from wrknv.wenv.operations.verify import (
     check_binary_compatibility,
     get_installed_version_info,
     get_version_command_args,

@@ -10,10 +10,9 @@ from __future__ import annotations
 
 
 import pathlib
-import subprocess
 
 from provide.foundation import logger
-from provide.foundation.process import run_command
+from provide.foundation.process import run_command, ProcessTimeoutError
 
 
 def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, tool_name: str) -> bool:
@@ -67,7 +66,7 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
             logger.error(f"Version command failed for {tool_name}: {result.stderr}")
             return None
 
-    except subprocess.TimeoutExpired:
+    except ProcessTimeoutError:
         logger.error(f"Version check timed out for {tool_name}")
         return None
     except Exception as e:
@@ -113,7 +112,7 @@ def check_binary_compatibility(binary_path: pathlib.Path) -> dict[str, any]:
             "stderr": result.stderr[:200] if result.stderr else "",
         }
 
-    except subprocess.TimeoutExpired:
+    except ProcessTimeoutError:
         return {"compatible": False, "error": "Binary execution timed out"}
     except Exception as e:
         return {"compatible": False, "error": str(e)}

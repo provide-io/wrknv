@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import pytest
-
 #
 # tests/container/test_container_integration.py
 #
@@ -16,9 +14,10 @@ import json
 from pathlib import Path
 import shutil
 import time
-from unittest import skipIf
 
+import pytest
 from provide.foundation.process import run_command
+from provide.testkit import FoundationTestCase
 
 from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
@@ -30,9 +29,9 @@ def docker_available():
 
 
 @pytest.mark.integration
-@skipIf(not docker_available(), "Docker not available")
+@pytest.mark.skipif(not docker_available(), reason="Docker not available")
 @pytest.mark.container
-class TestContainerVolumeIntegration:
+class TestContainerVolumeIntegration(FoundationTestCase):
     """Test actual container volume interactions with the host filesystem."""
 
     @pytest.fixture
