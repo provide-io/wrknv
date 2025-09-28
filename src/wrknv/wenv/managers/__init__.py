@@ -12,8 +12,8 @@ from __future__ import annotations
 from .base import BaseToolManager, ToolManagerError
 from .factory import get_supported_tools, get_tool_manager
 from .go import GoManager
-from .ibm_tf import IbmTfManager
-from .tofu import TofuManager
+from .tf.ibm import IbmTfManager
+from .tf.tofu import TofuManager
 from .uv import UvManager
 
 __all__ = [

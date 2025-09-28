@@ -23,7 +23,7 @@ import sys
 from provide.foundation import logger
 import semver
 
-from .base import BaseToolManager, ToolManagerError
+from wrknv.wenv.managers.base import BaseToolManager, ToolManagerError
 
 
 class TfVersionsManager(BaseToolManager):
