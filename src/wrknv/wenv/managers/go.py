@@ -6,6 +6,8 @@ Go Tool Manager for wrknv
 ============================
 Manages Go versions for development.
 """
+from __future__ import annotations
+
 
 import json
 import pathlib

@@ -3,6 +3,8 @@ wrknv Logging Setup
 ===================
 Provides setup functions for wrknv logging configuration.
 """
+from __future__ import annotations
+
 
 import os
 

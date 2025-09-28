@@ -7,6 +7,8 @@ Lock Commands
 =============
 Commands for managing wrknv.lock files.
 """
+from __future__ import annotations
+
 
 import sys
 from pathlib import Path

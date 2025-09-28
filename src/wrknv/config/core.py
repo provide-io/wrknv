@@ -3,6 +3,8 @@ Core Configuration for wrknv
 =============================
 Main configuration classes using provide.foundation.
 """
+from __future__ import annotations
+
 
 import os
 from pathlib import Path

@@ -7,6 +7,8 @@ Hub-based CLI Entry Point
 =========================
 Main CLI using provide.foundation.hub for command registration.
 """
+from __future__ import annotations
+
 
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger

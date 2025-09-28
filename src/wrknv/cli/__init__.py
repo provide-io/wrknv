@@ -3,6 +3,8 @@ wrknv CLI Module
 ================
 Command-line interface for wrknv tool management.
 """
+from __future__ import annotations
+
 
 from wrknv.cli.hub_cli import create_cli, main
 

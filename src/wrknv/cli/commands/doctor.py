@@ -7,6 +7,8 @@ Doctor Commands
 ===============
 Commands for diagnosing and testing the wrknv system.
 """
+from __future__ import annotations
+
 
 import sys
 from pathlib import Path

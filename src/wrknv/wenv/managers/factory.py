@@ -6,6 +6,8 @@ Tool Manager Factory for wrknv
 ================================
 Factory for creating appropriate tool managers.
 """
+from __future__ import annotations
+
 
 from wrknv.config import WorkenvConfig
 

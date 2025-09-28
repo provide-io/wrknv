@@ -6,6 +6,8 @@ wrknv Tool Managers
 ====================
 Tool managers for different development tools.
 """
+from __future__ import annotations
+
 
 from .base import BaseToolManager, ToolManagerError
 from .factory import get_supported_tools, get_tool_manager

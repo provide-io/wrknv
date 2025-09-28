@@ -3,6 +3,8 @@ Template Handler for Gitignore Files
 =====================================
 Manages gitignore templates from GitHub's collection.
 """
+from __future__ import annotations
+
 
 import json
 from pathlib import Path

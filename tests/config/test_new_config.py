@@ -3,6 +3,8 @@ Test the new foundation-based config system
 ===========================================
 Tests for the WorkenvConfig implementation using provide.foundation.
 """
+from __future__ import annotations
+
 
 import pathlib
 import tempfile

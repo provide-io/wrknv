@@ -3,6 +3,8 @@ Configuration Sources for wrknv
 ================================
 Different sources for loading configuration.
 """
+from __future__ import annotations
+
 
 import os
 from pathlib import Path

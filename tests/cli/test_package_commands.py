@@ -3,6 +3,8 @@ TDD Tests for wrknv Package Commands
 =====================================
 Test-driven development for package management functionality.
 """
+from __future__ import annotations
+
 
 from pathlib import Path
 from unittest.mock import MagicMock, patch

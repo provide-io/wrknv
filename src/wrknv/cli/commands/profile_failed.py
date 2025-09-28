@@ -3,6 +3,8 @@ Profile Commands for wrknv
 ===========================
 Commands for managing configuration profiles.
 """
+from __future__ import annotations
+
 
 from pathlib import Path
 

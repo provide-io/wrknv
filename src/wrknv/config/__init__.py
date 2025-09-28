@@ -3,6 +3,8 @@ wrknv Configuration Management
 ==============================
 Configuration system for wrknv using provide.foundation.
 """
+from __future__ import annotations
+
 
 from .core import (
     WorkenvConfig,

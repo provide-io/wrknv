@@ -6,6 +6,8 @@ UV Tool Manager for wrknv
 ============================
 Manages UV (Python package manager) versions for development.
 """
+from __future__ import annotations
+
 
 import json
 import pathlib

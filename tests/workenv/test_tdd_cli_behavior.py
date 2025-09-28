@@ -3,6 +3,8 @@ TDD Tests for TofuSoup Workenv CLI Behavior
 ===========================================
 These tests define the exact CLI behavior expected from workenv commands.
 """
+from __future__ import annotations
+
 
 import pytest
 import tempfile

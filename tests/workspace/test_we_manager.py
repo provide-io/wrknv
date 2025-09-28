@@ -1,6 +1,8 @@
 """
 Tests for workspace manager functionality.
 """
+from __future__ import annotations
+
 
 from pathlib import Path
 from unittest.mock import Mock, patch

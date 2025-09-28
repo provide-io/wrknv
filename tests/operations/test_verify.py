@@ -5,6 +5,8 @@
 """
 Comprehensive tests for the operations/verify module.
 """
+from __future__ import annotations
+
 
 from pathlib import Path
 import subprocess

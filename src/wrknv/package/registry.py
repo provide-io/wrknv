@@ -7,6 +7,8 @@ Client for interacting with package registries.
 
 Requires Python 3.11+ for native type hint support with pipe operators.
 """
+from __future__ import annotations
+
 
 import hashlib
 import json

@@ -8,6 +8,8 @@ Base class for Tf (IBM Terraform/OpenTofu) managers that use ~/.terraform.versio
 directory structure. This implementation is compatible with tfswitch and
 designed for managing Tf tool versions.
 """
+from __future__ import annotations
+
 
 from abc import abstractmethod
 from datetime import datetime

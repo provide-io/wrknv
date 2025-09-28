@@ -6,6 +6,8 @@ wrknv Configuration Management
 ==============================
 Flexible configuration system that supports multiple sources.
 """
+from __future__ import annotations
+
 
 import os
 import pathlib

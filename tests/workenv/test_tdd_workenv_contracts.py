@@ -4,6 +4,8 @@ TDD Contracts for TofuSoup Workenv
 These tests define the expected behavior and API contracts for the workenv system.
 They should be written BEFORE the implementation to drive development.
 """
+from __future__ import annotations
+
 
 import pytest
 import pathlib

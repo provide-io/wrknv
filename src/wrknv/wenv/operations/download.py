@@ -6,6 +6,8 @@ wrknv Download Operations
 ====================================
 Functions for downloading and verifying tool archives.
 """
+from __future__ import annotations
+
 
 import pathlib
 from urllib.parse import urlparse

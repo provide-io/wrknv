@@ -3,6 +3,8 @@ TDD Tests for wrknv Configuration Integration
 ==============================================
 These tests define the expected behavior for wrknv's flexible configuration system.
 """
+from __future__ import annotations
+
 
 import pathlib
 import tempfile

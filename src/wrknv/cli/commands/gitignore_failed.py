@@ -3,6 +3,8 @@ gitignore Commands for wrknv
 =============================
 Commands for managing .gitignore templates.
 """
+from __future__ import annotations
+
 
 from pathlib import Path
 

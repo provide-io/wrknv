@@ -3,6 +3,8 @@ Tests for Download Operations
 =============================
 Tests for the download functionality in wrknv.
 """
+from __future__ import annotations
+
 
 import hashlib
 from unittest.mock import patch

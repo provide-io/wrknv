@@ -3,6 +3,8 @@ Gitignore Management Module
 ===========================
 Comprehensive gitignore file management for wrknv projects.
 """
+from __future__ import annotations
+
 
 from .builder import GitignoreBuilder
 from .detector import ProjectDetector

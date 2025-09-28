@@ -7,6 +7,8 @@ Tool Management Commands
 ========================
 Commands for managing development tools (status, sync, doctor, etc).
 """
+from __future__ import annotations
+
 
 import pathlib
 import sys

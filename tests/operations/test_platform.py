@@ -3,6 +3,8 @@
 """
 Test suite for platform detection operations.
 """
+from __future__ import annotations
+
 
 import unittest
 from unittest.mock import patch
