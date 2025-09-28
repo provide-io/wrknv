@@ -3,44 +3,37 @@
 """
 Test suite for CLI setup command.
 """
+
 from __future__ import annotations
 
-
-from pathlib import Path
 import subprocess
-import tempfile
-import unittest
 from unittest.mock import Mock, patch
 
 import click.testing
+from provide.testkit import FoundationTestCase
 
 from wrknv.cli.hub_cli import create_cli
 
 
-class TestSetupCommand(unittest.TestCase):
+class TestSetupCommand(FoundationTestCase):
     """Test setup CLI command."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runner = click.testing.CliRunner()
         self.cli = create_cli()
-        self.temp_dir = tempfile.mkdtemp()
-        self.temp_path = Path(self.temp_dir)
+        self.temp_dir = self.create_temp_dir()
+        self.temp_path = self.temp_dir
 
-    def tearDown(self):
-        """Clean up test fixtures."""
-        import shutil
-
-        shutil.rmtree(self.temp_dir, ignore_errors=True)
-
-    def test_setup_no_options(self):
+    def test_setup_no_options(self) -> None:
         """Test setup command with no options shows help."""
         result = self.runner.invoke(self.cli, ["setup"])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertIn("Available setup options:", result.output)
-        self.assertIn("--init", result.output)
-        self.assertIn("--shell-integration", result.output)
+        assert result.exit_code == 0
+        assert "Available setup options:" in result.output
+        assert "--init" in result.output
+        assert "--shell-integration" in result.output
 
     @patch("wrknv.wenv.workenv.WorkenvManager")
     def test_setup_init(self, mock_manager_class):
@@ -51,8 +44,8 @@ class TestSetupCommand(unittest.TestCase):
 
         result = self.runner.invoke(self.cli, ["setup", "--init"])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertIn("Setting up wrknv workenv", result.output)
+        assert result.exit_code == 0
+        assert "Setting up wrknv workenv" in result.output
         mock_manager_class.setup_workenv.assert_called_once_with(force=False)
 
     @patch("wrknv.wenv.workenv.WorkenvManager")
@@ -64,8 +57,8 @@ class TestSetupCommand(unittest.TestCase):
 
         result = self.runner.invoke(self.cli, ["setup", "--init", "--force"])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertIn("Forcing recreation of workenv", result.output)
+        assert result.exit_code == 0
+        assert "Forcing recreation of workenv" in result.output
         mock_manager.setup_workenv.assert_called_once_with(force=True)
 
     @patch("wrknv.wenv.workenv.WorkenvManager")
@@ -77,9 +70,9 @@ class TestSetupCommand(unittest.TestCase):
 
         result = self.runner.invoke(self.cli, ["setup", "--init"])
 
-        self.assertEqual(result.exit_code, 1)
-        self.assertIn("Failed to set up workenv", result.output)
-        self.assertIn("Failed to create virtualenv", result.output)
+        assert result.exit_code == 1
+        assert "Failed to set up workenv" in result.output
+        assert "Failed to create virtualenv" in result.output
 
     @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.exists")
@@ -90,9 +83,9 @@ class TestSetupCommand(unittest.TestCase):
 
         result = self.runner.invoke(self.cli, ["setup", "--shell-integration"])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertIn("Setting up shell integration", result.output)
-        self.assertIn("Shell integration configured successfully", result.output)
+        assert result.exit_code == 0
+        assert "Setting up shell integration" in result.output
+        assert "Shell integration configured successfully" in result.output
         mock_run.assert_called_once()
 
     @patch("provide.foundation.process.run_command")
@@ -103,8 +96,8 @@ class TestSetupCommand(unittest.TestCase):
 
         result = self.runner.invoke(self.cli, ["setup", "--shell-integration"])
 
-        self.assertEqual(result.exit_code, 1)
-        self.assertIn("Shell integration script not found", result.output)
+        assert result.exit_code == 1
+        assert "Shell integration script not found" in result.output
         mock_run.assert_not_called()
 
     @patch("provide.foundation.process.run_command")
@@ -116,8 +109,8 @@ class TestSetupCommand(unittest.TestCase):
 
         result = self.runner.invoke(self.cli, ["setup", "--shell-integration"])
 
-        self.assertEqual(result.exit_code, 1)
-        self.assertIn("Failed to set up shell integration", result.output)
+        assert result.exit_code == 1
+        assert "Failed to set up shell integration" in result.output
 
     @patch("provide.foundation.process.run_command")
     def test_setup_shell_integration_creates_aliases(self, mock_run):
@@ -140,7 +133,7 @@ alias wrknv-activate='source env.sh'
 
             result = self.runner.invoke(self.cli, ["setup", "--shell-integration"])
 
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
 
     @patch("wrknv.wenv.workenv.WorkenvManager")
     @patch("provide.foundation.process.run_command")
@@ -155,13 +148,13 @@ alias wrknv-activate='source env.sh'
 
         result = self.runner.invoke(workenv_cli, ["setup", "--init", "--shell-integration"])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertIn("Setting up wrknv workenv", result.output)
-        self.assertIn("Setting up shell integration", result.output)
+        assert result.exit_code == 0
+        assert "Setting up wrknv workenv" in result.output
+        assert "Setting up shell integration" in result.output
         mock_manager.setup_workenv.assert_called_once()
         mock_run.assert_called_once()
 
-    def test_setup_check_dependencies(self):
+    def test_setup_check_dependencies(self) -> None:
         """Test setup --check to verify dependencies."""
         with patch("shutil.which") as mock_which:
             # Mock that all dependencies are installed
@@ -169,13 +162,13 @@ alias wrknv-activate='source env.sh'
 
             result = self.runner.invoke(self.cli, ["setup", "--check"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Checking dependencies", result.output)
-            self.assertIn("✓ git", result.output)
-            self.assertIn("✓ curl", result.output)
-            self.assertIn("✓ python3", result.output)
+            assert result.exit_code == 0
+            assert "Checking dependencies" in result.output
+            assert "✓ git" in result.output
+            assert "✓ curl" in result.output
+            assert "✓ python3" in result.output
 
-    def test_setup_check_missing_dependencies(self):
+    def test_setup_check_missing_dependencies(self) -> None:
         """Test setup --check when dependencies are missing."""
         with patch("shutil.which") as mock_which:
             # Mock that git is missing
@@ -183,33 +176,33 @@ alias wrknv-activate='source env.sh'
 
             result = self.runner.invoke(self.cli, ["setup", "--check"])
 
-            self.assertEqual(result.exit_code, 1)
-            self.assertIn("Missing dependencies", result.output)
-            self.assertIn("✗ git", result.output)
+            assert result.exit_code == 1
+            assert "Missing dependencies" in result.output
+            assert "✗ git" in result.output
 
-    def test_setup_completions_bash(self):
+    def test_setup_completions_bash(self) -> None:
         """Test generating bash completions."""
         result = self.runner.invoke(self.cli, ["setup", "--completions", "bash"])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertIn("_wrknv_completion", result.output)
-        self.assertIn("complete -F", result.output)
+        assert result.exit_code == 0
+        assert "_wrknv_completion" in result.output
+        assert "complete -F" in result.output
 
-    def test_setup_completions_zsh(self):
+    def test_setup_completions_zsh(self) -> None:
         """Test generating zsh completions."""
         result = self.runner.invoke(self.cli, ["setup", "--completions", "zsh"])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertIn("#compdef wrknv", result.output)
+        assert result.exit_code == 0
+        assert "#compdef wrknv" in result.output
 
-    def test_setup_completions_fish(self):
+    def test_setup_completions_fish(self) -> None:
         """Test generating fish completions."""
         result = self.runner.invoke(self.cli, ["setup", "--completions", "fish"])
 
-        self.assertEqual(result.exit_code, 0)
-        self.assertIn("complete -c wrknv", result.output)
+        assert result.exit_code == 0
+        assert "complete -c wrknv" in result.output
 
-    def test_setup_completions_install(self):
+    def test_setup_completions_install(self) -> None:
         """Test installing shell completions."""
         with patch("pathlib.Path.home") as mock_home:
             mock_home.return_value = self.temp_path
@@ -220,31 +213,26 @@ alias wrknv-activate='source env.sh'
 
             result = self.runner.invoke(workenv_cli, ["setup", "--completions", "bash", "--install"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Installed bash completions", result.output)
+            assert result.exit_code == 0
+            assert "Installed bash completions" in result.output
 
             # Verify completions were added to bashrc
             content = bashrc.read_text()
-            self.assertIn("wrknv completion", content)
+            assert "wrknv completion" in content
 
 
-class TestSetupCommandIntegration(unittest.TestCase):
+class TestSetupCommandIntegration(FoundationTestCase):
     """Integration tests for setup command."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runner = click.testing.CliRunner()
         self.cli = create_cli()
-        self.temp_dir = tempfile.mkdtemp()
-        self.temp_path = Path(self.temp_dir)
+        self.temp_dir = self.create_temp_dir()
+        self.temp_path = self.temp_dir
 
-    def tearDown(self):
-        """Clean up test fixtures."""
-        import shutil
-
-        shutil.rmtree(self.temp_dir, ignore_errors=True)
-
-    def test_setup_creates_workenv_structure(self):
+    def test_setup_creates_workenv_structure(self) -> None:
         """Test that setup creates the expected directory structure."""
         with patch("pathlib.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
@@ -257,15 +245,15 @@ class TestSetupCommandIntegration(unittest.TestCase):
                 if result.exit_code == 0:
                     # Check that workenv directory was created
                     workenv_dir = self.temp_path / "workenv"
-                    self.assertTrue(workenv_dir.exists())
+                    assert workenv_dir.exists()
 
                     # Check for expected subdirectories
                     expected_dirs = ["bin", "lib", "include"]
                     for dir_name in expected_dirs:
                         dir_path = workenv_dir / dir_name
                         if dir_path.exists():
-                            self.assertTrue(dir_path.is_dir())
+                            assert dir_path.is_dir()
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

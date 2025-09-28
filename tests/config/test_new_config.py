@@ -3,8 +3,8 @@ Test the new foundation-based config system
 ===========================================
 Tests for the WorkenvConfig implementation using provide.foundation.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 import pathlib
 import tempfile
@@ -16,7 +16,7 @@ from wrknv.config import EnvironmentConfigSource, FileConfigSource, WorkenvConfi
 class TestWorkenvConfig:
     """Test the new WorkenvConfig implementation."""
 
-    def test_load_with_defaults(self):
+    def test_load_with_defaults(self) -> None:
         """Should load with sensible defaults."""
         config = WorkenvConfig.load()
 
@@ -25,7 +25,7 @@ class TestWorkenvConfig:
         assert config.workenv.log_level == "WARNING"
         assert config.workenv.auto_install is True
 
-    def test_load_from_file(self):
+    def test_load_from_file(self) -> None:
         """Should load configuration from TOML file."""
         with tempfile.TemporaryDirectory() as tmpdir:
             config_file = pathlib.Path(tmpdir) / ".wrknv.toml"
@@ -52,7 +52,7 @@ auto_install = false
                 assert config.workenv.log_level == "DEBUG"
                 assert config.workenv.auto_install is False
 
-    def test_environment_variables(self):
+    def test_environment_variables(self) -> None:
         """Should support WRKNV_ environment variables."""
         with patch.dict(
             "os.environ",
@@ -71,7 +71,7 @@ auto_install = false
             assert config.workenv.log_level == "INFO"
             assert config.workenv.auto_install is False
 
-    def test_tool_management(self):
+    def test_tool_management(self) -> None:
         """Should manage tool versions correctly."""
         config = WorkenvConfig.load()
 
@@ -93,7 +93,7 @@ auto_install = false
         assert all_tools["terraform"] == "1.5.7"
         assert all_tools["go"] == "1.21.0"
 
-    def test_profile_management(self):
+    def test_profile_management(self) -> None:
         """Should manage profiles correctly."""
         config = WorkenvConfig.load()
 
@@ -121,7 +121,7 @@ auto_install = false
 class TestConfigSources:
     """Test the ConfigSource classes."""
 
-    def test_file_config_source(self):
+    def test_file_config_source(self) -> None:
         """Should load from TOML files."""
         with tempfile.TemporaryDirectory() as tmpdir:
             config_file = pathlib.Path(tmpdir) / "test.toml"
@@ -156,7 +156,7 @@ verify_checksums = true
             # Should load settings
             assert source.get_setting("verify_checksums") is True
 
-    def test_environment_config_source(self):
+    def test_environment_config_source(self) -> None:
         """Should load from environment variables."""
         with patch.dict(
             "os.environ",
@@ -183,7 +183,7 @@ verify_checksums = true
             assert source.get_setting("verify_checksums") is True
             assert source.get_setting("install_path") == "/custom/path"
 
-    def test_environment_boolean_parsing(self):
+    def test_environment_boolean_parsing(self) -> None:
         """Should parse boolean values correctly."""
         source = EnvironmentConfigSource("TEST")
 
@@ -206,7 +206,7 @@ verify_checksums = true
 class TestWorkenvConfigMethods:
     """Test WorkenvConfig utility methods."""
 
-    def test_get_setting(self):
+    def test_get_setting(self) -> None:
         """Should retrieve settings with dot notation."""
         config = WorkenvConfig.load()
 
@@ -220,7 +220,7 @@ class TestWorkenvConfigMethods:
         # Should return default for missing
         assert config.get_setting("missing", "default") == "default"
 
-    def test_validation(self):
+    def test_validation(self) -> None:
         """Should validate configuration correctly."""
         config = WorkenvConfig.load()
 
@@ -235,7 +235,7 @@ class TestWorkenvConfigMethods:
         assert not is_valid
         assert any("Invalid version" in error for error in errors)
 
-    def test_to_dict(self):
+    def test_to_dict(self) -> None:
         """Should convert to dictionary correctly."""
         config = WorkenvConfig.load()
         config.project_name = "test"

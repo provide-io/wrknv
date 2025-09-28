@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from provide.testkit import FoundationTestCase
 import pytest
 
 #!/usr/bin/env python3
 """Test container runtime implementations."""
 
-import unittest
 from unittest.mock import patch
 
 from provide.foundation.process import CompletedProcess, ProcessError
@@ -14,11 +14,12 @@ from wrknv.container.runtime.docker import DockerRuntime
 
 
 @pytest.mark.container
-class TestDockerRuntime(unittest.TestCase):
+class TestDockerRuntime(FoundationTestCase):
     """Test Docker runtime implementation."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
 
     @patch("wrknv.container.runtime.docker.run_command")
@@ -39,27 +40,27 @@ class TestDockerRuntime(unittest.TestCase):
             command=["echo", "hello"],
         )
 
-        self.assertEqual(result.stdout, "abc123container")
+        assert result.stdout == "abc123container"
         mock_run.assert_called_once()
 
         # Check command construction
         cmd = mock_run.call_args[0][0]
-        self.assertEqual(cmd[0], "docker")
-        self.assertEqual(cmd[1], "run")
-        self.assertIn("-d", cmd)
-        self.assertIn("--name", cmd)
-        self.assertIn("test-container", cmd)
-        self.assertIn("-v", cmd)
-        self.assertIn("/host:/container", cmd)
-        self.assertIn("-e", cmd)
-        self.assertIn("KEY=value", cmd)
-        self.assertIn("-p", cmd)
-        self.assertIn("8080:80", cmd)
-        self.assertIn("--workdir", cmd)
-        self.assertIn("/app", cmd)
-        self.assertIn("ubuntu:latest", cmd)
-        self.assertIn("echo", cmd)
-        self.assertIn("hello", cmd)
+        assert cmd[0] == "docker"
+        assert cmd[1] == "run"
+        assert "-d" in cmd
+        assert "--name" in cmd
+        assert "test-container" in cmd
+        assert "-v" in cmd
+        assert "/host:/container" in cmd
+        assert "-e" in cmd
+        assert "KEY=value" in cmd
+        assert "-p" in cmd
+        assert "8080:80" in cmd
+        assert "--workdir" in cmd
+        assert "/app" in cmd
+        assert "ubuntu:latest" in cmd
+        assert "echo" in cmd
+        assert "hello" in cmd
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_start_container(self, mock_run):
@@ -70,7 +71,7 @@ class TestDockerRuntime(unittest.TestCase):
 
         result = self.runtime.start_container("test-container")
 
-        self.assertEqual(result.stdout, "test-container")
+        assert result.stdout == "test-container"
         mock_run.assert_called_once_with(["docker", "start", "test-container"], check=True)
 
     @patch("wrknv.container.runtime.docker.run_command")
@@ -93,7 +94,7 @@ class TestDockerRuntime(unittest.TestCase):
 
         exists = self.runtime.container_exists("test-container")
 
-        self.assertTrue(exists)
+        assert exists
         mock_run.assert_called_once_with(["docker", "ps", "-a", "--format", "{{.Names}}"], check=False)
 
     @patch("wrknv.container.runtime.docker.run_command")
@@ -105,7 +106,7 @@ class TestDockerRuntime(unittest.TestCase):
 
         exists = self.runtime.container_exists("test-container")
 
-        self.assertFalse(exists)
+        assert not exists
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_container_running(self, mock_run):
@@ -116,7 +117,7 @@ class TestDockerRuntime(unittest.TestCase):
 
         running = self.runtime.container_running("test-container")
 
-        self.assertTrue(running)
+        assert running
         mock_run.assert_called_once_with(["docker", "ps", "--format", "{{.Names}}"], check=False)
 
     @patch("wrknv.container.runtime.docker.run_command")
@@ -136,20 +137,20 @@ class TestDockerRuntime(unittest.TestCase):
             environment={"VAR": "value"},
         )
 
-        self.assertEqual(result.stdout, "command output")
+        assert result.stdout == "command output"
 
         cmd = mock_run.call_args[0][0]
-        self.assertIn("-i", cmd)
-        self.assertIn("-t", cmd)
-        self.assertIn("-u", cmd)
-        self.assertIn("root", cmd)
-        self.assertIn("-w", cmd)
-        self.assertIn("/app", cmd)
-        self.assertIn("-e", cmd)
-        self.assertIn("VAR=value", cmd)
-        self.assertIn("test-container", cmd)
-        self.assertIn("ls", cmd)
-        self.assertIn("-la", cmd)
+        assert "-i" in cmd
+        assert "-t" in cmd
+        assert "-u" in cmd
+        assert "root" in cmd
+        assert "-w" in cmd
+        assert "/app" in cmd
+        assert "-e" in cmd
+        assert "VAR=value" in cmd
+        assert "test-container" in cmd
+        assert "ls" in cmd
+        assert "-la" in cmd
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_build_image(self, mock_run):
@@ -167,21 +168,21 @@ class TestDockerRuntime(unittest.TestCase):
             platform="linux/amd64",
         )
 
-        self.assertIn("Successfully built", result.stdout)
+        assert "Successfully built" in result.stdout
 
         cmd = mock_run.call_args[0][0]
-        self.assertEqual(cmd[0], "docker")
-        self.assertEqual(cmd[1], "build")
-        self.assertIn("-f", cmd)
-        self.assertIn("Dockerfile", cmd)
-        self.assertIn("-t", cmd)
-        self.assertIn("myapp:latest", cmd)
-        self.assertIn("--build-arg", cmd)
-        self.assertIn("VERSION=1.0", cmd)
-        self.assertIn("--no-cache", cmd)
-        self.assertIn("--platform", cmd)
-        self.assertIn("linux/amd64", cmd)
-        self.assertIn(".", cmd)
+        assert cmd[0] == "docker"
+        assert cmd[1] == "build"
+        assert "-f" in cmd
+        assert "Dockerfile" in cmd
+        assert "-t" in cmd
+        assert "myapp:latest" in cmd
+        assert "--build-arg" in cmd
+        assert "VERSION=1.0" in cmd
+        assert "--no-cache" in cmd
+        assert "--platform" in cmd
+        assert "linux/amd64" in cmd
+        assert "." in cmd
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_list_containers(self, mock_run):
@@ -195,9 +196,9 @@ class TestDockerRuntime(unittest.TestCase):
 
         containers = self.runtime.list_containers(all=True)
 
-        self.assertEqual(len(containers), 2)
-        self.assertEqual(containers[0]["Name"], "container1")
-        self.assertEqual(containers[1]["Name"], "container2")
+        assert len(containers) == 2
+        assert containers[0]["Name"] == "container1"
+        assert containers[1]["Name"] == "container2"
 
         mock_run.assert_called_once_with(["docker", "ps", "--format", "json", "-a"], check=True)
 
@@ -215,8 +216,8 @@ class TestDockerRuntime(unittest.TestCase):
         with self.assertRaises(ProcessError) as ctx:
             self.runtime.start_container("nonexistent")
 
-        self.assertIn("nonexistent", str(ctx.exception))
+        assert "nonexistent" in str(ctx.exception)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

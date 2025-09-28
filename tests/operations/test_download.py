@@ -3,8 +3,8 @@ Tests for Download Operations
 =============================
 Tests for the download functionality in wrknv.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 import hashlib
 from unittest.mock import patch
@@ -223,7 +223,7 @@ def456  other.zip
         result = parse_checksum_file(checksum_file, "test.zip")
         assert result is None
 
-    def test_get_filename_from_url(self):
+    def test_get_filename_from_url(self) -> None:
         """Test extracting filename from URL."""
         # Normal URL
         assert get_filename_from_url("https://example.com/test.zip") == "test.zip"
@@ -235,7 +235,7 @@ def456  other.zip
         result = get_filename_from_url("https://example.com/")
         assert result.startswith("download_")
 
-    def test_validate_download_url(self):
+    def test_validate_download_url(self) -> None:
         """Test URL validation."""
         # Valid URLs
         assert validate_download_url("https://example.com/file.zip") is True

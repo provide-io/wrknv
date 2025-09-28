@@ -3,8 +3,8 @@ TDD Tests for wrknv Configuration Integration
 ==============================================
 These tests define the expected behavior for wrknv's flexible configuration system.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 import pathlib
 import tempfile
@@ -23,7 +23,7 @@ from wrknv.wenv.configuration import (
 class TestConfigSourceContracts:
     """TDD contracts for configuration sources."""
 
-    def test_config_source_base_interface(self):
+    def test_config_source_base_interface(self) -> None:
         """
         CONTRACT: ConfigSource should define the base interface
         """
@@ -36,7 +36,7 @@ class TestConfigSourceContracts:
         assert source.get_setting("verify_checksums") is None
         assert source.get_setting("verify_checksums", True) is True
 
-    def test_file_config_source_loads_toml(self):
+    def test_file_config_source_loads_toml(self) -> None:
         """
         CONTRACT: FileConfigSource should load configuration from TOML files
         """
@@ -76,7 +76,7 @@ install_path = "~/.wrknv/tools"
             assert source.get_setting("verify_checksums") is True
             assert source.get_setting("install_path") == "~/.wrknv/tools"
 
-    def test_environment_config_source(self):
+    def test_environment_config_source(self) -> None:
         """
         CONTRACT: EnvironmentConfigSource should read from environment variables
         """
@@ -98,7 +98,7 @@ install_path = "~/.wrknv/tools"
             assert source.get_setting("verify_checksums") is True
             assert source.get_setting("install_path") == "/custom/path"
 
-    def test_environment_boolean_parsing(self):
+    def test_environment_boolean_parsing(self) -> None:
         """
         CONTRACT: Environment source should parse boolean values correctly
         """
@@ -126,7 +126,7 @@ install_path = "~/.wrknv/tools"
 class TestWorkenvConfigIntegration:
     """TDD contracts for WorkenvConfig integration."""
 
-    def test_default_configuration_sources(self):
+    def test_default_configuration_sources(self) -> None:
         """
         CONTRACT: WorkenvConfig should have sensible defaults
         """
@@ -155,7 +155,7 @@ terraform = "1.5.0"
                     for s in config.sources
                 )
 
-    def test_config_priority_ordering(self):
+    def test_config_priority_ordering(self) -> None:
         """
         CONTRACT: Configuration sources should be checked in priority order
         """
@@ -169,9 +169,10 @@ tofu = "1.6.0"
 """)
 
             # Set environment variables
-            with patch.dict(
-                "os.environ", {"WRKENV_TERRAFORM_VERSION": "1.7.0", "WRKENV_GO_VERSION": "1.22.0"}
-            ), patch("pathlib.Path.cwd", return_value=pathlib.Path(tmpdir)):
+            with (
+                patch.dict("os.environ", {"WRKENV_TERRAFORM_VERSION": "1.7.0", "WRKENV_GO_VERSION": "1.22.0"}),
+                patch("pathlib.Path.cwd", return_value=pathlib.Path(tmpdir)),
+            ):
                 config = WorkenvConfig()
 
                 # WRKENV_ env var should win for terraform
@@ -183,7 +184,7 @@ tofu = "1.6.0"
                 # WRKENV_ env var should win for go
                 assert config.get_tool_version("go") == "1.22.0"
 
-    def test_custom_configuration_sources(self):
+    def test_custom_configuration_sources(self) -> None:
         """
         CONTRACT: WorkenvConfig should accept custom configuration sources
         """
@@ -201,7 +202,7 @@ tofu = "1.6.0"
         source1.get_tool_version.assert_called_with("terraform")
         source2.get_tool_version.assert_not_called()  # Should stop at first match
 
-    def test_get_all_tools_merges_sources(self):
+    def test_get_all_tools_merges_sources(self) -> None:
         """
         CONTRACT: get_all_tools should merge from all sources with proper priority
         """
@@ -225,7 +226,7 @@ tofu = "1.6.0"
 class TestPlatformSpecificBehavior:
     """TDD contracts for platform-specific behavior."""
 
-    def test_workenv_dir_name_generation(self):
+    def test_workenv_dir_name_generation(self) -> None:
         """
         CONTRACT: Workenv directory names should be platform-specific
         """
@@ -239,7 +240,7 @@ class TestPlatformSpecificBehavior:
             with patch("platform.machine", return_value="arm64"):
                 assert config.get_workenv_dir_name() == "workenv/wrknv_darwin_arm64"
 
-    def test_workenv_dir_with_profile(self):
+    def test_workenv_dir_with_profile(self) -> None:
         """
         CONTRACT: Workenv directory should include profile name if not default
         """
@@ -256,7 +257,7 @@ class TestPlatformSpecificBehavior:
 class TestVersionValidation:
     """TDD contracts for version validation."""
 
-    def test_validate_version_patterns(self):
+    def test_validate_version_patterns(self) -> None:
         """
         CONTRACT: Version validation should accept common version formats
         """

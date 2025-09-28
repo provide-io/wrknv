@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from pathlib import Path
-import unittest
 from unittest.mock import MagicMock, patch
+
+from provide.testkit import FoundationTestCase
 
 from wrknv.wenv.config import WorkenvConfig
 from wrknv.wenv.managers.base import BaseToolManager
@@ -25,8 +25,8 @@ class ConcreteToolManager(BaseToolManager):
         return f"https://example.com/{self.tool_name}/{version}/checksums.txt"
 
 
-class TestManagers(unittest.TestCase):
-    def test_base_tool_manager_init(self):
+class TestManagers(FoundationTestCase):
+    def test_base_tool_manager_init(self) -> None:
         # Arrange
         config = WorkenvConfig()
 
@@ -34,9 +34,9 @@ class TestManagers(unittest.TestCase):
         manager = ConcreteToolManager(config)
 
         # Assert
-        self.assertEqual(manager.config, config)
+        assert manager.config == config
 
-    def test_get_binary_path(self):
+    def test_get_binary_path(self) -> None:
         # Arrange
         config = WorkenvConfig()
         manager = ConcreteToolManager(config)
@@ -46,7 +46,7 @@ class TestManagers(unittest.TestCase):
         binary_path = manager.get_binary_path("1.0.0")
 
         # Assert
-        self.assertEqual(binary_path, expected_path)
+        assert binary_path == expected_path
 
     @patch("pathlib.Path.iterdir")
     @patch("pathlib.Path.exists", return_value=True)
@@ -89,8 +89,8 @@ class TestManagers(unittest.TestCase):
         versions = manager.get_installed_versions()
 
         # Assert
-        self.assertEqual(versions, ["2.0.0", "1.1.0", "1.0.0"])
+        assert versions == ["2.0.0", "1.1.0", "1.0.0"]
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

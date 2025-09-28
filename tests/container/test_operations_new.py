@@ -1,12 +1,12 @@
 from __future__ import annotations
 
+from provide.testkit import FoundationTestCase
 import pytest
 
 #!/usr/bin/env python3
 """Test container operations modules."""
 
 from pathlib import Path
-import unittest
 from unittest.mock import patch
 
 from provide.foundation.process import CompletedProcess, ProcessError
@@ -21,11 +21,12 @@ from wrknv.container.runtime.docker import DockerRuntime
 
 
 @pytest.mark.container
-class TestContainerLifecycle(unittest.TestCase):
+class TestContainerLifecycle(FoundationTestCase):
     """Test container lifecycle operations."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
         self.lifecycle = ContainerLifecycle(
             runtime=self.runtime,
@@ -51,8 +52,8 @@ class TestContainerLifecycle(unittest.TestCase):
 
         result = self.lifecycle.start(create_if_missing=False)
 
-        self.assertTrue(result)
-        self.assertEqual(mock_run.call_count, 3)
+        assert result
+        assert mock_run.call_count == 3
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_start_create_new_container(self, mock_run):
@@ -71,8 +72,8 @@ class TestContainerLifecycle(unittest.TestCase):
             environment={"KEY": "value"},
         )
 
-        self.assertTrue(result)
-        self.assertEqual(mock_run.call_count, 2)
+        assert result
+        assert mock_run.call_count == 2
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_stop_container(self, mock_run):
@@ -86,8 +87,8 @@ class TestContainerLifecycle(unittest.TestCase):
 
         result = self.lifecycle.stop(timeout=10)
 
-        self.assertTrue(result)
-        self.assertEqual(mock_run.call_count, 2)
+        assert result
+        assert mock_run.call_count == 2
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_restart_container(self, mock_run):
@@ -110,8 +111,8 @@ class TestContainerLifecycle(unittest.TestCase):
 
         result = self.lifecycle.restart(timeout=10)
 
-        self.assertTrue(result)
-        self.assertEqual(mock_run.call_count, 6)
+        assert result
+        assert mock_run.call_count == 6
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_status(self, mock_run):
@@ -132,18 +133,19 @@ class TestContainerLifecycle(unittest.TestCase):
 
         status = self.lifecycle.status()
 
-        self.assertTrue(status["exists"])
-        self.assertTrue(status["running"])
-        self.assertIn("id", status)
-        self.assertEqual(mock_run.call_count, 3)
+        assert status["exists"]
+        assert status["running"]
+        assert "id" in status
+        assert mock_run.call_count == 3
 
 
 @pytest.mark.container
-class TestContainerExec(unittest.TestCase):
+class TestContainerExec(FoundationTestCase):
     """Test container exec operations."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
         self.exec = ContainerExec(
             runtime=self.runtime,
@@ -162,13 +164,13 @@ class TestContainerExec(unittest.TestCase):
 
         result = self.exec.run_command(command=["echo", "hello"], capture_output=True)
 
-        self.assertEqual(result, "command output")
+        assert result == "command output"
         mock_run.assert_called_once()
         cmd = mock_run.call_args[0][0]
-        self.assertIn("exec", cmd)
-        self.assertIn("test-container", cmd)
-        self.assertIn("echo", cmd)
-        self.assertIn("hello", cmd)
+        assert "exec" in cmd
+        assert "test-container" in cmd
+        assert "echo" in cmd
+        assert "hello" in cmd
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_find_shell(self, mock_run):
@@ -181,8 +183,8 @@ class TestContainerExec(unittest.TestCase):
 
         shell = self.exec._detect_shell()
 
-        self.assertEqual(shell, "/bin/sh")
-        self.assertEqual(mock_run.call_count, 2)
+        assert shell == "/bin/sh"
+        assert mock_run.call_count == 2
 
     @patch("wrknv.container.runtime.docker.run_command")
     @patch("os.system")
@@ -199,23 +201,24 @@ class TestContainerExec(unittest.TestCase):
 
         result = self.exec.enter(shell=None)
 
-        self.assertTrue(result)
-        self.assertEqual(mock_run.call_count, 2)  # Container running + shell detection
+        assert result
+        assert mock_run.call_count == 2  # Container running + shell detection
         mock_system.assert_called_once()
         system_cmd = mock_system.call_args[0][0]
-        self.assertIn("docker exec", system_cmd)
-        self.assertIn("-i", system_cmd)
-        self.assertIn("-t", system_cmd)
-        self.assertIn("test-container", system_cmd)
-        self.assertIn("/bin/bash", system_cmd)
+        assert "docker exec" in system_cmd
+        assert "-i" in system_cmd
+        assert "-t" in system_cmd
+        assert "test-container" in system_cmd
+        assert "/bin/bash" in system_cmd
 
 
 @pytest.mark.container
-class TestContainerBuilder(unittest.TestCase):
+class TestContainerBuilder(FoundationTestCase):
     """Test container build operations."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
         self.builder = ContainerBuilder(runtime=self.runtime, console=Console())
 
@@ -230,15 +233,15 @@ class TestContainerBuilder(unittest.TestCase):
             dockerfile="Dockerfile", tag="myapp:latest", context=".", build_args=None, stream_output=False
         )
 
-        self.assertTrue(result)
+        assert result
         mock_run.assert_called_once()
         cmd = mock_run.call_args[0][0]
-        self.assertIn("build", cmd)
-        self.assertIn("-f", cmd)
-        self.assertIn("Dockerfile", cmd)
-        self.assertIn("-t", cmd)
-        self.assertIn("myapp:latest", cmd)
-        self.assertIn(".", cmd)
+        assert "build" in cmd
+        assert "-f" in cmd
+        assert "Dockerfile" in cmd
+        assert "-t" in cmd
+        assert "myapp:latest" in cmd
+        assert "." in cmd
 
     @patch("wrknv.container.runtime.docker.run_command")
     def test_build_with_args(self, mock_run):
@@ -257,15 +260,15 @@ class TestContainerBuilder(unittest.TestCase):
             platform="linux/amd64",
         )
 
-        self.assertTrue(result)
+        assert result
         mock_run.assert_called_once()
         cmd = mock_run.call_args[0][0]
-        self.assertIn("--build-arg", cmd)
-        self.assertIn("VERSION=1.0", cmd)
-        self.assertIn("ENV=production", cmd)
-        self.assertIn("--no-cache", cmd)
-        self.assertIn("--platform", cmd)
-        self.assertIn("linux/amd64", cmd)
+        assert "--build-arg" in cmd
+        assert "VERSION=1.0" in cmd
+        assert "ENV=production" in cmd
+        assert "--no-cache" in cmd
+        assert "--platform" in cmd
+        assert "linux/amd64" in cmd
 
     @patch("wrknv.container.operations.build.stream_command")
     def test_build_with_stream(self, mock_stream):
@@ -278,16 +281,17 @@ class TestContainerBuilder(unittest.TestCase):
             dockerfile="Dockerfile", tag="myapp:latest", context=".", build_args=None, stream_output=True
         )
 
-        self.assertTrue(result)
+        assert result
         mock_stream.assert_called_once()
 
 
 @pytest.mark.container
-class TestContainerLogs(unittest.TestCase):
+class TestContainerLogs(FoundationTestCase):
     """Test container logs operations."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
         self.logs = ContainerLogs(runtime=self.runtime, container_name="test-container", console=Console())
 
@@ -300,16 +304,16 @@ class TestContainerLogs(unittest.TestCase):
 
         result = self.logs.get_logs(follow=False, tail=10, since="5m", timestamps=True)
 
-        self.assertEqual(result, "Log line 1\nLog line 2\nLog line 3")
+        assert result == "Log line 1\nLog line 2\nLog line 3"
         mock_run.assert_called_once()
         cmd = mock_run.call_args[0][0]
-        self.assertIn("logs", cmd)
-        self.assertIn("--tail", cmd)
-        self.assertIn("10", cmd)
-        self.assertIn("--since", cmd)
-        self.assertIn("5m", cmd)
+        assert "logs" in cmd
+        assert "--tail" in cmd
+        assert "10" in cmd
+        assert "--since" in cmd
+        assert "5m" in cmd
         # Note: timestamps is handled in stream_logs, not get_logs
-        self.assertIn("test-container", cmd)
+        assert "test-container" in cmd
 
     @patch("wrknv.container.operations.logs.stream_command")
     def test_stream_logs(self, mock_stream):
@@ -324,17 +328,18 @@ class TestContainerLogs(unittest.TestCase):
 
         lines = list(self.logs.stream_logs(tail=10, since=None, timestamps=False))
 
-        self.assertEqual(len(lines), 3)
-        self.assertIn("Log line 1", lines[0])
+        assert len(lines) == 3
+        assert "Log line 1" in lines[0]
         mock_stream.assert_called_once()
 
 
 @pytest.mark.container
-class TestVolumeManager(unittest.TestCase):
+class TestVolumeManager(FoundationTestCase):
     """Test volume management operations."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
         self.volumes = VolumeManager(runtime=self.runtime, console=Console(), backup_dir=Path("/tmp/backups"))
 
@@ -349,16 +354,16 @@ class TestVolumeManager(unittest.TestCase):
             name="test-volume", driver="local", options={"type": "tmpfs", "device": "tmpfs"}
         )
 
-        self.assertTrue(result)
+        assert result
         mock_run.assert_called_once()
         cmd = mock_run.call_args[0][0]
-        self.assertIn("volume", cmd)
-        self.assertIn("create", cmd)
-        self.assertIn("--driver", cmd)
-        self.assertIn("local", cmd)
-        self.assertIn("--opt", cmd)
-        self.assertIn("type=tmpfs", cmd)
-        self.assertIn("test-volume", cmd)
+        assert "volume" in cmd
+        assert "create" in cmd
+        assert "--driver" in cmd
+        assert "local" in cmd
+        assert "--opt" in cmd
+        assert "type=tmpfs" in cmd
+        assert "test-volume" in cmd
 
     @patch("wrknv.container.operations.volumes.run_command")
     def test_list_volumes(self, mock_run):
@@ -372,9 +377,9 @@ class TestVolumeManager(unittest.TestCase):
 
         volumes = self.volumes.list_volumes(filter_label=None)
 
-        self.assertEqual(len(volumes), 2)
-        self.assertEqual(volumes[0]["Name"], "vol1")
-        self.assertEqual(volumes[1]["Name"], "vol2")
+        assert len(volumes) == 2
+        assert volumes[0]["Name"] == "vol1"
+        assert volumes[1]["Name"] == "vol2"
         mock_run.assert_called_once()
 
     @patch("wrknv.container.operations.volumes.run_command")
@@ -387,17 +392,17 @@ class TestVolumeManager(unittest.TestCase):
         )
 
         self.assertIsNotNone(backup_file)
-        self.assertTrue(str(backup_file).startswith("/tmp/backups"))
-        self.assertIn("test-volume", str(backup_file))
+        assert str(backup_file.startswith("/tmp/backups"))
+        assert "test-volume" in str(backup_file)
         mock_run.assert_called_once()
         cmd = mock_run.call_args[0][0]
-        self.assertIn("run", cmd)
-        self.assertIn("--rm", cmd)
-        self.assertIn("-v", cmd)
-        self.assertIn("test-volume:/data", cmd)
-        self.assertIn("alpine", cmd)
-        self.assertIn("tar", cmd)
+        assert "run" in cmd
+        assert "--rm" in cmd
+        assert "-v" in cmd
+        assert "test-volume:/data" in cmd
+        assert "alpine" in cmd
+        assert "tar" in cmd
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

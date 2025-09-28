@@ -2,10 +2,9 @@
 Tests for Gitignore Manager
 ============================
 """
+
 from __future__ import annotations
 
-
-from pathlib import Path
 from unittest.mock import Mock, patch
 
 import pytest
@@ -64,7 +63,7 @@ class TestGitignoreManager:
         manager = GitignoreManager(project_dir=temp_dir, output_path=output_path)
         assert manager.gitignore_path == output_path
 
-    def test_init_default_project_dir(self):
+    def test_init_default_project_dir(self) -> None:
         """Test initialization with default project directory."""
         manager = GitignoreManager()
         assert manager.project_dir == Path.cwd()

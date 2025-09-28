@@ -3,8 +3,8 @@ TDD Tests for wrknv Package Commands
 =====================================
 Test-driven development for package management functionality.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -335,7 +335,7 @@ package = { default_out_dir = "build", signing_curve = "P-521", verify_on_build 
 class TestPackageManagerIntegration:
     """Test PackageManager class integration."""
 
-    def test_package_manager_requires_flavor(self):
+    def test_package_manager_requires_flavor(self) -> None:
         """PackageManager should check for flavor availability."""
         from wrknv.package.manager import PackageManager
 
@@ -353,7 +353,7 @@ class TestPackageManagerIntegration:
         manager._flavor_available = True
         assert manager.is_flavor_available()
 
-    def test_package_manager_tool_integration(self):
+    def test_package_manager_tool_integration(self) -> None:
         """PackageManager should integrate with tool managers."""
         from wrknv.package.manager import PackageManager
 
@@ -372,7 +372,7 @@ class TestPackageManagerIntegration:
             assert "go" in tools
             assert "uv" in tools
 
-    def test_package_manager_environment_setup(self):
+    def test_package_manager_environment_setup(self) -> None:
         """PackageManager should set up build environment."""
         from wrknv.package.manager import PackageManager
 

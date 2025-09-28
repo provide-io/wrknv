@@ -1,18 +1,18 @@
 """
 Tests for workspace manager functionality.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 from pathlib import Path
 from unittest.mock import Mock, patch
 
-import pytest
 from provide.foundation.file.temp import temp_dir
+import pytest
 
-from wrknv.workspace.manager import WorkspaceManager
-from wrknv.workspace.schema import WorkspaceConfig, RepoConfig, TemplateSource
 from wrknv.workspace.discovery import RepoInfo
+from wrknv.workspace.manager import WorkspaceManager
+from wrknv.workspace.schema import RepoConfig, TemplateSource, WorkspaceConfig
 
 
 @pytest.fixture
@@ -65,7 +65,7 @@ class TestWorkspaceManager:
 
     def test_init_workspace_basic(self, manager):
         """Test basic workspace initialization."""
-        with patch.object(manager.discovery, 'discover_repos', return_value=[]):
+        with patch.object(manager.discovery, "discover_repos", return_value=[]):
             config = manager.init_workspace(auto_discover=False)
 
             assert config.root == manager.root
@@ -84,7 +84,7 @@ class TestWorkspaceManager:
             current_config={"project": {"name": "test-repo"}},
         )
 
-        with patch.object(manager.discovery, 'discover_repos', return_value=[mock_repo]):
+        with patch.object(manager.discovery, "discover_repos", return_value=[mock_repo]):
             config = manager.init_workspace(auto_discover=True)
 
             assert len(config.repos) == 1
@@ -95,11 +95,8 @@ class TestWorkspaceManager:
         """Test workspace initialization with template source."""
         template_path = "/test/templates"
 
-        with patch.object(manager.discovery, 'discover_repos', return_value=[]):
-            config = manager.init_workspace(
-                template_source=template_path,
-                auto_discover=False
-            )
+        with patch.object(manager.discovery, "discover_repos", return_value=[]):
+            config = manager.init_workspace(template_source=template_path, auto_discover=False)
 
             assert config.template_source is not None
             assert config.template_source.location == template_path
@@ -139,7 +136,7 @@ version = "1.0.0"
         (repo_path / ".git").mkdir()
 
         # Initialize workspace first
-        with patch.object(manager.discovery, 'discover_repos', return_value=[]):
+        with patch.object(manager.discovery, "discover_repos", return_value=[]):
             manager.init_workspace(auto_discover=False)
 
         # Add repo
@@ -227,8 +224,8 @@ version = "1.0.0"
         """Test getting workspace status."""
         manager.save_config(sample_workspace_config)
 
-        with patch.object(manager.discovery, 'get_workspace_summary') as mock_summary:
-            with patch.object(manager.discovery, 'validate_workspace_structure') as mock_validate:
+        with patch.object(manager.discovery, "get_workspace_summary") as mock_summary:
+            with patch.object(manager.discovery, "validate_workspace_structure") as mock_validate:
                 mock_summary.return_value = {
                     "total_repos": 1,
                     "type_distribution": {"foundation-based": 1},
@@ -282,7 +279,7 @@ version = "1.0.0"
             "settings": {
                 "debug": True,
                 "count": 42,
-            }
+            },
         }
 
         toml_str = manager._dict_to_toml(data)
@@ -352,8 +349,7 @@ version = "1.0.0"
 
         # Initialize with template source
         config = manager.init_workspace(
-            template_source="https://github.com/provide-io/templates.git",
-            auto_discover=False
+            template_source="https://github.com/provide-io/templates.git", auto_discover=False
         )
 
         assert config.template_source is not None

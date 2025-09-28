@@ -33,18 +33,29 @@ DEFAULT_SYNC_STRATEGY = "manual"  # "manual", "auto", "check"
 # =================================
 DEFAULT_CONTAINER_RUNTIME = "docker"
 DEFAULT_CONTAINER_PLATFORM = "linux/amd64"
+DEFAULT_CONTAINER_ENABLED = False
+DEFAULT_CONTAINER_BASE_IMAGE = "ubuntu:22.04"
+DEFAULT_CONTAINER_STORAGE_PATH = "~/.wrknv/containers"
 
 # =================================
 # Package and Registry defaults
 # =================================
 DEFAULT_PACKAGE_FORMAT = "psp"
 DEFAULT_SEARCH_LIMIT = 10
+DEFAULT_PACKAGE_DESCRIPTION = ""
+DEFAULT_PACKAGE_AUTHOR = ""
+DEFAULT_PACKAGE_LICENSE = "MIT"
+DEFAULT_REGISTRY_WRKNV_URL = "https://registry.wrknv.io"
+DEFAULT_REGISTRY_VERIFY_SSL = True
+DEFAULT_REGISTRY_TIMEOUT = 30
 
 # =================================
 # Tool Manager defaults
 # =================================
 DEFAULT_TOOL_TIMEOUT = 10
 DEFAULT_DOWNLOAD_TIMEOUT = 30
+DEFAULT_TOOL_ENABLED = True
+DEFAULT_TOOL_AUTO_DETECT = False
 
 # =================================
 # Environment defaults
@@ -66,6 +77,14 @@ DEFAULT_TEMPLATE_BRANCH = None
 # Logging defaults
 # =================================
 DEFAULT_LOG_LEVEL = "INFO"
+
+# =================================
+# Configuration defaults
+# =================================
+DEFAULT_WORKENV_INSTALL_DIR = "~/.wrknv"
+DEFAULT_WORKENV_CACHE_DIR = "~/.wrknv/cache"
+DEFAULT_TELEMETRY_ENABLED = True
+DEFAULT_AUTO_UPDATE = False
 
 # =================================
 # CLI defaults

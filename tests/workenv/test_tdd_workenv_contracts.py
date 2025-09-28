@@ -4,14 +4,14 @@ TDD Contracts for TofuSoup Workenv
 These tests define the expected behavior and API contracts for the workenv system.
 They should be written BEFORE the implementation to drive development.
 """
+
 from __future__ import annotations
 
-
-import pytest
 import pathlib
 import tempfile
-from typing import List, Dict, Any
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
+
+import pytest
 
 # These imports will fail initially - that's expected in TDD
 try:
@@ -29,6 +29,7 @@ except ImportError:
 # PlatformDetector doesn't exist, but we have platform functions
 try:
     from wrknv.wenv.operations.platform import get_platform_info
+
     PlatformDetector = None  # We'll use the functions directly
 except ImportError:
     PlatformDetector = Mock
@@ -37,22 +38,20 @@ except ImportError:
 class TestWorkenvConfigContracts:
     """TDD contracts for workenv configuration management."""
 
-
-    def test_config_supports_environment_variables(self):
+    def test_config_supports_environment_variables(self) -> None:
         """
         CONTRACT: Configuration should support WRKENV_* environment variables
         """
-        with patch.dict('os.environ', {
-            'WRKENV_TERRAFORM_VERSION': '1.6.0',
-            'WRKENV_VERIFY_CHECKSUMS': 'false'
-        }):
+        with patch.dict(
+            "os.environ", {"WRKENV_TERRAFORM_VERSION": "1.6.0", "WRKENV_VERIFY_CHECKSUMS": "false"}
+        ):
             config = WorkenvConfig()
 
             # Environment should override file config
             assert config.get_tool_version("terraform") == "1.6.0"
             assert config.get_setting("verify_checksums") is False
 
-    def test_config_validates_tool_versions(self):
+    def test_config_validates_tool_versions(self) -> None:
         """
         CONTRACT: Configuration should validate tool version formats
         """
@@ -70,43 +69,44 @@ class TestWorkenvConfigContracts:
 class TestBaseToolManagerContracts:
     """TDD contracts for the base tool manager."""
 
-    def test_base_manager_abstract_methods(self):
+    def test_base_manager_abstract_methods(self) -> None:
         """
         CONTRACT: BaseToolManager should define abstract interface
         """
         # These methods must be implemented by subclasses
         abstract_methods = [
-            'tool_name',
-            'executable_name',
-            'get_available_versions',
-            'get_download_url',
-            'get_checksum_url'
+            "tool_name",
+            "executable_name",
+            "get_available_versions",
+            "get_download_url",
+            "get_checksum_url",
         ]
 
         for method in abstract_methods:
             assert hasattr(BaseToolManager, method)
 
-    def test_platform_detection(self):
+    def test_platform_detection(self) -> None:
         """
         CONTRACT: BaseToolManager should detect platform correctly
         """
+
         # Create a concrete implementation for testing
         class TestManager(BaseToolManager):
             tool_name = "test"
             executable_name = "test"
-            
+
             def get_available_versions(self):
                 return []
-            
+
             def get_download_url(self, version):
                 return ""
-            
+
             def get_checksum_url(self, version):
                 return ""
-            
+
             def _install_from_archive(self, archive_path, version):
                 pass
-        
+
         config = Mock()
         config.get_setting.return_value = "/tmp/test"
         manager = TestManager(config)
@@ -118,67 +118,67 @@ class TestBaseToolManagerContracts:
         assert platform_info["os"] in ["linux", "darwin", "windows"]
         assert platform_info["arch"] in ["amd64", "arm64", "386"]
 
-    def test_version_installation_workflow(self):
+    def test_version_installation_workflow(self) -> None:
         """
         CONTRACT: Tool installation should follow consistent workflow
         """
+
         # Create a concrete implementation for testing
         class TestManager(BaseToolManager):
             tool_name = "test"
             executable_name = "test"
-            
+
             def get_available_versions(self):
                 return []
-            
+
             def get_download_url(self, version):
                 return "https://example.com/test.zip"
-            
+
             def get_checksum_url(self, version):
                 return "https://example.com/test.sha256"
-            
+
             def _install_from_archive(self, archive_path, version):
                 pass
-        
+
         config = Mock()
         config.get_setting.side_effect = lambda key, default=None: {
             "install_path": "/tmp/test",
             "cache_path": "/tmp/cache",
             "cache_downloads": True,
             "verify_checksums": True,
-            "clean_on_failure": True
+            "clean_on_failure": True,
         }.get(key, default)
         config.get_command_option.return_value = True
         manager = TestManager(config)
 
         # Mock the download operations and paths
-        with patch('pathlib.Path.exists', return_value=False):
-            with patch('pathlib.Path.mkdir'):
-                with patch.object(manager, 'download_file') as mock_download:
-                    with patch.object(manager, '_verify_download_checksum') as mock_verify:
-                        # This workflow should be consistent across all tools
-                        manager.install_version("1.5.7")
+        with patch("pathlib.Path.exists", return_value=False), patch("pathlib.Path.mkdir"):
+            with patch.object(manager, "download_file") as mock_download:
+                with patch.object(manager, "_verify_download_checksum") as mock_verify:
+                    # This workflow should be consistent across all tools
+                    manager.install_version("1.5.7")
 
-                # Verify the workflow steps
-                mock_download.assert_called()
-                mock_verify.assert_called()
+            # Verify the workflow steps
+            mock_download.assert_called()
+            mock_verify.assert_called()
 
 
 class TestTerraformManagerContracts:
     """TDD contracts for Terraform-specific functionality."""
 
-    def test_terraform_version_fetching(self):
+    def test_terraform_version_fetching(self) -> None:
         """
         CONTRACT: TerraformManager should fetch versions from HashiCorp API
         """
         config = Mock()
         config.get_setting.side_effect = lambda key, default=None: {
             "install_path": "/tmp/test",
-            "base_url": "https://releases.hashicorp.com/terraform"
+            "base_url": "https://releases.hashicorp.com/terraform",
         }.get(key, default)
         config.get_workenv_dir_name.return_value = "workenv/test"
         manager = TerraformManager(config)
 
-        with patch('urllib.request.urlopen') as mock_urlopen:
+        with patch("urllib.request.urlopen") as mock_urlopen:
             # Mock HashiCorp releases API response
             mock_response = Mock()
             mock_response.read.return_value = b'[{"version": "1.5.7"}, {"version": "1.6.0"}]'
@@ -190,19 +190,19 @@ class TestTerraformManagerContracts:
             assert "1.5.7" in versions
             assert "1.6.0" in versions
 
-    def test_terraform_download_url_format(self):
+    def test_terraform_download_url_format(self) -> None:
         """
         CONTRACT: Terraform download URLs should follow HashiCorp pattern
         """
         config = Mock()
         config.get_setting.side_effect = lambda key, default=None: {
             "install_path": "/tmp/test",
-            "base_url": "https://releases.hashicorp.com/terraform"
+            "base_url": "https://releases.hashicorp.com/terraform",
         }.get(key, default)
         config.get_workenv_dir_name.return_value = "workenv/test"
         manager = TerraformManager(config)
 
-        with patch.object(manager, 'get_platform_info') as mock_platform:
+        with patch.object(manager, "get_platform_info") as mock_platform:
             mock_platform.return_value = {"os": "linux", "arch": "amd64"}
 
             url = manager.get_download_url("1.5.7")
@@ -211,12 +211,10 @@ class TestTerraformManagerContracts:
             assert url == expected
 
 
-
-
 class TestCLIContracts:
     """TDD contracts for the workenv CLI interface."""
 
-    def test_cli_tool_installation_command(self):
+    def test_cli_tool_installation_command(self) -> None:
         """
         CONTRACT: CLI should support direct tool installation
         """
@@ -227,7 +225,7 @@ class TestCLIContracts:
         # Should install Terraform 1.5.7
         pass
 
-    def test_cli_status_command(self):
+    def test_cli_status_command(self) -> None:
         """
         CONTRACT: CLI should show current tool status
         """
@@ -236,11 +234,10 @@ class TestCLIContracts:
         pass
 
 
-
 class TestIntegrationContracts:
     """TDD contracts for workenv integration with TofuSoup."""
 
-    def test_harness_integration(self):
+    def test_harness_integration(self) -> None:
         """
         CONTRACT: Workenv should integrate with TofuSoup test harnesses
         """
@@ -248,7 +245,7 @@ class TestIntegrationContracts:
         # Should coordinate with existing harness management
         pass
 
-    def test_conformance_testing_integration(self):
+    def test_conformance_testing_integration(self) -> None:
         """
         CONTRACT: Workenv should support conformance testing workflows
         """
@@ -271,8 +268,7 @@ class TestTDDConfiguration:
     @pytest.fixture
     def mock_network_calls(self):
         """Mock all network calls for isolated testing."""
-        with patch('urllib.request.urlopen'), \
-             patch('wrknv.wenv.operations.download.download_file'):
+        with patch("urllib.request.urlopen"), patch("wrknv.wenv.operations.download.download_file"):
             yield
 
     def test_tdd_fixtures_available(self, temp_workenv_dir, mock_network_calls):
@@ -290,7 +286,7 @@ class TestTDDConfiguration:
 class TestPropertyBasedContracts:
     """Property-based testing contracts using Hypothesis."""
 
-    def test_version_parsing_properties(self):
+    def test_version_parsing_properties(self) -> None:
         """
         CONTRACT: Version parsing should have consistent properties
         """
@@ -299,7 +295,7 @@ class TestPropertyBasedContracts:
         # Property: Version comparison should be transitive
         pass
 
-    def test_download_retry_properties(self):
+    def test_download_retry_properties(self) -> None:
         """
         CONTRACT: Download operations should have retry properties
         """

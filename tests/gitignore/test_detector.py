@@ -2,9 +2,8 @@
 Tests for Project Detector
 ===========================
 """
+
 from __future__ import annotations
-
-
 
 import pytest
 

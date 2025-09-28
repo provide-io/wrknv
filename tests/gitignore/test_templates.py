@@ -2,8 +2,8 @@
 Tests for Template Handler
 ===========================
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -62,7 +62,7 @@ class TestTemplateHandler:
         assert cache_dir.exists()
         assert handler.cache_dir == cache_dir
 
-    def test_init_with_default_cache_dir(self):
+    def test_init_with_default_cache_dir(self) -> None:
         """Test initialization with default cache directory."""
         with patch("pathlib.Path.home") as mock_home:
             mock_home.return_value = Path("/home/user")

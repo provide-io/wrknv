@@ -38,7 +38,7 @@ class TestShellCommand:
         return manager
 
     @pytest.fixture
-    def test_config(self):
+    def test_config(self) -> None:
         """Create test configuration."""
         return WorkenvConfig(
             project_name="test-project",
@@ -174,7 +174,7 @@ class TestExecCommand:
     """Test exec command for running commands in containers."""
 
     @pytest.fixture
-    def test_config(self):
+    def test_config(self) -> None:
         """Create test configuration."""
         return WorkenvConfig(
             project_name="test-project",
@@ -297,7 +297,7 @@ class TestLogsCommand:
     """Test logs command for viewing container logs."""
 
     @pytest.fixture
-    def test_config(self):
+    def test_config(self) -> None:
         """Create test configuration."""
         return WorkenvConfig(
             project_name="test-project",

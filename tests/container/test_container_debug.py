@@ -7,10 +7,10 @@ import pytest
 Debug container volume mounting
 """
 
-from pathlib import Path
-import subprocess
 import sys
 import time
+
+from provide.foundation.process import run_command
 
 sys.path.insert(0, "src")
 
@@ -58,13 +58,13 @@ def test_volume_debug():
     time.sleep(2)
 
     # Check container is running
-    result = subprocess.run(
+    result = run_command(
         ["docker", "ps", "--filter", f"name={manager.CONTAINER_NAME}"], capture_output=True, text=True
     )
     print(f"Container status:\n{result.stdout}")
 
     # Check volume mounts
-    result = subprocess.run(
+    result = run_command(
         ["docker", "inspect", manager.CONTAINER_NAME, "--format", "{{json .Mounts}}"],
         capture_output=True,
         text=True,
@@ -82,7 +82,7 @@ def test_volume_debug():
         f"echo 'Debug test' > /workspace/{test_file} && ls -la /workspace/",
     ]
 
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = run_command(cmd, capture_output=True, text=True)
     print(f"Write command result: {result.returncode}")
     print(f"Stdout: {result.stdout}")
     print(f"Stderr: {result.stderr}")
@@ -101,8 +101,8 @@ def test_volume_debug():
         print(f"Files in workspace: {files}")
 
     # Cleanup
-    subprocess.run(["docker", "stop", manager.CONTAINER_NAME], capture_output=True)
-    subprocess.run(["docker", "rm", manager.CONTAINER_NAME], capture_output=True)
+    run_command(["docker", "stop", manager.CONTAINER_NAME], capture_output=True)
+    run_command(["docker", "rm", manager.CONTAINER_NAME], capture_output=True)
 
     return host_file.exists()
 

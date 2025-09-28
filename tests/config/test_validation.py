@@ -7,11 +7,10 @@ from __future__ import annotations
 
 
 import pathlib
-import tempfile
-import unittest
 
 from wrknv.wenv.config import ValidatedTomlSource, WorkenvConfigError
 from wrknv.wenv.schema import (
+from provide.testkit import FoundationTestCase
     ContainerConfig,
     PackageConfig,
     ProfileConfig,
@@ -25,16 +24,16 @@ from wrknv.wenv.schema import (
 )
 
 
-class TestToolConfig(unittest.TestCase):
+class TestToolConfig(FoundationTestCase):
     """Test ToolConfig validation."""
 
-    def test_valid_tool_config(self):
+    def test_valid_tool_config(self) -> None:
         """Test creating valid tool configuration."""
         config = ToolConfig(version="1.5.0")
-        self.assertEqual(config.version, "1.5.0")
-        self.assertTrue(config.enabled)
+        assert config.version == "1.5.0"
+        assert config.enabled
 
-    def test_tool_config_with_custom_settings(self):
+    def test_tool_config_with_custom_settings(self) -> None:
         """Test tool config with custom settings."""
         config = ToolConfig(
             version="2.0.0",
@@ -43,11 +42,11 @@ class TestToolConfig(unittest.TestCase):
             install_path="/opt/tools/custom",
             environment={"TOOL_HOME": "/opt/tools/custom"},
         )
-        self.assertEqual(config.version, "2.0.0")
-        self.assertFalse(config.enabled)
-        self.assertEqual(config.source_url, "https://example.com/tool.tar.gz")
+        assert config.version == "2.0.0"
+        assert not config.enabled
+        assert config.source_url == "https://example.com/tool.tar.gz"
 
-    def test_invalid_version(self):
+    def test_invalid_version(self) -> None:
         """Test invalid version format."""
         try:
             # Should work with pydantic validation
@@ -56,25 +55,25 @@ class TestToolConfig(unittest.TestCase):
         except ImportError:
             # Fallback when pydantic not installed
             config = ToolConfig(version="")
-            self.assertEqual(config.version, "")
+            assert config.version == ""
 
-    def test_version_starting_with_v(self):
+    def test_version_starting_with_v(self) -> None:
         """Test version starting with 'v'."""
         config = ToolConfig(version="v1.2.3")
-        self.assertEqual(config.version, "v1.2.3")
+        assert config.version == "v1.2.3"
 
 
-class TestContainerConfig(unittest.TestCase):
+class TestContainerConfig(FoundationTestCase):
     """Test ContainerConfig validation."""
 
-    def test_default_container_config(self):
+    def test_default_container_config(self) -> None:
         """Test default container configuration."""
         config = ContainerConfig()
-        self.assertFalse(config.enabled)
-        self.assertEqual(config.base_image, "ubuntu:22.04")
-        self.assertEqual(config.python_version, "3.11")
+        assert not config.enabled
+        assert config.base_image == "ubuntu:22.04"
+        assert config.python_version == "3.11"
 
-    def test_container_config_with_settings(self):
+    def test_container_config_with_settings(self) -> None:
         """Test container config with custom settings."""
         config = ContainerConfig(
             enabled=True,
@@ -85,11 +84,11 @@ class TestContainerConfig(unittest.TestCase):
             volumes=["/host/path:/container/path"],
             ports=["8080:80"],
         )
-        self.assertTrue(config.enabled)
-        self.assertEqual(config.base_image, "python:3.11-slim")
-        self.assertEqual(len(config.additional_packages), 2)
+        assert config.enabled
+        assert config.base_image == "python:3.11-slim"
+        assert len(config.additional_packages) == 2
 
-    def test_invalid_python_version(self):
+    def test_invalid_python_version(self) -> None:
         """Test invalid Python version."""
         try:
             with self.assertRaises(ValueError):
@@ -97,51 +96,51 @@ class TestContainerConfig(unittest.TestCase):
         except ImportError:
             # Fallback behavior
             config = ContainerConfig(python_version="2.7")
-            self.assertEqual(config.python_version, "2.7")
+            assert config.python_version == "2.7"
 
 
-class TestProfileConfig(unittest.TestCase):
+class TestProfileConfig(FoundationTestCase):
     """Test ProfileConfig validation."""
 
-    def test_valid_profile(self):
+    def test_valid_profile(self) -> None:
         """Test creating valid profile."""
         profile = ProfileConfig(
             name="development",
             description="Development environment",
             tools={"terraform": ToolConfig(version="1.5.0"), "go": ToolConfig(version="1.21.0")},
         )
-        self.assertEqual(profile.name, "development")
-        self.assertEqual(len(profile.tools), 2)
+        assert profile.name == "development"
+        assert len(profile.tools) == 2
 
-    def test_profile_with_container(self):
+    def test_profile_with_container(self) -> None:
         """Test profile with container configuration."""
         profile = ProfileConfig(
             name="docker-dev", container=ContainerConfig(enabled=True), environment={"ENV": "development"}
         )
         self.assertIsNotNone(profile.container)
-        self.assertTrue(profile.container.enabled)
+        assert profile.container.enabled
 
-    def test_invalid_profile_name(self):
+    def test_invalid_profile_name(self) -> None:
         """Test invalid profile name."""
         try:
             with self.assertRaises(ValueError):
                 ProfileConfig(name="")
         except ImportError:
             profile = ProfileConfig(name="")
-            self.assertEqual(profile.name, "")
+            assert profile.name == ""
 
 
-class TestPackageConfig(unittest.TestCase):
+class TestPackageConfig(FoundationTestCase):
     """Test PackageConfig validation."""
 
-    def test_valid_package_config(self):
+    def test_valid_package_config(self) -> None:
         """Test creating valid package configuration."""
         config = PackageConfig(name="my-package", version="1.0.0", entry_point="my_package.main:app")
-        self.assertEqual(config.name, "my-package")
-        self.assertEqual(config.version, "1.0.0")
-        self.assertEqual(config.license, "MIT")
+        assert config.name == "my-package"
+        assert config.version == "1.0.0"
+        assert config.license == "MIT"
 
-    def test_package_with_metadata(self):
+    def test_package_with_metadata(self) -> None:
         """Test package with metadata."""
         config = PackageConfig(
             name="Complex-Package",
@@ -153,21 +152,21 @@ class TestPackageConfig(unittest.TestCase):
             metadata={"key": "value"},
         )
         # Name should be normalized to lowercase
-        self.assertEqual(config.name, "complex-package")
-        self.assertEqual(len(config.dependencies), 2)
+        assert config.name == "complex-package"
+        assert len(config.dependencies) == 2
 
 
-class TestRegistryConfig(unittest.TestCase):
+class TestRegistryConfig(FoundationTestCase):
     """Test RegistryConfig validation."""
 
-    def test_default_registry_config(self):
+    def test_default_registry_config(self) -> None:
         """Test default registry configuration."""
         config = RegistryConfig()
-        self.assertEqual(config.url, "https://registry.wrknv.io")
-        self.assertTrue(config.verify_ssl)
-        self.assertEqual(config.timeout, 30)
+        assert config.url == "https://registry.wrknv.io"
+        assert config.verify_ssl
+        assert config.timeout == 30
 
-    def test_custom_registry_config(self):
+    def test_custom_registry_config(self) -> None:
         """Test custom registry configuration."""
         config = RegistryConfig(
             url="https://custom.registry.com/",
@@ -177,30 +176,30 @@ class TestRegistryConfig(unittest.TestCase):
             timeout=60,
         )
         # URL should be normalized (trailing slash removed)
-        self.assertEqual(config.url, "https://custom.registry.com")
-        self.assertEqual(config.username, "user")
+        assert config.url == "https://custom.registry.com"
+        assert config.username == "user"
 
-    def test_invalid_registry_url(self):
+    def test_invalid_registry_url(self) -> None:
         """Test invalid registry URL."""
         try:
             with self.assertRaises(ValueError):
                 RegistryConfig(url="not-a-url")
         except ImportError:
             config = RegistryConfig(url="not-a-url")
-            self.assertEqual(config.url, "not-a-url")
+            assert config.url == "not-a-url"
 
 
-class TestWorkenvConfig(unittest.TestCase):
+class TestWorkenvConfig(FoundationTestCase):
     """Test WorkenvConfig validation."""
 
-    def test_minimal_config(self):
+    def test_minimal_config(self) -> None:
         """Test minimal valid configuration."""
         config = WorkenvConfig(project_name="test-project")
-        self.assertEqual(config.project_name, "test-project")
-        self.assertEqual(config.version, "1.0.0")
-        self.assertEqual(config.log_level, "INFO")
+        assert config.project_name == "test-project"
+        assert config.version == "1.0.0"
+        assert config.log_level == "INFO"
 
-    def test_full_config(self):
+    def test_full_config(self) -> None:
         """Test full configuration."""
         config = WorkenvConfig(
             project_name="full-project",
@@ -219,35 +218,35 @@ class TestWorkenvConfig(unittest.TestCase):
             environment={"KEY": "value"},
             scripts={"test": "pytest"},
         )
-        self.assertEqual(config.project_name, "full-project")
-        self.assertEqual(len(config.tools), 2)
+        assert config.project_name == "full-project"
+        assert len(config.tools) == 2
         self.assertIsNotNone(config.container)
         self.assertIsNotNone(config.package)
-        self.assertEqual(config.log_level, "DEBUG")
+        assert config.log_level == "DEBUG"
 
-    def test_get_tool_config(self):
+    def test_get_tool_config(self) -> None:
         """Test getting tool configuration."""
         config = WorkenvConfig(project_name="test", tools={"terraform": ToolConfig(version="1.5.0")})
         tool = config.get_tool_config("terraform")
         self.assertIsNotNone(tool)
-        self.assertEqual(tool.version, "1.5.0")
+        assert tool.version == "1.5.0"
 
         missing = config.get_tool_config("missing")
         self.assertIsNone(missing)
 
-    def test_get_profile(self):
+    def test_get_profile(self) -> None:
         """Test getting profile configuration."""
         config = WorkenvConfig(
             project_name="test", profiles={"dev": ProfileConfig(name="dev", description="Dev profile")}
         )
         profile = config.get_profile("dev")
         self.assertIsNotNone(profile)
-        self.assertEqual(profile.name, "dev")
+        assert profile.name == "dev"
 
         missing = config.get_profile("missing")
         self.assertIsNone(missing)
 
-    def test_merge_with_profile(self):
+    def test_merge_with_profile(self) -> None:
         """Test merging configuration with profile."""
         config = WorkenvConfig(
             project_name="test",
@@ -265,45 +264,45 @@ class TestWorkenvConfig(unittest.TestCase):
 
         # Profile tools should override base tools
         terraform = merged.get_tool_config("terraform")
-        self.assertEqual(terraform.version, "1.5.0")
+        assert terraform.version == "1.5.0"
 
         # New tools from profile should be added
         go = merged.get_tool_config("go")
         self.assertIsNotNone(go)
-        self.assertEqual(go.version, "1.21.0")
+        assert go.version == "1.21.0"
 
         # Environment should be merged
-        self.assertEqual(merged.environment["ENV"], "dev")
+        assert merged.environment["ENV"] == "dev"
 
-    def test_path_expansion(self):
+    def test_path_expansion(self) -> None:
         """Test path expansion in configuration."""
         config = WorkenvConfig(project_name="test", install_dir="~/test/install", cache_dir="~/test/cache")
         # Paths should be expanded
         self.assertNotIn("~", config.install_dir)
         self.assertNotIn("~", config.cache_dir)
-        self.assertTrue(config.install_dir.startswith("/"))
+        assert config.install_dir.startswith("/")
 
-    def test_invalid_log_level(self):
+    def test_invalid_log_level(self) -> None:
         """Test invalid log level."""
         try:
             with self.assertRaises(ValueError):
                 WorkenvConfig(project_name="test", log_level="INVALID")
         except ImportError:
             config = WorkenvConfig(project_name="test", log_level="INVALID")
-            self.assertEqual(config.log_level, "INVALID")
+            assert config.log_level == "INVALID"
 
 
-class TestConfigValidation(unittest.TestCase):
+class TestConfigValidation(FoundationTestCase):
     """Test configuration validation functions."""
 
-    def test_validate_valid_config(self):
+    def test_validate_valid_config(self) -> None:
         """Test validating valid configuration."""
         config_dict = {"project_name": "test-project", "tools": {"terraform": {"version": "1.5.0"}}}
         is_valid, errors = validate_config_dict(config_dict)
-        self.assertTrue(is_valid)
-        self.assertEqual(len(errors), 0)
+        assert is_valid
+        assert len(errors) == 0
 
-    def test_validate_invalid_config(self):
+    def test_validate_invalid_config(self) -> None:
         """Test validating invalid configuration."""
         config_dict = {
             # Missing required project_name
@@ -315,42 +314,39 @@ class TestConfigValidation(unittest.TestCase):
         # Validation behavior depends on whether pydantic is installed
         if is_valid:
             # Fallback mode - no validation
-            self.assertTrue(True)
+            assert True
         else:
-            self.assertFalse(is_valid)
+            assert not is_valid
             self.assertGreater(len(errors), 0)
 
-    def test_load_config_from_dict(self):
+    def test_load_config_from_dict(self) -> None:
         """Test loading configuration from dictionary."""
         config_dict = {"project_name": "test-project", "version": "2.0.0"}
         config = load_config_from_dict(config_dict)
-        self.assertEqual(config.project_name, "test-project")
-        self.assertEqual(config.version, "2.0.0")
+        assert config.project_name == "test-project"
+        assert config.version == "2.0.0"
 
-    def test_get_default_config(self):
+    def test_get_default_config(self) -> None:
         """Test getting default configuration."""
         config = get_default_config("my-project")
-        self.assertEqual(config.project_name, "my-project")
-        self.assertIn("terraform", config.tools)
-        self.assertIn("go", config.tools)
+        assert config.project_name == "my-project"
+        assert "terraform" in config.tools
+        assert "go" in config.tools
         self.assertIsNotNone(config.container)
 
 
-class TestValidatedTomlSource(unittest.TestCase):
+class TestValidatedTomlSource(FoundationTestCase):
     """Test ValidatedTomlSource configuration source."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
-        self.temp_dir = tempfile.mkdtemp()
+        super().setup_method()
+        self.temp_dir = self.create_temp_dir()
         self.temp_path = pathlib.Path(self.temp_dir)
 
-    def tearDown(self):
-        """Clean up test fixtures."""
-        import shutil
+    
 
-        shutil.rmtree(self.temp_dir, ignore_errors=True)
-
-    def test_load_valid_config(self):
+    def test_load_valid_config(self) -> None:
         """Test loading valid configuration file."""
         config_file = self.temp_path / "wrknv.toml"
         config_file.write_text("""
@@ -369,18 +365,18 @@ version = "1.21.0"
         config = source.get_config()
 
         self.assertIsNotNone(config)
-        self.assertEqual(config.project_name, "test-project")
+        assert config.project_name == "test-project"
 
         # Test getting tool versions
-        self.assertEqual(source.get_tool_version("terraform"), "1.5.0")
-        self.assertEqual(source.get_tool_version("go"), "1.21.0")
+        assert source.get_tool_version("terraform") == "1.5.0"
+        assert source.get_tool_version("go") == "1.21.0"
 
         # Test getting all tools
         tools = source.get_all_tools()
-        self.assertEqual(len(tools), 2)
-        self.assertEqual(tools["terraform"], "1.5.0")
+        assert len(tools) == 2
+        assert tools["terraform"] == "1.5.0"
 
-    def test_load_invalid_config(self):
+    def test_load_invalid_config(self) -> None:
         """Test loading invalid configuration file."""
         config_file = self.temp_path / "invalid.toml"
         config_file.write_text("""
@@ -401,7 +397,7 @@ version = ""  # Invalid empty version
             # Config might be None due to missing project_name
             pass
 
-    def test_missing_config_file(self):
+    def test_missing_config_file(self) -> None:
         """Test handling missing configuration file."""
         config_file = self.temp_path / "missing.toml"
 
@@ -410,9 +406,9 @@ version = ""  # Invalid empty version
 
         self.assertIsNone(config)
         self.assertIsNone(source.get_tool_version("terraform"))
-        self.assertEqual(source.get_all_tools(), {})
+        assert source.get_all_tools() == {}
 
-    def test_config_with_profiles(self):
+    def test_config_with_profiles(self) -> None:
         """Test configuration with profiles."""
         config_file = self.temp_path / "profiles.toml"
         config_file.write_text("""
@@ -430,13 +426,13 @@ version = "1.6.0"
         profile = source.get_profile("dev")
 
         if profile:  # Profile support depends on schema implementation
-            self.assertEqual(profile.get("name"), "dev")
+            assert profile.get("name") == "dev"
 
 
-class TestConfigToToml(unittest.TestCase):
+class TestConfigToToml(FoundationTestCase):
     """Test configuration to TOML conversion."""
 
-    def test_config_to_toml(self):
+    def test_config_to_toml(self) -> None:
         """Test converting configuration to TOML."""
         config = WorkenvConfig(
             project_name="test-project", version="1.0.0", tools={"terraform": ToolConfig(version="1.5.0")}
@@ -446,14 +442,14 @@ class TestConfigToToml(unittest.TestCase):
             import tomli_w
 
             toml_str = config_to_toml(config)
-            self.assertIn("project_name", toml_str)
-            self.assertIn("test-project", toml_str)
-            self.assertIn("terraform", toml_str)
-            self.assertIn("1.5.0", toml_str)
+            assert "project_name" in toml_str
+            assert "test-project" in toml_str
+            assert "terraform" in toml_str
+            assert "1.5.0" in toml_str
         except ImportError:
             # Skip test if tomli_w not available
             self.skipTest("tomli_w not available")
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

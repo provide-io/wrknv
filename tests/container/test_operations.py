@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import unittest
 from unittest.mock import patch
 
+from provide.testkit import FoundationTestCase
 import pytest
 
 from wrknv.container.commands import (
@@ -20,7 +20,7 @@ from wrknv.wenv.schema import WorkenvConfig
 
 
 @pytest.mark.container
-class TestContainerManager(unittest.TestCase):
+class TestContainerManager(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.build_image")
     def test_build_container(self, mock_build_image):
         # Arrange
@@ -31,7 +31,7 @@ class TestContainerManager(unittest.TestCase):
         result = build_container(config, rebuild=True)
 
         # Assert
-        self.assertTrue(result)
+        assert result
         mock_build_image.assert_called_once_with(rebuild=True)
 
     @patch("wrknv.container.manager.ContainerManager.start")
@@ -44,7 +44,7 @@ class TestContainerManager(unittest.TestCase):
         result = start_container(config, rebuild=True)
 
         # Assert
-        self.assertTrue(result)
+        assert result
         mock_start.assert_called_once_with(force_rebuild=True)
 
     @patch("wrknv.container.manager.ContainerManager.enter")
@@ -70,7 +70,7 @@ class TestContainerManager(unittest.TestCase):
         result = stop_container(config)
 
         # Assert
-        self.assertTrue(result)
+        assert result
         mock_stop.assert_called_once_with()
 
     @patch("wrknv.container.manager.ContainerManager.restart")
@@ -83,7 +83,7 @@ class TestContainerManager(unittest.TestCase):
         result = restart_container(config)
 
         # Assert
-        self.assertTrue(result)
+        assert result
         mock_restart.assert_called_once_with()
 
     @patch("wrknv.container.manager.ContainerManager.status")
@@ -125,7 +125,7 @@ class TestContainerManager(unittest.TestCase):
         result = clean_container(config)
 
         # Assert
-        self.assertTrue(result)
+        assert result
         mock_clean.assert_called_once_with()
 
     @patch("wrknv.container.manager.ContainerManager.start")
@@ -142,11 +142,11 @@ class TestContainerManager(unittest.TestCase):
         result = rebuild_container(config)
 
         # Assert
-        self.assertTrue(result)
+        assert result
         mock_clean.assert_called_once_with()
         mock_build_image.assert_called_once_with(rebuild=True)
         mock_start.assert_called_once_with()
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

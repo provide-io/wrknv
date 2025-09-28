@@ -15,9 +15,10 @@ These tests require Docker to be installed and running.
 import json
 from pathlib import Path
 import shutil
-import subprocess
 import time
 from unittest import skipIf
+
+from provide.foundation.process import run_command
 
 from wrknv.container.manager import ContainerManager
 from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
@@ -42,7 +43,7 @@ class TestContainerVolumeIntegration:
         return project_dir
 
     @pytest.fixture
-    def test_config(self):
+    def test_config(self) -> None:
         """Create test configuration with custom storage path."""
         # Use home directory for Docker Desktop compatibility
         storage_path = Path.home() / ".wrknv_test_containers"
@@ -65,8 +66,8 @@ class TestContainerVolumeIntegration:
         yield manager
         # Cleanup: stop and remove container
         try:
-            subprocess.run(["docker", "stop", manager.CONTAINER_NAME], capture_output=True, timeout=10)
-            subprocess.run(["docker", "rm", manager.CONTAINER_NAME], capture_output=True, timeout=10)
+            run_command(["docker", "stop", manager.CONTAINER_NAME], capture_output=True, timeout=10)
+            run_command(["docker", "rm", manager.CONTAINER_NAME], capture_output=True, timeout=10)
         except:
             pass
 
@@ -96,7 +97,7 @@ class TestContainerVolumeIntegration:
             f"echo '{test_content}' > /workspace/{test_file}",
         ]
 
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode == 0, f"Failed to write file in container: {result.stderr}"
 
         # Verify file exists on host
@@ -126,7 +127,7 @@ class TestContainerVolumeIntegration:
             "-c",
             f"echo '{json.dumps(test_data)}' > /workspace/persistent.json",
         ]
-        result = subprocess.run(cmd, capture_output=True)
+        result = run_command(cmd, capture_output=True)
         assert result.returncode == 0
 
         # Write to cache volume
@@ -138,7 +139,7 @@ class TestContainerVolumeIntegration:
             "-c",
             "echo 'cached data' > /home/user/.cache/data.txt",
         ]
-        result = subprocess.run(cmd, capture_output=True)
+        result = run_command(cmd, capture_output=True)
         assert result.returncode == 0
 
         # Stop container
@@ -157,7 +158,7 @@ class TestContainerVolumeIntegration:
 
         # Read data from restarted container
         cmd = ["docker", "exec", container_manager.CONTAINER_NAME, "cat", "/workspace/persistent.json"]
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode == 0
 
         # Verify data matches
@@ -182,7 +183,7 @@ class TestContainerVolumeIntegration:
 
         # Try to read the file from container (should work)
         cmd = ["docker", "exec", container_manager.CONTAINER_NAME, "cat", "/downloads/readonly_test.txt"]
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode == 0
         assert "This is read-only" in result.stdout
 
@@ -195,7 +196,7 @@ class TestContainerVolumeIntegration:
             "-c",
             "echo 'trying to write' > /downloads/should_fail.txt",
         ]
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode != 0, "Should not be able to write to read-only mount"
         assert "Read-only file system" in result.stderr or "Permission denied" in result.stderr
 
@@ -220,7 +221,7 @@ class TestContainerVolumeIntegration:
             dir_path = str(Path(filepath).parent)
             if dir_path != "/":
                 mkdir_cmd = ["docker", "exec", container_manager.CONTAINER_NAME, "mkdir", "-p", dir_path]
-                subprocess.run(mkdir_cmd, capture_output=True)
+                run_command(mkdir_cmd, capture_output=True)
 
             # Create file
             cmd = [
@@ -231,7 +232,7 @@ class TestContainerVolumeIntegration:
                 "-c",
                 f"echo '{content}' > {filepath}",
             ]
-            result = subprocess.run(cmd, capture_output=True)
+            result = run_command(cmd, capture_output=True)
             assert result.returncode == 0, f"Failed to create {filepath}"
 
         # Stop container for backup
@@ -261,11 +262,11 @@ class TestContainerVolumeIntegration:
         time.sleep(2)
 
         cmd = ["docker", "exec", container_manager.CONTAINER_NAME, "python", "/workspace/project.py"]
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode == 0
         assert "Hello World" in result.stdout
 
-    def test_multiple_containers_shared_downloads(self):
+    def test_multiple_containers_shared_downloads(self) -> None:
         """Test that multiple containers can share the downloads directory."""
         # Use home directory for Docker Desktop compatibility
         storage_path = Path.home() / ".wrknv_test_multi_containers"
@@ -317,7 +318,7 @@ class TestContainerVolumeIntegration:
             # Verify both containers can read the shared file
             for manager in [manager1, manager2]:
                 cmd = ["docker", "exec", manager.CONTAINER_NAME, "cat", "/downloads/shared_resource.txt"]
-                result = subprocess.run(cmd, capture_output=True, text=True)
+                result = run_command(cmd, capture_output=True, text=True)
                 assert result.returncode == 0
                 assert "Shared between containers" in result.stdout
 
@@ -330,7 +331,7 @@ class TestContainerVolumeIntegration:
                 "-c",
                 "echo 'project1 data' > /workspace/project1.txt",
             ]
-            subprocess.run(cmd1, capture_output=True)
+            run_command(cmd1, capture_output=True)
 
             cmd2 = [
                 "docker",
@@ -340,19 +341,19 @@ class TestContainerVolumeIntegration:
                 "-c",
                 "echo 'project2 data' > /workspace/project2.txt",
             ]
-            subprocess.run(cmd2, capture_output=True)
+            run_command(cmd2, capture_output=True)
 
             # Verify isolation - project1 file should not exist in project2
             cmd = ["docker", "exec", manager2.CONTAINER_NAME, "ls", "/workspace/project1.txt"]
-            result = subprocess.run(cmd, capture_output=True)
+            result = run_command(cmd, capture_output=True)
             assert result.returncode != 0, "Workspaces should be isolated"
 
         finally:
             # Cleanup
             for manager in [manager1, manager2]:
                 try:
-                    subprocess.run(["docker", "stop", manager.CONTAINER_NAME], capture_output=True, timeout=10)
-                    subprocess.run(["docker", "rm", manager.CONTAINER_NAME], capture_output=True, timeout=10)
+                    run_command(["docker", "stop", manager.CONTAINER_NAME], capture_output=True, timeout=10)
+                    run_command(["docker", "rm", manager.CONTAINER_NAME], capture_output=True, timeout=10)
                 except:
                     pass
 
@@ -403,7 +404,7 @@ class TestContainerVolumeIntegration:
                 "-c",
                 f"echo 'test' > {test_file} && echo 'success'",
             ]
-            result = subprocess.run(cmd, capture_output=True, text=True)
+            result = run_command(cmd, capture_output=True, text=True)
             assert result.returncode == 0, f"Failed to write to {volume}: {result.stderr}"
             assert "success" in result.stdout
 
@@ -426,7 +427,7 @@ class TestContainerVolumeIntegration:
             "bs=1M",
             "count=10",
         ]
-        result = subprocess.run(cmd, capture_output=True)
+        result = run_command(cmd, capture_output=True)
         assert result.returncode == 0
 
         # Verify file exists on host

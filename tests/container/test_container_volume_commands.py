@@ -39,7 +39,7 @@ class TestVolumeCommands:
             yield mock_home
 
     @pytest.fixture
-    def test_config(self):
+    def test_config(self) -> None:
         """Create test configuration."""
         return WorkenvConfig(
             project_name="test-project",

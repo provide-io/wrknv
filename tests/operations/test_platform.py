@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import patch
 
 from wrknv.wenv.operations.platform import (
+from provide.testkit import FoundationTestCase
     format_platform_string,
     get_architecture,
     get_archive_extension,
@@ -23,92 +24,92 @@ from wrknv.wenv.operations.platform import (
 )
 
 
-class TestPlatformOperations(unittest.TestCase):
+class TestPlatformOperations(FoundationTestCase):
     """Test platform detection operations."""
 
     @patch("wrknv.wenv.operations.platform.platform.system")
     def test_get_os_name_darwin(self, mock_system):
         """Test OS name detection for macOS."""
         mock_system.return_value = "Darwin"
-        self.assertEqual(get_os_name(), "darwin")
+        assert get_os_name() == "darwin"
 
     @patch("wrknv.wenv.operations.platform.platform.system")
     def test_get_os_name_linux(self, mock_system):
         """Test OS name detection for Linux."""
         mock_system.return_value = "Linux"
-        self.assertEqual(get_os_name(), "linux")
+        assert get_os_name() == "linux"
 
     @patch("wrknv.wenv.operations.platform.platform.system")
     def test_get_os_name_windows(self, mock_system):
         """Test OS name detection for Windows."""
         mock_system.return_value = "Windows"
-        self.assertEqual(get_os_name(), "windows")
+        assert get_os_name() == "windows"
 
     @patch("wrknv.wenv.operations.platform.platform.system")
     def test_get_os_name_freebsd(self, mock_system):
         """Test OS name detection for FreeBSD."""
         mock_system.return_value = "FreeBSD"
-        self.assertEqual(get_os_name(), "freebsd")
+        assert get_os_name() == "freebsd"
 
     @patch("wrknv.wenv.operations.platform.platform.system")
     def test_get_os_name_unknown(self, mock_system):
         """Test OS name detection for unknown OS."""
         mock_system.return_value = "Unknown"
-        self.assertEqual(get_os_name(), "unknown")
+        assert get_os_name() == "unknown"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_x86_64(self, mock_machine):
         """Test architecture detection for x86_64."""
         mock_machine.return_value = "x86_64"
-        self.assertEqual(get_architecture(), "amd64")
+        assert get_architecture() == "amd64"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_amd64(self, mock_machine):
         """Test architecture detection for amd64."""
         mock_machine.return_value = "AMD64"
-        self.assertEqual(get_architecture(), "amd64")
+        assert get_architecture() == "amd64"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_arm64(self, mock_machine):
         """Test architecture detection for arm64."""
         mock_machine.return_value = "arm64"
-        self.assertEqual(get_architecture(), "arm64")
+        assert get_architecture() == "arm64"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_aarch64(self, mock_machine):
         """Test architecture detection for aarch64."""
         mock_machine.return_value = "aarch64"
-        self.assertEqual(get_architecture(), "arm64")
+        assert get_architecture() == "arm64"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_i386(self, mock_machine):
         """Test architecture detection for i386."""
         mock_machine.return_value = "i386"
-        self.assertEqual(get_architecture(), "386")
+        assert get_architecture() == "386"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_i686(self, mock_machine):
         """Test architecture detection for i686."""
         mock_machine.return_value = "i686"
-        self.assertEqual(get_architecture(), "386")
+        assert get_architecture() == "386"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_arm(self, mock_machine):
         """Test architecture detection for ARM."""
         mock_machine.return_value = "armv7l"
-        self.assertEqual(get_architecture(), "arm")
+        assert get_architecture() == "arm"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_arm64_variant(self, mock_machine):
         """Test architecture detection for ARM64 variant."""
         mock_machine.return_value = "armv8-64"
-        self.assertEqual(get_architecture(), "arm64")
+        assert get_architecture() == "arm64"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     def test_get_architecture_unknown(self, mock_machine):
         """Test architecture detection for unknown arch."""
         mock_machine.return_value = "riscv64"
-        self.assertEqual(get_architecture(), "riscv64")
+        assert get_architecture() == "riscv64"
 
     @patch("wrknv.wenv.operations.platform.platform.machine")
     @patch("wrknv.wenv.operations.platform.platform.system")
@@ -120,12 +121,12 @@ class TestPlatformOperations(unittest.TestCase):
 
         info = get_platform_info()
 
-        self.assertEqual(info["os"], "darwin")
-        self.assertEqual(info["arch"], "arm64")
-        self.assertEqual(info["platform"], "darwin_arm64")
-        self.assertEqual(info["python_platform"], "darwin")
-        self.assertEqual(info["machine"], "arm64")
-        self.assertEqual(info["system"], "Darwin")
+        assert info["os"] == "darwin"
+        assert info["arch"] == "arm64"
+        assert info["platform"] == "darwin_arm64"
+        assert info["python_platform"] == "darwin"
+        assert info["machine"] == "arm64"
+        assert info["system"] == "Darwin"
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
@@ -133,7 +134,7 @@ class TestPlatformOperations(unittest.TestCase):
         """Test supported platform check for Darwin ARM64."""
         mock_os.return_value = "darwin"
         mock_arch.return_value = "arm64"
-        self.assertTrue(is_supported_platform())
+        assert is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
@@ -141,7 +142,7 @@ class TestPlatformOperations(unittest.TestCase):
         """Test supported platform check for Linux AMD64."""
         mock_os.return_value = "linux"
         mock_arch.return_value = "amd64"
-        self.assertTrue(is_supported_platform())
+        assert is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
@@ -149,7 +150,7 @@ class TestPlatformOperations(unittest.TestCase):
         """Test supported platform check for Windows AMD64."""
         mock_os.return_value = "windows"
         mock_arch.return_value = "amd64"
-        self.assertTrue(is_supported_platform())
+        assert is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
@@ -157,102 +158,102 @@ class TestPlatformOperations(unittest.TestCase):
         """Test unsupported platform check."""
         mock_os.return_value = "aix"
         mock_arch.return_value = "ppc64"
-        self.assertFalse(is_supported_platform())
+        assert not is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     def test_get_executable_extension_windows(self, mock_os):
         """Test executable extension for Windows."""
         mock_os.return_value = "windows"
-        self.assertEqual(get_executable_extension(), ".exe")
+        assert get_executable_extension() == ".exe"
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     def test_get_executable_extension_unix(self, mock_os):
         """Test executable extension for Unix-like systems."""
         mock_os.return_value = "linux"
-        self.assertEqual(get_executable_extension(), "")
+        assert get_executable_extension() == ""
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     def test_get_archive_extension_windows(self, mock_os):
         """Test archive extension for Windows."""
         mock_os.return_value = "windows"
-        self.assertEqual(get_archive_extension(), ".zip")
+        assert get_archive_extension() == ".zip"
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     def test_get_archive_extension_unix(self, mock_os):
         """Test archive extension for Unix-like systems."""
         mock_os.return_value = "linux"
-        self.assertEqual(get_archive_extension(), ".tar.gz")
+        assert get_archive_extension() == ".tar.gz"
 
-    def test_format_platform_string(self):
+    def test_format_platform_string(self) -> None:
         """Test platform string formatting."""
-        self.assertEqual(format_platform_string("darwin", "arm64"), "darwin_arm64")
-        self.assertEqual(format_platform_string("linux", "amd64"), "linux_amd64")
+        assert format_platform_string("darwin" == "arm64", "darwin_arm64")
+        assert format_platform_string("linux" == "amd64", "linux_amd64")
 
-    def test_parse_platform_string_valid(self):
+    def test_parse_platform_string_valid(self) -> None:
         """Test parsing valid platform strings."""
         result = parse_platform_string("darwin_arm64")
-        self.assertEqual(result["os"], "darwin")
-        self.assertEqual(result["arch"], "arm64")
+        assert result["os"] == "darwin"
+        assert result["arch"] == "arm64"
 
-    def test_parse_platform_string_os_only(self):
+    def test_parse_platform_string_os_only(self) -> None:
         """Test parsing platform string with OS only."""
         result = parse_platform_string("linux")
-        self.assertEqual(result["os"], "linux")
-        self.assertEqual(result["arch"], "unknown")
+        assert result["os"] == "linux"
+        assert result["arch"] == "unknown"
 
-    def test_parse_platform_string_arch_only(self):
+    def test_parse_platform_string_arch_only(self) -> None:
         """Test parsing platform string with arch only."""
         result = parse_platform_string("amd64")
-        self.assertEqual(result["os"], "unknown")
-        self.assertEqual(result["arch"], "amd64")
+        assert result["os"] == "unknown"
+        assert result["arch"] == "amd64"
 
-    def test_parse_platform_string_unknown(self):
+    def test_parse_platform_string_unknown(self) -> None:
         """Test parsing unknown platform string."""
         result = parse_platform_string("something")
-        self.assertEqual(result["os"], "unknown")
-        self.assertEqual(result["arch"], "unknown")
+        assert result["os"] == "unknown"
+        assert result["arch"] == "unknown"
 
-    def test_get_download_platform_mappings(self):
+    def test_get_download_platform_mappings(self) -> None:
         """Test getting platform mappings."""
         mappings = get_download_platform_mappings()
 
-        self.assertIn("terraform", mappings)
-        self.assertIn("tofu", mappings)
-        self.assertIn("go", mappings)
-        self.assertIn("uv", mappings)
+        assert "terraform" in mappings
+        assert "tofu" in mappings
+        assert "go" in mappings
+        assert "uv" in mappings
 
         # Check UV has special mappings
-        self.assertEqual(mappings["uv"]["darwin"], "apple-darwin")
-        self.assertEqual(mappings["uv"]["linux"], "unknown-linux-gnu")
-        self.assertEqual(mappings["uv"]["windows"], "pc-windows-msvc")
+        assert mappings["uv"]["darwin"] == "apple-darwin"
+        assert mappings["uv"]["linux"] == "unknown-linux-gnu"
+        assert mappings["uv"]["windows"] == "pc-windows-msvc"
 
-    def test_get_platform_mapping_terraform_os(self):
+    def test_get_platform_mapping_terraform_os(self) -> None:
         """Test platform mapping for Terraform OS."""
         result = get_platform_mapping("terraform", "darwin", "os")
-        self.assertEqual(result, "darwin")
+        assert result == "darwin"
 
-    def test_get_platform_mapping_uv_os(self):
+    def test_get_platform_mapping_uv_os(self) -> None:
         """Test platform mapping for UV OS."""
         result = get_platform_mapping("uv", "darwin", "os")
-        self.assertEqual(result, "apple-darwin")
+        assert result == "apple-darwin"
 
-    def test_get_platform_mapping_arch(self):
+    def test_get_platform_mapping_arch(self) -> None:
         """Test platform mapping for architecture."""
         result = get_platform_mapping("terraform", "arm64", "arch")
-        self.assertEqual(result, "arm64")
+        assert result == "arm64"
 
-    def test_get_platform_mapping_unknown_tool(self):
+    def test_get_platform_mapping_unknown_tool(self) -> None:
         """Test platform mapping for unknown tool."""
         result = get_platform_mapping("unknown", "darwin", "os")
-        self.assertEqual(result, "darwin")
+        assert result == "darwin"
 
-    def test_get_platform_mapping_other_type(self):
+    def test_get_platform_mapping_other_type(self) -> None:
         """Test platform mapping for other type."""
         result = get_platform_mapping("terraform", "something", "other")
-        self.assertEqual(result, "something")
+        assert result == "something"
 
 
-class TestPlatformEdgeCases(unittest.TestCase):
+class TestPlatformEdgeCases(FoundationTestCase):
     """Test edge cases in platform detection."""
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
@@ -261,7 +262,7 @@ class TestPlatformEdgeCases(unittest.TestCase):
         """Test FreeBSD platform support."""
         mock_os.return_value = "freebsd"
         mock_arch.return_value = "amd64"
-        self.assertTrue(is_supported_platform())
+        assert is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
@@ -269,7 +270,7 @@ class TestPlatformEdgeCases(unittest.TestCase):
         """Test Windows 32-bit platform support."""
         mock_os.return_value = "windows"
         mock_arch.return_value = "386"
-        self.assertTrue(is_supported_platform())
+        assert is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
@@ -277,20 +278,20 @@ class TestPlatformEdgeCases(unittest.TestCase):
         """Test Linux 32-bit platform support."""
         mock_os.return_value = "linux"
         mock_arch.return_value = "386"
-        self.assertTrue(is_supported_platform())
+        assert is_supported_platform()
 
-    def test_parse_platform_string_multiple_underscores(self):
+    def test_parse_platform_string_multiple_underscores(self) -> None:
         """Test parsing platform string with multiple underscores."""
         result = parse_platform_string("darwin_arm64_extra")
-        self.assertEqual(result["os"], "darwin")
-        self.assertEqual(result["arch"], "arm64_extra")
+        assert result["os"] == "darwin"
+        assert result["arch"] == "arm64_extra"
 
-    def test_get_platform_mapping_missing_os_mapping(self):
+    def test_get_platform_mapping_missing_os_mapping(self) -> None:
         """Test platform mapping when OS mapping is missing."""
         result = get_platform_mapping("uv", "freebsd", "os")
         # Should return original value when not in mappings
-        self.assertEqual(result, "freebsd")
+        assert result == "freebsd"
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

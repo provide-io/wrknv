@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from provide.testkit import FoundationTestCase
 import pytest
 
 #!/usr/bin/env python3
@@ -8,7 +9,6 @@ import pytest
 Test suite for dynamic container configuration.
 """
 
-import unittest
 from unittest.mock import MagicMock, patch
 
 from wrknv.container.manager import ContainerManager
@@ -16,38 +16,38 @@ from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 
 
 @pytest.mark.container
-class TestDynamicContainerConfiguration(unittest.TestCase):
+class TestDynamicContainerConfiguration(FoundationTestCase):
     """Test that container manager uses dynamic configuration from wrknv.toml."""
 
-    def test_default_container_config(self):
+    def test_default_container_config(self) -> None:
         """Test container manager with default configuration."""
         manager = ContainerManager()
 
-        self.assertEqual(manager.CONTAINER_NAME, "wrknv-dev")
-        self.assertEqual(manager.IMAGE_NAME, "wrknv-dev")
+        assert manager.CONTAINER_NAME == "wrknv-dev"
+        assert manager.IMAGE_NAME == "wrknv-dev"
         self.assertIsNotNone(manager.container_config)
-        self.assertFalse(manager.container_config.enabled)
+        assert not manager.container_config.enabled
 
-    def test_custom_project_name(self):
+    def test_custom_project_name(self) -> None:
         """Test container manager with custom project name."""
         config = WorkenvConfig(project_name="my-awesome-project", container=ContainerConfig(enabled=True))
 
         manager = ContainerManager(config)
 
-        self.assertEqual(manager.CONTAINER_NAME, "my-awesome-project-dev")
-        self.assertEqual(manager.IMAGE_NAME, "my-awesome-project-dev")
+        assert manager.CONTAINER_NAME == "my-awesome-project-dev"
+        assert manager.IMAGE_NAME == "my-awesome-project-dev"
 
-    def test_dockerfile_with_default_config(self):
+    def test_dockerfile_with_default_config(self) -> None:
         """Test Dockerfile generation with default configuration."""
         manager = ContainerManager()
         dockerfile = manager._generate_dockerfile()
 
-        self.assertIn("FROM ubuntu:22.04", dockerfile)
-        self.assertIn("python3.11", dockerfile)
-        self.assertIn("curl", dockerfile)
-        self.assertIn("git", dockerfile)
+        assert "FROM ubuntu:22.04" in dockerfile
+        assert "python3.11" in dockerfile
+        assert "curl" in dockerfile
+        assert "git" in dockerfile
 
-    def test_dockerfile_with_custom_config(self):
+    def test_dockerfile_with_custom_config(self) -> None:
         """Test Dockerfile generation with custom configuration."""
         config = WorkenvConfig(
             project_name="test-project",
@@ -64,18 +64,18 @@ class TestDynamicContainerConfiguration(unittest.TestCase):
         dockerfile = manager._generate_dockerfile()
 
         # Check base image
-        self.assertIn("FROM python:3.12-slim", dockerfile)
+        assert "FROM python:3.12-slim" in dockerfile
 
         # Python packages are not installed when using Python base image
 
         # Check additional packages
-        self.assertIn("nodejs", dockerfile)
-        self.assertIn("npm", dockerfile)
-        self.assertIn("postgresql-client", dockerfile)
+        assert "nodejs" in dockerfile
+        assert "npm" in dockerfile
+        assert "postgresql-client" in dockerfile
 
         # Check environment variables
-        self.assertIn("ENV NODE_ENV=development", dockerfile)
-        self.assertIn("ENV DEBUG=true", dockerfile)
+        assert "ENV NODE_ENV=development" in dockerfile
+        assert "ENV DEBUG=true" in dockerfile
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
@@ -104,30 +104,30 @@ class TestDynamicContainerConfiguration(unittest.TestCase):
         manager.start()
 
         # Check that docker run was called
-        self.assertTrue(mock_run.called)
+        assert mock_run.called
 
         # Get the command that was executed
         cmd = mock_run.call_args[0][0]
 
         # Check container name
-        self.assertIn("test-project-dev", cmd)
+        assert "test-project-dev" in cmd
 
         # Check custom volumes
-        self.assertIn("/data:/data", cmd)
-        self.assertIn("/logs:/logs", cmd)
+        assert "/data:/data" in cmd
+        assert "/logs:/logs" in cmd
 
         # Check custom ports
-        self.assertIn("8080:80", cmd)
-        self.assertIn("5432:5432", cmd)
+        assert "8080:80" in cmd
+        assert "5432:5432" in cmd
 
         # Check custom environment variable
-        self.assertIn("API_KEY=secret123", cmd)
+        assert "API_KEY=secret123" in cmd
 
         # Check default volumes are still included
-        self.assertIn("/host-home", " ".join(cmd))
-        self.assertIn("/var/run/docker.sock:/var/run/docker.sock", " ".join(cmd))
+        assert "/host-home" in " ".join(cmd)
+        assert "/var/run/docker.sock:/var/run/docker.sock" in " ".join(cmd)
 
-    def test_container_config_from_toml(self):
+    def test_container_config_from_toml(self) -> None:
         """Test loading container configuration from TOML-like structure."""
         config_dict = {
             "project_name": "web-app",
@@ -153,15 +153,15 @@ class TestDynamicContainerConfiguration(unittest.TestCase):
 
         manager = ContainerManager(config)
 
-        self.assertEqual(manager.CONTAINER_NAME, "web-app-dev")
-        self.assertTrue(manager.container_config.enabled)
-        self.assertEqual(manager.container_config.base_image, "node:18-alpine")
-        self.assertEqual(len(manager.container_config.additional_packages), 2)
-        self.assertEqual(len(manager.container_config.environment), 2)
-        self.assertEqual(len(manager.container_config.volumes), 1)
-        self.assertEqual(len(manager.container_config.ports), 2)
+        assert manager.CONTAINER_NAME == "web-app-dev"
+        assert manager.container_config.enabled
+        assert manager.container_config.base_image == "node:18-alpine"
+        assert len(manager.container_config.additional_packages) == 2
+        assert len(manager.container_config.environment) == 2
+        assert len(manager.container_config.volumes) == 1
+        assert len(manager.container_config.ports) == 2
 
-    def test_dockerfile_python_version_formatting(self):
+    def test_dockerfile_python_version_formatting(self) -> None:
         """Test that Python version is correctly formatted in Dockerfile."""
         test_cases = [
             ("3.11", "python3.11"),
@@ -175,10 +175,10 @@ class TestDynamicContainerConfiguration(unittest.TestCase):
             manager = ContainerManager(config)
             dockerfile = manager._generate_dockerfile()
 
-            self.assertIn(expected_package, dockerfile)
-            self.assertIn(f"{expected_package}-pip", dockerfile)
-            self.assertIn(f"{expected_package}-venv", dockerfile)
+            assert expected_package in dockerfile
+            assert f"{expected_package}-pip" in dockerfile
+            assert f"{expected_package}-venv" in dockerfile
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

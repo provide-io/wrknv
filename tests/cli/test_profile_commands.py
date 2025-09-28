@@ -3,38 +3,31 @@
 """
 Test suite for CLI profile commands.
 """
+
 from __future__ import annotations
 
-
-from pathlib import Path
-import tempfile
-import unittest
 from unittest.mock import Mock, patch
 
 import click.testing
+from provide.testkit import FoundationTestCase
 import tomli_w
 
 from wrknv.cli.hub_cli import create_cli
 
 
-class TestProfileCommands(unittest.TestCase):
+class TestProfileCommands(FoundationTestCase):
     """Test profile save and load CLI commands."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runner = click.testing.CliRunner()
         self.cli = create_cli()
-        self.temp_dir = tempfile.mkdtemp()
-        self.temp_path = Path(self.temp_dir)
+        self.temp_dir = self.create_temp_dir()
+        self.temp_path = self.temp_dir
         self.config_file = self.temp_path / "wrknv.toml"
 
-    def tearDown(self):
-        """Clean up test fixtures."""
-        import shutil
-
-        shutil.rmtree(self.temp_dir, ignore_errors=True)
-
-    def test_profile_list_empty(self):
+    def test_profile_list_empty(self) -> None:
         """Test listing profiles when none exist."""
         # Create empty config file
         self.config_file.write_text("""
@@ -48,10 +41,10 @@ project_name = "test-project"
 
             result = self.runner.invoke(self.cli, ["profile-list"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("No profiles found", result.output)
+            assert result.exit_code == 0
+            assert "No profiles found" in result.output
 
-    def test_profile_list_with_profiles(self):
+    def test_profile_list_with_profiles(self) -> None:
         """Test listing profiles when they exist."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -60,12 +53,12 @@ project_name = "test-project"
 
             result = self.runner.invoke(self.cli, ["profile-list"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("dev", result.output)
-            self.assertIn("prod", result.output)
-            self.assertIn("staging", result.output)
+            assert result.exit_code == 0
+            assert "dev" in result.output
+            assert "prod" in result.output
+            assert "staging" in result.output
 
-    def test_profile_save_current_tools(self):
+    def test_profile_save_current_tools(self) -> None:
         """Test saving current tool versions as a profile."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -76,13 +69,13 @@ project_name = "test-project"
 
             result = self.runner.invoke(self.cli, ["profile-save", "dev"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Saved profile 'dev'", result.output)
+            assert result.exit_code == 0
+            assert "Saved profile 'dev'" in result.output
             mock_config.save_profile.assert_called_once_with(
                 "dev", {"terraform": "1.5.0", "go": "1.21.0", "uv": "0.4.0"}
             )
 
-    def test_profile_save_overwrites_existing(self):
+    def test_profile_save_overwrites_existing(self) -> None:
         """Test that saving a profile overwrites an existing one."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -94,10 +87,10 @@ project_name = "test-project"
             # Should prompt for confirmation
             result = self.runner.invoke(workenv_cli, ["profile-save", "dev", "--force"], input="y\n")
 
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
             mock_config.save_profile.assert_called_once()
 
-    def test_profile_load_not_found(self):
+    def test_profile_load_not_found(self) -> None:
         """Test loading a profile that doesn't exist."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -106,10 +99,10 @@ project_name = "test-project"
 
             result = self.runner.invoke(self.cli, ["profile-load", "nonexistent"])
 
-            self.assertEqual(result.exit_code, 1)
-            self.assertIn("Profile 'nonexistent' not found", result.output)
+            assert result.exit_code == 1
+            assert "Profile 'nonexistent' not found" in result.output
 
-    def test_profile_load_success(self):
+    def test_profile_load_success(self) -> None:
         """Test successfully loading a profile."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             with patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager:
@@ -123,15 +116,15 @@ project_name = "test-project"
 
                 result = self.runner.invoke(self.cli, ["profile-load", "dev"])
 
-                self.assertEqual(result.exit_code, 0)
-                self.assertIn("Loading profile 'dev'", result.output)
-                self.assertIn("Successfully installed terraform 1.5.0", result.output)
-                self.assertIn("Successfully installed go 1.21.0", result.output)
+                assert result.exit_code == 0
+                assert "Loading profile 'dev'" in result.output
+                assert "Successfully installed terraform 1.5.0" in result.output
+                assert "Successfully installed go 1.21.0" in result.output
 
                 # Verify install was called for each tool
-                self.assertEqual(mock_manager.install_version.call_count, 2)
+                assert mock_manager.install_version.call_count == 2
 
-    def test_profile_load_partial_failure(self):
+    def test_profile_load_partial_failure(self) -> None:
         """Test loading a profile when some tools fail to install."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             with patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager:
@@ -150,11 +143,11 @@ project_name = "test-project"
                 result = self.runner.invoke(self.cli, ["profile-load", "dev"])
 
                 # Should not exit with error, but show error message
-                self.assertEqual(result.exit_code, 0)
-                self.assertIn("Successfully installed terraform 1.5.0", result.output)
-                self.assertIn("Error installing go 1.21.0", result.output)
+                assert result.exit_code == 0
+                assert "Successfully installed terraform 1.5.0" in result.output
+                assert "Error installing go 1.21.0" in result.output
 
-    def test_profile_delete(self):
+    def test_profile_delete(self) -> None:
         """Test deleting a profile."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -168,11 +161,11 @@ project_name = "test-project"
                 input="y\n",  # Confirm deletion
             )
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Profile 'dev' deleted", result.output)
+            assert result.exit_code == 0
+            assert "Profile 'dev' deleted" in result.output
             mock_config.delete_profile.assert_called_once_with("dev")
 
-    def test_profile_show(self):
+    def test_profile_show(self) -> None:
         """Test showing details of a profile."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -181,13 +174,13 @@ project_name = "test-project"
 
             result = self.runner.invoke(self.cli, ["profile-show", "dev"])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Profile: dev", result.output)
-            self.assertIn("terraform: 1.5.0", result.output)
-            self.assertIn("go: 1.21.0", result.output)
-            self.assertIn("uv: 0.4.0", result.output)
+            assert result.exit_code == 0
+            assert "Profile: dev" in result.output
+            assert "terraform: 1.5.0" in result.output
+            assert "go: 1.21.0" in result.output
+            assert "uv: 0.4.0" in result.output
 
-    def test_profile_export(self):
+    def test_profile_export(self) -> None:
         """Test exporting a profile to a file."""
         with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
             mock_config = Mock()
@@ -200,16 +193,16 @@ project_name = "test-project"
                 workenv_cli, ["profile", "export", "dev", "--output", str(output_file)]
             )
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn(f"Exported profile 'dev' to {output_file}", result.output)
+            assert result.exit_code == 0
+            assert f"Exported profile 'dev' to {output_file}" in result.output
 
             # Verify file was created with correct content
-            self.assertTrue(output_file.exists())
+            assert output_file.exists()
             content = output_file.read_text()
-            self.assertIn("terraform", content)
-            self.assertIn("1.5.0", content)
+            assert "terraform" in content
+            assert "1.5.0" in content
 
-    def test_profile_import(self):
+    def test_profile_import(self) -> None:
         """Test importing a profile from a file."""
         # Create a profile file
         profile_file = self.temp_path / "profile.toml"
@@ -223,30 +216,25 @@ project_name = "test-project"
 
             result = self.runner.invoke(workenv_cli, ["profile", "import", str(profile_file)])
 
-            self.assertEqual(result.exit_code, 0)
-            self.assertIn("Imported profile 'imported'", result.output)
+            assert result.exit_code == 0
+            assert "Imported profile 'imported'" in result.output
             mock_config.save_profile.assert_called_once_with(
                 "imported", {"terraform": "1.6.0", "go": "1.22.0"}
             )
 
 
-class TestProfileCommandIntegration(unittest.TestCase):
+class TestProfileCommandIntegration(FoundationTestCase):
     """Integration tests for profile commands with real config files."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.runner = click.testing.CliRunner()
         self.cli = create_cli()
-        self.temp_dir = tempfile.mkdtemp()
-        self.temp_path = Path(self.temp_dir)
+        self.temp_dir = self.create_temp_dir()
+        self.temp_path = self.temp_dir
 
-    def tearDown(self):
-        """Clean up test fixtures."""
-        import shutil
-
-        shutil.rmtree(self.temp_dir, ignore_errors=True)
-
-    def test_profile_save_and_load_integration(self):
+    def test_profile_save_and_load_integration(self) -> None:
         """Test full save and load cycle with real config file."""
         config_file = self.temp_path / "wrknv.toml"
         config_file.write_text("""
@@ -263,12 +251,12 @@ go = { version = "1.21.0" }
 
             # Save profile
             result = self.runner.invoke(self.cli, ["profile", "save", "test-profile"])
-            self.assertEqual(result.exit_code, 0)
+            assert result.exit_code == 0
 
             # Verify profile was saved to file
             config_content = config_file.read_text()
-            self.assertIn("profiles", config_content)
-            self.assertIn("test-profile", config_content)
+            assert "profiles" in config_content
+            assert "test-profile" in config_content
 
             # Load profile
             with patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager:
@@ -277,8 +265,8 @@ go = { version = "1.21.0" }
                 mock_get_manager.return_value = mock_manager
 
                 result = self.runner.invoke(self.cli, ["profile", "load", "test-profile"])
-                self.assertEqual(result.exit_code, 0)
+                assert result.exit_code == 0
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])

@@ -3,8 +3,8 @@ Tests for Install Operations
 =============================
 Tests for the install functionality in wrknv.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 import stat
 import tarfile

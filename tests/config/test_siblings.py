@@ -1,8 +1,8 @@
 """
 Test siblings configuration handling in wrknv
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 from unittest.mock import patch
 

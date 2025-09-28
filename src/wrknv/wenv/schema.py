@@ -14,6 +14,25 @@ from typing import Any
 from attrs import define, field, validators
 import cattrs
 
+from wrknv.config.defaults import (
+    DEFAULT_AUTO_UPDATE,
+    DEFAULT_CONTAINER_BASE_IMAGE,
+    DEFAULT_CONTAINER_ENABLED,
+    DEFAULT_CONTAINER_STORAGE_PATH,
+    DEFAULT_LOG_LEVEL,
+    DEFAULT_PACKAGE_LICENSE,
+    DEFAULT_PYTHON_VERSION,
+    DEFAULT_REGISTRY_TIMEOUT,
+    DEFAULT_REGISTRY_VERIFY_SSL,
+    DEFAULT_REGISTRY_WRKNV_URL,
+    DEFAULT_TELEMETRY_ENABLED,
+    DEFAULT_TOOL_AUTO_DETECT,
+    DEFAULT_TOOL_ENABLED,
+    DEFAULT_VERSION,
+    DEFAULT_WORKENV_CACHE_DIR,
+    DEFAULT_WORKENV_INSTALL_DIR,
+)
+
 
 def validate_version(instance, attribute, value):
     """Validate version format."""
@@ -132,7 +151,7 @@ class GitignoreConfig:
     templates_path: str | None = field(
         default=None, validator=validators.optional(validators.instance_of(str))
     )
-    auto_detect: bool = field(default=False, validator=validators.instance_of(bool))
+    auto_detect: bool = field(default=DEFAULT_TOOL_AUTO_DETECT, validator=validators.instance_of(bool))
     custom_rules: list[str] = field(factory=list, validator=validators.instance_of(list))
     exclude_patterns: list[str] = field(factory=list, validator=validators.instance_of(list))
 
@@ -142,7 +161,7 @@ class ToolConfig:
     """Configuration for a specific tool."""
 
     version: str = field(validator=[validators.instance_of(str), validate_version])
-    enabled: bool = field(default=True, validator=validators.instance_of(bool))
+    enabled: bool = field(default=DEFAULT_TOOL_ENABLED, validator=validators.instance_of(bool))
     source_url: str | None = field(default=None, validator=validators.optional(validators.instance_of(str)))
     install_path: str | None = field(default=None, validator=validators.optional(validators.instance_of(str)))
     environment: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
@@ -152,10 +171,10 @@ class ToolConfig:
 class ContainerConfig:
     """Configuration for container operations."""
 
-    enabled: bool = field(default=False, validator=validators.instance_of(bool))
-    base_image: str = field(default="ubuntu:22.04", validator=validators.instance_of(str))
+    enabled: bool = field(default=DEFAULT_CONTAINER_ENABLED, validator=validators.instance_of(bool))
+    base_image: str = field(default=DEFAULT_CONTAINER_BASE_IMAGE, validator=validators.instance_of(str))
     python_version: str = field(
-        default="3.11", validator=[validators.instance_of(str), validate_python_version]
+        default=DEFAULT_PYTHON_VERSION, validator=[validators.instance_of(str), validate_python_version]
     )
     additional_packages: list[str] = field(factory=list, validator=validators.instance_of(list))
     environment: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
@@ -163,7 +182,7 @@ class ContainerConfig:
     ports: list[str] = field(factory=list, validator=validators.instance_of(list))
 
     # New storage-related fields
-    storage_path: str = field(default="~/.wrknv/containers", validator=validators.instance_of(str))
+    storage_path: str = field(default=DEFAULT_CONTAINER_STORAGE_PATH, validator=validators.instance_of(str))
     persistent_volumes: list[str] = field(
         factory=lambda: ["workspace", "cache", "config"], validator=validators.instance_of(list)
     )
@@ -209,7 +228,7 @@ class PackageConfig:
     entry_point: str = field(validator=validators.instance_of(str))
     author: str = field(default="", validator=validators.instance_of(str))
     description: str = field(default="", validator=validators.instance_of(str))
-    license: str = field(default="MIT", validator=validators.instance_of(str))
+    license: str = field(default=DEFAULT_PACKAGE_LICENSE, validator=validators.instance_of(str))
     dependencies: list[str] = field(factory=list, validator=validators.instance_of(list))
     metadata: dict[str, Any] = field(factory=dict, validator=validators.instance_of(dict))
 
@@ -218,11 +237,13 @@ class PackageConfig:
 class RegistryConfig:
     """Configuration for package registry."""
 
-    url: str = field(default="https://registry.wrknv.io", converter=convert_registry_url)
+    url: str = field(default=DEFAULT_REGISTRY_WRKNV_URL, converter=convert_registry_url)
     username: str | None = field(default=None, validator=validators.optional(validators.instance_of(str)))
     token: str | None = field(default=None, validator=validators.optional(validators.instance_of(str)))
-    verify_ssl: bool = field(default=True, validator=validators.instance_of(bool))
-    timeout: int = field(default=30, validator=[validators.instance_of(int), validate_timeout])
+    verify_ssl: bool = field(default=DEFAULT_REGISTRY_VERIFY_SSL, validator=validators.instance_of(bool))
+    timeout: int = field(
+        default=DEFAULT_REGISTRY_TIMEOUT, validator=[validators.instance_of(int), validate_timeout]
+    )
 
 
 @define
@@ -230,7 +251,7 @@ class WorkenvConfig:
     """Main wrknv configuration model."""
 
     project_name: str = field(validator=[validators.instance_of(str), validate_project_name])
-    version: str = field(default="1.0.0", validator=validators.instance_of(str))
+    version: str = field(default=DEFAULT_VERSION, validator=validators.instance_of(str))
     description: str = field(default="", validator=validators.instance_of(str))
 
     # Tool configurations
@@ -258,11 +279,11 @@ class WorkenvConfig:
     profiles: dict[str, ProfileConfig] = field(factory=dict, validator=validators.instance_of(dict))
 
     # Global settings
-    install_dir: str = field(default="~/.wrknv", validator=validators.instance_of(str))
-    cache_dir: str = field(default="~/.wrknv/cache", validator=validators.instance_of(str))
-    log_level: str = field(default="INFO", converter=convert_log_level)
-    telemetry_enabled: bool = field(default=True, validator=validators.instance_of(bool))
-    auto_update: bool = field(default=False, validator=validators.instance_of(bool))
+    install_dir: str = field(default=DEFAULT_WORKENV_INSTALL_DIR, validator=validators.instance_of(str))
+    cache_dir: str = field(default=DEFAULT_WORKENV_CACHE_DIR, validator=validators.instance_of(str))
+    log_level: str = field(default=DEFAULT_LOG_LEVEL, converter=convert_log_level)
+    telemetry_enabled: bool = field(default=DEFAULT_TELEMETRY_ENABLED, validator=validators.instance_of(bool))
+    auto_update: bool = field(default=DEFAULT_AUTO_UPDATE, validator=validators.instance_of(bool))
 
     # Environment variables
     environment: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))

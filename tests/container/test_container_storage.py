@@ -421,24 +421,24 @@ class TestDockerIntegration:
 class TestContainerStorageConfig:
     """Test container storage configuration."""
 
-    def test_default_storage_path(self):
+    def test_default_storage_path(self) -> None:
         """Test default storage path configuration."""
         config = ContainerConfig()
         assert config.storage_path == "~/.wrknv/containers"
 
-    def test_custom_storage_path(self):
+    def test_custom_storage_path(self) -> None:
         """Test custom storage path configuration."""
         config = ContainerConfig(storage_path="/custom/path/containers")
         assert config.storage_path == "/custom/path/containers"
 
-    def test_persistent_volumes_config(self):
+    def test_persistent_volumes_config(self) -> None:
         """Test persistent volumes configuration."""
         config = ContainerConfig(persistent_volumes=["workspace", "cache", "config", "data"])
         assert "workspace" in config.persistent_volumes
         assert "data" in config.persistent_volumes
         assert len(config.persistent_volumes) == 4
 
-    def test_volume_mappings_config(self):
+    def test_volume_mappings_config(self) -> None:
         """Test volume mappings configuration."""
         config = ContainerConfig(
             volume_mappings={
@@ -457,7 +457,7 @@ class TestContainerStorageIntegration:
     """Integration tests for container storage (requires Docker)."""
 
     @pytest.mark.skipif(not shutil.which("docker"), reason="Docker not available")
-    def test_full_container_lifecycle_with_volumes(self):
+    def test_full_container_lifecycle_with_volumes(self) -> None:
         """Test full container lifecycle with persistent volumes."""
         # This would be a full integration test
         # Requires Docker to be installed and running

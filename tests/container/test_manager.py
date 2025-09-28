@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from provide.testkit import FoundationTestCase
 import pytest
 
 #!/usr/bin/env python3
@@ -10,10 +11,8 @@ import pytest
 Comprehensive tests for the ContainerManager class.
 """
 
-from pathlib import Path
 import shutil
 import subprocess
-import unittest
 from unittest.mock import Mock, patch
 
 from wrknv.container.manager import ContainerManager
@@ -21,15 +20,16 @@ from wrknv.wenv.schema import WorkenvConfig
 
 
 @pytest.mark.container
-class TestContainerManager(unittest.TestCase):
+class TestContainerManager(FoundationTestCase):
     """Test suite for ContainerManager class."""
 
-    def setUp(self):
+    def setup_method(self) -> None:
         """Set up test fixtures."""
+        super().setup_method()
         self.config = WorkenvConfig(project_name="test-project")
         self.manager = ContainerManager(self.config)
 
-    def tearDown(self):
+    def teardown_method(self) -> None:
         """Clean up after tests."""
         # Clean up any test directories
         test_build_dir = Path.home() / ".wrknv" / "container-build"
@@ -43,7 +43,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.check_docker()
 
-        self.assertTrue(result)
+        assert result
         mock_run.assert_called_once_with(["docker", "info"], capture_output=True, text=True, check=False)
 
     @patch("provide.foundation.process.run_command")
@@ -53,7 +53,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.check_docker()
 
-        self.assertFalse(result)
+        assert not result
 
     @patch("provide.foundation.process.run_command")
     def test_check_docker_not_installed(self, mock_run):
@@ -62,7 +62,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.check_docker()
 
-        self.assertFalse(result)
+        assert not result
 
     @patch("provide.foundation.process.run_command")
     def test_container_exists_true(self, mock_run):
@@ -71,7 +71,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.container_exists()
 
-        self.assertTrue(result)
+        assert result
         mock_run.assert_called_once_with(
             ["docker", "ps", "-a", "--format", "{{.Names}}"],
             capture_output=True,
@@ -86,7 +86,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.container_exists()
 
-        self.assertFalse(result)
+        assert not result
 
     @patch("provide.foundation.process.run_command")
     def test_container_running_true(self, mock_run):
@@ -95,7 +95,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.container_running()
 
-        self.assertTrue(result)
+        assert result
         mock_run.assert_called_once_with(
             ["docker", "ps", "--format", "{{.Names}}"],
             capture_output=True,
@@ -110,7 +110,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.container_running()
 
-        self.assertFalse(result)
+        assert not result
 
     @patch("provide.foundation.process.run_command")
     def test_image_exists_true(self, mock_run):
@@ -119,7 +119,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.image_exists()
 
-        self.assertTrue(result)
+        assert result
         mock_run.assert_called_once_with(
             ["docker", "images", "--format", "{{.Repository}}:{{.Tag}}"],
             capture_output=True,
@@ -134,7 +134,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.image_exists()
 
-        self.assertFalse(result)
+        assert not result
 
     @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.write_text")
@@ -145,12 +145,12 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.build_image()
 
-        self.assertTrue(result)
+        assert result
         mock_mkdir.assert_called_once_with(parents=True, exist_ok=True)
         mock_write.assert_called_once()
         # Verify dockerfile content was generated
         dockerfile_content = mock_write.call_args[0][0]
-        self.assertIn("FROM ubuntu:22.04", dockerfile_content)
+        assert "FROM ubuntu:22.04" in dockerfile_content
         # Build directory is now persistent, no cleanup
 
     @patch("provide.foundation.process.run_command")
@@ -162,10 +162,10 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.build_image(rebuild=True)
 
-        self.assertTrue(result)
+        assert result
         # Check that --no-cache was added to the command
         build_cmd = mock_run.call_args[0][0]
-        self.assertIn("--no-cache", build_cmd)
+        assert "--no-cache" in build_cmd
 
     @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.write_text")
@@ -176,7 +176,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.build_image()
 
-        self.assertFalse(result)
+        assert not result
         # Build directory is now persistent, no cleanup
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
@@ -208,17 +208,17 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.start()
 
-        self.assertTrue(result)
+        assert result
         mock_check_docker.assert_called_once()
         mock_image_exists.assert_called_once()
         mock_running.assert_called_once()
         # Verify docker run command
         docker_run_cmd = mock_run.call_args[0][0]
-        self.assertEqual(docker_run_cmd[0], "docker")
-        self.assertEqual(docker_run_cmd[1], "run")
-        self.assertIn("-d", docker_run_cmd)
-        self.assertIn("--name", docker_run_cmd)
-        self.assertIn("test-project-dev", docker_run_cmd)
+        assert docker_run_cmd[0] == "docker"
+        assert docker_run_cmd[1] == "run"
+        assert "-d" in docker_run_cmd
+        assert "--name" in docker_run_cmd
+        assert "test-project-dev" in docker_run_cmd
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
     def test_start_container_docker_not_available(self, mock_check_docker):
@@ -227,7 +227,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.start()
 
-        self.assertFalse(result)
+        assert not result
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
@@ -240,7 +240,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.start()
 
-        self.assertFalse(result)
+        assert not result
         mock_build.assert_called_once_with(rebuild=False)
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
@@ -254,7 +254,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.start()
 
-        self.assertTrue(result)  # Returns True but doesn't try to start again
+        assert result  # Returns True but doesn't try to start again
 
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
@@ -295,10 +295,10 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.stop()
 
-        self.assertTrue(result)
+        assert result
         # Check that docker stop was called
         stop_calls = [c for c in mock_run.call_args_list if "stop" in str(c)]
-        self.assertTrue(len(stop_calls) > 0)
+        assert len(stop_calls > 0)
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
@@ -309,7 +309,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.stop()
 
-        self.assertFalse(result)
+        assert not result
 
     @patch("wrknv.container.manager.ContainerManager.stop")
     @patch("wrknv.container.manager.ContainerManager.start")
@@ -320,7 +320,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.restart()
 
-        self.assertTrue(result)
+        assert result
         mock_stop.assert_called_once()
         mock_start.assert_called_once()
 
@@ -332,7 +332,7 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.restart()
 
-        self.assertTrue(result)  # restart continues even if stop fails
+        assert result  # restart continues even if stop fails
         mock_start.assert_called_once()
 
     @patch("provide.foundation.process.run_command")
@@ -354,9 +354,9 @@ class TestContainerManager(unittest.TestCase):
         status = self.manager.status()
 
         self.assertIsNotNone(status)
-        self.assertTrue(status["docker_available"])
-        self.assertTrue(status["container_exists"])
-        self.assertEqual(status["container_info"]["state"], "running")
+        assert status["docker_available"]
+        assert status["container_exists"]
+        assert status["container_info"]["state"] == "running"
         mock_run.assert_called_once_with(
             ["docker", "inspect", "test-project-dev"],
             capture_output=True,
@@ -372,8 +372,8 @@ class TestContainerManager(unittest.TestCase):
         status = self.manager.status()
 
         self.assertIsNotNone(status)
-        self.assertFalse(status["docker_available"])
-        self.assertFalse(status["container_exists"])
+        assert not status["docker_available"]
+        assert not status["container_exists"]
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_exists")
@@ -412,12 +412,12 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.clean()
 
-        self.assertTrue(result)
+        assert result
         # Should call both rm and rmi
         rm_calls = [c for c in mock_run.call_args_list if "rm" in str(c)]
         rmi_calls = [c for c in mock_run.call_args_list if "rmi" in str(c)]
-        self.assertTrue(len(rm_calls) > 0)
-        self.assertTrue(len(rmi_calls) > 0)
+        assert len(rm_calls > 0)
+        assert len(rmi_calls > 0)
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
@@ -433,20 +433,20 @@ class TestContainerManager(unittest.TestCase):
 
         result = self.manager.clean()
 
-        self.assertFalse(result)  # Returns False if container removal fails
+        assert not result  # Returns False if container removal fails
 
-    def test_generate_dockerfile(self):
+    def test_generate_dockerfile(self) -> None:
         """Test Dockerfile generation."""
         dockerfile = self.manager._generate_dockerfile()
 
         # Check for essential components
-        self.assertIn("FROM ubuntu:22.04", dockerfile)
-        self.assertIn("DEBIAN_FRONTEND=noninteractive", dockerfile)
-        self.assertIn("apt-get update", dockerfile)
-        self.assertIn("python3", dockerfile)
-        self.assertIn("curl -LsSf https://astral.sh/uv/install.sh", dockerfile)
-        self.assertIn("/workspace", dockerfile)
-        self.assertIn("zsh", dockerfile)
+        assert "FROM ubuntu:22.04" in dockerfile
+        assert "DEBIAN_FRONTEND=noninteractive" in dockerfile
+        assert "apt-get update" in dockerfile
+        assert "python3" in dockerfile
+        assert "curl -LsSf https://astral.sh/uv/install.sh" in dockerfile
+        assert "/workspace" in dockerfile
+        assert "zsh" in dockerfile
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
@@ -467,9 +467,9 @@ class TestContainerManager(unittest.TestCase):
 
             # Check that docker rm was called
             rm_calls = [c for c in mock_run.call_args_list if c[0][0][:2] == ["docker", "rm"]]
-            self.assertEqual(len(rm_calls), 1)
-            self.assertEqual(rm_calls[0][0][0], ["docker", "rm", "test-project-dev"])
+            assert len(rm_calls) == 1
+            assert rm_calls[0][0][0] == ["docker", "rm", "test-project-dev"]
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main([__file__, "-v"])
