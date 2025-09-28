@@ -3,6 +3,7 @@ Core Configuration for wrknv
 =============================
 Main configuration classes using provide.foundation.
 """
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -10,7 +11,7 @@ from typing import Any
 
 from attrs import define, field
 from provide.foundation.config import (
-    SyncConfigManager,
+    ConfigManager,
     field as config_field,
 )
 from provide.foundation.config.env import RuntimeConfig
@@ -78,7 +79,7 @@ class WorkenvConfig(RuntimeConfig):
 
     # Internal state
     config_path: Path | None = field(init=False, repr=False, default=None)
-    _manager: SyncConfigManager | None = field(init=False, repr=False, default=None)
+    _manager: ConfigManager | None = field(init=False, repr=False, default=None)
 
     # Helper instances for delegation
     _validator = field(init=False, repr=False, default=None)
@@ -96,7 +97,7 @@ class WorkenvConfig(RuntimeConfig):
         self._display = WorkenvConfigDisplay(self)
 
     @classmethod
-    def load(cls, config_file: Path | None = None) -> "WorkenvConfig":
+    def load(cls, config_file: Path | None = None) -> WorkenvConfig:
         """Load configuration from file and environment variables."""
         instance = cls()
         instance.config_path = config_file or instance._find_config_file()
@@ -116,9 +117,9 @@ class WorkenvConfig(RuntimeConfig):
         env_settings = WorkenvSettings.from_env(prefix="WRKNV")
         if env_settings.log_level != "WARNING":
             instance.workenv.log_level = env_settings.log_level
-        if env_settings.auto_install != True:
+        if not env_settings.auto_install:
             instance.workenv.auto_install = env_settings.auto_install
-        if env_settings.use_cache != True:
+        if not env_settings.use_cache:
             instance.workenv.use_cache = env_settings.use_cache
         if env_settings.cache_ttl != "7d":
             instance.workenv.cache_ttl = env_settings.cache_ttl
@@ -148,13 +149,13 @@ class WorkenvConfig(RuntimeConfig):
         # Return default location for new configs
         return Path.cwd() / ".wrknv.toml"
 
-    def _create_manager(self) -> SyncConfigManager:
+    def _create_manager(self) -> ConfigManager:
         """Create configuration manager."""
         # For now, just create a basic manager
         # We'll load files manually to avoid complexity
-        return SyncConfigManager()
+        return ConfigManager()
 
-    def _load_config(self):
+    def _load_config(self) -> None:
         """Load configuration from file."""
         self._persistence.load_config()
 
@@ -177,10 +178,7 @@ class WorkenvConfig(RuntimeConfig):
         """Get all tool versions."""
         result = {}
         for tool_name, config in self.tools.items():
-            if isinstance(config, dict):
-                version = config.get("version")
-            else:
-                version = config
+            version = config.get("version") if isinstance(config, dict) else config
             if version:
                 result[tool_name] = version
         return result
@@ -212,7 +210,7 @@ class WorkenvConfig(RuntimeConfig):
         """Get environment configuration for env generation."""
         return self.env
 
-    def set_setting(self, key: str, value: Any):
+    def set_setting(self, key: str, value: Any) -> None:
         """Set a configuration setting using dot notation."""
         parts = key.split(".")
 
@@ -241,7 +239,7 @@ class WorkenvConfig(RuntimeConfig):
         self.save_config()
 
     # Delegation methods to helper classes
-    def save_config(self):
+    def save_config(self) -> None:
         """Save configuration to file."""
         self._persistence.save_config()
 
@@ -249,15 +247,15 @@ class WorkenvConfig(RuntimeConfig):
         """Convert configuration to dictionary."""
         return self._persistence.to_dict()
 
-    def write_config(self, config_data: dict[str, Any]):
+    def write_config(self, config_data: dict[str, Any]) -> None:
         """Write configuration data to file."""
         self._persistence.write_config(config_data)
 
-    def edit_config(self):
+    def edit_config(self) -> None:
         """Open configuration file in editor."""
         self._persistence.edit_config()
 
-    def show_config(self):
+    def show_config(self) -> None:
         """Display configuration in a readable format."""
         self._display.show_config()
 

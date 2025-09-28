@@ -3,6 +3,7 @@ Main Configuration Manager for wenv
 ====================================
 Core WorkenvConfig class with delegation to other modules.
 """
+
 from __future__ import annotations
 
 import pathlib
@@ -21,8 +22,8 @@ except ImportError:
 
 from provide.foundation import logger
 
-from .sources import ConfigSource, EnvironmentConfigSource, FileConfigSource
 from .profiles import WorkenvProfileManager
+from .sources import ConfigSource, EnvironmentConfigSource, FileConfigSource
 
 
 class WorkenvConfig:
@@ -36,7 +37,7 @@ class WorkenvConfig:
     3. Built-in defaults
     """
 
-    def __init__(self, sources: list[ConfigSource] | None = None):
+    def __init__(self, sources: list[ConfigSource] | None = None) -> None:
         """
         Initialize with configuration sources.
 

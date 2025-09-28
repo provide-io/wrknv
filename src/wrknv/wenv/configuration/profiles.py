@@ -3,6 +3,7 @@ Profile Management for wenv
 ============================
 Management of configuration profiles.
 """
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -22,7 +23,7 @@ except ImportError:
 class WorkenvProfileManager:
     """Manages configuration profiles for workenv."""
 
-    def __init__(self, config):
+    def __init__(self, config) -> None:
         """Initialize profile manager with config instance."""
         self.config = config
 

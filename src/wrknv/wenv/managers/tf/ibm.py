@@ -6,8 +6,8 @@ IBM Terraform Tool Manager for wrknv
 =====================================
 Manages IBM Terraform (formerly HashiCorp Terraform) versions for development environment.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 import json
 import re
@@ -16,8 +16,9 @@ from urllib.request import urlopen
 from provide.foundation import logger
 import semver
 
-from .base import TfVersionsManager
 from wrknv.wenv.managers.base import ToolManagerError
+
+from .base import TfVersionsManager
 
 
 class IbmTfManager(TfVersionsManager):

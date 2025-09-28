@@ -3,8 +3,8 @@ Configuration Sources for wrknv
 ================================
 Different sources for loading configuration.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 import os
 from pathlib import Path
@@ -34,14 +34,14 @@ class ConfigSource:
 class FileConfigSource(ConfigSource):
     """Configuration source that loads from TOML files."""
 
-    def __init__(self, path: Path, section: str = "workenv"):
+    def __init__(self, path: Path, section: str = "workenv") -> None:
         """Initialize with file path and optional section."""
         self.path = path
         self.section = section
         self._data = {}
         self._load()
 
-    def _load(self):
+    def _load(self) -> None:
         """Load configuration from file."""
         if self.path.exists():
             try:
@@ -88,7 +88,7 @@ class FileConfigSource(ConfigSource):
 class EnvironmentConfigSource(ConfigSource):
     """Configuration source that loads from environment variables."""
 
-    def __init__(self, prefix: str = "WRKNV"):
+    def __init__(self, prefix: str = "WRKNV") -> None:
         """Initialize with environment variable prefix."""
         self.prefix = prefix
 

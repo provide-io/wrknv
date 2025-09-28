@@ -3,9 +3,11 @@ wenv Configuration Management
 =============================
 Configuration system for wenv (the old workenv system).
 """
+
 from __future__ import annotations
 
 from .config import WorkenvConfig
+from .profiles import WorkenvProfileManager
 from .sources import (
     ConfigSource,
     EnvironmentConfigSource,
@@ -13,14 +15,13 @@ from .sources import (
     ValidatedTomlSource,
     WorkenvConfigError,
 )
-from .profiles import WorkenvProfileManager
 
 __all__ = [
-    "WorkenvConfig",
     "ConfigSource",
     "EnvironmentConfigSource",
     "FileConfigSource",
     "ValidatedTomlSource",
+    "WorkenvConfig",
     "WorkenvConfigError",
     "WorkenvProfileManager",
 ]

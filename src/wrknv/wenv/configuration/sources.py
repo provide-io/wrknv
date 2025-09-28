@@ -3,6 +3,7 @@ Configuration Sources for wenv
 ===============================
 Different sources for loading workenv configuration.
 """
+
 from __future__ import annotations
 
 import os
@@ -52,13 +53,13 @@ class ConfigSource:
 class FileConfigSource(ConfigSource):
     """Configuration source from a TOML file."""
 
-    def __init__(self, file_path: pathlib.Path, section: str = "workenv"):
+    def __init__(self, file_path: pathlib.Path, section: str = "workenv") -> None:
         self.file_path = file_path
         self.section = section
         self._data = {}
         self._load()
 
-    def _load(self):
+    def _load(self) -> None:
         """Load configuration from file."""
         if self.file_path and self.file_path.exists():
             try:
@@ -126,13 +127,13 @@ class FileConfigSource(ConfigSource):
 class ValidatedTomlSource(ConfigSource):
     """Configuration source from a TOML file with schema validation."""
 
-    def __init__(self, file_path: pathlib.Path):
+    def __init__(self, file_path: pathlib.Path) -> None:
         self.file_path = file_path
         self._config = None  # Will be WorkenvConfig when imported
         self._raw_data: dict[str, Any] = {}
         self._load()
 
-    def _load(self):
+    def _load(self) -> None:
         """Load and validate configuration from file."""
         if self.file_path and self.file_path.exists():
             try:
@@ -140,7 +141,7 @@ class ValidatedTomlSource(ConfigSource):
                     self._raw_data = tomllib.load(f)
 
                 # Import here to avoid circular imports
-                from wrknv.wenv.schema import WorkenvConfig, load_config_from_dict, validate_config_dict
+                from wrknv.wenv.schema import load_config_from_dict, validate_config_dict
 
                 # Validate the configuration
                 is_valid, errors = validate_config_dict(self._raw_data)
@@ -200,7 +201,7 @@ class ValidatedTomlSource(ConfigSource):
 class EnvironmentConfigSource(ConfigSource):
     """Configuration source from environment variables."""
 
-    def __init__(self, prefix: str = "WRKENV"):
+    def __init__(self, prefix: str = "WRKENV") -> None:
         self.prefix = prefix
 
     def get_tool_version(self, tool_name: str) -> str | None:

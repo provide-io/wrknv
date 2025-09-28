@@ -3,6 +3,7 @@ Configuration Validation for wrknv
 ===================================
 Validation methods for configuration data.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -11,7 +12,7 @@ from typing import Any
 class WorkenvConfigValidator:
     """Validator for WorkenvConfig instances."""
 
-    def __init__(self, config):
+    def __init__(self, config) -> None:
         """Initialize validator with config instance."""
         self.config = config
 
@@ -99,8 +100,9 @@ class WorkenvConfigValidator:
     def _is_valid_project_name(self, name: str) -> bool:
         """Check if project name follows valid naming conventions."""
         import re
+
         # Allow letters, numbers, hyphens, underscores, and dots
-        pattern = r'^[a-zA-Z0-9._-]+$'
+        pattern = r"^[a-zA-Z0-9._-]+$"
         return bool(re.match(pattern, name)) and len(name) <= 100
 
     def _validate_tool_config(self, tool_name: str, tool_config: Any) -> list[str]:
@@ -182,7 +184,9 @@ class WorkenvConfigValidator:
             elif not isinstance(tool_version, str):
                 errors.append(f"Tool version for '{tool_name}' in profile '{profile_name}' must be string")
             elif not self._is_valid_version(tool_version):
-                errors.append(f"Invalid version '{tool_version}' for tool '{tool_name}' in profile '{profile_name}'")
+                errors.append(
+                    f"Invalid version '{tool_version}' for tool '{tool_name}' in profile '{profile_name}'"
+                )
 
         return errors
 
@@ -237,7 +241,9 @@ class WorkenvConfigValidator:
             elif not key.strip():
                 errors.append("Environment key cannot be empty")
             elif not key.replace("_", "").isalnum():
-                errors.append(f"Invalid environment key '{key}': must contain only letters, numbers, and underscores")
+                errors.append(
+                    f"Invalid environment key '{key}': must contain only letters, numbers, and underscores"
+                )
 
             # Values can be string, number, boolean, or list
             if not isinstance(value, (str, int, float, bool, list)):
@@ -245,19 +251,23 @@ class WorkenvConfigValidator:
             elif isinstance(value, list):
                 for i, item in enumerate(value):
                     if not isinstance(item, (str, int, float, bool)):
-                        errors.append(f"Environment list item {i} for '{key}' must be string, number, or boolean")
+                        errors.append(
+                            f"Environment list item {i} for '{key}' must be string, number, or boolean"
+                        )
 
         return errors
 
     def _is_valid_duration(self, duration: str) -> bool:
         """Check if duration string is valid (e.g., '7d', '2h', '30m')."""
         import re
-        pattern = r'^\d+[smhdw]$'
+
+        pattern = r"^\d+[smhdw]$"
         return bool(re.match(pattern, duration))
 
     def _is_valid_registry_url(self, url: str) -> bool:
         """Check if registry URL is valid."""
         import re
+
         # Basic URL validation for container registries
-        pattern = r'^[a-zA-Z0-9.-]+(\.[a-zA-Z]{2,})?(/[a-zA-Z0-9._-]+)*$'
+        pattern = r"^[a-zA-Z0-9.-]+(\.[a-zA-Z]{2,})?(/[a-zA-Z0-9._-]+)*$"
         return bool(re.match(pattern, url))

@@ -3,6 +3,7 @@ Configuration Persistence for wrknv
 ====================================
 Save, load, and file operations for configuration data.
 """
+
 from __future__ import annotations
 
 import os
@@ -18,11 +19,11 @@ logger = get_logger(__name__)
 class WorkenvConfigPersistence:
     """Handles saving and loading configuration files."""
 
-    def __init__(self, config):
+    def __init__(self, config) -> None:
         """Initialize persistence handler with config instance."""
         self.config = config
 
-    def load_config(self):
+    def load_config(self) -> None:
         """Load configuration from file."""
         if self.config.config_path and self.config.config_path.exists():
             try:
@@ -54,7 +55,7 @@ class WorkenvConfigPersistence:
             except Exception as e:
                 logger.warning(f"Failed to load config from {self.config.config_path}: {e}")
 
-    def save_config(self):
+    def save_config(self) -> None:
         """Save configuration to file."""
         # Import here to avoid circular imports
         from wrknv.config.core import WorkenvConfigError
@@ -91,7 +92,7 @@ class WorkenvConfigPersistence:
             "env": self.config.env,
         }
 
-    def write_config(self, config_data: dict[str, Any]):
+    def write_config(self, config_data: dict[str, Any]) -> None:
         """Write configuration data to file."""
         # Update current config
         if "project_name" in config_data:
@@ -102,18 +103,17 @@ class WorkenvConfigPersistence:
             self.config.tools = config_data["tools"]
         if "profiles" in config_data:
             self.config.profiles = config_data["profiles"]
-        if "workenv" in config_data:
-            if isinstance(config_data["workenv"], dict):
-                for key, value in config_data["workenv"].items():
-                    if hasattr(self.config.workenv, key):
-                        setattr(self.config.workenv, key, value)
+        if "workenv" in config_data and isinstance(config_data["workenv"], dict):
+            for key, value in config_data["workenv"].items():
+                if hasattr(self.config.workenv, key):
+                    setattr(self.config.workenv, key, value)
         if "env" in config_data:
             self.config.env = config_data["env"]
 
         # Save to file
         self.save_config()
 
-    def edit_config(self):
+    def edit_config(self) -> None:
         """Open configuration file in editor."""
         # Ensure file exists
         if not self.config.config_path.exists():

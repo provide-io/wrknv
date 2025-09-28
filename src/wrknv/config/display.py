@@ -3,17 +3,18 @@ Configuration Display for wrknv
 ================================
 Display and output methods for configuration.
 """
+
 from __future__ import annotations
 
 
 class WorkenvConfigDisplay:
     """Handles displaying configuration information."""
 
-    def __init__(self, config):
+    def __init__(self, config) -> None:
         """Initialize display handler with config instance."""
         self.config = config
 
-    def show_config(self):
+    def show_config(self) -> None:
         """Display configuration in a readable format."""
         from provide.foundation.cli import echo_info, echo_success
 
@@ -23,10 +24,7 @@ class WorkenvConfigDisplay:
         if self.config.tools:
             echo_info("\n  Tools:")
             for tool, config in self.config.tools.items():
-                if isinstance(config, dict):
-                    version = config.get("version", "latest")
-                else:
-                    version = config
+                version = config.get("version", "latest") if isinstance(config, dict) else config
                 echo_info(f"    {tool}: {version}")
 
         if self.config.profiles:

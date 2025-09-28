@@ -6,8 +6,8 @@ OpenTofu Tool Manager for wrknv
 ==================================
 Manages OpenTofu versions for development environment.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 import json
 import re
@@ -18,8 +18,9 @@ import semver
 
 logger = get_logger(__name__)
 
-from .base import TfVersionsManager
 from wrknv.wenv.managers.base import ToolManagerError
+
+from .base import TfVersionsManager
 
 
 class TofuManager(TfVersionsManager):

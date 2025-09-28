@@ -8,8 +8,8 @@ Base class for Tf (IBM Terraform/OpenTofu) managers that use ~/.terraform.versio
 directory structure. This implementation is compatible with tfswitch and
 designed for managing Tf tool versions.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 
 from abc import abstractmethod
 from datetime import datetime
@@ -35,7 +35,7 @@ class TfVersionsManager(BaseToolManager):
     for advanced features. Supports both IBM Terraform (formerly HashiCorp) and OpenTofu.
     """
 
-    def __init__(self, config=None):
+    def __init__(self, config=None) -> None:
         super().__init__(config)
         # Override install path to use tf versions directory
         self.install_path = pathlib.Path("~/.terraform.versions").expanduser()
@@ -87,10 +87,7 @@ class TfVersionsManager(BaseToolManager):
 
                 # Set version in new structure
                 # Use 'opentofu_version' for tofu
-                if tool == "tofu":
-                    version_key = "opentofu_version"
-                else:
-                    version_key = f"{tool}_version"
+                version_key = "opentofu_version" if tool == "tofu" else f"{tool}_version"
 
                 self.metadata["workenv"]["default"][version_key] = version
                 needs_save = True
@@ -220,10 +217,7 @@ class TfVersionsManager(BaseToolManager):
         if "workenv" in self.metadata:
             profile_data = self.metadata["workenv"].get(profile, {})
             # Use 'opentofu_version' for tofu tool
-            if self.tool_name == "tofu":
-                tool_key = "opentofu_version"
-            else:
-                tool_key = f"{self.tool_name}_version"
+            tool_key = "opentofu_version" if self.tool_name == "tofu" else f"{self.tool_name}_version"
 
             if tool_key in profile_data:
                 return profile_data[tool_key]
@@ -244,10 +238,7 @@ class TfVersionsManager(BaseToolManager):
 
         # Store active version in metadata under workenv profile
         # Use 'opentofu_version' for tofu tool
-        if self.tool_name == "tofu":
-            tool_key = "opentofu_version"
-        else:
-            tool_key = f"{self.tool_name}_version"
+        tool_key = "opentofu_version" if self.tool_name == "tofu" else f"{self.tool_name}_version"
 
         self.metadata["workenv"][profile][tool_key] = version
         self._save_metadata()
@@ -433,10 +424,7 @@ class TfVersionsManager(BaseToolManager):
         if "global" not in self.metadata:
             self.metadata["global"] = {}
 
-        if self.tool_name == "tofu":
-            tool_key = "opentofu_version"
-        else:
-            tool_key = f"{self.tool_name}_version"
+        tool_key = "opentofu_version" if self.tool_name == "tofu" else f"{self.tool_name}_version"
 
         self.metadata["global"][tool_key] = version
         self._save_metadata()
@@ -448,10 +436,7 @@ class TfVersionsManager(BaseToolManager):
         if "global" not in self.metadata:
             return None
 
-        if self.tool_name == "tofu":
-            tool_key = "opentofu_version"
-        else:
-            tool_key = f"{self.tool_name}_version"
+        tool_key = "opentofu_version" if self.tool_name == "tofu" else f"{self.tool_name}_version"
 
         return self.metadata["global"].get(tool_key)
 
