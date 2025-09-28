@@ -8,11 +8,10 @@ Functions for verifying tool installations.
 """
 from __future__ import annotations
 
-
 import pathlib
 
 from provide.foundation import logger
-from provide.foundation.process import run_command, ProcessError
+from provide.foundation.process import ProcessError, run_command
 
 
 def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, tool_name: str) -> bool:

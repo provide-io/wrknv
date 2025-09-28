@@ -12,7 +12,6 @@ from typing import Any
 
 from attrs import define, field
 from provide.foundation import logger
-from provide.foundation.process import run_command
 from rich.console import Console
 
 from wrknv.config import WorkenvConfig
