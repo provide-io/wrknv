@@ -11,6 +11,7 @@ from unittest.mock import Mock, patch
 
 import click.testing
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.cli.hub_cli import create_cli
 

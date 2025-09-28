@@ -25,7 +25,7 @@ class TestDynamicContainerConfiguration(FoundationTestCase):
 
         assert manager.CONTAINER_NAME == "wrknv-dev"
         assert manager.IMAGE_NAME == "wrknv-dev"
-        self.assertIsNotNone(manager.container_config)
+        assert manager.container_config is not None
         assert not manager.container_config.enabled
 
     def test_custom_project_name(self) -> None:

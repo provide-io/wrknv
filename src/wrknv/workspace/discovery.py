@@ -6,14 +6,12 @@ Discover and analyze repositories in workspace.
 
 from __future__ import annotations
 
-import tomllib
 from pathlib import Path
+import tomllib
 from typing import Any
 
 from attrs import define
 from provide.foundation import logger
-
-from .schema import RepoConfig
 
 
 @define

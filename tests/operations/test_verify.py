@@ -14,6 +14,7 @@ from unittest.mock import Mock, patch
 
 from wrknv.wenv.operations.verify import (
 from provide.testkit import FoundationTestCase
+import pytest
     check_binary_compatibility,
     get_installed_version_info,
     get_version_command_args,
@@ -128,7 +129,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = run_version_check(binary_path, "terraform")
 
-        self.assertIsNone(result)
+        assert result is None
 
     @patch("provide.foundation.process.run_command")
     def test_run_version_check_failure(self, mock_run):
@@ -140,7 +141,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = run_version_check(binary_path, "terraform")
 
-        self.assertIsNone(result)
+        assert result is None
 
     @patch("provide.foundation.process.run_command")
     def test_run_version_check_timeout(self, mock_run):
@@ -152,7 +153,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = run_version_check(binary_path, "terraform")
 
-        self.assertIsNone(result)
+        assert result is None
 
     @patch("provide.foundation.process.run_command")
     def test_run_version_check_exception(self, mock_run):
@@ -164,7 +165,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = run_version_check(binary_path, "terraform")
 
-        self.assertIsNone(result)
+        assert result is None
 
     # Test get_version_command_args
     def test_get_version_command_args_terraform(self) -> None:
@@ -331,7 +332,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = get_installed_version_info(binary_path, "terraform")
 
-        self.assertIsNotNone(result)
+        assert result is not None
         assert result["tool"] == "terraform"
         assert result["version"] == "1.5.0"
         assert result["platform"] == "linux_amd64"
@@ -344,7 +345,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = get_installed_version_info(binary_path, "tofu")
 
-        self.assertIsNotNone(result)
+        assert result is not None
         assert result["tool"] == "tofu"
         assert result["version"] == "1.6.0"
 
@@ -356,7 +357,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = get_installed_version_info(binary_path, "go")
 
-        self.assertIsNotNone(result)
+        assert result is not None
         assert result["tool"] == "go"
         assert result["version"] == "1.21.0"
         assert result["platform"] == "linux/amd64"
@@ -369,7 +370,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = get_installed_version_info(binary_path, "uv")
 
-        self.assertIsNotNone(result)
+        assert result is not None
         assert result["tool"] == "uv"
         assert result["version"] == "0.1.0"
 
@@ -381,7 +382,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = get_installed_version_info(binary_path, "tool")
 
-        self.assertIsNotNone(result)
+        assert result is not None
         assert result["tool"] == "tool"
         assert "2.3.4" in result["raw_output"]
 
@@ -393,7 +394,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         result = get_installed_version_info(binary_path, "tool")
 
-        self.assertIsNone(result)
+        assert result is None
 
     # Test parse functions
     def test_parse_terraform_version(self) -> None:

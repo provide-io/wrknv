@@ -391,7 +391,7 @@ class TestVolumeManager(FoundationTestCase):
             volume_name="test-volume", container_name="test-container", mount_path="/data"
         )
 
-        self.assertIsNotNone(backup_file)
+        assert backup_file is not None
         assert str(backup_file.startswith("/tmp/backups"))
         assert "test-volume" in str(backup_file)
         mock_run.assert_called_once()

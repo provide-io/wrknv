@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import pathlib
 
+import pytest
 from provide.testkit import FoundationTestCase
 
 from wrknv.wenv.config import ValidatedTomlSource, WorkenvConfigError
@@ -51,7 +52,7 @@ class TestToolConfig(FoundationTestCase):
         """Test invalid version format."""
         try:
             # Should work with pydantic validation
-            with self.assertRaises(ValueError):
+            with pytest.raises(ValueError):
                 ToolConfig(version="")
         except ImportError:
             # Fallback when pydantic not installed
@@ -92,7 +93,7 @@ class TestContainerConfig(FoundationTestCase):
     def test_invalid_python_version(self) -> None:
         """Test invalid Python version."""
         try:
-            with self.assertRaises(ValueError):
+            with pytest.raises(ValueError):
                 ContainerConfig(python_version="2.7")
         except ImportError:
             # Fallback behavior
@@ -118,13 +119,13 @@ class TestProfileConfig(FoundationTestCase):
         profile = ProfileConfig(
             name="docker-dev", container=ContainerConfig(enabled=True), environment={"ENV": "development"}
         )
-        self.assertIsNotNone(profile.container)
+        assert profile.container is not None
         assert profile.container.enabled
 
     def test_invalid_profile_name(self) -> None:
         """Test invalid profile name."""
         try:
-            with self.assertRaises(ValueError):
+            with pytest.raises(ValueError):
                 ProfileConfig(name="")
         except ImportError:
             profile = ProfileConfig(name="")
@@ -183,7 +184,7 @@ class TestRegistryConfig(FoundationTestCase):
     def test_invalid_registry_url(self) -> None:
         """Test invalid registry URL."""
         try:
-            with self.assertRaises(ValueError):
+            with pytest.raises(ValueError):
                 RegistryConfig(url="not-a-url")
         except ImportError:
             config = RegistryConfig(url="not-a-url")
@@ -221,19 +222,19 @@ class TestWorkenvConfig(FoundationTestCase):
         )
         assert config.project_name == "full-project"
         assert len(config.tools) == 2
-        self.assertIsNotNone(config.container)
-        self.assertIsNotNone(config.package)
+        assert config.container is not None
+        assert config.package is not None
         assert config.log_level == "DEBUG"
 
     def test_get_tool_config(self) -> None:
         """Test getting tool configuration."""
         config = WorkenvConfig(project_name="test", tools={"terraform": ToolConfig(version="1.5.0")})
         tool = config.get_tool_config("terraform")
-        self.assertIsNotNone(tool)
+        assert tool is not None
         assert tool.version == "1.5.0"
 
         missing = config.get_tool_config("missing")
-        self.assertIsNone(missing)
+        assert missing is None
 
     def test_get_profile(self) -> None:
         """Test getting profile configuration."""
@@ -241,11 +242,11 @@ class TestWorkenvConfig(FoundationTestCase):
             project_name="test", profiles={"dev": ProfileConfig(name="dev", description="Dev profile")}
         )
         profile = config.get_profile("dev")
-        self.assertIsNotNone(profile)
+        assert profile is not None
         assert profile.name == "dev"
 
         missing = config.get_profile("missing")
-        self.assertIsNone(missing)
+        assert missing is None
 
     def test_merge_with_profile(self) -> None:
         """Test merging configuration with profile."""
@@ -269,7 +270,7 @@ class TestWorkenvConfig(FoundationTestCase):
 
         # New tools from profile should be added
         go = merged.get_tool_config("go")
-        self.assertIsNotNone(go)
+        assert go is not None
         assert go.version == "1.21.0"
 
         # Environment should be merged
@@ -279,14 +280,14 @@ class TestWorkenvConfig(FoundationTestCase):
         """Test path expansion in configuration."""
         config = WorkenvConfig(project_name="test", install_dir="~/test/install", cache_dir="~/test/cache")
         # Paths should be expanded
-        self.assertNotIn("~", config.install_dir)
-        self.assertNotIn("~", config.cache_dir)
+        assert "~" not in config.install_dir
+        assert "~" not in config.cache_dir
         assert config.install_dir.startswith("/")
 
     def test_invalid_log_level(self) -> None:
         """Test invalid log level."""
         try:
-            with self.assertRaises(ValueError):
+            with pytest.raises(ValueError):
                 WorkenvConfig(project_name="test", log_level="INVALID")
         except ImportError:
             config = WorkenvConfig(project_name="test", log_level="INVALID")
@@ -333,7 +334,7 @@ class TestConfigValidation(FoundationTestCase):
         assert config.project_name == "my-project"
         assert "terraform" in config.tools
         assert "go" in config.tools
-        self.assertIsNotNone(config.container)
+        assert config.container is not None
 
 
 class TestValidatedTomlSource(FoundationTestCase):
@@ -365,7 +366,7 @@ version = "1.21.0"
         source = ValidatedTomlSource(config_file)
         config = source.get_config()
 
-        self.assertIsNotNone(config)
+        assert config is not None
         assert config.project_name == "test-project"
 
         # Test getting tool versions
@@ -390,7 +391,7 @@ version = ""  # Invalid empty version
 
         try:
             # Should raise error with pydantic validation
-            with self.assertRaises(WorkenvConfigError):
+            with pytest.raises(WorkenvConfigError):
                 ValidatedTomlSource(config_file)
         except ImportError:
             # Fallback mode - no validation error
@@ -405,8 +406,8 @@ version = ""  # Invalid empty version
         source = ValidatedTomlSource(config_file)
         config = source.get_config()
 
-        self.assertIsNone(config)
-        self.assertIsNone(source.get_tool_version("terraform"))
+        assert config is None
+        assert source.get_tool_version("terraform") is None
         assert source.get_all_tools() == {}
 
     def test_config_with_profiles(self) -> None:

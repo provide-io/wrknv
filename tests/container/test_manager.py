@@ -353,7 +353,7 @@ class TestContainerManager(FoundationTestCase):
 
         status = self.manager.status()
 
-        self.assertIsNotNone(status)
+        assert status is not None
         assert status["docker_available"]
         assert status["container_exists"]
         assert status["container_info"]["state"] == "running"
@@ -371,7 +371,7 @@ class TestContainerManager(FoundationTestCase):
 
         status = self.manager.status()
 
-        self.assertIsNotNone(status)
+        assert status is not None
         assert not status["docker_available"]
         assert not status["container_exists"]
 

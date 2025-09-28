@@ -11,6 +11,7 @@ from unittest.mock import patch
 
 from wrknv.wenv.operations.platform import (
 from provide.testkit import FoundationTestCase
+import pytest
     format_platform_string,
     get_architecture,
     get_archive_extension,
