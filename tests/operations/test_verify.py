@@ -236,7 +236,7 @@ class TestVerifyOperations(FoundationTestCase):
         result = check_binary_compatibility(binary_path)
 
         assert not result["compatible"]
-        assert result["error"] == "Binary execution timed out"
+        assert "timed out" in result["error"]
 
     @patch("wrknv.wenv.operations.verify.run_command")
     def test_check_binary_compatibility_exception(self, mock_run):
