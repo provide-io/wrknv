@@ -94,34 +94,34 @@ class TestPlatformOperations(FoundationTestCase):
         mock_arch.return_value = "ppc64"
         assert not is_supported_platform()
 
-    @patch("wrknv.wenv.operations.platform.get_os_name")
-    def test_get_executable_extension_windows(self, mock_os):
+    @patch("wrknv.wenv.operations.platform.is_windows")
+    def test_get_executable_extension_windows(self, mock_is_win):
         """Test executable extension for Windows."""
-        mock_os.return_value = "windows"
+        mock_is_win.return_value = True
         assert get_executable_extension() == ".exe"
 
-    @patch("wrknv.wenv.operations.platform.get_os_name")
-    def test_get_executable_extension_unix(self, mock_os):
+    @patch("wrknv.wenv.operations.platform.is_windows")
+    def test_get_executable_extension_unix(self, mock_is_win):
         """Test executable extension for Unix-like systems."""
-        mock_os.return_value = "linux"
+        mock_is_win.return_value = False
         assert get_executable_extension() == ""
 
-    @patch("wrknv.wenv.operations.platform.get_os_name")
-    def test_get_archive_extension_windows(self, mock_os):
+    @patch("wrknv.wenv.operations.platform.is_windows")
+    def test_get_archive_extension_windows(self, mock_is_win):
         """Test archive extension for Windows."""
-        mock_os.return_value = "windows"
+        mock_is_win.return_value = True
         assert get_archive_extension() == ".zip"
 
-    @patch("wrknv.wenv.operations.platform.get_os_name")
-    def test_get_archive_extension_unix(self, mock_os):
+    @patch("wrknv.wenv.operations.platform.is_windows")
+    def test_get_archive_extension_unix(self, mock_is_win):
         """Test archive extension for Unix-like systems."""
-        mock_os.return_value = "linux"
+        mock_is_win.return_value = False
         assert get_archive_extension() == ".tar.gz"
 
     def test_format_platform_string(self) -> None:
         """Test platform string formatting."""
-        assert format_platform_string("darwin" == "arm64", "darwin_arm64")
-        assert format_platform_string("linux" == "amd64", "linux_amd64")
+        assert format_platform_string("darwin", "arm64") == "darwin_arm64"
+        assert format_platform_string("linux", "amd64") == "linux_amd64"
 
     def test_parse_platform_string_valid(self) -> None:
         """Test parsing valid platform strings."""
