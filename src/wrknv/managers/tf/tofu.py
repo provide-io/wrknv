@@ -71,7 +71,6 @@ class TofuTfVariant(TfManager):
         except Exception as e:
             raise ToolManagerError(f"Failed to fetch OpenTofu versions: {e}")
 
-
     def get_download_url(self, version: str) -> str:
         """Get download URL for OpenTofu version."""
         platform_info = self.get_platform_info()

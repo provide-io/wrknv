@@ -3,6 +3,7 @@ GitHub Client Unit Tests
 =========================
 Unit tests for GitHubReleasesClient.
 """
+
 from __future__ import annotations
 
 import pathlib
@@ -83,7 +84,9 @@ class TestGitHubReleasesClient:
 
         client = GitHubReleasesClient("owner/repo")
 
-        with patch("provide.foundation.transport.client.UniversalClient.get", return_value=mock_response) as mock_get:
+        with patch(
+            "provide.foundation.transport.client.UniversalClient.get", return_value=mock_response
+        ) as mock_get:
             releases = await client.list_releases()
 
             assert len(releases) == 1
@@ -121,7 +124,9 @@ class TestGitHubReleasesClient:
 
         client = GitHubReleasesClient("owner/repo")
 
-        with patch("provide.foundation.transport.client.UniversalClient.get", return_value=mock_response) as mock_get:
+        with patch(
+            "provide.foundation.transport.client.UniversalClient.get", return_value=mock_response
+        ) as mock_get:
             release = await client.get_latest_release()
 
             assert isinstance(release, Release)
@@ -138,7 +143,9 @@ class TestGitHubReleasesClient:
 
         client = GitHubReleasesClient("owner/repo")
 
-        with patch("provide.foundation.transport.client.UniversalClient.get", return_value=mock_response) as mock_get:
+        with patch(
+            "provide.foundation.transport.client.UniversalClient.get", return_value=mock_response
+        ) as mock_get:
             release = await client.get_release_by_tag("v1.0.0")
 
             assert isinstance(release, Release)
@@ -155,7 +162,9 @@ class TestGitHubReleasesClient:
 
         client = GitHubReleasesClient("owner/repo")
 
-        with patch("provide.foundation.transport.client.UniversalClient.get", return_value=mock_response) as mock_get:
+        with patch(
+            "provide.foundation.transport.client.UniversalClient.get", return_value=mock_response
+        ) as mock_get:
             tags = await client.list_tags()
 
             assert len(tags) == 1

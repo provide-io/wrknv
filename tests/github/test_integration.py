@@ -3,6 +3,7 @@ GitHub Client Integration Tests
 ================================
 Integration tests using real GitHub API.
 """
+
 from __future__ import annotations
 
 import os

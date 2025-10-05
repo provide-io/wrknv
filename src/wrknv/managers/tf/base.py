@@ -191,7 +191,6 @@ class TfManager(BaseToolManager):
 
         return sorted(versions, key=version_sort_key, reverse=True)
 
-
     def get_installed_version(self) -> str | None:
         """Get currently active version from metadata only (no system fallbacks)."""
         # Get current profile (default to 'default')
@@ -254,7 +253,6 @@ class TfManager(BaseToolManager):
                 self.config.set_tool_version(self.tool_name, "")
             except:
                 logger.debug(f"Could not clear {self.tool_name} version in config")
-
 
     def _install_from_archive(self, archive_path: pathlib.Path, version: str) -> None:
         """Install tool from downloaded archive in tf versions format."""

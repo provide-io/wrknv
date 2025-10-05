@@ -79,7 +79,6 @@ class IbmTfVariant(TfManager):
         version_lower = version.lower()
         return any(pattern in version_lower for pattern in prerelease_patterns)
 
-
     def get_download_url(self, version: str) -> str:
         """Get download URL for IBM Terraform version."""
         platform_info = self.get_platform_info()

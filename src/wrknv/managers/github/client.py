@@ -3,6 +3,7 @@ GitHub Releases API Client
 ===========================
 Client for interacting with GitHub Releases API using provide-foundation transport.
 """
+
 from __future__ import annotations
 
 import pathlib
@@ -42,9 +43,7 @@ class GitHubReleasesClient:
 
         self.client = UniversalClient(default_headers=headers)
 
-    async def list_releases(
-        self, include_prereleases: bool = False, per_page: int = 100
-    ) -> list[Release]:
+    async def list_releases(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
         """List all releases from repository.
 
         Args:

@@ -6,6 +6,7 @@ Base Tool Manager for wrknv
 =============================
 Common functionality for all tool managers.
 """
+
 from __future__ import annotations
 
 
@@ -149,7 +150,11 @@ class BaseToolManager(ABC):
         await download_file_async(url, destination, show_progress, headers)
 
     def download_file(
-        self, url: str, destination: pathlib.Path, show_progress: bool = True, headers: dict[str, str] | None = None
+        self,
+        url: str,
+        destination: pathlib.Path,
+        show_progress: bool = True,
+        headers: dict[str, str] | None = None,
     ) -> None:
         """Download a file with optional progress display (sync wrapper).
 

@@ -3,6 +3,7 @@ GitHub API Client Module
 =========================
 Client for interacting with GitHub Releases API and archive downloads.
 """
+
 from __future__ import annotations
 
 from wrknv.managers.github.client import GitHubReleasesClient
