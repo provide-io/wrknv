@@ -7,7 +7,7 @@ Tests for the download functionality in wrknv.
 from __future__ import annotations
 
 import hashlib
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 import urllib.error
 import urllib.request
 
@@ -170,91 +170,6 @@ class TestDownloadOperations:
 
         with pytest.raises(Exception):
             download_file(url, dest_path)
-
-    # Remove old broken test implementations below
-    def _old_test_download_file_with_progress(self, tmp_path):
-        """DEPRECATED - kept for reference."""
-        url = "https://example.com/test.zip"
-        dest_path = tmp_path / "test.zip"
-
-        progress_calls = []
-
-        def mock_urlretrieve(url, path, reporthook=None):
-            path.write_bytes(b"ZIP file content")
-            if reporthook:
-                # Simulate multiple progress calls
-                for i in range(0, 101, 10):
-                    reporthook(i, 1, 100)
-                    progress_calls.append(i)
-
-        with patch("urllib.request.urlretrieve", side_effect=mock_urlretrieve):
-            download_file(url, dest_path, show_progress=True)
-
-        # Verify progress was reported
-        assert len(progress_calls) > 0
-
-    def test_download_file_error(self, tmp_path):
-        """Test download with error."""
-        url = "https://example.com/notfound.zip"
-        dest_path = tmp_path / "test.zip"
-
-        # Mock urlretrieve to raise exception
-        with patch("urllib.request.urlretrieve") as mock_urlretrieve:
-            mock_urlretrieve.side_effect = urllib.error.HTTPError(url, 404, "Not Found", {}, None)
-
-            with pytest.raises(Exception) as exc_info:
-                download_file(url, dest_path)
-
-            assert "Failed to download" in str(exc_info.value)
-
-        # File should not exist
-        assert not dest_path.exists()
-
-    def test_download_file_creates_parent_directory(self, tmp_path):
-        """Test download creates parent directory if needed."""
-        url = "https://example.com/test.zip"
-        dest_path = tmp_path / "subdir" / "test.zip"
-
-        def mock_urlretrieve(url, path, reporthook=None):
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(b"Test content")
-
-        with patch("urllib.request.urlretrieve", side_effect=mock_urlretrieve):
-            download_file(url, dest_path)
-
-        # Verify parent directory was created
-        assert dest_path.parent.exists()
-        assert dest_path.exists()
-
-    def test_download_checksum_file_success(self, tmp_path):
-        """Test successful checksum file download."""
-        checksum_url = "https://example.com/checksums.sha256"
-        output_dir = tmp_path
-
-        def mock_urlretrieve(url, path, reporthook=None):
-            path.write_text("abc123  test.zip\ndef456  other.zip\n")
-
-        with patch("urllib.request.urlretrieve", side_effect=mock_urlretrieve):
-            result = download_checksum_file(checksum_url, output_dir)
-
-        assert result is not None
-        assert result.name == "checksums.sha256"
-        assert result.exists()
-
-    def test_download_checksum_file_no_url(self, tmp_path):
-        """Test checksum file download with no URL."""
-        result = download_checksum_file("", tmp_path)
-        assert result is None
-
-    def test_download_checksum_file_error(self, tmp_path):
-        """Test checksum file download with error."""
-        checksum_url = "https://example.com/checksums.sha256"
-
-        with patch("urllib.request.urlretrieve") as mock_urlretrieve:
-            mock_urlretrieve.side_effect = Exception("Download failed")
-            result = download_checksum_file(checksum_url, tmp_path)
-
-        assert result is None
 
     def test_parse_checksum_file_success(self, tmp_path):
         """Test parsing checksum file."""
