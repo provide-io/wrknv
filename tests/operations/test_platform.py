@@ -28,100 +28,33 @@ from wrknv.wenv.operations.platform import (
 class TestPlatformOperations(FoundationTestCase):
     """Test platform detection operations."""
 
-    @patch("provide.foundation.platform.get_os_name")
-    def test_get_os_name_darwin(self, mock_get_os):
-        """Test OS name detection for macOS."""
-        mock_get_os.return_value = "darwin"
-        assert get_os_name() == "darwin"
+    def test_get_os_name_darwin(self):
+        """Test OS name detection re-exports foundation."""
+        # These tests verify the re-export works - just check current platform
+        result = get_os_name()
+        assert isinstance(result, str)
+        assert result in ["darwin", "linux", "windows", "freebsd", "unknown"]
 
-    @patch("provide.foundation.platform.get_os_name")
-    def test_get_os_name_linux(self, mock_get_os):
-        """Test OS name detection for Linux."""
-        mock_get_os.return_value = "linux"
-        assert get_os_name() == "linux"
+    def test_get_os_name_matches_foundation(self):
+        """Test OS name matches foundation."""
+        from provide.foundation.platform import get_os_name as foundation_get_os
+        assert get_os_name() == foundation_get_os()
 
-    @patch("provide.foundation.platform.get_os_name")
-    def test_get_os_name_windows(self, mock_get_os):
-        """Test OS name detection for Windows."""
-        mock_get_os.return_value = "windows"
-        assert get_os_name() == "windows"
+    def test_get_architecture_matches_foundation(self):
+        """Test architecture matches foundation."""
+        from provide.foundation.platform import get_arch_name as foundation_get_arch
+        assert get_architecture() == foundation_get_arch()
 
-    @patch("provide.foundation.platform.get_os_name")
-    def test_get_os_name_freebsd(self, mock_get_os):
-        """Test OS name detection for FreeBSD."""
-        mock_get_os.return_value = "freebsd"
-        assert get_os_name() == "freebsd"
-
-    @patch("provide.foundation.platform.get_os_name")
-    def test_get_os_name_unknown(self, mock_get_os):
-        """Test OS name detection for unknown OS."""
-        mock_get_os.return_value = "unknown"
-        assert get_os_name() == "unknown"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_x86_64(self, mock_arch):
-        """Test architecture detection for x86_64."""
-        mock_arch.return_value = "amd64"
-        assert get_architecture() == "amd64"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_amd64(self, mock_arch):
-        """Test architecture detection for amd64."""
-        mock_arch.return_value = "amd64"
-        assert get_architecture() == "amd64"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_arm64(self, mock_arch):
-        """Test architecture detection for arm64."""
-        mock_arch.return_value = "arm64"
-        assert get_architecture() == "arm64"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_aarch64(self, mock_arch):
-        """Test architecture detection for aarch64."""
-        mock_arch.return_value = "arm64"
-        assert get_architecture() == "arm64"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_i386(self, mock_arch):
-        """Test architecture detection for i386."""
-        mock_arch.return_value = "386"
-        assert get_architecture() == "386"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_i686(self, mock_arch):
-        """Test architecture detection for i686."""
-        mock_arch.return_value = "386"
-        assert get_architecture() == "386"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_arm(self, mock_arch):
-        """Test architecture detection for ARM."""
-        mock_arch.return_value = "arm"
-        assert get_architecture() == "arm"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_arm64_variant(self, mock_arch):
-        """Test architecture detection for ARM64 variant."""
-        mock_arch.return_value = "arm64"
-        assert get_architecture() == "arm64"
-
-    @patch("provide.foundation.platform.get_arch_name")
-    def test_get_architecture_unknown(self, mock_arch):
-        """Test architecture detection for unknown arch."""
-        mock_arch.return_value = "riscv64"
-        assert get_architecture() == "riscv64"
-
-    @patch("provide.foundation.platform.get_system_info")
+    @patch("wrknv.wenv.operations.platform.get_system_info")
     def test_get_platform_info(self, mock_get_system_info):
         """Test getting complete platform info."""
-        from provide.foundation.platform import SystemInfo
+        from unittest.mock import MagicMock
 
-        mock_get_system_info.return_value = SystemInfo(
-            os_name="darwin",
-            arch="arm64",
-            platform="darwin_arm64"
-        )
+        mock_sys_info = MagicMock()
+        mock_sys_info.os_name = "darwin"
+        mock_sys_info.arch = "arm64"
+        mock_sys_info.platform = "darwin_arm64"
+        mock_get_system_info.return_value = mock_sys_info
 
         info = get_platform_info()
 
