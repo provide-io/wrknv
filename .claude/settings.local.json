@@ -83,7 +83,9 @@
       "Bash(curl -s https://api.github.com/repos/openbao/openbao/releases/tags/v2.1.0)",
       "Read(//Users/tim/.wrknv/tools/bao/**)",
       "Bash(ruff format:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(tar:*)",
+      "Bash(unzip:*)"
     ],
     "deny": [],
     "additionalDirectories": [
