@@ -98,10 +98,12 @@ class TestExtractOperations:
 
     def test_extract_archive_nonexistent(self, tmp_path):
         """Test extracting non-existent archive."""
+        from provide.foundation.errors import ResourceError
+
         archive_path = tmp_path / "nonexistent.zip"
         extract_dir = tmp_path / "extract"
 
-        with pytest.raises(FileNotFoundError, match="Archive not found"):
+        with pytest.raises(ResourceError, match="Archive not found"):
             extract_archive(archive_path, extract_dir)
 
     def test_extract_archive_unsupported(self, tmp_path):
@@ -178,9 +180,11 @@ class TestExecutableOperations:
 
     def test_make_executable_nonexistent(self, tmp_path):
         """Test making non-existent file executable."""
+        from provide.foundation.errors import ResourceError
+
         test_file = tmp_path / "nonexistent.sh"
 
-        with pytest.raises(FileNotFoundError, match="File not found"):
+        with pytest.raises(ResourceError, match="File not found"):
             make_executable(test_file)
 
     def test_is_executable_unix(self, tmp_path):
@@ -260,7 +264,7 @@ class TestFileOperations:
         source = tmp_path / "nonexistent.txt"
         dest = tmp_path / "dest.txt"
 
-        with pytest.raises(FileNotFoundError, match="Source file not found"):
+        with pytest.raises(FileNotFoundError, match="Source file does not exist"):
             copy_file(source, dest)
 
     def test_create_symlink_success(self, tmp_path):
@@ -297,10 +301,12 @@ class TestFileOperations:
 
     def test_create_symlink_nonexistent_target(self, tmp_path):
         """Test creating symlink to non-existent target."""
+        from provide.foundation.errors import ResourceError
+
         target = tmp_path / "nonexistent.txt"
         link = tmp_path / "link.txt"
 
-        with pytest.raises(FileNotFoundError, match="Target does not exist"):
+        with pytest.raises(ResourceError, match="Target does not exist"):
             create_symlink(target, link)
 
     def test_create_symlink_windows_fallback(self, tmp_path):
@@ -330,9 +336,11 @@ class TestFileOperations:
 
     def test_get_file_size_nonexistent(self, tmp_path):
         """Test getting size of non-existent file."""
+        from provide.foundation.errors import ResourceError
+
         test_file = tmp_path / "nonexistent.txt"
 
-        with pytest.raises(FileNotFoundError, match="File not found"):
+        with pytest.raises(ResourceError, match="File not found"):
             get_file_size(test_file)
 
 
