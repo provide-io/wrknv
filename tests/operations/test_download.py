@@ -87,28 +87,93 @@ class TestDownloadOperations:
         result = verify_checksum(test_file, "somehash", "sha512")
         assert result is False
 
-    def test_download_file_success(self, tmp_path):
+    @patch("wrknv.wenv.operations.download.UniversalClient")
+    def test_download_file_success(self, mock_client_class, tmp_path):
         """Test successful file download."""
+        from unittest.mock import AsyncMock, MagicMock
+
         url = "https://example.com/test.zip"
         dest_path = tmp_path / "test.zip"
 
-        # Mock urlretrieve
-        def mock_urlretrieve(url, path, reporthook=None):
-            # Simulate file content
-            path.write_bytes(b"ZIP file content")
-            # Call progress hook if provided
-            if reporthook:
-                reporthook(1, 16, 16)  # block_num, block_size, total_size
+        # Mock UniversalClient
+        mock_client = MagicMock()
+        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = AsyncMock()
+        mock_client.head = AsyncMock(return_value=MagicMock(headers={"content-length": "16"}))
 
-        with patch("urllib.request.urlretrieve", side_effect=mock_urlretrieve):
-            download_file(url, dest_path)
+        async def mock_stream(url):
+            yield b"ZIP file content"
+
+        mock_client.stream = mock_stream
+        mock_client_class.return_value = mock_client
+
+        download_file(url, dest_path)
 
         # Verify file was written
         assert dest_path.exists()
         assert dest_path.read_bytes() == b"ZIP file content"
 
-    def test_download_file_with_progress(self, tmp_path):
+    @patch("wrknv.wenv.operations.download.UniversalClient")
+    def test_download_file_with_progress(self, mock_client_class, tmp_path):
         """Test file download with progress display."""
+        from unittest.mock import AsyncMock, MagicMock
+
+        url = "https://example.com/test.zip"
+        dest_path = tmp_path / "test.zip"
+
+        mock_client = MagicMock()
+        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = AsyncMock()
+        mock_client.head = AsyncMock(return_value=MagicMock(headers={"content-length": "16"}))
+
+        async def mock_stream(url):
+            yield b"ZIP file content"
+
+        mock_client.stream = mock_stream
+        mock_client_class.return_value = mock_client
+
+        download_file(url, dest_path, show_progress=True)
+
+        assert dest_path.exists()
+        assert dest_path.read_bytes() == b"ZIP file content"
+
+    @patch("wrknv.wenv.operations.download.UniversalClient")
+    def test_download_file_error(self, mock_client_class, tmp_path):
+        """Test file download error handling."""
+        from unittest.mock import AsyncMock
+
+        url = "https://example.com/test.zip"
+        dest_path = tmp_path / "test.zip"
+
+        mock_client = MagicMock()
+        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = AsyncMock()
+        mock_client.head = AsyncMock(side_effect=Exception("Network error"))
+        mock_client_class.return_value = mock_client
+
+        with pytest.raises(Exception):
+            download_file(url, dest_path)
+
+    @patch("wrknv.wenv.operations.download.UniversalClient")
+    def test_download_checksum_file_error(self, mock_client_class, tmp_path):
+        """Test checksum download error."""
+        from unittest.mock import AsyncMock
+
+        url = "https://example.com/checksums.txt"
+        dest_path = tmp_path / "checksums.txt"
+
+        mock_client = MagicMock()
+        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = AsyncMock()
+        mock_client.head = AsyncMock(side_effect=Exception("Not found"))
+        mock_client_class.return_value = mock_client
+
+        with pytest.raises(Exception):
+            download_file(url, dest_path)
+
+    # Remove old broken test implementations below
+    def _old_test_download_file_with_progress(self, tmp_path):
+        """DEPRECATED - kept for reference."""
         url = "https://example.com/test.zip"
         dest_path = tmp_path / "test.zip"
 
