@@ -75,7 +75,9 @@
       "Read(///**)",
       "Read(///**)",
       "Read(///**)",
-      "Read(///**)"
+      "Read(///**)",
+      "WebSearch",
+      "WebFetch(domain:openbao.org)"
     ],
     "deny": [],
     "additionalDirectories": [
