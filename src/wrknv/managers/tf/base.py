@@ -168,23 +168,28 @@ class TfManager(BaseToolManager):
             self.extract_archive(archive_path, extract_dir)
 
             # Find the binary in extracted files
-            binary_name = self.executable_name
+            # Note: Archive contains binary with original name (terraform/tofu)
+            # We search for the archive name, then copy to our target name
             if self.tool_name == "tofu":
-                binary_name = "tofu"
+                archive_binary_name = "tofu"
+            elif self.tool_name == "ibmtf":
+                archive_binary_name = "terraform"  # IBM Terraform binary is named "terraform" in archive
+            else:
+                archive_binary_name = self.executable_name
 
             binary_path = None
-            for file_path in extract_dir.rglob(f"{binary_name}*"):
+            for file_path in extract_dir.rglob(f"{archive_binary_name}*"):
                 if file_path.is_file() and file_path.name in [
-                    binary_name,
-                    f"{binary_name}.exe",
+                    archive_binary_name,
+                    f"{archive_binary_name}.exe",
                 ]:
                     binary_path = file_path
                     break
 
             if not binary_path:
-                raise ToolManagerError(f"{self.tool_name} binary not found in archive")
+                raise ToolManagerError(f"{self.tool_name} binary not found in archive (looking for {archive_binary_name})")
 
-            # Copy to tf versions location
+            # Copy to tf versions location with the correct target name
             target_path = self.get_binary_path(version)
             shutil.copy2(binary_path, target_path)
 
