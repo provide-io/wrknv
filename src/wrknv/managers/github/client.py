@@ -49,7 +49,6 @@ class GitHubReleasesClient:
         self.retry_policy = get_retry_policy("github")
         self.circuit_breaker = get_circuit_breaker("github")
 
-    @resilient(retry_policy="github")
     async def list_releases(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
         """List all releases from repository.
 

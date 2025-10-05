@@ -11,33 +11,35 @@ from provide.foundation.resilience import BackoffStrategy, CircuitBreaker, Retry
 
 # GitHub API Retry Policy
 GITHUB_RETRY_POLICY = RetryPolicy(
-    max_retries=3,
-    backoff_strategy=BackoffStrategy.EXPONENTIAL,
-    initial_delay=1.0,
+    max_attempts=3,
+    backoff=BackoffStrategy.EXPONENTIAL,
+    base_delay=1.0,
     max_delay=30.0,
-    exceptions=(Exception,),  # Retry on any exception
+    jitter=True,
+    retryable_errors=(Exception,),  # Retry on any exception
 )
 
 # Download Retry Policy (more retries for downloads)
 DOWNLOAD_RETRY_POLICY = RetryPolicy(
-    max_retries=5,
-    backoff_strategy=BackoffStrategy.EXPONENTIAL,
-    initial_delay=2.0,
+    max_attempts=5,
+    backoff=BackoffStrategy.EXPONENTIAL,
+    base_delay=2.0,
     max_delay=60.0,
-    exceptions=(Exception,),
+    jitter=True,
+    retryable_errors=(Exception,),
 )
 
 # GitHub API Circuit Breaker
 github_circuit_breaker = CircuitBreaker(
     failure_threshold=5,  # Open after 5 failures
-    timeout=60.0,  # Stay open for 60 seconds
+    recovery_timeout=60.0,  # Stay open for 60 seconds
     expected_exception=Exception,
 )
 
 # Download Circuit Breaker
 download_circuit_breaker = CircuitBreaker(
     failure_threshold=3,  # Open after 3 failures
-    timeout=30.0,  # Stay open for 30 seconds
+    recovery_timeout=30.0,  # Stay open for 30 seconds
     expected_exception=Exception,
 )
 
