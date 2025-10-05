@@ -17,8 +17,8 @@ import pytest
 try:
     from wrknv.wenv.config import WorkenvConfig
     from wrknv.managers.base import BaseToolManager
-    from wrknv.managers.ibm_tf import IbmTfManager as TerraformManager
-    from wrknv.managers.tofu import TofuManager
+    from wrknv.managers.tf.ibm import IbmTfVariant as TerraformManager
+    from wrknv.managers.tf.tofu import TofuTfVariant as TofuManager
 except ImportError:
     # Expected during TDD - we'll implement these
     WorkenvConfig = Mock

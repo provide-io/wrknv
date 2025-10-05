@@ -6,12 +6,12 @@ Tool managers for Terraform-compatible tools.
 
 from __future__ import annotations
 
-from .base import TfVersionsManager
-from .ibm import IbmTfManager
-from .tofu import TofuManager
+from .base import TfManager
+from .ibm import IbmTfVariant
+from .tofu import TofuTfVariant
 
 __all__ = [
-    "IbmTfManager",
-    "TfVersionsManager",
-    "TofuManager",
+    "IbmTfVariant",
+    "TfManager",
+    "TofuTfVariant",
 ]

@@ -20,11 +20,11 @@ logger = get_logger(__name__)
 
 from wrknv.managers.base import ToolManagerError
 
-from .base import TfVersionsManager
+from .base import TfManager
 
 
-class TofuManager(TfVersionsManager):
-    """Manages OpenTofu versions using GitHub releases API with wrknv's directory structure."""
+class TofuTfVariant(TfManager):
+    """OpenTofu Tf variant - manages OpenTofu versions using GitHub releases API with wrknv's directory structure."""
 
     @property
     def tool_name(self) -> str:

@@ -26,9 +26,9 @@ import semver
 from wrknv.managers.base import BaseToolManager, ToolManagerError
 
 
-class TfVersionsManager(BaseToolManager):
+class TfManager(BaseToolManager):
     """
-    Base class for managers using ~/.terraform.versions directory.
+    Base class for Tf tool managers using ~/.terraform.versions directory.
 
     This directory structure is compatible with tfswitch, allowing users to
     use either tool interchangeably while providing enhanced metadata tracking

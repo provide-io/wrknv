@@ -14,7 +14,7 @@ import pathlib
 
 from provide.foundation import logger
 
-from wrknv.wenv.github import GitHubReleasesClient
+from wrknv.managers.github import GitHubReleasesClient
 from wrknv.managers.base import BaseToolManager, ToolManagerError
 
 

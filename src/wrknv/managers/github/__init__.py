@@ -5,8 +5,8 @@ Client for interacting with GitHub Releases API and archive downloads.
 """
 from __future__ import annotations
 
-from wrknv.wenv.github.client import GitHubReleasesClient
-from wrknv.wenv.github.types import Asset, Release, Tag
+from wrknv.managers.github.client import GitHubReleasesClient
+from wrknv.managers.github.types import Asset, Release, Tag
 
 __all__ = [
     "Asset",

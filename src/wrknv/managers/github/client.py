@@ -13,7 +13,7 @@ from typing import Literal
 from provide.foundation.logger import get_logger
 from provide.foundation.transport import UniversalClient
 
-from wrknv.wenv.github.types import Asset, Release, Tag
+from wrknv.managers.github.types import Asset, Release, Tag
 
 logger = get_logger(__name__)
 

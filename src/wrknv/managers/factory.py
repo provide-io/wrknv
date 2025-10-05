@@ -21,14 +21,14 @@ def get_tool_manager(tool_name: str, config: WorkenvConfig | None = None) -> Bas
         config = WorkenvConfig.load()
 
     if tool_name == "ibmtf":
-        from .tf.ibm import IbmTfManager
+        from .tf.ibm import IbmTfVariant
 
-        return IbmTfManager(config)
+        return IbmTfVariant(config)
 
     elif tool_name == "tofu":
-        from .tf.tofu import TofuManager
+        from .tf.tofu import TofuTfVariant
 
-        return TofuManager(config)
+        return TofuTfVariant(config)
 
     elif tool_name == "uv":
         from .uv import UvManager

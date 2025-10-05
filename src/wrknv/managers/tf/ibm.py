@@ -18,11 +18,11 @@ import semver
 
 from wrknv.managers.base import ToolManagerError
 
-from .base import TfVersionsManager
+from .base import TfManager
 
 
-class IbmTfManager(TfVersionsManager):
-    """Manages IBM Terraform (formerly HashiCorp Terraform) versions using HashiCorp's releases API."""
+class IbmTfVariant(TfManager):
+    """IBM Terraform variant - manages IBM Terraform (formerly HashiCorp Terraform) versions using HashiCorp's releases API."""
 
     @property
     def tool_name(self) -> str:

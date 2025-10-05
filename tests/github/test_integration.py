@@ -10,7 +10,7 @@ import pathlib
 
 import pytest
 
-from wrknv.wenv.github import GitHubReleasesClient
+from wrknv.managers.github import GitHubReleasesClient
 
 
 # Skip if no GitHub token available (CI-friendly)

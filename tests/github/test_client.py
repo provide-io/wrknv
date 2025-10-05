@@ -10,7 +10,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from wrknv.wenv.github import Asset, GitHubReleasesClient, Release, Tag
+from wrknv.managers.github import Asset, GitHubReleasesClient, Release, Tag
 
 
 @pytest.fixture
