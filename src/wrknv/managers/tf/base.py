@@ -446,95 +446,9 @@ class TfManager(BaseToolManager):
         # Default to 'default' profile
         return "default"
 
-    def _get_venv_bin_dir(self) -> pathlib.Path:
-        """Get the current virtual environment's bin directory."""
-        # First check if we're in a virtual environment
-        if hasattr(sys, "real_prefix") or (hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix):
-            # We're in a virtual environment
-            venv_path = pathlib.Path(sys.prefix)
-
-            # Check if this is a wrknv (has 'workenv' in the path)
-            if "workenv" in str(venv_path):
-                # Use the workenv structure
-                if os.name == "nt":  # Windows
-                    bin_dir = venv_path / "Scripts"
-                else:  # Unix/Linux/macOS
-                    bin_dir = venv_path / "bin"
-            else:
-                # Regular venv
-                if os.name == "nt":  # Windows
-                    bin_dir = venv_path / "Scripts"
-                else:  # Unix/Linux/macOS
-                    bin_dir = venv_path / "bin"
-        else:
-            # Not in a venv, check for workenv directory relative to project root
-            project_root = self._find_project_root()
-            if project_root:
-                workenv_dir_name = self.config.get_workenv_dir_name()
-                bin_dir = project_root / workenv_dir_name / "bin"
-                if bin_dir.exists():
-                    return bin_dir
-
-            # Fallback to .local/bin
-            bin_dir = pathlib.Path.home() / ".local" / "bin"
-
-        # Ensure directory exists
-        bin_dir.mkdir(parents=True, exist_ok=True)
-        return bin_dir
-
-    def _find_project_root(self) -> pathlib.Path | None:
-        """Find the project root by looking for pyproject.toml."""
-        current = pathlib.Path.cwd()
-
-        while current != current.parent:
-            if (current / "pyproject.toml").exists():
-                return current
-            current = current.parent
-
-        return None
-
     def _copy_active_binaries_to_venv(self) -> None:
         """Copy all active tf binaries to venv bin directory."""
-        if not self.venv_bin_dir:
-            logger.warning("No venv bin directory available for tf binary copying")
-            return
-
-        # Get active versions for both tools
-        for tool_name in ["tofu", "terraform"]:
-            try:
-                # Create a temporary manager instance to get active version
-                if tool_name == "tofu":
-                    from .tofu import TofuManager
-
-                    temp_manager = TofuManager(self.config)
-                else:
-                    from .terraform import TerraformManager
-
-                    temp_manager = TerraformManager(self.config)
-
-                active_version = temp_manager.get_installed_version()
-                if active_version:
-                    source_path = temp_manager.get_binary_path(active_version)
-                    if source_path.exists():
-                        # Terraform is copied as 'hctf', OpenTofu stays as 'tofu'
-                        target_name = "hctf" if tool_name == "terraform" else "tofu"
-
-                        if os.name == "nt":  # Windows
-                            target_name += ".exe"
-
-                        target_path = self.venv_bin_dir / target_name
-
-                        # Copy the binary
-                        shutil.copy2(source_path, target_path)
-
-                        # Make executable on Unix systems
-                        if os.name != "nt":
-                            target_path.chmod(0o755)
-
-                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
-
-            except Exception as e:
-                logger.warning(f"Failed to copy {tool_name} binary: {e}")
+        copy_active_binaries_to_venv(self.venv_bin_dir, self.config)
 
 
 # 🍲🥄📄🪄

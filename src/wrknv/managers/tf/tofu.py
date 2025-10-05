@@ -14,13 +14,12 @@ import re
 from urllib.request import urlopen
 
 from provide.foundation.logger import get_logger
-import semver
-
-logger = get_logger(__name__)
 
 from wrknv.managers.base import ToolManagerError
+from wrknv.managers.tf.base import TfManager
+from wrknv.managers.tf.utils import version_sort_key
 
-from .base import TfManager
+logger = get_logger(__name__)
 
 
 class TofuTfVariant(TfManager):
@@ -64,7 +63,7 @@ class TofuTfVariant(TfManager):
                     versions.append(version)
 
             # Sort versions in descending order (latest first)
-            versions.sort(key=self._version_sort_key, reverse=True)
+            versions.sort(key=version_sort_key, reverse=True)
 
             logger.debug(f"Found {len(versions)} OpenTofu versions")
             return versions
@@ -72,23 +71,6 @@ class TofuTfVariant(TfManager):
         except Exception as e:
             raise ToolManagerError(f"Failed to fetch OpenTofu versions: {e}")
 
-    def _version_sort_key(self, version: str):
-        """Generate sort key for semantic versioning using semver module."""
-        try:
-            # Try to parse as a semantic version
-            return semver.VersionInfo.parse(version)
-        except ValueError:
-            # If it fails, try to make it semver-compliant
-            # Handle versions like "1.0" by adding ".0"
-            parts = version.split(".")
-            while len(parts) < 3:
-                parts.append("0")
-            try:
-                normalized = ".".join(parts[:3])
-                return semver.VersionInfo.parse(normalized)
-            except ValueError:
-                # Last resort: return a very old version
-                return semver.VersionInfo.parse("0.0.0")
 
     def get_download_url(self, version: str) -> str:
         """Get download URL for OpenTofu version."""
