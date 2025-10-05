@@ -11,10 +11,12 @@ import re
 from collections.abc import Callable
 from typing import Literal
 
+from provide.foundation.errors import resilient
 from provide.foundation.logger import get_logger
 from provide.foundation.transport import UniversalClient
 
 from wrknv.managers.github.types import Asset, Release, Tag
+from wrknv.wenv.resilience import get_circuit_breaker, get_retry_policy
 
 logger = get_logger(__name__)
 
@@ -43,6 +45,11 @@ class GitHubReleasesClient:
 
         self.client = UniversalClient(default_headers=headers)
 
+        # Get resilience components
+        self.retry_policy = get_retry_policy("github")
+        self.circuit_breaker = get_circuit_breaker("github")
+
+    @resilient(retry_policy="github")
     async def list_releases(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
         """List all releases from repository.
 
