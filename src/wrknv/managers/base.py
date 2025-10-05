@@ -83,11 +83,12 @@ class BaseToolManager(ABC):
         return self.config.get_tool_version(self.tool_name)
 
     def set_installed_version(self, version: str) -> None:
-        """Set the installed version in config."""
-        try:
-            self.config.set_tool_version(self.tool_name, version)
-        except WorkenvConfigError as e:
-            logger.warning(f"Could not save {self.tool_name} version to config: {e}")
+        """Set the installed version in config.
+
+        Base implementation is a no-op since config doesn't support writing.
+        Subclasses should override this to persist version information.
+        """
+        logger.debug(f"Would set {self.tool_name} version to {version} (base implementation - no persistence)")
 
     def get_binary_path(self, version: str) -> pathlib.Path:
         """Get path to the installed binary for a version."""
@@ -207,7 +208,7 @@ class BaseToolManager(ABC):
             self.set_installed_version(version)
 
             # Create symlink if configured
-            if self.config.get_command_option(f"workenv.{self.tool_name}", "create_symlinks", True):
+            if self.config.get_setting("create_symlinks", True):
                 self.create_symlink(version)
             return
 
@@ -234,7 +235,7 @@ class BaseToolManager(ABC):
             self.set_installed_version(version)
 
             # Create symlink if configured
-            if self.config.get_command_option(f"workenv.{self.tool_name}", "create_symlinks", True):
+            if self.config.get_setting("create_symlinks", True):
                 self.create_symlink(version)
 
             logger.info(f"✅ {self.tool_name} {version} installed successfully")
@@ -363,12 +364,8 @@ class BaseToolManager(ABC):
 
         # Update config if this was the current version
         if self.get_installed_version() == version:
-            # Clear the version in config
-            try:
-                self.config.set_tool_version(self.tool_name, "")
-            except:
-                # If set_tool_version doesn't exist, just log
-                logger.debug(f"Could not clear {self.tool_name} version in config")
+            # Clear the version (subclasses should override set_installed_version to persist)
+            self.set_installed_version("")
 
     def verify_installation(self, version: str) -> bool:
         """Verify that installation works correctly."""

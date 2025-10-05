@@ -70,14 +70,20 @@ class UvManager(BaseToolManager):
             platform_name = "unknown-linux-gnu"
         elif os_name == "windows":
             platform_name = "pc-windows-msvc"
-            return f"https://github.com/astral-sh/uv/releases/download/{version}/uv-{arch}-{platform_name}.zip"
         else:
             raise ToolManagerError(f"Unsupported platform for UV: {os_name}")
 
+        # UV uses specific architecture names
         if arch == "amd64":
             arch = "x86_64"
+        elif arch == "arm64":
+            arch = "aarch64"
 
-        return f"https://github.com/astral-sh/uv/releases/download/{version}/uv-{arch}-{platform_name}.tar.gz"
+        # Return appropriate archive format
+        if os_name == "windows":
+            return f"https://github.com/astral-sh/uv/releases/download/{version}/uv-{arch}-{platform_name}.zip"
+        else:
+            return f"https://github.com/astral-sh/uv/releases/download/{version}/uv-{arch}-{platform_name}.tar.gz"
 
     def get_checksum_url(self, version: str) -> str | None:
         """UV doesn't provide separate checksum files."""
