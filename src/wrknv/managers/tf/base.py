@@ -60,121 +60,19 @@ class TfManager(BaseToolManager):
         """Prefix for version files (e.g., 'terraform' or 'opentofu')."""
         pass
 
-    def _load_metadata(self) -> None:
-        """Load metadata from JSON file."""
-        if self.metadata_file.exists():
-            try:
-                with open(self.metadata_file) as f:
-                    self.metadata = json.load(f)
-
-                # Migrate old format if needed
-                self._migrate_metadata_format()
-            except Exception as e:
-                logger.warning(f"Failed to load metadata: {e}")
-                self.metadata = {}
-        else:
-            self.metadata = {}
-
-    def _migrate_metadata_format(self) -> None:
-        """Migrate old metadata format to new workenv structure."""
-        needs_save = False
-
-        # Migrate old active_* keys to workenv structure
-        for old_key in ["active_tofu", "active_terraform"]:
-            if old_key in self.metadata:
-                tool = old_key.replace("active_", "")
-                version = self.metadata.pop(old_key)
-
-                # Ensure workenv structure exists
-                if "workenv" not in self.metadata:
-                    self.metadata["workenv"] = {}
-                if "default" not in self.metadata["workenv"]:
-                    self.metadata["workenv"]["default"] = {}
-
-                # Set version in new structure
-                # Use 'opentofu_version' for tofu
-                version_key = "opentofu_version" if tool == "tofu" else f"{tool}_version"
-
-                self.metadata["workenv"]["default"][version_key] = version
-                needs_save = True
-
-        if needs_save:
-            self._save_metadata()
-
     def _save_metadata(self) -> None:
         """Save metadata to JSON file."""
-        try:
-            with open(self.metadata_file, "w") as f:
-                json.dump(self.metadata, f, indent=2, sort_keys=True, default=str)
-        except Exception as e:
-            logger.warning(f"Failed to save metadata: {e}")
+        self.metadata_manager.save_metadata()
 
     def _update_recent_file(self) -> None:
         """Update the RECENT file with current installed versions."""
-        recent_file = self.install_path / "RECENT"
-        recent_data = {}
-
-        # Read existing RECENT file if it exists
-        if recent_file.exists():
-            try:
-                with open(recent_file) as f:
-                    recent_data = json.load(f)
-            except:
-                recent_data = {}
-
-        # Get all installed versions for this tool
-        tool_key = self.tool_name if self.tool_name != "tofu" else "opentofu"
         installed_versions = self.get_installed_versions()
-
-        if installed_versions:
-            # Keep only the 5 most recent versions
-            recent_data[tool_key] = installed_versions[:5]
-        elif tool_key in recent_data:
-            # Remove tool if no versions installed
-            del recent_data[tool_key]
-
-        # Write updated RECENT file
-        try:
-            with open(recent_file, "w") as f:
-                json.dump(recent_data, f)
-        except Exception as e:
-            logger.warning(f"Failed to update RECENT file: {e}")
+        self.metadata_manager.update_recent_file(installed_versions)
 
     def _update_recent_file_with_active(self, version: str) -> None:
         """Update RECENT file to put active version first."""
-        recent_file = self.install_path / "RECENT"
-        recent_data = {}
-
-        # Read existing RECENT file if it exists
-        if recent_file.exists():
-            try:
-                with open(recent_file) as f:
-                    recent_data = json.load(f)
-            except:
-                recent_data = {}
-
-        # Get tool key
-        tool_key = self.tool_name if self.tool_name != "tofu" else "opentofu"
-
-        # Get current list of versions
-        current_versions = recent_data.get(tool_key, [])
-
-        # Remove version if it exists
-        if version in current_versions:
-            current_versions.remove(version)
-
-        # Add version at the beginning
-        current_versions.insert(0, version)
-
-        # Keep only the 5 most recent
-        recent_data[tool_key] = current_versions[:5]
-
-        # Write updated RECENT file
-        try:
-            with open(recent_file, "w") as f:
-                json.dump(recent_data, f)
-        except Exception as e:
-            logger.warning(f"Failed to update RECENT file with active version: {e}")
+        installed_versions = self.get_installed_versions()
+        self.metadata_manager.update_recent_file_with_active(version, installed_versions)
 
     def get_binary_path(self, version: str) -> pathlib.Path:
         """Get path to the installed binary for a version."""
