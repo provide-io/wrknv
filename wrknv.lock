@@ -8,7 +8,7 @@
       "version": "1.9.4",
       "resolved_from": "['1.9.x', '1.10.x']",
       "checksum": null,
-      "installed_at": "2025-10-05T10:56:10.179659",
+      "installed_at": "2025-10-05T10:57:34.500614",
       "install_path": null
     },
     "tofu@1.10.6": {
@@ -16,7 +16,7 @@
       "version": "1.10.6",
       "resolved_from": "['1.9.x', '1.10.x']",
       "checksum": null,
-      "installed_at": "2025-10-05T10:56:10.179674",
+      "installed_at": "2025-10-05T10:57:34.500627",
       "install_path": null
     },
     "bao": {
@@ -24,7 +24,7 @@
       "version": "2.1.0",
       "resolved_from": "2.1.0",
       "checksum": null,
-      "installed_at": "2025-10-05T10:56:10.491722",
+      "installed_at": "2025-10-05T10:57:38.146415",
       "install_path": null
     }
   }

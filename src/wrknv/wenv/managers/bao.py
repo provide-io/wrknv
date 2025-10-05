@@ -63,13 +63,12 @@ class BaoManager(BaseToolManager):
         os_name = platform_info["os"]
         arch = platform_info["arch"]
 
-        # OpenBao naming: bao_2.1.0_darwin_arm64.zip
-        # Note: They use zip files, not tar.gz
-        if os_name == "windows":
-            return f"https://github.com/openbao/openbao/releases/download/v{version}/bao_{version}_{os_name}_{arch}.zip"
+        # OpenBao uses capitalized OS names: Darwin, Linux, Windows
+        os_capitalized = os_name.capitalize()
 
-        # For Unix systems (darwin, linux, freebsd)
-        return f"https://github.com/openbao/openbao/releases/download/v{version}/bao_{version}_{os_name}_{arch}.zip"
+        # OpenBao naming: bao_2.1.0_Darwin_arm64.tar.gz
+        # Note: They use tar.gz for all platforms
+        return f"https://github.com/openbao/openbao/releases/download/v{version}/bao_{version}_{os_capitalized}_{arch}.tar.gz"
 
     def get_checksum_url(self, version: str) -> str | None:
         """Get checksum URL for OpenBao version."""
