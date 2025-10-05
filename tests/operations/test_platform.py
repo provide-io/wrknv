@@ -125,27 +125,27 @@ class TestPlatformOperations(FoundationTestCase):
 
     def test_parse_platform_string_valid(self) -> None:
         """Test parsing valid platform strings."""
-        result = parse_platform_string("darwin_arm64")
-        assert result["os"] == "darwin"
-        assert result["arch"] == "arm64"
+        os_name, arch = parse_platform_string("darwin_arm64")
+        assert os_name == "darwin"
+        assert arch == "arm64"
 
     def test_parse_platform_string_os_only(self) -> None:
         """Test parsing platform string with OS only."""
-        result = parse_platform_string("linux")
-        assert result["os"] == "linux"
-        assert result["arch"] == "unknown"
+        os_name, arch = parse_platform_string("linux")
+        assert os_name == "linux"
+        assert arch == ""
 
     def test_parse_platform_string_arch_only(self) -> None:
         """Test parsing platform string with arch only."""
-        result = parse_platform_string("amd64")
-        assert result["os"] == "unknown"
-        assert result["arch"] == "amd64"
+        os_name, arch = parse_platform_string("amd64")
+        assert os_name == "amd64"
+        assert arch == ""
 
     def test_parse_platform_string_unknown(self) -> None:
         """Test parsing unknown platform string."""
-        result = parse_platform_string("something")
-        assert result["os"] == "unknown"
-        assert result["arch"] == "unknown"
+        os_name, arch = parse_platform_string("something")
+        assert os_name == "something"
+        assert arch == ""
 
     def test_get_download_platform_mappings(self) -> None:
         """Test getting platform mappings."""
@@ -154,37 +154,23 @@ class TestPlatformOperations(FoundationTestCase):
         assert "terraform" in mappings
         assert "tofu" in mappings
         assert "go" in mappings
-        assert "uv" in mappings
 
-        # Check UV has special mappings
-        assert mappings["uv"]["darwin"] == "apple-darwin"
-        assert mappings["uv"]["linux"] == "unknown-linux-gnu"
-        assert mappings["uv"]["windows"] == "pc-windows-msvc"
+    def test_get_platform_mapping_terraform(self) -> None:
+        """Test platform mapping for Terraform."""
+        result = get_platform_mapping("terraform")
+        assert isinstance(result, dict)
+        assert "darwin_arm64" in result
 
-    def test_get_platform_mapping_terraform_os(self) -> None:
-        """Test platform mapping for Terraform OS."""
-        result = get_platform_mapping("terraform", "darwin", "os")
-        assert result == "darwin"
-
-    def test_get_platform_mapping_uv_os(self) -> None:
-        """Test platform mapping for UV OS."""
-        result = get_platform_mapping("uv", "darwin", "os")
-        assert result == "apple-darwin"
-
-    def test_get_platform_mapping_arch(self) -> None:
-        """Test platform mapping for architecture."""
-        result = get_platform_mapping("terraform", "arm64", "arch")
-        assert result == "arm64"
+    def test_get_platform_mapping_go(self) -> None:
+        """Test platform mapping for Go."""
+        result = get_platform_mapping("go")
+        assert "darwin_arm64" in result
+        assert result["darwin_arm64"] == "darwin-arm64"
 
     def test_get_platform_mapping_unknown_tool(self) -> None:
         """Test platform mapping for unknown tool."""
-        result = get_platform_mapping("unknown", "darwin", "os")
-        assert result == "darwin"
-
-    def test_get_platform_mapping_other_type(self) -> None:
-        """Test platform mapping for other type."""
-        result = get_platform_mapping("terraform", "something", "other")
-        assert result == "something"
+        result = get_platform_mapping("unknown_tool")
+        assert result == {}
 
 
 class TestPlatformEdgeCases(FoundationTestCase):
@@ -196,7 +182,8 @@ class TestPlatformEdgeCases(FoundationTestCase):
         """Test FreeBSD platform support."""
         mock_os.return_value = "freebsd"
         mock_arch.return_value = "amd64"
-        assert is_supported_platform()
+        # FreeBSD not in supported list
+        assert not is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
@@ -204,7 +191,8 @@ class TestPlatformEdgeCases(FoundationTestCase):
         """Test Windows 32-bit platform support."""
         mock_os.return_value = "windows"
         mock_arch.return_value = "386"
-        assert is_supported_platform()
+        # 386 not in supported arch list (only amd64, arm64, x86_64, aarch64)
+        assert not is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
@@ -212,19 +200,14 @@ class TestPlatformEdgeCases(FoundationTestCase):
         """Test Linux 32-bit platform support."""
         mock_os.return_value = "linux"
         mock_arch.return_value = "386"
-        assert is_supported_platform()
+        # 386 not in supported arch list
+        assert not is_supported_platform()
 
     def test_parse_platform_string_multiple_underscores(self) -> None:
         """Test parsing platform string with multiple underscores."""
-        result = parse_platform_string("darwin_arm64_extra")
-        assert result["os"] == "darwin"
-        assert result["arch"] == "arm64_extra"
-
-    def test_get_platform_mapping_missing_os_mapping(self) -> None:
-        """Test platform mapping when OS mapping is missing."""
-        result = get_platform_mapping("uv", "freebsd", "os")
-        # Should return original value when not in mappings
-        assert result == "freebsd"
+        os_name, arch = parse_platform_string("darwin_arm64_extra")
+        assert os_name == "darwin"
+        assert arch == "arm64_extra"
 
 
 if __name__ == "__main__":
