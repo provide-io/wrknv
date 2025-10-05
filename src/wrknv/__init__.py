@@ -7,6 +7,7 @@ Supports Terraform, OpenTofu, Go, UV, and more.
 
 Can be used standalone or integrated with other tools.
 """
+
 from __future__ import annotations
 
 

@@ -61,7 +61,7 @@ class Lockfile:
         version: str,
         resolved_from: str,
         checksum: str | None = None,
-        install_path: str | None = None
+        install_path: str | None = None,
     ):
         """Add a resolved tool to the lockfile."""
         from datetime import datetime
@@ -72,7 +72,7 @@ class Lockfile:
             resolved_from=resolved_from,
             checksum=checksum,
             installed_at=datetime.now().isoformat(),
-            install_path=install_path
+            install_path=install_path,
         )
 
     def get_resolved_version(self, tool_name: str) -> str | None:
@@ -101,7 +101,7 @@ class Lockfile:
                     "install_path": tool.install_path,
                 }
                 for name, tool in self.resolved_tools.items()
-            }
+            },
         }
 
     @classmethod
@@ -140,6 +140,7 @@ class LockfileManager:
 
         try:
             import json
+
             with open(self.lockfile_path, "r") as f:
                 data = json.load(f)
             return Lockfile.from_dict(data)
@@ -191,7 +192,7 @@ class LockfileManager:
                         lockfile.add_resolved_tool(
                             name=f"{tool_name}@{resolved_version}",
                             version=resolved_version,
-                            resolved_from=str(version_pattern)
+                            resolved_from=str(version_pattern),
                         )
                 else:
                     # Single version pattern
@@ -199,9 +200,7 @@ class LockfileManager:
                     if resolved_versions:
                         resolved_version = resolved_versions[0]
                         lockfile.add_resolved_tool(
-                            name=tool_name,
-                            version=resolved_version,
-                            resolved_from=version_pattern
+                            name=tool_name, version=resolved_version, resolved_from=version_pattern
                         )
             except Exception:
                 # Skip tools that can't be resolved
@@ -217,7 +216,4 @@ class LockfileManager:
         if not lockfile:
             return {}
 
-        return {
-            tool.name: tool.version
-            for tool in lockfile.resolved_tools.values()
-        }
+        return {tool.name: tool.version for tool in lockfile.resolved_tools.values()}

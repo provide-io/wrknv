@@ -3,6 +3,7 @@ Gitignore File Builder
 ======================
 Constructs gitignore files with proper formatting and sections.
 """
+
 from __future__ import annotations
 
 

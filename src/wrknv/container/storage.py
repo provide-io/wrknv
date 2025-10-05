@@ -5,6 +5,7 @@ Container Storage Management
 ============================
 Storage path management and volume operations for containers.
 """
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -169,6 +170,7 @@ class ContainerStorage:
                 for volume_path in volumes_dir.iterdir():
                     if volume_path.is_dir():
                         import shutil
+
                         shutil.rmtree(volume_path)
                         logger.info("🗑️ Removed volume", volume=volume_path.name)
 
@@ -176,6 +178,7 @@ class ContainerStorage:
             build_dir = container_dir / "build"
             if build_dir.exists():
                 import shutil
+
                 shutil.rmtree(build_dir)
                 build_dir.mkdir(exist_ok=True)
 
@@ -190,6 +193,7 @@ class ContainerStorage:
                 backups_dir = container_dir / "backups"
                 if backups_dir.exists():
                     import shutil
+
                     shutil.rmtree(backups_dir)
                     backups_dir.mkdir(exist_ok=True)
 

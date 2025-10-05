@@ -1,4 +1,5 @@
 """Python version checking and compatibility utilities."""
+
 from __future__ import annotations
 
 

@@ -7,6 +7,7 @@ Gitignore Commands
 ==================
 Commands for managing .gitignore files.
 """
+
 from __future__ import annotations
 
 

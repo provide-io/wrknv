@@ -3,6 +3,7 @@ Gitignore Manager
 =================
 Central manager for gitignore operations.
 """
+
 from __future__ import annotations
 
 

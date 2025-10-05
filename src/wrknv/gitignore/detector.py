@@ -3,6 +3,7 @@ Project Detector for Gitignore Templates
 =========================================
 Auto-detects project types and suggests appropriate gitignore templates.
 """
+
 from __future__ import annotations
 
 

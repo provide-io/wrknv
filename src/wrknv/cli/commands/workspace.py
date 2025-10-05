@@ -23,19 +23,13 @@ def workspace_group():
 
 
 @register_command("workspace.init", description="Initialize workspace in current directory")
-def init(
-    template_source: str | None = None,
-    auto_discover: bool = True
-):
+def init(template_source: str | None = None, auto_discover: bool = True):
     """Initialize workspace in current directory."""
     logger.info("🚀 Initializing workspace", auto_discover=auto_discover)
 
     try:
         manager = WorkspaceManager()
-        config = manager.init_workspace(
-            template_source=template_source,
-            auto_discover=auto_discover
-        )
+        config = manager.init_workspace(template_source=template_source, auto_discover=auto_discover)
 
         logger.success(f"✅ Workspace initialized with {len(config.repos)} repositories")
         if config.template_source:
@@ -48,10 +42,7 @@ def init(
 
 @register_command("workspace.add", description="Add repository to workspace")
 def add_repo(
-    repo_path: str,
-    name: str | None = None,
-    repo_type: str | None = None,
-    template_profile: str | None = None
+    repo_path: str, name: str | None = None, repo_type: str | None = None, template_profile: str | None = None
 ):
     """Add repository to workspace."""
     path = Path(repo_path)
@@ -60,10 +51,7 @@ def add_repo(
     try:
         manager = WorkspaceManager()
         config = manager.add_repo(
-            repo_path=path,
-            name=name,
-            repo_type=repo_type,
-            template_profile=template_profile
+            repo_path=path, name=name, repo_type=repo_type, template_profile=template_profile
         )
 
         logger.success(f"✅ Repository added: {name or path.name}")

@@ -7,6 +7,7 @@ Doctor Commands
 ===============
 Commands for diagnosing and testing the wrknv system.
 """
+
 from __future__ import annotations
 
 
@@ -134,11 +135,13 @@ def _check_environment() -> dict[str, Any]:
                 "name": "Python Version",
                 "status": "fail",
                 "message": f"Python 3.11+ required, found {sys.version}",
-                "fix": "Update to Python 3.11 or later"
+                "fix": "Update to Python 3.11 or later",
             }
 
         # Check if we're in a virtual environment
-        in_venv = hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)
+        in_venv = hasattr(sys, "real_prefix") or (
+            hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix
+        )
 
         # Check for workenv directory
         workenv_dir = Path.cwd() / "workenv"
@@ -151,22 +154,18 @@ def _check_environment() -> dict[str, Any]:
                 "name": "Environment Setup",
                 "status": "warn",
                 "message": "No workenv/ directory or virtual environment detected",
-                "details": "Consider running 'wrknv workenv create' or activating a virtual environment"
+                "details": "Consider running 'wrknv workenv create' or activating a virtual environment",
             }
 
         return {
             "name": "Environment Setup",
             "status": "pass",
             "message": "Environment properly configured",
-            "details": env_detail
+            "details": env_detail,
         }
 
     except Exception as e:
-        return {
-            "name": "Environment Setup",
-            "status": "fail",
-            "message": f"Environment check failed: {e}"
-        }
+        return {"name": "Environment Setup", "status": "fail", "message": f"Environment check failed: {e}"}
 
 
 def _check_config() -> dict[str, Any]:
@@ -180,7 +179,7 @@ def _check_config() -> dict[str, Any]:
                 "name": "Configuration",
                 "status": "warn",
                 "message": "No configuration file found",
-                "fix": "Run 'wrknv config init' to create one"
+                "fix": "Run 'wrknv config init' to create one",
             }
 
         # Validate configuration
@@ -191,22 +190,18 @@ def _check_config() -> dict[str, Any]:
                 "name": "Configuration",
                 "status": "fail",
                 "message": f"Configuration validation failed: {'; '.join(errors[:3])}",
-                "fix": "Run 'wrknv config validate --verbose' for details"
+                "fix": "Run 'wrknv config validate --verbose' for details",
             }
 
         return {
             "name": "Configuration",
             "status": "pass",
             "message": "Configuration is valid",
-            "details": f"Config file: {config.config_path}"
+            "details": f"Config file: {config.config_path}",
         }
 
     except Exception as e:
-        return {
-            "name": "Configuration",
-            "status": "fail",
-            "message": f"Configuration check failed: {e}"
-        }
+        return {"name": "Configuration", "status": "fail", "message": f"Configuration check failed: {e}"}
 
 
 def _check_dependencies() -> dict[str, Any]:
@@ -255,7 +250,7 @@ def _check_dependencies() -> dict[str, Any]:
                 "name": "Dependencies",
                 "status": "fail",
                 "message": f"Missing required dependencies: {', '.join(missing_deps)}",
-                "fix": "Run 'uv pip install -e .[all]' to install dependencies"
+                "fix": "Run 'uv pip install -e .[all]' to install dependencies",
             }
 
         if optional_missing:
@@ -263,21 +258,13 @@ def _check_dependencies() -> dict[str, Any]:
                 "name": "Dependencies",
                 "status": "warn",
                 "message": f"Missing optional dependencies: {', '.join(optional_missing)}",
-                "details": "Some features may not work without these dependencies"
+                "details": "Some features may not work without these dependencies",
             }
 
-        return {
-            "name": "Dependencies",
-            "status": "pass",
-            "message": "All dependencies available"
-        }
+        return {"name": "Dependencies", "status": "pass", "message": "All dependencies available"}
 
     except Exception as e:
-        return {
-            "name": "Dependencies",
-            "status": "fail",
-            "message": f"Dependency check failed: {e}"
-        }
+        return {"name": "Dependencies", "status": "fail", "message": f"Dependency check failed: {e}"}
 
 
 def _check_commands() -> dict[str, Any]:
@@ -290,11 +277,7 @@ def _check_commands() -> dict[str, Any]:
 
         # Check that commands are registered
         if not cli.commands:
-            return {
-                "name": "Commands",
-                "status": "fail",
-                "message": "No commands registered in CLI"
-            }
+            return {"name": "Commands", "status": "fail", "message": "No commands registered in CLI"}
 
         # Check for core command groups
         expected_groups = ["config", "workenv", "gitignore", "package", "selftest"]
@@ -309,22 +292,18 @@ def _check_commands() -> dict[str, Any]:
                 "name": "Commands",
                 "status": "warn",
                 "message": f"Missing command groups: {', '.join(missing_groups)}",
-                "details": f"Found {len(cli.commands)} commands/groups"
+                "details": f"Found {len(cli.commands)} commands/groups",
             }
 
         return {
             "name": "Commands",
             "status": "pass",
             "message": "All command groups available",
-            "details": f"Found {len(cli.commands)} commands/groups"
+            "details": f"Found {len(cli.commands)} commands/groups",
         }
 
     except Exception as e:
-        return {
-            "name": "Commands",
-            "status": "fail",
-            "message": f"Command check failed: {e}"
-        }
+        return {"name": "Commands", "status": "fail", "message": f"Command check failed: {e}"}
 
 
 def _check_permissions() -> dict[str, Any]:
@@ -333,11 +312,7 @@ def _check_permissions() -> dict[str, Any]:
         # Check current directory permissions
         cwd = Path.cwd()
         if not cwd.exists():
-            return {
-                "name": "Permissions",
-                "status": "fail",
-                "message": "Current directory does not exist"
-            }
+            return {"name": "Permissions", "status": "fail", "message": "Current directory does not exist"}
 
         # Check write permissions in current directory
         test_file = cwd / ".wrknv_permission_test"
@@ -349,7 +324,7 @@ def _check_permissions() -> dict[str, Any]:
                 "name": "Permissions",
                 "status": "fail",
                 "message": f"No write permission in current directory: {e}",
-                "fix": "Ensure you have write permissions in the project directory"
+                "fix": "Ensure you have write permissions in the project directory",
             }
 
         # Check home directory for config
@@ -363,18 +338,10 @@ def _check_permissions() -> dict[str, Any]:
                     "name": "Permissions",
                     "status": "warn",
                     "message": "Cannot create config directory in home folder",
-                    "details": "Global configuration may not work"
+                    "details": "Global configuration may not work",
                 }
 
-        return {
-            "name": "Permissions",
-            "status": "pass",
-            "message": "File system permissions OK"
-        }
+        return {"name": "Permissions", "status": "pass", "message": "File system permissions OK"}
 
     except Exception as e:
-        return {
-            "name": "Permissions",
-            "status": "fail",
-            "message": f"Permission check failed: {e}"
-        }
+        return {"name": "Permissions", "status": "fail", "message": f"Permission check failed: {e}"}

@@ -7,6 +7,7 @@ Config Commands
 ===============
 Commands for managing workenv configuration.
 """
+
 from __future__ import annotations
 
 
@@ -118,6 +119,7 @@ def config_validate(strict: bool = False, verbose: bool = False):
         echo_error(f"Validation error: {e}")
         if verbose:
             import traceback
+
             echo_error(f"   Traceback: {traceback.format_exc()}")
         sys.exit(1)
 

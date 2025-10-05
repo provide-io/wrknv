@@ -6,6 +6,7 @@ wrknv Verification Operations
 ========================================
 Functions for verifying tool installations.
 """
+
 from __future__ import annotations
 
 import pathlib

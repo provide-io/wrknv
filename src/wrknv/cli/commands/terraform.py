@@ -7,6 +7,7 @@ Terraform/OpenTofu Commands
 ===========================
 Commands for managing Terraform and OpenTofu installations.
 """
+
 from __future__ import annotations
 
 

@@ -3,6 +3,7 @@ wenv Configuration (Compatibility Module)
 ==========================================
 Imports from the new configuration module structure.
 """
+
 from __future__ import annotations
 
 # Import everything from the new configuration module

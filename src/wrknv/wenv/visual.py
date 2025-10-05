@@ -6,6 +6,7 @@ Visual UX Enhancements
 ======================
 Emoji and color support for enhanced CLI output.
 """
+
 from __future__ import annotations
 
 

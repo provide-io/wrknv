@@ -54,9 +54,7 @@ class WorkspaceSync:
         changes = {}
         for filename, new_content in configs.items():
             file_path = repo.path / filename
-            change_info = await self._apply_config_change(
-                file_path, new_content, dry_run
-            )
+            change_info = await self._apply_config_change(file_path, new_content, dry_run)
             changes[filename] = change_info
 
         result = {
@@ -74,11 +72,13 @@ class WorkspaceSync:
         context = dict(self.config.global_standards)
 
         # Add repo-specific values
-        context.update({
-            "project_name": repo.name,
-            "package_type": repo.type,
-            "features": repo.features,
-        })
+        context.update(
+            {
+                "project_name": repo.name,
+                "package_type": repo.type,
+                "features": repo.features,
+            }
+        )
 
         # Add custom values (highest priority)
         context.update(repo.custom_values)
@@ -93,17 +93,23 @@ class WorkspaceSync:
 
         # Configure features based on repo type
         if repo.type == "foundation-based":
-            context.setdefault("workspace_sources", {
-                "provide-foundation": {"workspace": True},
-                "provide-testkit": {"workspace": True},
-            })
+            context.setdefault(
+                "workspace_sources",
+                {
+                    "provide-foundation": {"workspace": True},
+                    "provide-testkit": {"workspace": True},
+                },
+            )
         elif repo.type == "pyvider-plugin":
-            context.setdefault("workspace_sources", {
-                "pyvider": {"workspace": True},
-                "pyvider-cty": {"workspace": True},
-                "provide-foundation": {"workspace": True},
-                "provide-testkit": {"workspace": True},
-            })
+            context.setdefault(
+                "workspace_sources",
+                {
+                    "pyvider": {"workspace": True},
+                    "pyvider-cty": {"workspace": True},
+                    "provide-foundation": {"workspace": True},
+                    "provide-testkit": {"workspace": True},
+                },
+            )
 
         return context
 
@@ -125,12 +131,7 @@ class WorkspaceSync:
 
         return configs
 
-    async def _apply_config_change(
-        self,
-        file_path: Path,
-        new_content: str,
-        dry_run: bool
-    ) -> dict[str, Any]:
+    async def _apply_config_change(self, file_path: Path, new_content: str, dry_run: bool) -> dict[str, Any]:
         """Apply configuration change to file."""
         change_info = {
             "path": str(file_path),
@@ -155,13 +156,15 @@ class WorkspaceSync:
             return change_info
 
         # Generate diff
-        diff_lines = list(difflib.unified_diff(
-            current_content.splitlines(keepends=True),
-            new_content.splitlines(keepends=True),
-            fromfile=str(file_path),
-            tofile=str(file_path),
-            lineterm=""
-        ))
+        diff_lines = list(
+            difflib.unified_diff(
+                current_content.splitlines(keepends=True),
+                new_content.splitlines(keepends=True),
+                fromfile=str(file_path),
+                tofile=str(file_path),
+                lineterm="",
+            )
+        )
 
         change_info["changed"] = True
         change_info["diff"] = "".join(diff_lines)

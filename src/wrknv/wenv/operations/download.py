@@ -6,6 +6,7 @@ wrknv Download Operations
 ====================================
 Functions for downloading and verifying tool archives using foundation transport.
 """
+
 from __future__ import annotations
 
 
@@ -63,9 +64,7 @@ async def download_file_async(
                     if show_progress and total_size > 0:
                         percent = min(100, (downloaded * 100) // total_size)
                         if downloaded % (1024 * 1024) < len(chunk):  # Log every ~1MB
-                            logger.debug(
-                                f"Download progress: {percent}% ({downloaded}/{total_size} bytes)"
-                            )
+                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total_size} bytes)")
 
                     # Custom callback
                     if progress_callback and total_size > 0:

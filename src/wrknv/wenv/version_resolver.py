@@ -3,6 +3,7 @@ Version Resolution Utilities
 ============================
 Handles resolution of version patterns like "1.11.x" to specific versions.
 """
+
 from __future__ import annotations
 
 

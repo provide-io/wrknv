@@ -28,9 +28,7 @@ class WorkspaceManager:
         self.discovery = WorkspaceDiscovery(self.root)
 
     def init_workspace(
-        self,
-        template_source: str | None = None,
-        auto_discover: bool = True
+        self, template_source: str | None = None, auto_discover: bool = True
     ) -> WorkspaceConfig:
         """Initialize workspace in current directory."""
         logger.info("🚀 Initializing workspace", root=str(self.root))
@@ -107,7 +105,7 @@ class WorkspaceManager:
         repo_path: Path | str,
         name: str | None = None,
         repo_type: str | None = None,
-        template_profile: str | None = None
+        template_profile: str | None = None,
     ) -> WorkspaceConfig:
         """Add repository to workspace."""
         repo_path = Path(repo_path)
@@ -229,12 +227,8 @@ class WorkspaceManager:
         return {
             "python_version": "3.11",
             "ruff_line_length": 111,
-            "authors": [
-                {"name": "Tim Perkins", "email": "code@tim.life"}
-            ],
-            "maintainers": [
-                {"name": "provide.io", "email": "code@provide.io"}
-            ],
+            "authors": [{"name": "Tim Perkins", "email": "code@tim.life"}],
+            "maintainers": [{"name": "provide.io", "email": "code@provide.io"}],
             "license": "Apache-2.0",
             "development_status": "3 - Alpha",
         }
@@ -243,6 +237,7 @@ class WorkspaceManager:
         """Convert dictionary to TOML string."""
         try:
             import tomli_w
+
             return tomli_w.dumps(data)
         except ImportError:
             # Fallback to basic TOML generation
@@ -258,7 +253,7 @@ class WorkspaceManager:
                 if isinstance(value, str):
                     lines.append(f'{key} = "{value}"')
                 else:
-                    lines.append(f'{key} = {json.dumps(value)}')
+                    lines.append(f"{key} = {json.dumps(value)}")
 
         # Handle sections
         for key, value in data.items():
