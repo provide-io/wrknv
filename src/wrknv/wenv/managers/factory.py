@@ -40,6 +40,11 @@ def get_tool_manager(tool_name: str, config: WorkenvConfig | None = None) -> Bas
 
         return GoManager(config)
 
+    elif tool_name == "bao":
+        from .bao import BaoManager
+
+        return BaoManager(config)
+
     # Add more tools as needed:
     # elif tool_name == "python":
     #     from .python import PythonManager
@@ -54,12 +59,12 @@ def get_tool_manager(tool_name: str, config: WorkenvConfig | None = None) -> Bas
 
 def get_supported_tools() -> list[str]:
     """Get list of supported tools."""
-    return ["ibmtf", "tofu", "uv", "go"]
+    return ["ibmtf", "tofu", "uv", "go", "bao"]
 
 
 def get_major_tools() -> list[str]:
     """Get list of major tools (those with direct CLI commands)."""
-    return ["ibmtf", "tofu", "uv", "go"]
+    return ["ibmtf", "tofu", "uv", "go", "bao"]
 
 
 def get_secondary_tools() -> list[str]:

@@ -1,0 +1,31 @@
+{
+  "config_checksum": "63a8f00595c7",
+  "created_at": "2025-10-05T10:56:07.442010",
+  "wrknv_version": "0.1.0",
+  "resolved_tools": {
+    "tofu@1.9.4": {
+      "name": "tofu@1.9.4",
+      "version": "1.9.4",
+      "resolved_from": "['1.9.x', '1.10.x']",
+      "checksum": null,
+      "installed_at": "2025-10-05T10:56:10.179659",
+      "install_path": null
+    },
+    "tofu@1.10.6": {
+      "name": "tofu@1.10.6",
+      "version": "1.10.6",
+      "resolved_from": "['1.9.x', '1.10.x']",
+      "checksum": null,
+      "installed_at": "2025-10-05T10:56:10.179674",
+      "install_path": null
+    },
+    "bao": {
+      "name": "bao",
+      "version": "2.1.0",
+      "resolved_from": "2.1.0",
+      "checksum": null,
+      "installed_at": "2025-10-05T10:56:10.491722",
+      "install_path": null
+    }
+  }
+}
