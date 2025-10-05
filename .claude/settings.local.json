@@ -77,7 +77,8 @@
       "Read(///**)",
       "Read(///**)",
       "WebSearch",
-      "WebFetch(domain:openbao.org)"
+      "WebFetch(domain:openbao.org)",
+      "Bash(curl -s 'https://go.dev/dl/?mode=json')"
     ],
     "deny": [],
     "additionalDirectories": [
