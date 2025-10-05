@@ -244,12 +244,19 @@ class GitHubReleasesClient:
         Returns:
             First matching Asset or None
         """
+        # First try exact match
+        for asset in release.assets:
+            if asset.name == pattern:
+                logger.debug(f"Found exact matching asset: {asset.name}")
+                return asset
+
         # Convert simple glob to regex
         if "*" in pattern:
             regex_pattern = pattern.replace(".", r"\.").replace("*", ".*")
         else:
             regex_pattern = pattern
 
+        # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
                 logger.debug(f"Found matching asset: {asset.name}")
