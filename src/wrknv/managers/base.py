@@ -145,7 +145,7 @@ class BaseToolManager(ABC):
             show_progress: Whether to log progress
             headers: Optional custom headers
         """
-        from ..operations.download import download_file_async
+        from wrknv.wenv.operations.download import download_file_async
 
         await download_file_async(url, destination, show_progress, headers)
 
@@ -164,7 +164,7 @@ class BaseToolManager(ABC):
             show_progress: Whether to log progress
             headers: Optional custom headers
         """
-        from ..operations.download import download_file
+        from wrknv.wenv.operations.download import download_file
 
         download_file(url, destination, show_progress, headers)
 
@@ -176,19 +176,19 @@ class BaseToolManager(ABC):
             logger.debug("Checksum verification disabled")
             return True
 
-        from ..operations.download import verify_checksum
+        from wrknv.wenv.operations.download import verify_checksum
 
         return verify_checksum(file_path, expected_checksum, algorithm)
 
     def extract_archive(self, archive_path: pathlib.Path, extract_to: pathlib.Path) -> None:
         """Extract an archive file."""
-        from ..operations.install import extract_archive
+        from wrknv.wenv.operations.install import extract_archive
 
         extract_archive(archive_path, extract_to)
 
     def make_executable(self, file_path: pathlib.Path) -> None:
         """Make a file executable (Unix systems)."""
-        from ..operations.install import make_executable
+        from wrknv.wenv.operations.install import make_executable
 
         make_executable(file_path)
 
