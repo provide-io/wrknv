@@ -21,9 +21,10 @@ import shutil
 import sys
 
 from provide.foundation import logger
-import semver
 
 from wrknv.managers.base import BaseToolManager, ToolManagerError
+from wrknv.managers.tf.utils import calculate_file_hash, get_tool_version_key, version_sort_key
+from wrknv.managers.tf.venv import copy_active_binaries_to_venv, get_venv_bin_dir
 
 
 class TfManager(BaseToolManager):
@@ -42,7 +43,7 @@ class TfManager(BaseToolManager):
         self.install_path.mkdir(parents=True, exist_ok=True)
 
         # Get venv bin directory for copying active binaries
-        self.venv_bin_dir = self._get_venv_bin_dir()
+        self.venv_bin_dir = get_venv_bin_dir(config)
 
         # Metadata file for enriched information
         self.metadata_file = self.install_path / "metadata.json"
@@ -188,25 +189,8 @@ class TfManager(BaseToolManager):
                 if self._is_version_dir(version):
                     versions.append(version)
 
-        return sorted(versions, key=self._version_sort_key, reverse=True)
+        return sorted(versions, key=version_sort_key, reverse=True)
 
-    def _version_sort_key(self, version: str):
-        """Generate sort key for semantic versioning using semver module."""
-        try:
-            # Try to parse as a semantic version
-            return semver.VersionInfo.parse(version)
-        except ValueError:
-            # If it fails, try to make it semver-compliant
-            # Handle versions like "1.0" by adding ".0"
-            parts = version.split(".")
-            while len(parts) < 3:
-                parts.append("0")
-            try:
-                normalized = ".".join(parts[:3])
-                return semver.VersionInfo.parse(normalized)
-            except ValueError:
-                # Last resort: return a very old version
-                return semver.VersionInfo.parse("0.0.0")
 
     def get_installed_version(self) -> str | None:
         """Get currently active version from metadata only (no system fallbacks)."""
@@ -216,8 +200,7 @@ class TfManager(BaseToolManager):
         # Check metadata for active version in workenv
         if "workenv" in self.metadata:
             profile_data = self.metadata["workenv"].get(profile, {})
-            # Use 'opentofu_version' for tofu tool
-            tool_key = "opentofu_version" if self.tool_name == "tofu" else f"{self.tool_name}_version"
+            tool_key = get_tool_version_key(self.tool_name)
 
             if tool_key in profile_data:
                 return profile_data[tool_key]
@@ -237,9 +220,7 @@ class TfManager(BaseToolManager):
             self.metadata["workenv"][profile] = {}
 
         # Store active version in metadata under workenv profile
-        # Use 'opentofu_version' for tofu tool
-        tool_key = "opentofu_version" if self.tool_name == "tofu" else f"{self.tool_name}_version"
-
+        tool_key = get_tool_version_key(self.tool_name)
         self.metadata["workenv"][profile][tool_key] = version
         self._save_metadata()
 
@@ -274,13 +255,6 @@ class TfManager(BaseToolManager):
             except:
                 logger.debug(f"Could not clear {self.tool_name} version in config")
 
-    def _calculate_file_hash(self, file_path: pathlib.Path, algorithm: str = "sha256") -> str:
-        """Calculate hash of a file."""
-        hash_func = hashlib.new(algorithm)
-        with open(file_path, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                hash_func.update(chunk)
-        return hash_func.hexdigest()
 
     def _install_from_archive(self, archive_path: pathlib.Path, version: str) -> None:
         """Install tool from downloaded archive in tf versions format."""
@@ -318,7 +292,7 @@ class TfManager(BaseToolManager):
             logger.info(f"Installed {self.tool_name} binary to: {target_path}")
 
             # Calculate installed binary hash
-            binary_hash = self._calculate_file_hash(target_path)
+            binary_hash = calculate_file_hash(target_path)
 
             # Update metadata with comprehensive information
             self._update_install_metadata(version, archive_path, binary_hash)
