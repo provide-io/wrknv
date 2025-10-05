@@ -23,8 +23,9 @@ import sys
 from provide.foundation import logger
 
 from wrknv.managers.base import BaseToolManager, ToolManagerError
+from wrknv.managers.tf.metadata import TfMetadataManager
 from wrknv.managers.tf.utils import calculate_file_hash, get_tool_version_key, version_sort_key
-from wrknv.managers.tf.venv import copy_active_binaries_to_venv, get_venv_bin_dir
+from wrknv.wenv.venv_integration import copy_active_binaries_to_venv, get_venv_bin_dir
 
 
 class TfManager(BaseToolManager):
@@ -45,9 +46,13 @@ class TfManager(BaseToolManager):
         # Get venv bin directory for copying active binaries
         self.venv_bin_dir = get_venv_bin_dir(config)
 
-        # Metadata file for enriched information
-        self.metadata_file = self.install_path / "metadata.json"
-        self._load_metadata()
+        # Metadata manager
+        self.metadata_manager = TfMetadataManager(self.install_path, self.tool_name)
+        self.metadata_manager.load_metadata()
+
+        # Expose metadata for backward compatibility
+        self.metadata = self.metadata_manager.metadata
+        self.metadata_file = self.metadata_manager.metadata_file
 
     @property
     @abstractmethod
