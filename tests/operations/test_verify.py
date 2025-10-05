@@ -8,6 +8,7 @@ Comprehensive tests for the operations/verify module.
 from __future__ import annotations
 
 
+import subprocess
 from unittest.mock import Mock, patch
 
 import pytest
