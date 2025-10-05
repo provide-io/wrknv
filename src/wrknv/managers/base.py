@@ -74,7 +74,7 @@ class BaseToolManager(ABC):
 
     def get_platform_info(self) -> dict[str, str]:
         """Get current platform information."""
-        from ..operations.platform import get_platform_info
+        from wrknv.wenv.operations.platform import get_platform_info
 
         return get_platform_info()
 
