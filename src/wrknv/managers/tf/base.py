@@ -23,9 +23,10 @@ import sys
 from provide.foundation import logger
 
 from wrknv.managers.base import BaseToolManager, ToolManagerError
+from wrknv.managers.tf.bin_ops import copy_tf_binaries_to_workenv
 from wrknv.managers.tf.metadata import TfMetadataManager
 from wrknv.managers.tf.utils import calculate_file_hash, get_tool_version_key, version_sort_key
-from wrknv.wenv.venv_integration import copy_active_binaries_to_venv, get_venv_bin_dir
+from wrknv.wenv.bin_manager import get_workenv_bin_dir
 
 
 class TfManager(BaseToolManager):
@@ -43,8 +44,8 @@ class TfManager(BaseToolManager):
         self.install_path = pathlib.Path("~/.terraform.versions").expanduser()
         self.install_path.mkdir(parents=True, exist_ok=True)
 
-        # Get venv bin directory for copying active binaries
-        self.venv_bin_dir = get_venv_bin_dir(config)
+        # Get workenv bin directory for copying active binaries
+        self.workenv_bin_dir = get_workenv_bin_dir(config)
 
         # Metadata manager
         self.metadata_manager = TfMetadataManager(self.install_path, self.tool_name)
@@ -348,8 +349,8 @@ class TfManager(BaseToolManager):
         return "default"
 
     def _copy_active_binaries_to_venv(self) -> None:
-        """Copy all active tf binaries to venv bin directory."""
-        copy_active_binaries_to_venv(self.venv_bin_dir, self.config)
+        """Copy all active tf binaries to workenv bin directory."""
+        copy_tf_binaries_to_workenv(self.workenv_bin_dir, self.config)
 
 
 # 🍲🥄📄🪄
