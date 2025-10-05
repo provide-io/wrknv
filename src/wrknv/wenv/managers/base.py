@@ -129,11 +129,39 @@ class BaseToolManager(ABC):
         except OSError as e:
             logger.warning(f"Could not create symlink: {e}")
 
-    def download_file(self, url: str, destination: pathlib.Path, show_progress: bool = True) -> None:
-        """Download a file with optional progress display."""
+    async def download_file_async(
+        self,
+        url: str,
+        destination: pathlib.Path,
+        show_progress: bool = True,
+        headers: dict[str, str] | None = None,
+    ) -> None:
+        """Download a file asynchronously using foundation transport.
+
+        Args:
+            url: URL to download from
+            destination: Where to save the file
+            show_progress: Whether to log progress
+            headers: Optional custom headers
+        """
+        from ..operations.download import download_file_async
+
+        await download_file_async(url, destination, show_progress, headers)
+
+    def download_file(
+        self, url: str, destination: pathlib.Path, show_progress: bool = True, headers: dict[str, str] | None = None
+    ) -> None:
+        """Download a file with optional progress display (sync wrapper).
+
+        Args:
+            url: URL to download from
+            destination: Where to save the file
+            show_progress: Whether to log progress
+            headers: Optional custom headers
+        """
         from ..operations.download import download_file
 
-        download_file(url, destination, show_progress)
+        download_file(url, destination, show_progress, headers)
 
     def verify_checksum(
         self, file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256"

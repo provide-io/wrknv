@@ -4,44 +4,97 @@
 """
 wrknv Download Operations
 ====================================
-Functions for downloading and verifying tool archives.
+Functions for downloading and verifying tool archives using foundation transport.
 """
 from __future__ import annotations
 
 
+import asyncio
 import pathlib
+from collections.abc import Callable
 from urllib.parse import urlparse
-import urllib.request
 
 from provide.foundation import logger
 from provide.foundation.crypto import verify_file
+from provide.foundation.transport import UniversalClient
 
 
-def download_file(url: str, output_path: pathlib.Path, show_progress: bool = True) -> None:
-    """Download a file from URL to output path with optional progress display."""
+async def download_file_async(
+    url: str,
+    output_path: pathlib.Path,
+    show_progress: bool = True,
+    headers: dict[str, str] | None = None,
+    progress_callback: Callable[[int, int], None] | None = None,
+) -> None:
+    """Download a file using foundation transport with streaming.
 
+    Args:
+        url: URL to download from
+        output_path: Where to save the file
+        show_progress: Whether to log progress
+        headers: Optional custom headers
+        progress_callback: Optional callback(downloaded_bytes, total_bytes)
+    """
     logger.info(f"Downloading {url} to {output_path}")
 
     # Create parent directories if they don't exist
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    def progress_hook(block_num: int, block_size: int, total_size: int) -> None:
-        """Progress hook for urllib.request.urlretrieve."""
-        if show_progress and total_size > 0:
-            downloaded = block_num * block_size
-            percent = min(100, (downloaded * 100) // total_size)
-            if block_num % 50 == 0:  # Only log every 50 blocks to avoid spam
-                logger.debug(f"Download progress: {percent}% ({downloaded}/{total_size} bytes)")
+    downloaded = 0
+    total_size = 0
 
     try:
-        urllib.request.urlretrieve(url, output_path, reporthook=progress_hook)
-        logger.info(f"Successfully downloaded {output_path.name}")
+        async with UniversalClient(default_headers=headers or {}) as client:
+            # Try to get total size from HEAD request
+            try:
+                head_response = await client.head(url)
+                if "content-length" in head_response.headers:
+                    total_size = int(head_response.headers["content-length"])
+            except Exception:
+                pass  # Size unknown, continue without it
+
+            # Stream download
+            with open(output_path, "wb") as f:
+                async for chunk in client.stream(url):
+                    f.write(chunk)
+                    downloaded += len(chunk)
+
+                    # Progress reporting
+                    if show_progress and total_size > 0:
+                        percent = min(100, (downloaded * 100) // total_size)
+                        if downloaded % (1024 * 1024) < len(chunk):  # Log every ~1MB
+                            logger.debug(
+                                f"Download progress: {percent}% ({downloaded}/{total_size} bytes)"
+                            )
+
+                    # Custom callback
+                    if progress_callback and total_size > 0:
+                        progress_callback(downloaded, total_size)
+
+        logger.info(f"Successfully downloaded {output_path.name} ({downloaded} bytes)")
 
     except Exception as e:
         # Clean up partial download
         if output_path.exists():
             output_path.unlink()
         raise Exception(f"Failed to download {url}: {e}")
+
+
+def download_file(
+    url: str,
+    output_path: pathlib.Path,
+    show_progress: bool = True,
+    headers: dict[str, str] | None = None,
+) -> None:
+    """Synchronous wrapper for download_file_async.
+
+    Args:
+        url: URL to download from
+        output_path: Where to save the file
+        show_progress: Whether to log progress
+        headers: Optional custom headers
+    """
+    asyncio.run(download_file_async(url, output_path, show_progress, headers))
 
 
 def verify_checksum(file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256") -> bool:

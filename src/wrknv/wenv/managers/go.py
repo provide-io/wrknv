@@ -9,12 +9,12 @@ Manages Go versions for development.
 from __future__ import annotations
 
 
-import json
+import asyncio
 import pathlib
 import re
-from urllib.request import urlopen
 
 from provide.foundation import logger
+from provide.foundation.transport import get
 
 from .base import BaseToolManager, ToolManagerError
 
@@ -37,8 +37,9 @@ class GoManager(BaseToolManager):
 
             logger.debug(f"Fetching Go versions from {api_url}")
 
-            with urlopen(api_url) as response:
-                data = json.loads(response.read())
+            # Use foundation transport to fetch versions
+            response = asyncio.run(get(api_url))
+            data = response.json()
 
             versions = []
             for release in data:

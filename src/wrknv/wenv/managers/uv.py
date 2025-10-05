@@ -9,17 +9,29 @@ Manages UV (Python package manager) versions for development.
 from __future__ import annotations
 
 
-import json
+import asyncio
 import pathlib
-from urllib.request import urlopen
 
 from provide.foundation import logger
+
+from wrknv.wenv.github import GitHubReleasesClient
 
 from .base import BaseToolManager, ToolManagerError
 
 
 class UvManager(BaseToolManager):
     """Manages UV versions using GitHub releases API."""
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        self._github_client: GitHubReleasesClient | None = None
+
+    @property
+    def github_client(self) -> GitHubReleasesClient:
+        """Get or create GitHub client for UV repository."""
+        if self._github_client is None:
+            self._github_client = GitHubReleasesClient("astral-sh/uv")
+        return self._github_client
 
     @property
     def tool_name(self) -> str:
@@ -32,24 +44,12 @@ class UvManager(BaseToolManager):
     def get_available_versions(self) -> list[str]:
         """Get available UV versions from GitHub releases."""
         try:
-            api_url = "https://api.github.com/repos/astral-sh/uv/releases"
+            logger.debug("Fetching UV versions from GitHub")
 
-            logger.debug(f"Fetching UV versions from {api_url}")
+            include_prereleases = self.config.get_setting("include_prereleases", False)
 
-            with urlopen(api_url) as response:
-                data = json.loads(response.read())
-
-            versions = []
-            for release in data:
-                tag_name = release.get("tag_name", "")
-
-                # Skip prereleases unless configured to include them
-                if release.get("prerelease", False) and not self.config.get_setting(
-                    "include_prereleases", False
-                ):
-                    continue
-
-                versions.append(tag_name)
+            # Use GitHub client to fetch versions
+            versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             logger.debug(f"Found {len(versions)} UV versions")
             return versions
