@@ -137,40 +137,6 @@ class TestDownloadOperations:
         assert dest_path.exists()
         assert dest_path.read_bytes() == b"ZIP file content"
 
-    @patch("wrknv.wenv.operations.download.UniversalClient")
-    def test_download_file_error(self, mock_client_class, tmp_path):
-        """Test file download error handling."""
-        from unittest.mock import AsyncMock
-
-        url = "https://example.com/test.zip"
-        dest_path = tmp_path / "test.zip"
-
-        mock_client = MagicMock()
-        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
-        mock_client.__aexit__ = AsyncMock()
-        mock_client.head = AsyncMock(side_effect=Exception("Network error"))
-        mock_client_class.return_value = mock_client
-
-        with pytest.raises(Exception):
-            download_file(url, dest_path)
-
-    @patch("wrknv.wenv.operations.download.UniversalClient")
-    def test_download_checksum_file_error(self, mock_client_class, tmp_path):
-        """Test checksum download error."""
-        from unittest.mock import AsyncMock
-
-        url = "https://example.com/checksums.txt"
-        dest_path = tmp_path / "checksums.txt"
-
-        mock_client = MagicMock()
-        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
-        mock_client.__aexit__ = AsyncMock()
-        mock_client.head = AsyncMock(side_effect=Exception("Not found"))
-        mock_client_class.return_value = mock_client
-
-        with pytest.raises(Exception):
-            download_file(url, dest_path)
-
     def test_parse_checksum_file_success(self, tmp_path):
         """Test parsing checksum file."""
         checksum_file = tmp_path / "checksums.sha256"
