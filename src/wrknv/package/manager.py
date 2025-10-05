@@ -16,7 +16,7 @@ from pathlib import Path
 from provide.foundation import logger
 
 from wrknv.config import WorkenvConfig
-from wrknv.wenv.managers.factory import get_tool_manager
+from wrknv.managers.factory import get_tool_manager
 
 
 class PackageManager:

@@ -16,7 +16,7 @@ from urllib.request import urlopen
 from provide.foundation import logger
 import semver
 
-from wrknv.wenv.managers.base import ToolManagerError
+from wrknv.managers.base import ToolManagerError
 
 from .base import TfVersionsManager
 

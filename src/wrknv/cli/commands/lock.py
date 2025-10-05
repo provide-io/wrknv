@@ -151,7 +151,7 @@ def lock_sync():
 
         echo_info("🔒 Installing tools from lockfile...")
 
-        from wrknv.wenv.managers.factory import get_tool_manager
+        from wrknv.managers.factory import get_tool_manager
 
         installed_count = 0
         for tool in lockfile.resolved_tools.values():

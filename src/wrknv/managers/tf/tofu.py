@@ -18,7 +18,7 @@ import semver
 
 logger = get_logger(__name__)
 
-from wrknv.wenv.managers.base import ToolManagerError
+from wrknv.managers.base import ToolManagerError
 
 from .base import TfVersionsManager
 

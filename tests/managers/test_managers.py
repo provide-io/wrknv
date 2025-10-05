@@ -6,7 +6,7 @@ from provide.testkit import FoundationTestCase
 import pytest
 
 from wrknv.wenv.config import WorkenvConfig
-from wrknv.wenv.managers.base import BaseToolManager
+from wrknv.managers.base import BaseToolManager
 
 
 class ConcreteToolManager(BaseToolManager):

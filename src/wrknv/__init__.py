@@ -14,7 +14,7 @@ from wrknv._version import __version__
 
 # Public API exports
 from wrknv.config import WorkenvConfig, WorkenvConfigError
-from wrknv.wenv.managers.factory import get_supported_tools, get_tool_manager
+from wrknv.managers.factory import get_supported_tools, get_tool_manager
 
 __all__ = [
     "WorkenvConfig",

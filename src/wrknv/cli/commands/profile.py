@@ -18,7 +18,7 @@ from provide.foundation.cli import echo_error, echo_info, echo_success, echo_war
 from provide.foundation.hub import register_command
 
 from wrknv.config import WorkenvConfig
-from wrknv.wenv.managers.factory import get_tool_manager
+from wrknv.managers.factory import get_tool_manager
 
 
 # Register the profile group first

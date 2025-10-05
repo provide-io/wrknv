@@ -15,7 +15,7 @@ import pathlib
 from provide.foundation import logger
 
 from wrknv.wenv.github import GitHubReleasesClient
-from wrknv.wenv.managers.base import BaseToolManager, ToolManagerError
+from wrknv.managers.base import BaseToolManager, ToolManagerError
 
 
 class BaoManager(BaseToolManager):
