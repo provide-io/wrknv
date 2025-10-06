@@ -55,7 +55,7 @@ templates_path = "{templates_path_actual}"
             mock_config_instance = WorkenvConfig(config_file=config_path)
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
-            with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
+            with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
                 cli = create_cli()
                 result = runner.invoke(cli, ["gitignore-build"], catch_exceptions=False)
 
@@ -107,7 +107,7 @@ templates_path = "{templates_path_actual}"
             mock_config_instance = WorkenvConfig(config_file=config_path)
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
-            with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
+            with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
                 cli = create_cli()
                 result = runner.invoke(
                     cli,
@@ -189,7 +189,7 @@ templates_path = "{templates_path_actual}"
             mock_config_instance = WorkenvConfig(config_file=config_path)
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
-            with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
+            with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
                 cli = create_cli()
                 result = runner.invoke(cli, ["gitignore-build"], catch_exceptions=False)
 
@@ -236,7 +236,7 @@ templates_path = "{templates_path_actual}"
             mock_config_instance = WorkenvConfig(config_file=config_path)
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
-            with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
+            with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
                 custom_output_path = tmp_path / "my_custom.ignore"
 
                 cli = create_cli()
