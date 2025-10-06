@@ -35,22 +35,24 @@ class TestProfileCommands(FoundationTestCase):
 project_name = "test-project"
 """)
 
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.list_profiles.return_value = []
-            mock_config_class.return_value = mock_config
+            mock_config.get_current_profile.return_value = "default"
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["profile", "list"])
 
             assert result.exit_code == 0
-            assert "No profiles found" in result.output
+            assert "Available profiles:" in result.output
 
     def test_profile_list_with_profiles(self) -> None:
         """Test listing profiles when they exist."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.list_profiles.return_value = ["dev", "prod", "staging"]
-            mock_config_class.return_value = mock_config
+            mock_config.get_current_profile.return_value = "default"
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["profile", "list"])
 
@@ -61,12 +63,12 @@ project_name = "test-project"
 
     def test_profile_save_current_tools(self) -> None:
         """Test saving current tool versions as a profile."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_all_tools.return_value = {"terraform": "1.5.0", "go": "1.21.0", "uv": "0.4.0"}
             mock_config.save_profile.return_value = None
             mock_config.profile_exists.return_value = False
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["profile", "save", "dev"])
 
@@ -78,12 +80,12 @@ project_name = "test-project"
 
     def test_profile_save_overwrites_existing(self) -> None:
         """Test that saving a profile overwrites an existing one."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_all_tools.return_value = {"terraform": "1.6.0"}
             mock_config.profile_exists.return_value = True
             mock_config.save_profile.return_value = None
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             # Should prompt for confirmation
             result = self.runner.invoke(self.cli, ["profile", "save", "dev", "--force"], input="y\n")
@@ -93,10 +95,11 @@ project_name = "test-project"
 
     def test_profile_load_not_found(self) -> None:
         """Test loading a profile that doesn't exist."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_profile.return_value = None
-            mock_config_class.return_value = mock_config
+            mock_config.list_profiles.return_value = []
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["profile", "load", "nonexistent"])
 
@@ -150,11 +153,11 @@ project_name = "test-project"
 
     def test_profile_delete(self) -> None:
         """Test deleting a profile."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.profile_exists.return_value = True
             mock_config.delete_profile.return_value = True
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(
                 self.cli,
@@ -168,10 +171,10 @@ project_name = "test-project"
 
     def test_profile_show(self) -> None:
         """Test showing details of a profile."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0", "uv": "0.4.0"}
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["profile", "show", "dev"])
 
@@ -183,10 +186,10 @@ project_name = "test-project"
 
     def test_profile_export(self) -> None:
         """Test exporting a profile to a file."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             output_file = self.temp_path / "profile.toml"
 
@@ -210,10 +213,10 @@ project_name = "test-project"
         profile_data = {"name": "imported", "tools": {"terraform": "1.6.0", "go": "1.22.0"}}
         profile_file.write_text(tomli_w.dumps(profile_data))
 
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.save_profile.return_value = None
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["profile", "import", str(profile_file)])
 
