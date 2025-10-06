@@ -65,8 +65,8 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         yield manager
         # Cleanup: stop and remove container
         try:
-            run_command(["docker", "stop", manager.CONTAINER_NAME], capture_output=True, timeout=10)
-            run_command(["docker", "rm", manager.CONTAINER_NAME], capture_output=True, timeout=10)
+            run_command(["docker", "stop", manager.container_name], capture_output=True, timeout=10)
+            run_command(["docker", "rm", manager.container_name], capture_output=True, timeout=10)
         except:
             pass
 
@@ -90,7 +90,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         cmd = [
             "docker",
             "exec",
-            container_manager.CONTAINER_NAME,
+            container_manager.container_name,
             "sh",
             "-c",
             f"echo '{test_content}' > /workspace/{test_file}",
@@ -121,7 +121,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         cmd = [
             "docker",
             "exec",
-            container_manager.CONTAINER_NAME,
+            container_manager.container_name,
             "sh",
             "-c",
             f"echo '{json.dumps(test_data)}' > /workspace/persistent.json",
@@ -133,7 +133,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         cmd = [
             "docker",
             "exec",
-            container_manager.CONTAINER_NAME,
+            container_manager.container_name,
             "sh",
             "-c",
             "echo 'cached data' > /home/user/.cache/data.txt",
@@ -156,7 +156,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         time.sleep(2)
 
         # Read data from restarted container
-        cmd = ["docker", "exec", container_manager.CONTAINER_NAME, "cat", "/workspace/persistent.json"]
+        cmd = ["docker", "exec", container_manager.container_name, "cat", "/workspace/persistent.json"]
         result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode == 0
 
@@ -181,7 +181,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         test_file.write_text("This is read-only")
 
         # Try to read the file from container (should work)
-        cmd = ["docker", "exec", container_manager.CONTAINER_NAME, "cat", "/downloads/readonly_test.txt"]
+        cmd = ["docker", "exec", container_manager.container_name, "cat", "/downloads/readonly_test.txt"]
         result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode == 0
         assert "This is read-only" in result.stdout
@@ -190,7 +190,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         cmd = [
             "docker",
             "exec",
-            container_manager.CONTAINER_NAME,
+            container_manager.container_name,
             "sh",
             "-c",
             "echo 'trying to write' > /downloads/should_fail.txt",
@@ -219,14 +219,14 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             # Create directories if needed
             dir_path = str(Path(filepath).parent)
             if dir_path != "/":
-                mkdir_cmd = ["docker", "exec", container_manager.CONTAINER_NAME, "mkdir", "-p", dir_path]
+                mkdir_cmd = ["docker", "exec", container_manager.container_name, "mkdir", "-p", dir_path]
                 run_command(mkdir_cmd, capture_output=True)
 
             # Create file
             cmd = [
                 "docker",
                 "exec",
-                container_manager.CONTAINER_NAME,
+                container_manager.container_name,
                 "sh",
                 "-c",
                 f"echo '{content}' > {filepath}",
@@ -260,7 +260,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         assert container_manager.start()
         time.sleep(2)
 
-        cmd = ["docker", "exec", container_manager.CONTAINER_NAME, "python", "/workspace/project.py"]
+        cmd = ["docker", "exec", container_manager.container_name, "python", "/workspace/project.py"]
         result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode == 0
         assert "Hello World" in result.stdout
@@ -313,7 +313,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
 
             # Verify both containers can read the shared file
             for manager in [manager1, manager2]:
-                cmd = ["docker", "exec", manager.CONTAINER_NAME, "cat", "/downloads/shared_resource.txt"]
+                cmd = ["docker", "exec", manager.container_name, "cat", "/downloads/shared_resource.txt"]
                 result = run_command(cmd, capture_output=True, text=True)
                 assert result.returncode == 0
                 assert "Shared between containers" in result.stdout
@@ -322,7 +322,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             cmd1 = [
                 "docker",
                 "exec",
-                manager1.CONTAINER_NAME,
+                manager1.container_name,
                 "sh",
                 "-c",
                 "echo 'project1 data' > /workspace/project1.txt",
@@ -332,7 +332,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             cmd2 = [
                 "docker",
                 "exec",
-                manager2.CONTAINER_NAME,
+                manager2.container_name,
                 "sh",
                 "-c",
                 "echo 'project2 data' > /workspace/project2.txt",
@@ -340,7 +340,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             run_command(cmd2, capture_output=True)
 
             # Verify isolation - project1 file should not exist in project2
-            cmd = ["docker", "exec", manager2.CONTAINER_NAME, "ls", "/workspace/project1.txt"]
+            cmd = ["docker", "exec", manager2.container_name, "ls", "/workspace/project1.txt"]
             result = run_command(cmd, capture_output=True)
             assert result.returncode != 0, "Workspaces should be isolated"
 
@@ -348,8 +348,8 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             # Cleanup
             for manager in [manager1, manager2]:
                 try:
-                    run_command(["docker", "stop", manager.CONTAINER_NAME], capture_output=True, timeout=10)
-                    run_command(["docker", "rm", manager.CONTAINER_NAME], capture_output=True, timeout=10)
+                    run_command(["docker", "stop", manager.container_name], capture_output=True, timeout=10)
+                    run_command(["docker", "rm", manager.container_name], capture_output=True, timeout=10)
                 except:
                     pass
 
@@ -395,7 +395,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             cmd = [
                 "docker",
                 "exec",
-                container_manager.CONTAINER_NAME,
+                container_manager.container_name,
                 "sh",
                 "-c",
                 f"echo 'test' > {test_file} && echo 'success'",
@@ -416,7 +416,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         cmd = [
             "docker",
             "exec",
-            container_manager.CONTAINER_NAME,
+            container_manager.container_name,
             "dd",
             "if=/dev/zero",
             "of=/workspace/large_file.bin",

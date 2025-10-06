@@ -41,7 +41,7 @@ def test_volume_debug():
 
     # Check paths
     print(f"Storage path: {storage_path}")
-    print(f"Container name: {manager.CONTAINER_NAME}")
+    print(f"Container name: {manager.container_name}")
 
     workspace_path = manager.get_container_path("volumes/workspace")
     print(f"Workspace path: {workspace_path}")
@@ -60,13 +60,13 @@ def test_volume_debug():
 
     # Check container is running
     result = run_command(
-        ["docker", "ps", "--filter", f"name={manager.CONTAINER_NAME}"], capture_output=True, text=True
+        ["docker", "ps", "--filter", f"name={manager.container_name}"], capture_output=True, text=True
     )
     print(f"Container status:\n{result.stdout}")
 
     # Check volume mounts
     result = run_command(
-        ["docker", "inspect", manager.CONTAINER_NAME, "--format", "{{json .Mounts}}"],
+        ["docker", "inspect", manager.container_name, "--format", "{{json .Mounts}}"],
         capture_output=True,
         text=True,
     )
@@ -77,7 +77,7 @@ def test_volume_debug():
     cmd = [
         "docker",
         "exec",
-        manager.CONTAINER_NAME,
+        manager.container_name,
         "sh",
         "-c",
         f"echo 'Debug test' > /workspace/{test_file} && ls -la /workspace/",
@@ -102,8 +102,8 @@ def test_volume_debug():
         print(f"Files in workspace: {files}")
 
     # Cleanup
-    run_command(["docker", "stop", manager.CONTAINER_NAME], capture_output=True)
-    run_command(["docker", "rm", manager.CONTAINER_NAME], capture_output=True)
+    run_command(["docker", "stop", manager.container_name], capture_output=True)
+    run_command(["docker", "rm", manager.container_name], capture_output=True)
 
     return host_file.exists()
 

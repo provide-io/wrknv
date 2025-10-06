@@ -51,7 +51,7 @@ class TestVolumeCommands:
         """Create mock container manager."""
         with patch("wrknv.container.commands.ContainerManager") as MockManager:
             manager = MockManager.return_value
-            manager.CONTAINER_NAME = "test-project-dev"
+            manager.container_name = "test-project-dev"
             manager.get_container_path = Mock(
                 side_effect=lambda p="": mock_home / ".wrknv" / "containers" / "test-project-dev" / p
             )

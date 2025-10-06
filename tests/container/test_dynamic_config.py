@@ -21,10 +21,11 @@ class TestDynamicContainerConfiguration(FoundationTestCase):
 
     def test_default_container_config(self) -> None:
         """Test container manager with default configuration."""
-        manager = ContainerManager()
+        from wrknv.container.manager import create_container_manager
+        manager = create_container_manager()
 
-        assert manager.CONTAINER_NAME == "wrknv-dev"
-        assert manager.IMAGE_NAME == "wrknv-dev"
+        assert manager.container_name == "wrknv-dev"
+        assert manager.image_name == "wrknv-dev"
         assert manager.container_config is not None
         assert not manager.container_config.enabled
 
@@ -34,12 +35,13 @@ class TestDynamicContainerConfiguration(FoundationTestCase):
 
         manager = ContainerManager(config)
 
-        assert manager.CONTAINER_NAME == "my-awesome-project-dev"
-        assert manager.IMAGE_NAME == "my-awesome-project-dev"
+        assert manager.container_name == "my-awesome-project-dev"
+        assert manager.image_name == "my-awesome-project-dev"
 
     def test_dockerfile_with_default_config(self) -> None:
         """Test Dockerfile generation with default configuration."""
-        manager = ContainerManager()
+        from wrknv.container.manager import create_container_manager
+        manager = create_container_manager()
         dockerfile = manager._generate_dockerfile()
 
         assert "FROM ubuntu:22.04" in dockerfile
@@ -153,7 +155,7 @@ class TestDynamicContainerConfiguration(FoundationTestCase):
 
         manager = ContainerManager(config)
 
-        assert manager.CONTAINER_NAME == "web-app-dev"
+        assert manager.container_name == "web-app-dev"
         assert manager.container_config.enabled
         assert manager.container_config.base_image == "node:18-alpine"
         assert len(manager.container_config.additional_packages) == 2

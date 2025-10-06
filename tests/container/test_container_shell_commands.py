@@ -32,7 +32,7 @@ class TestShellCommand:
     def mock_manager(self):
         """Create a mock container manager."""
         manager = Mock(spec=ContainerManager)
-        manager.CONTAINER_NAME = "test-project-dev"
+        manager.container_name = "test-project-dev"
         manager.container_running = Mock(return_value=True)
         manager.container_exists = Mock(return_value=True)
         return manager
@@ -50,7 +50,7 @@ class TestShellCommand:
     def test_shell_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic shell command execution."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -69,7 +69,7 @@ class TestShellCommand:
     def test_shell_with_custom_shell(self, mock_manager_class, mock_run, test_config):
         """Test shell command with custom shell."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -87,7 +87,7 @@ class TestShellCommand:
     def test_shell_container_not_running(self, mock_manager_class, test_config):
         """Test shell when container is not running."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = False
         mock_manager.container_exists.return_value = True
         mock_manager.start.return_value = False
@@ -102,7 +102,7 @@ class TestShellCommand:
     def test_shell_auto_start(self, mock_manager_class, mock_run, test_config):
         """Test shell with auto-start when container is stopped."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = False
         mock_manager.container_exists.return_value = True
         mock_manager.start.return_value = True
@@ -125,7 +125,7 @@ class TestShellCommand:
     def test_shell_with_working_dir(self, mock_manager_class, mock_run, test_config):
         """Test shell with custom working directory."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -144,7 +144,7 @@ class TestShellCommand:
     def test_shell_with_environment(self, mock_manager_class, mock_run, test_config):
         """Test shell with environment variables."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -186,7 +186,7 @@ class TestExecCommand:
     def test_exec_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic command execution."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -205,7 +205,7 @@ class TestExecCommand:
     def test_exec_with_working_dir(self, mock_manager_class, mock_run, test_config):
         """Test exec with working directory."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -225,7 +225,7 @@ class TestExecCommand:
     def test_exec_with_environment(self, mock_manager_class, mock_run, test_config):
         """Test exec with environment variables."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -245,7 +245,7 @@ class TestExecCommand:
     def test_exec_interactive(self, mock_manager_class, mock_run, test_config):
         """Test interactive command execution."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -265,7 +265,7 @@ class TestExecCommand:
     def test_exec_with_user(self, mock_manager_class, mock_run, test_config):
         """Test exec with specific user."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_running.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -309,7 +309,7 @@ class TestLogsCommand:
     def test_logs_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic logs retrieval."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -327,7 +327,7 @@ class TestLogsCommand:
     def test_logs_with_follow(self, mock_manager_class, mock_run, test_config):
         """Test logs with follow option."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -341,7 +341,7 @@ class TestLogsCommand:
     def test_logs_with_tail(self, mock_manager_class, mock_run, test_config):
         """Test logs with tail option."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -359,7 +359,7 @@ class TestLogsCommand:
     def test_logs_with_timestamps(self, mock_manager_class, mock_run, test_config):
         """Test logs with timestamps."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -377,7 +377,7 @@ class TestLogsCommand:
     def test_logs_with_since(self, mock_manager_class, mock_run, test_config):
         """Test logs with since option."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -398,7 +398,7 @@ class TestLogsCommand:
     def test_logs_combined_options(self, mock_manager_class, mock_run, test_config):
         """Test logs with multiple options combined."""
         mock_manager = Mock()
-        mock_manager.CONTAINER_NAME = "test-project-dev"
+        mock_manager.container_name = "test-project-dev"
         mock_manager.container_exists.return_value = True
         mock_manager_class.return_value = mock_manager
 
@@ -450,7 +450,7 @@ class TestCLIIntegration:
         """Mock ContainerManager."""
         with patch("wrknv.container.manager.ContainerManager") as mock_class:
             manager = Mock()
-            manager.CONTAINER_NAME = "test-project-dev"
+            manager.container_name = "test-project-dev"
             manager.container_running.return_value = True
             manager.container_exists.return_value = True
             manager.enter.return_value = True

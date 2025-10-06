@@ -57,7 +57,7 @@ class TestContainerStorageStructure:
 
     def test_container_specific_directories(self, container_manager, test_storage_path):
         """Test that container-specific directories are created."""
-        container_name = container_manager.CONTAINER_NAME
+        container_name = container_manager.container_name
         storage_dir = Path(test_storage_path)
 
         container_dir = storage_dir / container_name
@@ -89,7 +89,7 @@ class TestContainerStorageStructure:
         # Test root container path
         root_path = container_manager.get_container_path()
         assert root_path.exists()
-        assert root_path.name == container_manager.CONTAINER_NAME
+        assert root_path.name == container_manager.container_name
 
 
 @pytest.mark.container
@@ -132,7 +132,7 @@ class TestContainerMetadata:
         assert "config" in metadata
         assert metadata["config"]["python_version"] == "3.11"
         assert "git" in metadata["config"]["additional_packages"]
-        assert metadata["image"] == f"{container_manager.IMAGE_NAME}:{container_manager.IMAGE_TAG}"
+        assert metadata["image"] == f"{container_manager.image_name}:{container_manager.image_tag}"
 
     def test_load_metadata(self, container_manager, test_storage_path):
         """Test loading container metadata."""
@@ -265,7 +265,7 @@ class TestVolumeManagement:
         assert "backup-" in backup_path.name  # Default backup naming
 
         # Check backup location
-        backups_dir = Path(test_storage_path) / container_manager.CONTAINER_NAME / "backups"
+        backups_dir = Path(test_storage_path) / container_manager.container_name / "backups"
         assert backups_dir.exists()
         assert backup_path.parent == backups_dir
 
