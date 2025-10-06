@@ -41,8 +41,8 @@ class RepoConfig:
         )
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary, excluding None values for TOML compatibility."""
+        data = {
             "path": str(self.path),
             "name": self.name,
             "type": self.type,
@@ -52,6 +52,8 @@ class RepoConfig:
             "last_sync": self.last_sync,
             "template_version": self.template_version,
         }
+        # Filter out None values - TOML cannot serialize None
+        return {k: v for k, v in data.items() if v is not None}
 
 
 @define(frozen=True)
@@ -74,13 +76,15 @@ class TemplateSource:
         )
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary, excluding None values for TOML compatibility."""
+        data = {
             "type": self.type,
             "location": self.location,
             "version": self.version,
             "branch": self.branch,
         }
+        # Filter out None values - TOML cannot serialize None
+        return {k: v for k, v in data.items() if v is not None}
 
 
 @define(frozen=True)
@@ -113,8 +117,8 @@ class WorkspaceConfig(BaseConfig):
         )
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary, excluding None values for TOML compatibility."""
+        data = {
             "version": self.version,
             "root": str(self.root),
             "repos": [repo.to_dict() for repo in self.repos],
@@ -122,6 +126,8 @@ class WorkspaceConfig(BaseConfig):
             "global_standards": self.global_standards,
             "sync_strategy": self.sync_strategy,
         }
+        # Filter out None values - TOML cannot serialize None
+        return {k: v for k, v in data.items() if v is not None}
 
     def find_repo(self, name: str) -> RepoConfig | None:
         """Find repository by name."""
