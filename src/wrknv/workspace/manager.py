@@ -6,12 +6,11 @@ Manage multi-repo workspaces with configuration synchronization.
 
 from __future__ import annotations
 
-import json
-import tomllib
 from pathlib import Path
 from typing import Any
 
 from provide.foundation import logger
+from provide.foundation.file import read_toml, write_toml
 
 from .discovery import WorkspaceDiscovery
 from .schema import WorkspaceConfig, RepoConfig, TemplateSource
@@ -80,8 +79,9 @@ class WorkspaceManager:
             return None
 
         try:
-            with open(self.config_path, "rb") as f:
-                data = tomllib.load(f)
+            data = read_toml(self.config_path, default={})
+            if not data:
+                return None
             return WorkspaceConfig.from_dict(data)
 
         except Exception as e:
@@ -91,9 +91,8 @@ class WorkspaceManager:
     def save_config(self, config: WorkspaceConfig):
         """Save workspace configuration."""
         try:
-            # Convert to TOML format
-            toml_content = self._dict_to_toml(config.to_dict())
-            self.config_path.write_text(toml_content)
+            # Convert to dictionary and write with foundation's atomic TOML writer
+            write_toml(self.config_path, config.to_dict(), atomic=True)
             logger.debug("💾 Workspace config saved", path=str(self.config_path))
 
         except Exception as e:
@@ -232,41 +231,3 @@ class WorkspaceManager:
             "license": "Apache-2.0",
             "development_status": "3 - Alpha",
         }
-
-    def _dict_to_toml(self, data: dict[str, Any]) -> str:
-        """Convert dictionary to TOML string."""
-        try:
-            import tomli_w
-
-            return tomli_w.dumps(data)
-        except ImportError:
-            # Fallback to basic TOML generation
-            return self._basic_toml_dump(data)
-
-    def _basic_toml_dump(self, data: dict[str, Any], section: str = "") -> str:
-        """Basic TOML generation fallback."""
-        lines = []
-
-        # Handle top-level values first
-        for key, value in data.items():
-            if not isinstance(value, (dict, list)):
-                if isinstance(value, str):
-                    lines.append(f'{key} = "{value}"')
-                else:
-                    lines.append(f"{key} = {json.dumps(value)}")
-
-        # Handle sections
-        for key, value in data.items():
-            if isinstance(value, dict):
-                section_name = f"{section}.{key}" if section else key
-                lines.append(f"\n[{section_name}]")
-                lines.append(self._basic_toml_dump(value, section_name))
-
-            elif isinstance(value, list) and value and isinstance(value[0], dict):
-                # Handle array of tables
-                for item in value:
-                    section_name = f"{section}.{key}" if section else key
-                    lines.append(f"\n[[{section_name}]]")
-                    lines.append(self._basic_toml_dump(item, ""))
-
-        return "\n".join(lines)

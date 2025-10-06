@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 from typing import Any
 
+from provide.foundation.file import read_toml, write_toml
 from provide.foundation.logger import get_logger
 from provide.foundation.process import run_command
 
@@ -27,14 +28,8 @@ class WorkenvConfigPersistence:
         """Load configuration from file."""
         if self.config.config_path and self.config.config_path.exists():
             try:
-                # Load TOML directly - simple and reliable
-                try:
-                    import tomli
-                except ImportError:
-                    import tomllib as tomli
-
-                with open(self.config.config_path, "rb") as f:
-                    config_dict = tomli.load(f)
+                # Load TOML using foundation
+                config_dict = read_toml(self.config.config_path, default={})
 
                 # Update attributes from loaded config
                 if "project_name" in config_dict:
@@ -57,20 +52,11 @@ class WorkenvConfigPersistence:
 
     def save_config(self) -> None:
         """Save configuration to file."""
-        # Import here to avoid circular imports
-        from wrknv.config.core import WorkenvConfigError
-
-        try:
-            import tomli_w
-        except ImportError:
-            raise WorkenvConfigError("tomli-w is required to save TOML files")
-
         # Convert to dict
         config_dict = self.to_dict()
 
-        # Write to file
-        with open(self.config.config_path, "wb") as f:
-            tomli_w.dump(config_dict, f)
+        # Write to file using foundation's atomic TOML writer
+        write_toml(self.config.config_path, config_dict, atomic=True)
 
         logger.info(f"Saved configuration to {self.config.config_path}")
 

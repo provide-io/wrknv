@@ -10,6 +10,8 @@ import os
 from pathlib import Path
 from typing import Any
 
+from provide.foundation.file import read_toml
+
 
 class ConfigSource:
     """Base interface for configuration sources."""
@@ -44,12 +46,7 @@ class FileConfigSource(ConfigSource):
     def _load(self) -> None:
         """Load configuration from file."""
         if self.path.exists():
-            try:
-                import tomli
-            except ImportError:
-                import tomllib as tomli  # Python 3.11+ built-in
-            with open(self.path, "rb") as f:
-                self._data = tomli.load(f)
+            self._data = read_toml(self.path, default={})
 
     def get_tool_version(self, tool_name: str) -> str | None:
         """Get version for a specific tool."""
