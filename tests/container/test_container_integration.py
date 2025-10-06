@@ -61,7 +61,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
     def container_manager(self, test_config):
         """Create a real ContainerManager instance."""
         manager = ContainerManager(test_config)
-        manager._setup_storage()
+        # Storage is now automatically set up in __attrs_post_init__
         yield manager
         # Cleanup: stop and remove container
         try:
@@ -296,10 +296,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         manager2 = ContainerManager(config2)
 
         try:
-            # Setup storage for both
-            manager1._setup_storage()
-            manager2._setup_storage()
-
+            # Storage is now automatically set up in __attrs_post_init__
             # Create a file in shared downloads
             shared_downloads = storage_path / "shared" / "downloads"
             shared_file = shared_downloads / "shared_resource.txt"

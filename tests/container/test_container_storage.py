@@ -74,7 +74,7 @@ class TestContainerStorageStructure:
 
     def test_get_container_path(self, container_manager, test_storage_path):
         """Test getting container-specific paths."""
-        container_manager._setup_storage()
+        # Storage is now automatically set up in __attrs_post_init__
 
         # Test various path types
         workspace_path = container_manager.get_container_path("volumes/workspace")
@@ -115,7 +115,7 @@ class TestContainerMetadata:
             ),
         )
         manager = ContainerManager(config)
-        manager._setup_storage()
+        # Storage is now automatically set up in __attrs_post_init__
         return manager
 
     def test_save_metadata(self, container_manager, test_storage_path):
@@ -184,7 +184,7 @@ class TestVolumeManagement:
             container=ContainerConfig(enabled=True, storage_path=test_storage_path),
         )
         manager = ContainerManager(config)
-        manager._setup_storage()
+        # Storage is now automatically set up in __attrs_post_init__
         return manager
 
     def test_get_volume_mappings(self, container_manager):
@@ -217,7 +217,7 @@ class TestVolumeManagement:
             ),
         )
         manager = ContainerManager(config)
-        manager._setup_storage()
+        # Storage is now automatically set up in __attrs_post_init__
 
         mappings = manager.get_volume_mappings()
 
@@ -340,7 +340,7 @@ class TestDockerIntegration:
             container=ContainerConfig(enabled=True, storage_path=test_storage_path),
         )
         manager = ContainerManager(config)
-        manager._setup_storage()
+        # Storage is now automatically set up in __attrs_post_init__
         return manager
 
     @patch("provide.foundation.process.run_command")

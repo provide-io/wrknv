@@ -36,7 +36,7 @@ def test_volume_debug():
     )
 
     manager = ContainerManager(config)
-    manager._setup_storage()
+    # Storage is now automatically set up in __attrs_post_init__
 
     # Check paths
     print(f"Storage path: {storage_path}")
