@@ -132,7 +132,7 @@ class WorkenvProfileManager:
 
         arch = platform.machine().lower()
         if arch in ("x86_64", "amd64"):
-            arch = "x64"
+            arch = "amd64"
         elif arch in ("aarch64", "arm64"):
             arch = "arm64"
 
