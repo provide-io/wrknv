@@ -442,7 +442,7 @@ class TestCLIIntegration:
             project_name="test-project",
             container=ContainerConfig(enabled=True),
         )
-        with patch("wrknv.wenv.cli.WorkenvConfig", return_value=config):
+        with patch("wrknv.wenv.config.WorkenvConfig", return_value=config):
             yield config
 
     @pytest.fixture
@@ -469,7 +469,7 @@ class TestCLIIntegration:
 
     def test_cli_enter_command(self, runner, mock_config, mock_container_manager):
         """Test CLI enter command."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import workenv_cli as cli
 
         result = runner.invoke(cli, ["container", "enter"])
 
@@ -478,7 +478,7 @@ class TestCLIIntegration:
 
     def test_cli_exec_command(self, runner, mock_config, mock_container_manager):
         """Test CLI exec command."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import workenv_cli as cli
 
         # Mock exec_in_container at the source
         with patch("wrknv.container.shell_commands.exec_in_container") as mock_exec:
@@ -494,7 +494,7 @@ class TestCLIIntegration:
 
     def test_cli_logs_command(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import workenv_cli as cli
 
         result = runner.invoke(cli, ["container", "logs"])
 
@@ -503,7 +503,7 @@ class TestCLIIntegration:
 
     def test_cli_logs_with_options(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command with options."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import workenv_cli as cli
 
         result = runner.invoke(cli, ["container", "logs", "--tail", "50", "--timestamps"])
 
@@ -515,7 +515,7 @@ class TestCLIIntegration:
 
     def test_cli_stats_command(self, runner, mock_config, mock_container_manager):
         """Test CLI stats command."""
-        from wrknv.wenv.cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import workenv_cli as cli
 
         # Mock get_container_stats at the source
         with patch("wrknv.container.shell_commands.get_container_stats") as mock_stats:
