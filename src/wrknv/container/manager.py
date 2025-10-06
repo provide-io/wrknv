@@ -135,9 +135,84 @@ class ContainerManager:
         """Check if the container image exists."""
         return self.builder.image_exists()
 
+    def _generate_dockerfile(self) -> str:
+        """Generate Dockerfile content from configuration."""
+        # Use configured base image or default
+        base_image = self.container_config.base_image or "ubuntu:22.04"
+
+        # Start with base image
+        lines = [f"FROM {base_image}", ""]
+
+        # Set working directory
+        lines.extend(["WORKDIR /workspace", ""])
+
+        # Install system packages
+        if self.container_config.additional_packages:
+            packages = " ".join(self.container_config.additional_packages)
+            lines.extend([
+                "RUN apt-get update && apt-get install -y \\",
+                f"    {packages} \\",
+                "    && rm -rf /var/lib/apt/lists/*",
+                "",
+            ])
+        else:
+            # Install default packages
+            lines.extend([
+                "RUN apt-get update && apt-get install -y \\",
+                "    curl \\",
+                "    git \\",
+                "    && rm -rf /var/lib/apt/lists/*",
+                "",
+            ])
+
+        # Install Python if python_version is specified
+        if self.container_config.python_version:
+            py_version = self.container_config.python_version
+            lines.extend([
+                f"RUN apt-get update && apt-get install -y python{py_version} python{py_version}-venv \\",
+                "    && rm -rf /var/lib/apt/lists/*",
+                "",
+            ])
+
+        # Set environment variables
+        if self.container_config.environment:
+            for key, value in self.container_config.environment.items():
+                lines.append(f"ENV {key}={value}")
+            lines.append("")
+
+        # Create user
+        lines.extend([
+            "RUN useradd -m -s /bin/bash user",
+            "USER user",
+            "",
+        ])
+
+        return "\n".join(lines)
+
     def build_image(self, rebuild: bool = False) -> bool:
         """Build the container image."""
-        return self.builder.build(rebuild=rebuild)
+        # Get build directory from storage
+        build_dir = self.storage.get_container_path("build")
+        build_dir.mkdir(parents=True, exist_ok=True)
+
+        # Generate Dockerfile
+        dockerfile_path = build_dir / "Dockerfile"
+        dockerfile_content = self._generate_dockerfile()
+        dockerfile_path.write_text(dockerfile_content)
+
+        # Build arguments from config
+        build_args = {}
+        if self.container_config.environment:
+            build_args.update(self.container_config.environment)
+
+        # Build the image
+        return self.builder.build(
+            dockerfile=str(dockerfile_path),
+            tag=self.full_image,
+            context=str(build_dir),
+            build_args=build_args,
+            stream_output=True,
+        )
 
     def start(self, force_rebuild: bool = False) -> bool:
         """Start the container, building if necessary."""
