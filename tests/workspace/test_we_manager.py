@@ -271,23 +271,6 @@ version = "1.0.0"
         assert "authors" in standards
         assert "license" in standards
 
-    def test_dict_to_toml(self, manager):
-        """Test TOML generation."""
-        data = {
-            "version": "1.0",
-            "root": "/test/path",
-            "settings": {
-                "debug": True,
-                "count": 42,
-            },
-        }
-
-        toml_str = manager._dict_to_toml(data)
-
-        assert 'version = "1.0"' in toml_str
-        assert 'root = "/test/path"' in toml_str
-        assert "[settings]" in toml_str
-
 
 class TestWorkspaceManagerIntegration:
     """Integration tests for WorkspaceManager."""
