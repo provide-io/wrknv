@@ -85,7 +85,8 @@
       "Bash(ruff format:*)",
       "Bash(curl:*)",
       "Bash(tar:*)",
-      "Bash(unzip:*)"
+      "Bash(unzip:*)",
+      "Bash(awk:*)"
     ],
     "deny": [],
     "additionalDirectories": [
