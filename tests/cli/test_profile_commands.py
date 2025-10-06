@@ -108,11 +108,11 @@ project_name = "test-project"
 
     def test_profile_load_success(self) -> None:
         """Test successfully loading a profile."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             with patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
-                mock_config_class.return_value = mock_config
+                mock_load.return_value = mock_config
 
                 mock_manager = Mock()
                 mock_manager.install_version.return_value = None
@@ -130,11 +130,11 @@ project_name = "test-project"
 
     def test_profile_load_partial_failure(self) -> None:
         """Test loading a profile when some tools fail to install."""
-        with patch("wrknv.cli.commands.profile.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.profile.WorkenvConfig.load") as mock_load:
             with patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
-                mock_config_class.return_value = mock_config
+                mock_load.return_value = mock_config
 
                 # First tool succeeds, second fails
                 mock_manager = Mock()
