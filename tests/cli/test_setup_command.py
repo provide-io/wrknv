@@ -147,7 +147,7 @@ alias wrknv-activate='source env.sh'
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0)
 
-        result = self.runner.invoke(workenv_cli, ["setup", "--init", "--shell-integration"])
+        result = self.runner.invoke(self.cli, ["setup", "--init", "--shell-integration"])
 
         assert result.exit_code == 0
         assert "Setting up wrknv workenv" in result.output
@@ -212,7 +212,7 @@ alias wrknv-activate='source env.sh'
             bashrc = self.temp_path / ".bashrc"
             bashrc.touch()
 
-            result = self.runner.invoke(workenv_cli, ["setup", "--completions", "bash", "--install"])
+            result = self.runner.invoke(self.cli, ["setup", "--completions", "bash", "--install"])
 
             assert result.exit_code == 0
             assert "Installed bash completions" in result.output
@@ -238,22 +238,19 @@ class TestSetupCommandIntegration(FoundationTestCase):
         with patch("pathlib.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
 
-            with patch("wrknv.wenv.cli.uv_available") as mock_uv:
-                mock_uv.return_value = True
+            result = self.runner.invoke(self.cli, ["setup", "--init"])
 
-                result = self.runner.invoke(self.cli, ["setup", "--init"])
+            if result.exit_code == 0:
+                # Check that workenv directory was created
+                workenv_dir = self.temp_path / "workenv"
+                assert workenv_dir.exists()
 
-                if result.exit_code == 0:
-                    # Check that workenv directory was created
-                    workenv_dir = self.temp_path / "workenv"
-                    assert workenv_dir.exists()
-
-                    # Check for expected subdirectories
-                    expected_dirs = ["bin", "lib", "include"]
-                    for dir_name in expected_dirs:
-                        dir_path = workenv_dir / dir_name
-                        if dir_path.exists():
-                            assert dir_path.is_dir()
+                # Check for expected subdirectories
+                expected_dirs = ["bin", "lib", "include"]
+                for dir_name in expected_dirs:
+                    dir_path = workenv_dir / dir_name
+                    if dir_path.exists():
+                        assert dir_path.is_dir()
 
 
 if __name__ == "__main__":
