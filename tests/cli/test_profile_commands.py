@@ -44,7 +44,7 @@ project_name = "test-project"
             result = self.runner.invoke(self.cli, ["profile", "list"])
 
             assert result.exit_code == 0
-            assert "Available profiles:" in result.output
+            assert "No profiles found" in result.output
 
     def test_profile_list_with_profiles(self) -> None:
         """Test listing profiles when they exist."""
