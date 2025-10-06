@@ -13,6 +13,7 @@ Comprehensive tests for the ContainerManager class.
 
 import shutil
 import subprocess
+from pathlib import Path
 from unittest.mock import Mock, patch
 
 from wrknv.container.manager import ContainerManager
