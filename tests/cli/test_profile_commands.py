@@ -86,7 +86,7 @@ project_name = "test-project"
             mock_config_class.return_value = mock_config
 
             # Should prompt for confirmation
-            result = self.runner.invoke(workenv_cli, ["profile-save", "dev", "--force"], input="y\n")
+            result = self.runner.invoke(self.cli, ["profile-save", "dev", "--force"], input="y\n")
 
             assert result.exit_code == 0
             mock_config.save_profile.assert_called_once()
@@ -157,7 +157,7 @@ project_name = "test-project"
             mock_config_class.return_value = mock_config
 
             result = self.runner.invoke(
-                workenv_cli,
+                self.cli,
                 ["profile-delete", "dev"],
                 input="y\n",  # Confirm deletion
             )
@@ -191,7 +191,7 @@ project_name = "test-project"
             output_file = self.temp_path / "profile.toml"
 
             result = self.runner.invoke(
-                workenv_cli, ["profile", "export", "dev", "--output", str(output_file)]
+                self.cli, ["profile", "export", "dev", "--output", str(output_file)]
             )
 
             assert result.exit_code == 0
@@ -215,7 +215,7 @@ project_name = "test-project"
             mock_config.save_profile.return_value = None
             mock_config_class.return_value = mock_config
 
-            result = self.runner.invoke(workenv_cli, ["profile", "import", str(profile_file)])
+            result = self.runner.invoke(self.cli, ["profile", "import", str(profile_file)])
 
             assert result.exit_code == 0
             assert "Imported profile 'imported'" in result.output

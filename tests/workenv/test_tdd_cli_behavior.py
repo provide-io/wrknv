@@ -13,10 +13,10 @@ import pytest
 
 # These will fail initially - expected in TDD
 try:
-    from wrknv.cli.hub_cli import workenv_cli
+    from wrknv.cli.hub_cli import create_cli
     from wrknv.wenv.config import WorkenvConfig
 except ImportError:
-    workenv_cli = Mock()
+    create_cli = Mock()
     WorkenvConfig = Mock()
 
 
@@ -35,7 +35,7 @@ class TestWorkenvCLIBehavior:
             mock_instance = Mock()
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ["tf", "1.6.2"])
+            result = self.runner.invoke(create_cli(), ["tf", "1.6.2"])
 
             # Should succeed
             if result.exit_code != 0:
@@ -58,7 +58,7 @@ class TestWorkenvCLIBehavior:
             mock_instance = Mock()
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ["tf", "--latest"])
+            result = self.runner.invoke(create_cli(), ["tf", "--latest"])
 
             assert result.exit_code == 0
             mock_instance.install_latest.assert_called_once_with(dry_run=False)
@@ -79,7 +79,7 @@ class TestWorkenvCLIBehavior:
             mock_instance.list_versions = mock_list_versions
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ["tf", "--list"])
+            result = self.runner.invoke(create_cli(), ["tf", "--list"])
 
             assert result.exit_code == 0
             assert "1.6.2" in result.output
@@ -99,7 +99,7 @@ class TestWorkenvCLIBehavior:
             }
             mock_config.return_value = mock_config_instance
 
-            result = self.runner.invoke(workenv_cli, ["status"])
+            result = self.runner.invoke(create_cli(), ["status"])
 
             assert result.exit_code == 0
             # The new output uses a Rich table format, not plain text
@@ -121,7 +121,7 @@ class TestWorkenvCLIBehavior:
                 mock_tofu_manager = Mock()
                 mock_factory.side_effect = [mock_tf_manager, mock_tofu_manager]
 
-                result = self.runner.invoke(workenv_cli, ["sync"])
+                result = self.runner.invoke(create_cli(), ["sync"])
 
                 assert result.exit_code == 0
                 mock_tf_manager.install_version.assert_called_once_with("1.5.7", dry_run=False)
@@ -135,7 +135,7 @@ class TestWorkenvCLIBehavior:
             mock_instance = Mock()
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ["tf", "--terraform", "1.5.7", "--dry-run"])
+            result = self.runner.invoke(create_cli(), ["tf", "--terraform", "1.5.7", "--dry-run"])
 
             assert result.exit_code == 0
             mock_instance.install_version.assert_called_once_with("1.5.7", dry_run=True)

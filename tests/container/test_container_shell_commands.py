@@ -469,22 +469,22 @@ class TestCLIIntegration:
 
     def test_cli_enter_command(self, runner, mock_config, mock_container_manager):
         """Test CLI enter command."""
-        from wrknv.cli.hub_cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import create_cli
 
-        result = runner.invoke(cli, ["container", "enter"])
+        result = runner.invoke(create_cli(), ["container", "enter"])
 
         assert result.exit_code == 0
         mock_container_manager.enter.assert_called_once()
 
     def test_cli_exec_command(self, runner, mock_config, mock_container_manager):
         """Test CLI exec command."""
-        from wrknv.cli.hub_cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import create_cli
 
         # Mock exec_in_container at the source
         with patch("wrknv.container.shell_commands.exec_in_container") as mock_exec:
             mock_exec.return_value = Mock(returncode=0, stdout="exec output", stderr="")
 
-            result = runner.invoke(cli, ["container", "exec", "--", "ls", "-la"])
+            result = runner.invoke(create_cli(), ["container", "exec", "--", "ls", "-la"])
 
             if result.exit_code != 0:
                 print(f"Error: {result.output}")
@@ -494,18 +494,18 @@ class TestCLIIntegration:
 
     def test_cli_logs_command(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command."""
-        from wrknv.cli.hub_cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import create_cli
 
-        result = runner.invoke(cli, ["container", "logs"])
+        result = runner.invoke(create_cli(), ["container", "logs"])
 
         assert result.exit_code == 0
         mock_container_manager.logs.assert_called_once()
 
     def test_cli_logs_with_options(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command with options."""
-        from wrknv.cli.hub_cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import create_cli
 
-        result = runner.invoke(cli, ["container", "logs", "--tail", "50", "--timestamps"])
+        result = runner.invoke(create_cli(), ["container", "logs", "--tail", "50", "--timestamps"])
 
         assert result.exit_code == 0
         # Check that options were passed through
@@ -515,7 +515,7 @@ class TestCLIIntegration:
 
     def test_cli_stats_command(self, runner, mock_config, mock_container_manager):
         """Test CLI stats command."""
-        from wrknv.cli.hub_cli import workenv_cli as cli
+        from wrknv.cli.hub_cli import create_cli
 
         # Mock get_container_stats at the source
         with patch("wrknv.container.shell_commands.get_container_stats") as mock_stats:
