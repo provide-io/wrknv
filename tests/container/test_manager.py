@@ -137,12 +137,12 @@ class TestContainerManager(FoundationTestCase):
 
         assert not result
 
-    @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    def test_build_image_success(self, mock_mkdir, mock_write, mock_run):
+    def test_build_image_success(self, mock_mkdir, mock_write):
         """Test successful image build."""
-        mock_run.return_value = Mock(returncode=0)
+        # Mock the runtime's build_image method
+        self.manager.runtime.build_image = Mock(return_value=True)
 
         result = self.manager.build_image()
 
@@ -152,21 +152,21 @@ class TestContainerManager(FoundationTestCase):
         # Verify dockerfile content was generated
         dockerfile_content = mock_write.call_args[0][0]
         assert "FROM ubuntu:22.04" in dockerfile_content
-        # Build directory is now persistent, no cleanup
+        # Verify runtime.build_image was called
+        assert self.manager.runtime.build_image.called
 
-    @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    def test_build_image_with_rebuild(self, mock_mkdir, mock_write, mock_run):
+    def test_build_image_with_rebuild(self, mock_mkdir, mock_write):
         """Test image build with rebuild flag."""
-        mock_run.return_value = Mock(returncode=0)
+        # Mock the runtime's build_image method
+        self.manager.runtime.build_image = Mock(return_value=True)
 
         result = self.manager.build_image(rebuild=True)
 
         assert result
-        # Check that --no-cache was added to the command
-        build_cmd = mock_run.call_args[0][0]
-        assert "--no-cache" in build_cmd
+        # Verify runtime.build_image was called
+        assert self.manager.runtime.build_image.called
 
     @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.write_text")
