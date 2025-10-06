@@ -158,7 +158,7 @@ class TestWorkenvProfileManagement:
             mock_config_instance.get_all_tools.return_value = {}
             mock_config.return_value = mock_config_instance
 
-            result = self.runner.invoke(workenv_cli, ["profile", "save", "dev"])
+            result = self.runner.invoke(create_cli(), ["profile", "save", "dev"])
 
             if result.exit_code != 0:
                 print(f"Exit code: {result.exit_code}")
@@ -181,7 +181,7 @@ class TestWorkenvProfileManagement:
                 mock_tofu_manager = Mock()
                 mock_factory.side_effect = [mock_tf_manager, mock_tofu_manager]
 
-                result = self.runner.invoke(workenv_cli, ["profile", "load", "dev"])
+                result = self.runner.invoke(create_cli(), ["profile", "load", "dev"])
 
                 assert result.exit_code == 0
                 mock_tf_manager.install_version.assert_called_once_with("1.5.7", dry_run=False)
@@ -196,7 +196,7 @@ class TestWorkenvProfileManagement:
             mock_config_instance.list_profiles.return_value = ["dev", "prod", "testing"]
             mock_config.return_value = mock_config_instance
 
-            result = self.runner.invoke(workenv_cli, ["profile", "list"])
+            result = self.runner.invoke(create_cli(), ["profile", "list"])
 
             assert result.exit_code == 0
             assert "dev" in result.output
@@ -219,7 +219,7 @@ class TestWorkenvErrorHandling:
             mock_instance.install_version.side_effect = ValueError("Invalid version: invalid")
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ["tf", "--terraform", "invalid"])
+            result = self.runner.invoke(create_cli(), ["tf", "--terraform", "invalid"])
 
             assert result.exit_code != 0
             assert "Invalid version" in result.output
@@ -233,7 +233,7 @@ class TestWorkenvErrorHandling:
             mock_instance.install_version.side_effect = ConnectionError("Network unreachable")
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ["tf", "--terraform", "1.5.7"])
+            result = self.runner.invoke(create_cli(), ["tf", "--terraform", "1.5.7"])
 
             assert result.exit_code != 0
             assert "network" in result.output.lower() or "connection" in result.output.lower()
@@ -247,7 +247,7 @@ class TestWorkenvErrorHandling:
             mock_instance.install_version.side_effect = PermissionError("Permission denied")
             mock_factory.return_value = mock_instance
 
-            result = self.runner.invoke(workenv_cli, ["tf", "--terraform", "1.5.7"])
+            result = self.runner.invoke(create_cli(), ["tf", "--terraform", "1.5.7"])
 
             assert result.exit_code != 0
             assert "permission" in result.output.lower()
@@ -268,7 +268,7 @@ class TestWorkenvConfiguration:
             mock_config_instance.show_config.return_value = None  # Prints to console
             mock_config.return_value = mock_config_instance
 
-            result = self.runner.invoke(workenv_cli, ["config", "show"])
+            result = self.runner.invoke(create_cli(), ["config", "show"])
 
             assert result.exit_code == 0
             mock_config_instance.show_config.assert_called_once()
@@ -281,7 +281,7 @@ class TestWorkenvConfiguration:
             mock_config_instance = Mock()
             mock_config.return_value = mock_config_instance
 
-            result = self.runner.invoke(workenv_cli, ["config", "edit"])
+            result = self.runner.invoke(create_cli(), ["config", "edit"])
 
             assert result.exit_code == 0
             mock_config_instance.edit_config.assert_called_once()
