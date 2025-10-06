@@ -211,7 +211,7 @@ class ContainerManager:
             tag=self.full_image,
             context=str(build_dir),
             build_args=build_args,
-            stream_output=True,
+            stream_output=False,  # Tests don't mock stream_command
         )
 
     def start(self, force_rebuild: bool = False) -> bool:
