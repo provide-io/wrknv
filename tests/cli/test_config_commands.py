@@ -90,11 +90,11 @@ class TestConfigCommands(FoundationTestCase):
         """Test editing config file with default editor."""
         self.config_file.write_text('project_name = "test-project"')
 
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.edit_config.return_value = None
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "edit"])
 
@@ -105,7 +105,7 @@ class TestConfigCommands(FoundationTestCase):
         """Test editing config when no EDITOR is set."""
         self.config_file.write_text('project_name = "test-project"')
 
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             with patch.dict(os.environ, {}, clear=True):
                 # Remove EDITOR from environment
                 if "EDITOR" in os.environ:
@@ -116,7 +116,7 @@ class TestConfigCommands(FoundationTestCase):
                 mock_config.edit_config.side_effect = RuntimeError(
                     "No editor configured. Set EDITOR or VISUAL environment variable."
                 )
-                mock_config_class.return_value = mock_config
+                mock_load.return_value = mock_config
 
                 result = self.runner.invoke(self.cli, ["config", "edit"])
 
@@ -125,14 +125,14 @@ class TestConfigCommands(FoundationTestCase):
 
     def test_config_edit_creates_file_if_missing(self) -> None:
         """Test that edit creates a config file if it doesn't exist."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             with patch("provide.foundation.process.run_command") as mock_run:
                 with patch.dict(os.environ, {"EDITOR": "nano"}):
                     mock_config = Mock()
                     mock_config.get_config_path.return_value = self.config_file
                     mock_config.config_exists.return_value = False
                     mock_config.edit_config.return_value = None
-                    mock_config_class.return_value = mock_config
+                    mock_load.return_value = mock_config
                     mock_run.return_value = Mock(returncode=0)
 
                     result = self.runner.invoke(self.cli, ["config", "edit"])
@@ -150,11 +150,11 @@ version = "1.0.0"
 terraform = { version = "1.5.0" }
 """)
 
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.validate.return_value = (True, [])
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "validate"])
 
@@ -168,14 +168,14 @@ terraform = { version = "1.5.0" }
 version = "1.0.0"
 """)
 
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.validate.return_value = (
                 False,
                 ["Missing required field: project_name", "Invalid version format"],
             )
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "validate"])
 
@@ -185,11 +185,11 @@ version = "1.0.0"
 
     def test_config_init(self) -> None:
         """Test initializing a new configuration file."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.config_exists.return_value = False
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "init"], input="my-project\n1.0.0\nINFO\n")
 
@@ -200,11 +200,11 @@ version = "1.0.0"
         """Test initializing when config already exists."""
         self.config_file.write_text('project_name = "existing"')
 
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.config_exists.return_value = True
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "init"])
 
@@ -225,10 +225,10 @@ version = "1.0.0"
 
     def test_config_set_setting(self) -> None:
         """Test setting a configuration value."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.set_setting.return_value = True
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "set", "log_level", "DEBUG"])
 
@@ -238,10 +238,10 @@ version = "1.0.0"
 
     def test_config_path(self) -> None:
         """Test showing configuration file path."""
-        with patch("wrknv.cli.commands.config.WorkenvConfig") as mock_config_class:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
-            mock_config_class.return_value = mock_config
+            mock_load.return_value = mock_config
 
             result = self.runner.invoke(self.cli, ["config", "path"])
 
