@@ -262,7 +262,7 @@ class WorkspaceSync:
             self.template_generator.generate_claude_md(test_context)
             self.template_generator.generate_gitignore(test_context)
 
-            logger.success("✅ All templates validated")
+            logger.info("✅ All templates validated")
             return True
 
         except Exception as e:

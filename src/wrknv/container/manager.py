@@ -113,8 +113,8 @@ class ContainerManager:
 
         self.volumes = VolumeManager(
             runtime=self.runtime,
-            container_name=self.container_name,
             console=self.console,
+            backup_dir=self.storage.get_container_path("backups"),
         )
 
     # Convenience methods that delegate to operations

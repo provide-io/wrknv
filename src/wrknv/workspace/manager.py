@@ -70,7 +70,7 @@ class WorkspaceManager:
         # Save configuration
         self.save_config(config)
 
-        logger.success("✅ Workspace initialized", repos=len(repos))
+        logger.info("✅ Workspace initialized", repos=len(repos))
         return config
 
     def load_config(self) -> WorkspaceConfig | None:
@@ -131,7 +131,7 @@ class WorkspaceManager:
         updated_config = config.add_repo(repo_config)
         self.save_config(updated_config)
 
-        logger.success("✅ Repository added to workspace", name=repo_config.name)
+        logger.info("✅ Repository added to workspace", name=repo_config.name)
         return updated_config
 
     def remove_repo(self, name: str) -> WorkspaceConfig:
@@ -143,7 +143,7 @@ class WorkspaceManager:
         updated_config = config.remove_repo(name)
         self.save_config(updated_config)
 
-        logger.success("✅ Repository removed from workspace", name=name)
+        logger.info("✅ Repository removed from workspace", name=name)
         return updated_config
 
     async def sync_all(self, dry_run: bool = False) -> dict[str, Any]:
