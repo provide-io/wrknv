@@ -211,7 +211,7 @@ class EnvironmentConfigSource(ConfigSource):
 
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
-        from provide.foundation.utils.parsing import parse_bool
+        from provide.foundation.parsers.primitives import parse_bool
 
         env_var = f"{self.prefix}_{key.upper()}"
         value = os.environ.get(env_var)
