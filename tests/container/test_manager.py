@@ -21,6 +21,14 @@ from wrknv.container.operations.lifecycle import ContainerLifecycle
 from wrknv.container.runtime.docker import DockerRuntime
 from wrknv.wenv.schema import WorkenvConfig
 
+# Test utilities
+import sys
+from pathlib import Path
+
+# Add tests directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from utils.fixtures import create_mock_builder, create_mock_logs
+
 
 @pytest.mark.container
 class TestContainerManager(FoundationTestCase):
