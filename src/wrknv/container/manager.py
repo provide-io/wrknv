@@ -386,8 +386,41 @@ class ContainerManager:
             return False
 
     def clean_volumes(self, preserve: list[str] | None = None) -> bool:
-        """Clean up container volumes."""
-        return self.volumes.clean(preserve=preserve)
+        """Clean up container volumes.
+
+        Args:
+            preserve: List of volume names to preserve
+
+        Returns:
+            True if successful
+        """
+        import shutil
+
+        try:
+            volumes_dir = self.storage.get_container_path("volumes")
+
+            if not volumes_dir.exists():
+                return True
+
+            # Clean each volume directory
+            for volume_path in volumes_dir.iterdir():
+                if volume_path.is_dir():
+                    # Check if should be preserved
+                    if preserve and volume_path.name in preserve:
+                        logger.debug("Preserving volume", volume=volume_path.name)
+                        continue
+
+                    # Remove volume contents
+                    shutil.rmtree(volume_path)
+                    # Recreate empty directory
+                    volume_path.mkdir(exist_ok=True)
+                    logger.info("🗑️ Cleaned volume", volume=volume_path.name)
+
+            return True
+
+        except Exception as e:
+            logger.error("Failed to clean volumes", error=str(e))
+            return False
 
     def get_logs(
         self,
