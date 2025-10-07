@@ -78,6 +78,7 @@ class ContainerStorage:
             return self.container_config.volume_mappings.copy()
 
         # Default volume mappings
+        storage_base = Path(self.container_config.storage_path).expanduser()
         volumes_base = self.get_container_path("volumes")
         mappings = {}
 
@@ -86,6 +87,10 @@ class ContainerStorage:
             host_path = volumes_base / volume_name
             container_path = f"/wrknv/{volume_name}"
             mappings[str(host_path)] = container_path
+
+        # Map shared downloads (read-only)
+        shared_downloads = storage_base / "shared" / "downloads"
+        mappings[str(shared_downloads)] = "/downloads:ro"
 
         # Add current working directory mapping
         mappings[str(Path.cwd())] = "/workspace"
