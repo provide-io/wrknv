@@ -201,7 +201,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             "-c",
             "echo 'trying to write' > /downloads/should_fail.txt",
         ]
-        result = run_command(cmd, capture_output=True, text=True)
+        result = run_command(cmd, capture_output=True, text=True, check=False)
         assert result.returncode != 0, "Should not be able to write to read-only mount"
         assert "Read-only file system" in result.stderr or "Permission denied" in result.stderr
 
