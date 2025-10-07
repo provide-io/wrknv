@@ -120,55 +120,55 @@ class TestContainerVolumeIntegration(FoundationTestCase):
 
         time.sleep(2)
 
-        # Write data to volumes
+        # Write data to volumes (use writable paths in container)
         test_data = {"test": "persistence", "timestamp": time.time()}
 
-        # Write to workspace volume
+        # Write to workspace volume (/wrknv/workspace is mounted)
         cmd = [
             "docker",
             "exec",
             container_manager.container_name,
             "sh",
             "-c",
-            f"echo '{json.dumps(test_data)}' > /workspace/persistent.json",
+            f"echo '{json.dumps(test_data)}' > /wrknv/workspace/persistent.json",
         ]
         result = run_command(cmd, capture_output=True)
-        assert result.returncode == 0
+        assert result.returncode == 0, f"Failed to write to workspace: {result.stderr}"
 
-        # Write to cache volume
+        # Write to cache volume (/wrknv/cache is mounted)
         cmd = [
             "docker",
             "exec",
             container_manager.container_name,
             "sh",
             "-c",
-            "echo 'cached data' > /home/user/.cache/data.txt",
+            "echo 'cached data' > /wrknv/cache/data.txt",
         ]
         result = run_command(cmd, capture_output=True)
-        assert result.returncode == 0
+        assert result.returncode == 0, f"Failed to write to cache: {result.stderr}"
 
         # Stop container
         assert container_manager.stop()
 
         # Verify data still exists on host
-        workspace_file = container_manager.get_container_path("volumes/workspace/persistent.json")
-        cache_file = container_manager.get_container_path("volumes/cache/data.txt")
+        workspace_file = container_manager.storage.get_container_path("volumes/workspace/persistent.json")
+        cache_file = container_manager.storage.get_container_path("volumes/cache/data.txt")
 
-        assert workspace_file.exists()
-        assert cache_file.exists()
+        assert workspace_file.exists(), f"Workspace file not found: {workspace_file}"
+        assert cache_file.exists(), f"Cache file not found: {cache_file}"
 
         # Restart container
         assert container_manager.start()
         time.sleep(2)
 
-        # Read data from restarted container
-        cmd = ["docker", "exec", container_manager.container_name, "cat", "/workspace/persistent.json"]
+        # Read data from restarted container (use mounted volume path)
+        cmd = ["docker", "exec", container_manager.container_name, "cat", "/wrknv/workspace/persistent.json"]
         result = run_command(cmd, capture_output=True, text=True)
-        assert result.returncode == 0
+        assert result.returncode == 0, f"Failed to read from workspace: {result.stderr}"
 
         # Verify data matches
         retrieved_data = json.loads(result.stdout)
-        assert retrieved_data == test_data
+        assert retrieved_data == test_data, "Data should persist across restarts"
 
     def test_shared_downloads_readonly(self, container_manager):
         """Test that shared downloads is mounted as read-only."""
