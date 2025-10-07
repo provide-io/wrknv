@@ -357,5 +357,46 @@ class TfManager(BaseToolManager):
         """Copy all active tf binaries to workenv bin directory."""
         copy_tf_binaries_to_workenv(self.workenv_bin_dir, self.config)
 
+    def switch_version(self, version: str, dry_run: bool = False) -> None:
+        """Switch to a specific version (like nvm use, tfswitch).
+
+        This method:
+        1. Installs the version if not present
+        2. Updates workenv by copying binaries to venv bin
+        3. Sets active version in metadata
+        4. Regenerates env.sh script
+
+        Args:
+            version: Version to switch to
+            dry_run: If True, show what would be done without doing it
+        """
+        if dry_run:
+            logger.info(f"[DRY-RUN] Would switch to {self.tool_name} {version}")
+            if not self.get_binary_path(version).exists():
+                logger.info(f"[DRY-RUN] Would install {self.tool_name} {version}")
+            return
+
+        # 1. Install if not present
+        if not self.get_binary_path(version).exists():
+            logger.info(f"Installing {self.tool_name} {version}...")
+            self.install_version(version, dry_run=False)
+
+        # 2. Activate in workenv (copies binaries to venv bin)
+        self.create_symlink(version)
+
+        # 3. Regenerate env script
+        try:
+            from wrknv.wenv.env_generator import create_project_env_scripts
+
+            project_dir = pathlib.Path.cwd()
+            # Only regenerate if we're in a project directory
+            if (project_dir / "pyproject.toml").exists() or (project_dir / "wrknv.toml").exists():
+                create_project_env_scripts(project_dir)
+                logger.debug("Regenerated env.sh with new version")
+        except Exception as e:
+            logger.debug(f"Could not regenerate env.sh: {e}")
+
+        logger.info(f"Switched to {self.tool_name} {version}")
+
 
 # 🍲🥄📄🪄
