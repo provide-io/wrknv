@@ -108,8 +108,11 @@ class TestContainerManager(FoundationTestCase):
     @patch("pathlib.Path.mkdir")
     def test_build_image_success(self, mock_mkdir, mock_write) -> None:
         """Test successful image build."""
-        # Mock the runtime's build_image method
-        self.manager.runtime.build_image = Mock(return_value=True)
+        # Replace the entire builder with a mock (attrs objects are read-only)
+        from tests.utils.fixtures import create_mock_builder
+
+        mock_builder = create_mock_builder()
+        self.manager.builder = mock_builder
 
         result = self.manager.build_image()
 
@@ -119,21 +122,24 @@ class TestContainerManager(FoundationTestCase):
         # Verify dockerfile content was generated
         dockerfile_content = mock_write.call_args[0][0]
         assert "FROM ubuntu:22.04" in dockerfile_content
-        # Verify runtime.build_image was called
-        assert self.manager.runtime.build_image.called
+        # Verify builder.build was called
+        mock_builder.build.assert_called_once()
 
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
     def test_build_image_with_rebuild(self, mock_mkdir, mock_write) -> None:
         """Test image build with rebuild flag."""
-        # Mock the runtime's build_image method
-        self.manager.runtime.build_image = Mock(return_value=True)
+        # Replace the entire builder with a mock (attrs objects are read-only)
+        from tests.utils.fixtures import create_mock_builder
+
+        mock_builder = create_mock_builder()
+        self.manager.builder = mock_builder
 
         result = self.manager.build_image(rebuild=True)
 
         assert result
-        # Verify runtime.build_image was called
-        assert self.manager.runtime.build_image.called
+        # Verify builder.build was called
+        mock_builder.build.assert_called_once()
 
     @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.write_text")
@@ -357,9 +363,7 @@ class TestContainerManager(FoundationTestCase):
 
         self.manager.get_logs(follow=False, lines=10)
 
-        mock_run.assert_called_once_with(
-            ["docker", "logs", "--tail", "10", "test-project-dev"], check=True
-        )
+        mock_run.assert_called_once_with(["docker", "logs", "--tail", "10", "test-project-dev"], check=True)
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_exists")
