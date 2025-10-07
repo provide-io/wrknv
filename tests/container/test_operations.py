@@ -22,7 +22,7 @@ from wrknv.wenv.schema import WorkenvConfig
 @pytest.mark.container
 class TestContainerManager(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.build_image")
-    def test_build_container(self, mock_build_image):
+    def test_build_container(self, mock_build_image) -> None:
         # Arrange
         mock_build_image.return_value = True
         config = WorkenvConfig(project_name="test-project")
@@ -35,7 +35,7 @@ class TestContainerManager(FoundationTestCase):
         mock_build_image.assert_called_once_with(rebuild=True)
 
     @patch("wrknv.container.manager.ContainerManager.start")
-    def test_start_container(self, mock_start):
+    def test_start_container(self, mock_start) -> None:
         # Arrange
         mock_start.return_value = True
         config = WorkenvConfig(project_name="test-project")
@@ -48,7 +48,7 @@ class TestContainerManager(FoundationTestCase):
         mock_start.assert_called_once_with(force_rebuild=True)
 
     @patch("wrknv.container.manager.ContainerManager.enter")
-    def test_enter_container(self, mock_enter):
+    def test_enter_container(self, mock_enter) -> None:
         # Arrange
         config = WorkenvConfig(project_name="test-project")
 
@@ -61,7 +61,7 @@ class TestContainerManager(FoundationTestCase):
         )
 
     @patch("wrknv.container.manager.ContainerManager.stop")
-    def test_stop_container(self, mock_stop):
+    def test_stop_container(self, mock_stop) -> None:
         # Arrange
         mock_stop.return_value = True
         config = WorkenvConfig(project_name="test-project")
@@ -74,7 +74,7 @@ class TestContainerManager(FoundationTestCase):
         mock_stop.assert_called_once_with()
 
     @patch("wrknv.container.manager.ContainerManager.restart")
-    def test_restart_container(self, mock_restart):
+    def test_restart_container(self, mock_restart) -> None:
         # Arrange
         mock_restart.return_value = True
         config = WorkenvConfig(project_name="test-project")
@@ -87,7 +87,7 @@ class TestContainerManager(FoundationTestCase):
         mock_restart.assert_called_once_with()
 
     @patch("wrknv.container.manager.ContainerManager.status")
-    def test_container_status(self, mock_status):
+    def test_container_status(self, mock_status) -> None:
         # Arrange
         mock_status.return_value = {
             "docker_available": True,
@@ -104,8 +104,8 @@ class TestContainerManager(FoundationTestCase):
         # Assert
         mock_status.assert_called_once_with()
 
-    @patch("wrknv.container.manager.ContainerManager.logs")
-    def test_container_logs(self, mock_logs):
+    @patch("wrknv.container.operations.logs.ContainerLogs.get_logs")
+    def test_container_logs(self, mock_get_logs) -> None:
         # Arrange
         config = WorkenvConfig(project_name="test-project")
 
@@ -113,10 +113,11 @@ class TestContainerManager(FoundationTestCase):
         container_logs(config, follow=True, tail=100)
 
         # Assert
-        mock_logs.assert_called_once_with(follow=True, tail=100, since=None, timestamps=False, details=False)
+        # Note: details parameter is not passed to get_logs
+        mock_get_logs.assert_called_once_with(follow=True, tail=100, since=None, timestamps=False)
 
     @patch("wrknv.container.manager.ContainerManager.clean")
-    def test_clean_container(self, mock_clean):
+    def test_clean_container(self, mock_clean) -> None:
         # Arrange
         mock_clean.return_value = True
         config = WorkenvConfig(project_name="test-project")
@@ -131,7 +132,7 @@ class TestContainerManager(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.start")
     @patch("wrknv.container.manager.ContainerManager.build_image")
     @patch("wrknv.container.manager.ContainerManager.clean")
-    def test_rebuild_container(self, mock_clean, mock_build_image, mock_start):
+    def test_rebuild_container(self, mock_clean, mock_build_image, mock_start) -> None:
         # Arrange
         mock_clean.return_value = True
         mock_build_image.return_value = True

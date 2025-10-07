@@ -23,7 +23,7 @@ class TestDockerRuntime(FoundationTestCase):
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_run_container(self, mock_run):
+    def test_run_container(self, mock_run) -> None:
         """Test starting a new container."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "run"], returncode=0, stdout="abc123container", stderr=""
@@ -63,7 +63,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert "hello" in cmd
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_start_container(self, mock_run):
+    def test_start_container(self, mock_run) -> None:
         """Test starting an existing container."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "start"], returncode=0, stdout="test-container", stderr=""
@@ -75,18 +75,18 @@ class TestDockerRuntime(FoundationTestCase):
         mock_run.assert_called_once_with(["docker", "start", "test-container"], check=True)
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_stop_container(self, mock_run):
+    def test_stop_container(self, mock_run) -> None:
         """Test stopping a container."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "stop"], returncode=0, stdout="test-container", stderr=""
         )
 
-        result = self.runtime.stop_container("test-container", timeout=15)
+        self.runtime.stop_container("test-container", timeout=15)
 
         mock_run.assert_called_once_with(["docker", "stop", "-t", "15", "test-container"], check=True)
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_container_exists_true(self, mock_run):
+    def test_container_exists_true(self, mock_run) -> None:
         """Test checking if container exists - found case."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "ps"], returncode=0, stdout="container1\ntest-container\ncontainer3", stderr=""
@@ -98,7 +98,7 @@ class TestDockerRuntime(FoundationTestCase):
         mock_run.assert_called_once_with(["docker", "ps", "-a", "--format", "{{.Names}}"], check=False)
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_container_exists_false(self, mock_run):
+    def test_container_exists_false(self, mock_run) -> None:
         """Test checking if container exists - not found case."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "ps"], returncode=0, stdout="container1\ncontainer2", stderr=""
@@ -109,7 +109,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert not exists
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_container_running(self, mock_run):
+    def test_container_running(self, mock_run) -> None:
         """Test checking if container is running."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "ps"], returncode=0, stdout="test-container\nother-container", stderr=""
@@ -121,7 +121,7 @@ class TestDockerRuntime(FoundationTestCase):
         mock_run.assert_called_once_with(["docker", "ps", "--format", "{{.Names}}"], check=False)
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_exec_in_container(self, mock_run):
+    def test_exec_in_container(self, mock_run) -> None:
         """Test executing command in container."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "exec"], returncode=0, stdout="command output", stderr=""
@@ -153,7 +153,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert "-la" in cmd
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_build_image(self, mock_run):
+    def test_build_image(self, mock_run) -> None:
         """Test building a Docker image."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "build"], returncode=0, stdout="Successfully built abc123", stderr=""
@@ -185,7 +185,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert "." in cmd
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_list_containers(self, mock_run):
+    def test_list_containers(self, mock_run) -> None:
         """Test listing containers."""
         mock_run.return_value = CompletedProcess(
             args=["docker", "ps"],
@@ -203,7 +203,7 @@ class TestDockerRuntime(FoundationTestCase):
         mock_run.assert_called_once_with(["docker", "ps", "--format", "json", "-a"], check=True)
 
     @patch("wrknv.container.runtime.docker.run_command")
-    def test_error_handling(self, mock_run):
+    def test_error_handling(self, mock_run) -> None:
         """Test error handling when command fails."""
         mock_run.side_effect = ProcessError(
             message="Error: No such container: nonexistent",
@@ -213,10 +213,10 @@ class TestDockerRuntime(FoundationTestCase):
             stderr="Error: No such container: nonexistent",
         )
 
-        with self.assertRaises(ProcessError) as ctx:
+        with pytest.raises(ProcessError) as exc_info:
             self.runtime.start_container("nonexistent")
 
-        assert "nonexistent" in str(ctx.exception)
+        assert "nonexistent" in str(exc_info.value)
 
 
 if __name__ == "__main__":

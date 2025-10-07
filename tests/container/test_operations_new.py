@@ -392,7 +392,7 @@ class TestVolumeManager(FoundationTestCase):
         )
 
         assert backup_file is not None
-        assert str(backup_file.startswith("/tmp/backups"))
+        assert str(backup_file).startswith("/tmp/backups")
         assert "test-volume" in str(backup_file)
         mock_run.assert_called_once()
         cmd = mock_run.call_args[0][0]

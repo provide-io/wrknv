@@ -119,12 +119,12 @@ def container_logs(
 ) -> None:
     """Show container logs."""
     manager = ContainerManager(config)
-    manager.logs(
+    # Note: details parameter is ignored for now
+    manager.logs.get_logs(
         follow=follow,
         tail=tail,
         since=since,
         timestamps=timestamps,
-        details=details,
     )
 
 
