@@ -178,8 +178,8 @@ class TestDynamicContainerConfiguration(FoundationTestCase):
             manager = ContainerManager(config)
             dockerfile = manager._generate_dockerfile()
 
+            # Check that Python version is installed (without -pip, just -venv)
             assert expected_package in dockerfile
-            assert f"{expected_package}-pip" in dockerfile
             assert f"{expected_package}-venv" in dockerfile
 
 
