@@ -327,17 +327,17 @@ def container_shell_command():
     "container.exec",
     description="Execute command in container",
 )
-def container_exec_command(command: str):
+def container_exec_command(cmd: str):
     """Execute a command in the container."""
     config = WorkenvConfig.load()
 
-    if not command:
+    if not cmd:
         echo_error("No command specified")
         echo_info("Usage: wrknv container exec 'command to run'")
         sys.exit(1)
 
     enter_container(
         config=config,
-        command=command.split(),
+        command=cmd.split(),
         auto_start=True,
     )
