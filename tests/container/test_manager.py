@@ -354,27 +354,37 @@ class TestContainerManager(FoundationTestCase):
         assert not status["docker_available"]
         assert not status["container_exists"]
 
-    @patch("provide.foundation.process.run_command")
-    @patch("wrknv.container.manager.ContainerManager.container_exists")
-    def test_logs_method(self, mock_exists, mock_run) -> None:
+    def test_logs_method(self) -> None:
         """Test getting container logs."""
-        mock_exists.return_value = True
-        mock_run.return_value = Mock(returncode=0, stdout="logs", stderr="")
+        # Replace logs component with mock
+        from tests.utils.fixtures import create_mock_logs
 
-        self.manager.get_logs(follow=False, lines=10)
+        mock_logs = create_mock_logs()
+        mock_logs.get_logs = Mock(return_value="test logs")
+        self.manager.logs = mock_logs
 
-        mock_run.assert_called_once_with(["docker", "logs", "--tail", "10", "test-project-dev"], check=True)
+        result = self.manager.get_logs(follow=False, lines=10)
 
-    @patch("provide.foundation.process.run_command")
-    @patch("wrknv.container.manager.ContainerManager.container_exists")
-    def test_logs_follow(self, mock_exists, mock_run) -> None:
+        assert result == "test logs"
+        mock_logs.get_logs.assert_called_once_with(
+            tail=10, follow=False, since=None, timestamps=False
+        )
+
+    def test_logs_follow(self) -> None:
         """Test following container logs."""
-        mock_exists.return_value = True
-        mock_run.return_value = Mock(returncode=0)
+        # Replace logs component with mock
+        from tests.utils.fixtures import create_mock_logs
 
-        self.manager.get_logs(follow=True)
+        mock_logs = create_mock_logs()
+        mock_logs.get_logs = Mock(return_value=None)  # follow returns None
+        self.manager.logs = mock_logs
 
-        mock_run.assert_called_once_with(["docker", "logs", "-f", "test-project-dev"], check=True)
+        result = self.manager.get_logs(follow=True)
+
+        assert result is None
+        mock_logs.get_logs.assert_called_once_with(
+            tail=None, follow=True, since=None, timestamps=False
+        )
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
