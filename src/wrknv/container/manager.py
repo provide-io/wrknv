@@ -191,10 +191,11 @@ class ContainerManager:
                 lines.append(f"ENV {key}={value}")
             lines.append("")
 
-        # Create user
+        # Create user and set ownership of workspace
         lines.extend(
             [
                 "RUN useradd -m -s /bin/bash user",
+                "RUN chown -R user:user /workspace",
                 "USER user",
                 "",
             ]
