@@ -23,8 +23,8 @@ from wrknv.wenv.visual import Emoji
 
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
 def tf_command(
-    variant_or_version: str,           # ARG 1: variant (tofu/ibm) OR version
-    version: str | None = None,        # ARG 2: version (if arg1 was variant)
+    variant_or_version: str | None = None,  # ARG 1: variant (tofu/ibm) OR version
+    version: str | None = None,             # ARG 2: version (if arg1 was variant)
     list: bool = False,
     list_variants: bool = False,
     dry_run: bool = False,
@@ -56,14 +56,24 @@ def tf_command(
         echo_info("  • ibm  - IBM Terraform (formerly HashiCorp)")
         return
 
+    # Get default variant for list/install operations
+    default_variant = config.get_setting("tools.tf.default_variant", "tofu")
+
     # Smart parsing: determine variant and version
-    if version is None:
+    if variant_or_version is None:
+        # No args: use default variant (only valid with --list)
+        if not list:
+            echo_error("Error: Version required. Use 'wrknv tf --list' to see available versions.")
+            sys.exit(1)
+        actual_variant = default_variant
+        actual_version = None
+    elif version is None:
         # Single arg: use default variant from config
-        default_variant = config.get_setting("tools.tf.default_variant", "tofu")
         actual_variant = default_variant
         actual_version = variant_or_version
 
-        echo_info(f"Using default variant: {actual_variant}")
+        if not list:
+            echo_info(f"Using default variant: {actual_variant}")
     else:
         # Two args: explicit variant specified
         actual_variant = variant_or_version
