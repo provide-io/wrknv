@@ -258,10 +258,12 @@ class TestVolumeManagement:
         workspace.mkdir(parents=True, exist_ok=True)
         (workspace / "project.txt").write_text("project data")
 
-        # Backup volumes - returns bool, not path
+        # Backup volumes - returns Path to backup file
         result = container_manager.backup_volumes()
 
-        assert result is True  # Backup succeeded
+        assert result is not None  # Backup succeeded
+        assert result.exists()  # Backup file exists
+        assert result.suffix == ".gz"  # Compressed backup
 
     def test_restore_volumes(self, container_manager, test_storage_path):
         """Test restoring container volumes from backup."""
@@ -386,26 +388,26 @@ class TestDockerIntegration:
 
     def test_clean_preserves_volumes_optionally(self, container_manager):
         """Test that clean can optionally preserve volumes."""
-        from tests.conftest import create_mock_lifecycle, create_mock_builder, create_mock_volumes
+        from tests.conftest import create_mock_lifecycle, create_mock_builder, create_mock_storage
 
         # Replace attrs dependencies with mocks
         mock_lifecycle = create_mock_lifecycle(exists=True, running=False)
         mock_lifecycle.remove = Mock(return_value=True)
         mock_builder = create_mock_builder()
-        mock_volumes = create_mock_volumes()
-        mock_volumes.clean = Mock(return_value=True)
+        mock_storage = create_mock_storage()
+        mock_storage.clean_storage = Mock(return_value=True)
 
         container_manager.lifecycle = mock_lifecycle
         container_manager.builder = mock_builder
-        container_manager.volumes = mock_volumes
+        container_manager.storage = mock_storage
 
-        # Clean calls volumes.clean
+        # Clean calls storage.clean_storage
         result = container_manager.clean()
 
         # Verify clean was called
         assert result
         mock_lifecycle.remove.assert_called()
-        mock_volumes.clean.assert_called()
+        mock_storage.clean_storage.assert_called()
 
 
 @pytest.mark.container
