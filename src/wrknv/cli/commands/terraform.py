@@ -25,9 +25,6 @@ from wrknv.wenv.visual import Emoji
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
 @click.argument("variant_or_version", required=False)
 @click.argument("version", required=False)
-@click.option("--list", is_flag=True, help="List available versions")
-@click.option("--list-variants", is_flag=True, help="List available variants")
-@click.option("--dry-run", is_flag=True, help="Show what would be done")
 def tf_command(
     variant_or_version: str | None = None,
     version: str | None = None,
