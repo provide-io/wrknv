@@ -8,7 +8,7 @@ from __future__ import annotations
 import pytest
 
 # Import all test utilities to make them available
-from utils.fixtures import (
+from tests.utils.fixtures import (
     create_mock_builder,
     create_mock_exec,
     create_mock_lifecycle,

@@ -21,13 +21,8 @@ from wrknv.container.operations.lifecycle import ContainerLifecycle
 from wrknv.container.runtime.docker import DockerRuntime
 from wrknv.wenv.schema import WorkenvConfig
 
-# Test utilities
-import sys
-from pathlib import Path
-
-# Add tests directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from utils.fixtures import create_mock_builder, create_mock_logs
+# Test utilities - available from conftest
+from tests.conftest import create_mock_builder, create_mock_logs
 
 
 @pytest.mark.container
@@ -117,8 +112,6 @@ class TestContainerManager(FoundationTestCase):
     def test_build_image_success(self, mock_mkdir, mock_write) -> None:
         """Test successful image build."""
         # Replace the entire builder with a mock (attrs objects are read-only)
-        from tests.utils.fixtures import create_mock_builder
-
         mock_builder = create_mock_builder()
         self.manager.builder = mock_builder
 
@@ -138,8 +131,6 @@ class TestContainerManager(FoundationTestCase):
     def test_build_image_with_rebuild(self, mock_mkdir, mock_write) -> None:
         """Test image build with rebuild flag."""
         # Replace the entire builder with a mock (attrs objects are read-only)
-        from tests.utils.fixtures import create_mock_builder
-
         mock_builder = create_mock_builder()
         self.manager.builder = mock_builder
 

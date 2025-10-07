@@ -33,7 +33,8 @@ manager.runtime = create_mock_runtime(available=True)  # Works!
 We provide mock factories for all attrs-based classes in `tests/utils/fixtures.py`:
 
 ```python
-from tests.utils.fixtures import (
+# Import from conftest (imports are re-exported there)
+from tests.conftest import (
     create_mock_runtime,
     create_mock_lifecycle,
     create_mock_exec,
@@ -43,6 +44,9 @@ from tests.utils.fixtures import (
     create_mock_storage,
     create_mock_manager,  # Creates manager with all mocks
 )
+
+# Or import directly from fixtures
+from tests.utils.fixtures import create_mock_runtime
 
 def test_example():
     # Create a mock runtime
@@ -61,7 +65,7 @@ def test_example():
 For most tests, use `create_mock_manager()` which gives you a manager with all dependencies mocked:
 
 ```python
-from tests.utils.fixtures import create_mock_manager
+from tests.conftest import create_mock_manager
 
 def test_with_mock_manager():
     # All dependencies are already mocked
@@ -82,7 +86,7 @@ def test_with_mock_manager():
 When testing ContainerManager methods, replace just the components you need:
 
 ```python
-from tests.utils.fixtures import create_mock_builder
+from tests.conftest import create_mock_builder
 
 def test_build_image():
     manager = ContainerManager(config)
@@ -129,10 +133,10 @@ def test_check_docker(mock_available):
 ### After (works with attrs):
 
 ```python
+from tests.conftest import create_mock_runtime
+
 def test_check_docker():
     # ✅ Replace entire runtime
-    from tests.utils.fixtures import create_mock_runtime
-
     manager = ContainerManager(config)
     manager.runtime = create_mock_runtime(available=True)
 
