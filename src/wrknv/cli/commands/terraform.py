@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import sys
 
-import click
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
@@ -23,11 +22,9 @@ from wrknv.wenv.visual import Emoji
 
 
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
-@click.argument("variant_or_version", required=False)
-@click.argument("version", required=False)
 def tf_command(
-    variant_or_version: str | None = None,
-    version: str | None = None,
+    variant_or_version: str = "",
+    version: str = "",
     list: bool = False,
     list_variants: bool = False,
     dry_run: bool = False,
@@ -63,19 +60,19 @@ def tf_command(
     default_variant = config.get_setting("tools.tf.default_variant", "tofu")
 
     # Smart parsing: determine variant and version
-    if variant_or_version is None:
-        # No args: use default variant (only valid with --list)
-        if not list:
+    if not variant_or_version or variant_or_version == "":
+        # No args: only valid with --list or --list-variants
+        if not list and not list_variants:
             echo_error("Error: Version required. Use 'wrknv tf --list' to see available versions.")
             sys.exit(1)
         actual_variant = default_variant
-        actual_version = None
-    elif version is None:
+        actual_version = ""
+    elif not version or version == "":
         # Single arg: use default variant from config
         actual_variant = default_variant
         actual_version = variant_or_version
 
-        if not list:
+        if not list and not list_variants:
             echo_info(f"Using default variant: {actual_variant}")
     else:
         # Two args: explicit variant specified
