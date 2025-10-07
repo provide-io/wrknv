@@ -52,7 +52,8 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             container=ContainerConfig(
                 enabled=True,
                 storage_path=str(storage_path),
-                python_version="3.11",
+                # Don't specify python_version when using python:* base image
+                # python_version="3.11",
                 base_image="python:3.11-slim",
             ),
         )
