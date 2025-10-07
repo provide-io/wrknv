@@ -9,7 +9,6 @@ Command implementations for container management.
 
 from __future__ import annotations
 
-
 from pathlib import Path
 
 import click
@@ -74,7 +73,7 @@ def container_status(config: WorkenvConfig | None = None) -> None:
     status = manager.status()
 
     # Create status table
-    table = Table(title=f"{manager.STATUS_EMOJI} Container Status", show_header=True)
+    table = Table(title="📊 Container Status", show_header=True)
     table.add_column("Property", style="cyan")
     table.add_column("Status", style="green")
 
@@ -88,13 +87,10 @@ def container_status(config: WorkenvConfig | None = None) -> None:
 
     # Container status
     if status["container_exists"]:
-        if status["container_running"]:
-            container_status = "🟢 Running"
-        else:
-            container_status = "🟡 Stopped"
+        container_status = "\U0001f7e2 Running" if status["container_running"] else "\U0001f7e1 Stopped"
     else:
         container_status = "❌ Not Created"
-    table.add_row(f"Container ({manager.CONTAINER_NAME})", container_status)
+    table.add_row(f"Container ({manager.container_name})", container_status)
 
     # Additional info if container exists
     if status["container_info"]:
@@ -143,7 +139,7 @@ def rebuild_container(config: WorkenvConfig | None = None) -> bool:
     manager = ContainerManager(config)
     console = Console()
 
-    console.print(f"{manager.BUILD_EMOJI} Rebuilding container from scratch...")
+    console.print("🔨 Rebuilding container from scratch...")
 
     # Clean existing resources
     if not manager.clean():
@@ -209,10 +205,7 @@ def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None)
 
         # Get backup size
         size = backup_path.stat().st_size
-        if size > 1024 * 1024:
-            size_str = f"{size / (1024 * 1024):.1f} MB"
-        else:
-            size_str = f"{size / 1024:.1f} KB"
+        size_str = f"{size / (1024 * 1024):.1f} MB" if size > 1024 * 1024 else f"{size / 1024:.1f} KB"
 
         console.print(f"[green]✅ Successfully created backup: {backup_path.name} ({size_str})[/green]")
         console.print(f"[dim]Location: {backup_path}[/dim]")
@@ -258,7 +251,7 @@ def restore_volumes(
         return False
 
 
-def clean_volumes(config: WorkenvConfig | None = None, preserve: list[str] = None) -> bool:
+def clean_volumes(config: WorkenvConfig | None = None, preserve: list[str] | None = None) -> bool:
     """Clean container volumes."""
     manager = ContainerManager(config)
     console = Console()
