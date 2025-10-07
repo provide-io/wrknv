@@ -20,7 +20,6 @@ WRKNV_EMOJI_HIERARCHY = {
     "wrknv.cli.commands.container": "🐳",
     "wrknv.cli.commands.gitignore": "📄",
     "wrknv.cli.commands.profile": "👤",
-    "wrknv.cli.commands.package": "📤",
     "wrknv.cli.commands.setup": "🌱",
     # Work environment management
     "wrknv.wenv": "🌍",

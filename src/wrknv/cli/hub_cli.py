@@ -26,7 +26,6 @@ def load_commands():
         doctor,  # noqa: F401
         gitignore,  # noqa: F401
         lock,  # noqa: F401
-        package,  # noqa: F401
         profile,  # noqa: F401
         setup,  # noqa: F401
         terraform,  # noqa: F401
