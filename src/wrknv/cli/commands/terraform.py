@@ -23,9 +23,15 @@ from wrknv.wenv.visual import Emoji
 
 
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
-@click.argument("variant_or_version", required=False, default="")
-@click.argument("version", required=False, default="")
-def tf_command(**kwargs):
+@click.argument("variant_or_version", required=False)
+@click.argument("version", required=False)
+def tf_command(
+    variant_or_version,
+    version,
+    list: bool = False,
+    list_variants: bool = False,
+    dry_run: bool = False,
+):
     """Manage Terraform/OpenTofu versions.
 
     Switch to a specific variant and version of Terraform ecosystem tools.
@@ -45,12 +51,10 @@ def tf_command(**kwargs):
         list_variants: List available variants
         dry_run: Show what would be done without doing it
     """
-    # Extract parameters from kwargs
-    variant_or_version = kwargs.get("variant_or_version", "")
-    version = kwargs.get("version", "")
-    list_flag = kwargs.get("list", False)
-    list_variants = kwargs.get("list_variants", False)
-    dry_run = kwargs.get("dry_run", False)
+    # Convert None to empty string for easier handling
+    variant_or_version = variant_or_version or ""
+    version = version or ""
+    list_flag = list
 
     config = WorkenvConfig.load()
 
