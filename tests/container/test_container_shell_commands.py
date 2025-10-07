@@ -197,7 +197,7 @@ class TestExecCommand:
         assert result.returncode == 0
         assert result.stdout == "command output"
         mock_run.assert_called_once_with(
-            ["docker", "exec", "test-project-dev", "ls", "-la"], capture_output=True, text=True, check=False
+            ["docker", "exec", "test-project-dev", "ls", "-la"], check=False
         )
 
     @patch("wrknv.container.shell_commands.run_command")
@@ -215,8 +215,6 @@ class TestExecCommand:
 
         mock_run.assert_called_once_with(
             ["docker", "exec", "-w", "/app", "test-project-dev", "pwd"],
-            capture_output=True,
-            text=True,
             check=False,
         )
 
@@ -235,8 +233,6 @@ class TestExecCommand:
 
         mock_run.assert_called_once_with(
             ["docker", "exec", "-e", "DEBUG=1", "test-project-dev", "echo", "$DEBUG"],
-            capture_output=True,
-            text=True,
             check=False,
         )
 
@@ -255,8 +251,6 @@ class TestExecCommand:
 
         mock_run.assert_called_once_with(
             ["docker", "exec", "-it", "test-project-dev", "python"],
-            capture_output=False,
-            text=True,
             check=False,
         )
 
@@ -275,8 +269,6 @@ class TestExecCommand:
 
         mock_run.assert_called_once_with(
             ["docker", "exec", "-u", "nobody", "test-project-dev", "whoami"],
-            capture_output=True,
-            text=True,
             check=False,
         )
 
@@ -319,7 +311,7 @@ class TestLogsCommand:
 
         assert result == "container logs here"
         mock_run.assert_called_once_with(
-            ["docker", "logs", "test-project-dev"], capture_output=True, text=True, check=False
+            ["docker", "logs", "test-project-dev"], check=False
         )
 
     @patch("wrknv.container.shell_commands.run_command")
@@ -351,7 +343,7 @@ class TestLogsCommand:
 
         assert result == "last lines"
         mock_run.assert_called_once_with(
-            ["docker", "logs", "--tail", "50", "test-project-dev"], capture_output=True, text=True, check=False
+            ["docker", "logs", "--tail", "50", "test-project-dev"], check=False
         )
 
     @patch("wrknv.container.shell_commands.run_command")
@@ -369,7 +361,7 @@ class TestLogsCommand:
 
         assert result == "timestamped logs"
         mock_run.assert_called_once_with(
-            ["docker", "logs", "-t", "test-project-dev"], capture_output=True, text=True, check=False
+            ["docker", "logs", "-t", "test-project-dev"], check=False
         )
 
     @patch("wrknv.container.shell_commands.run_command")
@@ -388,8 +380,6 @@ class TestLogsCommand:
         assert result == "recent logs"
         mock_run.assert_called_once_with(
             ["docker", "logs", "--since", "1h", "test-project-dev"],
-            capture_output=True,
-            text=True,
             check=False,
         )
 
@@ -409,8 +399,6 @@ class TestLogsCommand:
         assert result == "filtered logs"
         mock_run.assert_called_once_with(
             ["docker", "logs", "-t", "--tail", "100", "--since", "30m", "test-project-dev"],
-            capture_output=True,
-            text=True,
             check=False,
         )
 
