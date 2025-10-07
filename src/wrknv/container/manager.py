@@ -200,6 +200,14 @@ class ContainerManager:
             ]
         )
 
+        # Add CMD to keep container running (for development/testing)
+        lines.extend(
+            [
+                "# Keep container running",
+                'CMD ["sleep", "infinity"]',
+            ]
+        )
+
         return "\n".join(lines)
 
     def build_image(self, rebuild: bool = False) -> bool:
