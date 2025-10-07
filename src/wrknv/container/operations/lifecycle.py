@@ -33,6 +33,14 @@ class ContainerLifecycle:
     restart_emoji: str
     status_emoji: str
 
+    def exists(self) -> bool:
+        """Check if container exists."""
+        return self.runtime.container_exists(self.container_name)
+
+    def is_running(self) -> bool:
+        """Check if container is running."""
+        return self.runtime.container_running(self.container_name)
+
     def start(self, create_if_missing: bool, **run_options) -> bool:
         """Start the container.
 
