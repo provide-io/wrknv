@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import sys
 
+import click
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
@@ -22,9 +23,14 @@ from wrknv.wenv.visual import Emoji
 
 
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
+@click.argument("variant_or_version", required=False)
+@click.argument("version", required=False)
+@click.option("--list", is_flag=True, help="List available versions")
+@click.option("--list-variants", is_flag=True, help="List available variants")
+@click.option("--dry-run", is_flag=True, help="Show what would be done")
 def tf_command(
-    variant_or_version: str | None = None,  # ARG 1: variant (tofu/ibm) OR version
-    version: str | None = None,             # ARG 2: version (if arg1 was variant)
+    variant_or_version: str | None = None,
+    version: str | None = None,
     list: bool = False,
     list_variants: bool = False,
     dry_run: bool = False,
