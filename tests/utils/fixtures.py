@@ -7,23 +7,28 @@ Utilities for creating properly mocked attrs-based objects for testing.
 The attrs library makes classes immutable by default, which prevents
 mocking individual methods. These factories create mock objects that
 work with the attrs architecture.
+
+Note: Imports are done lazily inside functions to avoid circular import
+issues when this module is loaded by conftest.py.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, TYPE_CHECKING
 from unittest.mock import Mock
 
-from wrknv.container.manager import ContainerManager
-from wrknv.container.operations.build import ContainerBuilder
-from wrknv.container.operations.exec import ContainerExec
-from wrknv.container.operations.lifecycle import ContainerLifecycle
-from wrknv.container.operations.logs import ContainerLogs
-from wrknv.container.operations.volumes import VolumeManager
-from wrknv.container.runtime.docker import DockerRuntime
-from wrknv.container.storage import ContainerStorage
-from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+# Use TYPE_CHECKING to avoid runtime imports
+if TYPE_CHECKING:
+    from wrknv.container.manager import ContainerManager
+    from wrknv.container.operations.build import ContainerBuilder
+    from wrknv.container.operations.exec import ContainerExec
+    from wrknv.container.operations.lifecycle import ContainerLifecycle
+    from wrknv.container.operations.logs import ContainerLogs
+    from wrknv.container.operations.volumes import VolumeManager
+    from wrknv.container.runtime.docker import DockerRuntime
+    from wrknv.container.storage import ContainerStorage
+    from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
 
 
 def create_test_config(
