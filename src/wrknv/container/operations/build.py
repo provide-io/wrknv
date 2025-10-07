@@ -178,3 +178,29 @@ class ContainerBuilder:
             logger.error("Failed to push image", tag=tag, error=str(e))
             self.console.print(f"[red]❌ Failed to push image: {e}[/red]")
             return False
+
+    def image_exists(self, tag: str) -> bool:
+        """Check if an image exists locally.
+
+        Args:
+            tag: Image tag to check
+
+        Returns:
+            True if image exists
+        """
+        try:
+            from provide.foundation.process import run_command
+
+            result = run_command(
+                [self.runtime.runtime_command, "images", "--format", "{{.Repository}}:{{.Tag}}"],
+                check=False,
+            )
+
+            if result.stdout:
+                images = result.stdout.strip().splitlines()
+                return tag in images
+
+            return False
+
+        except ProcessError:
+            return False

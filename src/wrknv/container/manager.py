@@ -133,7 +133,7 @@ class ContainerManager:
 
     def image_exists(self) -> bool:
         """Check if the container image exists."""
-        return self.builder.image_exists()
+        return self.builder.image_exists(self.full_image)
 
     def _generate_dockerfile(self) -> str:
         """Generate Dockerfile content from configuration."""
@@ -216,7 +216,21 @@ class ContainerManager:
 
     def start(self, force_rebuild: bool = False) -> bool:
         """Start the container, building if necessary."""
-        return self.lifecycle.start(force_rebuild=force_rebuild)
+        # Build image if needed
+        if force_rebuild or not self.image_exists():
+            if not self.build_image(rebuild=force_rebuild):
+                return False
+
+        # Prepare run options for container creation
+        run_options = {
+            "image": self.full_image,
+            "volumes": self.storage.get_volume_mappings(),
+            "environment": self.container_config.environment or {},
+            "ports": self.container_config.ports or [],
+            "workdir": "/workspace",
+        }
+
+        return self.lifecycle.start(create_if_missing=True, **run_options)
 
     def enter(
         self,
@@ -233,17 +247,31 @@ class ContainerManager:
             environment=environment,
         )
 
-    def stop(self) -> bool:
+    def stop(self, timeout: int = 10) -> bool:
         """Stop the container."""
-        return self.lifecycle.stop()
+        return self.lifecycle.stop(timeout=timeout)
 
-    def restart(self) -> bool:
+    def restart(self, timeout: int = 10) -> bool:
         """Restart the container."""
-        return self.lifecycle.restart()
+        return self.lifecycle.restart(timeout=timeout)
 
     def status(self) -> dict[str, Any]:
         """Get container status information."""
-        return self.lifecycle.status()
+        # Get status from lifecycle
+        lifecycle_status = self.lifecycle.status()
+
+        # Convert to format expected by tests (for compatibility)
+        return {
+            "docker_available": self.runtime.is_available(),
+            "container_exists": lifecycle_status.get("exists", False),
+            "container_running": lifecycle_status.get("running", False),
+            "container_info": {
+                "name": lifecycle_status.get("name"),
+                "state": lifecycle_status.get("status"),
+                "id": lifecycle_status.get("id"),
+                "image": lifecycle_status.get("image"),
+            },
+        }
 
     def backup_volumes(
         self,
