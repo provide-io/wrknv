@@ -9,17 +9,22 @@ Functions for downloading and verifying tool archives using foundation transport
 
 from __future__ import annotations
 
-
 import asyncio
-import pathlib
 from collections.abc import Callable
+import pathlib
 from urllib.parse import urlparse
 
 from provide.foundation import logger
 from provide.foundation.crypto import verify_file
+from provide.foundation.resilience import circuit_breaker
 from provide.foundation.transport import UniversalClient
 
 
+@circuit_breaker(
+    failure_threshold=5,
+    recovery_timeout=60.0,
+    expected_exception=Exception,
+)
 async def download_file_async(
     url: str,
     output_path: pathlib.Path,
@@ -29,12 +34,19 @@ async def download_file_async(
 ) -> None:
     """Download a file using foundation transport with streaming.
 
+    Uses circuit breaker to prevent repeated attempts when downloads are failing.
+    After 5 failures, will fast-fail for 60 seconds before retrying.
+
     Args:
         url: URL to download from
         output_path: Where to save the file
         show_progress: Whether to log progress
         headers: Optional custom headers
         progress_callback: Optional callback(downloaded_bytes, total_bytes)
+
+    Raises:
+        RuntimeError: If circuit breaker is open (too many recent failures)
+        Exception: On download failure
     """
     logger.info(f"Downloading {url} to {output_path}")
 

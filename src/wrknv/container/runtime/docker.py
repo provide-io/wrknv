@@ -10,7 +10,6 @@ Docker-specific implementation of the container runtime.
 
 from __future__ import annotations
 
-
 import json
 from typing import Any
 
