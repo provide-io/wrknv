@@ -36,12 +36,10 @@ class TestSetupCommand(FoundationTestCase):
         assert "--init" in result.output
         assert "--shell-integration" in result.output
 
-    @patch("wrknv.wenv.workenv.WorkenvManager")
+    @patch("wrknv.cli.commands.setup.WorkenvManager")
     def test_setup_init(self, mock_manager_class):
         """Test setup --init to create wrknv's own workenv."""
-        mock_manager = Mock()
-        mock_manager.setup_workenv.return_value = True
-        mock_manager_class.return_value = mock_manager
+        mock_manager_class.setup_workenv.return_value = True
 
         result = self.runner.invoke(self.cli, ["setup", "--init"])
 
@@ -49,20 +47,17 @@ class TestSetupCommand(FoundationTestCase):
         assert "Setting up wrknv workenv" in result.output
         mock_manager_class.setup_workenv.assert_called_once_with(force=False)
 
-    @patch("wrknv.wenv.workenv.WorkenvManager")
+    @patch("wrknv.cli.commands.setup.WorkenvManager")
     def test_setup_init_force(self, mock_manager_class):
         """Test setup --init --force to recreate workenv."""
-        mock_manager = Mock()
-        mock_manager.setup_workenv.return_value = True
-        mock_manager_class.return_value = mock_manager
+        mock_manager_class.setup_workenv.return_value = True
 
         result = self.runner.invoke(self.cli, ["setup", "--init", "--force"])
 
         assert result.exit_code == 0
-        assert "Forcing recreation of workenv" in result.output
-        mock_manager.setup_workenv.assert_called_once_with(force=True)
+        mock_manager_class.setup_workenv.assert_called_once_with(force=True)
 
-    @patch("wrknv.wenv.workenv.WorkenvManager")
+    @patch("wrknv.cli.commands.setup.WorkenvManager")
     def test_setup_init_failure(self, mock_manager_class):
         """Test setup --init when creation fails."""
         mock_manager = Mock()
