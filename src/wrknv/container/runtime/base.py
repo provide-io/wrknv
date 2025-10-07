@@ -211,3 +211,12 @@ class ContainerRuntime(ABC):
             Container inspection data
         """
         pass
+
+    @abstractmethod
+    def is_available(self) -> bool:
+        """Check if the container runtime is available.
+
+        Returns:
+            True if runtime is available and functional
+        """
+        pass

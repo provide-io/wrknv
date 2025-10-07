@@ -290,3 +290,11 @@ class DockerRuntime(ContainerRuntime):
         except (ProcessError, json.JSONDecodeError) as e:
             logger.error("Failed to inspect Docker container", name=name, error=str(e))
             return {}
+
+    def is_available(self) -> bool:
+        """Check if Docker is available."""
+        try:
+            result = run_command([self.runtime_command, "version"], check=False)
+            return result.returncode == 0
+        except Exception:
+            return False
