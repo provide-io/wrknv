@@ -213,12 +213,12 @@ class TestContainerVolumeIntegration(FoundationTestCase):
 
         time.sleep(2)
 
-        # Create various files in different volumes
+        # Create various files in different volumes (use mounted paths)
         files_to_create = [
-            ("/workspace/project.py", "print('Hello World')"),
-            ("/workspace/data/config.json", '{"setting": "value"}'),
-            ("/home/user/.cache/package.tar.gz", "binary data here"),
-            ("/home/user/.config/settings.ini", "[section]\nkey=value"),
+            ("/wrknv/workspace/project.py", "print('Hello World')"),
+            ("/wrknv/workspace/data/config.json", '{"setting": "value"}'),
+            ("/wrknv/cache/package.tar.gz", "binary data here"),
+            ("/wrknv/config/settings.ini", "[section]\\nkey=value"),
         ]
 
         for filepath, content in files_to_create:
@@ -228,14 +228,14 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 mkdir_cmd = ["docker", "exec", container_manager.container_name, "mkdir", "-p", dir_path]
                 run_command(mkdir_cmd, capture_output=True)
 
-            # Create file
+            # Create file using printf to handle quotes properly
             cmd = [
                 "docker",
                 "exec",
                 container_manager.container_name,
                 "sh",
                 "-c",
-                f"echo '{content}' > {filepath}",
+                f"printf '%s' {repr(content)} > {filepath}",
             ]
             result = run_command(cmd, capture_output=True)
             assert result.returncode == 0, f"Failed to create {filepath}"
@@ -252,7 +252,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         container_manager.clean_volumes()
 
         # Verify files are gone
-        workspace_file = container_manager.get_container_path("volumes/workspace/project.py")
+        workspace_file = container_manager.storage.get_container_path("volumes/workspace/project.py")
         assert not workspace_file.exists()
 
         # Restore from backup
@@ -266,7 +266,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         assert container_manager.start()
         time.sleep(2)
 
-        cmd = ["docker", "exec", container_manager.container_name, "python", "/workspace/project.py"]
+        cmd = ["docker", "exec", container_manager.container_name, "python", "/wrknv/workspace/project.py"]
         result = run_command(cmd, capture_output=True, text=True)
         assert result.returncode == 0
         assert "Hello World" in result.stdout
@@ -324,14 +324,14 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 assert result.returncode == 0
                 assert "Shared between containers" in result.stdout
 
-            # Verify containers have separate workspace volumes
+            # Verify containers have separate workspace volumes (use persistent volumes)
             cmd1 = [
                 "docker",
                 "exec",
                 manager1.container_name,
                 "sh",
                 "-c",
-                "echo 'project1 data' > /workspace/project1.txt",
+                "echo 'project1 data' > /wrknv/workspace/project1.txt",
             ]
             run_command(cmd1, capture_output=True)
 
@@ -341,13 +341,13 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 manager2.container_name,
                 "sh",
                 "-c",
-                "echo 'project2 data' > /workspace/project2.txt",
+                "echo 'project2 data' > /wrknv/workspace/project2.txt",
             ]
             run_command(cmd2, capture_output=True)
 
-            # Verify isolation - project1 file should not exist in project2
-            cmd = ["docker", "exec", manager2.container_name, "ls", "/workspace/project1.txt"]
-            result = run_command(cmd, capture_output=True)
+            # Verify isolation - project1 file should not exist in project2's persistent workspace
+            cmd = ["docker", "exec", manager2.container_name, "ls", "/wrknv/workspace/project1.txt"]
+            result = run_command(cmd, capture_output=True, check=False)
             assert result.returncode != 0, "Workspaces should be isolated"
 
         finally:
