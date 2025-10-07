@@ -9,7 +9,6 @@ Commands for interacting with running containers.
 
 from __future__ import annotations
 
-
 from typing import Any
 
 from provide.foundation import logger
@@ -52,18 +51,18 @@ def shell_into_container(
     # Check if container is running
     if not manager.container_running():
         if not manager.container_exists():
-            console.print(f"[yellow]⚠️  Container {manager.CONTAINER_NAME} doesn't exist[/yellow]")
+            console.print(f"[yellow]⚠️  Container {manager.container_name} doesn't exist[/yellow]")
             return False
 
         if auto_start:
             console.print(
-                f"[yellow]⚠️  Container {manager.CONTAINER_NAME} is not running. Starting...[/yellow]"
+                f"[yellow]⚠️  Container {manager.container_name} is not running. Starting...[/yellow]"
             )
             if not manager.start():
                 console.print("[red]❌ Failed to start container[/red]")
                 return False
         else:
-            console.print(f"[yellow]⚠️  Container {manager.CONTAINER_NAME} is not running[/yellow]")
+            console.print(f"[yellow]⚠️  Container {manager.container_name} is not running[/yellow]")
             console.print("Use --auto-start to start it automatically")
             return False
 
@@ -80,10 +79,10 @@ def shell_into_container(
             cmd.extend(["-e", f"{key}={value}"])
 
     # Add container name and shell
-    cmd.extend([manager.CONTAINER_NAME, shell])
+    cmd.extend([manager.container_name, shell])
 
     logger.info(f"Opening shell in container: {' '.join(cmd)}")
-    console.print(f"[green]🐚 Opening {shell} in {manager.CONTAINER_NAME}...[/green]")
+    console.print(f"[green]🐚 Opening {shell} in {manager.container_name}...[/green]")
 
     try:
         # Run interactively without capturing output
@@ -131,7 +130,7 @@ def exec_in_container(
 
     # Check if container is running
     if not manager.container_running():
-        console.print(f"[yellow]⚠️  Container {manager.CONTAINER_NAME} is not running[/yellow]")
+        console.print(f"[yellow]⚠️  Container {manager.container_name} is not running[/yellow]")
         return None
 
     # Build docker exec command
@@ -155,18 +154,14 @@ def exec_in_container(
             cmd.extend(["-e", f"{key}={value}"])
 
     # Add container name and command
-    cmd.append(manager.CONTAINER_NAME)
+    cmd.append(manager.container_name)
     cmd.extend(command)
 
     logger.info(f"Executing in container: {' '.join(cmd)}")
 
     try:
-        if interactive:
-            # Run interactively without capturing output
-            result = run_command(cmd, check=False)
-        else:
-            # Capture output for non-interactive commands
-            result = run_command(cmd, check=False)
+        # Run command (interactively if requested)
+        result = run_command(cmd, check=False)
 
         if result.returncode != 0 and result.stderr:
             console.print(f"[red]Command failed: {result.stderr}[/red]")
@@ -209,7 +204,7 @@ def get_container_logs(
 
     # Check if container exists
     if not manager.container_exists():
-        console.print(f"[yellow]⚠️  Container {manager.CONTAINER_NAME} doesn't exist[/yellow]")
+        console.print(f"[yellow]⚠️  Container {manager.container_name} doesn't exist[/yellow]")
         return None
 
     # Build docker logs command
@@ -229,7 +224,7 @@ def get_container_logs(
         cmd.extend(["--since", since])
 
     # Add container name
-    cmd.append(manager.CONTAINER_NAME)
+    cmd.append(manager.container_name)
 
     logger.info(f"Getting container logs: {' '.join(cmd)}")
 
@@ -279,14 +274,14 @@ def stream_container_logs(
     manager = ContainerManager(config)
 
     if not manager.container_exists():
-        console.print(f"[yellow]⚠️  Container {manager.CONTAINER_NAME} doesn't exist[/yellow]")
+        console.print(f"[yellow]⚠️  Container {manager.container_name} doesn't exist[/yellow]")
         return False
 
-    console.print(f"[green]📜 Streaming logs from {manager.CONTAINER_NAME}...[/green]")
+    console.print(f"[green]📜 Streaming logs from {manager.container_name}...[/green]")
     console.print("[dim]Press Ctrl+C to stop[/dim]\n")
 
     # Build command
-    cmd = ["docker", "logs", "-f", manager.CONTAINER_NAME]
+    cmd = ["docker", "logs", "-f", manager.container_name]
 
     try:
         import re
@@ -324,7 +319,7 @@ def get_container_stats(config: WorkenvConfig) -> dict[str, Any] | None:
     Returns:
         Dictionary with container stats or None
     """
-    console = Console()
+    Console()
 
     if not config.container or not config.container.enabled:
         return None
@@ -337,7 +332,7 @@ def get_container_stats(config: WorkenvConfig) -> dict[str, Any] | None:
 
     try:
         # Get container stats
-        cmd = ["docker", "stats", "--no-stream", "--format", "json", manager.CONTAINER_NAME]
+        cmd = ["docker", "stats", "--no-stream", "--format", "json", manager.container_name]
         result = run_command(cmd, check=False)
 
         if result.returncode == 0 and result.stdout:
@@ -347,7 +342,7 @@ def get_container_stats(config: WorkenvConfig) -> dict[str, Any] | None:
 
             # Parse and format stats
             return {
-                "name": stats.get("Name", manager.CONTAINER_NAME),
+                "name": stats.get("Name", manager.container_name),
                 "cpu": stats.get("CPUPerc", "0%"),
                 "memory": {"usage": stats.get("MemUsage", "0B / 0B"), "percent": stats.get("MemPerc", "0%")},
                 "network": stats.get("NetIO", "0B / 0B"),
