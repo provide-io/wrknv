@@ -226,35 +226,38 @@ class TestContainerManager(FoundationTestCase):
 
         assert result  # Returns True but doesn't try to start again
 
-    @patch("wrknv.container.manager.ContainerManager.container_running")
-    @patch("os.system")
-    def test_enter_container_running(self, mock_system, mock_running) -> None:
+    def test_enter_container_running(self) -> None:
         """Test entering a running container."""
-        mock_running.return_value = True
+        mock_exec = Mock()
+        mock_exec.enter = Mock(return_value=True)
+        self.manager.exec = mock_exec
 
-        self.manager.enter()
+        result = self.manager.enter()
 
-        mock_system.assert_called_once_with("docker exec -it test-project-dev /bin/bash")
+        assert result is True
+        mock_exec.enter.assert_called_once_with(command=None, user=None, workdir=None, environment=None)
 
-    @patch("wrknv.container.manager.ContainerManager.container_running")
-    @patch("os.system")
-    def test_enter_container_with_command(self, mock_system, mock_running) -> None:
+    def test_enter_container_with_command(self) -> None:
         """Test entering container with specific command."""
-        mock_running.return_value = True
+        mock_exec = Mock()
+        mock_exec.enter = Mock(return_value=True)
+        self.manager.exec = mock_exec
 
-        self.manager.enter(["ls", "-la"])
+        result = self.manager.enter(command="ls -la")
 
-        mock_system.assert_called_once_with("docker exec -it test-project-dev ls -la")
+        assert result is True
+        mock_exec.enter.assert_called_once_with(command="ls -la", user=None, workdir=None, environment=None)
 
-    @patch("wrknv.container.manager.ContainerManager.container_running")
-    @patch("os.system")
-    def test_enter_container_not_running(self, mock_system, mock_running) -> None:
+    def test_enter_container_not_running(self) -> None:
         """Test entering when container is not running."""
-        mock_running.return_value = False
+        mock_exec = Mock()
+        mock_exec.enter = Mock(return_value=False)
+        self.manager.exec = mock_exec
 
-        self.manager.enter()
+        result = self.manager.enter()
 
-        mock_system.assert_not_called()
+        assert result is False
+        mock_exec.enter.assert_called_once()
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
@@ -268,7 +271,7 @@ class TestContainerManager(FoundationTestCase):
         assert result
         # Check that docker stop was called
         stop_calls = [c for c in mock_run.call_args_list if "stop" in str(c)]
-        assert len(stop_calls > 0)
+        assert len(stop_calls) > 0
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
@@ -352,10 +355,10 @@ class TestContainerManager(FoundationTestCase):
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0, stdout="logs", stderr="")
 
-        self.manager.logs(follow=False, tail=10)
+        self.manager.get_logs(follow=False, lines=10)
 
         mock_run.assert_called_once_with(
-            ["docker", "logs", "--tail", "10", "test-project-dev"], capture_output=True, text=True
+            ["docker", "logs", "--tail", "10", "test-project-dev"], check=True
         )
 
     @patch("provide.foundation.process.run_command")
@@ -365,9 +368,9 @@ class TestContainerManager(FoundationTestCase):
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0)
 
-        self.manager.logs(follow=True)
+        self.manager.get_logs(follow=True)
 
-        mock_run.assert_called_once_with(["docker", "logs", "-f", "--tail", "100", "test-project-dev"])
+        mock_run.assert_called_once_with(["docker", "logs", "-f", "test-project-dev"], check=True)
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
