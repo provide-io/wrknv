@@ -10,7 +10,6 @@ Start, stop, restart, and status operations for containers.
 
 from __future__ import annotations
 
-
 from typing import Any
 
 from attrs import define
@@ -145,9 +144,8 @@ class ContainerLifecycle:
         self.console.print(f"{self.restart_emoji} Restarting container {self.container_name}...")
 
         # Stop if running
-        if self.runtime.container_running(self.container_name):
-            if not self.stop(timeout=timeout):
-                return False
+        if self.runtime.container_running(self.container_name) and not self.stop(timeout=timeout):
+            return False
 
         # Start again
         return self.start(create_if_missing=False)
@@ -239,4 +237,3 @@ class ContainerLifecycle:
             return False
 
 
-from typing import Any

@@ -11,9 +11,9 @@ import pytest
 Comprehensive tests for the ContainerManager class.
 """
 
+from pathlib import Path
 import shutil
 import subprocess
-from pathlib import Path
 from unittest.mock import Mock, patch
 
 from wrknv.container.manager import ContainerManager
@@ -37,7 +37,7 @@ class TestContainerManager(FoundationTestCase):
         if test_build_dir.exists():
             shutil.rmtree(test_build_dir, ignore_errors=True)
 
-    def test_check_docker_success(self):
+    def test_check_docker_success(self) -> None:
         """Test check_docker when Docker is available and running."""
         # Mock runtime's is_available method directly
         self.manager.runtime.is_available = Mock(return_value=True)
@@ -47,7 +47,7 @@ class TestContainerManager(FoundationTestCase):
         assert result
         assert self.manager.runtime.is_available.called
 
-    def test_check_docker_daemon_not_running(self):
+    def test_check_docker_daemon_not_running(self) -> None:
         """Test check_docker when Docker daemon is not running."""
         # Mock runtime's is_available method directly
         self.manager.runtime.is_available = Mock(return_value=False)
@@ -56,7 +56,7 @@ class TestContainerManager(FoundationTestCase):
 
         assert not result
 
-    def test_check_docker_not_installed(self):
+    def test_check_docker_not_installed(self) -> None:
         """Test check_docker when Docker is not installed."""
         # Mock runtime's is_available to return False (Docker not available)
         self.manager.runtime.is_available = Mock(return_value=False)
@@ -65,7 +65,7 @@ class TestContainerManager(FoundationTestCase):
 
         assert not result
 
-    def test_container_exists_true(self):
+    def test_container_exists_true(self) -> None:
         """Test container_exists when container exists."""
         # Mock lifecycle's exists method directly
         self.manager.lifecycle.exists = Mock(return_value=True)
@@ -75,7 +75,7 @@ class TestContainerManager(FoundationTestCase):
         assert result
         assert self.manager.lifecycle.exists.called
 
-    def test_container_exists_false(self):
+    def test_container_exists_false(self) -> None:
         """Test container_exists when container doesn't exist."""
         # Mock lifecycle's exists method directly
         self.manager.lifecycle.exists = Mock(return_value=False)
@@ -84,7 +84,7 @@ class TestContainerManager(FoundationTestCase):
 
         assert not result
 
-    def test_container_running_true(self):
+    def test_container_running_true(self) -> None:
         """Test container_running when container is running."""
         # Mock lifecycle's is_running method directly
         self.manager.lifecycle.is_running = Mock(return_value=True)
@@ -94,7 +94,7 @@ class TestContainerManager(FoundationTestCase):
         assert result
         assert self.manager.lifecycle.is_running.called
 
-    def test_container_running_false(self):
+    def test_container_running_false(self) -> None:
         """Test container_running when container is not running."""
         # Mock lifecycle's is_running method directly
         self.manager.lifecycle.is_running = Mock(return_value=False)
@@ -104,7 +104,7 @@ class TestContainerManager(FoundationTestCase):
         assert not result
 
     @patch("provide.foundation.process.run_command")
-    def test_image_exists_true(self, mock_run):
+    def test_image_exists_true(self, mock_run) -> None:
         """Test image_exists when image exists."""
         mock_run.return_value = Mock(returncode=0, stdout="test-project-dev:latest\nother:tag\n")
 
@@ -115,7 +115,7 @@ class TestContainerManager(FoundationTestCase):
         assert mock_run.called
 
     @patch("provide.foundation.process.run_command")
-    def test_image_exists_false(self, mock_run):
+    def test_image_exists_false(self, mock_run) -> None:
         """Test image_exists when image doesn't exist."""
         mock_run.return_value = Mock(returncode=0, stdout="other:tag\n")
 
@@ -125,7 +125,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    def test_build_image_success(self, mock_mkdir, mock_write):
+    def test_build_image_success(self, mock_mkdir, mock_write) -> None:
         """Test successful image build."""
         # Mock the runtime's build_image method
         self.manager.runtime.build_image = Mock(return_value=True)
@@ -143,7 +143,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    def test_build_image_with_rebuild(self, mock_mkdir, mock_write):
+    def test_build_image_with_rebuild(self, mock_mkdir, mock_write) -> None:
         """Test image build with rebuild flag."""
         # Mock the runtime's build_image method
         self.manager.runtime.build_image = Mock(return_value=True)
@@ -157,7 +157,7 @@ class TestContainerManager(FoundationTestCase):
     @patch("provide.foundation.process.run_command")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    def test_build_image_failure(self, mock_mkdir, mock_write, mock_run):
+    def test_build_image_failure(self, mock_mkdir, mock_write, mock_run) -> None:
         """Test image build failure."""
         mock_run.side_effect = subprocess.CalledProcessError(1, "docker build")
 
@@ -184,7 +184,7 @@ class TestContainerManager(FoundationTestCase):
         mock_build,
         mock_image_exists,
         mock_check_docker,
-    ):
+    ) -> None:
         """Test successful container start."""
         mock_check_docker.return_value = True
         mock_image_exists.return_value = True
@@ -208,7 +208,7 @@ class TestContainerManager(FoundationTestCase):
         assert "test-project-dev" in docker_run_cmd
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
-    def test_start_container_docker_not_available(self, mock_check_docker):
+    def test_start_container_docker_not_available(self, mock_check_docker) -> None:
         """Test container start when Docker is not available."""
         mock_check_docker.return_value = False
 
@@ -219,7 +219,7 @@ class TestContainerManager(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.check_docker")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
     @patch("wrknv.container.manager.ContainerManager.build_image")
-    def test_start_container_build_image_if_missing(self, mock_build, mock_image_exists, mock_check_docker):
+    def test_start_container_build_image_if_missing(self, mock_build, mock_image_exists, mock_check_docker) -> None:
         """Test that start builds image if it doesn't exist."""
         mock_check_docker.return_value = True
         mock_image_exists.return_value = False
@@ -233,7 +233,7 @@ class TestContainerManager(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.check_docker")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
     @patch("wrknv.container.manager.ContainerManager.container_running")
-    def test_start_container_already_running(self, mock_running, mock_image_exists, mock_check_docker):
+    def test_start_container_already_running(self, mock_running, mock_image_exists, mock_check_docker) -> None:
         """Test start when container is already running."""
         mock_check_docker.return_value = True
         mock_image_exists.return_value = True
@@ -245,7 +245,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
-    def test_enter_container_running(self, mock_system, mock_running):
+    def test_enter_container_running(self, mock_system, mock_running) -> None:
         """Test entering a running container."""
         mock_running.return_value = True
 
@@ -255,7 +255,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
-    def test_enter_container_with_command(self, mock_system, mock_running):
+    def test_enter_container_with_command(self, mock_system, mock_running) -> None:
         """Test entering container with specific command."""
         mock_running.return_value = True
 
@@ -265,7 +265,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("os.system")
-    def test_enter_container_not_running(self, mock_system, mock_running):
+    def test_enter_container_not_running(self, mock_system, mock_running) -> None:
         """Test entering when container is not running."""
         mock_running.return_value = False
 
@@ -275,7 +275,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
-    def test_stop_container_success(self, mock_running, mock_run):
+    def test_stop_container_success(self, mock_running, mock_run) -> None:
         """Test successful container stop."""
         mock_running.return_value = True
         mock_run.return_value = Mock(returncode=0)
@@ -289,7 +289,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_running")
-    def test_stop_container_failure(self, mock_running, mock_run):
+    def test_stop_container_failure(self, mock_running, mock_run) -> None:
         """Test container stop failure."""
         mock_running.return_value = True
         mock_run.side_effect = subprocess.CalledProcessError(1, "docker stop")
@@ -300,7 +300,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("wrknv.container.manager.ContainerManager.stop")
     @patch("wrknv.container.manager.ContainerManager.start")
-    def test_restart_container_success(self, mock_start, mock_stop):
+    def test_restart_container_success(self, mock_start, mock_stop) -> None:
         """Test successful container restart."""
         mock_stop.return_value = True
         mock_start.return_value = True
@@ -313,7 +313,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("wrknv.container.manager.ContainerManager.start")
     @patch("wrknv.container.manager.ContainerManager.stop")
-    def test_restart_container_stop_failure(self, mock_stop, mock_start):
+    def test_restart_container_stop_failure(self, mock_stop, mock_start) -> None:
         """Test restart when stop fails."""
         mock_stop.return_value = False
 
@@ -327,7 +327,7 @@ class TestContainerManager(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.container_exists")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
     @patch("wrknv.container.manager.ContainerManager.check_docker")
-    def test_status_method(self, mock_docker, mock_image, mock_exists, mock_running, mock_run):
+    def test_status_method(self, mock_docker, mock_image, mock_exists, mock_running, mock_run) -> None:
         """Test getting container status."""
         mock_docker.return_value = True
         mock_image.return_value = True
@@ -352,7 +352,7 @@ class TestContainerManager(FoundationTestCase):
         )
 
     @patch("wrknv.container.manager.ContainerManager.check_docker")
-    def test_status_no_docker(self, mock_check):
+    def test_status_no_docker(self, mock_check) -> None:
         """Test getting status when Docker is not available."""
         mock_check.return_value = False
 
@@ -364,7 +364,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_exists")
-    def test_logs_method(self, mock_exists, mock_run):
+    def test_logs_method(self, mock_exists, mock_run) -> None:
         """Test getting container logs."""
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0, stdout="logs", stderr="")
@@ -377,7 +377,7 @@ class TestContainerManager(FoundationTestCase):
 
     @patch("provide.foundation.process.run_command")
     @patch("wrknv.container.manager.ContainerManager.container_exists")
-    def test_logs_follow(self, mock_exists, mock_run):
+    def test_logs_follow(self, mock_exists, mock_run) -> None:
         """Test following container logs."""
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0)
@@ -390,7 +390,7 @@ class TestContainerManager(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("wrknv.container.manager.ContainerManager.container_exists")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
-    def test_clean_success(self, mock_image_exists, mock_container_exists, mock_running, mock_run):
+    def test_clean_success(self, mock_image_exists, mock_container_exists, mock_running, mock_run) -> None:
         """Test successful cleanup."""
         mock_running.return_value = False
         mock_container_exists.side_effect = [True, False]  # Exists first, then doesn't after rm
@@ -410,7 +410,7 @@ class TestContainerManager(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.container_running")
     @patch("wrknv.container.manager.ContainerManager.container_exists")
     @patch("wrknv.container.manager.ContainerManager.image_exists")
-    def test_clean_partial_failure(self, mock_image_exists, mock_container_exists, mock_running, mock_run):
+    def test_clean_partial_failure(self, mock_image_exists, mock_container_exists, mock_running, mock_run) -> None:
         """Test cleanup with partial failure."""
         mock_running.return_value = False
         mock_container_exists.return_value = True
@@ -441,7 +441,7 @@ class TestContainerManager(FoundationTestCase):
     @patch("provide.foundation.process.run_command")
     def test_start_removes_stopped_container(
         self, mock_run, mock_exists, mock_image_exists, mock_check_docker
-    ):
+    ) -> None:
         """Test that start removes existing stopped container."""
         mock_check_docker.return_value = True
         mock_image_exists.return_value = True

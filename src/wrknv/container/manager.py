@@ -149,30 +149,36 @@ class ContainerManager:
         # Install system packages
         if self.container_config.additional_packages:
             packages = " ".join(self.container_config.additional_packages)
-            lines.extend([
-                "RUN apt-get update && apt-get install -y \\",
-                f"    {packages} \\",
-                "    && rm -rf /var/lib/apt/lists/*",
-                "",
-            ])
+            lines.extend(
+                [
+                    "RUN apt-get update && apt-get install -y \\",
+                    f"    {packages} \\",
+                    "    && rm -rf /var/lib/apt/lists/*",
+                    "",
+                ]
+            )
         else:
             # Install default packages
-            lines.extend([
-                "RUN apt-get update && apt-get install -y \\",
-                "    curl \\",
-                "    git \\",
-                "    && rm -rf /var/lib/apt/lists/*",
-                "",
-            ])
+            lines.extend(
+                [
+                    "RUN apt-get update && apt-get install -y \\",
+                    "    curl \\",
+                    "    git \\",
+                    "    && rm -rf /var/lib/apt/lists/*",
+                    "",
+                ]
+            )
 
         # Install Python if python_version is specified
         if self.container_config.python_version:
             py_version = self.container_config.python_version
-            lines.extend([
-                f"RUN apt-get update && apt-get install -y python{py_version} python{py_version}-venv \\",
-                "    && rm -rf /var/lib/apt/lists/*",
-                "",
-            ])
+            lines.extend(
+                [
+                    f"RUN apt-get update && apt-get install -y python{py_version} python{py_version}-venv \\",
+                    "    && rm -rf /var/lib/apt/lists/*",
+                    "",
+                ]
+            )
 
         # Set environment variables
         if self.container_config.environment:
@@ -181,11 +187,13 @@ class ContainerManager:
             lines.append("")
 
         # Create user
-        lines.extend([
-            "RUN useradd -m -s /bin/bash user",
-            "USER user",
-            "",
-        ])
+        lines.extend(
+            [
+                "RUN useradd -m -s /bin/bash user",
+                "USER user",
+                "",
+            ]
+        )
 
         return "\n".join(lines)
 
@@ -217,9 +225,8 @@ class ContainerManager:
     def start(self, force_rebuild: bool = False) -> bool:
         """Start the container, building if necessary."""
         # Build image if needed
-        if force_rebuild or not self.image_exists():
-            if not self.build_image(rebuild=force_rebuild):
-                return False
+        if (force_rebuild or not self.image_exists()) and not self.build_image(rebuild=force_rebuild):
+            return False
 
         # Prepare run options for container creation
         run_options = {

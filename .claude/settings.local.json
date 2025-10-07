@@ -86,7 +86,9 @@
       "Bash(curl:*)",
       "Bash(tar:*)",
       "Bash(unzip:*)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(ruff check:*)",
+      "Bash(mypy:*)"
     ],
     "deny": [],
     "additionalDirectories": [

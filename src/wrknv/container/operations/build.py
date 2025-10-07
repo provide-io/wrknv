@@ -10,7 +10,6 @@ Build container images with streaming output.
 
 from __future__ import annotations
 
-
 from typing import Any
 
 from attrs import define
@@ -68,7 +67,7 @@ class ContainerBuilder:
                 return True
             else:
                 # Use runtime's build method
-                result = self.runtime.build_image(
+                self.runtime.build_image(
                     dockerfile=dockerfile, tag=tag, context=context, build_args=build_args, **extra_options
                 )
 
@@ -138,7 +137,7 @@ class ContainerBuilder:
         try:
             from provide.foundation.process import run_command
 
-            result = run_command([self.runtime.runtime_command, "tag", source_tag, target_tag], check=True)
+            run_command([self.runtime.runtime_command, "tag", source_tag, target_tag], check=True)
 
             logger.info("Image tagged", source=source_tag, target=target_tag)
             self.console.print(f"[green]✅ Tagged {source_tag} as {target_tag}[/green]")
@@ -168,7 +167,7 @@ class ContainerBuilder:
 
             self.console.print(f"[cyan]📤 Pushing image {tag}...[/cyan]")
 
-            result = run_command([self.runtime.runtime_command, "push", tag], check=True)
+            run_command([self.runtime.runtime_command, "push", tag], check=True)
 
             logger.info("Image pushed", tag=tag)
             self.console.print(f"[green]✅ Pushed {tag} successfully[/green]")
