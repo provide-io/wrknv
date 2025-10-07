@@ -418,14 +418,14 @@ class TestContainerVolumeIntegration(FoundationTestCase):
 
         time.sleep(2)
 
-        # Create a 10MB file in workspace
+        # Create a 10MB file in persistent workspace volume
         cmd = [
             "docker",
             "exec",
             container_manager.container_name,
             "dd",
             "if=/dev/zero",
-            "of=/workspace/large_file.bin",
+            "of=/wrknv/workspace/large_file.bin",
             "bs=1M",
             "count=10",
         ]
@@ -433,7 +433,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         assert result.returncode == 0
 
         # Verify file exists on host
-        large_file = container_manager.get_container_path("volumes/workspace/large_file.bin")
+        large_file = container_manager.storage.get_container_path("volumes/workspace/large_file.bin")
         assert large_file.exists()
         assert large_file.stat().st_size == 10 * 1024 * 1024  # 10MB
 

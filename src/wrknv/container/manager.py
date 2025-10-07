@@ -306,17 +306,84 @@ class ContainerManager:
         backup_path: Path | None = None,
         volumes: list[str] | None = None,
         compress: bool = True,
-    ) -> bool:
-        """Backup container volumes."""
-        return self.volumes.backup(
-            backup_path=backup_path,
-            volumes=volumes,
-            compress=compress,
-        )
+    ) -> Path | None:
+        """Backup container volumes.
+
+        Returns:
+            Path to backup file if successful, None otherwise
+        """
+        import tarfile
+        from datetime import datetime
+
+        try:
+            # Determine backup path
+            if backup_path is None:
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                backup_path = self.storage.get_backup_path(f"volumes_backup_{timestamp}.tar.gz")
+
+            # Create backup directory if needed
+            backup_path.parent.mkdir(parents=True, exist_ok=True)
+
+            # Get volumes directory to backup
+            volumes_dir = self.storage.get_container_path("volumes")
+
+            if not volumes_dir.exists():
+                logger.warning("No volumes directory to backup", path=str(volumes_dir))
+                return None
+
+            # Create tar archive of volumes
+            with tarfile.open(backup_path, "w:gz" if compress else "w") as tar:
+                tar.add(volumes_dir, arcname="volumes")
+
+            logger.info("📦 Backed up volumes", backup=str(backup_path))
+            return backup_path
+
+        except Exception as e:
+            logger.error("Failed to backup volumes", error=str(e))
+            return None
 
     def restore_volumes(self, backup_path: Path, force: bool = False) -> bool:
-        """Restore container volumes from backup."""
-        return self.volumes.restore(backup_path=backup_path, force=force)
+        """Restore container volumes from backup.
+
+        Args:
+            backup_path: Path to backup tar file
+            force: Overwrite existing volumes
+
+        Returns:
+            True if successful
+        """
+        import tarfile
+        import shutil
+
+        try:
+            if not backup_path.exists():
+                logger.error("Backup file not found", path=str(backup_path))
+                return False
+
+            # Get container directory
+            container_dir = self.storage.get_container_path()
+
+            # Check if volumes exist
+            volumes_dir = container_dir / "volumes"
+            if volumes_dir.exists() and not force:
+                logger.warning("Volumes already exist, use force=True to overwrite")
+                return False
+
+            # Remove existing volumes if force
+            if volumes_dir.exists() and force:
+                shutil.rmtree(volumes_dir)
+
+            # Extract backup
+            with tarfile.open(backup_path, "r:*") as tar:
+                # Extract to container directory
+                tar.extractall(container_dir)
+
+            logger.info("📥 Restored volumes from backup", backup=str(backup_path))
+            return True
+
+        except Exception as e:
+            logger.error("Failed to restore volumes", error=str(e), backup=str(backup_path))
+            return False
 
     def clean_volumes(self, preserve: list[str] | None = None) -> bool:
         """Clean up container volumes."""
