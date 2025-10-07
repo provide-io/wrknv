@@ -21,6 +21,7 @@ from provide.foundation.process import (
     ProcessError,
     run_command,
 )
+from provide.foundation.resilience import circuit_breaker
 
 from wrknv.container.runtime.base import ContainerRuntime
 
@@ -291,10 +292,29 @@ class DockerRuntime(ContainerRuntime):
             logger.error("Failed to inspect Docker container", name=name, error=str(e))
             return {}
 
+    @circuit_breaker(
+        failure_threshold=3,
+        recovery_timeout=30.0,
+        expected_exception=(ProcessError, OSError),
+    )
     def is_available(self) -> bool:
-        """Check if Docker is available."""
+        """Check if Docker is available.
+
+        Uses circuit breaker to prevent repeated checks when Docker is unavailable.
+        If circuit is open, raises RuntimeError which callers should catch.
+        """
         try:
             result = run_command([self.runtime_command, "version"], check=False)
-            return result.returncode == 0
-        except Exception:
-            return False
+            if result.returncode != 0:
+                # Treat non-zero exit as failure to trigger circuit breaker
+                raise ProcessError(
+                    message="Docker not available",
+                    command=[self.runtime_command, "version"],
+                    returncode=result.returncode,
+                    stdout=result.stdout,
+                    stderr=result.stderr,
+                )
+            return True
+        except (ProcessError, OSError):
+            # Re-raise to let circuit breaker count this as a failure
+            raise

@@ -121,7 +121,11 @@ class ContainerManager:
 
     def check_docker(self) -> bool:
         """Check if Docker is available and running."""
-        return self.runtime.is_available()
+        try:
+            return self.runtime.is_available()
+        except RuntimeError:
+            # Circuit breaker is open - Docker has been unavailable
+            return False
 
     def container_exists(self) -> bool:
         """Check if the container exists."""
@@ -267,9 +271,16 @@ class ContainerManager:
         # Get status from lifecycle
         lifecycle_status = self.lifecycle.status()
 
+        # Check Docker availability (handle circuit breaker)
+        try:
+            docker_available = self.runtime.is_available()
+        except RuntimeError:
+            # Circuit breaker is open - Docker unavailable
+            docker_available = False
+
         # Convert to format expected by tests (for compatibility)
         return {
-            "docker_available": self.runtime.is_available(),
+            "docker_available": docker_available,
             "container_exists": lifecycle_status.get("exists", False),
             "container_running": lifecycle_status.get("running", False),
             "container_info": {
