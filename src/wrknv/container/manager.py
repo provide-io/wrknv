@@ -173,8 +173,9 @@ class ContainerManager:
                 ]
             )
 
-        # Install Python if python_version is specified
-        if self.container_config.python_version:
+        # Install Python if python_version is specified and base image isn't already Python
+        # Skip if using python:* base image (already has Python installed)
+        if self.container_config.python_version and not base_image.startswith("python:"):
             py_version = self.container_config.python_version
             lines.extend(
                 [
