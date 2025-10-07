@@ -319,7 +319,7 @@ class ContainerManager:
         since: str | None = None,
     ) -> str | None:
         """Get container logs."""
-        return self.logs.get_logs(lines=lines, follow=follow, since=since)
+        return self.logs.get_logs(tail=lines, follow=follow, since=since, timestamps=False)
 
     def clean(self, preserve_volumes: bool = False) -> bool:
         """Clean up container and optionally volumes."""
@@ -330,7 +330,7 @@ class ContainerManager:
             if self.container_running():
                 success = self.stop() and success
 
-            success = self.lifecycle.remove() and success
+            success = self.lifecycle.remove(force=False) and success
 
         # Clean up volumes if requested
         if not preserve_volumes:
