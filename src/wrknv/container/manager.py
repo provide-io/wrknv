@@ -243,7 +243,7 @@ class ContainerManager:
 
     def status(self) -> dict[str, Any]:
         """Get container status information."""
-        return self.lifecycle.get_status()
+        return self.lifecycle.status()
 
     def backup_volumes(
         self,
