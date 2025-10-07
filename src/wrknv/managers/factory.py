@@ -21,6 +21,7 @@ def get_tool_manager(tool_name: str, config: WorkenvConfig | None = None) -> Bas
     if config is None:
         config = WorkenvConfig.load()
 
+    # Terraform ecosystem
     if tool_name == "ibmtf":
         from .tf.ibm import IbmTfVariant
 
@@ -31,6 +32,18 @@ def get_tool_manager(tool_name: str, config: WorkenvConfig | None = None) -> Bas
 
         return TofuTfVariant(config)
 
+    # Secret management (sub rosa)
+    elif tool_name == "bao":
+        from .subrosa.bao import BaoVariant
+
+        return BaoVariant(config)
+
+    elif tool_name == "vault":
+        from .subrosa.ibm import IbmVaultVariant
+
+        return IbmVaultVariant(config)
+
+    # Single-variant tools
     elif tool_name == "uv":
         from .uv import UvManager
 
@@ -40,11 +53,6 @@ def get_tool_manager(tool_name: str, config: WorkenvConfig | None = None) -> Bas
         from .go import GoManager
 
         return GoManager(config)
-
-    elif tool_name == "bao":
-        from .bao import BaoManager
-
-        return BaoManager(config)
 
     # Add more tools as needed:
     # elif tool_name == "python":
@@ -60,12 +68,12 @@ def get_tool_manager(tool_name: str, config: WorkenvConfig | None = None) -> Bas
 
 def get_supported_tools() -> list[str]:
     """Get list of supported tools."""
-    return ["ibmtf", "tofu", "uv", "go", "bao"]
+    return ["ibmtf", "tofu", "bao", "vault", "uv", "go"]
 
 
 def get_major_tools() -> list[str]:
     """Get list of major tools (those with direct CLI commands)."""
-    return ["ibmtf", "tofu", "uv", "go", "bao"]
+    return ["ibmtf", "tofu", "bao", "vault", "uv", "go"]
 
 
 def get_secondary_tools() -> list[str]:

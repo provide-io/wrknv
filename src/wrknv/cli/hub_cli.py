@@ -27,6 +27,7 @@ def load_commands():
         gitignore,  # noqa: F401
         lock,  # noqa: F401
         profile,  # noqa: F401
+        secrets,  # noqa: F401
         setup,  # noqa: F401
         terraform,  # noqa: F401
         tools,  # noqa: F401
