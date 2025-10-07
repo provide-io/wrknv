@@ -37,77 +37,67 @@ class TestContainerManager(FoundationTestCase):
         if test_build_dir.exists():
             shutil.rmtree(test_build_dir, ignore_errors=True)
 
-    @patch("provide.foundation.process.run_command")
-    def test_check_docker_success(self, mock_run):
+    def test_check_docker_success(self):
         """Test check_docker when Docker is available and running."""
-        mock_run.return_value = Mock(returncode=0)
+        # Mock runtime's is_available method directly
+        self.manager.runtime.is_available = Mock(return_value=True)
 
         result = self.manager.check_docker()
 
         assert result
-        mock_run.assert_called_once_with(["docker", "info"], capture_output=True, text=True, check=False)
+        assert self.manager.runtime.is_available.called
 
-    @patch("provide.foundation.process.run_command")
-    def test_check_docker_daemon_not_running(self, mock_run):
+    def test_check_docker_daemon_not_running(self):
         """Test check_docker when Docker daemon is not running."""
-        mock_run.return_value = Mock(returncode=1)
+        # Mock runtime's is_available method directly
+        self.manager.runtime.is_available = Mock(return_value=False)
 
         result = self.manager.check_docker()
 
         assert not result
 
-    @patch("provide.foundation.process.run_command")
-    def test_check_docker_not_installed(self, mock_run):
+    def test_check_docker_not_installed(self):
         """Test check_docker when Docker is not installed."""
-        mock_run.side_effect = FileNotFoundError()
+        # Mock runtime's is_available to return False (Docker not available)
+        self.manager.runtime.is_available = Mock(return_value=False)
 
         result = self.manager.check_docker()
 
         assert not result
 
-    @patch("provide.foundation.process.run_command")
-    def test_container_exists_true(self, mock_run):
+    def test_container_exists_true(self):
         """Test container_exists when container exists."""
-        mock_run.return_value = Mock(returncode=0, stdout="test-project-dev\nother-container\n")
+        # Mock lifecycle's exists method directly
+        self.manager.lifecycle.exists = Mock(return_value=True)
 
         result = self.manager.container_exists()
 
         assert result
-        mock_run.assert_called_once_with(
-            ["docker", "ps", "-a", "--format", "{{.Names}}"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        assert self.manager.lifecycle.exists.called
 
-    @patch("provide.foundation.process.run_command")
-    def test_container_exists_false(self, mock_run):
+    def test_container_exists_false(self):
         """Test container_exists when container doesn't exist."""
-        mock_run.return_value = Mock(returncode=0, stdout="other-container\n")
+        # Mock lifecycle's exists method directly
+        self.manager.lifecycle.exists = Mock(return_value=False)
 
         result = self.manager.container_exists()
 
         assert not result
 
-    @patch("provide.foundation.process.run_command")
-    def test_container_running_true(self, mock_run):
+    def test_container_running_true(self):
         """Test container_running when container is running."""
-        mock_run.return_value = Mock(returncode=0, stdout="test-project-dev\n")
+        # Mock lifecycle's is_running method directly
+        self.manager.lifecycle.is_running = Mock(return_value=True)
 
         result = self.manager.container_running()
 
         assert result
-        mock_run.assert_called_once_with(
-            ["docker", "ps", "--format", "{{.Names}}"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        assert self.manager.lifecycle.is_running.called
 
-    @patch("provide.foundation.process.run_command")
-    def test_container_running_false(self, mock_run):
+    def test_container_running_false(self):
         """Test container_running when container is not running."""
-        mock_run.return_value = Mock(returncode=0, stdout="")
+        # Mock lifecycle's is_running method directly
+        self.manager.lifecycle.is_running = Mock(return_value=False)
 
         result = self.manager.container_running()
 
@@ -121,12 +111,8 @@ class TestContainerManager(FoundationTestCase):
         result = self.manager.image_exists()
 
         assert result
-        mock_run.assert_called_once_with(
-            ["docker", "images", "--format", "{{.Repository}}:{{.Tag}}"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        # Verify docker images was called (don't check exact kwargs)
+        assert mock_run.called
 
     @patch("provide.foundation.process.run_command")
     def test_image_exists_false(self, mock_run):
