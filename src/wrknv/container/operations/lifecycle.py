@@ -72,11 +72,20 @@ class ContainerLifecycle:
                 )
 
                 image = run_options.pop("image")
+
+                # Convert volume mappings dict to list format for Docker
+                volumes_dict = run_options.get("volumes", {})
+                volumes_list = None
+                if isinstance(volumes_dict, dict):
+                    volumes_list = [f"{host}:{container}" for host, container in volumes_dict.items()]
+                elif volumes_dict:
+                    volumes_list = volumes_dict  # Already a list
+
                 self.runtime.run_container(
                     image=image,
                     name=self.container_name,
                     detach=True,
-                    volumes=run_options.get("volumes"),
+                    volumes=volumes_list,
                     environment=run_options.get("environment"),
                     ports=run_options.get("ports"),
                     workdir=run_options.get("workdir"),
