@@ -21,69 +21,112 @@ from wrknv.managers.factory import get_tool_manager
 from wrknv.wenv.visual import Emoji
 
 
-@register_command("tf", description="Install or manage Terraform/OpenTofu versions", category="tools")
+@register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
 def tf_command(
-    version: str | None = None,
-    latest: bool = False,
+    variant_or_version: str,           # ARG 1: variant (tofu/ibm) OR version
+    version: str | None = None,        # ARG 2: version (if arg1 was variant)
     list: bool = False,
+    list_variants: bool = False,
     dry_run: bool = False,
-    terraform: bool = False,
 ):
-    """Install or manage Terraform/OpenTofu versions.
+    """Manage Terraform/OpenTofu versions.
+
+    Switch to a specific variant and version of Terraform ecosystem tools.
+    This command will install the version if needed and activate it in your workenv.
+
+    Examples:
+        wrknv tf tofu 1.9.0     # Switch to OpenTofu 1.9.0
+        wrknv tf ibm 1.6.2      # Switch to IBM Terraform 1.6.2
+        wrknv tf 1.9.0          # Switch to default (tofu)
+        wrknv tf --list-variants
+        wrknv tf tofu --list    # List available OpenTofu versions
 
     Args:
-        version: Version to install
-        latest: Install latest version
+        variant_or_version: Variant name (tofu/ibm) or version if using default
+        version: Version to switch to (if first arg was variant)
         list: List available versions
-        dry_run: Show what would be installed
-        terraform: Install Terraform instead of OpenTofu
+        list_variants: List available variants
+        dry_run: Show what would be done without doing it
     """
     config = WorkenvConfig.load()
 
-    # Determine which tool to manage
-    tool_name = "terraform" if terraform else "tofu"
-    tool_display = "Terraform" if terraform else "OpenTofu"
-    tool_emoji = Emoji.TERRAFORM if terraform else Emoji.OPENTOFU
+    if list_variants:
+        echo_info(f"{Emoji.TERRAFORM} Available Terraform ecosystem variants:")
+        echo_info("  • tofu - OpenTofu (open source fork)")
+        echo_info("  • ibm  - IBM Terraform (formerly HashiCorp)")
+        return
+
+    # Smart parsing: determine variant and version
+    if version is None:
+        # Single arg: use default variant from config
+        default_variant = config.get_setting("tools.tf.default_variant", "tofu")
+        actual_variant = default_variant
+        actual_version = variant_or_version
+
+        echo_info(f"Using default variant: {actual_variant}")
+    else:
+        # Two args: explicit variant specified
+        actual_variant = variant_or_version
+        actual_version = version
+
+    # Map variant to manager name
+    variant_map = {
+        "tofu": "tofu",
+        "opentofu": "tofu",  # Alias
+        "ibm": "ibmtf",
+        "terraform": "ibmtf",  # Alias
+        "ibmtf": "ibmtf",
+    }
+
+    manager_name = variant_map.get(actual_variant.lower())
+    if not manager_name:
+        echo_error(f"Unknown Terraform variant: {actual_variant}")
+        echo_info("Available variants: tofu, ibm")
+        sys.exit(1)
+
+    # Variant display names
+    variant_display = {
+        "tofu": "OpenTofu",
+        "ibmtf": "IBM Terraform",
+    }
+    display_name = variant_display.get(manager_name, manager_name)
+    tool_emoji = Emoji.OPENTOFU if manager_name == "tofu" else Emoji.TERRAFORM
 
     if list:
-        # List available versions
+        # List available versions for this variant
         try:
-            manager = get_tool_manager(tool_name, config)
-            echo_info(f"Available {tool_display} versions:", prefix=tool_emoji)
-            manager.list_versions()
+            manager = get_tool_manager(manager_name, config)
+            echo_info(f"{tool_emoji} Available {display_name} versions:")
+            versions = manager.get_available_versions()
+            for v in versions[:20]:  # Show first 20
+                echo_info(f"  • {v}")
+            if len(versions) > 20:
+                echo_info(f"  ... and {len(versions) - 20} more")
+            echo_info(f"\nTotal: {len(versions)} versions available")
         except Exception as e:
-            echo_error(f"Error: {e}")
+            echo_error(f"Error listing versions: {e}")
             sys.exit(1)
-    elif latest:
-        # Install latest version
-        try:
-            manager = get_tool_manager(tool_name, config)
-            manager.install_latest(dry_run=dry_run)
-        except Exception as e:
-            echo_error(f"Error: {e}")
-            sys.exit(1)
-    elif version:
-        # Install specific version
-        try:
-            manager = get_tool_manager(tool_name, config)
-            if dry_run:
-                echo_info(f"[DRY-RUN] Would install {tool_display} {version}")
-            else:
-                echo_info(
-                    f"Installing {tool_display} {version}...",
-                    prefix=f"{tool_emoji} {Emoji.DOWNLOAD}",
-                )
-            manager.install_version(version, dry_run=dry_run)
-            if not dry_run:
-                echo_success(f"Successfully installed {tool_display} {version}")
-        except Exception as e:
-            echo_error(f"Error: {e}")
-            sys.exit(1)
-    else:
-        echo_warning("Please specify a version, --latest, or --list")
-        echo_info("Examples:")
-        echo_info("  wrknv tf --list              # List OpenTofu versions")
-        echo_info("  wrknv tf 1.8.0               # Install OpenTofu 1.8.0")
-        echo_info("  wrknv tf --terraform 1.5.7   # Install Terraform 1.5.7")
-        echo_info("  wrknv tf --terraform --list  # List Terraform versions")
+        return
+
+    # Switch to the specified version
+    try:
+        manager = get_tool_manager(manager_name, config)
+
+        if dry_run:
+            echo_info(f"[DRY-RUN] Would switch to {display_name} {actual_version}")
+        else:
+            echo_info(
+                f"{tool_emoji} Switching to {display_name} {actual_version}...",
+            )
+
+        manager.switch_version(actual_version, dry_run=dry_run)
+
+        if not dry_run:
+            echo_success(f"✅ Switched to {display_name} {actual_version}")
+            echo_info(f"💡 Run 'source env.sh' to activate in current shell")
+            echo_info(f"💡 Or restart your terminal")
+    except Exception as e:
+        echo_error(f"Error: {e}")
+        import traceback
+        echo_error(traceback.format_exc())
         sys.exit(1)
