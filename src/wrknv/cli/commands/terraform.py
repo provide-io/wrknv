@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import sys
 
+import click
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
@@ -22,13 +23,9 @@ from wrknv.wenv.visual import Emoji
 
 
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
-def tf_command(
-    variant_or_version: str = "",
-    version: str = "",
-    list: bool = False,
-    list_variants: bool = False,
-    dry_run: bool = False,
-):
+@click.argument("variant_or_version", required=False, default="")
+@click.argument("version", required=False, default="")
+def tf_command(**kwargs):
     """Manage Terraform/OpenTofu versions.
 
     Switch to a specific variant and version of Terraform ecosystem tools.
@@ -48,6 +45,13 @@ def tf_command(
         list_variants: List available variants
         dry_run: Show what would be done without doing it
     """
+    # Extract parameters from kwargs
+    variant_or_version = kwargs.get("variant_or_version", "")
+    version = kwargs.get("version", "")
+    list_flag = kwargs.get("list", False)
+    list_variants = kwargs.get("list_variants", False)
+    dry_run = kwargs.get("dry_run", False)
+
     config = WorkenvConfig.load()
 
     if list_variants:
@@ -62,7 +66,7 @@ def tf_command(
     # Smart parsing: determine variant and version
     if not variant_or_version or variant_or_version == "":
         # No args: only valid with --list or --list-variants
-        if not list and not list_variants:
+        if not list_flag and not list_variants:
             echo_error("Error: Version required. Use 'wrknv tf --list' to see available versions.")
             sys.exit(1)
         actual_variant = default_variant
@@ -72,7 +76,7 @@ def tf_command(
         actual_variant = default_variant
         actual_version = variant_or_version
 
-        if not list and not list_variants:
+        if not list_flag and not list_variants:
             echo_info(f"Using default variant: {actual_variant}")
     else:
         # Two args: explicit variant specified
@@ -102,7 +106,7 @@ def tf_command(
     display_name = variant_display.get(manager_name, manager_name)
     tool_emoji = Emoji.OPENTOFU if manager_name == "tofu" else Emoji.TERRAFORM
 
-    if list:
+    if list_flag:
         # List available versions for this variant
         try:
             manager = get_tool_manager(manager_name, config)
