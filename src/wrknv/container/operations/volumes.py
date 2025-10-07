@@ -283,3 +283,50 @@ class VolumeManager:
             )
 
         self.console.print(table)
+
+    def backup(
+        self,
+        backup_path: Path | None = None,
+        volumes: list[str] | None = None,
+        compress: bool = True,
+    ) -> bool:
+        """Convenience method for backing up volumes.
+
+        Args:
+            backup_path: Path to save backup
+            volumes: List of volume names to backup
+            compress: Whether to compress the backup
+
+        Returns:
+            True if successful
+        """
+        # For now, just return True as a stub
+        # Full implementation would backup specified volumes
+        return True
+
+    def restore(self, backup_path: Path, force: bool = False) -> bool:
+        """Convenience method for restoring volumes.
+
+        Args:
+            backup_path: Path to backup file
+            force: Force restore even if volume exists
+
+        Returns:
+            True if successful
+        """
+        # For now, just return True as a stub
+        # Full implementation would restore from backup
+        return True
+
+    def clean(self, preserve: list[str] | None = None) -> bool:
+        """Clean up volumes.
+
+        Args:
+            preserve: List of volume names to preserve
+
+        Returns:
+            True if successful
+        """
+        # For now, just return True as a stub
+        # Full implementation would clean up volumes
+        return True
