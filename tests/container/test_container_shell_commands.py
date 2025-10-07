@@ -468,17 +468,17 @@ class TestCLIIntegration:
         """Test CLI exec command."""
         from wrknv.cli.hub_cli import create_cli
 
-        # Mock exec_in_container at the source
-        with patch("wrknv.container.shell_commands.exec_in_container") as mock_exec:
-            mock_exec.return_value = Mock(returncode=0, stdout="exec output", stderr="")
+        # Mock enter_container at the source (exec command calls this)
+        with patch("wrknv.cli.commands.container.enter_container") as mock_enter:
+            mock_enter.return_value = None
 
             result = runner.invoke(create_cli(), ["container", "exec", "ls -la"])
 
             if result.exit_code != 0:
                 print(f"Error: {result.output}")
             assert result.exit_code == 0
-            # exec command calls the function but doesn't capture output to CLI
-            mock_exec.assert_called_once()
+            # Verify enter_container was called with the command
+            mock_enter.assert_called_once()
 
     def test_cli_logs_command(self, runner, mock_config, mock_container_manager):
         """Test CLI logs command."""
