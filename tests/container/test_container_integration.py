@@ -393,8 +393,8 @@ class TestContainerVolumeIntegration(FoundationTestCase):
 
         time.sleep(2)
 
-        # Test writing as the container user
-        volumes_to_test = ["/workspace", "/home/user/.cache", "/home/user/.config"]
+        # Test writing as the container user to mounted volumes
+        volumes_to_test = ["/workspace", "/wrknv/cache", "/wrknv/config"]
 
         for volume in volumes_to_test:
             test_file = f"{volume}/permission_test.txt"
