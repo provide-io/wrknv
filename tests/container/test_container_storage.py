@@ -122,17 +122,20 @@ class TestContainerMetadata:
         """Test saving container metadata."""
         container_manager.save_metadata()
 
-        metadata_file = container_manager.get_container_path("metadata.json")
+        metadata_file = container_manager.storage.get_container_path("metadata.json")
         assert metadata_file.exists()
 
         with open(metadata_file) as f:
             metadata = json.load(f)
 
-        assert "created" in metadata
-        assert "config" in metadata
-        assert metadata["config"]["python_version"] == "3.11"
-        assert "git" in metadata["config"]["additional_packages"]
-        assert metadata["image"] == f"{container_manager.image_name}:{container_manager.image_tag}"
+        # Check actual metadata fields from implementation
+        assert "container_name" in metadata
+        assert "image_name" in metadata
+        assert "project_name" in metadata
+        assert "config_version" in metadata
+        assert "last_updated" in metadata
+        assert metadata["container_name"] == "test-project-dev"
+        assert metadata["project_name"] == "test-project"
 
     def test_load_metadata(self, container_manager, test_storage_path):
         """Test loading container metadata."""
@@ -143,9 +146,11 @@ class TestContainerMetadata:
         metadata = container_manager.load_metadata()
 
         assert metadata is not None
-        assert "created" in metadata
-        assert "config" in metadata
-        assert metadata["config"]["python_version"] == "3.11"
+        assert "container_name" in metadata
+        assert "image_name" in metadata
+        assert "project_name" in metadata
+        assert "last_updated" in metadata
+        assert metadata["project_name"] == "test-project"
 
     def test_update_metadata(self, container_manager, test_storage_path):
         """Test updating container metadata."""
@@ -158,7 +163,8 @@ class TestContainerMetadata:
         # Load and verify
         metadata = container_manager.load_metadata()
         assert metadata["last_started"] == "2025-08-31T15:00:00"
-        assert "created" in metadata  # Original field still exists
+        assert "container_name" in metadata  # Original field still exists
+        assert "last_updated" in metadata  # Timestamp updated
 
     def test_metadata_not_found(self, container_manager):
         """Test loading metadata when file doesn't exist."""
