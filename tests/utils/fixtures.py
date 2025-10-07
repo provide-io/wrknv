@@ -46,6 +46,9 @@ def create_test_config(
     Returns:
         WorkenvConfig instance
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+
     container = ContainerConfig(enabled=container_enabled) if container_enabled else None
 
     return WorkenvConfig(
@@ -73,6 +76,9 @@ def create_mock_runtime(
     Returns:
         Mock configured as DockerRuntime
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.container.runtime.docker import DockerRuntime
+
     runtime = Mock(spec=DockerRuntime)
     runtime.runtime_name = name
     runtime.runtime_command = name
@@ -110,6 +116,9 @@ def create_mock_lifecycle(
     Returns:
         Mock configured as ContainerLifecycle
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.container.operations.lifecycle import ContainerLifecycle
+
     lifecycle = Mock(spec=ContainerLifecycle)
     lifecycle.container_name = container_name
     lifecycle.exists = Mock(return_value=exists)
@@ -148,6 +157,9 @@ def create_mock_exec(
     Returns:
         Mock configured as ContainerExec
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.container.operations.exec import ContainerExec
+
     exec_mock = Mock(spec=ContainerExec)
     exec_mock.container_name = container_name
     exec_mock.enter = Mock(return_value=True)
@@ -172,6 +184,9 @@ def create_mock_logs(
     Returns:
         Mock configured as ContainerLogs
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.container.operations.logs import ContainerLogs
+
     logs_mock = Mock(spec=ContainerLogs)
     logs_mock.container_name = container_name
     logs_mock.get_logs = Mock(return_value="test logs")
@@ -192,6 +207,9 @@ def create_mock_builder(**kwargs: Any) -> Mock:
     Returns:
         Mock configured as ContainerBuilder
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.container.operations.build import ContainerBuilder
+
     builder = Mock(spec=ContainerBuilder)
     builder.build = Mock(return_value=True)
     builder.image_exists = Mock(return_value=True)
@@ -212,6 +230,9 @@ def create_mock_volumes(backup_dir: Path | None = None, **kwargs: Any) -> Mock:
     Returns:
         Mock configured as VolumeManager
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.container.operations.volumes import VolumeManager
+
     volumes = Mock(spec=VolumeManager)
     volumes.backup_dir = backup_dir or Path("/tmp/backups")
     volumes.create_volume = Mock(return_value=True)
@@ -242,6 +263,9 @@ def create_mock_storage(
     Returns:
         Mock configured as ContainerStorage
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.container.storage import ContainerStorage
+
     storage = Mock(spec=ContainerStorage)
     storage.container_name = container_name
     storage.base_dir = Path(f"/tmp/wrknv/containers/{container_name}")
@@ -285,6 +309,9 @@ def create_mock_manager(
         >>> manager.check_docker()
         False
     """
+    # Lazy import to avoid circular dependency
+    from wrknv.container.manager import ContainerManager
+
     # Create config if not provided
     if config is None:
         config = create_test_config(project_name=project_name)
