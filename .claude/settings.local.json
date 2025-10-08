@@ -91,7 +91,8 @@
       "Bash(mypy:*)",
       "Bash(docker ps:*)",
       "Bash(xargs:*)",
-      "Read(//private/tmp/**)"
+      "Read(//private/tmp/**)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "additionalDirectories": [
