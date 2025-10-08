@@ -38,13 +38,10 @@ def load_commands():
         "wrknv.cli.commands.workspace",
     ]
 
-    # Import or reload each command module to trigger @register_command decorators
+    # Import command modules to trigger @register_command decorators
+    # Only import once - decorators run at import time and won't re-run
     for module_name in command_modules:
-        if module_name in sys.modules:
-            # Module already imported, reload it to re-execute decorators
-            importlib.reload(sys.modules[module_name])
-        else:
-            # First import
+        if module_name not in sys.modules:
             importlib.import_module(module_name)
 
     logger.debug("Loaded wrknv command modules")

@@ -10,11 +10,22 @@ import os
 from unittest.mock import Mock, patch
 
 import click.testing
-from provide.foundation.hub.manager import clear_hub
 from provide.testkit import FoundationTestCase
 import pytest
 
 from wrknv.cli.hub_cli import create_cli
+
+
+# Create CLI once at module level and reuse across all tests
+_test_cli = None
+
+
+def get_test_cli():
+    """Get or create the test CLI instance."""
+    global _test_cli
+    if _test_cli is None:
+        _test_cli = create_cli()
+    return _test_cli
 
 
 @pytest.mark.cli
@@ -25,7 +36,6 @@ class TestConfigCommands(FoundationTestCase):
     def setup_method(self) -> None:
         """Set up test fixtures."""
         super().setup_method()
-        clear_hub()  # Clear hub state to prevent test contamination
         self.temp_dir = self.create_temp_dir()
         self.temp_path = self.temp_dir
         self.config_file = self.temp_path / "wrknv.toml"
@@ -33,7 +43,7 @@ class TestConfigCommands(FoundationTestCase):
     def test_config_show_no_config(self) -> None:
         """Test showing config when no config file exists."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -48,7 +58,7 @@ class TestConfigCommands(FoundationTestCase):
     def test_config_show_with_config(self) -> None:
         """Test showing existing configuration."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -63,7 +73,7 @@ class TestConfigCommands(FoundationTestCase):
     def test_config_show_json_format(self) -> None:
         """Test showing config in JSON format."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -85,7 +95,7 @@ class TestConfigCommands(FoundationTestCase):
     def test_config_show_with_profile_filter(self) -> None:
         """Test showing only specific profile configuration."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -101,7 +111,7 @@ class TestConfigCommands(FoundationTestCase):
     def test_config_edit_with_editor(self) -> None:
         """Test editing config file with default editor."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         self.config_file.write_text('project_name = "test-project"')
 
@@ -119,7 +129,7 @@ class TestConfigCommands(FoundationTestCase):
     def test_config_edit_no_editor_set(self) -> None:
         """Test editing config when no EDITOR is set."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         self.config_file.write_text('project_name = "test-project"')
 
@@ -144,7 +154,7 @@ class TestConfigCommands(FoundationTestCase):
     def test_config_edit_creates_file_if_missing(self) -> None:
         """Test that edit creates a config file if it doesn't exist."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             with patch("provide.foundation.process.run_command") as mock_run:
@@ -164,7 +174,7 @@ class TestConfigCommands(FoundationTestCase):
     def test_config_validate(self) -> None:
         """Test validating configuration file."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         self.config_file.write_text("""
 project_name = "test-project"
@@ -189,7 +199,7 @@ terraform = { version = "1.5.0" }
     def test_config_validate_with_errors(self) -> None:
         """Test validating invalid configuration."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         self.config_file.write_text("""
 # Missing project_name
@@ -215,7 +225,7 @@ version = "1.0.0"
     def test_config_init(self) -> None:
         """Test initializing a new configuration file."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -233,7 +243,7 @@ version = "1.0.0"
     def test_config_init_already_exists(self) -> None:
         """Test initializing when config already exists."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         self.config_file.write_text('project_name = "existing"')
 
@@ -251,7 +261,7 @@ version = "1.0.0"
     def test_config_get_setting(self) -> None:
         """Test getting a specific configuration setting."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -266,7 +276,7 @@ version = "1.0.0"
     def test_config_set_setting(self) -> None:
         """Test setting a configuration value."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -282,7 +292,7 @@ version = "1.0.0"
     def test_config_path(self) -> None:
         """Test showing configuration file path."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
@@ -303,16 +313,13 @@ class TestConfigCommandIntegration(FoundationTestCase):
     def setup_method(self) -> None:
         """Set up test fixtures."""
         super().setup_method()
-        clear_hub()  # Clear hub state to prevent test contamination
-        self.runner = click.testing.CliRunner()
-        self.cli = create_cli()
         self.temp_dir = self.create_temp_dir()
         self.temp_path = self.temp_dir
 
     def test_config_init_and_validate_integration(self) -> None:
         """Test creating and validating a config file."""
         runner = click.testing.CliRunner()
-        cli = create_cli()
+        cli = get_test_cli()
 
         config_file = self.temp_path / "wrknv.toml"
 
