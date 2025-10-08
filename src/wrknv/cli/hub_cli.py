@@ -38,10 +38,14 @@ def load_commands():
         "wrknv.cli.commands.workspace",
     ]
 
-    # Import command modules to trigger @register_command decorators
-    # Only import once - decorators run at import time and won't re-run
+    # Import or reload command modules to trigger @register_command decorators
+    # Reload is needed when Foundation clears the registry between tests
     for module_name in command_modules:
-        if module_name not in sys.modules:
+        if module_name in sys.modules:
+            # Module already imported - reload to re-run decorators
+            importlib.reload(sys.modules[module_name])
+        else:
+            # First import
             importlib.import_module(module_name)
 
     logger.debug("Loaded wrknv command modules")
