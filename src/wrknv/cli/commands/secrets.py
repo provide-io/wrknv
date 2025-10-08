@@ -52,7 +52,7 @@ def secrets_command(
     config = WorkenvConfig.load()
 
     if list_variants:
-        echo_info(f"{Emoji.KEY} Available secret management variants:")
+        echo_info(f"🔐 Available secret management variants:")
         echo_info("  • bao    - OpenBao (open source Vault fork)")
         echo_info("  • vault  - IBM Vault (HashiCorp Vault)")
         return
@@ -104,7 +104,7 @@ def secrets_command(
         # List available versions for this variant
         try:
             manager = get_tool_manager(manager_name, config)
-            echo_info(f"{Emoji.SEARCH} Available {display_name} versions:")
+            echo_info(f"🔐 Available {display_name} versions:")
             versions = manager.get_available_versions()
             for v in versions[:20]:  # Show first 20
                 echo_info(f"  • {v}")
@@ -124,7 +124,7 @@ def secrets_command(
             echo_info(f"[DRY-RUN] Would switch to {display_name} {actual_version}")
         else:
             echo_info(
-                f"{Emoji.KEY} Switching to {display_name} {actual_version}...",
+                f"🔐 Switching to {display_name} {actual_version}...",
             )
 
         manager.switch_version(actual_version, dry_run=dry_run)
