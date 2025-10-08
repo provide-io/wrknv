@@ -223,8 +223,9 @@ project_name = "test-project"
 
             runner = click.testing.CliRunner()
             cli = get_test_cli()
+            # Use positional arguments, not options
             result = runner.invoke(
-                cli, ["profile", "export", "dev", "--output", str(output_file)]
+                cli, ["profile", "export", "dev", str(output_file)]
             )
 
             assert result.exit_code == 0
@@ -250,6 +251,7 @@ project_name = "test-project"
 
             runner = click.testing.CliRunner()
             cli = get_test_cli()
+            # Command expects positional argument, not option
             result = runner.invoke(cli, ["profile", "import", str(profile_file)])
 
             assert result.exit_code == 0

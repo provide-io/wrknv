@@ -40,7 +40,7 @@ DEFAULT_CONTAINER_STORAGE_PATH = "~/.wrknv/containers"
 # =================================
 # Package and Registry defaults
 # =================================
-DEFAULT_PACKAGE_FORMAT = "psp"
+DEFAULT_PACKAGE_FORMAT = "tar"
 DEFAULT_SEARCH_LIMIT = 10
 DEFAULT_PACKAGE_DESCRIPTION = ""
 DEFAULT_PACKAGE_AUTHOR = ""
