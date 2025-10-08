@@ -11,6 +11,9 @@ Main CLI using provide.foundation.hub for command registration.
 from __future__ import annotations
 
 
+import importlib
+import sys
+
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 
@@ -19,21 +22,30 @@ logger = get_logger(__name__)
 
 def load_commands():
     """Import all command modules to trigger registration."""
-    # Import command modules to trigger @register_command decorators
-    from wrknv.cli.commands import (
-        config,  # noqa: F401
-        container,  # noqa: F401
-        doctor,  # noqa: F401
-        gitignore,  # noqa: F401
-        lock,  # noqa: F401
-        profile,  # noqa: F401
-        secrets,  # noqa: F401
-        setup,  # noqa: F401
-        terraform,  # noqa: F401
-        tools,  # noqa: F401
-        workenv,  # noqa: F401
-        workspace,  # noqa: F401
-    )
+    # List of command modules to load
+    command_modules = [
+        "wrknv.cli.commands.config",
+        "wrknv.cli.commands.container",
+        "wrknv.cli.commands.doctor",
+        "wrknv.cli.commands.gitignore",
+        "wrknv.cli.commands.lock",
+        "wrknv.cli.commands.profile",
+        "wrknv.cli.commands.secrets",
+        "wrknv.cli.commands.setup",
+        "wrknv.cli.commands.terraform",
+        "wrknv.cli.commands.tools",
+        "wrknv.cli.commands.workenv",
+        "wrknv.cli.commands.workspace",
+    ]
+
+    # Import or reload each command module to trigger @register_command decorators
+    for module_name in command_modules:
+        if module_name in sys.modules:
+            # Module already imported, reload it to re-execute decorators
+            importlib.reload(sys.modules[module_name])
+        else:
+            # First import
+            importlib.import_module(module_name)
 
     logger.debug("Loaded wrknv command modules")
 
