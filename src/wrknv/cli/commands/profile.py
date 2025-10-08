@@ -187,8 +187,7 @@ def profile_export(name: str, output: str):
 def profile_import(file: str):
     """Import a profile from a file."""
     import json
-
-    import tomli
+    import tomllib
 
     file_path = Path(file)
 
@@ -203,8 +202,8 @@ def profile_import(file: str):
         try:
             data = json.loads(content)
         except json.JSONDecodeError:
-            # Try TOML
-            data = tomli.loads(content)
+            # Try TOML (using Python 3.11+ built-in tomllib)
+            data = tomllib.loads(content)
 
         name = data.get("name")
         tools = data.get("tools")
