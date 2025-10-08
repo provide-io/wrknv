@@ -65,14 +65,14 @@ def config_show(
     "config.edit",
     description="Edit configuration file",
 )
-@resilient
 def config_edit():
     """Edit configuration file."""
     config = WorkenvConfig.load()
     try:
         config.edit_config()
     except RuntimeError as e:
-        raise ConfigurationError(f"Failed to edit config: {e}") from e
+        echo_error(f"Failed to edit config: {e}")
+        sys.exit(1)
 
 
 @register_command(
