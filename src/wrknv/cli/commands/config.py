@@ -15,6 +15,7 @@ import json
 import sys
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.console.output import pout
 from provide.foundation.errors import ConfigurationError, resilient
 from provide.foundation.hub import register_command
 
@@ -47,7 +48,7 @@ def config_show(
             raise ProfileError(profile, available_profiles=config.list_profiles())
 
         if output_json:
-            print(json.dumps({"profile": profile, "tools": profile_data}, indent=2))
+            pout({"profile": profile, "tools": profile_data})
         else:
             echo_info(f"Profile: {profile}")
             for tool_name, version in profile_data.items():
@@ -55,7 +56,7 @@ def config_show(
     elif output_json:
         # Output entire config as JSON
         config_data = config.to_dict()
-        print(json.dumps(config_data, indent=2))
+        pout(config_data)
     else:
         # Default formatted output
         config.show_config()
