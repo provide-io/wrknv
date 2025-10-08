@@ -10,6 +10,7 @@ import os
 from unittest.mock import Mock, patch
 
 import click.testing
+from provide.foundation.hub.manager import clear_hub
 from provide.testkit import FoundationTestCase
 import pytest
 
@@ -24,6 +25,7 @@ class TestConfigCommands(FoundationTestCase):
     def setup_method(self) -> None:
         """Set up test fixtures."""
         super().setup_method()
+        clear_hub()  # Clear hub state to prevent test contamination
         self.runner = click.testing.CliRunner()
         self.cli = create_cli()
         self.temp_dir = self.create_temp_dir()
