@@ -16,14 +16,24 @@ import tomli_w
 from wrknv.cli.hub_cli import create_cli
 
 
+# Module-level shared CLI instance
+_test_cli = None
+
+
+def get_test_cli():
+    """Get or create the test CLI instance."""
+    global _test_cli
+    if _test_cli is None:
+        _test_cli = create_cli()
+    return _test_cli
+
+
 class TestProfileCommands(FoundationTestCase):
     """Test profile save and load CLI commands."""
 
     def setup_method(self) -> None:
         """Set up test fixtures."""
         super().setup_method()
-        self.runner = click.testing.CliRunner()
-        self.cli = create_cli()
         self.temp_dir = self.create_temp_dir()
         self.temp_path = self.temp_dir
         self.config_file = self.temp_path / "wrknv.toml"
@@ -41,7 +51,9 @@ project_name = "test-project"
             mock_config.get_current_profile.return_value = "default"
             mock_load.return_value = mock_config
 
-            result = self.runner.invoke(self.cli, ["profile", "list"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "list"])
 
             assert result.exit_code == 0
             assert "No profiles found" in result.output
@@ -54,7 +66,9 @@ project_name = "test-project"
             mock_config.get_current_profile.return_value = "default"
             mock_load.return_value = mock_config
 
-            result = self.runner.invoke(self.cli, ["profile", "list"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "list"])
 
             assert result.exit_code == 0
             assert "dev" in result.output
@@ -70,7 +84,9 @@ project_name = "test-project"
             mock_config.profile_exists.return_value = False
             mock_load.return_value = mock_config
 
-            result = self.runner.invoke(self.cli, ["profile", "save", "dev"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "save", "dev"])
 
             assert result.exit_code == 0
             assert "Saved profile 'dev'" in result.output
@@ -88,7 +104,9 @@ project_name = "test-project"
             mock_load.return_value = mock_config
 
             # Should prompt for confirmation
-            result = self.runner.invoke(self.cli, ["profile", "save", "dev", "--force"], input="y\n")
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "save", "dev", "--force"], input="y\n")
 
             assert result.exit_code == 0
             mock_config.save_profile.assert_called_once()
@@ -101,7 +119,9 @@ project_name = "test-project"
             mock_config.list_profiles.return_value = []
             mock_load.return_value = mock_config
 
-            result = self.runner.invoke(self.cli, ["profile", "load", "nonexistent"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "load", "nonexistent"])
 
             assert result.exit_code == 1
             assert "Profile 'nonexistent' not found" in result.output
@@ -118,7 +138,9 @@ project_name = "test-project"
                 mock_manager.install_version.return_value = None
                 mock_get_manager.return_value = mock_manager
 
-                result = self.runner.invoke(self.cli, ["profile", "load", "dev"])
+                runner = click.testing.CliRunner()
+                cli = get_test_cli()
+                result = runner.invoke(cli, ["profile", "load", "dev"])
 
                 assert result.exit_code == 0
                 assert "Loading profile 'dev'" in result.output
@@ -144,7 +166,9 @@ project_name = "test-project"
                 ]
                 mock_get_manager.return_value = mock_manager
 
-                result = self.runner.invoke(self.cli, ["profile", "load", "dev"])
+                runner = click.testing.CliRunner()
+                cli = get_test_cli()
+                result = runner.invoke(cli, ["profile", "load", "dev"])
 
                 # Should not exit with error, but show error message
                 assert result.exit_code == 0
@@ -159,8 +183,10 @@ project_name = "test-project"
             mock_config.delete_profile.return_value = True
             mock_load.return_value = mock_config
 
-            result = self.runner.invoke(
-                self.cli,
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(
+                cli,
                 ["profile", "delete", "dev"],
                 input="y\n",  # Confirm deletion
             )
@@ -176,7 +202,9 @@ project_name = "test-project"
             mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0", "uv": "0.4.0"}
             mock_load.return_value = mock_config
 
-            result = self.runner.invoke(self.cli, ["profile", "show", "dev"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "show", "dev"])
 
             assert result.exit_code == 0
             assert "Profile: dev" in result.output
@@ -193,8 +221,10 @@ project_name = "test-project"
 
             output_file = self.temp_path / "profile.toml"
 
-            result = self.runner.invoke(
-                self.cli, ["profile", "export", "dev", "--output", str(output_file)]
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(
+                cli, ["profile", "export", "dev", "--output", str(output_file)]
             )
 
             assert result.exit_code == 0
@@ -218,7 +248,9 @@ project_name = "test-project"
             mock_config.save_profile.return_value = None
             mock_load.return_value = mock_config
 
-            result = self.runner.invoke(self.cli, ["profile", "import", str(profile_file)])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "import", str(profile_file)])
 
             assert result.exit_code == 0
             assert "Imported profile 'imported'" in result.output
@@ -233,8 +265,6 @@ class TestProfileCommandIntegration(FoundationTestCase):
     def setup_method(self) -> None:
         """Set up test fixtures."""
         super().setup_method()
-        self.runner = click.testing.CliRunner()
-        self.cli = create_cli()
         self.temp_dir = self.create_temp_dir()
         self.temp_path = self.temp_dir
 
@@ -254,7 +284,9 @@ go = { version = "1.21.0" }
             mock_cwd.return_value = self.temp_path
 
             # Save profile
-            result = self.runner.invoke(self.cli, ["profile", "save", "test-profile"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "save", "test-profile"])
             assert result.exit_code == 0
 
             # Verify profile was saved to file
@@ -268,7 +300,7 @@ go = { version = "1.21.0" }
                 mock_manager.install_version.return_value = None
                 mock_get_manager.return_value = mock_manager
 
-                result = self.runner.invoke(self.cli, ["profile", "load", "test-profile"])
+                result = runner.invoke(cli, ["profile", "load", "test-profile"])
                 assert result.exit_code == 0
 
 
