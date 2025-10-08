@@ -95,13 +95,20 @@ class TestDownloadOperations:
         url = "https://example.com/test.zip"
         dest_path = tmp_path / "test.zip"
 
+        # Mock response object
+        mock_response = MagicMock()
+        mock_response.is_success.return_value = True
+        mock_response.status = 200
+        mock_response.headers = {"content-length": "16"}
+
         # Mock UniversalClient
         mock_client = MagicMock()
         mock_client.__aenter__ = AsyncMock(return_value=mock_client)
         mock_client.__aexit__ = AsyncMock()
-        mock_client.head = AsyncMock(return_value=MagicMock(headers={"content-length": "16"}))
+        mock_client.request = AsyncMock(return_value=mock_response)
+        mock_client.head = AsyncMock(return_value=mock_response)
 
-        async def mock_stream(url):
+        async def mock_stream(url, method="GET"):
             yield b"ZIP file content"
 
         mock_client.stream = mock_stream
@@ -121,12 +128,19 @@ class TestDownloadOperations:
         url = "https://example.com/test.zip"
         dest_path = tmp_path / "test.zip"
 
+        # Mock response object
+        mock_response = MagicMock()
+        mock_response.is_success.return_value = True
+        mock_response.status = 200
+        mock_response.headers = {"content-length": "16"}
+
         mock_client = MagicMock()
         mock_client.__aenter__ = AsyncMock(return_value=mock_client)
         mock_client.__aexit__ = AsyncMock()
-        mock_client.head = AsyncMock(return_value=MagicMock(headers={"content-length": "16"}))
+        mock_client.request = AsyncMock(return_value=mock_response)
+        mock_client.head = AsyncMock(return_value=mock_response)
 
-        async def mock_stream(url):
+        async def mock_stream(url, method="GET"):
             yield b"ZIP file content"
 
         mock_client.stream = mock_stream
