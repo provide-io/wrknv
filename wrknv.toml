@@ -1,24 +1,36 @@
 project_name = "wrknv"
 version = "0.1.0"
-log_level = "INFO"
 
 [tools]
-# Matrix tool configurations
-terraform = ["1.11.x", "1.13.x"]
-tofu = ["1.9.x", "1.10.x"]
-# go = { version = "1.21.0" }
+terraform = [
+    "1.11.x",
+    "1.13.x",
+]
+tofu = [
+    "1.9.x",
+    "1.10.x",
+]
 
 [tools.bao]
 version = "2.1.0"
 
-[gitignore]
-templates = ["Python", "Node", "Global"]
+[profiles.dev]
+terraform = [
+    "1.11.x",
+    "1.13.x",
+]
+tofu = [
+    "1.9.x",
+    "1.10.x",
+]
+bao = "2.1.0"
 
-[container]
-enabled = false
+[workenv]
+auto_install = true
+use_cache = true
+cache_ttl = "7d"
+log_level = "WARNING"
+container_runtime = "docker"
+container_registry = "ghcr.io"
 
-[package]
-# Example package configuration
-# name = "my-provider"
-# version = "0.1.0"
-# entry_point = "src/my_provider/__init__.py"
+[env]
