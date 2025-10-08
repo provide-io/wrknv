@@ -10,6 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from provide.foundation.cli import echo_error, echo_info, echo_success
+from provide.foundation.console.output import pout
 from provide.foundation.hub import register_command
 
 from wrknv.config import WorkenvConfig
@@ -105,11 +106,11 @@ def gitignore_show(template: str, raw: bool = False):
         return
 
     if raw:
-        print(content)
+        pout(content)
     else:
         echo_info(f"Content of '{template}.gitignore':")
         echo_info("-" * 40)
-        print(content)
+        pout(content)
         echo_info("-" * 40)
 
 

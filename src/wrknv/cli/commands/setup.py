@@ -16,6 +16,7 @@ import shutil
 import sys
 
 from provide.foundation.cli import echo_error, echo_info, echo_success
+from provide.foundation.console.output import pout
 from provide.foundation.hub import register_command
 from provide.foundation.process import ProcessError, run_command
 
@@ -136,7 +137,7 @@ def setup_command(
                     echo_info("  autoload -U compinit && compinit")
         else:
             # Just output the completion script
-            print(completion_script)
+            pout(completion_script)
         return
 
     if init:
