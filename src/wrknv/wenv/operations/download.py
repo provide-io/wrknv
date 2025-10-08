@@ -4,7 +4,7 @@
 """
 wrknv Download Operations
 ====================================
-Functions for downloading and verifying tool archives using foundation transport.
+Functions for downloading and verifying tool archives using Foundation's ToolDownloader.
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ from urllib.parse import urlparse
 from provide.foundation import logger
 from provide.foundation.crypto import verify_file
 from provide.foundation.resilience import circuit_breaker
+from provide.foundation.tools.downloader import ToolDownloader
 from provide.foundation.transport import UniversalClient
 
 
@@ -31,8 +32,9 @@ async def download_file_async(
     show_progress: bool = True,
     headers: dict[str, str] | None = None,
     progress_callback: Callable[[int, int], None] | None = None,
+    checksum: str | None = None,
 ) -> None:
-    """Download a file using foundation transport with streaming.
+    """Download a file using Foundation's ToolDownloader with streaming.
 
     Uses circuit breaker to prevent repeated attempts when downloads are failing.
     After 5 failures, will fast-fail for 60 seconds before retrying.
@@ -43,6 +45,7 @@ async def download_file_async(
         show_progress: Whether to log progress
         headers: Optional custom headers
         progress_callback: Optional callback(downloaded_bytes, total_bytes)
+        checksum: Optional checksum for verification
 
     Raises:
         RuntimeError: If circuit breaker is open (too many recent failures)
@@ -53,42 +56,33 @@ async def download_file_async(
     # Create parent directories if they don't exist
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    downloaded = 0
-    total_size = 0
-
     try:
         async with UniversalClient(default_headers=headers or {}) as client:
-            # Try to get total size from HEAD request
-            try:
-                head_response = await client.head(url)
-                if "content-length" in head_response.headers:
-                    total_size = int(head_response.headers["content-length"])
-            except Exception:
-                pass  # Size unknown, continue without it
+            # Create ToolDownloader instance
+            downloader = ToolDownloader(client)
 
-            # Stream download
-            with open(output_path, "wb") as f:
-                async for chunk in client.stream(url):
-                    f.write(chunk)
-                    downloaded += len(chunk)
+            # Add progress callback if provided
+            if progress_callback:
+                downloader.add_progress_callback(progress_callback)
 
-                    # Progress reporting
-                    if show_progress and total_size > 0:
-                        percent = min(100, (downloaded * 100) // total_size)
-                        if downloaded % (1024 * 1024) < len(chunk):  # Log every ~1MB
-                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total_size} bytes)")
+            # Add logging progress callback if enabled
+            if show_progress:
+                def log_progress(downloaded: int, total: int) -> None:
+                    if total > 0:
+                        percent = min(100, (downloaded * 100) // total)
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
+                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
-                    # Custom callback
-                    if progress_callback and total_size > 0:
-                        progress_callback(downloaded, total_size)
+                downloader.add_progress_callback(log_progress)
 
-        logger.info(f"Successfully downloaded {output_path.name} ({downloaded} bytes)")
+            # Download with progress and optional checksum verification
+            await downloader.download_with_progress(url, output_path, checksum)
+
+        logger.info(f"Successfully downloaded {output_path.name}")
 
     except Exception as e:
-        # Clean up partial download
-        if output_path.exists():
-            output_path.unlink()
-        raise Exception(f"Failed to download {url}: {e}")
+        # ToolDownloader already cleans up partial downloads on failure
+        raise Exception(f"Failed to download {url}: {e}") from e
 
 
 def download_file(
@@ -96,6 +90,7 @@ def download_file(
     output_path: pathlib.Path,
     show_progress: bool = True,
     headers: dict[str, str] | None = None,
+    checksum: str | None = None,
 ) -> None:
     """Synchronous wrapper for download_file_async.
 
@@ -104,8 +99,80 @@ def download_file(
         output_path: Where to save the file
         show_progress: Whether to log progress
         headers: Optional custom headers
+        checksum: Optional checksum for verification
     """
-    asyncio.run(download_file_async(url, output_path, show_progress, headers))
+    asyncio.run(download_file_async(url, output_path, show_progress, headers, checksum=checksum))
+
+
+async def download_with_mirrors_async(
+    mirrors: list[str],
+    output_path: pathlib.Path,
+    show_progress: bool = True,
+    headers: dict[str, str] | None = None,
+    checksum: str | None = None,
+) -> None:
+    """Download a file trying multiple mirror URLs until one succeeds.
+
+    Args:
+        mirrors: List of mirror URLs to try in order
+        output_path: Where to save the file
+        show_progress: Whether to log progress
+        headers: Optional custom headers
+        checksum: Optional checksum for verification
+
+    Raises:
+        Exception: If all mirrors fail
+    """
+    logger.info(f"Downloading from mirrors to {output_path}")
+
+    # Create parent directories if they don't exist
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        async with UniversalClient(default_headers=headers or {}) as client:
+            downloader = ToolDownloader(client)
+
+            # Add logging progress callback if enabled
+            if show_progress:
+                def log_progress(downloaded: int, total: int) -> None:
+                    if total > 0:
+                        percent = min(100, (downloaded * 100) // total)
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
+                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
+
+                downloader.add_progress_callback(log_progress)
+
+            # Download with mirror fallback
+            await downloader.download_with_mirrors(mirrors, output_path)
+
+            # Verify checksum if provided (mirror method doesn't support checksum param)
+            if checksum and not verify_checksum(output_path, checksum):
+                output_path.unlink()
+                raise Exception(f"Checksum verification failed for {output_path.name}")
+
+        logger.info(f"Successfully downloaded {output_path.name}")
+
+    except Exception as e:
+        raise Exception(f"Failed to download from all mirrors: {e}") from e
+
+
+def download_with_mirrors(
+    mirrors: list[str],
+    output_path: pathlib.Path,
+    show_progress: bool = True,
+    headers: dict[str, str] | None = None,
+    checksum: str | None = None,
+) -> None:
+    """Synchronous wrapper for download_with_mirrors_async.
+
+    Args:
+        mirrors: List of mirror URLs to try in order
+        output_path: Where to save the file
+        show_progress: Whether to log progress
+        headers: Optional custom headers
+        checksum: Optional checksum for verification
+    """
+    asyncio.run(download_with_mirrors_async(mirrors, output_path, show_progress, headers, checksum))
 
 
 def verify_checksum(file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256") -> bool:

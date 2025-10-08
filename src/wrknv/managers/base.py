@@ -248,29 +248,26 @@ class BaseToolManager(ABC):
             raise ToolManagerError(f"Failed to install {self.tool_name} {version}: {e}")
 
     def _verify_download_checksum(self, download_path: pathlib.Path, checksum_url: str) -> None:
-        """Download and verify checksum file."""
-        checksum_filename = pathlib.Path(urlparse(checksum_url).path).name
-        checksum_path = self.cache_dir / checksum_filename
+        """Download and verify checksum file using Foundation helpers."""
+        from wrknv.wenv.operations.download import download_checksum_file, parse_checksum_file
 
-        # Download checksum file
-        self.download_file(checksum_url, checksum_path, show_progress=False)
+        # Download checksum file using helper
+        checksum_path = download_checksum_file(checksum_url, self.cache_dir)
+        if not checksum_path:
+            logger.warning(f"Failed to download checksum file from {checksum_url}")
+            return
 
-        # Parse checksum file and verify
-        with open(checksum_path) as f:
-            checksum_content = f.read()
-
-        # Find checksum for our file
+        # Parse checksum file using helper
         download_filename = download_path.name
-        for line in checksum_content.split("\n"):
-            if download_filename in line and line.strip():
-                parts = line.strip().split()
-                if len(parts) >= 2:
-                    expected_checksum = parts[0]
-                    if not self.verify_checksum(download_path, expected_checksum):
-                        raise ToolManagerError(f"Checksum verification failed for {download_path}")
-                    return
+        expected_checksum = parse_checksum_file(checksum_path, download_filename)
 
-        logger.warning(f"No checksum found for {download_filename} in {checksum_path}")
+        if expected_checksum:
+            # Verify using Foundation's verify method
+            if not self.verify_checksum(download_path, expected_checksum):
+                raise ToolManagerError(f"Checksum verification failed for {download_path}")
+            logger.info(f"✅ Checksum verified for {download_filename}")
+        else:
+            logger.warning(f"No checksum found for {download_filename} in {checksum_path.name}")
 
     @abstractmethod
     def _install_from_archive(self, archive_path: pathlib.Path, version: str) -> None:
