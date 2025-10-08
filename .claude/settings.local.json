@@ -90,7 +90,8 @@
       "Bash(ruff check:*)",
       "Bash(mypy:*)",
       "Bash(docker ps:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Read(//private/tmp/**)"
     ],
     "deny": [],
     "additionalDirectories": [
