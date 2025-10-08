@@ -257,7 +257,9 @@ class TestConfigCommandIntegration(FoundationTestCase):
     def setup_method(self) -> None:
         """Set up test fixtures."""
         super().setup_method()
+        clear_hub()  # Clear hub state to prevent test contamination
         self.runner = click.testing.CliRunner()
+        self.cli = create_cli()
         self.temp_dir = self.create_temp_dir()
         self.temp_path = self.temp_dir
 
