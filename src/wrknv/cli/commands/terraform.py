@@ -12,8 +12,8 @@ from __future__ import annotations
 
 
 import sys
+from typing import Annotated
 
-import click
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
@@ -23,11 +23,9 @@ from wrknv.wenv.visual import Emoji
 
 
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
-@click.argument("variant_or_version", required=False)
-@click.argument("version", required=False)
 def tf_command(
-    variant_or_version,
-    version,
+    variant_or_version: Annotated[str, "argument"] = "",
+    version: Annotated[str, "argument"] = "",
     list: bool = False,
     list_variants: bool = False,
     dry_run: bool = False,
@@ -51,12 +49,10 @@ def tf_command(
         list_variants: List available variants
         dry_run: Show what would be done without doing it
     """
-    # Convert None to empty string for easier handling
-    variant_or_version = variant_or_version or ""
-    version = version or ""
-    list_flag = list
-
     config = WorkenvConfig.load()
+
+    # Use list as the flag variable
+    list_flag = list
 
     if list_variants:
         echo_info(f"{Emoji.TERRAFORM} Available Terraform ecosystem variants:")

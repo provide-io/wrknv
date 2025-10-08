@@ -12,8 +12,8 @@ from __future__ import annotations
 
 
 import sys
+from typing import Annotated
 
-import click
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
@@ -23,11 +23,9 @@ from wrknv.wenv.visual import Emoji
 
 
 @register_command("secrets", description="Manage secret management tools (Bao, Vault)", category="tools")
-@click.argument("variant_or_version", required=False)
-@click.argument("version", required=False)
 def secrets_command(
-    variant_or_version: str | None = None,
-    version: str | None = None,
+    variant_or_version: Annotated[str, "argument"] = "",
+    version: Annotated[str, "argument"] = "",
     list: bool = False,
     list_variants: bool = False,
     dry_run: bool = False,
@@ -59,14 +57,24 @@ def secrets_command(
         echo_info("  • vault  - IBM Vault (HashiCorp Vault)")
         return
 
+    # Get default variant for list/install operations
+    default_variant = config.get_setting("tools.secrets.default_variant", "bao")
+
     # Smart parsing: determine variant and version
-    if version is None:
+    if not variant_or_version or variant_or_version == "":
+        # No args: only valid with --list or --list-variants
+        if not list and not list_variants:
+            echo_error("Error: Version required. Use 'wrknv secrets --list' to see available versions.")
+            sys.exit(1)
+        actual_variant = default_variant
+        actual_version = ""
+    elif not version or version == "":
         # Single arg: use default variant from config
-        default_variant = config.get_setting("tools.secrets.default_variant", "bao")
         actual_variant = default_variant
         actual_version = variant_or_version
 
-        echo_info(f"Using default variant: {actual_variant}")
+        if not list and not list_variants:
+            echo_info(f"Using default variant: {actual_variant}")
     else:
         # Two args: explicit variant specified
         actual_variant = variant_or_version
