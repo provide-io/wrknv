@@ -9,6 +9,18 @@ import pytest
 from wrknv.cli.hub_cli import create_cli
 
 
+# Module-level shared CLI instance
+_test_cli = None
+
+
+def get_test_cli():
+    """Get or create the test CLI instance."""
+    global _test_cli
+    if _test_cli is None:
+        _test_cli = create_cli()
+    return _test_cli
+
+
 @pytest.fixture
 def runner():
     return CliRunner()
@@ -56,7 +68,7 @@ templates_path = "{templates_path_actual}"
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
-                cli = create_cli()
+                cli = get_test_cli()
                 result = runner.invoke(cli, ["gitignore-build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
@@ -108,7 +120,7 @@ templates_path = "{templates_path_actual}"
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
-                cli = create_cli()
+                cli = get_test_cli()
                 result = runner.invoke(
                     cli,
                     ["gitignore-build", "--templates", "Global", "--templates", "Python"],
@@ -148,7 +160,7 @@ version = "0.1.0"
         with patch("wrknv.cli.commands.gitignore.WorkenvConfig", return_value=mock_config_instance):
             # Change current working directory to tmp_path for the test
             with runner.isolated_filesystem(tmp_path):
-                cli = create_cli()
+                cli = get_test_cli()
                 result = runner.invoke(cli, ["gitignore-build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
@@ -190,7 +202,7 @@ templates_path = "{templates_path_actual}"
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
-                cli = create_cli()
+                cli = get_test_cli()
                 result = runner.invoke(cli, ["gitignore-build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
@@ -239,7 +251,7 @@ templates_path = "{templates_path_actual}"
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
                 custom_output_path = tmp_path / "my_custom.ignore"
 
-                cli = create_cli()
+                cli = get_test_cli()
                 result = runner.invoke(
                     cli, ["gitignore", "build", "--output", str(custom_output_path)], catch_exceptions=False
                 )
