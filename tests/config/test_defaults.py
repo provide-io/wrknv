@@ -177,7 +177,7 @@ class TestValueConstraints:
 
     def test_package_format_valid(self) -> None:
         """Test package format is known."""
-        valid_formats = {"psp", "tar", "zip"}
+        valid_formats = {"tar", "zip"}
         assert DEFAULT_PACKAGE_FORMAT in valid_formats
 
     def test_log_level_valid(self) -> None:
