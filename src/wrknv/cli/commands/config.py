@@ -47,7 +47,7 @@ def config_show(
             raise ProfileError(profile, available_profiles=config.list_profiles())
 
         if output_json:
-            echo_info(json.dumps({"profile": profile, "tools": profile_data}, indent=2))
+            print(json.dumps({"profile": profile, "tools": profile_data}, indent=2))
         else:
             echo_info(f"Profile: {profile}")
             for tool_name, version in profile_data.items():
@@ -55,7 +55,7 @@ def config_show(
     elif output_json:
         # Output entire config as JSON
         config_data = config.to_dict()
-        echo_info(json.dumps(config_data, indent=2))
+        print(json.dumps(config_data, indent=2))
     else:
         # Default formatted output
         config.show_config()
