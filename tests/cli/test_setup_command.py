@@ -16,20 +16,32 @@ import pytest
 from wrknv.cli.hub_cli import create_cli
 
 
+# Module-level shared CLI instance
+_test_cli = None
+
+
+def get_test_cli():
+    """Get or create the test CLI instance."""
+    global _test_cli
+    if _test_cli is None:
+        _test_cli = create_cli()
+    return _test_cli
+
+
 class TestSetupCommand(FoundationTestCase):
     """Test setup CLI command."""
 
     def setup_method(self) -> None:
         """Set up test fixtures."""
         super().setup_method()
-        self.runner = click.testing.CliRunner()
-        self.cli = create_cli()
         self.temp_dir = self.create_temp_dir()
         self.temp_path = self.temp_dir
 
     def test_setup_no_options(self) -> None:
         """Test setup command with no options shows help."""
-        result = self.runner.invoke(self.cli, ["setup"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup"])
 
         assert result.exit_code == 0
         assert "Available setup options:" in result.output
@@ -41,7 +53,9 @@ class TestSetupCommand(FoundationTestCase):
         """Test setup --init to create wrknv's own workenv."""
         mock_manager_class.setup_workenv.return_value = True
 
-        result = self.runner.invoke(self.cli, ["setup", "--init"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--init"])
 
         assert result.exit_code == 0
         assert "Setting up wrknv workenv" in result.output
@@ -52,7 +66,9 @@ class TestSetupCommand(FoundationTestCase):
         """Test setup --init --force to recreate workenv."""
         mock_manager_class.setup_workenv.return_value = True
 
-        result = self.runner.invoke(self.cli, ["setup", "--init", "--force"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--init", "--force"])
 
         assert result.exit_code == 0
         mock_manager_class.setup_workenv.assert_called_once_with(force=True)
@@ -62,7 +78,9 @@ class TestSetupCommand(FoundationTestCase):
         """Test setup --init when creation fails."""
         mock_manager_class.setup_workenv.side_effect = Exception("Failed to create virtualenv")
 
-        result = self.runner.invoke(self.cli, ["setup", "--init"], catch_exceptions=False)
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--init"], catch_exceptions=False)
 
         assert result.exit_code != 0
 
@@ -73,7 +91,9 @@ class TestSetupCommand(FoundationTestCase):
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0)
 
-        result = self.runner.invoke(self.cli, ["setup", "--shell-integration"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--shell-integration"])
 
         assert result.exit_code == 0
         assert "Setting up shell integration" in result.output
@@ -86,7 +106,9 @@ class TestSetupCommand(FoundationTestCase):
         """Test shell integration when script is missing."""
         mock_exists.return_value = False
 
-        result = self.runner.invoke(self.cli, ["setup", "--shell-integration"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--shell-integration"])
 
         assert result.exit_code == 1
         assert "Shell integration script not found" in result.output
@@ -99,7 +121,9 @@ class TestSetupCommand(FoundationTestCase):
         mock_exists.return_value = True
         mock_run.side_effect = subprocess.CalledProcessError(1, ["bash", "script.sh"])
 
-        result = self.runner.invoke(self.cli, ["setup", "--shell-integration"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--shell-integration"])
 
         assert result.exit_code == 1
         assert "Failed to set up shell integration" in result.output
@@ -123,7 +147,9 @@ alias wrknv-activate='source env.sh'
             mock_path_class.return_value = mock_path
             mock_run.return_value = Mock(returncode=0)
 
-            result = self.runner.invoke(self.cli, ["setup", "--shell-integration"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["setup", "--shell-integration"])
 
             assert result.exit_code == 0
 
@@ -138,7 +164,9 @@ alias wrknv-activate='source env.sh'
         mock_exists.return_value = True
         mock_run.return_value = Mock(returncode=0)
 
-        result = self.runner.invoke(self.cli, ["setup", "--init", "--shell-integration"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--init", "--shell-integration"])
 
         assert result.exit_code == 0
         assert "Setting up wrknv workenv" in result.output
@@ -152,7 +180,9 @@ alias wrknv-activate='source env.sh'
             # Mock that all dependencies are installed
             mock_which.side_effect = lambda x: f"/usr/bin/{x}" if x in ["git", "curl", "python3"] else None
 
-            result = self.runner.invoke(self.cli, ["setup", "--check"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["setup", "--check"])
 
             assert result.exit_code == 0
             assert "Checking dependencies" in result.output
@@ -166,7 +196,9 @@ alias wrknv-activate='source env.sh'
             # Mock that git is missing
             mock_which.side_effect = lambda x: None if x == "git" else f"/usr/bin/{x}"
 
-            result = self.runner.invoke(self.cli, ["setup", "--check"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["setup", "--check"])
 
             assert result.exit_code == 1
             assert "Missing dependencies" in result.output
@@ -174,7 +206,9 @@ alias wrknv-activate='source env.sh'
 
     def test_setup_completions_bash(self) -> None:
         """Test generating bash completions."""
-        result = self.runner.invoke(self.cli, ["setup", "--completions", "bash"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--completions", "bash"])
 
         assert result.exit_code == 0
         assert "_wrknv_completion" in result.output
@@ -182,14 +216,18 @@ alias wrknv-activate='source env.sh'
 
     def test_setup_completions_zsh(self) -> None:
         """Test generating zsh completions."""
-        result = self.runner.invoke(self.cli, ["setup", "--completions", "zsh"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--completions", "zsh"])
 
         assert result.exit_code == 0
         assert "#compdef wrknv" in result.output
 
     def test_setup_completions_fish(self) -> None:
         """Test generating fish completions."""
-        result = self.runner.invoke(self.cli, ["setup", "--completions", "fish"])
+        runner = click.testing.CliRunner()
+        cli = get_test_cli()
+        result = runner.invoke(cli, ["setup", "--completions", "fish"])
 
         assert result.exit_code == 0
         assert "complete -c wrknv" in result.output
@@ -203,7 +241,9 @@ alias wrknv-activate='source env.sh'
             bashrc = self.temp_path / ".bashrc"
             bashrc.touch()
 
-            result = self.runner.invoke(self.cli, ["setup", "--completions", "bash", "--install"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["setup", "--completions", "bash", "--install"])
 
             assert result.exit_code == 0
             assert "Installed bash completions" in result.output
@@ -219,8 +259,6 @@ class TestSetupCommandIntegration(FoundationTestCase):
     def setup_method(self) -> None:
         """Set up test fixtures."""
         super().setup_method()
-        self.runner = click.testing.CliRunner()
-        self.cli = create_cli()
         self.temp_dir = self.create_temp_dir()
         self.temp_path = self.temp_dir
 
@@ -229,7 +267,9 @@ class TestSetupCommandIntegration(FoundationTestCase):
         with patch("pathlib.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
 
-            result = self.runner.invoke(self.cli, ["setup", "--init"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["setup", "--init"])
 
             if result.exit_code == 0:
                 # Check that workenv directory was created
