@@ -281,8 +281,8 @@ terraform = { version = "1.5.0" }
 go = { version = "1.21.0" }
 """)
 
-        # Mock the config file location
-        with patch("wrknv.wenv.config.Path.cwd") as mock_cwd:
+        # Mock the config file location using pathlib.Path.cwd
+        with patch("pathlib.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
 
             # Save profile

@@ -191,6 +191,29 @@ class WorkenvConfig(RuntimeConfig):
         """List all available profiles."""
         return list(self.profiles.keys())
 
+    def profile_exists(self, profile_name: str) -> bool:
+        """Check if a profile exists."""
+        return profile_name in self.profiles
+
+    def save_profile(self, profile_name: str, tools: dict[str, str]) -> None:
+        """Save a profile."""
+        self.profiles[profile_name] = tools
+        self.save_config()
+
+    def delete_profile(self, profile_name: str) -> bool:
+        """Delete a profile."""
+        if profile_name in self.profiles:
+            del self.profiles[profile_name]
+            self.save_config()
+            return True
+        return False
+
+    def get_current_profile(self) -> str:
+        """Get the current active profile name."""
+        # For now, always return "default"
+        # TODO: Add support for tracking active profile
+        return "default"
+
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting using dot notation."""
         parts = key.split(".")
