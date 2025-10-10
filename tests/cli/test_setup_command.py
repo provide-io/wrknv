@@ -147,10 +147,10 @@ class TestSetupCommand(FoundationTestCase):
         assert "Setting up shell integration" in result.output
         mock_run.assert_called_once()
 
-    @patch("wrknv.cli.commands.setup.WorkenvManager")
-    def test_setup_all_options(self, mock_manager_class):
+    @patch("wrknv.wenv.workenv.WorkenvManager.setup_workenv")
+    def test_setup_all_options(self, mock_setup_workenv):
         """Test setup with --init takes precedence (only one option processed)."""
-        mock_manager_class.setup_workenv.return_value = True
+        mock_setup_workenv.return_value = True
 
         runner = click.testing.CliRunner()
         cli = get_test_cli()
@@ -159,7 +159,7 @@ class TestSetupCommand(FoundationTestCase):
 
         assert result.exit_code == 0
         assert "Setting up wrknv workenv" in result.output
-        mock_manager_class.setup_workenv.assert_called_once_with(force=False)
+        mock_setup_workenv.assert_called_once_with(force=False)
 
     def test_setup_check_dependencies(self) -> None:
         """Test setup --check to verify dependencies."""

@@ -35,6 +35,12 @@ from wrknv.container.commands import (
     restore_volumes,
 )
 
+# Import click for explicit decorators
+try:
+    import click
+except ImportError:
+    click = None
+
 
 # Register the container group first
 @register_command("container", group=True, description="Docker container management")
@@ -259,11 +265,11 @@ def container_volumes_list_command():
     "container.volumes.backup",
     description="Backup container volumes",
 )
-def container_volumes_backup_command(name: str | None = None):
+def container_volumes_backup_command(name: str | None = None, **kwargs):
     """Create a backup of container volumes.
 
     Args:
-        name: Custom backup name
+        name: Custom backup name (use --name option)
     """
     config = WorkenvConfig.load()
 
@@ -294,11 +300,11 @@ def container_volumes_restore_command(
     "container.volumes.clean",
     description="Clean container volumes",
 )
-def container_volumes_clean_command(preserve: tuple[str, ...] = ()):
+def container_volumes_clean_command(preserve: tuple[str, ...] = (), **kwargs):
     """Clean container volumes.
 
     Args:
-        preserve: Volumes to preserve (can be specified multiple times)
+        preserve: Volumes to preserve (use --preserve multiple times)
     """
     config = WorkenvConfig.load()
 
