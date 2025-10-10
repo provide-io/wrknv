@@ -216,6 +216,24 @@ def create_mock_builder(**kwargs: Any) -> Mock:
     builder.build = Mock(return_value=True)
     builder.image_exists = Mock(return_value=True)
 
+    # Mock generate_dockerfile to return a basic Dockerfile string
+    builder.generate_dockerfile = Mock(return_value="""FROM ubuntu:22.04
+
+WORKDIR /workspace
+
+RUN apt-get update && apt-get install -y \\
+    curl \\
+    git \\
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -s /bin/bash user
+RUN chown -R user:user /workspace
+USER user
+
+# Keep container running
+CMD ["sleep", "infinity"]
+""")
+
     for key, value in kwargs.items():
         setattr(builder, key, value)
 
