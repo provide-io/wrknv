@@ -92,7 +92,6 @@ templates_path = "{templates_path_actual}"
                 assert "npm-debug.log" in content or "logs" in content  # Real template may differ
                 assert ".DS_Store" not in content  # Should not include Global.gitignore
 
-    @pytest.mark.skip(reason="Templates parameter currently doesn't support multiple positional arguments - needs design decision")
     def test_gitignore_build_with_templates_option(self, cli, runner, tmp_path, gitignore_templates_dir):
         """Test building .gitignore using --templates option (should override config)."""
         # Create a dummy wrknv.toml (with different templates)

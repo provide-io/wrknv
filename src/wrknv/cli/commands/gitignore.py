@@ -146,12 +146,19 @@ def gitignore_detect(path: str | None = None):
     description="Build a .gitignore file from templates",
 )
 def gitignore_build(
-    templates: list[str] | None = None,
+    *templates: str,
     output: str | None = None,
     append: bool = False,
     auto_detect: bool = False,
 ):
-    """Build a .gitignore file from templates."""
+    """Build a .gitignore file from templates.
+
+    Args:
+        *templates: Template names (e.g., "Python", "Node", "Go")
+        output: Custom output file path
+        append: Append to existing .gitignore
+        auto_detect: Auto-detect project types
+    """
     config = WorkenvConfig.load()
     gitignore_config = config.get_setting("gitignore", {})
     templates_path = gitignore_config.get("templates_path")
@@ -173,6 +180,7 @@ def gitignore_build(
             template_list.extend(detected)
             echo_info(f"Auto-detected: {', '.join(detected)}")
 
+    # templates is a tuple from *templates, convert to list
     if templates:
         template_list.extend(templates)
 
