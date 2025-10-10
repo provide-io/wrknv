@@ -130,7 +130,7 @@ templates_path = "{templates_path_actual}"
                 # Use shared cli fixture
                 result = runner.invoke(
                     cli,
-                    ["gitignore", "build", "--templates", "Global", "--templates", "Python"],
+                    ["gitignore", "build", "Global", "Python"],
                     catch_exceptions=False,
                 )
 
