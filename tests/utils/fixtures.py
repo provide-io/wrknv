@@ -28,7 +28,8 @@ if TYPE_CHECKING:
     from wrknv.container.operations.volumes import VolumeManager
     from wrknv.container.runtime.docker import DockerRuntime
     from wrknv.container.storage import ContainerStorage
-    from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+    from wrknv.config import WorkenvConfig
+from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
 
 
 def create_test_config(
@@ -47,7 +48,8 @@ def create_test_config(
         WorkenvConfig instance
     """
     # Lazy import to avoid circular dependency
-    from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+    from wrknv.config import WorkenvConfig
+from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
 
     container = ContainerConfig(enabled=container_enabled) if container_enabled else None
 

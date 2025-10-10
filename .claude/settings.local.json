@@ -92,7 +92,8 @@
       "Bash(docker ps:*)",
       "Bash(xargs:*)",
       "Read(//private/tmp/**)",
-      "Bash(tee:*)"
+      "Bash(tee:*)",
+      "Bash(do)"
     ],
     "deny": [],
     "additionalDirectories": [

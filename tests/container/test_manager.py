@@ -19,7 +19,7 @@ from unittest.mock import Mock, patch
 from wrknv.container.manager import ContainerManager
 from wrknv.container.operations.lifecycle import ContainerLifecycle
 from wrknv.container.runtime.docker import DockerRuntime
-from wrknv.wenv.schema import WorkenvConfig
+from wrknv.wenv.schema import WorkenvSchema
 
 # Test utilities - available from conftest
 from tests.conftest import create_mock_builder, create_mock_logs

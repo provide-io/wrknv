@@ -23,7 +23,8 @@ from wrknv.container.commands import (
     list_volumes,
     restore_volumes,
 )
-from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+from wrknv.config import WorkenvConfig
+from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
 
 
 @pytest.mark.container

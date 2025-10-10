@@ -21,7 +21,8 @@ from wrknv.container.shell_commands import (
     get_container_logs,
     shell_into_container,
 )
-from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+from wrknv.config import WorkenvConfig
+from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
 
 
 @pytest.mark.container

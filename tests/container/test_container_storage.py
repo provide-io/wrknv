@@ -17,7 +17,8 @@ import shutil
 from unittest.mock import Mock, patch
 
 from wrknv.container.manager import ContainerManager
-from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+from wrknv.config import WorkenvConfig
+from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
 
 
 @pytest.mark.container
