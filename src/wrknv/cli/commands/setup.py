@@ -24,6 +24,15 @@ from wrknv.errors import DependencyError
 from wrknv.wenv.workenv import WorkenvManager
 
 
+def _get_shell_integration_script_path() -> Path:
+    """Get the path to the shell integration script.
+
+    Returns:
+        Path to shell-integration.sh in the repository root
+    """
+    return Path(__file__).parent.parent.parent.parent.parent / "scripts" / "shell-integration.sh"
+
+
 @register_command(
     "setup",
     description="Set up wrknv environment and integrations",
@@ -148,7 +157,7 @@ def setup_command(
 
     if shell_integration:
         # Look for script in the repository root
-        script_path = Path(__file__).parent.parent.parent.parent.parent / "scripts" / "shell-integration.sh"
+        script_path = _get_shell_integration_script_path()
         if script_path.exists():
             echo_info("Setting up shell integration...")
             try:
