@@ -13,6 +13,7 @@ from provide.foundation.hub import register_command
 from provide.foundation import logger
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 
+from wrknv.config import WorkenvConfig  # Keep for special case: load from specific file
 from wrknv.workenv import WorkenvExporter, WorkenvImporter, WorkenvPackager
 from wrknv.workenv.registry import WorkenvRegistry
 from wrknv.cli.hub_cli import WrknvContext
@@ -37,11 +38,11 @@ def create(
         manager = WorkenvManager()
 
         if from_config and from_config.exists():
-            # Load configuration from specific file
+            # Special case: Load configuration from specific file (not using cached config)
             config = WorkenvConfig.load(config_file=from_config)
             workenv_name = name or config.project_name
         else:
-            # Use current directory config or defaults
+            # Use cached config from context
             config = WrknvContext.get_config()
             workenv_name = name or config.project_name
 

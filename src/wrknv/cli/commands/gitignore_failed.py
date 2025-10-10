@@ -13,7 +13,7 @@ from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.console.output import pout
 from provide.foundation.hub import register_command
 
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 from wrknv.gitignore.manager import GitignoreManager
 
 
@@ -34,7 +34,7 @@ def gitignore():
 )
 def gitignore_list(category: str | None = None):
     """List available gitignore templates."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     gitignore_config = config.get_setting("gitignore", {})
     templates_path = gitignore_config.get("templates_path")
     manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)
@@ -63,7 +63,7 @@ def gitignore_list(category: str | None = None):
 )
 def gitignore_search(pattern: str):
     """Search for gitignore templates matching a pattern."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     gitignore_config = config.get_setting("gitignore", {})
     templates_path = gitignore_config.get("templates_path")
     manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)
@@ -94,7 +94,7 @@ def gitignore_show(template: str, raw: bool = False):
         template: Name of the template to show
         raw: Show raw content without formatting
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     gitignore_config = config.get_setting("gitignore", {})
     templates_path = gitignore_config.get("templates_path")
     manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)
@@ -132,7 +132,7 @@ def gitignore_build(
         output: Output file path (default: .gitignore)
         merge: Merge with existing .gitignore file
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     gitignore_config = config.get_setting("gitignore", {})
     templates_path = gitignore_config.get("templates_path")
     manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)
@@ -172,7 +172,7 @@ def gitignore_detect(apply: bool = False):
     Args:
         apply: Automatically apply detected templates
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     gitignore_config = config.get_setting("gitignore", {})
     templates_path = gitignore_config.get("templates_path")
     manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)
@@ -207,7 +207,7 @@ def gitignore_update(force: bool = False):
     Args:
         force: Force update even if cache is recent
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     gitignore_config = config.get_setting("gitignore", {})
     templates_path = gitignore_config.get("templates_path")
     manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)

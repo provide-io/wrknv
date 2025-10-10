@@ -12,7 +12,7 @@ from pathlib import Path
 from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.hub import register_command
 
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 
 
 @register_command(
@@ -21,7 +21,7 @@ from wrknv.config import WorkenvConfig
 )
 def profile_list():
     """List all available profiles."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     profiles = config.list_profiles()
 
     if not profiles:
@@ -42,7 +42,7 @@ def profile_list():
 )
 def profile_show(name: str):
     """Show details of a specific profile."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     profile_data = config.get_profile(name)
 
     if not profile_data:
@@ -67,7 +67,7 @@ def profile_load(name: str, save: bool = False):
         name: Name of the profile to load
         save: Save the profile to the configuration file
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     profile_data = config.get_profile(name)
 
     if not profile_data:
@@ -95,7 +95,7 @@ def profile_load(name: str, save: bool = False):
 )
 def profile_save(name: str):
     """Save the current tool configuration as a profile."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     # Get current tools
     tools = config.get_all_tools()
@@ -119,7 +119,7 @@ def profile_save(name: str):
 )
 def profile_delete(name: str):
     """Delete a profile from the configuration."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     if name not in config.profiles:
         echo_error(f"Profile '{name}' not found")
@@ -144,7 +144,7 @@ def profile_export(name: str, output: Path):
         name: Name of the profile to export
         output: Output file path
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     profile_data = config.get_profile(name)
 
     if not profile_data:
@@ -180,7 +180,7 @@ def profile_import(input: Path, name: str | None = None):
         input: Input file path
         name: Override the profile name (optional)
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     if not input.exists():
         echo_error(f"File not found: {input}")
