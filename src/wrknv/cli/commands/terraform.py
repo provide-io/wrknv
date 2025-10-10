@@ -19,7 +19,7 @@ from provide.foundation.hub import register_command
 
 from wrknv.config import WorkenvConfig
 from wrknv.managers.factory import get_tool_manager
-from wrknv.wenv.visual import Emoji
+from wrknv.cli.visual import Emoji
 
 
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")

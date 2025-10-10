@@ -16,7 +16,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from provide.foundation import logger
 
-from wrknv.wenv.visual import Emoji, print_success
+from wrknv.cli.visual import Emoji, print_success
 
 
 class EnvScriptGenerator:

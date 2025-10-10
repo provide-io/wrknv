@@ -27,7 +27,7 @@ from wrknv.wenv.doctor import run_doctor
 from wrknv.wenv.env_generator import create_project_env_scripts
 from wrknv.managers.factory import get_tool_manager
 from wrknv.utils.version_resolver import resolve_tool_versions
-from wrknv.wenv.visual import Emoji, get_console, get_tool_emoji
+from wrknv.cli.visual import Emoji, get_console, get_tool_emoji
 
 
 @register_command("status", description="Show status of all managed tools", category="tools")

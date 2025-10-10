@@ -17,7 +17,7 @@ import sys
 
 from provide.foundation.process import run_command
 
-from wrknv.wenv.visual import Emoji, print_info, print_success
+from wrknv.cli.visual import Emoji, print_info, print_success
 
 
 class WorkenvManager:
