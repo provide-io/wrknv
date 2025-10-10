@@ -41,11 +41,16 @@ class WorkenvConfigPersistence:
                 if "profiles" in config_dict:
                     self.config.profiles = config_dict["profiles"]
                 if "workenv" in config_dict and isinstance(config_dict["workenv"], dict):
-                    for key, value in config_dict["workenv"].items():
-                        if hasattr(self.config.workenv, key):
+                    workenv_data = config_dict["workenv"]
+
+                    # Handle nested env configuration (siblings, etc.)
+                    if "env" in workenv_data:
+                        self.config.env = workenv_data["env"]
+
+                    # Set WorkenvSettings attributes
+                    for key, value in workenv_data.items():
+                        if key != "env" and hasattr(self.config.workenv, key):
                             setattr(self.config.workenv, key, value)
-                if "env" in config_dict:
-                    self.config.env = config_dict["env"]
 
             except Exception as e:
                 logger.warning(f"Failed to load config from {self.config.config_path}: {e}")
@@ -62,20 +67,25 @@ class WorkenvConfigPersistence:
 
     def to_dict(self) -> dict[str, Any]:
         """Convert configuration to dictionary."""
+        workenv_dict = {
+            "auto_install": self.config.workenv.auto_install,
+            "use_cache": self.config.workenv.use_cache,
+            "cache_ttl": self.config.workenv.cache_ttl,
+            "log_level": self.config.workenv.log_level,
+            "container_runtime": self.config.workenv.container_runtime,
+            "container_registry": self.config.workenv.container_registry,
+        }
+
+        # Add env configuration under workenv if it exists
+        if self.config.env:
+            workenv_dict["env"] = self.config.env
+
         return {
             "project_name": self.config.project_name,
             "version": self.config.version,
             "tools": self.config.tools,
             "profiles": self.config.profiles,
-            "workenv": {
-                "auto_install": self.config.workenv.auto_install,
-                "use_cache": self.config.workenv.use_cache,
-                "cache_ttl": self.config.workenv.cache_ttl,
-                "log_level": self.config.workenv.log_level,
-                "container_runtime": self.config.workenv.container_runtime,
-                "container_registry": self.config.workenv.container_registry,
-            },
-            "env": self.config.env,
+            "workenv": workenv_dict,
         }
 
     def write_config(self, config_data: dict[str, Any]) -> None:
@@ -90,11 +100,16 @@ class WorkenvConfigPersistence:
         if "profiles" in config_data:
             self.config.profiles = config_data["profiles"]
         if "workenv" in config_data and isinstance(config_data["workenv"], dict):
-            for key, value in config_data["workenv"].items():
-                if hasattr(self.config.workenv, key):
+            workenv_data = config_data["workenv"]
+
+            # Handle nested env configuration
+            if "env" in workenv_data:
+                self.config.env = workenv_data["env"]
+
+            # Set WorkenvSettings attributes
+            for key, value in workenv_data.items():
+                if key != "env" and hasattr(self.config.workenv, key):
                     setattr(self.config.workenv, key, value)
-        if "env" in config_data:
-            self.config.env = config_data["env"]
 
         # Save to file
         self.save_config()
