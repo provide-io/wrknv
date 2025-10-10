@@ -18,7 +18,7 @@ from typing import Any
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 
 
 # Register the selftest group first
@@ -171,7 +171,7 @@ def _check_environment() -> dict[str, Any]:
 def _check_config() -> dict[str, Any]:
     """Check configuration."""
     try:
-        config = WorkenvConfig.load()
+        config = WrknvContext.get_config()
 
         # Check if config file exists
         if not config.config_exists():

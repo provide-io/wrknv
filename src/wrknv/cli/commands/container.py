@@ -16,7 +16,7 @@ import sys
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 from wrknv.container import (
     build_container,
     clean_container,
@@ -55,7 +55,7 @@ def container_group():
 )
 def container_status_command():
     """Display container status information."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     container_status(config)
 
 
@@ -65,7 +65,7 @@ def container_status_command():
 )
 def container_build_command(rebuild: bool = False):
     """Build the development container image."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     if rebuild:
         echo_info("🔨 Rebuilding container image from scratch...")
@@ -87,7 +87,7 @@ def container_build_command(rebuild: bool = False):
 )
 def container_start_command(rebuild: bool = False):
     """Start the development container."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     echo_info("🚀 Starting container...")
 
@@ -107,7 +107,7 @@ def container_start_command(rebuild: bool = False):
 )
 def container_stop_command():
     """Stop the development container."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     echo_info("🛑 Stopping container...")
 
@@ -126,7 +126,7 @@ def container_stop_command():
 )
 def container_restart_command():
     """Restart the development container."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     echo_info("🔄 Restarting container...")
 
@@ -151,7 +151,7 @@ def container_enter_command(
     auto_start: bool = False,
 ):
     """Enter the running container."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     # Parse command if provided
     command_list = command.split() if command else None
@@ -178,7 +178,7 @@ def container_logs_command(
     details: bool = False,
 ):
     """Show container logs."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     container_logs(
         config=config,
@@ -196,7 +196,7 @@ def container_logs_command(
 )
 def container_clean_command():
     """Clean up container and image."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     echo_warning("⚠️  This will remove the container and image")
 
@@ -223,7 +223,7 @@ def container_clean_command():
 )
 def container_rebuild_command():
     """Rebuild the container from scratch."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     echo_info("🔨 Rebuilding container from scratch...")
 
@@ -257,7 +257,7 @@ def container_volumes_group():
 )
 def container_volumes_list_command():
     """List container volumes with information."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     list_volumes(config)
 
 
@@ -272,7 +272,7 @@ def container_volumes_backup_command(name: str | None = None):
     Args:
         name: Custom backup name (use --name option)
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     success = backup_volumes(config, name=name)
 
@@ -289,7 +289,7 @@ def container_volumes_restore_command(
     force: bool = False,
 ):
     """Restore container volumes from a backup."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     success = restore_volumes(config, backup_path=backup_path, force=force)
 
@@ -308,7 +308,7 @@ def container_volumes_clean_command(preserve: tuple[str, ...] = ()):
     Args:
         preserve: Volumes to preserve (use --preserve multiple times)
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     # Convert tuple to list
     preserve_list = list(preserve) if preserve else []
@@ -329,7 +329,7 @@ def container_volumes_clean_command(preserve: tuple[str, ...] = ()):
 )
 def container_shell_command():
     """Open an interactive shell in the container."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     enter_container(
         config=config,
@@ -345,7 +345,7 @@ def container_shell_command():
 )
 def container_exec_command(cmd: str):
     """Execute a command in the container."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     if not cmd:
         echo_error("No command specified")

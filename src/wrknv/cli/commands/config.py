@@ -19,7 +19,7 @@ from provide.foundation.console.output import pout
 from provide.foundation.errors import ConfigurationError, resilient
 from provide.foundation.hub import register_command
 
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 from wrknv.errors import ProfileError
 
 
@@ -39,7 +39,7 @@ def config_show(
     profile: str | None = None,
 ):
     """Show current configuration."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     if profile:
         # Show specific profile
@@ -68,7 +68,7 @@ def config_show(
 )
 def config_edit():
     """Edit configuration file."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     try:
         config.edit_config()
     except RuntimeError as e:
@@ -83,7 +83,7 @@ def config_edit():
 def config_validate(strict: bool = False, verbose: bool = False):
     """Validate configuration file syntax and values."""
     try:
-        config = WorkenvConfig.load()
+        config = WrknvContext.get_config()
 
         if not config.config_exists():
             echo_error("No configuration file found")
@@ -131,7 +131,7 @@ def config_validate(strict: bool = False, verbose: bool = False):
 )
 def config_init(force: bool = False):
     """Initialize a new configuration file interactively."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     if config.config_exists() and not force:
         echo_warning("Configuration file already exists")
@@ -174,7 +174,7 @@ def config_init(force: bool = False):
 )
 def config_path():
     """Show path to configuration file."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     if config.config_exists():
         echo_info(str(config.config_path))
     else:
@@ -188,7 +188,7 @@ def config_path():
 )
 def config_get(key: str):
     """Get a specific configuration setting."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     try:
         value = config.get_setting(key)
@@ -210,7 +210,7 @@ def config_get(key: str):
 )
 def config_set(key: str, value: str):
     """Set a configuration value."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     try:
         # Try to parse value as JSON first (for complex types)

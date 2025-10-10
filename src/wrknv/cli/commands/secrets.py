@@ -17,7 +17,7 @@ from typing import Annotated
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 from wrknv.managers.factory import get_tool_manager
 from wrknv.cli.visual import Emoji
 
@@ -49,7 +49,7 @@ def secrets_command(
         list_variants: List available variants
         dry_run: Show what would be done without doing it
     """
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
 
     if list_variants:
         echo_info(f"🔐 Available secret management variants:")

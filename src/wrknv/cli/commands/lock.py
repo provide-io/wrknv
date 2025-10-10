@@ -17,7 +17,7 @@ from pathlib import Path
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 from wrknv.lockfile import LockfileManager
 
 
@@ -32,7 +32,7 @@ def lock_group():
 def lock_generate(force: bool = False):
     """Generate lockfile from current configuration."""
     try:
-        config = WorkenvConfig.load()
+        config = WrknvContext.get_config()
         lockfile_manager = LockfileManager()
 
         if lockfile_manager.lockfile_path.exists() and not force:
@@ -55,7 +55,7 @@ def lock_generate(force: bool = False):
 def lock_check():
     """Check if lockfile is valid for current configuration."""
     try:
-        config = WorkenvConfig.load()
+        config = WrknvContext.get_config()
         lockfile_manager = LockfileManager()
 
         if not lockfile_manager.lockfile_path.exists():
@@ -132,7 +132,7 @@ def lock_clean():
 def lock_sync():
     """Install tools using locked versions."""
     try:
-        config = WorkenvConfig.load()
+        config = WrknvContext.get_config()
         lockfile_manager = LockfileManager()
 
         if not lockfile_manager.lockfile_path.exists():

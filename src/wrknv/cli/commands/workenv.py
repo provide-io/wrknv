@@ -15,7 +15,7 @@ from provide.foundation.cli import echo_error, echo_info, echo_success, echo_war
 
 from wrknv.workenv import WorkenvExporter, WorkenvImporter, WorkenvPackager
 from wrknv.workenv.registry import WorkenvRegistry
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 from wrknv.wenv.workenv import WorkenvManager
 
 
@@ -42,7 +42,7 @@ def create(
             workenv_name = name or config.project_name
         else:
             # Use current directory config or defaults
-            config = WorkenvConfig.load()
+            config = WrknvContext.get_config()
             workenv_name = name or config.project_name
 
         # Create workenv
@@ -63,7 +63,7 @@ def export(output: Path, name: str | None = None, version: str = "1.0.0", format
 
     try:
         # Load current configuration
-        config = WorkenvConfig.load()
+        config = WrknvContext.get_config()
         exporter = WorkenvExporter(config)
 
         # Export workenv

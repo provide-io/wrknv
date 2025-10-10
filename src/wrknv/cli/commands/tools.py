@@ -21,7 +21,7 @@ from rich.table import Table
 
 logger = get_logger(__name__)
 
-from wrknv.config import WorkenvConfig
+from wrknv.cli.hub_cli import WrknvContext
 from wrknv.lockfile import LockfileManager
 from wrknv.wenv.doctor import run_doctor
 from wrknv.wenv.env_generator import create_project_env_scripts
@@ -33,7 +33,7 @@ from wrknv.cli.visual import Emoji, get_console, get_tool_emoji
 @register_command("status", description="Show status of all managed tools", category="tools")
 def status_command():
     """Show status of all managed tools."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     tools = config.get_all_tools()
     console = get_console()
 
@@ -91,7 +91,7 @@ def status_command():
 @register_command("sync", description="Install all tools defined in configuration", category="tools")
 def sync_command(lock: bool = True):
     """Install all tools defined in configuration."""
-    config = WorkenvConfig.load()
+    config = WrknvContext.get_config()
     tools = config.get_all_tools()
 
     if not tools:
