@@ -260,7 +260,11 @@ def container_volumes_list_command():
     description="Backup container volumes",
 )
 def container_volumes_backup_command(name: str | None = None):
-    """Create a backup of container volumes."""
+    """Create a backup of container volumes.
+
+    Args:
+        name: Custom backup name
+    """
     config = WorkenvConfig.load()
 
     success = backup_volumes(config, name=name)
@@ -290,12 +294,16 @@ def container_volumes_restore_command(
     "container.volumes.clean",
     description="Clean container volumes",
 )
-def container_volumes_clean_command(preserve: str | None = None):
-    """Clean container volumes."""
+def container_volumes_clean_command(preserve: tuple[str, ...] = ()):
+    """Clean container volumes.
+
+    Args:
+        preserve: Volumes to preserve (can be specified multiple times)
+    """
     config = WorkenvConfig.load()
 
-    # Parse preserve list
-    preserve_list = preserve.split(",") if preserve else []
+    # Convert tuple to list
+    preserve_list = list(preserve) if preserve else []
 
     success = clean_volumes(config, preserve=preserve_list)
 
