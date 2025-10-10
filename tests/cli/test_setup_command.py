@@ -73,10 +73,10 @@ class TestSetupCommand(FoundationTestCase):
         assert result.exit_code == 0
         mock_manager_class.setup_workenv.assert_called_once_with(force=True)
 
-    @patch("wrknv.cli.commands.setup.WorkenvManager")
-    def test_setup_init_failure(self, mock_manager_class):
+    @patch("wrknv.wenv.workenv.WorkenvManager.setup_workenv")
+    def test_setup_init_failure(self, mock_setup_workenv):
         """Test setup --init when creation fails."""
-        mock_manager_class.setup_workenv.side_effect = Exception("Failed to create virtualenv")
+        mock_setup_workenv.side_effect = Exception("Failed to create virtualenv")
 
         runner = click.testing.CliRunner()
         cli = get_test_cli()

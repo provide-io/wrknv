@@ -79,7 +79,7 @@ templates_path = "{templates_path_actual}"
                 assert result.exit_code == 0
                 assert "✅ .gitignore built successfully" in result.output
 
-                gitignore_file = tmp_path / ".gitignore"
+                gitignore_file = isolated_path / ".gitignore"
                 assert gitignore_file.exists()
 
                 content = gitignore_file.read_text()
@@ -221,7 +221,7 @@ templates_path = "{templates_path_actual}"
                 assert "Warning: Gitignore template 'NonExistent' not found" in err
                 assert "✅ .gitignore built successfully" in out
 
-                gitignore_file = tmp_path / ".gitignore"
+                gitignore_file = isolated_path / ".gitignore"
                 assert gitignore_file.exists()
                 content = gitignore_file.read_text()
                 assert "# --- Python ---" in content
@@ -262,7 +262,7 @@ templates_path = "{templates_path_actual}"
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
-                custom_output_path = tmp_path / "my_custom.ignore"
+                custom_output_path = isolated_path / "my_custom.ignore"
 
                 # Use shared cli fixture
                 result = runner.invoke(
@@ -276,4 +276,4 @@ templates_path = "{templates_path_actual}"
                 content = custom_output_path.read_text()
                 assert "# --- Python ---" in content
                 assert "*.pyc" in content
-                assert not (tmp_path / ".gitignore").exists()  # Default file should not be created
+                assert not (isolated_path / ".gitignore").exists()  # Default file should not be created
