@@ -96,9 +96,9 @@ class GoManager(BaseToolManager):
                 raise ToolManagerError("Go directory not found in archive")
 
             # Move the entire Go installation to version directory
-            from provide.foundation.file import safe_copy, safe_move, safe_rmtree
+            import shutil
 
-            safe_move(go_root, version_dir / "go")
+            shutil.move(str(go_root), str(version_dir / "go"))
 
             # Create a bin directory in version_dir for consistency
             bin_dir = version_dir / "bin"
@@ -119,9 +119,9 @@ class GoManager(BaseToolManager):
 
         finally:
             # Clean up extraction directory
-            from provide.foundation.file import safe_copy, safe_rmtree
+            import shutil
 
-            safe_rmtree(extract_dir, missing_ok=True)
+            shutil.rmtree(extract_dir, ignore_errors=True)
 
     def verify_installation(self, version: str) -> bool:
         """Verify that Go installation works and version matches."""

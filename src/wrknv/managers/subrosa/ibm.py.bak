@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import json
 import pathlib
-from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
+import shutil
 from urllib.request import urlopen
 
 from provide.foundation import logger
@@ -114,7 +114,7 @@ class IbmVaultVariant(SubRosaManager):
 
             # Copy to target location with variant-specific naming
             target_path = self.get_binary_path(version)
-            safe_copy(binary_path, target_path, overwrite=True)
+            shutil.copy2(binary_path, target_path)
 
             # Make executable (Unix systems)
             self.make_executable(target_path)
@@ -127,7 +127,7 @@ class IbmVaultVariant(SubRosaManager):
 
         finally:
             # Clean up extraction directory
-            safe_rmtree(extract_dir, missing_ok=True)
+            shutil.rmtree(extract_dir, ignore_errors=True)
 
 
 __all__ = [

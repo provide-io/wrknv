@@ -16,10 +16,10 @@ import hashlib
 import json
 import os
 import pathlib
-import shutil
 import sys
 
 from provide.foundation import logger
+from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
 from provide.foundation.time import provide_now
 
 from wrknv.managers.base import BaseToolManager, ToolManagerError
@@ -139,7 +139,7 @@ class TfManager(BaseToolManager):
         binary_path = self.get_binary_path(version)
 
         if binary_path.exists():
-            binary_path.unlink()
+            safe_delete(binary_path, missing_ok=True)
             logger.info(f"Removed {self.tool_name} {version}")
 
             # Update metadata
@@ -191,7 +191,7 @@ class TfManager(BaseToolManager):
 
             # Copy to tf versions location with the correct target name
             target_path = self.get_binary_path(version)
-            shutil.copy2(binary_path, target_path)
+            safe_copy(binary_path, target_path, overwrite=True)
 
             # Make executable (Unix systems)
             self.make_executable(target_path)
@@ -213,7 +213,7 @@ class TfManager(BaseToolManager):
 
         finally:
             # Clean up extraction directory
-            shutil.rmtree(extract_dir, ignore_errors=True)
+            safe_rmtree(extract_dir, missing_ok=True)
 
     def _update_install_metadata(self, version: str, archive_path: pathlib.Path, binary_hash: str) -> None:
         """Update metadata for installed version with comprehensive information."""
@@ -295,7 +295,7 @@ class TfManager(BaseToolManager):
         target_path = local_bin_dir / target_name
 
         # Copy the binary to ~/.local/bin
-        shutil.copy2(binary_path, target_path)
+        safe_copy(binary_path, target_path, overwrite=True)
 
         # Make executable on Unix systems
         if os.name != "nt":

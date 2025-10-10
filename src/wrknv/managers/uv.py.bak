@@ -118,9 +118,9 @@ class UvManager(BaseToolManager):
 
             # Copy to bin directory
             target_path = bin_dir / uv_binary.name
-            from provide.foundation.file import safe_copy, safe_rmtree
+            import shutil
 
-            safe_copy(uv_binary, target_path, overwrite=True)
+            shutil.copy2(uv_binary, target_path)
 
             # Make executable (Unix systems)
             self.make_executable(target_path)
@@ -133,9 +133,9 @@ class UvManager(BaseToolManager):
 
         finally:
             # Clean up extraction directory
-            from provide.foundation.file import safe_copy, safe_rmtree
+            import shutil
 
-            safe_rmtree(extract_dir, missing_ok=True)
+            shutil.rmtree(extract_dir, ignore_errors=True)
 
     def verify_installation(self, version: str) -> bool:
         """Verify that UV installation works and version matches."""

@@ -105,9 +105,9 @@ class BaoManager(BaseToolManager):
 
             # Copy to bin directory
             target_path = bin_dir / bao_binary.name
-            from provide.foundation.file import safe_copy, safe_rmtree
+            import shutil
 
-            safe_copy(bao_binary, target_path, overwrite=True)
+            shutil.copy2(bao_binary, target_path)
 
             # Make executable (Unix systems)
             self.make_executable(target_path)
@@ -120,9 +120,9 @@ class BaoManager(BaseToolManager):
 
         finally:
             # Clean up extraction directory
-            from provide.foundation.file import safe_copy, safe_rmtree
+            import shutil
 
-            safe_rmtree(extract_dir, missing_ok=True)
+            shutil.rmtree(extract_dir, ignore_errors=True)
 
     def verify_installation(self, version: str) -> bool:
         """Verify that OpenBao installation works and version matches."""

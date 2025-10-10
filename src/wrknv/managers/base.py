@@ -13,9 +13,9 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 import pathlib
 import platform
-import shutil
 from urllib.parse import urlparse
 
+from provide.foundation.file import safe_delete, safe_rmtree
 from provide.foundation.logger import get_logger
 from provide.foundation.process import run_command
 
@@ -123,7 +123,7 @@ class BaseToolManager(ABC):
 
         # Remove existing symlink
         if symlink_path.exists() or symlink_path.is_symlink():
-            symlink_path.unlink()
+            safe_delete(symlink_path, missing_ok=True)
 
         try:
             symlink_path.symlink_to(binary_path)
@@ -278,7 +278,7 @@ class BaseToolManager(ABC):
         """Clean up failed installation."""
         tool_dir = self.install_path / self.tool_name / version
         if tool_dir.exists():
-            shutil.rmtree(tool_dir)
+            safe_rmtree(tool_dir, missing_ok=True)
             logger.info(f"Cleaned up failed installation: {tool_dir}")
 
     def install_latest(self, dry_run: bool = False) -> None:
@@ -349,14 +349,12 @@ class BaseToolManager(ABC):
 
         # Remove the version directory
         if version_dir.exists():
-            import shutil
-
-            shutil.rmtree(version_dir)
+            safe_rmtree(version_dir, missing_ok=True)
             logger.info(f"Removed {self.tool_name} {version} directory")
 
         # Remove the binary if it exists elsewhere
         if binary_path.exists() and binary_path.parent != version_dir:
-            binary_path.unlink()
+            safe_delete(binary_path, missing_ok=True)
             logger.info(f"Removed {self.tool_name} {version} binary")
 
         # Update config if this was the current version

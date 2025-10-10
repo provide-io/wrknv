@@ -15,7 +15,7 @@ from __future__ import annotations
 from abc import abstractmethod
 import json
 import pathlib
-from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
+import shutil
 
 from provide.foundation import logger
 
@@ -139,7 +139,7 @@ class SubRosaManager(BaseToolManager):
 
             # Remove existing symlink
             if symlink_path.exists() or symlink_path.is_symlink():
-                safe_delete(symlink_path, missing_ok=True)
+                symlink_path.unlink()
 
             try:
                 symlink_path.symlink_to(binary_path)
@@ -237,7 +237,7 @@ class SubRosaManager(BaseToolManager):
 
             # Copy to target location
             target_path = self.get_binary_path(version)
-            safe_copy(binary_path, target_path, overwrite=True)
+            shutil.copy2(binary_path, target_path)
 
             # Make executable (Unix systems)
             self.make_executable(target_path)
@@ -250,7 +250,7 @@ class SubRosaManager(BaseToolManager):
 
         finally:
             # Clean up extraction directory
-            safe_rmtree(extract_dir, missing_ok=True)
+            shutil.rmtree(extract_dir, ignore_errors=True)
 
     def verify_installation(self, version: str) -> bool:
         """Verify that installation works and version matches."""
