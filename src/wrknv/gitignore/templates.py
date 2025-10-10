@@ -10,11 +10,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import shutil
-import tarfile
 import tempfile
 from urllib.request import urlopen
 
 from provide.foundation import logger
+from provide.foundation.archive.tar import extract_tar
 
 
 class TemplateHandler:
@@ -67,26 +67,26 @@ class TemplateHandler:
                 with urlopen(self.GITHUB_ARCHIVE) as response:
                     shutil.copyfileobj(response, tmp_file)
 
-                # Extract archive
+                # Extract archive using foundation utilities
                 logger.debug("Extracting templates archive")
-                with tarfile.open(tmp_file.name, "r:gz") as tar:
-                    # Get the root directory name (usually gitignore-main)
-                    root_dir = tar.getnames()[0].split("/")[0]
+                with tempfile.TemporaryDirectory() as extract_dir:
+                    # Extract with security validation (path traversal protection)
+                    extract_tar(tmp_file.name, Path(extract_dir))
 
-                    # Extract to temp directory first
-                    with tempfile.TemporaryDirectory() as extract_dir:
-                        tar.extractall(extract_dir)
+                    # Find root directory (usually gitignore-main)
+                    extracted_items = list(Path(extract_dir).iterdir())
+                    if not extracted_items:
+                        raise ValueError("Archive is empty")
 
-                        # Move files to cache directory
-                        source_dir = Path(extract_dir) / root_dir
+                    source_dir = extracted_items[0] if len(extracted_items) == 1 else Path(extract_dir)
 
-                        # Clear existing cache
-                        if self.cache_dir.exists():
-                            logger.debug("Clearing existing cache")
-                            shutil.rmtree(self.cache_dir)
+                    # Clear existing cache
+                    if self.cache_dir.exists():
+                        logger.debug("Clearing existing cache")
+                        shutil.rmtree(self.cache_dir)
 
-                        # Move extracted files to cache
-                        shutil.move(str(source_dir), str(self.cache_dir))
+                    # Move extracted files to cache
+                    shutil.move(str(source_dir), str(self.cache_dir))
 
                 # Clean up temp file
                 Path(tmp_file.name).unlink()
