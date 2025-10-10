@@ -5,7 +5,7 @@ Tests for workspace manager functionality.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import Mock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 from provide.foundation.file.temp import temp_dir
 import pytest
@@ -175,7 +175,7 @@ version = "1.0.0"
 
         with patch("wrknv.workspace.manager.WorkspaceSync") as mock_sync_class:
             mock_sync = Mock()
-            mock_sync.sync_all.return_value = {"test-repo": {"success": True}}
+            mock_sync.sync_all = AsyncMock(return_value={"test-repo": {"success": True}})
             mock_sync_class.return_value = mock_sync
 
             result = await manager.sync_all(dry_run=True)
@@ -190,7 +190,7 @@ version = "1.0.0"
 
         with patch("wrknv.workspace.manager.WorkspaceSync") as mock_sync_class:
             mock_sync = Mock()
-            mock_sync.sync_repo.return_value = {"test-repo": {"success": True}}
+            mock_sync.sync_repo = AsyncMock(return_value={"test-repo": {"success": True}})
             mock_sync_class.return_value = mock_sync
 
             result = await manager.sync_repo("test-repo", dry_run=False)
