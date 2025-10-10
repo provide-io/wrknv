@@ -153,6 +153,7 @@ def setup_command(
             echo_info("Setting up shell integration...")
             try:
                 run_command(["bash", str(script_path)], check=True)
+                echo_success("Shell integration configured successfully")
             except ProcessError:
                 echo_error("Failed to set up shell integration")
                 sys.exit(1)
