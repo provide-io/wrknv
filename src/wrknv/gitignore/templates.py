@@ -132,9 +132,9 @@ class TemplateHandler:
                 commit_sha = data["sha"][:8]
         except Exception as e:
             logger.warning(f"Could not fetch commit SHA: {e}, using timestamp")
-            from datetime import datetime
+            from provide.foundation.time import provide_now
 
-            commit_sha = datetime.now().isoformat()
+            commit_sha = provide_now().isoformat()
 
         version_file.write_text(commit_sha)
         logger.debug(f"Updated version file with: {commit_sha}")

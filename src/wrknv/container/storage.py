@@ -8,13 +8,13 @@ Storage path management and volume operations for containers.
 
 from __future__ import annotations
 
-from datetime import datetime
 import json
 from pathlib import Path
 from typing import Any
 
 from attrs import define
 from provide.foundation import logger
+from provide.foundation.time import provide_now
 
 from wrknv.wenv.schema import ContainerConfig
 
@@ -103,7 +103,7 @@ class ContainerStorage:
         metadata_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Add timestamp to metadata
-        metadata["last_updated"] = datetime.now().isoformat()
+        metadata["last_updated"] = provide_now().isoformat()
 
         try:
             with open(metadata_path, "w") as f:
@@ -140,7 +140,7 @@ class ContainerStorage:
         backup_dir.mkdir(exist_ok=True)
 
         if not backup_name:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            timestamp = provide_now().strftime("%Y%m%d_%H%M%S")
             backup_name = f"volumes_backup_{timestamp}.tar.gz"
 
         return backup_dir / backup_name

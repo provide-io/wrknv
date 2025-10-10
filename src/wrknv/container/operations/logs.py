@@ -12,11 +12,12 @@ from __future__ import annotations
 
 
 from collections.abc import Generator
-from datetime import datetime
+from datetime import timedelta
 
 from attrs import define
 from provide.foundation import logger
 from provide.foundation.process import ProcessError, stream_command
+from provide.foundation.time import provide_now
 from rich.console import Console
 
 from wrknv.container.runtime.base import ContainerRuntime
@@ -131,9 +132,7 @@ class ContainerLogs:
         # Calculate since timestamp if needed
         since = None
         if since_minutes:
-            from datetime import timedelta
-
-            since_time = datetime.now() - timedelta(minutes=since_minutes)
+            since_time = provide_now() - timedelta(minutes=since_minutes)
             since = since_time.isoformat()
 
         # Get logs

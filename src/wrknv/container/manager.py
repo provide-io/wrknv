@@ -237,11 +237,11 @@ class ContainerManager:
     ) -> Path | None:
         """Backup container volumes."""
         import tarfile
-        from datetime import datetime
+        from provide.foundation.time import provide_now
 
         try:
             if backup_path is None:
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                timestamp = provide_now().strftime("%Y%m%d_%H%M%S")
                 backup_path = self.storage.get_backup_path(f"volumes_backup_{timestamp}.tar.gz")
 
             backup_path.parent.mkdir(parents=True, exist_ok=True)

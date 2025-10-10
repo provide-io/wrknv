@@ -43,7 +43,7 @@ class Lockfile:
     @classmethod
     def from_config(cls, config: WorkenvConfig) -> "Lockfile":
         """Create a lockfile from a config."""
-        from datetime import datetime
+        from provide.foundation.time import provide_now
 
         # Calculate config checksum
         config_dict = config.to_dict()
@@ -52,7 +52,7 @@ class Lockfile:
 
         return cls(
             config_checksum=config_checksum,
-            created_at=datetime.now().isoformat(),
+            created_at=provide_now().isoformat(),
         )
 
     def add_resolved_tool(
@@ -64,14 +64,14 @@ class Lockfile:
         install_path: str | None = None,
     ):
         """Add a resolved tool to the lockfile."""
-        from datetime import datetime
+        from provide.foundation.time import provide_now
 
         self.resolved_tools[name] = ResolvedTool(
             name=name,
             version=version,
             resolved_from=resolved_from,
             checksum=checksum,
-            installed_at=datetime.now().isoformat(),
+            installed_at=provide_now().isoformat(),
             install_path=install_path,
         )
 

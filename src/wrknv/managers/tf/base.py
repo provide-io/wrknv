@@ -12,7 +12,6 @@ designed for managing Tf tool versions.
 from __future__ import annotations
 
 from abc import abstractmethod
-from datetime import datetime
 import hashlib
 import json
 import os
@@ -21,6 +20,7 @@ import shutil
 import sys
 
 from provide.foundation import logger
+from provide.foundation.time import provide_now
 
 from wrknv.managers.base import BaseToolManager, ToolManagerError
 from wrknv.managers.tf.bin_ops import copy_tf_binaries_to_workenv
@@ -240,7 +240,7 @@ class TfManager(BaseToolManager):
         self.metadata[version_key] = {
             "tool": self.tool_name,
             "version": version,
-            "installed_at": datetime.now().isoformat(),
+            "installed_at": provide_now().isoformat(),
             "download_url": download_url,
             "checksum_url": checksum_url if checksum_url else None,
             "archive_path": str(archive_path),

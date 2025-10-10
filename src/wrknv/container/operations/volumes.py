@@ -11,7 +11,6 @@ Manage container volumes and mounts.
 from __future__ import annotations
 
 
-from datetime import datetime
 import json
 from pathlib import Path
 from typing import Any
@@ -19,6 +18,7 @@ from typing import Any
 from attrs import define
 from provide.foundation import logger
 from provide.foundation.process import ProcessError, run_command
+from provide.foundation.time import provide_now
 from rich.console import Console
 from rich.table import Table
 
@@ -162,7 +162,7 @@ class VolumeManager:
             Path to backup file if successful
         """
         try:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            timestamp = provide_now().strftime("%Y%m%d_%H%M%S")
             backup_file = self.backup_dir / f"{volume_name}_{timestamp}.tar"
 
             self.console.print(f"[cyan]💾 Backing up volume {volume_name}...[/cyan]")
