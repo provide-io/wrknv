@@ -6,7 +6,7 @@ Retry policies, circuit breakers, and fallback chains for network operations.
 
 from __future__ import annotations
 
-from provide.foundation.resilience import BackoffStrategy, RetryPolicy, SyncCircuitBreaker
+from provide.foundation.resilience import BackoffStrategy, CircuitBreaker, RetryPolicy
 
 
 # GitHub API Retry Policy
@@ -30,14 +30,14 @@ DOWNLOAD_RETRY_POLICY = RetryPolicy(
 )
 
 # GitHub API Circuit Breaker
-github_circuit_breaker = SyncCircuitBreaker(
+github_circuit_breaker = CircuitBreaker(
     failure_threshold=5,  # Open after 5 failures
     recovery_timeout=60.0,  # Stay open for 60 seconds
     expected_exception=Exception,
 )
 
 # Download Circuit Breaker
-download_circuit_breaker = SyncCircuitBreaker(
+download_circuit_breaker = CircuitBreaker(
     failure_threshold=3,  # Open after 3 failures
     recovery_timeout=30.0,  # Stay open for 30 seconds
     expected_exception=Exception,
@@ -54,7 +54,7 @@ def get_retry_policy(operation_type: str = "default") -> RetryPolicy:
     return policies.get(operation_type, GITHUB_RETRY_POLICY)
 
 
-def get_circuit_breaker(operation_type: str = "default") -> SyncCircuitBreaker:
+def get_circuit_breaker(operation_type: str = "default") -> CircuitBreaker:
     """Get circuit breaker for operation type."""
     breakers = {
         "github": github_circuit_breaker,

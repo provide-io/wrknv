@@ -10,6 +10,8 @@ import pathlib
 import tempfile
 from unittest.mock import patch
 
+import pytest
+
 from wrknv.config import WorkenvConfig
 
 
@@ -124,9 +126,14 @@ auto_install = false
             assert dev_profile["go"] == "1.21.0"
 
 
-class TestConfigSources:
-    """Test the ConfigSource classes."""
+class TestConfigSourcesDeprecated:
+    """
+    DEPRECATED: ConfigSource classes were removed during consolidation.
+    These tests are kept but skipped for historical reference.
+    Use wrknv.config.WorkenvConfig directly instead.
+    """
 
+    @pytest.mark.skip(reason="ConfigSource classes removed - using unified WorkenvConfig")
     def test_file_config_source(self) -> None:
         """Should load from TOML files."""
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -162,6 +169,7 @@ verify_checksums = true
             # Should load settings
             assert source.get_setting("verify_checksums") is True
 
+    @pytest.mark.skip(reason="ConfigSource classes removed - using unified WorkenvConfig")
     def test_environment_config_source(self) -> None:
         """Should load from environment variables."""
         with patch.dict(
@@ -189,6 +197,7 @@ verify_checksums = true
             assert source.get_setting("verify_checksums") is True
             assert source.get_setting("install_path") == "/custom/path"
 
+    @pytest.mark.skip(reason="ConfigSource classes removed - using unified WorkenvConfig")
     def test_environment_boolean_parsing(self) -> None:
         """Should parse boolean values correctly."""
         source = EnvironmentConfigSource("TEST")
