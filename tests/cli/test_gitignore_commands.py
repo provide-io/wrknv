@@ -47,7 +47,7 @@ templates_path = "{templates_path_actual}"
 """
 
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig
+        from wrknv.config import WorkenvConfig
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -101,7 +101,7 @@ templates = ["Python", "Node"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig
+        from wrknv.config import WorkenvConfig
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -156,7 +156,7 @@ version = "0.1.0"
         config_path.write_text(config_content)
 
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig
+        from wrknv.config import WorkenvConfig
 
         # Load config from the file
         with patch("wrknv.wenv.config.WorkenvConfig._find_config_file", return_value=config_path):
@@ -187,7 +187,7 @@ templates = ["Python", "NonExistent"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig
+        from wrknv.config import WorkenvConfig
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:
@@ -236,7 +236,7 @@ templates = ["Python"]
 templates_path = "{templates_path_actual}"
 """
         # Create a pre-configured WorkenvConfig instance
-        from wrknv.wenv.config import WorkenvConfig
+        from wrknv.config import WorkenvConfig
 
         # Change current working directory to tmp_path for the test
         with runner.isolated_filesystem(tmp_path) as isolated_path_str:

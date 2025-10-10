@@ -10,7 +10,7 @@ import pathlib
 import tempfile
 from unittest.mock import patch
 
-from wrknv.config import EnvironmentConfigSource, FileConfigSource, WorkenvConfig
+from wrknv.config import WorkenvConfig
 
 
 class TestWorkenvConfig:
@@ -18,12 +18,14 @@ class TestWorkenvConfig:
 
     def test_load_with_defaults(self) -> None:
         """Should load with sensible defaults."""
-        config = WorkenvConfig.load()
+        # Isolate test by mocking config file discovery to return non-existent file
+        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+            config = WorkenvConfig.load()
 
-        assert config.project_name == "my-project"
-        assert config.version == "1.0.0"
-        assert config.workenv.log_level == "WARNING"
-        assert config.workenv.auto_install is True
+            assert config.project_name == "my-project"
+            assert config.version == "1.0.0"
+            assert config.workenv.log_level == "WARNING"
+            assert config.workenv.auto_install is True
 
     def test_load_from_file(self) -> None:
         """Should load configuration from TOML file."""
@@ -73,49 +75,53 @@ auto_install = false
 
     def test_tool_management(self) -> None:
         """Should manage tool versions correctly."""
-        config = WorkenvConfig.load()
+        # Isolate test by mocking config file discovery
+        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+            config = WorkenvConfig.load()
 
-        # Initially no tools
-        assert config.get_all_tools() == {}
-        assert config.get_tool_version("terraform") is None
+            # Initially no tools
+            assert config.get_all_tools() == {}
+            assert config.get_tool_version("terraform") is None
 
-        # Add some tools
-        config.tools = {
-            "terraform": "1.5.7",
-            "go": {"version": "1.21.0", "path": "/usr/local/go"},
-        }
+            # Add some tools
+            config.tools = {
+                "terraform": "1.5.7",
+                "go": {"version": "1.21.0", "path": "/usr/local/go"},
+            }
 
-        # Should retrieve tool versions
-        assert config.get_tool_version("terraform") == "1.5.7"
-        assert config.get_tool_version("go") == "1.21.0"
+            # Should retrieve tool versions
+            assert config.get_tool_version("terraform") == "1.5.7"
+            assert config.get_tool_version("go") == "1.21.0"
 
-        all_tools = config.get_all_tools()
-        assert all_tools["terraform"] == "1.5.7"
-        assert all_tools["go"] == "1.21.0"
+            all_tools = config.get_all_tools()
+            assert all_tools["terraform"] == "1.5.7"
+            assert all_tools["go"] == "1.21.0"
 
     def test_profile_management(self) -> None:
         """Should manage profiles correctly."""
-        config = WorkenvConfig.load()
+        # Isolate test by mocking config file discovery
+        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+            config = WorkenvConfig.load()
 
-        # Initially no profiles
-        assert config.list_profiles() == []
-        assert config.get_profile("dev") is None
+            # Initially no profiles
+            assert config.list_profiles() == []
+            assert config.get_profile("dev") is None
 
-        # Add profiles
-        config.profiles = {
-            "dev": {"terraform": "1.6.0", "go": "1.21.0"},
-            "prod": {"terraform": "1.5.7", "go": "1.20.0"},
-        }
+            # Add profiles
+            config.profiles = {
+                "dev": {"terraform": "1.6.0", "go": "1.21.0"},
+                "prod": {"terraform": "1.5.7", "go": "1.20.0"},
+            }
 
-        # Should list profiles
-        profiles = config.list_profiles()
-        assert "dev" in profiles
-        assert "prod" in profiles
+            # Should list profiles
+            profiles = config.list_profiles()
+            assert "dev" in profiles
+            assert "prod" in profiles
 
-        # Should get profile data
-        dev_profile = config.get_profile("dev")
-        assert dev_profile["terraform"] == "1.6.0"
-        assert dev_profile["go"] == "1.21.0"
+            # Should get profile data
+            dev_profile = config.get_profile("dev")
+            assert dev_profile["terraform"] == "1.6.0"
+            assert dev_profile["go"] == "1.21.0"
 
 
 class TestConfigSources:
@@ -208,32 +214,36 @@ class TestWorkenvConfigMethods:
 
     def test_get_setting(self) -> None:
         """Should retrieve settings with dot notation."""
-        config = WorkenvConfig.load()
+        # Isolate test by mocking config file discovery
+        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+            config = WorkenvConfig.load()
 
-        # Should get direct attributes
-        assert config.get_setting("project_name") == "my-project"
+            # Should get direct attributes
+            assert config.get_setting("project_name") == "my-project"
 
-        # Should get nested attributes
-        assert config.get_setting("workenv.log_level") == "WARNING"
-        assert config.get_setting("workenv.auto_install") is True
+            # Should get nested attributes
+            assert config.get_setting("workenv.log_level") == "WARNING"
+            assert config.get_setting("workenv.auto_install") is True
 
-        # Should return default for missing
-        assert config.get_setting("missing", "default") == "default"
+            # Should return default for missing
+            assert config.get_setting("missing", "default") == "default"
 
     def test_validation(self) -> None:
         """Should validate configuration correctly."""
-        config = WorkenvConfig.load()
+        # Isolate test by mocking config file discovery
+        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+            config = WorkenvConfig.load()
 
-        # Default config should be valid
-        is_valid, errors = config.validate()
-        assert is_valid
-        assert errors == []
+            # Default config should be valid
+            is_valid, errors = config.validate()
+            assert is_valid
+            assert errors == []
 
-        # Invalid tool version should fail
-        config.tools = {"terraform": {"version": "invalid.version"}}
-        is_valid, errors = config.validate()
-        assert not is_valid
-        assert any("Invalid version" in error for error in errors)
+            # Invalid tool version should fail
+            config.tools = {"terraform": {"version": "invalid.version"}}
+            is_valid, errors = config.validate()
+            assert not is_valid
+            assert any("Invalid version" in error for error in errors)
 
     def test_to_dict(self) -> None:
         """Should convert to dictionary correctly."""

@@ -247,8 +247,8 @@ class RegistryConfig:
 
 
 @define
-class WorkenvConfig:
-    """Main wrknv configuration model."""
+class WorkenvSchema:
+    """Schema for wrknv configuration validation (use wrknv.config.WorkenvConfig for runtime)."""
 
     project_name: str = field(validator=[validators.instance_of(str), validate_project_name])
     version: str = field(default=DEFAULT_VERSION, validator=validators.instance_of(str))
@@ -311,7 +311,7 @@ class WorkenvConfig:
         """Get a specific profile configuration."""
         return self.profiles.get(profile_name)
 
-    def merge_with_profile(self, profile_name: str) -> WorkenvConfig:
+    def merge_with_profile(self, profile_name: str) -> WorkenvSchema:
         """Create a new config merged with a profile."""
         profile = self.get_profile(profile_name)
         if not profile:
@@ -335,7 +335,7 @@ class WorkenvConfig:
         merged_dict["scripts"].update(profile.scripts)
 
         # Create new instance from merged dict
-        return cattrs.structure(merged_dict, WorkenvConfig)
+        return cattrs.structure(merged_dict, WorkenvSchema)
 
     def model_dump(self, exclude_none: bool = False) -> dict[str, Any]:
         """Convert to dictionary (compatibility method)."""
@@ -366,7 +366,7 @@ def validate_config_dict(config_dict: dict[str, Any]) -> tuple[bool, list[str]]:
 
     try:
         converter = cattrs.Converter()
-        converter.structure(config_dict, WorkenvConfig)
+        converter.structure(config_dict, WorkenvSchema)
         return True, []
     except Exception as e:
         if hasattr(e, "__cause__") and e.__cause__:
@@ -378,7 +378,7 @@ def validate_config_dict(config_dict: dict[str, Any]) -> tuple[bool, list[str]]:
         return False, errors
 
 
-def load_config_from_dict(config_dict: dict[str, Any]) -> WorkenvConfig:
+def load_config_from_dict(config_dict: dict[str, Any]) -> WorkenvSchema:
     """
     Load configuration from a dictionary with validation.
 
@@ -391,12 +391,12 @@ def load_config_from_dict(config_dict: dict[str, Any]) -> WorkenvConfig:
         raise ValueError(error_msg)
 
     converter = cattrs.Converter()
-    return converter.structure(config_dict, WorkenvConfig)
+    return converter.structure(config_dict, WorkenvSchema)
 
 
-def get_default_config(project_name: str = "my-project") -> WorkenvConfig:
-    """Get a default configuration."""
-    return WorkenvConfig(
+def get_default_config(project_name: str = "my-project") -> WorkenvSchema:
+    """Get a default configuration schema."""
+    return WorkenvSchema(
         project_name=project_name,
         tools={
             "terraform": ToolConfig(version="1.5.0"),
