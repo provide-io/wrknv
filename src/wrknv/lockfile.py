@@ -172,7 +172,7 @@ class LockfileManager:
     def resolve_and_lock(self, config: WorkenvConfig) -> Lockfile:
         """Resolve tool versions and create/update lockfile."""
         from wrknv.managers.factory import get_tool_manager
-        from wrknv.wenv.version_resolver import resolve_tool_versions
+        from wrknv.utils.version_resolver import resolve_tool_versions
 
         # Load existing lockfile or create new one
         lockfile = self.load_lockfile()
