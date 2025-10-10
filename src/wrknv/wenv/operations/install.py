@@ -12,10 +12,10 @@ from __future__ import annotations
 
 import pathlib
 import stat
-import tarfile
-import zipfile
 
 from provide.foundation import logger
+from provide.foundation.archive.tar import extract_tar
+from provide.foundation.archive.zip import extract_zip
 from provide.foundation.errors import ResourceError, ValidationError, resilient
 from provide.foundation.file import (
     ensure_dir,
@@ -41,55 +41,19 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
     archive_name = archive_path.name.lower()
 
     try:
-        if archive_name.endswith(".tar.gz") or archive_name.endswith(".tgz"):
-            _extract_tar_gz(archive_path, extract_dir)
-        elif archive_name.endswith(".tar"):
-            _extract_tar(archive_path, extract_dir)
+        if archive_name.endswith(".tar.gz") or archive_name.endswith(".tgz") or archive_name.endswith(".tar"):
+            # Use foundation's extract_tar with built-in path traversal protection
+            extract_tar(archive_path, extract_dir)
         elif archive_name.endswith(".zip"):
-            _extract_zip(archive_path, extract_dir)
+            # Use foundation's extract_zip with built-in path traversal protection
+            extract_zip(archive_path, extract_dir)
         else:
             raise ValidationError(f"Unsupported archive format: {archive_path}")
 
         logger.debug(f"Successfully extracted {archive_path}")
 
-    except (tarfile.TarError, zipfile.BadZipFile) as e:
+    except Exception as e:
         raise ResourceError(f"Failed to extract {archive_path}: {e}") from e
-
-
-def _extract_tar_gz(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
-    """Extract tar.gz archive."""
-
-    with tarfile.open(archive_path, "r:gz") as tar:
-        # Security check: ensure no path traversal
-        for member in tar.getmembers():
-            if member.name.startswith("/") or ".." in member.name:
-                raise Exception(f"Unsafe archive member: {member.name}")
-
-        tar.extractall(path=extract_dir)
-
-
-def _extract_tar(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
-    """Extract tar archive."""
-
-    with tarfile.open(archive_path, "r") as tar:
-        # Security check: ensure no path traversal
-        for member in tar.getmembers():
-            if member.name.startswith("/") or ".." in member.name:
-                raise Exception(f"Unsafe archive member: {member.name}")
-
-        tar.extractall(path=extract_dir)
-
-
-def _extract_zip(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
-    """Extract ZIP archive."""
-
-    with zipfile.ZipFile(archive_path, "r") as zip_file:
-        # Security check: ensure no path traversal
-        for member in zip_file.namelist():
-            if member.startswith("/") or ".." in member:
-                raise Exception(f"Unsafe archive member: {member}")
-
-        zip_file.extractall(path=extract_dir)
 
 
 @resilient
