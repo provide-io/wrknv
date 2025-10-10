@@ -16,7 +16,7 @@ from wrknv.container.commands import (
     start_container,
     stop_container,
 )
-from wrknv.wenv.schema import WorkenvSchema
+from wrknv.config import WorkenvConfig
 
 
 @pytest.mark.container

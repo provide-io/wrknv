@@ -321,7 +321,7 @@ class TestConfigCommandIntegration(FoundationTestCase):
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        config_file = self.temp_path / "wrknv.toml"
+        config_file = self.temp_path / ".wrknv.toml"
 
         with patch("pathlib.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
