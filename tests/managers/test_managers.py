@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 from provide.testkit import FoundationTestCase
 import pytest
 
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 from wrknv.managers.base import BaseToolManager
 
 

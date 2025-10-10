@@ -28,7 +28,7 @@ name = "test-project"
 siblings = ["pyvider-*", "test-*"]
 """)
 
-        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+        with patch("wrknv.config.WorkenvConfig._find_config_file") as mock_find:
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
@@ -69,7 +69,7 @@ siblings = [
 ]
 """)
 
-        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+        with patch("wrknv.config.WorkenvConfig._find_config_file") as mock_find:
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
@@ -115,7 +115,7 @@ siblings = [
 ]
 """)
 
-        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+        with patch("wrknv.config.WorkenvConfig._find_config_file") as mock_find:
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
@@ -148,7 +148,7 @@ siblings = [
 ]
 """)
 
-        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+        with patch("wrknv.config.WorkenvConfig._find_config_file") as mock_find:
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
@@ -180,7 +180,7 @@ special_siblings = [
 ]
 """)
 
-        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+        with patch("wrknv.config.WorkenvConfig._find_config_file") as mock_find:
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
@@ -239,7 +239,7 @@ siblings = [
 ]
 """)
 
-        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+        with patch("wrknv.config.WorkenvConfig._find_config_file") as mock_find:
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
@@ -276,7 +276,7 @@ siblings = [
 ]
 """)
 
-        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file") as mock_find:
+        with patch("wrknv.config.WorkenvConfig._find_config_file") as mock_find:
             mock_find.return_value = wrknv_toml
 
             sh_path, ps1_path = create_project_env_scripts(tmp_path)

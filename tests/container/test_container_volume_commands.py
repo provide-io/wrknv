@@ -312,7 +312,7 @@ class TestVolumeCommandsCLI:
     @pytest.fixture
     def mock_load_config(self):
         """Mock WorkenvConfig constructor."""
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock:
+        with patch("wrknv.config.WorkenvConfig") as mock:
             mock.return_value = WorkenvConfig(
                 project_name="test-project",
                 container=ContainerConfig(enabled=True),

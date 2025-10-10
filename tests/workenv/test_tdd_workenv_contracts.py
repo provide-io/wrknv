@@ -15,7 +15,7 @@ import pytest
 
 # These imports will fail initially - that's expected in TDD
 try:
-    from wrknv.wenv.config import WorkenvConfig
+    from wrknv.config import WorkenvConfig
     from wrknv.managers.base import BaseToolManager
     from wrknv.managers.tf.ibm import IbmTfVariant as TerraformManager
     from wrknv.managers.tf.tofu import TofuTfVariant as TofuManager

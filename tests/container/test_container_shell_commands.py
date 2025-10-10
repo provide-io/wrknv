@@ -431,7 +431,7 @@ class TestCLIIntegration:
             project_name="test-project",
             container=ContainerConfig(enabled=True),
         )
-        with patch("wrknv.wenv.config.WorkenvConfig", return_value=config):
+        with patch("wrknv.config.WorkenvConfig", return_value=config):
             yield config
 
     @pytest.fixture

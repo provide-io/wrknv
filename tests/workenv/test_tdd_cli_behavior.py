@@ -14,7 +14,7 @@ import pytest
 # These will fail initially - expected in TDD
 try:
     from wrknv.cli.hub_cli import create_cli
-    from wrknv.wenv.config import WorkenvConfig
+    from wrknv.config import WorkenvConfig
 except ImportError:
     create_cli = Mock()
     WorkenvConfig = Mock()
@@ -91,7 +91,7 @@ class TestWorkenvCLIBehavior:
         """
         TDD: `soup workenv status` should show installed tools
         """
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock_config:
+        with patch("wrknv.config.WorkenvConfig") as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.get_all_tools.return_value = {
                 "terraform": "1.5.7",
@@ -112,7 +112,7 @@ class TestWorkenvCLIBehavior:
         """
         TDD: `soup workenv sync` should install tools from soup.toml
         """
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock_config:
+        with patch("wrknv.config.WorkenvConfig") as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.get_all_tools.return_value = {"terraform": "1.5.7", "tofu": "1.6.2"}
             mock_config.return_value = mock_config_instance
@@ -153,7 +153,7 @@ class TestWorkenvProfileManagement:
         """
         TDD: `soup workenv profile save dev` should save current state as profile
         """
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock_config:
+        with patch("wrknv.config.WorkenvConfig") as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.profile_exists.return_value = False
             mock_config_instance.get_all_tools.return_value = {}
@@ -172,7 +172,7 @@ class TestWorkenvProfileManagement:
         """
         TDD: `soup workenv profile load dev` should switch to dev profile
         """
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock_config:
+        with patch("wrknv.config.WorkenvConfig") as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.get_profile.return_value = {"terraform": "1.5.7", "tofu": "1.6.2"}
             mock_config.return_value = mock_config_instance
@@ -192,7 +192,7 @@ class TestWorkenvProfileManagement:
         """
         TDD: `soup workenv profile list` should show available profiles
         """
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock_config:
+        with patch("wrknv.config.WorkenvConfig") as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.list_profiles.return_value = ["dev", "prod", "testing"]
             mock_config.return_value = mock_config_instance
@@ -264,7 +264,7 @@ class TestWorkenvConfiguration:
         """
         TDD: `soup workenv config show` should display current configuration
         """
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock_config:
+        with patch("wrknv.config.WorkenvConfig") as mock_config:
             mock_config_instance = Mock()
             mock_config_instance.show_config.return_value = None  # Prints to console
             mock_config.return_value = mock_config_instance
@@ -278,7 +278,7 @@ class TestWorkenvConfiguration:
         """
         TDD: `soup workenv config edit` should open configuration for editing
         """
-        with patch("wrknv.wenv.config.WorkenvConfig") as mock_config:
+        with patch("wrknv.config.WorkenvConfig") as mock_config:
             mock_config_instance = Mock()
             mock_config.return_value = mock_config_instance
 

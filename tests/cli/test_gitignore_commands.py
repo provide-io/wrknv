@@ -65,7 +65,7 @@ templates_path = "{templates_path_actual}"
             config_path.write_text(config_content)
 
             # Load config from the file
-            with patch("wrknv.wenv.config.WorkenvConfig._find_config_file", return_value=config_path):
+            with patch("wrknv.config.WorkenvConfig._find_config_file", return_value=config_path):
                 mock_config_instance = WorkenvConfig.load()
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
@@ -119,7 +119,7 @@ templates_path = "{templates_path_actual}"
             config_path.write_text(config_content)
 
             # Load config from the file
-            with patch("wrknv.wenv.config.WorkenvConfig._find_config_file", return_value=config_path):
+            with patch("wrknv.config.WorkenvConfig._find_config_file", return_value=config_path):
                 mock_config_instance = WorkenvConfig.load()
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
@@ -159,7 +159,7 @@ version = "0.1.0"
         from wrknv.config import WorkenvConfig
 
         # Load config from the file
-        with patch("wrknv.wenv.config.WorkenvConfig._find_config_file", return_value=config_path):
+        with patch("wrknv.config.WorkenvConfig._find_config_file", return_value=config_path):
             mock_config_instance = WorkenvConfig.load()
 
         # Patch WorkenvConfig in cli.py to return our pre-configured instance
@@ -205,7 +205,7 @@ templates_path = "{templates_path_actual}"
             config_path.write_text(config_content)
 
             # Load config from the file
-            with patch("wrknv.wenv.config.WorkenvConfig._find_config_file", return_value=config_path):
+            with patch("wrknv.config.WorkenvConfig._find_config_file", return_value=config_path):
                 mock_config_instance = WorkenvConfig.load()
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
@@ -254,7 +254,7 @@ templates_path = "{templates_path_actual}"
             config_path.write_text(config_content)
 
             # Load config from the file
-            with patch("wrknv.wenv.config.WorkenvConfig._find_config_file", return_value=config_path):
+            with patch("wrknv.config.WorkenvConfig._find_config_file", return_value=config_path):
                 mock_config_instance = WorkenvConfig.load()
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
