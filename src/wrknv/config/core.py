@@ -17,6 +17,9 @@ from provide.foundation.config import (
 from provide.foundation.config.env import RuntimeConfig
 from provide.foundation.logger import get_logger
 
+# Import container config from schema - will consolidate later
+from wrknv.wenv.schema import ContainerConfig
+
 logger = get_logger(__name__)
 
 
@@ -68,6 +71,9 @@ class WorkenvConfig(RuntimeConfig):
 
     # Tool configurations
     tools: dict[str, dict[str, Any]] = field(factory=dict)
+
+    # Container configuration (matching WorkenvSchema)
+    container: ContainerConfig | None = field(default=None)
 
     # Profiles
     profiles: dict[str, dict[str, str]] = field(factory=dict)
