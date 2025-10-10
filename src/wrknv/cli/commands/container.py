@@ -264,8 +264,9 @@ def container_volumes_list_command():
 @register_command(
     "container.volumes.backup",
     description="Backup container volumes",
+    force_options=True,
 )
-def container_volumes_backup_command(name: str | None = None, **kwargs):
+def container_volumes_backup_command(name: str | None = None):
     """Create a backup of container volumes.
 
     Args:
@@ -299,8 +300,9 @@ def container_volumes_restore_command(
 @register_command(
     "container.volumes.clean",
     description="Clean container volumes",
+    force_options=True,
 )
-def container_volumes_clean_command(preserve: tuple[str, ...] = (), **kwargs):
+def container_volumes_clean_command(preserve: tuple[str, ...] = ()):
     """Clean container volumes.
 
     Args:
