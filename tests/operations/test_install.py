@@ -124,7 +124,7 @@ class TestExtractOperations:
         with zipfile.ZipFile(archive_path, "w") as zf:
             zf.writestr("../evil.txt", "Evil content")
 
-        with pytest.raises(Exception, match="Unsafe archive member"):
+        with pytest.raises(Exception, match="Unsafe path in archive"):
             extract_archive(archive_path, extract_dir)
 
     def test_extract_archive_path_traversal_tar(self, tmp_path):
@@ -142,7 +142,7 @@ class TestExtractOperations:
             info.size = len(content)
             tf.addfile(info, fileobj=io.BytesIO(content))
 
-        with pytest.raises(Exception, match="Unsafe archive member"):
+        with pytest.raises(Exception, match="Unsafe path in archive"):
             extract_archive(archive_path, extract_dir)
 
 
