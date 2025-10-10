@@ -53,11 +53,16 @@ def load_commands():
 
 def create_cli():
     """Create the main CLI application using the hub."""
-    # Load all commands
-    load_commands()
-
     # Get or create hub
     hub = get_hub()
+
+    # Clear existing command registrations to allow re-creation in tests
+    # This prevents AlreadyExistsError when create_cli() is called multiple times
+    from provide.foundation.hub.categories import ComponentCategory
+    hub.clear(dimension=ComponentCategory.COMMAND.value)
+
+    # Load all commands (this will register them in the cleared registry)
+    load_commands()
 
     # Create CLI with standard options
     cli = hub.create_cli(
