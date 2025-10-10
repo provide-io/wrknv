@@ -292,3 +292,33 @@ class WorkenvConfig(RuntimeConfig):
     def validate(self) -> tuple[bool, list[str]]:
         """Validate configuration comprehensively."""
         return self._validator.validate()
+
+    def validate_version(self, tool_name: str, version: str) -> bool:
+        """Validate a tool version format.
+
+        Args:
+            tool_name: Name of the tool
+            version: Version string to validate
+
+        Returns:
+            True if version is valid, False otherwise
+        """
+        import re
+
+        if not version:
+            return False
+
+        # Allow "latest" as a special case
+        if version.lower() in ["latest", "stable"]:
+            return True
+
+        # Check semantic versioning format (X.Y.Z with optional suffixes)
+        semver_pattern = r"^\d+\.\d+(\.\d+)?(-[a-zA-Z0-9\.\-]+)?(\+[a-zA-Z0-9\.\-]+)?$"
+        if re.match(semver_pattern, version):
+            return True
+
+        # Allow version patterns (for matrix testing)
+        if "*" in version or "~" in version or "^" in version:
+            return True
+
+        return False

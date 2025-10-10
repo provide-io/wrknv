@@ -135,6 +135,16 @@ class ContainerManager:
 
     # Build operations
 
+    def _generate_dockerfile(self) -> str:
+        """Generate Dockerfile content from configuration.
+
+        This is a convenience wrapper for testing.
+
+        Returns:
+            Dockerfile content as string
+        """
+        return self.builder.generate_dockerfile(self.container_config)
+
     def build_image(self, rebuild: bool = False) -> bool:
         """Build the container image."""
         build_dir = self.storage.get_container_path("build")
@@ -142,7 +152,7 @@ class ContainerManager:
 
         # Generate and save Dockerfile
         dockerfile_path = build_dir / "Dockerfile"
-        dockerfile_content = self.builder.generate_dockerfile(self.container_config)
+        dockerfile_content = self._generate_dockerfile()
         dockerfile_path.write_text(dockerfile_content)
 
         # Build arguments from config
