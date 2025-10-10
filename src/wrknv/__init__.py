@@ -15,6 +15,7 @@ from wrknv._version import __version__
 
 # Public API exports
 from wrknv.config import WorkenvConfig, WorkenvConfigError
+from wrknv import errors
 from wrknv.managers.factory import get_supported_tools, get_tool_manager
 
 __all__ = [
@@ -22,6 +23,7 @@ __all__ = [
     "WorkenvConfigError",
     "__version__",
     "container",
+    "errors",
     "get_supported_tools",
     "get_tool_manager",
     "package",

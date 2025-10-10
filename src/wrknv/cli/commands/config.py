@@ -20,7 +20,7 @@ from provide.foundation.errors import ConfigurationError, resilient
 from provide.foundation.hub import register_command
 
 from wrknv.config import WorkenvConfig
-from wrknv.wenv.exceptions import ProfileError
+from wrknv.errors import ProfileError
 
 
 # Register the config group first

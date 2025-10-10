@@ -22,7 +22,7 @@ from provide.foundation.process import run_command
 logger = get_logger(__name__)
 
 from wrknv.config import WorkenvConfig, WorkenvConfigError
-from wrknv.wenv.exceptions import WrkenvError
+from wrknv.errors import WrkenvError
 
 
 class ToolManagerError(WrkenvError):

@@ -20,7 +20,7 @@ from provide.foundation.console.output import pout
 from provide.foundation.hub import register_command
 from provide.foundation.process import ProcessError, run_command
 
-from wrknv.wenv.exceptions import DependencyError
+from wrknv.errors import DependencyError
 from wrknv.wenv.workenv import WorkenvManager
 
 
