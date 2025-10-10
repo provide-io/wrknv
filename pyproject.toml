@@ -1,37 +1,38 @@
+#
+# wrknv/pyproject.toml
+#
+
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.dynamic]
-version = {file = "VERSION"}
-
-[tool.setuptools.package-data]
-wrknv = ["py.typed"]
 
 [project]
 name = "wrknv"
-dynamic = ["version"]
 description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"
-authors = [
-    {name = "Provide.io", email = "engineering@provide.io"},
-]
+dynamic = ["version"]
+requires-python = ">=3.11"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
+authors = [
+    { name = "Tim Perkins", email = "code@tim.life" },
+]
+maintainers = [
+    { name = "provide.io", email = "code@provide.io" },
+]
+keywords = ["development", "environment", "tools", "terraform", "opentofu", "provide"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Build Tools",
     "Topic :: System :: Installation/Setup",
+    "Typing :: Typed",
 ]
-requires-python = ">=3.11"
 dependencies = [
     "provide-foundation[all]>=0.0.0",
     "cattrs>=23.0.0",
@@ -59,16 +60,123 @@ docs = [
 wrknv = "wrknv.cli.hub_cli:main"
 
 [project.urls]
-"Homepage" = "https://github.com/provide-io/wrknv"
-"Bug Tracker" = "https://github.com/provide-io/wrknv/issues"
-"Documentation" = "https://github.com/provide-io/wrknv#readme"
-"Source Code" = "https://github.com/provide-io/wrknv"
+Homepage = "https://github.com/provide-io/wrknv"
+Repository = "https://github.com/provide-io/wrknv"
+Issues = "https://github.com/provide-io/wrknv/issues"
+Documentation = "https://github.com/provide-io/wrknv#readme"
 
+################################################################################
+# Build Configuration
+################################################################################
 
-[tool.black]
-line-length = 88
-target-version = ['py311', 'py312', 'py313']
-include = '\.pyi?$'
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION"}
+
+[tool.setuptools.package-data]
+wrknv = ["py.typed"]
+
+################################################################################
+# Pytest Configuration
+################################################################################
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "DEBUG"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+asyncio_default_test_loop_scope = "function"
+minversion = "7.0"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*", "*Tests"]
+python_functions = ["test_*", "*_test"]
+addopts = "-m 'not integration and not benchmark and not slow' -rFE -q --color=yes --dist worksteal"
+markers = [
+    # Test categories
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "cli: CLI command tests",
+    "config: Configuration tests",
+    "container: Container management tests",
+    "package: Package management tests",
+    "operations: File and platform operations tests",
+    "managers: Tool manager tests",
+    # Test characteristics
+    "tdd: TDD contract tests",
+    "slow: Slow running tests",
+    "fast: tests taking <100ms",
+    "network: Tests requiring network access",
+    "benchmark: performance/timing sensitive tests",
+    "flaky: tests known to be intermittently failing",
+    # Execution modifiers
+    "serial: run tests serially to avoid conflicts",
+    "time_sensitive: tests with strict timing requirements",
+    # Requirements
+    "requires_docker: skip if docker not available",
+    "requires_network: skip if offline",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore:cannot collect test class 'Test.*' because it has a __init__ constructor:pytest.PytestCollectionWarning",
+    "ignore:cannot collect test class .* because it has a __init__ constructor:pytest.PytestCollectionWarning",
+    "ignore:coroutine .* was never awaited:RuntimeWarning",
+]
+norecursedirs = [
+    ".git", ".hg", ".svn", "*_build", "build", "dist", "*.egg-info",
+    ".venv", "venv", "workenv",
+    "htmlcov", "docs/_build",
+    ".hypothesis",
+]
+
+################################################################################
+# Coverage.py Configuration
+################################################################################
+
+[tool.coverage.run]
+source = ["src/wrknv"]
+branch = true
+parallel = true
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/testing/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 70
+precision = 2
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "def __str__",
+    "if self.debug:",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if False:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+    "logger\\.(debug|info|warning|error|exception|critical|trace)\\(",
+    "pass",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+################################################################################
+# Ruff Linter and Formatter Configuration
+################################################################################
 
 [tool.ruff]
 line-length = 111
@@ -89,6 +197,10 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
+
+################################################################################
+# MyPy Static Type Checker Configuration
+################################################################################
 
 [tool.mypy]
 python_version = "3.11"
@@ -112,40 +224,20 @@ module = [
 ]
 ignore_missing_imports = true
 
-[tool.pytest.ini_options]
-minversion = "7.0"
-addopts = "-ra -q"
-testpaths = ["tests"]
-python_files = ["test_*.py", "*_test.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-markers = [
-    "unit: Unit tests",
-    "integration: Integration tests",
-    "cli: CLI command tests",
-    "config: Configuration tests",
-    "container: Container management tests",
-    "package: Package management tests",
-    "operations: File and platform operations tests",
-    "managers: Tool manager tests",
-    "slow: Slow running tests",
-    "network: Tests requiring network access",
-]
+################################################################################
+# Black Formatter Configuration (kept for compatibility)
+################################################################################
 
-[tool.coverage.run]
-source = ["src/wrknv"]
-omit = ["*/tests/*", "*/__pycache__/*"]
+[tool.black]
+line-length = 88
+target-version = ['py311', 'py312', 'py313']
+include = '\.pyi?$'
 
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "if self.debug:",
-    "if __name__ == .__main__.:",
-    "raise AssertionError",
-    "raise NotImplementedError",
-    "if 0:",
-    "if False:",
-    "class .*\\bProtocol\\):",
-    "@(abc\\.)?abstractmethod",
-]
+################################################################################
+# Security Scanner Configuration
+################################################################################
+
+[tool.bandit]
+exclude_dirs = [".venv", "tests", "workenv"]
+
+# 🧰🌍🖥️🪄
