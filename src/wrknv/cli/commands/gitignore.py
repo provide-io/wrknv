@@ -144,9 +144,10 @@ def gitignore_detect(path: str | None = None):
 @register_command(
     "gitignore.build",
     description="Build a .gitignore file from templates",
+    templates_nargs=-1,  # Allow multiple template arguments
 )
 def gitignore_build(
-    *templates: str,
+    templates: tuple[str, ...] = (),
     output: str | None = None,
     append: bool = False,
     auto_detect: bool = False,
@@ -154,7 +155,7 @@ def gitignore_build(
     """Build a .gitignore file from templates.
 
     Args:
-        *templates: Template names (e.g., "Python", "Node", "Go")
+        templates: Template names (e.g., "Python Node Go" or multiple arguments)
         output: Custom output file path
         append: Append to existing .gitignore
         auto_detect: Auto-detect project types
