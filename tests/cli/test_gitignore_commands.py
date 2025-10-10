@@ -27,25 +27,17 @@ def reset_cli():
     global _test_cli
     _test_cli = None
 
-    # Clear command dimension in registry to avoid "already registered" errors
+    yield
+
+    # Clean up after test - remove all commands registered during test
     from provide.foundation.hub import get_hub
     hub = get_hub()
 
-    # Remove all commands from registry
+    _test_cli = None
     commands_to_remove = []
     for entry in hub._component_registry.list_dimension("command"):
         commands_to_remove.append(entry.name)
 
-    for cmd_name in commands_to_remove:
-        try:
-            hub._component_registry.remove(cmd_name, "command")
-        except Exception:
-            pass
-
-    yield
-
-    # Clean up after test
-    _test_cli = None
     for cmd_name in commands_to_remove:
         try:
             hub._component_registry.remove(cmd_name, "command")
