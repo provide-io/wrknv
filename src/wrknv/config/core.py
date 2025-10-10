@@ -64,6 +64,7 @@ class WorkenvConfig(RuntimeConfig):
         default="my-project", description="Project name", env_var="WRKNV_PROJECT_NAME"
     )
     version: str = config_field(default="1.0.0", description="Project version", env_var="WRKNV_VERSION")
+    description: str = config_field(default="", description="Project description", env_var="WRKNV_DESCRIPTION")
 
     # Tool configurations
     tools: dict[str, dict[str, Any]] = field(factory=dict)
