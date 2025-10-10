@@ -3,7 +3,7 @@
 """
 Container Manager Implementation
 ================================
-Core container management functionality for wrknv.
+Thin orchestration facade for container operations.
 """
 
 from __future__ import annotations
@@ -16,6 +16,7 @@ from provide.foundation import logger
 from rich.console import Console
 
 from wrknv.config import WorkenvConfig
+from wrknv.container.metadata import ContainerMetadata
 from wrknv.container.operations import (
     ContainerBuilder,
     ContainerExec,
@@ -30,7 +31,7 @@ from wrknv.wenv.schema import ContainerConfig, get_default_config
 
 @define
 class ContainerManager:
-    """Manages Docker containers for wrknv development environments."""
+    """Orchestrates container operations through specialized components."""
 
     config: WorkenvConfig = field()
     console: Console = field(factory=Console)
@@ -44,7 +45,7 @@ class ContainerManager:
     # Container configuration
     container_config: ContainerConfig = field(init=False)
 
-    # Operations and storage (initialized in __attrs_post_init__)
+    # Operations components
     storage: ContainerStorage = field(init=False)
     runtime: DockerRuntime = field(init=False)
     lifecycle: ContainerLifecycle = field(init=False)
@@ -52,19 +53,16 @@ class ContainerManager:
     builder: ContainerBuilder = field(init=False)
     logs: ContainerLogs = field(init=False)
     volumes: VolumeManager = field(init=False)
+    metadata: ContainerMetadata = field(init=False)
 
     def __attrs_post_init__(self):
-        """Initialize container configuration and operations."""
+        """Initialize container components."""
         # Get container configuration
         self.container_config = self.config.container or ContainerConfig()
 
         # Set container and image names
         project_name = self.config.project_name.replace(" ", "-").lower()
-        if project_name != "my-project":
-            self.container_name = f"{project_name}-dev"
-        else:
-            self.container_name = "wrknv-dev"
-
+        self.container_name = f"{project_name}-dev" if project_name != "my-project" else "wrknv-dev"
         self.image_name = self.container_name
         self.full_image = f"{self.image_name}:{self.image_tag}"
 
@@ -76,12 +74,9 @@ class ContainerManager:
         self.storage.setup_storage()
 
         # Initialize runtime
-        self.runtime = DockerRuntime(
-            runtime_name="docker",
-            runtime_command="docker",
-        )
+        self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
 
-        # Initialize operations with dependencies (simplified for compatibility)
+        # Initialize operations
         self.lifecycle = ContainerLifecycle(
             runtime=self.runtime,
             container_name=self.container_name,
@@ -100,16 +95,9 @@ class ContainerManager:
             default_shell="/bin/bash",
         )
 
-        self.builder = ContainerBuilder(
-            runtime=self.runtime,
-            console=self.console,
-        )
+        self.builder = ContainerBuilder(runtime=self.runtime, console=self.console)
 
-        self.logs = ContainerLogs(
-            runtime=self.runtime,
-            container_name=self.container_name,
-            console=self.console,
-        )
+        self.logs = ContainerLogs(runtime=self.runtime, container_name=self.container_name, console=self.console)
 
         self.volumes = VolumeManager(
             runtime=self.runtime,
@@ -117,14 +105,20 @@ class ContainerManager:
             backup_dir=self.storage.get_container_path("backups"),
         )
 
-    # Convenience methods that delegate to operations
+        self.metadata = ContainerMetadata(
+            storage=self.storage,
+            container_name=self.container_name,
+            image_name=self.full_image,
+            config=self.config,
+        )
+
+    # Status checks
 
     def check_docker(self) -> bool:
         """Check if Docker is available and running."""
         try:
             return self.runtime.is_available()
         except RuntimeError:
-            # Circuit breaker is open - Docker has been unavailable
             return False
 
     def container_exists(self) -> bool:
@@ -139,87 +133,16 @@ class ContainerManager:
         """Check if the container image exists."""
         return self.builder.image_exists(self.full_image)
 
-    def _generate_dockerfile(self) -> str:
-        """Generate Dockerfile content from configuration."""
-        # Use configured base image or default
-        base_image = self.container_config.base_image or "ubuntu:22.04"
-
-        # Start with base image
-        lines = [f"FROM {base_image}", ""]
-
-        # Set working directory
-        lines.extend(["WORKDIR /workspace", ""])
-
-        # Install system packages
-        if self.container_config.additional_packages:
-            packages = " ".join(self.container_config.additional_packages)
-            lines.extend(
-                [
-                    "RUN apt-get update && apt-get install -y \\",
-                    f"    {packages} \\",
-                    "    && rm -rf /var/lib/apt/lists/*",
-                    "",
-                ]
-            )
-        else:
-            # Install default packages
-            lines.extend(
-                [
-                    "RUN apt-get update && apt-get install -y \\",
-                    "    curl \\",
-                    "    git \\",
-                    "    && rm -rf /var/lib/apt/lists/*",
-                    "",
-                ]
-            )
-
-        # Install Python if python_version is specified and base image isn't already Python
-        # Skip if using python:* base image (already has Python installed)
-        if self.container_config.python_version and not base_image.startswith("python:"):
-            py_version = self.container_config.python_version
-            lines.extend(
-                [
-                    f"RUN apt-get update && apt-get install -y python{py_version} python{py_version}-venv \\",
-                    "    && rm -rf /var/lib/apt/lists/*",
-                    "",
-                ]
-            )
-
-        # Set environment variables
-        if self.container_config.environment:
-            for key, value in self.container_config.environment.items():
-                lines.append(f"ENV {key}={value}")
-            lines.append("")
-
-        # Create user and set ownership of workspace
-        lines.extend(
-            [
-                "RUN useradd -m -s /bin/bash user",
-                "RUN chown -R user:user /workspace",
-                "USER user",
-                "",
-            ]
-        )
-
-        # Add CMD to keep container running (for development/testing)
-        lines.extend(
-            [
-                "# Keep container running",
-                'CMD ["sleep", "infinity"]',
-            ]
-        )
-
-        return "\n".join(lines)
+    # Build operations
 
     def build_image(self, rebuild: bool = False) -> bool:
         """Build the container image."""
-        # Get build directory from storage
         build_dir = self.storage.get_container_path("build")
         build_dir.mkdir(parents=True, exist_ok=True)
 
-        # Generate Dockerfile
+        # Generate and save Dockerfile
         dockerfile_path = build_dir / "Dockerfile"
-        dockerfile_content = self._generate_dockerfile()
+        dockerfile_content = self.builder.generate_dockerfile(self.container_config)
         dockerfile_path.write_text(dockerfile_content)
 
         # Build arguments from config
@@ -233,8 +156,10 @@ class ContainerManager:
             tag=self.full_image,
             context=str(build_dir),
             build_args=build_args,
-            stream_output=False,  # Tests don't mock stream_command
+            stream_output=False,
         )
+
+    # Lifecycle operations
 
     def start(self, force_rebuild: bool = False) -> bool:
         """Start the container, building if necessary."""
@@ -242,7 +167,7 @@ class ContainerManager:
         if (force_rebuild or not self.image_exists()) and not self.build_image(rebuild=force_rebuild):
             return False
 
-        # Prepare run options for container creation
+        # Prepare run options
         run_options = {
             "image": self.full_image,
             "volumes": self.storage.get_volume_mappings(),
@@ -253,21 +178,6 @@ class ContainerManager:
 
         return self.lifecycle.start(create_if_missing=True, **run_options)
 
-    def enter(
-        self,
-        command: str | None = None,
-        user: str | None = None,
-        workdir: str | None = None,
-        environment: dict[str, str] | None = None,
-    ) -> bool:
-        """Enter the container with an interactive shell or command."""
-        return self.exec.enter(
-            command=command,
-            user=user,
-            workdir=workdir,
-            environment=environment,
-        )
-
     def stop(self, timeout: int = 10) -> bool:
         """Stop the container."""
         return self.lifecycle.stop(timeout=timeout)
@@ -276,19 +186,25 @@ class ContainerManager:
         """Restart the container."""
         return self.lifecycle.restart(timeout=timeout)
 
+    def enter(
+        self,
+        command: str | None = None,
+        user: str | None = None,
+        workdir: str | None = None,
+        environment: dict[str, str] | None = None,
+    ) -> bool:
+        """Enter the container with an interactive shell or command."""
+        return self.exec.enter(command=command, user=user, workdir=workdir, environment=environment)
+
     def status(self) -> dict[str, Any]:
         """Get container status information."""
-        # Get status from lifecycle
         lifecycle_status = self.lifecycle.status()
 
-        # Check Docker availability (handle circuit breaker)
         try:
             docker_available = self.runtime.is_available()
         except RuntimeError:
-            # Circuit breaker is open - Docker unavailable
             docker_available = False
 
-        # Convert to format expected by tests (for compatibility)
         return {
             "docker_available": docker_available,
             "container_exists": lifecycle_status.get("exists", False),
@@ -301,37 +217,30 @@ class ContainerManager:
             },
         }
 
+    # Volume operations (delegate to VolumeManager)
+
     def backup_volumes(
         self,
         backup_path: Path | None = None,
         volumes: list[str] | None = None,
         compress: bool = True,
     ) -> Path | None:
-        """Backup container volumes.
-
-        Returns:
-            Path to backup file if successful, None otherwise
-        """
+        """Backup container volumes."""
         import tarfile
         from datetime import datetime
 
         try:
-            # Determine backup path
             if backup_path is None:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                 backup_path = self.storage.get_backup_path(f"volumes_backup_{timestamp}.tar.gz")
 
-            # Create backup directory if needed
             backup_path.parent.mkdir(parents=True, exist_ok=True)
-
-            # Get volumes directory to backup
             volumes_dir = self.storage.get_container_path("volumes")
 
             if not volumes_dir.exists():
                 logger.warning("No volumes directory to backup", path=str(volumes_dir))
                 return None
 
-            # Create tar archive of volumes
             with tarfile.open(backup_path, "w:gz" if compress else "w") as tar:
                 tar.add(volumes_dir, arcname="volumes")
 
@@ -343,15 +252,7 @@ class ContainerManager:
             return None
 
     def restore_volumes(self, backup_path: Path, force: bool = False) -> bool:
-        """Restore container volumes from backup.
-
-        Args:
-            backup_path: Path to backup tar file
-            force: Overwrite existing volumes
-
-        Returns:
-            True if successful
-        """
+        """Restore container volumes from backup."""
         import tarfile
         import shutil
 
@@ -360,22 +261,17 @@ class ContainerManager:
                 logger.error("Backup file not found", path=str(backup_path))
                 return False
 
-            # Get container directory
             container_dir = self.storage.get_container_path()
-
-            # Check if volumes exist
             volumes_dir = container_dir / "volumes"
+
             if volumes_dir.exists() and not force:
                 logger.warning("Volumes already exist, use force=True to overwrite")
                 return False
 
-            # Remove existing volumes if force
             if volumes_dir.exists() and force:
                 shutil.rmtree(volumes_dir)
 
-            # Extract backup
             with tarfile.open(backup_path, "r:*") as tar:
-                # Extract to container directory
                 tar.extractall(container_dir)
 
             logger.info("📥 Restored volumes from backup", backup=str(backup_path))
@@ -386,14 +282,7 @@ class ContainerManager:
             return False
 
     def clean_volumes(self, preserve: list[str] | None = None) -> bool:
-        """Clean up container volumes.
-
-        Args:
-            preserve: List of volume names to preserve
-
-        Returns:
-            True if successful
-        """
+        """Clean up container volumes."""
         import shutil
 
         try:
@@ -402,17 +291,13 @@ class ContainerManager:
             if not volumes_dir.exists():
                 return True
 
-            # Clean each volume directory
             for volume_path in volumes_dir.iterdir():
                 if volume_path.is_dir():
-                    # Check if should be preserved
                     if preserve and volume_path.name in preserve:
                         logger.debug("Preserving volume", volume=volume_path.name)
                         continue
 
-                    # Remove volume contents
                     shutil.rmtree(volume_path)
-                    # Recreate empty directory
                     volume_path.mkdir(exist_ok=True)
                     logger.info("🗑️ Cleaned volume", volume=volume_path.name)
 
@@ -421,6 +306,8 @@ class ContainerManager:
         except Exception as e:
             logger.error("Failed to clean volumes", error=str(e))
             return False
+
+    # Logs operations
 
     def get_logs(
         self,
@@ -431,22 +318,20 @@ class ContainerManager:
         """Get container logs."""
         return self.logs.get_logs(tail=lines, follow=follow, since=since, timestamps=False)
 
+    # Cleanup operations
+
     def clean(self, preserve_volumes: bool = False) -> bool:
         """Clean up container and optionally volumes."""
         success = True
 
-        # Stop and remove container
         if self.container_exists():
             if self.container_running():
                 success = self.stop() and success
-
             success = self.lifecycle.remove(force=False) and success
 
-        # Clean up volumes if requested
         if not preserve_volumes:
             success = self.clean_volumes() and success
 
-        # Clean up storage
         success = self.storage.clean_storage(preserve_backups=True) and success
 
         if success:
@@ -456,6 +341,8 @@ class ContainerManager:
 
         return success
 
+    # Storage delegation
+
     def get_container_path(self, subpath: str = "") -> Path:
         """Get path to container-specific directory or file."""
         return self.storage.get_container_path(subpath)
@@ -464,23 +351,19 @@ class ContainerManager:
         """Get volume mappings for the container."""
         return self.storage.get_volume_mappings()
 
+    # Metadata delegation
+
     def save_metadata(self) -> None:
         """Save container metadata."""
-        metadata = {
-            "container_name": self.container_name,
-            "image_name": self.full_image,
-            "project_name": self.config.project_name,
-            "config_version": self.config.version,
-        }
-        self.storage.save_metadata(metadata)
+        self.metadata.save()
 
     def load_metadata(self) -> dict[str, Any] | None:
         """Load container metadata."""
-        return self.storage.load_metadata()
+        return self.metadata.load()
 
     def update_metadata(self, updates: dict[str, Any]) -> None:
         """Update container metadata."""
-        self.storage.update_metadata(updates)
+        self.metadata.update(updates)
 
 
 def create_container_manager(project_name: str | None = None) -> ContainerManager:

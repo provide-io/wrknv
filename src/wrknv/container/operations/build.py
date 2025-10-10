@@ -18,6 +18,7 @@ from provide.foundation.process import ProcessError, stream_command
 from rich.console import Console
 
 from wrknv.container.runtime.base import ContainerRuntime
+from wrknv.wenv.schema import ContainerConfig
 
 
 @define
@@ -203,3 +204,82 @@ class ContainerBuilder:
 
         except ProcessError:
             return False
+
+    def generate_dockerfile(self, container_config: ContainerConfig) -> str:
+        """
+        Generate Dockerfile content from configuration.
+
+        Args:
+            container_config: Container configuration
+
+        Returns:
+            Dockerfile content as string
+        """
+        # Use configured base image or default
+        base_image = container_config.base_image or "ubuntu:22.04"
+
+        # Start with base image
+        lines = [f"FROM {base_image}", ""]
+
+        # Set working directory
+        lines.extend(["WORKDIR /workspace", ""])
+
+        # Install system packages
+        if container_config.additional_packages:
+            packages = " ".join(container_config.additional_packages)
+            lines.extend(
+                [
+                    "RUN apt-get update && apt-get install -y \\",
+                    f"    {packages} \\",
+                    "    && rm -rf /var/lib/apt/lists/*",
+                    "",
+                ]
+            )
+        else:
+            # Install default packages
+            lines.extend(
+                [
+                    "RUN apt-get update && apt-get install -y \\",
+                    "    curl \\",
+                    "    git \\",
+                    "    && rm -rf /var/lib/apt/lists/*",
+                    "",
+                ]
+            )
+
+        # Install Python if python_version is specified and base image isn't already Python
+        if container_config.python_version and not base_image.startswith("python:"):
+            py_version = container_config.python_version
+            lines.extend(
+                [
+                    f"RUN apt-get update && apt-get install -y python{py_version} python{py_version}-venv \\",
+                    "    && rm -rf /var/lib/apt/lists/*",
+                    "",
+                ]
+            )
+
+        # Set environment variables
+        if container_config.environment:
+            for key, value in container_config.environment.items():
+                lines.append(f"ENV {key}={value}")
+            lines.append("")
+
+        # Create user and set ownership
+        lines.extend(
+            [
+                "RUN useradd -m -s /bin/bash user",
+                "RUN chown -R user:user /workspace",
+                "USER user",
+                "",
+            ]
+        )
+
+        # Keep container running
+        lines.extend(
+            [
+                "# Keep container running",
+                'CMD ["sleep", "infinity"]',
+            ]
+        )
+
+        return "\n".join(lines)
