@@ -64,7 +64,9 @@ templates_path = "{templates_path_actual}"
             config_content = config_content_template.format(templates_path_actual=isolated_path)
             config_path.write_text(config_content)
 
-            mock_config_instance = WorkenvConfig(config_file=config_path)
+            # Load config from the file
+            with patch("wrknv.wenv.config.WorkenvConfig._find_config_file", return_value=config_path):
+                mock_config_instance = WorkenvConfig.load()
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
@@ -202,7 +204,9 @@ templates_path = "{templates_path_actual}"
             config_content = config_content_template.format(templates_path_actual=isolated_path)
             config_path.write_text(config_content)
 
-            mock_config_instance = WorkenvConfig(config_file=config_path)
+            # Load config from the file
+            with patch("wrknv.wenv.config.WorkenvConfig._find_config_file", return_value=config_path):
+                mock_config_instance = WorkenvConfig.load()
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
