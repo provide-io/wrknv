@@ -144,10 +144,9 @@ def gitignore_detect(path: str | None = None):
 @register_command(
     "gitignore.build",
     description="Build a .gitignore file from templates",
-    templates_nargs=-1,  # Allow multiple template arguments
 )
 def gitignore_build(
-    templates: tuple[str, ...] = (),
+    templates: str | None = None,
     output: str | None = None,
     append: bool = False,
     auto_detect: bool = False,
@@ -155,7 +154,7 @@ def gitignore_build(
     """Build a .gitignore file from templates.
 
     Args:
-        templates: Template names (e.g., "Python Node Go" or multiple arguments)
+        templates: Comma-separated template names (e.g., "Python,Node,Go") or single name
         output: Custom output file path
         append: Append to existing .gitignore
         auto_detect: Auto-detect project types
@@ -181,9 +180,14 @@ def gitignore_build(
             template_list.extend(detected)
             echo_info(f"Auto-detected: {', '.join(detected)}")
 
-    # templates is a tuple from *templates, convert to list
+    # Parse templates string - support both comma-separated and space-separated
     if templates:
-        template_list.extend(templates)
+        # Try comma-separated first
+        if ',' in templates:
+            template_list.extend([t.strip() for t in templates.split(',') if t.strip()])
+        else:
+            # Otherwise treat as space-separated
+            template_list.extend([t.strip() for t in templates.split() if t.strip()])
 
     if not template_list:
         # Try to get from config

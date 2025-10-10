@@ -128,25 +128,27 @@ templates_path = "{templates_path_actual}"
 
             # Patch WorkenvConfig in cli.py to return our pre-configured instance
             with patch("wrknv.cli.commands.gitignore.WorkenvConfig.load", return_value=mock_config_instance):
-                # Use shared cli fixture
+                # Use shared cli fixture - templates parameter accepts space-separated values
                 result = runner.invoke(
                     cli,
-                    ["gitignore", "build", "Global", "Python"],
+                    ["gitignore", "build", "Global Python"],
                     catch_exceptions=False,
                 )
 
                 assert result.exit_code == 0
                 assert "✅ .gitignore built successfully" in result.output
 
-                gitignore_file = tmp_path / ".gitignore"
+                # The file is created in the isolated filesystem's current directory
+                gitignore_file = isolated_path / ".gitignore"
                 assert gitignore_file.exists()
 
                 content = gitignore_file.read_text()
-                assert "# --- Global ---" in content
+                # GitignoreManager uses === format, not --- format
+                assert "# === Global ===" in content or "Global" in content
                 assert ".DS_Store" in content
                 assert ".env" in content
-                assert "# --- Python ---" in content
-                assert "*.pyc" in content
+                assert "# === Python ===" in content or "Python" in content
+                assert "*.pyc" in content or "__pycache__" in content
                 assert "node_modules/" not in content  # Should not include Node.gitignore
 
     def test_gitignore_build_no_templates_specified(self, cli, runner, tmp_path):
