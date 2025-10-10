@@ -14,7 +14,7 @@ import tempfile
 from urllib.request import urlopen
 
 from provide.foundation import logger
-from provide.foundation.archive.tar import extract_tar
+from provide.foundation.archive.operations import ArchiveOperations
 
 
 class TemplateHandler:
@@ -71,7 +71,7 @@ class TemplateHandler:
                 logger.debug("Extracting templates archive")
                 with tempfile.TemporaryDirectory() as extract_dir:
                     # Extract with security validation (path traversal protection)
-                    extract_tar(tmp_file.name, Path(extract_dir))
+                    ArchiveOperations.extract_tar_gz(Path(tmp_file.name), Path(extract_dir))
 
                     # Find root directory (usually gitignore-main)
                     extracted_items = list(Path(extract_dir).iterdir())

@@ -14,8 +14,9 @@ import pathlib
 import stat
 
 from provide.foundation import logger
-from provide.foundation.archive.tar import extract_tar
-from provide.foundation.archive.zip import extract_zip
+from provide.foundation.archive.operations import ArchiveOperations
+from provide.foundation.archive.tar import TarArchive
+from provide.foundation.archive.zip import ZipArchive
 from provide.foundation.errors import ResourceError, ValidationError, resilient
 from provide.foundation.file import (
     ensure_dir,
@@ -41,12 +42,15 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
     archive_name = archive_path.name.lower()
 
     try:
-        if archive_name.endswith(".tar.gz") or archive_name.endswith(".tgz") or archive_name.endswith(".tar"):
-            # Use foundation's extract_tar with built-in path traversal protection
-            extract_tar(archive_path, extract_dir)
+        if archive_name.endswith(".tar.gz") or archive_name.endswith(".tgz"):
+            # Use foundation's extract_tar_gz with built-in path traversal protection
+            ArchiveOperations.extract_tar_gz(archive_path, extract_dir)
+        elif archive_name.endswith(".tar"):
+            # Use foundation's TarArchive with built-in path traversal protection
+            TarArchive().extract(archive_path, extract_dir)
         elif archive_name.endswith(".zip"):
-            # Use foundation's extract_zip with built-in path traversal protection
-            extract_zip(archive_path, extract_dir)
+            # Use foundation's ZipArchive with built-in path traversal protection
+            ZipArchive().extract(archive_path, extract_dir)
         else:
             raise ValidationError(f"Unsupported archive format: {archive_path}")
 

@@ -45,7 +45,7 @@ class TestConfigCommands(FoundationTestCase):
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.show_config.return_value = None
             mock_load.return_value = mock_config
@@ -60,7 +60,7 @@ class TestConfigCommands(FoundationTestCase):
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.show_config.return_value = None
             mock_load.return_value = mock_config
@@ -75,7 +75,7 @@ class TestConfigCommands(FoundationTestCase):
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.to_dict.return_value = {
                 "project_name": "test-project",
@@ -97,7 +97,7 @@ class TestConfigCommands(FoundationTestCase):
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
             mock_load.return_value = mock_config
@@ -115,7 +115,7 @@ class TestConfigCommands(FoundationTestCase):
 
         self.config_file.write_text('project_name = "test-project"')
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.edit_config.return_value = None
@@ -133,7 +133,7 @@ class TestConfigCommands(FoundationTestCase):
 
         self.config_file.write_text('project_name = "test-project"')
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             with patch.dict(os.environ, {}, clear=True):
                 # Remove EDITOR from environment
                 if "EDITOR" in os.environ:
@@ -156,7 +156,7 @@ class TestConfigCommands(FoundationTestCase):
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             with patch("provide.foundation.process.run_command") as mock_run:
                 with patch.dict(os.environ, {"EDITOR": "nano"}):
                     mock_config = Mock()
@@ -184,7 +184,7 @@ version = "1.0.0"
 terraform = { version = "1.5.0" }
 """)
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.config_exists.return_value = True
             mock_config.get_config_path.return_value = self.config_file
@@ -206,7 +206,7 @@ terraform = { version = "1.5.0" }
 version = "1.0.0"
 """)
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.config_exists.return_value = True
             mock_config.get_config_path.return_value = self.config_file
@@ -227,7 +227,7 @@ version = "1.0.0"
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.config_path = self.config_file
             mock_config.get_config_path.return_value = self.config_file
@@ -247,7 +247,7 @@ version = "1.0.0"
 
         self.config_file.write_text('project_name = "existing"')
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.config_exists.return_value = True
@@ -263,7 +263,7 @@ version = "1.0.0"
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.get_setting.return_value = "INFO"
             mock_load.return_value = mock_config
@@ -278,7 +278,7 @@ version = "1.0.0"
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.set_setting.return_value = True
             mock_load.return_value = mock_config
@@ -294,7 +294,7 @@ version = "1.0.0"
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+        with patch("wrknv.cli.commands.config.WorkenvConfig.load") as mock_load:
             mock_config = Mock()
             mock_config.config_exists.return_value = True
             mock_config.config_path = self.config_file
