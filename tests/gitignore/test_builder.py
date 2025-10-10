@@ -27,8 +27,8 @@ class TestGitignoreBuilder:
 
     def test_add_header_without_project(self, builder):
         """Test adding header without project name."""
-        with patch("wrknv.gitignore.builder.datetime") as mock_datetime:
-            mock_datetime.now.return_value.strftime.return_value = "2024-01-01 12:00:00"
+        with patch("wrknv.gitignore.builder.provide_now") as mock_now:
+            mock_now.return_value.strftime.return_value = "2024-01-01 12:00:00"
             builder.add_header()
 
         assert len(builder.sections) == 1
@@ -40,8 +40,8 @@ class TestGitignoreBuilder:
 
     def test_add_header_with_project(self, builder):
         """Test adding header with project name."""
-        with patch("wrknv.gitignore.builder.datetime") as mock_datetime:
-            mock_datetime.now.return_value.strftime.return_value = "2024-01-01 12:00:00"
+        with patch("wrknv.gitignore.builder.provide_now") as mock_now:
+            mock_now.return_value.strftime.return_value = "2024-01-01 12:00:00"
             builder.add_header(project_name="test-project")
 
         assert len(builder.sections) == 1
@@ -159,8 +159,8 @@ class TestGitignoreBuilder:
 
     def test_build_complete_gitignore(self, builder):
         """Test building a complete gitignore with all sections."""
-        with patch("wrknv.gitignore.builder.datetime") as mock_datetime:
-            mock_datetime.now.return_value.strftime.return_value = "2024-01-01 12:00:00"
+        with patch("wrknv.gitignore.builder.provide_now") as mock_now:
+            mock_now.return_value.strftime.return_value = "2024-01-01 12:00:00"
             builder.add_header(project_name="test-project")
 
         builder.add_template_section("Python", "*.pyc\n__pycache__/")
