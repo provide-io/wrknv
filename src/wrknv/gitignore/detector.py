@@ -7,7 +7,7 @@ Auto-detects project types and suggests appropriate gitignore templates.
 from __future__ import annotations
 
 
-import json
+from provide.foundation.serialization import json
 from pathlib import Path
 
 from provide.foundation import logger

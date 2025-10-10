@@ -7,7 +7,7 @@ Manages gitignore templates from GitHub's collection.
 from __future__ import annotations
 
 
-import json
+from provide.foundation.serialization import json
 from pathlib import Path
 import shutil
 import tempfile

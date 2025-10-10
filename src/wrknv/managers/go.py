@@ -10,7 +10,7 @@ Manages Go versions for development.
 from __future__ import annotations
 
 
-import json
+from provide.foundation.serialization import json
 import pathlib
 import re
 from urllib.request import urlopen
