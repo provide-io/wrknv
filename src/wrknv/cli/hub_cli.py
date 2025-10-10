@@ -14,10 +14,31 @@ from __future__ import annotations
 import importlib
 import sys
 
+import click
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 
+from wrknv.config import WorkenvConfig
+
 logger = get_logger(__name__)
+
+
+class WrknvContext:
+    """Shared context for wrknv CLI commands."""
+
+    _config = None
+
+    @classmethod
+    def get_config(cls) -> WorkenvConfig:
+        """Get or load the WorkenvConfig singleton."""
+        if cls._config is None:
+            cls._config = WorkenvConfig.load()
+        return cls._config
+
+    @classmethod
+    def reset(cls):
+        """Reset config cache (for testing)."""
+        cls._config = None
 
 
 def load_commands():
@@ -60,6 +81,9 @@ def create_cli():
     # This prevents AlreadyExistsError when create_cli() is called multiple times
     from provide.foundation.hub.categories import ComponentCategory
     hub.clear(dimension=ComponentCategory.COMMAND.value)
+
+    # Reset config cache when creating CLI (for test isolation)
+    WrknvContext.reset()
 
     # Load all commands (this will register them in the cleared registry)
     load_commands()
