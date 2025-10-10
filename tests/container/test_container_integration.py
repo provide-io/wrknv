@@ -20,7 +20,8 @@ from provide.foundation.process import run_command
 from provide.testkit import FoundationTestCase
 
 from wrknv.container.manager import ContainerManager
-from wrknv.wenv.schema import ContainerConfig, WorkenvConfig
+from wrknv.config import WorkenvConfig
+from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
 
 
 def docker_available():
