@@ -84,6 +84,9 @@ class WorkenvConfig(RuntimeConfig):
     # Env configuration
     env: dict[str, Any] = field(factory=dict)
 
+    # Gitignore configuration
+    gitignore: dict[str, Any] = field(factory=dict)
+
     # Internal state
     config_path: Path | None = field(init=False, repr=False, default=None)
     _manager: ConfigManager | None = field(init=False, repr=False, default=None)

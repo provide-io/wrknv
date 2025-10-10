@@ -40,6 +40,8 @@ class WorkenvConfigPersistence:
                     self.config.tools = config_dict["tools"]
                 if "profiles" in config_dict:
                     self.config.profiles = config_dict["profiles"]
+                if "gitignore" in config_dict:
+                    self.config.gitignore = config_dict["gitignore"]
                 if "workenv" in config_dict and isinstance(config_dict["workenv"], dict):
                     workenv_data = config_dict["workenv"]
 
@@ -80,13 +82,19 @@ class WorkenvConfigPersistence:
         if self.config.env:
             workenv_dict["env"] = self.config.env
 
-        return {
+        config_dict = {
             "project_name": self.config.project_name,
             "version": self.config.version,
             "tools": self.config.tools,
             "profiles": self.config.profiles,
             "workenv": workenv_dict,
         }
+
+        # Add gitignore configuration if present
+        if self.config.gitignore:
+            config_dict["gitignore"] = self.config.gitignore
+
+        return config_dict
 
     def write_config(self, config_data: dict[str, Any]) -> None:
         """Write configuration data to file."""
@@ -99,6 +107,8 @@ class WorkenvConfigPersistence:
             self.config.tools = config_data["tools"]
         if "profiles" in config_data:
             self.config.profiles = config_data["profiles"]
+        if "gitignore" in config_data:
+            self.config.gitignore = config_data["gitignore"]
         if "workenv" in config_data and isinstance(config_data["workenv"], dict):
             workenv_data = config_data["workenv"]
 
