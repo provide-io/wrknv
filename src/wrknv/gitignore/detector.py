@@ -6,8 +6,7 @@ Auto-detects project types and suggests appropriate gitignore templates.
 
 from __future__ import annotations
 
-
-from provide.foundation.serialization import json
+import json
 from pathlib import Path
 
 from provide.foundation import logger
@@ -172,11 +171,12 @@ class ProjectDetector:
         """Check if filename matches a pattern."""
         from fnmatch import fnmatch
 
-        # Handle directory patterns
+        # Handle directory patterns (directories starting with .)
         if pattern.startswith(".") and not pattern.startswith("*."):
-            return is_dir and filename == pattern
+            # Match exact name for both files and directories
+            return filename == pattern
 
-        # Handle file patterns
+        # Handle wildcard file patterns
         if not is_dir:
             return fnmatch(filename, pattern) or filename == pattern
 
@@ -211,7 +211,7 @@ class ProjectDetector:
                     self.detected_frameworks.add("NextJS")
                     logger.trace("Detected Next.js from package.json")
 
-            except (Exception, KeyError):
+            except (json.JSONDecodeError, KeyError):
                 logger.debug("Could not parse package.json")
 
         # Check requirements.txt for Python frameworks
