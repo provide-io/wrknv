@@ -13,20 +13,15 @@ import pytest
 from wrknv.gitignore.manager import GitignoreManager
 
 
-@pytest.mark.skip(reason="Tests need refactor - TemplateHandler mocking incompatible with current API (created in __init__)")
 class TestGitignoreManager:
     """Test suite for GitignoreManager."""
 
     @pytest.fixture
     def temp_dir(self, tmp_path):
         """Create a temporary directory."""
-        return tmp_path / "test_project"
-
-    @pytest.fixture
-    def manager(self, temp_dir):
-        """Create a GitignoreManager instance."""
-        temp_dir.mkdir(exist_ok=True)
-        return GitignoreManager(project_dir=temp_dir)
+        test_project = tmp_path / "test_project"
+        test_project.mkdir(exist_ok=True)
+        return test_project
 
     @pytest.fixture
     def mock_template_handler(self):
@@ -72,7 +67,7 @@ class TestGitignoreManager:
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
     @patch("wrknv.gitignore.manager.ProjectDetector")
-    def test_build_from_templates(self, mock_detector_class, mock_handler_class, manager, temp_dir):
+    def test_build_from_templates(self, mock_detector_class, mock_handler_class, temp_dir):
         """Test building gitignore from specific templates."""
         mock_handler = Mock()
         mock_handler.get_template.side_effect = lambda name: {
@@ -81,6 +76,7 @@ class TestGitignoreManager:
         }.get(name)
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         manager.build_from_templates(["Python", "Node"])
 
         gitignore_file = temp_dir / ".gitignore"
@@ -94,12 +90,13 @@ class TestGitignoreManager:
         assert "=== Node ===" in content
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_build_from_templates_with_custom_rules(self, mock_handler_class, manager, temp_dir):
+    def test_build_from_templates_with_custom_rules(self, mock_handler_class, temp_dir):
         """Test building with custom rules."""
         mock_handler = Mock()
         mock_handler.get_template.return_value = "*.pyc"
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         manager.build_from_templates(["Python"], custom_rules=["*.secret", "local.conf"])
 
         content = temp_dir / ".gitignore"
@@ -109,19 +106,20 @@ class TestGitignoreManager:
         assert "=== Custom Rules ===" in content_text
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_build_from_templates_missing_template(self, mock_handler_class, manager, temp_dir):
+    def test_build_from_templates_missing_template(self, mock_handler_class, temp_dir):
         """Test building with missing template."""
         mock_handler = Mock()
         mock_handler.get_template.return_value = None
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         with patch("wrknv.gitignore.manager.logger") as mock_logger:
             manager.build_from_templates(["NonExistent"])
             mock_logger.warning.assert_called_with("Template 'NonExistent' not found")
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
     @patch("wrknv.gitignore.manager.ProjectDetector")
-    def test_build_from_detection(self, mock_detector_class, mock_handler_class, manager, temp_dir):
+    def test_build_from_detection(self, mock_detector_class, mock_handler_class, temp_dir):
         """Test building gitignore from auto-detection."""
         # Set up mock detector
         mock_detector = Mock()
@@ -136,6 +134,7 @@ class TestGitignoreManager:
         }.get(name)
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         manager.build_from_detection()
 
         mock_detector.scan_directory.assert_called_once_with(temp_dir, max_depth=5)
@@ -146,7 +145,7 @@ class TestGitignoreManager:
         assert "*.pid" in content_text
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_add_templates_to_existing(self, mock_handler_class, manager, temp_dir):
+    def test_add_templates_to_existing(self, mock_handler_class, temp_dir):
         """Test adding templates to existing gitignore."""
         # Create existing gitignore
         existing_file = temp_dir / ".gitignore"
@@ -156,6 +155,7 @@ class TestGitignoreManager:
         mock_handler.get_template.return_value = "*.pyc"
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         manager.add_templates(["Python"])
 
         content = existing_file.read_text()
