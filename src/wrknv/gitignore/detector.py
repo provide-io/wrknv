@@ -124,7 +124,7 @@ class ProjectDetector:
                 # Skip hidden directories (except IDE/tool directories)
                 if item.is_dir() and item.name.startswith("."):
                     # Check for IDE/tool directories
-                    if item.name in [".vscode", ".idea", ".vim", ".emacs.d"]:
+                    if item.name in [".vscode", ".idea", ".vim", ".emacs.d", ".ruff_cache"]:
                         self._check_pattern(item.name, is_dir=True)
                     continue
 
