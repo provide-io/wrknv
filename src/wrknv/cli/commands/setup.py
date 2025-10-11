@@ -21,6 +21,7 @@ from provide.foundation.hub import register_command
 from provide.foundation.process import ProcessError, run_command
 
 from wrknv.errors import DependencyError
+from provide.foundation.errors import NotFoundError
 from wrknv.wenv.workenv import WorkenvManager
 
 
@@ -163,12 +164,17 @@ def setup_command(
             try:
                 run_command(["bash", str(script_path)], check=True)
                 echo_success("Shell integration configured successfully")
-            except ProcessError:
+            except ProcessError as e:
                 echo_error("Failed to set up shell integration")
-                sys.exit(1)
+                raise e
         else:
             echo_error(f"Shell integration script not found at {script_path}")
-            sys.exit(1)
+            raise NotFoundError(
+                message=f"Shell integration script not found at {script_path}",
+                resource_type="file",
+                resource_id=str(script_path),
+                hint="Make sure you're running from the repository root or reinstall wrknv"
+            )
     else:
         echo_info("Available setup options:")
         echo_info("  --init                Create wrknv's own workenv")
