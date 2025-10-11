@@ -211,7 +211,7 @@ class ProjectDetector:
                     self.detected_frameworks.add("NextJS")
                     logger.trace("Detected Next.js from package.json")
 
-            except (json.JSONDecodeError, KeyError):
+            except (Exception, KeyError):
                 logger.debug("Could not parse package.json")
 
         # Check requirements.txt for Python frameworks
