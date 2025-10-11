@@ -11,10 +11,10 @@ from provide.foundation.serialization import json
 from pathlib import Path
 import shutil
 import tempfile
-from provide.foundation.transport import get
 
 from provide.foundation import logger
 from provide.foundation.archive.operations import ArchiveOperations
+from provide.foundation.transport import get
 
 
 class TemplateHandler:
@@ -60,36 +60,39 @@ class TemplateHandler:
         logger.info("Updating gitignore templates from GitHub...")
 
         try:
-            # Download archive to temp file
+            # Download archive to temp file using foundation download
+            from wrknv.wenv.operations.download import download_file
+
+            # Use NamedTemporaryFile but don't delete automatically
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
-                logger.debug(f"Downloading templates archive to {tmp_file.name}")
+                tmp_path = Path(tmp_file.name)
 
-                response = get(self.GITHUB_ARCHIVE)
-                tmp_file.write(response.content)
+            logger.debug(f"Downloading templates archive to {tmp_path}")
+            download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
-                # Extract archive using foundation utilities
-                logger.debug("Extracting templates archive")
-                with tempfile.TemporaryDirectory() as extract_dir:
-                    # Extract with security validation (path traversal protection)
-                    ArchiveOperations.extract_tar_gz(Path(tmp_file.name), Path(extract_dir))
+            # Extract archive using foundation utilities
+            logger.debug("Extracting templates archive")
+            with tempfile.TemporaryDirectory() as extract_dir:
+                # Extract with security validation (path traversal protection)
+                ArchiveOperations.extract_tar_gz(tmp_path, Path(extract_dir))
 
-                    # Find root directory (usually gitignore-main)
-                    extracted_items = list(Path(extract_dir).iterdir())
-                    if not extracted_items:
-                        raise ValueError("Archive is empty")
+                # Find root directory (usually gitignore-main)
+                extracted_items = list(Path(extract_dir).iterdir())
+                if not extracted_items:
+                    raise ValueError("Archive is empty")
 
-                    source_dir = extracted_items[0] if len(extracted_items) == 1 else Path(extract_dir)
+                source_dir = extracted_items[0] if len(extracted_items) == 1 else Path(extract_dir)
 
-                    # Clear existing cache
-                    if self.cache_dir.exists():
-                        logger.debug("Clearing existing cache")
-                        shutil.rmtree(self.cache_dir)
+                # Clear existing cache
+                if self.cache_dir.exists():
+                    logger.debug("Clearing existing cache")
+                    shutil.rmtree(self.cache_dir)
 
-                    # Move extracted files to cache
-                    shutil.move(str(source_dir), str(self.cache_dir))
+                # Move extracted files to cache
+                shutil.move(str(source_dir), str(self.cache_dir))
 
-                # Clean up temp file
-                Path(tmp_file.name).unlink()
+            # Clean up temp file
+            tmp_path.unlink()
 
             # Update version file with current commit
             self._update_version_file()
