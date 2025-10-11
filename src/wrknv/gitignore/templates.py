@@ -14,6 +14,7 @@ import tempfile
 from provide.foundation import logger
 from provide.foundation.archive.operations import ArchiveOperations
 from provide.foundation.file import safe_move, safe_rmtree
+from provide.foundation.resilience import retry, fallback
 from provide.foundation.transport import get
 
 
@@ -123,21 +124,32 @@ class TemplateHandler:
         logger.debug("Cache validation passed")
         return True
 
+    @retry(max_attempts=3, delay=1.0, backoff=2.0, exceptions=(Exception,))
+    def _fetch_commit_sha(self) -> str:
+        """Fetch latest commit SHA from GitHub API with retry."""
+        logger.debug("Fetching latest commit SHA from GitHub API")
+        response = get(f"{self.GITHUB_API}/commits/main")
+        data = response.json()
+        return data["sha"][:8]
+
+    def _fallback_version(self) -> str:
+        """Fallback version identifier using timestamp."""
+        from provide.foundation.time import provide_now
+
+        return provide_now().isoformat()
+
     def _update_version_file(self):
-        """Update the version file with current information."""
+        """Update the version file with current information.
+
+        Uses GitHub API with retry, falls back to timestamp if unavailable.
+        """
         version_file = self.cache_dir / ".version"
 
         try:
-            # Try to get latest commit SHA from GitHub API
-            logger.debug("Fetching latest commit SHA from GitHub API")
-            response = get(f"{self.GITHUB_API}/commits/main")
-            data = response.json()
-            commit_sha = data["sha"][:8]
+            commit_sha = self._fetch_commit_sha()
         except Exception as e:
-            logger.warning(f"Could not fetch commit SHA: {e}, using timestamp")
-            from provide.foundation.time import provide_now
-
-            commit_sha = provide_now().isoformat()
+            logger.warning(f"Could not fetch commit SHA after retries: {e}, using timestamp fallback")
+            commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
         logger.debug(f"Updated version file with: {commit_sha}")
