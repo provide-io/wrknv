@@ -12,11 +12,12 @@ from __future__ import annotations
 
 
 import hashlib
-import json
 from pathlib import Path
 from typing import Any
 
 from provide.foundation import logger
+from provide.foundation.serialization import json
+from provide.foundation.transport import UniversalClient
 
 
 class RegistryClient:
@@ -35,20 +36,14 @@ class RegistryClient:
         self._session = None
 
     def _get_session(self):
-        """Get or create HTTP session."""
+        """Get or create HTTP session using foundation transport."""
         if self._session is None:
-            try:
-                import httpx
-
-                self._session = httpx.Client(
-                    base_url=self.registry_url,
-                    headers=self._get_headers(),
-                    timeout=30.0,
-                )
-            except ImportError:
-                # Fallback to urllib if httpx not available
-                logger.warning("httpx not available, using urllib fallback")
-                return None
+            # Use UniversalClient from foundation
+            self._session = UniversalClient(
+                base_url=self.registry_url,
+                default_headers=self._get_headers(),
+                timeout=30.0,
+            )
         return self._session
 
     def _get_headers(self) -> dict[str, str]:

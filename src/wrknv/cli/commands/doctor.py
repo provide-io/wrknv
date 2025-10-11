@@ -235,7 +235,6 @@ def _check_dependencies() -> dict[str, Any]:
         # Check optional dependencies
         optional_deps = [
             ("tomli_w", "for saving TOML files"),
-            ("httpx", "for downloading templates"),
             ("semver", "for version parsing"),
         ]
 
