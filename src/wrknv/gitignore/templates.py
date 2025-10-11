@@ -124,7 +124,7 @@ class TemplateHandler:
         logger.debug("Cache validation passed")
         return True
 
-    @retry(max_attempts=3, delay=1.0, backoff=2.0, exceptions=(Exception,))
+    @retry(Exception, max_attempts=3, base_delay=1.0)
     def _fetch_commit_sha(self) -> str:
         """Fetch latest commit SHA from GitHub API with retry."""
         logger.debug("Fetching latest commit SHA from GitHub API")

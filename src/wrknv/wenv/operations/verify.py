@@ -45,7 +45,7 @@ def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, t
         return False
 
 
-@retry(max_attempts=3, delay=1.0, backoff=2.0, exceptions=(ProcessError, OSError))
+@retry(ProcessError, OSError, max_attempts=3, base_delay=1.0)
 def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 10) -> str | None:
     """Run version check command for a tool and return output.
 
