@@ -86,7 +86,7 @@ class TestSetupCommand(FoundationTestCase):
         assert result.exit_code != 0
         assert result.exception is not None
 
-    @patch("provide.foundation.process.run_command")
+    @patch("wrknv.cli.commands.setup.run_command")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
     def test_setup_shell_integration_success(self, mock_get_path, mock_run):
         """Test successful shell integration setup."""
