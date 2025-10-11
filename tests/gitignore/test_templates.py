@@ -14,7 +14,6 @@ import pytest
 from wrknv.gitignore.templates import TemplateHandler
 
 
-@pytest.mark.skip(reason="Template tests need update for current API")
 class TestTemplateHandler:
     """Test suite for TemplateHandler."""
 
