@@ -15,6 +15,7 @@ import pathlib
 import sys
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.file import safe_move
 from provide.foundation.hub import register_command
 from provide.foundation.logger import get_logger
 from rich.table import Table
@@ -167,16 +168,12 @@ def generate_env_command(
         # Move to requested output location if different
         if shell in ["powershell", "ps1"]:
             if output != ps1_path:
-                import shutil
-
-                shutil.move(str(ps1_path), str(output))
+                safe_move(ps1_path, output)
                 ps1_path = output
             echo_success(f"✅ Generated {ps1_path}")
         else:
             if output != sh_path:
-                import shutil
-
-                shutil.move(str(sh_path), str(output))
+                safe_move(sh_path, output)
                 sh_path = output
             echo_success(f"✅ Generated {sh_path}")
 
