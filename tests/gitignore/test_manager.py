@@ -164,60 +164,69 @@ class TestGitignoreManager:
         assert "*.secret" in content  # Custom rules preserved
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_list_available_templates(self, mock_handler_class, manager):
+    def test_list_available_templates(self, mock_handler_class, temp_dir):
         """Test listing available templates."""
         mock_handler = Mock()
         mock_handler.list_templates.return_value = ["Python", "Node", "Go"]
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         templates = manager.list_available_templates()
 
         assert templates == ["Python", "Node", "Go"]
         mock_handler.list_templates.assert_called_once_with(category=None)
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_list_available_templates_by_category(self, mock_handler_class, manager):
+    def test_list_available_templates_by_category(self, mock_handler_class, temp_dir):
         """Test listing templates by category."""
         mock_handler = Mock()
         mock_handler.list_templates.return_value = ["macOS", "Windows"]
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         templates = manager.list_available_templates(category="Global")
 
         assert templates == ["macOS", "Windows"]
         mock_handler.list_templates.assert_called_once_with(category="Global")
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_search_templates(self, mock_handler_class, manager):
+    def test_search_templates(self, mock_handler_class, temp_dir):
         """Test searching for templates."""
         mock_handler = Mock()
         mock_handler.search_templates.return_value = ["Python", "PureScript"]
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         results = manager.search_templates("py")
 
         assert results == ["Python", "PureScript"]
         mock_handler.search_templates.assert_called_once_with("py")
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_update_templates(self, mock_handler_class, manager):
+    def test_update_templates(self, mock_handler_class, temp_dir):
         """Test updating template cache."""
         mock_handler = Mock()
         mock_handler.update_cache.return_value = True
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         result = manager.update_templates(force=True)
 
         assert result is True
         mock_handler.update_cache.assert_called_once_with(force=True)
 
-    def test_preview_no_templates(self, manager):
+    @patch("wrknv.gitignore.manager.TemplateHandler")
+    def test_preview_no_templates(self, mock_handler_class, temp_dir):
         """Test preview with no templates."""
+        mock_handler = Mock()
+        mock_handler_class.return_value = mock_handler
+
+        manager = GitignoreManager(project_dir=temp_dir)
         preview = manager.preview([])
         assert "No templates specified" in preview
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_preview_with_templates(self, mock_handler_class, manager):
+    def test_preview_with_templates(self, mock_handler_class, temp_dir):
         """Test preview with templates."""
         mock_handler = Mock()
         mock_handler.get_template.side_effect = lambda name: {
@@ -226,6 +235,7 @@ class TestGitignoreManager:
         }.get(name)
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         preview = manager.preview(["Python", "Node"])
 
         assert "=== Python ===" in preview
@@ -234,12 +244,13 @@ class TestGitignoreManager:
         assert "node_modules/" in preview
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_build_with_exclude_patterns(self, mock_handler_class, manager, temp_dir):
+    def test_build_with_exclude_patterns(self, mock_handler_class, temp_dir):
         """Test building with exclude patterns."""
         mock_handler = Mock()
         mock_handler.get_template.return_value = "*.pyc\n*.md\n__pycache__/"
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         manager.build_from_templates(["Python"], exclude_patterns=["*.md"])
 
         content = temp_dir / ".gitignore"
@@ -249,7 +260,7 @@ class TestGitignoreManager:
         assert "*.md" not in content_text  # Excluded pattern
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_build_with_append_mode(self, mock_handler_class, manager, temp_dir):
+    def test_build_with_append_mode(self, mock_handler_class, temp_dir):
         """Test building in append mode."""
         # Create existing file
         existing_file = temp_dir / ".gitignore"
@@ -259,6 +270,7 @@ class TestGitignoreManager:
         mock_handler.get_template.return_value = "*.pyc"
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         manager.build_from_templates(["Python"], append=True)
 
         content = existing_file.read_text()
@@ -267,7 +279,7 @@ class TestGitignoreManager:
         assert "*.pyc" in content
 
     @patch("wrknv.gitignore.manager.TemplateHandler")
-    def test_build_with_overwrite_mode(self, mock_handler_class, manager, temp_dir):
+    def test_build_with_overwrite_mode(self, mock_handler_class, temp_dir):
         """Test building in overwrite mode."""
         # Create existing file
         existing_file = temp_dir / ".gitignore"
@@ -277,6 +289,7 @@ class TestGitignoreManager:
         mock_handler.get_template.return_value = "*.pyc"
         mock_handler_class.return_value = mock_handler
 
+        manager = GitignoreManager(project_dir=temp_dir)
         manager.build_from_templates(["Python"], append=False)
 
         content = existing_file.read_text()
@@ -285,9 +298,15 @@ class TestGitignoreManager:
         assert "*.secret" in content  # Custom rules preserved
         assert "*.pyc" in content
 
+    @patch("wrknv.gitignore.manager.TemplateHandler")
     @patch("wrknv.gitignore.manager.ProjectDetector")
-    def test_get_detection_report(self, mock_detector_class, manager):
+    def test_get_detection_report(self, mock_detector_class, mock_handler_class, temp_dir):
         """Test getting detection report."""
+        # Mock handler
+        mock_handler = Mock()
+        mock_handler_class.return_value = mock_handler
+
+        # Mock detector
         mock_detector = Mock()
         mock_detector.detected_languages = {"Python", "JavaScript"}
         mock_detector.detected_frameworks = {"Django"}
@@ -295,17 +314,23 @@ class TestGitignoreManager:
         mock_detector.detected_os = {"macOS"}
         mock_detector_class.return_value = mock_detector
 
+        manager = GitignoreManager(project_dir=temp_dir)
         report = manager.get_detection_report()
 
-        assert "Languages: Python, JavaScript" in report
+        assert "Languages: JavaScript, Python" in report or "Languages: Python, JavaScript" in report
         assert "Frameworks: Django" in report
-        assert "Tools: Docker, Poetry" in report
+        assert "Tools: Docker, Poetry" in report or "Tools: Poetry, Docker" in report
         assert "OS: macOS" in report
 
-    def test_build_from_config(self, manager, temp_dir):
+    @patch("wrknv.gitignore.manager.TemplateHandler")
+    def test_build_from_config(self, mock_handler_class, temp_dir):
         """Test building from configuration object."""
         from wrknv.wenv.schema import GitignoreConfig
 
+        mock_handler = Mock()
+        mock_handler_class.return_value = mock_handler
+
+        manager = GitignoreManager(project_dir=temp_dir)
         config = GitignoreConfig(
             templates=["Python", "Node"], custom_rules=["*.secret"], exclude_patterns=["*.md"]
         )
