@@ -184,35 +184,16 @@ class ProjectDetector:
 
     def _detect_frameworks_from_configs(self, path: Path):
         """Detect frameworks from configuration files."""
-        # Check package.json for JavaScript frameworks
-        package_json = path / "package.json"
-        if package_json.exists():
-            try:
-                content = json.loads(package_json.read_text())
-                deps = {**content.get("dependencies", {}), **content.get("devDependencies", {})}
+        # Check package.json for JavaScript frameworks (root and subdirectories)
+        self._check_package_json(path)
 
-                # Check for React
-                if "react" in deps:
-                    self.detected_frameworks.add("React")
-                    logger.trace("Detected React from package.json")
-
-                # Check for Vue
-                if "vue" in deps:
-                    self.detected_frameworks.add("Vue")
-                    logger.trace("Detected Vue from package.json")
-
-                # Check for Angular
-                if "@angular/core" in deps:
-                    self.detected_frameworks.add("Angular")
-                    logger.trace("Detected Angular from package.json")
-
-                # Check for Next.js
-                if "next" in deps:
-                    self.detected_frameworks.add("NextJS")
-                    logger.trace("Detected Next.js from package.json")
-
-            except (json.JSONDecodeError, KeyError):
-                logger.debug("Could not parse package.json")
+        # Also check common subdirectories (frontend, backend, client, server, etc.)
+        try:
+            for subdir in path.iterdir():
+                if subdir.is_dir() and not subdir.name.startswith("."):
+                    self._check_package_json(subdir)
+        except PermissionError:
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -235,6 +216,37 @@ class ProjectDetector:
         if "TypeScript" in self.detected_languages:
             self.detected_languages.add("Node")
             logger.trace("Added Node due to TypeScript detection")
+
+    def _check_package_json(self, path: Path):
+        """Check a specific directory for package.json and detect frameworks."""
+        package_json = path / "package.json"
+        if package_json.exists():
+            try:
+                content = json.loads(package_json.read_text())
+                deps = {**content.get("dependencies", {}), **content.get("devDependencies", {})}
+
+                # Check for React
+                if "react" in deps:
+                    self.detected_frameworks.add("React")
+                    logger.trace(f"Detected React from {package_json}")
+
+                # Check for Vue
+                if "vue" in deps:
+                    self.detected_frameworks.add("Vue")
+                    logger.trace(f"Detected Vue from {package_json}")
+
+                # Check for Angular
+                if "@angular/core" in deps:
+                    self.detected_frameworks.add("Angular")
+                    logger.trace(f"Detected Angular from {package_json}")
+
+                # Check for Next.js
+                if "next" in deps:
+                    self.detected_frameworks.add("NextJS")
+                    logger.trace(f"Detected Next.js from {package_json}")
+
+            except (json.JSONDecodeError, KeyError):
+                logger.debug(f"Could not parse {package_json}")
 
     def suggest_templates(self) -> list[str]:
         """
