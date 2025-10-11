@@ -149,7 +149,7 @@ class TestSetupCommand(FoundationTestCase):
         # The command should fail when run_command raises ProcessError
         assert isinstance(result.exception, (ProcessError, SystemExit)) or result.exit_code == 1
 
-    @patch("provide.foundation.process.run_command")
+    @patch("wrknv.cli.commands.setup.run_command")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
     def test_setup_shell_integration_creates_aliases(self, mock_get_path, mock_run):
         """Test that shell integration calls the shell script."""
