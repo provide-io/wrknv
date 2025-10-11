@@ -158,8 +158,7 @@ def profile_show(name: str):
 def profile_export(name: str, output: str):
     """Export a profile to a file."""
     import json
-
-    import tomli_w
+    from provide.foundation.file.formats import toml_dumps
 
     config = WrknvContext.get_config()
 
@@ -175,7 +174,7 @@ def profile_export(name: str, output: str):
         output_path.write_text(json.dumps({"name": name, "tools": profile_data}, indent=2))
     else:
         # Default to TOML
-        output_path.write_text(tomli_w.dumps({"name": name, "tools": profile_data}))
+        output_path.write_text(toml_dumps({"name": name, "tools": profile_data}))
 
     echo_success(f"✅ Exported profile '{name}' to {output_path}")
 
@@ -187,7 +186,7 @@ def profile_export(name: str, output: str):
 def profile_import(file: str):
     """Import a profile from a file."""
     import json
-    import tomllib
+    from provide.foundation.file.formats import toml_loads
 
     file_path = Path(file)
 
@@ -202,8 +201,8 @@ def profile_import(file: str):
         try:
             data = json.loads(content)
         except json.JSONDecodeError:
-            # Try TOML (using Python 3.11+ built-in tomllib)
-            data = tomllib.loads(content)
+            # Try TOML
+            data = toml_loads(content)
 
         name = data.get("name")
         tools = data.get("tools")

@@ -414,7 +414,7 @@ def get_default_config(project_name: str = "my-project") -> WorkenvSchema:
 
 def config_to_toml(config: WorkenvConfig) -> str:
     """Convert configuration to TOML format."""
-    import tomli_w
+    from provide.foundation.file.formats import toml_dumps
 
     # Convert to dictionary
     config_dict = config.model_dump(exclude_none=True)
@@ -431,4 +431,4 @@ def config_to_toml(config: WorkenvConfig) -> str:
     config_dict = remove_empty(config_dict)
 
     # Convert to TOML
-    return tomli_w.dumps(config_dict)
+    return toml_dumps(config_dict)

@@ -180,13 +180,9 @@ def create_project_env_scripts(project_dir: Path, workenv_name: str | None = Non
         raise FileNotFoundError(f"No pyproject.toml found in {project_dir}")
 
     # Parse project name from pyproject.toml
-    try:
-        import tomllib
-    except ImportError:
-        import tomli as tomllib  # type: ignore
+    from provide.foundation.file.formats import read_toml
 
-    with open(pyproject_path, "rb") as f:
-        pyproject = tomllib.load(f)
+    pyproject = read_toml(pyproject_path)
 
     project_name = pyproject.get("project", {}).get("name", project_dir.name)
     python_requirement = pyproject.get("project", {}).get("requires-python")
