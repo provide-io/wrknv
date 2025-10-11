@@ -10,10 +10,10 @@ Manages IBM Vault (HashiCorp Vault) versions for development.
 from __future__ import annotations
 
 
-import json
 import pathlib
 from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
-from urllib.request import urlopen
+from provide.foundation.serialization import json
+from provide.foundation.transport import get
 
 from provide.foundation import logger
 
@@ -37,8 +37,8 @@ class IbmVaultVariant(SubRosaManager):
 
             logger.debug(f"Fetching Vault versions from {api_url}")
 
-            with urlopen(api_url) as response:
-                data = json.loads(response.read())
+            response = get(api_url)
+            data = response.json()
 
             versions = []
             include_prereleases = self.config.get_setting("include_prereleases", False)

@@ -11,7 +11,7 @@ from provide.foundation.serialization import json
 from pathlib import Path
 import shutil
 import tempfile
-from urllib.request import urlopen
+from provide.foundation.transport import get
 
 from provide.foundation import logger
 from provide.foundation.archive.operations import ArchiveOperations
@@ -64,8 +64,8 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 logger.debug(f"Downloading templates archive to {tmp_file.name}")
 
-                with urlopen(self.GITHUB_ARCHIVE) as response:
-                    shutil.copyfileobj(response, tmp_file)
+                response = get(self.GITHUB_ARCHIVE)
+                tmp_file.write(response.content)
 
                 # Extract archive using foundation utilities
                 logger.debug("Extracting templates archive")
@@ -127,9 +127,9 @@ class TemplateHandler:
         try:
             # Try to get latest commit SHA from GitHub API
             logger.debug("Fetching latest commit SHA from GitHub API")
-            with urlopen(f"{self.GITHUB_API}/commits/main") as response:
-                data = json.loads(response.read())
-                commit_sha = data["sha"][:8]
+            response = get(f"{self.GITHUB_API}/commits/main")
+            data = response.json()
+            commit_sha = data["sha"][:8]
         except Exception as e:
             logger.warning(f"Could not fetch commit SHA: {e}, using timestamp")
             from provide.foundation.time import provide_now

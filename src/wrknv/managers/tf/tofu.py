@@ -9,9 +9,9 @@ Manages OpenTofu versions for development environment.
 
 from __future__ import annotations
 
-import json
 import re
-from urllib.request import urlopen
+from provide.foundation.serialization import json
+from provide.foundation.transport import get
 
 from provide.foundation.logger import get_logger
 
@@ -45,8 +45,8 @@ class TofuTfVariant(TfManager):
 
             logger.debug(f"Fetching OpenTofu versions from {api_url}")
 
-            with urlopen(api_url) as response:
-                data = json.loads(response.read())
+            response = get(api_url)
+            data = response.json()
 
             versions = []
             for release in data:

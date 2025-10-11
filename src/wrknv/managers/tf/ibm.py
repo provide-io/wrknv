@@ -9,9 +9,9 @@ Manages IBM Terraform (formerly HashiCorp Terraform) versions for development en
 
 from __future__ import annotations
 
-import json
 import re
-from urllib.request import urlopen
+from provide.foundation.serialization import json
+from provide.foundation.transport import get
 
 from provide.foundation import logger
 
@@ -46,8 +46,8 @@ class IbmTfVariant(TfManager):
 
             logger.debug(f"Fetching IBM Terraform versions from {api_url}")
 
-            with urlopen(api_url) as response:
-                data = json.loads(response.read())
+            response = get(api_url)
+            data = response.json()
 
             versions = []
             for version_info in data.get("versions", {}).values():
