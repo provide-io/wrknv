@@ -93,40 +93,20 @@ class RegistryClient:
             }
         )
 
-        # Try to use httpx if available
+        # Upload using UniversalClient
         session = self._get_session()
-        if session:
-            try:
-                # Upload with httpx
-                with open(package_path, "rb") as f:
-                    files = {"package": (package_path.name, f, "application/octet-stream")}
-                    data = {"metadata": json.dumps(metadata)}
+        try:
+            # Upload with foundation transport
+            with open(package_path, "rb") as f:
+                files = {"package": (package_path.name, f, "application/octet-stream")}
+                data = {"metadata": json.dumps(metadata)}
 
-                    response = session.post("/api/v1/packages", files=files, data=data)
-                    response.raise_for_status()
-                    return response.json()
-            except Exception as e:
-                logger.error(f"Failed to upload package: {e}")
-                raise
-        else:
-            # Fallback implementation
-            return self._upload_fallback(package_path, metadata)
+                response = session.post("/api/v1/packages", files=files, data=data)
+                return response.json()
+        except Exception as e:
+            logger.error(f"Failed to upload package: {e}")
+            raise
 
-    def _upload_fallback(self, package_path: Path, metadata: dict[str, Any]) -> dict[str, Any]:
-        """Fallback upload implementation using urllib."""
-
-        # For fallback, just simulate the upload
-        logger.info(f"[EXPERIMENTAL] Would upload {package_path.name} to {self.registry_url}")
-
-        # Return simulated response
-        return {
-            "success": True,
-            "package_url": f"{self.registry_url}/packages/{package_path.stem}",
-            "download_url": f"{self.registry_url}/api/v1/packages/{package_path.stem}/download",
-            "sha256": metadata["sha256"],
-            "size": metadata["size"],
-            "message": "Package upload simulated (experimental feature)",
-        }
 
     def download_package(self, package_name: str, version: str, output_dir: Path) -> Path:
         """
@@ -144,26 +124,20 @@ class RegistryClient:
         output_path = output_dir / f"{package_name}-{version}.flavor"
 
         session = self._get_session()
-        if session:
-            try:
-                response = session.get(
-                    f"/api/v1/packages/{package_name}/{version}/download",
-                    follow_redirects=True,
-                )
-                response.raise_for_status()
+        try:
+            response = session.get(
+                f"/api/v1/packages/{package_name}/{version}/download",
+                follow_redirects=True,
+            )
 
-                with open(output_path, "wb") as f:
-                    f.write(response.content)
+            with open(output_path, "wb") as f:
+                f.write(response.content)
 
-                logger.info(f"Downloaded {package_name} v{version} to {output_path}")
-                return output_path
-            except Exception as e:
-                logger.error(f"Failed to download package: {e}")
-                raise
-        else:
-            # Fallback
-            logger.warning(f"[EXPERIMENTAL] Would download {package_name} v{version}")
+            logger.info(f"Downloaded {package_name} v{version} to {output_path}")
             return output_path
+        except Exception as e:
+            logger.error(f"Failed to download package: {e}")
+            raise
 
     def search_packages(self, query: str, limit: int = 10) -> list[dict[str, Any]]:
         """
@@ -177,17 +151,11 @@ class RegistryClient:
             List of package metadata
         """
         session = self._get_session()
-        if session:
-            try:
-                response = session.get("/api/v1/packages/search", params={"q": query, "limit": limit})
-                response.raise_for_status()
-                return response.json().get("packages", [])
-            except Exception as e:
-                logger.error(f"Search failed: {e}")
-                return []
-        else:
-            # Fallback
-            logger.info(f"[EXPERIMENTAL] Would search for '{query}'")
+        try:
+            response = session.get("/api/v1/packages/search", params={"q": query, "limit": limit})
+            return response.json().get("packages", [])
+        except Exception as e:
+            logger.error(f"Search failed: {e}")
             return []
 
     def get_package_info(self, package_name: str, version: str | None = None) -> dict[str, Any]:
@@ -202,25 +170,16 @@ class RegistryClient:
             Package metadata
         """
         session = self._get_session()
-        if session:
-            try:
-                url = f"/api/v1/packages/{package_name}"
-                if version:
-                    url += f"/{version}"
+        try:
+            url = f"/api/v1/packages/{package_name}"
+            if version:
+                url += f"/{version}"
 
-                response = session.get(url)
-                response.raise_for_status()
-                return response.json()
-            except Exception as e:
-                logger.error(f"Failed to get package info: {e}")
-                raise
-        else:
-            # Fallback
-            return {
-                "name": package_name,
-                "version": version or "latest",
-                "description": "Package information not available (experimental)",
-            }
+            response = session.get(url)
+            return response.json()
+        except Exception as e:
+            logger.error(f"Failed to get package info: {e}")
+            raise
 
     def list_versions(self, package_name: str) -> list[str]:
         """
@@ -233,17 +192,12 @@ class RegistryClient:
             List of available versions
         """
         session = self._get_session()
-        if session:
-            try:
-                response = session.get(f"/api/v1/packages/{package_name}/versions")
-                response.raise_for_status()
-                return response.json().get("versions", [])
-            except Exception as e:
-                logger.error(f"Failed to list versions: {e}")
-                return []
-        else:
-            # Fallback
-            return ["1.0.0", "0.9.0", "0.8.0"]  # Mock data
+        try:
+            response = session.get(f"/api/v1/packages/{package_name}/versions")
+            return response.json().get("versions", [])
+        except Exception as e:
+            logger.error(f"Failed to list versions: {e}")
+            return []
 
     def close(self):
         """Close the client session."""
