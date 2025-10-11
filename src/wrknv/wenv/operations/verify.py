@@ -13,6 +13,7 @@ import pathlib
 
 from provide.foundation import logger
 from provide.foundation.process import ProcessError, run_command
+from provide.foundation.resilience import retry
 
 
 def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, tool_name: str) -> bool:
