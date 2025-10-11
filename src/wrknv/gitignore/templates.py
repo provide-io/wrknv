@@ -127,8 +127,10 @@ class TemplateHandler:
     @retry(Exception, max_attempts=3, base_delay=1.0)
     def _fetch_commit_sha(self) -> str:
         """Fetch latest commit SHA from GitHub API with retry."""
+        import asyncio
+
         logger.debug("Fetching latest commit SHA from GitHub API")
-        response = get(f"{self.GITHUB_API}/commits/main")
+        response = asyncio.run(get(f"{self.GITHUB_API}/commits/main"))
         data = response.json()
         return data["sha"][:8]
 
