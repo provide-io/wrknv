@@ -9,11 +9,11 @@ from __future__ import annotations
 
 from provide.foundation.serialization import json
 from pathlib import Path
-import shutil
 import tempfile
 
 from provide.foundation import logger
 from provide.foundation.archive.operations import ArchiveOperations
+from provide.foundation.file import safe_move, safe_rmtree
 from provide.foundation.transport import get
 
 
@@ -86,10 +86,10 @@ class TemplateHandler:
                 # Clear existing cache
                 if self.cache_dir.exists():
                     logger.debug("Clearing existing cache")
-                    shutil.rmtree(self.cache_dir)
+                    safe_rmtree(self.cache_dir)
 
                 # Move extracted files to cache
-                shutil.move(str(source_dir), str(self.cache_dir))
+                safe_move(source_dir, self.cache_dir)
 
             # Clean up temp file
             tmp_path.unlink()

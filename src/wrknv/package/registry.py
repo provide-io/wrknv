@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from provide.foundation import logger
+from provide.foundation.file import safe_copy
 from provide.foundation.serialization import json
 from provide.foundation.transport import UniversalClient
 
@@ -253,11 +254,9 @@ class LocalRegistry:
         Returns:
             Publication result
         """
-        import shutil
-
         # Copy package to registry
         dest_path = self.registry_dir / package_path.name
-        shutil.copy2(package_path, dest_path)
+        safe_copy(package_path, dest_path, overwrite=True)
 
         # Update metadata
         package_name = metadata.get("name", package_path.stem)
