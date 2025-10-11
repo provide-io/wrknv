@@ -39,18 +39,23 @@ def gitignore_templates_dir(tmp_path):
 class TestGitignoreCommands(FoundationTestCase):
     def test_gitignore_build_from_config(self, cli, runner, tmp_path, gitignore_templates_dir):
         """Test building .gitignore from wrknv.toml config."""
+        from pathlib import Path
         import os
 
-        # Create a dummy wrknv.toml in the temporary directory
-        config_path = tmp_path / "wrknv.toml"
+        # Patch WorkenvConfig in cli.py to return our pre-configured instance
+        with runner.isolated_filesystem():
+            # Get current directory after isolated_filesystem creates it
+            test_dir = Path.cwd()
 
-        # Create dummy template files inside tmp_path
-        (tmp_path / "Python.gitignore").write_text("# Python ignores\n*.pyc\n__pycache__/")
-        (tmp_path / "Node.gitignore").write_text("# Node ignores\nnode_modules/\nnpm-debug.log")
-        (tmp_path / "Global.gitignore").write_text("# Global ignores\n.DS_Store\n.env")
-        (tmp_path / "NonExistent.gitignore").write_text("# This file should not be used")
+            # Create dummy template files
+            (test_dir / "Python.gitignore").write_text("# Python ignores\n*.pyc\n__pycache__/")
+            (test_dir / "Node.gitignore").write_text("# Node ignores\nnode_modules/\nnpm-debug.log")
+            (test_dir / "Global.gitignore").write_text("# Global ignores\n.DS_Store\n.env")
+            (test_dir / "NonExistent.gitignore").write_text("# This file should not be used")
 
-        config_content_template = """
+            # Create a dummy wrknv.toml
+            config_path = test_dir / "wrknv.toml"
+            config_content_template = """
 project_name = "test-project"
 version = "0.1.0"
 
@@ -58,29 +63,24 @@ version = "0.1.0"
 templates = ["Python", "Node"]
 templates_path = "{templates_path_actual}"
 """
+            config_content = config_content_template.format(templates_path_actual=test_dir)
+            config_path.write_text(config_content)
 
-        # Write config content with the actual tmp_path
-        config_content = config_content_template.format(templates_path_actual=tmp_path)
-        config_path.write_text(config_content)
+            # Create a pre-configured WorkenvConfig instance
+            from wrknv.config import WorkenvConfig
 
-        # Create a pre-configured WorkenvConfig instance
-        from wrknv.config import WorkenvConfig
+            # Load config from the file
+            with patch("wrknv.config.WorkenvConfig._find_config_file", return_value=config_path):
+                mock_config_instance = WorkenvConfig.load()
 
-        # Load config from the file
-        with patch("wrknv.config.WorkenvConfig._find_config_file", return_value=config_path):
-            mock_config_instance = WorkenvConfig.load()
-
-        # Patch WorkenvConfig in cli.py to return our pre-configured instance
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config", return_value=mock_config_instance):
-            # Change to tmp_path and run the command
-            with runner.isolated_filesystem(temp_dir=tmp_path):
+            with patch("wrknv.cli.hub_cli.WrknvContext.get_config", return_value=mock_config_instance):
                 # Use shared cli fixture
                 result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
                 assert "✅ .gitignore built successfully" in result.output
 
-                gitignore_file = tmp_path / ".gitignore"
+                gitignore_file = test_dir / ".gitignore"
                 assert gitignore_file.exists()
 
                 content = gitignore_file.read_text()
