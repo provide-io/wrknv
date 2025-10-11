@@ -45,8 +45,12 @@ def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, t
         return False
 
 
+@retry(max_attempts=3, delay=1.0, backoff=2.0, exceptions=(ProcessError, OSError))
 def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 10) -> str | None:
-    """Run version check command for a tool and return output."""
+    """Run version check command for a tool and return output.
+
+    Includes automatic retry with exponential backoff for transient failures.
+    """
 
     if not binary_path.exists():
         return None
@@ -72,7 +76,7 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
             logger.error(f"Version check timed out for {tool_name}")
         else:
             logger.error(f"Version check failed for {tool_name}: {e}")
-        return None
+        raise  # Re-raise to trigger retry
     except Exception as e:
         logger.error(f"Version check failed for {tool_name}: {e}")
         return None
