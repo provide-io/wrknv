@@ -127,7 +127,7 @@ class TestSetupCommand(FoundationTestCase):
         assert "Shell integration script not found" in result.output
         mock_run.assert_not_called()
 
-    @patch("provide.foundation.process.run_command")
+    @patch("wrknv.cli.commands.setup.run_command")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
     def test_setup_shell_integration_script_fails(self, mock_get_path, mock_run):
         """Test shell integration when script execution fails."""
