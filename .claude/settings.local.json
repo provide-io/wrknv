@@ -94,7 +94,8 @@
       "Read(//private/tmp/**)",
       "Bash(tee:*)",
       "Bash(do)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Read(//Users/tim/.wrknv/gitignore-templates/**)"
     ],
     "deny": [],
     "additionalDirectories": [
