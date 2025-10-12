@@ -16,7 +16,7 @@ from datetime import timedelta
 
 from attrs import define
 from provide.foundation import logger
-from provide.foundation.process import ProcessError, stream_command
+from provide.foundation.process import ProcessError, stream
 from provide.foundation.time import provide_now
 from rich.console import Console
 
@@ -106,7 +106,7 @@ class ContainerLogs:
         cmd.append(self.container_name)
 
         try:
-            for line in stream_command(cmd):
+            for line in stream(cmd):
                 yield line
         except ProcessError as e:
             logger.error(
@@ -168,11 +168,11 @@ class ContainerLogs:
             True if successful
         """
         try:
-            from provide.foundation.process import run_command
+            from provide.foundation.process import run
 
             # Docker doesn't have a direct clear logs command
             # This is a workaround using truncate
-            result = run_command(
+            result = run(
                 [
                     "sh",
                     "-c",

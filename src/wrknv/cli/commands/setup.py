@@ -18,7 +18,7 @@ import sys
 from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.console.output import pout
 from provide.foundation.hub import register_command
-from provide.foundation.process import ProcessError, run_command
+from provide.foundation.process import ProcessError, run
 
 from wrknv.errors import DependencyError
 from provide.foundation.errors import NotFoundError
@@ -162,7 +162,7 @@ def setup_command(
         if script_path.exists():
             echo_info("Setting up shell integration...")
             try:
-                run_command(["bash", str(script_path)], check=True)
+                run(["bash", str(script_path)], check=True)
                 echo_success("Shell integration configured successfully")
             except ProcessError as e:
                 echo_error("Failed to set up shell integration")

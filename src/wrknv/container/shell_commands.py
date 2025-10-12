@@ -12,7 +12,7 @@ from __future__ import annotations
 from typing import Any
 
 from provide.foundation import logger
-from provide.foundation.process import CompletedProcess, run_command, stream_command
+from provide.foundation.process import CompletedProcess, run, stream
 from rich.console import Console
 
 from wrknv.container.manager import ContainerManager
@@ -86,7 +86,7 @@ def shell_into_container(
 
     try:
         # Run interactively without capturing output
-        result = run_command(cmd, check=False)
+        result = run(cmd, check=False)
         return result.returncode == 0
     except KeyboardInterrupt:
         console.print("\n[yellow]Shell session interrupted[/yellow]")
@@ -161,7 +161,7 @@ def exec_in_container(
 
     try:
         # Run command (interactively if requested)
-        result = run_command(cmd, check=False)
+        result = run(cmd, check=False)
 
         if result.returncode != 0 and result.stderr:
             console.print(f"[red]Command failed: {result.stderr}[/red]")
@@ -231,11 +231,11 @@ def get_container_logs(
     try:
         if follow:
             # Stream logs without capturing (for follow mode)
-            run_command(cmd, check=False)
+            run(cmd, check=False)
             return None
         else:
             # Capture and return logs
-            result = run_command(cmd, check=False)
+            result = run(cmd, check=False)
 
             if result.returncode != 0:
                 console.print(f"[red]Failed to get logs: {result.stderr}[/red]")
@@ -287,7 +287,7 @@ def stream_container_logs(
         import re
 
         # Start streaming process
-        for line in stream_command(cmd):
+        for line in stream(cmd):
             # Apply filter if specified
             if filter_pattern and not re.search(filter_pattern, line):
                 continue
@@ -333,7 +333,7 @@ def get_container_stats(config: WorkenvConfig) -> dict[str, Any] | None:
     try:
         # Get container stats
         cmd = ["docker", "stats", "--no-stream", "--format", "json", manager.container_name]
-        result = run_command(cmd, check=False)
+        result = run(cmd, check=False)
 
         if result.returncode == 0 and result.stdout:
             import json

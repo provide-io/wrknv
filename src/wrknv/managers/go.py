@@ -131,13 +131,13 @@ class GoManager(BaseToolManager):
             return False
 
         try:
-            from provide.foundation.process import run_command
+            from provide.foundation.process import run
 
             # Set GOROOT for this Go installation
             go_root = binary_path.parent.parent / "go"
             env = {"GOROOT": str(go_root)}
 
-            result = run_command(
+            result = run(
                 [str(binary_path), "version"],
                 timeout=10,
                 env=env,

@@ -12,7 +12,7 @@ from __future__ import annotations
 import pathlib
 
 from provide.foundation import logger
-from provide.foundation.process import ProcessError, run_command
+from provide.foundation.process import ProcessError, run
 from provide.foundation.resilience import retry
 
 
@@ -63,7 +63,7 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
     try:
         logger.debug(f"Running version check: {' '.join(cmd)}")
 
-        result = run_command(cmd, timeout=timeout)
+        result = run(cmd, timeout=timeout)
 
         if result.returncode == 0:
             return result.stdout.strip()
@@ -108,7 +108,7 @@ def check_binary_compatibility(binary_path: pathlib.Path) -> dict[str, any]:
 
     try:
         # Try to run the binary with help/version flag
-        result = run_command([str(binary_path), "--help"], timeout=5)
+        result = run([str(binary_path), "--help"], timeout=5)
 
         # If it runs without error, it's likely compatible
         compatible = result.returncode == 0

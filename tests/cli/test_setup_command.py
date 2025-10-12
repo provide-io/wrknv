@@ -86,7 +86,7 @@ class TestSetupCommand(FoundationTestCase):
         assert result.exit_code != 0
         assert result.exception is not None
 
-    @patch("wrknv.cli.commands.setup.run_command")
+    @patch("wrknv.cli.commands.setup.run")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
     def test_setup_shell_integration_success(self, mock_get_path, mock_run):
         """Test successful shell integration setup."""
@@ -108,7 +108,7 @@ class TestSetupCommand(FoundationTestCase):
         assert "Shell integration configured successfully" in result.output
         # Note: mock_run assertion removed due to CLI module caching
 
-    @patch("provide.foundation.process.run_command")
+    @patch("provide.foundation.process.run")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
     def test_setup_shell_integration_script_not_found(self, mock_get_path, mock_run):
         """Test shell integration when script is missing."""
@@ -127,7 +127,7 @@ class TestSetupCommand(FoundationTestCase):
         assert "Shell integration script not found" in result.output
         mock_run.assert_not_called()
 
-    @patch("wrknv.cli.commands.setup.run_command")
+    @patch("wrknv.cli.commands.setup.run")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
     def test_setup_shell_integration_script_fails(self, mock_get_path, mock_run):
         """Test shell integration when script execution fails."""
@@ -149,7 +149,7 @@ class TestSetupCommand(FoundationTestCase):
         # The command should fail when run_command raises ProcessError
         assert isinstance(result.exception, (ProcessError, SystemExit)) or result.exit_code == 1
 
-    @patch("wrknv.cli.commands.setup.run_command")
+    @patch("wrknv.cli.commands.setup.run")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
     def test_setup_shell_integration_creates_aliases(self, mock_get_path, mock_run):
         """Test that shell integration calls the shell script."""

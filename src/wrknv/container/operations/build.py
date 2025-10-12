@@ -14,7 +14,7 @@ from typing import Any
 
 from attrs import define
 from provide.foundation import logger
-from provide.foundation.process import ProcessError, stream_command
+from provide.foundation.process import ProcessError, stream
 from rich.console import Console
 
 from wrknv.container.runtime.base import ContainerRuntime
@@ -60,7 +60,7 @@ class ContainerBuilder:
                 self.console.print(f"[cyan]🔨 Building image {tag}...[/cyan]")
 
                 # Stream build output
-                for line in stream_command(cmd):
+                for line in stream(cmd):
                     self.console.print(line, end="")
 
                 self.console.print(f"[green]✅ Image {tag} built successfully[/green]")
@@ -136,9 +136,9 @@ class ContainerBuilder:
             True if successful
         """
         try:
-            from provide.foundation.process import run_command
+            from provide.foundation.process import run
 
-            run_command([self.runtime.runtime_command, "tag", source_tag, target_tag], check=True)
+            run([self.runtime.runtime_command, "tag", source_tag, target_tag], check=True)
 
             logger.info("Image tagged", source=source_tag, target=target_tag)
             self.console.print(f"[green]✅ Tagged {source_tag} as {target_tag}[/green]")

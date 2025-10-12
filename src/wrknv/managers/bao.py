@@ -132,9 +132,9 @@ class BaoManager(BaseToolManager):
             return False
 
         try:
-            from provide.foundation.process import run_command
+            from provide.foundation.process import run
 
-            result = run_command(
+            result = run(
                 [str(binary_path), "version"],
                 capture_output=True,
                 text=True,

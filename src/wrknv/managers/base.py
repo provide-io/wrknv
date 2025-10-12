@@ -17,7 +17,7 @@ from urllib.parse import urlparse
 
 from provide.foundation.file import safe_delete, safe_rmtree
 from provide.foundation.logger import get_logger
-from provide.foundation.process import run_command
+from provide.foundation.process import run
 
 logger = get_logger(__name__)
 
@@ -370,7 +370,7 @@ class BaseToolManager(ABC):
 
         try:
             # Try to run the tool with version flag
-            result = run_command(
+            result = run(
                 [str(binary_path), "--version"],
                 timeout=10,
             )
