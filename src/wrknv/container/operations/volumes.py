@@ -17,7 +17,7 @@ from typing import Any
 
 from attrs import define
 from provide.foundation import logger
-from provide.foundation.process import ProcessError, run_command
+from provide.foundation.process import ProcessError, run
 from provide.foundation.time import provide_now
 from rich.console import Console
 from rich.table import Table
@@ -55,7 +55,7 @@ class VolumeManager:
 
             cmd.append(name)
 
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
 
             logger.info("Volume created", name=name, driver=driver)
             self.console.print(f"[green]✅ Volume {name} created[/green]")
@@ -84,7 +84,7 @@ class VolumeManager:
 
             cmd.append(name)
 
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
 
             logger.info("Volume removed", name=name)
             self.console.print(f"[green]✅ Volume {name} removed[/green]")
@@ -110,7 +110,7 @@ class VolumeManager:
             if filter_label:
                 cmd.extend(["--filter", f"label={filter_label}"])
 
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
 
             volumes = []
             if result.stdout:
@@ -134,7 +134,7 @@ class VolumeManager:
             Volume information
         """
         try:
-            result = run_command([self.runtime.runtime_command, "volume", "inspect", name], check=True)
+            result = run([self.runtime.runtime_command, "volume", "inspect", name], check=True)
 
             if result.stdout:
                 data = json.loads(result.stdout)
@@ -185,7 +185,7 @@ class VolumeManager:
                 ".",
             ]
 
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
 
             logger.info(
                 "Volume backed up",
@@ -240,7 +240,7 @@ class VolumeManager:
                 mount_path,
             ]
 
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
 
             logger.info(
                 "Volume restored",

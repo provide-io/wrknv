@@ -12,7 +12,7 @@ from typing import Any
 
 from provide.foundation.file import read_toml, write_toml
 from provide.foundation.logger import get_logger
-from provide.foundation.process import run_command
+from provide.foundation.process import run
 
 logger = get_logger(__name__)
 
@@ -137,7 +137,7 @@ class WorkenvConfigPersistence:
             raise RuntimeError("No editor configured. Set EDITOR or VISUAL environment variable.")
 
         # Open in editor
-        result = run_command([editor, str(self.config.config_path)])
+        result = run([editor, str(self.config.config_path)])
         if result.returncode != 0:
             raise RuntimeError(f"Editor exited with error code {result.returncode}")
 

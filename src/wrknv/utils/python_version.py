@@ -10,7 +10,7 @@ import tomllib
 
 from packaging.specifiers import SpecifierSet
 from packaging.version import Version
-from provide.foundation.process import run_command
+from provide.foundation.process import run
 
 
 def get_venv_python_version(venv_dir: Path) -> dict[str, any] | None:
@@ -36,7 +36,7 @@ def get_venv_python_version(venv_dir: Path) -> dict[str, any] | None:
             "-c",
             "import sys, json; print(json.dumps({'version': '.'.join(map(str, sys.version_info[:3])), 'major': sys.version_info.major, 'minor': sys.version_info.minor, 'micro': sys.version_info.micro}))",
         ]
-        result = run_command(cmd, check=False)
+        result = run(cmd, check=False)
 
         if result.returncode == 0:
             return json.loads(result.stdout)

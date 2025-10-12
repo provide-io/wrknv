@@ -14,7 +14,7 @@ import platform
 import shutil
 import sys
 
-from provide.foundation.process import run_command
+from provide.foundation.process import run
 from rich import box
 from rich.console import Console
 from rich.panel import Panel
@@ -89,7 +89,7 @@ class WrknvDoctor:
             self.checks_passed.append(("wrknv Installation", f"Version {version}"))
 
             # Check if wrknv CLI is available
-            result = run_command(["wrknv", "--version"], timeout=5)
+            result = run(["wrknv", "--version"], timeout=5)
             if result.returncode == 0:
                 self.checks_passed.append(("wrknv CLI", "Available"))
             else:
@@ -222,7 +222,7 @@ class WrknvDoctor:
         """Test if env.sh can be executed successfully."""
         try:
             # Try to source env.sh and check if VIRTUAL_ENV is set
-            result = run_command(["bash", "-c", f"source {env_script} && echo $VIRTUAL_ENV"], timeout=10)
+            result = run(["bash", "-c", f"source {env_script} && echo $VIRTUAL_ENV"], timeout=10)
 
             if result.returncode != 0:
                 self.checks_failed.append(
