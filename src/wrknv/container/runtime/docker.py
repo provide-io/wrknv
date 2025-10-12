@@ -18,7 +18,7 @@ from provide.foundation import logger
 from provide.foundation.process import (
     CompletedProcess,
     ProcessError,
-    run_command,
+    run,
 )
 from provide.foundation.resilience import circuit_breaker
 
@@ -84,7 +84,7 @@ class DockerRuntime(ContainerRuntime):
             cmd.extend(command)
 
         try:
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
             logger.info(
                 "Docker container started",
                 name=name,
@@ -105,7 +105,7 @@ class DockerRuntime(ContainerRuntime):
     def start_container(self, name: str) -> CompletedProcess:
         """Start an existing Docker container."""
         try:
-            result = run_command([self.runtime_command, "start", name], check=True)
+            result = run([self.runtime_command, "start", name], check=True)
             logger.info("Docker container started", name=name)
             return result
         except ProcessError as e:
@@ -115,7 +115,7 @@ class DockerRuntime(ContainerRuntime):
     def stop_container(self, name: str, timeout: int) -> CompletedProcess:
         """Stop a running Docker container."""
         try:
-            result = run_command([self.runtime_command, "stop", "-t", str(timeout), name], check=True)
+            result = run([self.runtime_command, "stop", "-t", str(timeout), name], check=True)
             logger.info("Docker container stopped", name=name)
             return result
         except ProcessError as e:
@@ -130,7 +130,7 @@ class DockerRuntime(ContainerRuntime):
         cmd.append(name)
 
         try:
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
             logger.info("Docker container removed", name=name, forced=force)
             return result
         except ProcessError as e:
@@ -168,7 +168,7 @@ class DockerRuntime(ContainerRuntime):
         try:
             # Note: Interactive mode may need special handling
             # Check if foundation.process supports it
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
             logger.debug(
                 "Docker exec completed",
                 name=name,
@@ -188,7 +188,7 @@ class DockerRuntime(ContainerRuntime):
     def container_exists(self, name: str) -> bool:
         """Check if Docker container exists."""
         try:
-            result = run_command([self.runtime_command, "ps", "-a", "--format", "{{.Names}}"], check=False)
+            result = run([self.runtime_command, "ps", "-a", "--format", "{{.Names}}"], check=False)
             return name in result.stdout.splitlines() if result.stdout else False
         except ProcessError:
             return False
@@ -196,7 +196,7 @@ class DockerRuntime(ContainerRuntime):
     def container_running(self, name: str) -> bool:
         """Check if Docker container is running."""
         try:
-            result = run_command([self.runtime_command, "ps", "--format", "{{.Names}}"], check=False)
+            result = run([self.runtime_command, "ps", "--format", "{{.Names}}"], check=False)
             return name in result.stdout.splitlines() if result.stdout else False
         except ProcessError:
             return False
@@ -221,7 +221,7 @@ class DockerRuntime(ContainerRuntime):
         cmd.append(name)
 
         try:
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
             return result
         except ProcessError as e:
             logger.error("Failed to get Docker logs", name=name, error=str(e))
@@ -249,7 +249,7 @@ class DockerRuntime(ContainerRuntime):
         cmd.append(context)
 
         try:
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
             logger.info("Docker image built", tag=tag, dockerfile=dockerfile)
             return result
         except ProcessError as e:
@@ -268,7 +268,7 @@ class DockerRuntime(ContainerRuntime):
             cmd.append("-a")
 
         try:
-            result = run_command(cmd, check=True)
+            result = run(cmd, check=True)
             containers = []
             if result.stdout:
                 for line in result.stdout.strip().splitlines():
@@ -282,7 +282,7 @@ class DockerRuntime(ContainerRuntime):
     def inspect_container(self, name: str) -> dict[str, Any]:
         """Get detailed Docker container information."""
         try:
-            result = run_command([self.runtime_command, "inspect", name], check=True)
+            result = run([self.runtime_command, "inspect", name], check=True)
             if result.stdout:
                 data = json.loads(result.stdout)
                 return data[0] if data else {}
@@ -303,7 +303,7 @@ class DockerRuntime(ContainerRuntime):
         If circuit is open, raises RuntimeError which callers should catch.
         """
         try:
-            result = run_command([self.runtime_command, "version"], check=False)
+            result = run([self.runtime_command, "version"], check=False)
             if result.returncode != 0:
                 # Treat non-zero exit as failure to trigger circuit breaker
                 raise ProcessError(

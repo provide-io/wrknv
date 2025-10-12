@@ -14,7 +14,7 @@ from pathlib import Path
 import platform
 import sys
 
-from provide.foundation.process import run_command
+from provide.foundation.process import run
 
 
 def get_workenv_dir(package_name: str | None = None) -> Path:
@@ -152,7 +152,7 @@ class WorkenvTestRunner:
 
         # Source env.sh - this will create the workenv directory automatically
         print("Setting up workenv by sourcing env.sh...")
-        result = run_command(["bash", "-c", f"source {env_script} && echo 'Workenv ready at: $VIRTUAL_ENV'"])
+        result = run(["bash", "-c", f"source {env_script} && echo 'Workenv ready at: $VIRTUAL_ENV'"])
 
         if result.returncode != 0:
             raise RuntimeError(f"Failed to source env.sh: {result.stderr}")
@@ -182,7 +182,7 @@ class WorkenvTestRunner:
         cmd.append(package_spec)
 
         print(f"Installing dependencies: {' '.join(cmd)}")
-        run_command(cmd, env=env, check=True)
+        run(cmd, env=env, check=True)
 
     def run_pytest(self, *args, **kwargs) -> subprocess.CompletedProcess:
         """
@@ -202,9 +202,9 @@ class WorkenvTestRunner:
         pytest_cmd.extend(args)
 
         print(f"Running tests: {' '.join(pytest_cmd)}")
-        return run_command(pytest_cmd, env=env, **kwargs)
+        return run(pytest_cmd, env=env, **kwargs)
 
-    def run_command(self, cmd: list, **kwargs) -> subprocess.CompletedProcess:
+    def run(self, cmd: list, **kwargs) -> subprocess.CompletedProcess:
         """
         Run any command with the workenv activated.
 
@@ -216,7 +216,7 @@ class WorkenvTestRunner:
             CompletedProcess instance with the result.
         """
         env = activate_workenv(self.package_name)
-        return run_command(cmd, env=env, **kwargs)
+        return run(cmd, env=env, **kwargs)
 
 
 def pytest_with_workenv(package_name: str | None = None, *pytest_args) -> int:

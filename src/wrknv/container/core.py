@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from provide.foundation import logger
-from provide.foundation.process import run_command
+from provide.foundation.process import run
 from rich.console import Console
 
 from wrknv.config import WorkenvConfig
@@ -104,7 +104,7 @@ class ContainerManager:
     def check_docker(self) -> bool:
         """Check if Docker is installed and running."""
         try:
-            result = run_command(
+            result = run(
                 ["docker", "version", "--format", "{{.Server.Version}}"],
                 capture_output=True,
                 text=True,
@@ -118,7 +118,7 @@ class ContainerManager:
     def container_exists(self) -> bool:
         """Check if the container exists."""
         try:
-            result = run_command(
+            result = run(
                 ["docker", "container", "inspect", self.CONTAINER_NAME],
                 capture_output=True,
                 timeout=5,
@@ -134,7 +134,7 @@ class ContainerManager:
             return False
 
         try:
-            result = run_command(
+            result = run(
                 ["docker", "container", "inspect", "-f", "{{.State.Running}}", self.CONTAINER_NAME],
                 capture_output=True,
                 text=True,
@@ -148,7 +148,7 @@ class ContainerManager:
     def image_exists(self) -> bool:
         """Check if the container image exists."""
         try:
-            result = run_command(
+            result = run(
                 ["docker", "image", "inspect", self.full_image],
                 capture_output=True,
                 timeout=5,

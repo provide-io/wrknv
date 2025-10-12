@@ -154,10 +154,10 @@ class WorkspaceDiscovery:
     def _get_git_status(self, repo_path: Path) -> dict[str, Any] | None:
         """Get git status for repository."""
         try:
-            from provide.foundation.process import run_command
+            from provide.foundation.process import run
 
             # Get current branch
-            branch_result = run_command(
+            branch_result = run(
                 ["git", "branch", "--show-current"],
                 cwd=repo_path,
                 capture_output=True,
@@ -166,7 +166,7 @@ class WorkspaceDiscovery:
             )
 
             # Get status
-            status_result = run_command(
+            status_result = run(
                 ["git", "status", "--porcelain"],
                 cwd=repo_path,
                 capture_output=True,

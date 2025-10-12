@@ -15,7 +15,7 @@ import platform
 import shutil
 import sys
 
-from provide.foundation.process import run_command
+from provide.foundation.process import run
 
 from wrknv.cli.visual import Emoji, print_info, print_success
 
@@ -73,7 +73,7 @@ class WorkenvManager:
         workenv_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Create virtual environment
-        run_command(
+        run(
             [sys.executable, "-m", "venv", str(workenv_path)],
             check=True,
         )
@@ -83,14 +83,14 @@ class WorkenvManager:
         wrknv_root = Path(__file__).parent.parent.parent.parent
 
         print_info("Installing wrknv in development mode...", Emoji.INSTALL)
-        run_command(
+        run(
             [str(pip_path), "install", "-e", str(wrknv_root)],
             check=True,
         )
 
         # Install development dependencies
         print_info("Installing development dependencies...", Emoji.PACKAGE)
-        run_command(
+        run(
             [str(pip_path), "install", "-e", f"{wrknv_root}[dev]"],
             check=True,
         )
