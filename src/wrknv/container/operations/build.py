@@ -164,11 +164,11 @@ class ContainerBuilder:
             True if successful
         """
         try:
-            from provide.foundation.process import run_command
+            from provide.foundation.process import run
 
             self.console.print(f"[cyan]📤 Pushing image {tag}...[/cyan]")
 
-            run_command([self.runtime.runtime_command, "push", tag], check=True)
+            run([self.runtime.runtime_command, "push", tag], check=True)
 
             logger.info("Image pushed", tag=tag)
             self.console.print(f"[green]✅ Pushed {tag} successfully[/green]")
@@ -189,9 +189,9 @@ class ContainerBuilder:
             True if image exists
         """
         try:
-            from provide.foundation.process import run_command
+            from provide.foundation.process import run
 
-            result = run_command(
+            result = run(
                 [self.runtime.runtime_command, "images", "--format", "{{.Repository}}:{{.Tag}}"],
                 check=False,
             )
