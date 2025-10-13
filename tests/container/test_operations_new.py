@@ -270,7 +270,7 @@ class TestContainerBuilder(FoundationTestCase):
         assert "--platform" in cmd
         assert "linux/amd64" in cmd
 
-    @patch("wrknv.container.operations.build.stream_command")
+    @patch("provide.foundation.process.stream")
     def test_build_with_stream(self, mock_stream):
         """Test build with streaming output."""
         mock_stream.return_value = iter(
@@ -315,7 +315,7 @@ class TestContainerLogs(FoundationTestCase):
         # Note: timestamps is handled in stream_logs, not get_logs
         assert "test-container" in cmd
 
-    @patch("wrknv.container.operations.logs.stream_command")
+    @patch("provide.foundation.process.stream")
     def test_stream_logs(self, mock_stream):
         """Test streaming container logs."""
         mock_stream.return_value = iter(

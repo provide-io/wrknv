@@ -12,6 +12,7 @@ from collections.abc import Callable
 from typing import Literal
 
 from provide.foundation.errors import resilient
+from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 from provide.foundation.transport import UniversalClient
 
@@ -43,7 +44,9 @@ class GitHubReleasesClient:
         if token:
             headers["Authorization"] = f"Bearer {token}"
 
-        self.client = UniversalClient(default_headers=headers)
+        # Get hub and create client
+        hub = get_hub()
+        self.client = UniversalClient(hub=hub, default_headers=headers)
 
         # Get resilience components
         self.retry_policy = get_retry_policy("github")

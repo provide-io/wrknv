@@ -16,6 +16,7 @@ from urllib.parse import urlparse
 
 from provide.foundation import logger
 from provide.foundation.crypto import verify_file
+from provide.foundation.hub import get_hub
 from provide.foundation.resilience import circuit_breaker
 from provide.foundation.tools.downloader import ToolDownloader
 from provide.foundation.transport import UniversalClient
@@ -57,7 +58,8 @@ async def download_file_async(
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
-        async with UniversalClient(default_headers=headers or {}) as client:
+        hub = get_hub()
+        async with UniversalClient(hub=hub, default_headers=headers or {}) as client:
             # Create ToolDownloader instance
             downloader = ToolDownloader(client)
 
@@ -129,7 +131,8 @@ async def download_with_mirrors_async(
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
-        async with UniversalClient(default_headers=headers or {}) as client:
+        hub = get_hub()
+        async with UniversalClient(hub=hub, default_headers=headers or {}) as client:
             downloader = ToolDownloader(client)
 
             # Add logging progress callback if enabled
