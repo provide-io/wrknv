@@ -157,7 +157,7 @@ class TestConfigCommands(FoundationTestCase):
         cli = get_test_cli()
 
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("provide.foundation.process.run_command") as mock_run:
+            with patch("provide.foundation.process.run") as mock_run:
                 with patch.dict(os.environ, {"EDITOR": "nano"}):
                     mock_config = Mock()
                     mock_config.get_config_path.return_value = self.config_file

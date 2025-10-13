@@ -87,7 +87,7 @@ class TestContainerManager(FoundationTestCase):
         result = self.manager.container_running()
         assert not result
 
-    @patch("provide.foundation.process.run_command")
+    @patch("provide.foundation.process.run")
     def test_image_exists_true(self, mock_run) -> None:
         """Test image_exists when image exists."""
         mock_run.return_value = Mock(returncode=0, stdout="test-project-dev:latest\nother:tag\n")
@@ -98,7 +98,7 @@ class TestContainerManager(FoundationTestCase):
         # Verify docker images was called (don't check exact kwargs)
         assert mock_run.called
 
-    @patch("provide.foundation.process.run_command")
+    @patch("provide.foundation.process.run")
     def test_image_exists_false(self, mock_run) -> None:
         """Test image_exists when image doesn't exist."""
         mock_run.return_value = Mock(returncode=0, stdout="other:tag\n")

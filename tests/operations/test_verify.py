@@ -105,7 +105,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert not result
 
     # Test run_version_check
-    @patch("wrknv.wenv.operations.verify.run_command")
+    @patch("wrknv.wenv.operations.verify.run")
     def test_run_version_check_success(self, mock_run):
         """Test successful version check."""
         binary_path = self.temp_path / "terraform"
@@ -126,7 +126,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         assert result is None
 
-    @patch("wrknv.wenv.operations.verify.run_command")
+    @patch("wrknv.wenv.operations.verify.run")
     def test_run_version_check_failure(self, mock_run):
         """Test version check with non-zero return code."""
         binary_path = self.temp_path / "terraform"
@@ -138,7 +138,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         assert result is None
 
-    @patch("wrknv.wenv.operations.verify.run_command")
+    @patch("wrknv.wenv.operations.verify.run")
     def test_run_version_check_timeout(self, mock_run):
         """Test version check with timeout."""
         binary_path = self.temp_path / "terraform"
@@ -150,7 +150,7 @@ class TestVerifyOperations(FoundationTestCase):
 
         assert result is None
 
-    @patch("wrknv.wenv.operations.verify.run_command")
+    @patch("wrknv.wenv.operations.verify.run")
     def test_run_version_check_exception(self, mock_run):
         """Test version check with general exception."""
         binary_path = self.temp_path / "terraform"
@@ -189,7 +189,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert args == ["--version"]
 
     # Test check_binary_compatibility
-    @patch("wrknv.wenv.operations.verify.run_command")
+    @patch("wrknv.wenv.operations.verify.run")
     def test_check_binary_compatibility_success(self, mock_run):
         """Test successful binary compatibility check."""
         binary_path = self.temp_path / "terraform"
@@ -212,7 +212,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert not result["compatible"]
         assert result["error"] == "Binary not found"
 
-    @patch("wrknv.wenv.operations.verify.run_command")
+    @patch("wrknv.wenv.operations.verify.run")
     def test_check_binary_compatibility_incompatible(self, mock_run):
         """Test incompatible binary."""
         binary_path = self.temp_path / "terraform"
@@ -225,7 +225,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert not result["compatible"]
         assert result["returncode"] == 127
 
-    @patch("wrknv.wenv.operations.verify.run_command")
+    @patch("wrknv.wenv.operations.verify.run")
     def test_check_binary_compatibility_timeout(self, mock_run):
         """Test compatibility check with timeout."""
         binary_path = self.temp_path / "terraform"
@@ -238,7 +238,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert not result["compatible"]
         assert "timed out" in result["error"]
 
-    @patch("wrknv.wenv.operations.verify.run_command")
+    @patch("wrknv.wenv.operations.verify.run")
     def test_check_binary_compatibility_exception(self, mock_run):
         """Test compatibility check with exception."""
         binary_path = self.temp_path / "terraform"

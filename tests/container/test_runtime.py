@@ -22,7 +22,7 @@ class TestDockerRuntime(FoundationTestCase):
         super().setup_method()
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_run_container(self, mock_run) -> None:
         """Test starting a new container."""
         mock_run.return_value = CompletedProcess(
@@ -62,7 +62,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert "echo" in cmd
         assert "hello" in cmd
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_start_container(self, mock_run) -> None:
         """Test starting an existing container."""
         mock_run.return_value = CompletedProcess(
@@ -74,7 +74,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert result.stdout == "test-container"
         mock_run.assert_called_once_with(["docker", "start", "test-container"], check=True)
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_stop_container(self, mock_run) -> None:
         """Test stopping a container."""
         mock_run.return_value = CompletedProcess(
@@ -85,7 +85,7 @@ class TestDockerRuntime(FoundationTestCase):
 
         mock_run.assert_called_once_with(["docker", "stop", "-t", "15", "test-container"], check=True)
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_container_exists_true(self, mock_run) -> None:
         """Test checking if container exists - found case."""
         mock_run.return_value = CompletedProcess(
@@ -97,7 +97,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert exists
         mock_run.assert_called_once_with(["docker", "ps", "-a", "--format", "{{.Names}}"], check=False)
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_container_exists_false(self, mock_run) -> None:
         """Test checking if container exists - not found case."""
         mock_run.return_value = CompletedProcess(
@@ -108,7 +108,7 @@ class TestDockerRuntime(FoundationTestCase):
 
         assert not exists
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_container_running(self, mock_run) -> None:
         """Test checking if container is running."""
         mock_run.return_value = CompletedProcess(
@@ -120,7 +120,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert running
         mock_run.assert_called_once_with(["docker", "ps", "--format", "{{.Names}}"], check=False)
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_exec_in_container(self, mock_run) -> None:
         """Test executing command in container."""
         mock_run.return_value = CompletedProcess(
@@ -152,7 +152,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert "ls" in cmd
         assert "-la" in cmd
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_build_image(self, mock_run) -> None:
         """Test building a Docker image."""
         mock_run.return_value = CompletedProcess(
@@ -184,7 +184,7 @@ class TestDockerRuntime(FoundationTestCase):
         assert "linux/amd64" in cmd
         assert "." in cmd
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_list_containers(self, mock_run) -> None:
         """Test listing containers."""
         mock_run.return_value = CompletedProcess(
@@ -202,7 +202,7 @@ class TestDockerRuntime(FoundationTestCase):
 
         mock_run.assert_called_once_with(["docker", "ps", "--format", "json", "-a"], check=True)
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_error_handling(self, mock_run) -> None:
         """Test error handling when command fails."""
         mock_run.side_effect = ProcessError(

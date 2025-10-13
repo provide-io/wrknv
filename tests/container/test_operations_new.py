@@ -38,7 +38,7 @@ class TestContainerLifecycle(FoundationTestCase):
             status_emoji="📊",
         )
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_start_existing_container(self, mock_run):
         """Test starting an existing container."""
         # Container exists
@@ -55,7 +55,7 @@ class TestContainerLifecycle(FoundationTestCase):
         assert result
         assert mock_run.call_count == 3
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_start_create_new_container(self, mock_run):
         """Test creating and starting a new container."""
         # Container doesn't exist
@@ -75,7 +75,7 @@ class TestContainerLifecycle(FoundationTestCase):
         assert result
         assert mock_run.call_count == 2
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_stop_container(self, mock_run):
         """Test stopping a container."""
         # Container is running
@@ -90,7 +90,7 @@ class TestContainerLifecycle(FoundationTestCase):
         assert result
         assert mock_run.call_count == 2
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_restart_container(self, mock_run):
         """Test restarting a container."""
         # Container is running (for stop check)
@@ -114,7 +114,7 @@ class TestContainerLifecycle(FoundationTestCase):
         assert result
         assert mock_run.call_count == 6
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_status(self, mock_run):
         """Test getting container status."""
         mock_run.side_effect = [
@@ -155,7 +155,7 @@ class TestContainerExec(FoundationTestCase):
             default_shell="/bin/sh",
         )
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_run_command(self, mock_run):
         """Test running a command in container."""
         mock_run.return_value = CompletedProcess(
@@ -172,7 +172,7 @@ class TestContainerExec(FoundationTestCase):
         assert "echo" in cmd
         assert "hello" in cmd
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_find_shell(self, mock_run):
         """Test finding available shell."""
         # First shell fails, second succeeds
@@ -186,7 +186,7 @@ class TestContainerExec(FoundationTestCase):
         assert shell == "/bin/sh"
         assert mock_run.call_count == 2
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     @patch("os.system")
     def test_enter_container(self, mock_system, mock_run):
         """Test entering container interactively."""
@@ -222,7 +222,7 @@ class TestContainerBuilder(FoundationTestCase):
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
         self.builder = ContainerBuilder(runtime=self.runtime, console=Console())
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_build_simple(self, mock_run):
         """Test simple build."""
         mock_run.return_value = CompletedProcess(
@@ -243,7 +243,7 @@ class TestContainerBuilder(FoundationTestCase):
         assert "myapp:latest" in cmd
         assert "." in cmd
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_build_with_args(self, mock_run):
         """Test build with build args."""
         mock_run.return_value = CompletedProcess(
@@ -295,7 +295,7 @@ class TestContainerLogs(FoundationTestCase):
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
         self.logs = ContainerLogs(runtime=self.runtime, container_name="test-container", console=Console())
 
-    @patch("wrknv.container.runtime.docker.run_command")
+    @patch("wrknv.container.runtime.docker.run")
     def test_get_logs(self, mock_run):
         """Test getting container logs."""
         mock_run.return_value = CompletedProcess(
@@ -343,7 +343,7 @@ class TestVolumeManager(FoundationTestCase):
         self.runtime = DockerRuntime(runtime_name="docker", runtime_command="docker")
         self.volumes = VolumeManager(runtime=self.runtime, console=Console(), backup_dir=Path("/tmp/backups"))
 
-    @patch("wrknv.container.operations.volumes.run_command")
+    @patch("wrknv.container.operations.volumes.run")
     def test_create_volume(self, mock_run):
         """Test creating a volume."""
         mock_run.return_value = CompletedProcess(
@@ -365,7 +365,7 @@ class TestVolumeManager(FoundationTestCase):
         assert "type=tmpfs" in cmd
         assert "test-volume" in cmd
 
-    @patch("wrknv.container.operations.volumes.run_command")
+    @patch("wrknv.container.operations.volumes.run")
     def test_list_volumes(self, mock_run):
         """Test listing volumes."""
         mock_run.return_value = CompletedProcess(
@@ -382,7 +382,7 @@ class TestVolumeManager(FoundationTestCase):
         assert volumes[1]["Name"] == "vol2"
         mock_run.assert_called_once()
 
-    @patch("wrknv.container.operations.volumes.run_command")
+    @patch("wrknv.container.operations.volumes.run")
     def test_backup_volume(self, mock_run):
         """Test backing up a volume."""
         mock_run.return_value = CompletedProcess(args=["docker", "run"], returncode=0, stdout="", stderr="")

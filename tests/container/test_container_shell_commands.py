@@ -46,7 +46,7 @@ class TestShellCommand:
             container=ContainerConfig(enabled=True),
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic shell command execution."""
@@ -65,7 +65,7 @@ class TestShellCommand:
             ["docker", "exec", "-it", "test-project-dev", "/bin/bash"], check=False
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_with_custom_shell(self, mock_manager_class, mock_run, test_config):
         """Test shell command with custom shell."""
@@ -98,7 +98,7 @@ class TestShellCommand:
 
         assert result is False
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_auto_start(self, mock_manager_class, mock_run, test_config):
         """Test shell with auto-start when container is stopped."""
@@ -121,7 +121,7 @@ class TestShellCommand:
         mock_manager.start.assert_called_once()
         mock_run.assert_called_once()
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_with_working_dir(self, mock_manager_class, mock_run, test_config):
         """Test shell with custom working directory."""
@@ -140,7 +140,7 @@ class TestShellCommand:
             ["docker", "exec", "-it", "-w", "/app", "test-project-dev", "/bin/bash"], check=False
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_shell_with_environment(self, mock_manager_class, mock_run, test_config):
         """Test shell with environment variables."""
@@ -182,7 +182,7 @@ class TestExecCommand:
             container=ContainerConfig(enabled=True),
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic command execution."""
@@ -201,7 +201,7 @@ class TestExecCommand:
             ["docker", "exec", "test-project-dev", "ls", "-la"], check=False
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_with_working_dir(self, mock_manager_class, mock_run, test_config):
         """Test exec with working directory."""
@@ -219,7 +219,7 @@ class TestExecCommand:
             check=False,
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_with_environment(self, mock_manager_class, mock_run, test_config):
         """Test exec with environment variables."""
@@ -237,7 +237,7 @@ class TestExecCommand:
             check=False,
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_interactive(self, mock_manager_class, mock_run, test_config):
         """Test interactive command execution."""
@@ -255,7 +255,7 @@ class TestExecCommand:
             check=False,
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exec_with_user(self, mock_manager_class, mock_run, test_config):
         """Test exec with specific user."""
@@ -297,7 +297,7 @@ class TestLogsCommand:
             container=ContainerConfig(enabled=True),
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_basic(self, mock_manager_class, mock_run, test_config):
         """Test basic logs retrieval."""
@@ -315,7 +315,7 @@ class TestLogsCommand:
             ["docker", "logs", "test-project-dev"], check=False
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_with_follow(self, mock_manager_class, mock_run, test_config):
         """Test logs with follow option."""
@@ -329,7 +329,7 @@ class TestLogsCommand:
 
         mock_run.assert_called_once_with(["docker", "logs", "-f", "test-project-dev"], check=False)
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_with_tail(self, mock_manager_class, mock_run, test_config):
         """Test logs with tail option."""
@@ -347,7 +347,7 @@ class TestLogsCommand:
             ["docker", "logs", "--tail", "50", "test-project-dev"], check=False
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_with_timestamps(self, mock_manager_class, mock_run, test_config):
         """Test logs with timestamps."""
@@ -365,7 +365,7 @@ class TestLogsCommand:
             ["docker", "logs", "-t", "test-project-dev"], check=False
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_with_since(self, mock_manager_class, mock_run, test_config):
         """Test logs with since option."""
@@ -384,7 +384,7 @@ class TestLogsCommand:
             check=False,
         )
 
-    @patch("wrknv.container.shell_commands.run_command")
+    @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_logs_combined_options(self, mock_manager_class, mock_run, test_config):
         """Test logs with multiple options combined."""

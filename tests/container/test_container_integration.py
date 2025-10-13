@@ -16,7 +16,7 @@ import shutil
 import time
 
 import pytest
-from provide.foundation.process import run_command
+from provide.foundation.process import run
 from provide.testkit import FoundationTestCase
 
 from wrknv.container.manager import ContainerManager
@@ -67,8 +67,8 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         yield manager
         # Cleanup: stop and remove container
         try:
-            run_command(["docker", "stop", manager.container_name], capture_output=True, timeout=10)
-            run_command(["docker", "rm", manager.container_name], capture_output=True, timeout=10)
+            run(["docker", "stop", manager.container_name], capture_output=True, timeout=10)
+            run(["docker", "rm", manager.container_name], capture_output=True, timeout=10)
         except:
             pass
 
@@ -98,7 +98,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             f"echo '{test_content}' > /tmp/{test_file}",
         ]
 
-        result = run_command(cmd, capture_output=True, text=True)
+        result = run(cmd, capture_output=True, text=True)
         assert result.returncode == 0, f"Failed to write file in container: {result.stderr}"
 
         # Verify file exists inside the container
@@ -109,7 +109,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             "cat",
             f"/tmp/{test_file}",
         ]
-        verify_result = run_command(verify_cmd, capture_output=True, text=True)
+        verify_result = run(verify_cmd, capture_output=True, text=True)
         assert verify_result.returncode == 0, "File should exist in container"
         assert verify_result.stdout.strip() == test_content, "File content should match"
 
@@ -133,7 +133,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             "-c",
             f"echo '{json.dumps(test_data)}' > /wrknv/workspace/persistent.json",
         ]
-        result = run_command(cmd, capture_output=True)
+        result = run(cmd, capture_output=True)
         assert result.returncode == 0, f"Failed to write to workspace: {result.stderr}"
 
         # Write to cache volume (/wrknv/cache is mounted)
@@ -145,7 +145,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             "-c",
             "echo 'cached data' > /wrknv/cache/data.txt",
         ]
-        result = run_command(cmd, capture_output=True)
+        result = run(cmd, capture_output=True)
         assert result.returncode == 0, f"Failed to write to cache: {result.stderr}"
 
         # Stop container
@@ -164,7 +164,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
 
         # Read data from restarted container (use mounted volume path)
         cmd = ["docker", "exec", container_manager.container_name, "cat", "/wrknv/workspace/persistent.json"]
-        result = run_command(cmd, capture_output=True, text=True)
+        result = run(cmd, capture_output=True, text=True)
         assert result.returncode == 0, f"Failed to read from workspace: {result.stderr}"
 
         # Verify data matches
@@ -189,7 +189,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
 
         # Try to read the file from container (should work)
         cmd = ["docker", "exec", container_manager.container_name, "cat", "/downloads/readonly_test.txt"]
-        result = run_command(cmd, capture_output=True, text=True)
+        result = run(cmd, capture_output=True, text=True)
         assert result.returncode == 0
         assert "This is read-only" in result.stdout
 
@@ -202,7 +202,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             "-c",
             "echo 'trying to write' > /downloads/should_fail.txt",
         ]
-        result = run_command(cmd, capture_output=True, text=True, check=False)
+        result = run(cmd, capture_output=True, text=True, check=False)
         assert result.returncode != 0, "Should not be able to write to read-only mount"
         assert "Read-only file system" in result.stderr or "Permission denied" in result.stderr
 
@@ -227,7 +227,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             dir_path = str(Path(filepath).parent)
             if dir_path != "/":
                 mkdir_cmd = ["docker", "exec", container_manager.container_name, "mkdir", "-p", dir_path]
-                run_command(mkdir_cmd, capture_output=True)
+                run(mkdir_cmd, capture_output=True)
 
             # Create file using printf to handle quotes properly
             cmd = [
@@ -238,7 +238,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 "-c",
                 f"printf '%s' {repr(content)} > {filepath}",
             ]
-            result = run_command(cmd, capture_output=True)
+            result = run(cmd, capture_output=True)
             assert result.returncode == 0, f"Failed to create {filepath}"
 
         # Stop container for backup
@@ -268,7 +268,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         time.sleep(2)
 
         cmd = ["docker", "exec", container_manager.container_name, "python", "/wrknv/workspace/project.py"]
-        result = run_command(cmd, capture_output=True, text=True)
+        result = run(cmd, capture_output=True, text=True)
         assert result.returncode == 0
         assert "Hello World" in result.stdout
 
@@ -321,7 +321,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             # Verify both containers can read the shared file
             for manager in [manager1, manager2]:
                 cmd = ["docker", "exec", manager.container_name, "cat", "/downloads/shared_resource.txt"]
-                result = run_command(cmd, capture_output=True, text=True)
+                result = run(cmd, capture_output=True, text=True)
                 assert result.returncode == 0
                 assert "Shared between containers" in result.stdout
 
@@ -334,7 +334,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 "-c",
                 "echo 'project1 data' > /wrknv/workspace/project1.txt",
             ]
-            run_command(cmd1, capture_output=True)
+            run(cmd1, capture_output=True)
 
             cmd2 = [
                 "docker",
@@ -344,19 +344,19 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 "-c",
                 "echo 'project2 data' > /wrknv/workspace/project2.txt",
             ]
-            run_command(cmd2, capture_output=True)
+            run(cmd2, capture_output=True)
 
             # Verify isolation - project1 file should not exist in project2's persistent workspace
             cmd = ["docker", "exec", manager2.container_name, "ls", "/wrknv/workspace/project1.txt"]
-            result = run_command(cmd, capture_output=True, check=False)
+            result = run(cmd, capture_output=True, check=False)
             assert result.returncode != 0, "Workspaces should be isolated"
 
         finally:
             # Cleanup
             for manager in [manager1, manager2]:
                 try:
-                    run_command(["docker", "stop", manager.container_name], capture_output=True, timeout=10)
-                    run_command(["docker", "rm", manager.container_name], capture_output=True, timeout=10)
+                    run(["docker", "stop", manager.container_name], capture_output=True, timeout=10)
+                    run(["docker", "rm", manager.container_name], capture_output=True, timeout=10)
                 except:
                     pass
 
@@ -407,7 +407,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 "-c",
                 f"echo 'test' > {test_file} && echo 'success'",
             ]
-            result = run_command(cmd, capture_output=True, text=True)
+            result = run(cmd, capture_output=True, text=True)
             assert result.returncode == 0, f"Failed to write to {volume}: {result.stderr}"
             assert "success" in result.stdout
 
@@ -430,7 +430,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             "bs=1M",
             "count=10",
         ]
-        result = run_command(cmd, capture_output=True)
+        result = run(cmd, capture_output=True)
         assert result.returncode == 0
 
         # Verify file exists on host
