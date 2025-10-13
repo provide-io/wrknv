@@ -189,10 +189,15 @@ async def test_progress_callback_real(tmp_path: pathlib.Path):
 
     # Should have received progress updates
     assert len(progress_updates) > 0
-    # Last update should have downloaded == total
+    # Last update should have downloaded <= total (if total is known)
+    # or downloaded > 0 (if total is unknown/0)
     if progress_updates:
         last_downloaded, last_total = progress_updates[-1]
-        assert last_downloaded <= last_total
+        if last_total > 0:
+            assert last_downloaded <= last_total
+        else:
+            # Total size unknown - just verify we downloaded something
+            assert last_downloaded > 0
 
 
 @pytest.mark.asyncio

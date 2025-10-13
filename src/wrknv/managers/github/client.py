@@ -192,6 +192,7 @@ class GitHubReleasesClient:
             url: URL to download
             destination: Where to save file
             progress_callback: Optional callback(downloaded_bytes, total_bytes)
+                             total_bytes will be 0 if size is unknown
         """
         # Create parent directories
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -216,7 +217,8 @@ class GitHubReleasesClient:
                     f.write(chunk)
                     downloaded += len(chunk)
 
-                    if progress_callback and total_size > 0:
+                    # Call progress callback even if total size is unknown (pass 0)
+                    if progress_callback:
                         progress_callback(downloaded, total_size)
 
         logger.info(f"Successfully downloaded {destination.name} ({downloaded} bytes)")
