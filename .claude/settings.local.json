@@ -96,7 +96,8 @@
       "Bash(do)",
       "Bash(echo:*)",
       "Read(//Users/tim/.wrknv/gitignore-templates/**)",
-      "Bash(gh:*)"
+      "Bash(gh:*)",
+      "Bash(do echo \"=== Run $i ===\")"
     ],
     "deny": [],
     "additionalDirectories": [
