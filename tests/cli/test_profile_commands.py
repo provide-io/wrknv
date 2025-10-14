@@ -224,9 +224,7 @@ project_name = "test-project"
             runner = click.testing.CliRunner()
             cli = get_test_cli()
             # Use positional arguments, not options
-            result = runner.invoke(
-                cli, ["profile", "export", "dev", str(output_file)]
-            )
+            result = runner.invoke(cli, ["profile", "export", "dev", str(output_file)])
 
             assert result.exit_code == 0
             assert f"Exported profile 'dev' to {output_file}" in result.output

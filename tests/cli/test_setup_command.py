@@ -92,6 +92,7 @@ class TestSetupCommand(FoundationTestCase):
         """Test successful shell integration setup."""
         # Mock the path to exist
         from pathlib import Path
+
         mock_script_path = Mock(spec=Path)
         mock_script_path.exists = Mock(return_value=True)
         mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
@@ -114,6 +115,7 @@ class TestSetupCommand(FoundationTestCase):
         """Test shell integration when script is missing."""
         # Mock the path to not exist
         from pathlib import Path
+
         mock_script_path = Mock(spec=Path)
         mock_script_path.exists = Mock(return_value=False)
         mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
@@ -133,12 +135,14 @@ class TestSetupCommand(FoundationTestCase):
         """Test shell integration when script execution fails."""
         # Mock the path to exist
         from pathlib import Path
+
         mock_script_path = Mock(spec=Path)
         mock_script_path.exists = Mock(return_value=True)
         mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
         mock_get_path.return_value = mock_script_path
 
         from provide.foundation.process import ProcessError
+
         mock_run.side_effect = ProcessError("Script failed", returncode=1)
 
         runner = click.testing.CliRunner()
@@ -155,6 +159,7 @@ class TestSetupCommand(FoundationTestCase):
         """Test that shell integration calls the shell script."""
         # Mock the path to exist
         from pathlib import Path
+
         mock_script_path = Mock(spec=Path)
         mock_script_path.exists = Mock(return_value=True)
         mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")

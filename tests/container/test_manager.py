@@ -372,9 +372,7 @@ class TestContainerManager(FoundationTestCase):
         result = self.manager.get_logs(follow=False, lines=10)
 
         assert result == "test logs"
-        mock_logs.get_logs.assert_called_once_with(
-            tail=10, follow=False, since=None, timestamps=False
-        )
+        mock_logs.get_logs.assert_called_once_with(tail=10, follow=False, since=None, timestamps=False)
 
     def test_logs_follow(self) -> None:
         """Test following container logs."""
@@ -388,13 +386,16 @@ class TestContainerManager(FoundationTestCase):
         result = self.manager.get_logs(follow=True)
 
         assert result is None
-        mock_logs.get_logs.assert_called_once_with(
-            tail=None, follow=True, since=None, timestamps=False
-        )
+        mock_logs.get_logs.assert_called_once_with(tail=None, follow=True, since=None, timestamps=False)
 
     def test_clean_success(self) -> None:
         """Test successful cleanup."""
-        from tests.conftest import create_mock_lifecycle, create_mock_builder, create_mock_volumes, create_mock_storage
+        from tests.conftest import (
+            create_mock_lifecycle,
+            create_mock_builder,
+            create_mock_volumes,
+            create_mock_storage,
+        )
 
         # Replace dependencies with mocks
         mock_lifecycle = create_mock_lifecycle(exists=True, running=False)
@@ -419,7 +420,12 @@ class TestContainerManager(FoundationTestCase):
 
     def test_clean_partial_failure(self) -> None:
         """Test cleanup with partial failure."""
-        from tests.conftest import create_mock_lifecycle, create_mock_builder, create_mock_volumes, create_mock_storage
+        from tests.conftest import (
+            create_mock_lifecycle,
+            create_mock_builder,
+            create_mock_volumes,
+            create_mock_storage,
+        )
 
         # Replace dependencies with mocks - lifecycle remove fails
         mock_lifecycle = create_mock_lifecycle(exists=True, running=False)
@@ -470,6 +476,7 @@ class TestContainerManager(FoundationTestCase):
         # Check that start was called (container is started, not removed)
         assert result
         mock_lifecycle.start.assert_called_once()
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

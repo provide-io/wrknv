@@ -3,6 +3,7 @@
 """
 Test suite for platform detection operations.
 """
+
 from __future__ import annotations
 
 
@@ -38,11 +39,13 @@ class TestPlatformOperations(FoundationTestCase):
     def test_get_os_name_matches_foundation(self):
         """Test OS name matches foundation."""
         from provide.foundation.platform import get_os_name as foundation_get_os
+
         assert get_os_name() == foundation_get_os()
 
     def test_get_architecture_matches_foundation(self):
         """Test architecture matches foundation."""
         from provide.foundation.platform import get_arch_name as foundation_get_arch
+
         assert get_architecture() == foundation_get_arch()
 
     @patch("wrknv.wenv.operations.platform.get_system_info")

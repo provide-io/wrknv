@@ -151,7 +151,6 @@ class SubRosaManager(BaseToolManager):
     def _regenerate_env_script(self) -> None:
         """Regenerate env.sh script with updated version."""
         try:
-
             from wrknv.wenv.env_generator import create_project_env_scripts
 
             project_dir = pathlib.Path.cwd()

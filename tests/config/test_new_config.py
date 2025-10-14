@@ -21,7 +21,9 @@ class TestWorkenvConfig:
     def test_load_with_defaults(self) -> None:
         """Should load with sensible defaults."""
         # Isolate test by mocking config file discovery to return non-existent file
-        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+        with patch.object(
+            WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/.wrknv.toml")
+        ):
             config = WorkenvConfig.load()
 
             assert config.project_name == "my-project"
@@ -78,7 +80,9 @@ auto_install = false
     def test_tool_management(self) -> None:
         """Should manage tool versions correctly."""
         # Isolate test by mocking config file discovery
-        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+        with patch.object(
+            WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/.wrknv.toml")
+        ):
             config = WorkenvConfig.load()
 
             # Initially no tools
@@ -102,7 +106,9 @@ auto_install = false
     def test_profile_management(self) -> None:
         """Should manage profiles correctly."""
         # Isolate test by mocking config file discovery
-        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+        with patch.object(
+            WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/.wrknv.toml")
+        ):
             config = WorkenvConfig.load()
 
             # Initially no profiles
@@ -132,7 +138,9 @@ class TestWorkenvConfigMethods:
     def test_get_setting(self) -> None:
         """Should retrieve settings with dot notation."""
         # Isolate test by mocking config file discovery
-        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+        with patch.object(
+            WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/.wrknv.toml")
+        ):
             config = WorkenvConfig.load()
 
             # Should get direct attributes
@@ -148,7 +156,9 @@ class TestWorkenvConfigMethods:
     def test_validation(self) -> None:
         """Should validate configuration correctly."""
         # Isolate test by mocking config file discovery
-        with patch.object(WorkenvConfig, '_find_config_file', return_value=pathlib.Path("/nonexistent/.wrknv.toml")):
+        with patch.object(
+            WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/.wrknv.toml")
+        ):
             config = WorkenvConfig.load()
 
             # Default config should be valid

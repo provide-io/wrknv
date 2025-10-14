@@ -217,7 +217,8 @@ def create_mock_builder(**kwargs: Any) -> Mock:
     builder.image_exists = Mock(return_value=True)
 
     # Mock generate_dockerfile to return a basic Dockerfile string
-    builder.generate_dockerfile = Mock(return_value="""FROM ubuntu:22.04
+    builder.generate_dockerfile = Mock(
+        return_value="""FROM ubuntu:22.04
 
 WORKDIR /workspace
 
@@ -232,7 +233,8 @@ USER user
 
 # Keep container running
 CMD ["sleep", "infinity"]
-""")
+"""
+    )
 
     for key, value in kwargs.items():
         setattr(builder, key, value)

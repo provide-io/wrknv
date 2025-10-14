@@ -23,6 +23,7 @@ class TestDynamicContainerConfiguration(FoundationTestCase):
     def test_default_container_config(self) -> None:
         """Test container manager with default configuration."""
         from wrknv.container.manager import create_container_manager
+
         manager = create_container_manager()
 
         assert manager.container_name == "wrknv-dev"
@@ -42,6 +43,7 @@ class TestDynamicContainerConfiguration(FoundationTestCase):
     def test_dockerfile_with_default_config(self) -> None:
         """Test Dockerfile generation with default configuration."""
         from wrknv.container.manager import create_container_manager
+
         manager = create_container_manager()
         dockerfile = manager._generate_dockerfile()
 

@@ -5,6 +5,7 @@
 """
 Comprehensive tests for the operations/verify module.
 """
+
 from __future__ import annotations
 
 
@@ -37,8 +38,6 @@ class TestVerifyOperations(FoundationTestCase):
         super().setup_method()
         self.temp_dir = self.create_temp_dir()
         self.temp_path = self.temp_dir
-
-    
 
     # Test verify_tool_installation
     @patch("wrknv.wenv.operations.verify.run_version_check")
