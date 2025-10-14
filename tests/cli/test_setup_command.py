@@ -273,27 +273,35 @@ class TestSetupCommandIntegration(FoundationTestCase):
 
     def test_setup_creates_workenv_structure(self) -> None:
         """Test that setup creates the expected directory structure."""
-        # Use isolated_cli_runner to prevent "I/O operation on closed file" error
-        # when running tests in parallel. The isolated_filesystem ensures proper
-        # cleanup and avoids stream conflicts.
-        with isolated_cli_runner() as runner:
-            with patch("pathlib.Path.cwd") as mock_cwd:
-                mock_cwd.return_value = self.temp_path
+        with patch("pathlib.Path.cwd") as mock_cwd:
+            mock_cwd.return_value = self.temp_path
 
+            # Use isolated_cli_runner to prevent "I/O operation on closed file" error
+            # when running tests in parallel. Use catch_exceptions=False to avoid
+            # stream capture issues.
+            with isolated_cli_runner() as runner:
                 cli = get_test_cli()
-                result = runner.invoke(cli, ["setup", "--init"])
 
-                if result.exit_code == 0:
-                    # Check that workenv directory was created
-                    workenv_dir = self.temp_path / "workenv"
-                    assert workenv_dir.exists()
+                # Run with catch_exceptions=False to avoid Click's stream handling issues
+                try:
+                    result = runner.invoke(cli, ["setup", "--init"], catch_exceptions=False)
+                except Exception as e:
+                    # If there's a genuine error, reraise it
+                    if not isinstance(e, ValueError) or "I/O operation" not in str(e):
+                        raise
+                    # Otherwise, just check if the workenv was created
+                    pass
 
-                    # Check for expected subdirectories
-                    expected_dirs = ["bin", "lib", "include"]
-                    for dir_name in expected_dirs:
-                        dir_path = workenv_dir / dir_name
-                        if dir_path.exists():
-                            assert dir_path.is_dir()
+                # Check that workenv directory was created
+                workenv_dir = self.temp_path / "workenv"
+                assert workenv_dir.exists(), "Workenv directory should be created"
+
+                # Check for expected subdirectories
+                expected_dirs = ["bin", "lib", "include"]
+                for dir_name in expected_dirs:
+                    dir_path = workenv_dir / dir_name
+                    if dir_path.exists():
+                        assert dir_path.is_dir()
 
 
 if __name__ == "__main__":
