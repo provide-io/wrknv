@@ -9,14 +9,13 @@ Manages UV (Python package manager) versions for development.
 
 from __future__ import annotations
 
-
 import asyncio
 import pathlib
 
 from provide.foundation import logger
 
-from wrknv.managers.github import GitHubReleasesClient
 from wrknv.managers.base import BaseToolManager, ToolManagerError
+from wrknv.managers.github import GitHubReleasesClient
 
 
 class UvManager(BaseToolManager):
@@ -83,7 +82,9 @@ class UvManager(BaseToolManager):
         if os_name == "windows":
             return f"https://github.com/astral-sh/uv/releases/download/{version}/uv-{arch}-{platform_name}.zip"
         else:
-            return f"https://github.com/astral-sh/uv/releases/download/{version}/uv-{arch}-{platform_name}.tar.gz"
+            return (
+                f"https://github.com/astral-sh/uv/releases/download/{version}/uv-{arch}-{platform_name}.tar.gz"
+            )
 
     def get_checksum_url(self, version: str) -> str | None:
         """UV doesn't provide separate checksum files."""

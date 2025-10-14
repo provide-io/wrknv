@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-
-from provide.foundation.serialization import json
 from pathlib import Path
 import sys
 import tomllib
@@ -11,6 +9,7 @@ import tomllib
 from packaging.specifiers import SpecifierSet
 from packaging.version import Version
 from provide.foundation.process import run
+from provide.foundation.serialization import json
 
 
 def get_venv_python_version(venv_dir: Path) -> dict[str, any] | None:

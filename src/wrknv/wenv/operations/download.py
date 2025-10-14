@@ -69,6 +69,7 @@ async def download_file_async(
 
             # Add logging progress callback if enabled
             if show_progress:
+
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
@@ -137,6 +138,7 @@ async def download_with_mirrors_async(
 
             # Add logging progress callback if enabled
             if show_progress:
+
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)

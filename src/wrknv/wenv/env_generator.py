@@ -9,7 +9,6 @@ Generate env.sh and env.ps1 scripts from templates.
 
 from __future__ import annotations
 
-
 from pathlib import Path
 from typing import Any
 

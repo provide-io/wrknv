@@ -10,10 +10,9 @@ Manages OpenTofu versions for development environment.
 from __future__ import annotations
 
 import re
-from provide.foundation.serialization import json
-from provide.foundation.transport import get
 
 from provide.foundation.logger import get_logger
+from provide.foundation.transport import get
 
 from wrknv.managers.base import ToolManagerError
 from wrknv.managers.tf.base import TfManager

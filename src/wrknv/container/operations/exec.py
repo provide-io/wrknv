@@ -10,7 +10,6 @@ Execute commands inside running containers.
 
 from __future__ import annotations
 
-
 import os
 
 from attrs import define

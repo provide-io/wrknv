@@ -6,16 +6,15 @@ Manage configurations across multiple independent Git repositories.
 
 from __future__ import annotations
 
-
-from .manager import WorkspaceManager
 from .discovery import WorkspaceDiscovery
+from .manager import WorkspaceManager
+from .schema import RepoConfig, WorkspaceConfig
 from .sync import WorkspaceSync
-from .schema import WorkspaceConfig, RepoConfig
 
 __all__ = [
-    "WorkspaceManager",
-    "WorkspaceDiscovery",
-    "WorkspaceSync",
-    "WorkspaceConfig",
     "RepoConfig",
+    "WorkspaceConfig",
+    "WorkspaceDiscovery",
+    "WorkspaceManager",
+    "WorkspaceSync",
 ]

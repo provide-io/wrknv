@@ -10,11 +10,9 @@ Main CLI using provide.foundation.hub for command registration.
 
 from __future__ import annotations
 
-
 import importlib
 import sys
 
-import click
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 
@@ -80,6 +78,7 @@ def create_cli():
     # Clear existing command registrations to allow re-creation in tests
     # This prevents AlreadyExistsError when create_cli() is called multiple times
     from provide.foundation.hub.categories import ComponentCategory
+
     hub.clear(dimension=ComponentCategory.COMMAND.value)
 
     # Reset config cache when creating CLI (for test isolation)

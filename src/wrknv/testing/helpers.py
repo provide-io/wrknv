@@ -7,7 +7,6 @@ that wrknv is designed to manage.
 
 from __future__ import annotations
 
-
 import contextlib
 import os
 from pathlib import Path

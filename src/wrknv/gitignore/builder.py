@@ -6,7 +6,6 @@ Constructs gitignore files with proper formatting and sections.
 
 from __future__ import annotations
 
-
 from pathlib import Path
 
 from provide.foundation import logger

@@ -41,7 +41,7 @@ class Lockfile:
     wrknv_version: str = "0.1.0"
 
     @classmethod
-    def from_config(cls, config: WorkenvConfig) -> "Lockfile":
+    def from_config(cls, config: WorkenvConfig) -> Lockfile:
         """Create a lockfile from a config."""
         from provide.foundation.time import provide_now
 
@@ -105,7 +105,7 @@ class Lockfile:
         }
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Lockfile":
+    def from_dict(cls, data: dict[str, Any]) -> Lockfile:
         """Create from dictionary."""
         resolved_tools = {}
         for name, tool_data in data.get("resolved_tools", {}).items():
@@ -141,10 +141,10 @@ class LockfileManager:
         try:
             import json
 
-            with open(self.lockfile_path, "r") as f:
+            with open(self.lockfile_path) as f:
                 data = json.load(f)
             return Lockfile.from_dict(data)
-        except (json.JSONDecodeError, KeyError, TypeError) as e:
+        except (json.JSONDecodeError, KeyError, TypeError):
             # Corrupted lockfile - return None to regenerate
             return None
 

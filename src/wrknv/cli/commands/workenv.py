@@ -7,17 +7,16 @@ Commands for managing development workenvs.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
-from provide.foundation.hub import register_command
 from provide.foundation import logger
-from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.cli import echo_error, echo_info, echo_success
+from provide.foundation.hub import register_command
 
+from wrknv.cli.hub_cli import WrknvContext
 from wrknv.config import WorkenvConfig  # Keep for special case: load from specific file
+from wrknv.wenv.workenv import WorkenvManager
 from wrknv.workenv import WorkenvExporter, WorkenvImporter, WorkenvPackager
 from wrknv.workenv.registry import WorkenvRegistry
-from wrknv.cli.hub_cli import WrknvContext
-from wrknv.wenv.workenv import WorkenvManager
 
 
 # Register the workenv group first
@@ -87,7 +86,7 @@ def export(output: Path, name: str | None = None, version: str = "1.0.0", format
 
 
 @register_command("workenv.import", description="Import a packaged workenv")
-def import_workenv(package: str, directory: Path = Path("."), activate: bool = True, verify: bool = True):
+def import_workenv(package: str, directory: Path = Path(), activate: bool = True, verify: bool = True):
     """Import a packaged workenv."""
     import asyncio
 
@@ -176,7 +175,7 @@ def activate(name: str | None = None):
 
         # Show activation command
         if workenv_path.exists():
-            echo_info(f"💡 Activate workenv: source workenv/env.sh")
+            echo_info("💡 Activate workenv: source workenv/env.sh")
             echo_info(f"📁 Workenv path: {workenv_path}")
         else:
             echo_error(f"❌ Workenv path does not exist: {workenv_path}")

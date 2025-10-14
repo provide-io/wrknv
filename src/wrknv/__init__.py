@@ -10,12 +10,11 @@ Can be used standalone or integrated with other tools.
 
 from __future__ import annotations
 
-
+from wrknv import errors
 from wrknv._version import __version__
 
 # Public API exports
 from wrknv.config import WorkenvConfig, WorkenvConfigError
-from wrknv import errors
 from wrknv.managers.factory import get_supported_tools, get_tool_manager
 
 __all__ = [

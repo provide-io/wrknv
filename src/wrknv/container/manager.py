@@ -97,7 +97,9 @@ class ContainerManager:
 
         self.builder = ContainerBuilder(runtime=self.runtime, console=self.console)
 
-        self.logs = ContainerLogs(runtime=self.runtime, container_name=self.container_name, console=self.console)
+        self.logs = ContainerLogs(
+            runtime=self.runtime, container_name=self.container_name, console=self.console
+        )
 
         self.volumes = VolumeManager(
             runtime=self.runtime,
@@ -237,6 +239,7 @@ class ContainerManager:
     ) -> Path | None:
         """Backup container volumes."""
         import tarfile
+
         from provide.foundation.time import provide_now
 
         try:
@@ -263,8 +266,8 @@ class ContainerManager:
 
     def restore_volumes(self, backup_path: Path, force: bool = False) -> bool:
         """Restore container volumes from backup."""
-        import tarfile
         import shutil
+        import tarfile
 
         try:
             if not backup_path.exists():

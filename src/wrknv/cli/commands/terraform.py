@@ -10,16 +10,15 @@ Commands for managing Terraform and OpenTofu installations.
 
 from __future__ import annotations
 
-
 import sys
 from typing import Annotated
 
-from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.hub import register_command
 
 from wrknv.cli.hub_cli import WrknvContext
-from wrknv.managers.factory import get_tool_manager
 from wrknv.cli.visual import Emoji
+from wrknv.managers.factory import get_tool_manager
 
 
 @register_command("tf", description="Manage Terraform/OpenTofu versions", category="tools")
@@ -137,10 +136,11 @@ def tf_command(
 
         if not dry_run:
             echo_success(f"✅ Switched to {display_name} {actual_version}")
-            echo_info(f"💡 Run 'source env.sh' to activate in current shell")
-            echo_info(f"💡 Or restart your terminal")
+            echo_info("💡 Run 'source env.sh' to activate in current shell")
+            echo_info("💡 Or restart your terminal")
     except Exception as e:
         echo_error(f"Error: {e}")
         import traceback
+
         echo_error(traceback.format_exc())
         sys.exit(1)

@@ -10,16 +10,14 @@ Commands for managing secret management tools (OpenBao, IBM Vault).
 
 from __future__ import annotations
 
-
 import sys
 from typing import Annotated
 
-from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.hub import register_command
 
 from wrknv.cli.hub_cli import WrknvContext
 from wrknv.managers.factory import get_tool_manager
-from wrknv.cli.visual import Emoji
 
 
 @register_command("secrets", description="Manage secret management tools (Bao, Vault)", category="tools")
@@ -52,7 +50,7 @@ def secrets_command(
     config = WrknvContext.get_config()
 
     if list_variants:
-        echo_info(f"🔐 Available secret management variants:")
+        echo_info("🔐 Available secret management variants:")
         echo_info("  • bao    - OpenBao (open source Vault fork)")
         echo_info("  • vault  - IBM Vault (HashiCorp Vault)")
         return
@@ -131,10 +129,11 @@ def secrets_command(
 
         if not dry_run:
             echo_success(f"✅ Switched to {display_name} {actual_version}")
-            echo_info(f"💡 Run 'source env.sh' to activate in current shell")
-            echo_info(f"💡 Or restart your terminal")
+            echo_info("💡 Run 'source env.sh' to activate in current shell")
+            echo_info("💡 Or restart your terminal")
     except Exception as e:
         echo_error(f"Error: {e}")
         import traceback
+
         echo_error(traceback.format_exc())
         sys.exit(1)

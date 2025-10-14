@@ -9,7 +9,6 @@ Simply importing the modules is enough to register them with the hub.
 
 from __future__ import annotations
 
-
 # The modules themselves register commands when imported
 # No exports needed
 

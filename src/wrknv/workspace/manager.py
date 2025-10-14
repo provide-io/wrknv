@@ -13,7 +13,7 @@ from provide.foundation import logger
 from provide.foundation.file import read_toml, write_toml
 
 from .discovery import WorkspaceDiscovery
-from .schema import WorkspaceConfig, RepoConfig, TemplateSource
+from .schema import RepoConfig, TemplateSource, WorkspaceConfig
 from .sync import WorkspaceSync
 
 

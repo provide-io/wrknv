@@ -99,10 +99,14 @@ class ContainerMetadata:
 
         # Check project name
         if metadata.get("project_name") != self.config.project_name:
-            issues.append(f"Project name mismatch: {metadata.get('project_name')} != {self.config.project_name}")
+            issues.append(
+                f"Project name mismatch: {metadata.get('project_name')} != {self.config.project_name}"
+            )
 
         # Check container name
         if metadata.get("container_name") != self.container_name:
-            issues.append(f"Container name mismatch: {metadata.get('container_name')} != {self.container_name}")
+            issues.append(
+                f"Container name mismatch: {metadata.get('container_name')} != {self.container_name}"
+            )
 
         return (len(issues) == 0, issues)

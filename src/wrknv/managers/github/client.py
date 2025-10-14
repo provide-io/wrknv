@@ -6,12 +6,11 @@ Client for interacting with GitHub Releases API using provide-foundation transpo
 
 from __future__ import annotations
 
+from collections.abc import Callable
 import pathlib
 import re
-from collections.abc import Callable
 from typing import Literal
 
-from provide.foundation.errors import resilient
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 from provide.foundation.transport import UniversalClient

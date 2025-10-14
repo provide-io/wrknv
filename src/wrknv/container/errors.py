@@ -10,7 +10,6 @@ Custom exceptions for container operations using foundation error hierarchy.
 
 from __future__ import annotations
 
-
 from provide.foundation.errors import (
     AlreadyExistsError,
     NotFoundError,

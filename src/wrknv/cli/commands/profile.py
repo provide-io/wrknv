@@ -10,7 +10,6 @@ Commands for managing workenv profiles.
 
 from __future__ import annotations
 
-
 from pathlib import Path
 import sys
 
@@ -158,6 +157,7 @@ def profile_show(name: str):
 def profile_export(name: str, output: str):
     """Export a profile to a file."""
     import json
+
     from provide.foundation.file.formats import toml_dumps
 
     config = WrknvContext.get_config()
@@ -186,6 +186,7 @@ def profile_export(name: str, output: str):
 def profile_import(file: str):
     """Import a profile from a file."""
     import json
+
     from provide.foundation.file.formats import toml_loads
 
     file_path = Path(file)

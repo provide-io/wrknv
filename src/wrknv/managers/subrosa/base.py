@@ -15,9 +15,9 @@ from __future__ import annotations
 from abc import abstractmethod
 import json
 import pathlib
-from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
 
 from provide.foundation import logger
+from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
 
 from wrknv.managers.base import BaseToolManager, ToolManagerError
 from wrknv.wenv.bin_manager import get_workenv_bin_dir
@@ -66,7 +66,7 @@ class SubRosaManager(BaseToolManager):
         """Load metadata from JSON file."""
         if self.metadata_file.exists():
             try:
-                with open(self.metadata_file, "r") as f:
+                with open(self.metadata_file) as f:
                     return json.load(f)
             except Exception as e:
                 logger.warning(f"Failed to load subrosa metadata: {e}")
@@ -98,12 +98,13 @@ class SubRosaManager(BaseToolManager):
         for item in self.install_path.iterdir():
             if item.is_file() and item.name.startswith(prefix):
                 # Extract version from filename
-                version = item.name[len(prefix):]
+                version = item.name[len(prefix) :]
                 versions.append(version)
 
         # Sort by version
         try:
             from packaging.version import parse as parse_version
+
             versions.sort(key=lambda v: parse_version(v), reverse=True)
         except:
             versions.sort(reverse=True)
@@ -150,8 +151,8 @@ class SubRosaManager(BaseToolManager):
     def _regenerate_env_script(self) -> None:
         """Regenerate env.sh script with updated version."""
         try:
+
             from wrknv.wenv.env_generator import create_project_env_scripts
-            import os
 
             project_dir = pathlib.Path.cwd()
             # Only regenerate if we're in a project directory
@@ -206,7 +207,10 @@ class SubRosaManager(BaseToolManager):
 
             # Update metadata if this was the current version
             if self.get_installed_version() == version:
-                if "active_versions" in self.metadata and self.variant_name in self.metadata["active_versions"]:
+                if (
+                    "active_versions" in self.metadata
+                    and self.variant_name in self.metadata["active_versions"]
+                ):
                     del self.metadata["active_versions"][self.variant_name]
                     self._save_metadata()
 

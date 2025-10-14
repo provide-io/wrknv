@@ -10,9 +10,8 @@ Commands for diagnosing and testing the wrknv system.
 
 from __future__ import annotations
 
-
-import sys
 from pathlib import Path
+import sys
 from typing import Any
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
@@ -64,7 +63,7 @@ def selftest_check(verbose: bool = False, fix: bool = False):
             if verbose and check_result.get("details"):
                 echo_info(f"   Details: {check_result['details']}")
 
-        echo_info(f"\n📊 Health Check Summary:")
+        echo_info("\n📊 Health Check Summary:")
         echo_success(f"   ✅ Passed: {passed}")
         if warnings > 0:
             echo_warning(f"   ⚠️  Warnings: {warnings}")
@@ -146,7 +145,7 @@ def _check_environment() -> dict[str, Any]:
         # Check for workenv directory
         workenv_dir = Path.cwd() / "workenv"
         if workenv_dir.exists():
-            env_detail = f"workenv/ directory found"
+            env_detail = "workenv/ directory found"
         elif in_venv:
             env_detail = f"Virtual environment active: {sys.prefix}"
         else:

@@ -9,7 +9,6 @@ Platform and architecture information using provide.foundation.
 
 from __future__ import annotations
 
-
 from provide.foundation.platform import (
     get_arch_name,
     get_os_name,

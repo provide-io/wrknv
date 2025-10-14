@@ -6,15 +6,13 @@ Manages gitignore templates from GitHub's collection.
 
 from __future__ import annotations
 
-
-from provide.foundation.serialization import json
 from pathlib import Path
 import tempfile
 
 from provide.foundation import logger
 from provide.foundation.archive.operations import ArchiveOperations
 from provide.foundation.file import safe_move, safe_rmtree
-from provide.foundation.resilience import retry, fallback
+from provide.foundation.resilience import retry
 from provide.foundation.transport import get
 
 

@@ -10,18 +10,16 @@ Commands for setting up wrknv environment and integrations.
 
 from __future__ import annotations
 
-
 from pathlib import Path
 import shutil
-import sys
 
 from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.console.output import pout
+from provide.foundation.errors import NotFoundError
 from provide.foundation.hub import register_command
 from provide.foundation.process import ProcessError, run
 
 from wrknv.errors import DependencyError
-from provide.foundation.errors import NotFoundError
 from wrknv.wenv.workenv import WorkenvManager
 
 
@@ -173,7 +171,7 @@ def setup_command(
                 message=f"Shell integration script not found at {script_path}",
                 resource_type="file",
                 resource_id=str(script_path),
-                hint="Make sure you're running from the repository root or reinstall wrknv"
+                hint="Make sure you're running from the repository root or reinstall wrknv",
             )
     else:
         echo_info("Available setup options:")

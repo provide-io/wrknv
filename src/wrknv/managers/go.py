@@ -9,8 +9,6 @@ Manages Go versions for development.
 
 from __future__ import annotations
 
-
-from provide.foundation.serialization import json
 import pathlib
 import re
 
@@ -96,7 +94,7 @@ class GoManager(BaseToolManager):
                 raise ToolManagerError("Go directory not found in archive")
 
             # Move the entire Go installation to version directory
-            from provide.foundation.file import safe_copy, safe_move, safe_rmtree
+            from provide.foundation.file import safe_move, safe_rmtree
 
             safe_move(go_root, version_dir / "go")
 
@@ -119,7 +117,7 @@ class GoManager(BaseToolManager):
 
         finally:
             # Clean up extraction directory
-            from provide.foundation.file import safe_copy, safe_rmtree
+            from provide.foundation.file import safe_rmtree
 
             safe_rmtree(extract_dir, missing_ok=True)
 

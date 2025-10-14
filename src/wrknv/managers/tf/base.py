@@ -12,11 +12,8 @@ designed for managing Tf tool versions.
 from __future__ import annotations
 
 from abc import abstractmethod
-import hashlib
-import json
 import os
 import pathlib
-import sys
 
 from provide.foundation import logger
 from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
@@ -187,7 +184,9 @@ class TfManager(BaseToolManager):
                     break
 
             if not binary_path:
-                raise ToolManagerError(f"{self.tool_name} binary not found in archive (looking for {archive_binary_name})")
+                raise ToolManagerError(
+                    f"{self.tool_name} binary not found in archive (looking for {archive_binary_name})"
+                )
 
             # Copy to tf versions location with the correct target name
             target_path = self.get_binary_path(version)

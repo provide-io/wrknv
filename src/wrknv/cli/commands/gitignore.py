@@ -10,7 +10,6 @@ Commands for managing .gitignore files.
 
 from __future__ import annotations
 
-
 from pathlib import Path
 import sys
 
@@ -183,8 +182,8 @@ def gitignore_build(
     # Parse templates string - support both comma-separated and space-separated
     if templates:
         # Try comma-separated first
-        if ',' in templates:
-            template_list.extend([t.strip() for t in templates.split(',') if t.strip()])
+        if "," in templates:
+            template_list.extend([t.strip() for t in templates.split(",") if t.strip()])
         else:
             # Otherwise treat as space-separated
             template_list.extend([t.strip() for t in templates.split() if t.strip()])

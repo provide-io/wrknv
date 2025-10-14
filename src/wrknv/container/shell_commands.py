@@ -15,8 +15,8 @@ from provide.foundation import logger
 from provide.foundation.process import CompletedProcess, run, stream
 from rich.console import Console
 
-from wrknv.container.manager import ContainerManager
 from wrknv.config import WorkenvConfig
+from wrknv.container.manager import ContainerManager
 
 
 def shell_into_container(

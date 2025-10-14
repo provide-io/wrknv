@@ -10,13 +10,11 @@ Commands for managing workenv configuration.
 
 from __future__ import annotations
 
-
 import json
 import sys
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.console.output import pout
-from provide.foundation.errors import ConfigurationError, resilient
 from provide.foundation.hub import register_command
 
 from wrknv.cli.hub_cli import WrknvContext

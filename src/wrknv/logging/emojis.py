@@ -6,7 +6,6 @@ Defines the emoji hierarchy for wrknv modules.
 
 from __future__ import annotations
 
-
 # wrknv emoji hierarchy - organized by functionality
 WRKNV_EMOJI_HIERARCHY = {
     # Core wrknv

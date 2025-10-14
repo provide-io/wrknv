@@ -13,7 +13,8 @@ from typing import Any
 from provide.foundation import logger
 
 from wrknv.workenv.config_templates import ConfigTemplateGenerator
-from .schema import WorkspaceConfig, RepoConfig
+
+from .schema import RepoConfig, WorkspaceConfig
 
 
 class WorkspaceSync:

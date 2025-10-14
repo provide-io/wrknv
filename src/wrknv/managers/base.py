@@ -9,7 +9,6 @@ Common functionality for all tool managers.
 
 from __future__ import annotations
 
-
 from abc import ABC, abstractmethod
 import pathlib
 import platform
@@ -21,7 +20,7 @@ from provide.foundation.process import run
 
 logger = get_logger(__name__)
 
-from wrknv.config import WorkenvConfig, WorkenvConfigError
+from wrknv.config import WorkenvConfig
 from wrknv.errors import WrkenvError
 
 

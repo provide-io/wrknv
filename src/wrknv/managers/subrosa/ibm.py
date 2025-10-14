@@ -9,16 +9,14 @@ Manages IBM Vault (HashiCorp Vault) versions for development.
 
 from __future__ import annotations
 
-
 import pathlib
-from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
-from provide.foundation.serialization import json
-from provide.foundation.transport import get
 
 from provide.foundation import logger
+from provide.foundation.file import safe_copy, safe_rmtree
+from provide.foundation.transport import get
 
-from wrknv.managers.subrosa.base import SubRosaManager
 from wrknv.managers.base import ToolManagerError
+from wrknv.managers.subrosa.base import SubRosaManager
 
 
 class IbmVaultVariant(SubRosaManager):
@@ -58,6 +56,7 @@ class IbmVaultVariant(SubRosaManager):
             # Sort versions
             try:
                 from packaging.version import parse as parse_version
+
                 versions.sort(key=lambda v: parse_version(v), reverse=True)
             except:
                 versions.sort(reverse=True)
@@ -71,7 +70,7 @@ class IbmVaultVariant(SubRosaManager):
         """Get download URL for HashiCorp Vault version."""
         platform_info = self.get_platform_info()
         os_name = platform_info["os"]  # darwin, linux, windows
-        arch = platform_info["arch"]   # amd64, arm64, etc.
+        arch = platform_info["arch"]  # amd64, arm64, etc.
 
         # HashiCorp uses different arch naming for ARM
         if arch == "arm64":

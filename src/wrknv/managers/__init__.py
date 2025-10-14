@@ -9,7 +9,6 @@ Tool managers for different development tools.
 
 from __future__ import annotations
 
-
 from wrknv.managers.bao import BaoManager
 from wrknv.managers.base import BaseToolManager, ToolManagerError
 from wrknv.managers.factory import get_supported_tools, get_tool_manager

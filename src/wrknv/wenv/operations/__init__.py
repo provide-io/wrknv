@@ -9,7 +9,6 @@ Core operation modules for workenv functionality.
 
 from __future__ import annotations
 
-
 from .download import download_file, verify_checksum
 from .install import extract_archive, make_executable
 from .platform import get_architecture, get_os_name, get_platform_info

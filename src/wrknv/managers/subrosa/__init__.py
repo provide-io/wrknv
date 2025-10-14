@@ -13,13 +13,12 @@ Provides base class and variants for managing secret management tools:
 
 from __future__ import annotations
 
-
-from wrknv.managers.subrosa.base import SubRosaManager
 from wrknv.managers.subrosa.bao import BaoVariant
+from wrknv.managers.subrosa.base import SubRosaManager
 from wrknv.managers.subrosa.ibm import IbmVaultVariant
 
 __all__ = [
-    "SubRosaManager",
     "BaoVariant",
     "IbmVaultVariant",
+    "SubRosaManager",
 ]

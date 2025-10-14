@@ -6,7 +6,6 @@ Provides setup functions for wrknv logging configuration.
 
 from __future__ import annotations
 
-
 import os
 
 from provide.foundation.logger.emoji.hierarchy import register_emoji_hierarchy

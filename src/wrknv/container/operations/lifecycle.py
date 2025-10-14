@@ -244,5 +244,3 @@ class ContainerLifecycle:
             )
             self.console.print(f"[red]❌ Failed to remove container: {e}[/red]")
             return False
-
-

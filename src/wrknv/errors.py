@@ -18,7 +18,6 @@ from provide.foundation.errors import (
     StateError,
 )
 
-
 # Base Errors
 # ===========
 

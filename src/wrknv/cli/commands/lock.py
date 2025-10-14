@@ -10,9 +10,7 @@ Commands for managing wrknv.lock files.
 
 from __future__ import annotations
 
-
 import sys
-from pathlib import Path
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command

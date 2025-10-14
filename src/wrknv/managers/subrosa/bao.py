@@ -9,14 +9,13 @@ Manages OpenBao (open source Vault fork) versions for development.
 
 from __future__ import annotations
 
-
 import asyncio
 
 from provide.foundation import logger
 
+from wrknv.managers.base import ToolManagerError
 from wrknv.managers.github import GitHubReleasesClient
 from wrknv.managers.subrosa.base import SubRosaManager
-from wrknv.managers.base import ToolManagerError
 
 
 class BaoVariant(SubRosaManager):
