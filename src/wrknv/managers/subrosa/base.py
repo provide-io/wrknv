@@ -6,6 +6,7 @@
 # wrknv/managers/subrosa/base.py
 #
 """
+"""
 SubRosaManager Base Class
 =========================
 Base class for sub rosa (secret) management tools.

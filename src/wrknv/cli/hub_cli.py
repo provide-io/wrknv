@@ -7,6 +7,7 @@
 # wrknv/cli/hub_cli.py
 #
 """
+"""
 Hub-based CLI Entry Point
 =========================
 Main CLI using provide.foundation.hub for command registration.

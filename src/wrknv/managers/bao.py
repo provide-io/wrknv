@@ -6,6 +6,7 @@
 # wrknv/workenv/managers/bao.py
 #
 """
+"""
 OpenBao Tool Manager for wrknv
 ===============================
 Manages OpenBao (open source Vault fork) versions for development.

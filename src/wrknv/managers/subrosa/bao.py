@@ -6,6 +6,7 @@
 # wrknv/managers/subrosa/bao.py
 #
 """
+"""
 OpenBao Variant for SubRosaManager
 ===================================
 Manages OpenBao (open source Vault fork) versions for development.

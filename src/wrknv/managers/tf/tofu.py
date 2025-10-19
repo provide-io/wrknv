@@ -6,6 +6,7 @@
 # wrknv/workenv/managers/tofu.py
 #
 """
+"""
 OpenTofu Tool Manager for wrknv
 ==================================
 Manages OpenTofu versions for development environment.

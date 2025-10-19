@@ -7,6 +7,7 @@
 # wrknv/cli/commands/doctor.py
 #
 """
+"""
 Doctor Commands
 ===============
 Commands for diagnosing and testing the wrknv system.

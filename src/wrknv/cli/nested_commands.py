@@ -7,6 +7,7 @@
 # wrknv/cli/nested_commands.py
 #
 """
+"""
 Enhanced command registration with nested group support.
 
 This module extends the Foundation Hub to support nested command groups,

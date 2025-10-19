@@ -6,6 +6,7 @@
 # wrknv/env/managers/base.py
 #
 """
+"""
 Base Tool Manager for wrknv
 =============================
 Common functionality for all tool managers.

@@ -7,6 +7,7 @@
 # wrknv/container/errors.py
 #
 """
+"""
 Container-specific Errors
 =========================
 Custom exceptions for container operations using foundation error hierarchy.

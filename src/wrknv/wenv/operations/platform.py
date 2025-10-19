@@ -6,6 +6,7 @@
 # wrknv/workenv/operations/platform.py
 #
 """
+"""
 wrknv Platform Detection
 ===================================
 Platform and architecture information using provide.foundation.

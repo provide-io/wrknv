@@ -6,6 +6,7 @@
 # wrknv/workenv/managers/tf_base.py
 #
 """
+"""
 Tf Manager Base
 ===============
 Base class for Tf (IBM Terraform/OpenTofu) managers that use ~/.terraform.versions

@@ -6,6 +6,7 @@
 # wrknv/env/visual.py
 #
 """
+"""
 Visual UX Enhancements
 ======================
 Emoji and color support for enhanced CLI output.

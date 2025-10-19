@@ -6,6 +6,7 @@
 # wrknv/workenv/operations/verify.py
 #
 """
+"""
 wrknv Verification Operations
 ========================================
 Functions for verifying tool installations.

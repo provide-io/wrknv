@@ -6,6 +6,7 @@
 # wrknv/managers/subrosa/__init__.py
 #
 """
+"""
 Sub Rosa Manager Module
 =======================
 Secret management tools - 'sub rosa' (under the rose) - in confidence.

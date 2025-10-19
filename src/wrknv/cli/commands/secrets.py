@@ -7,6 +7,7 @@
 # wrknv/cli/commands/secrets.py
 #
 """
+"""
 Secret Management Commands
 ===========================
 Commands for managing secret management tools (OpenBao, IBM Vault).
