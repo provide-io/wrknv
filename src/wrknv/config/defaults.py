@@ -6,6 +6,7 @@
 """from pathlib import Path
 
 """Centralized default values for wrknv configuration.
+
 All defaults are defined here instead of inline in field definitions.
 """
 

@@ -12,7 +12,6 @@ suggestions, and proper inheritance from foundation errors.
 """
 
 from __future__ import annotations
-
 from provide.foundation.errors import (
     AlreadyExistsError,
     FoundationError,

@@ -9,10 +9,8 @@ Main configuration classes using provide.foundation.
 """
 
 from __future__ import annotations
-
 from pathlib import Path
 from typing import Any
-
 from attrs import define, field
 from provide.foundation.config import (
     ConfigManager,
