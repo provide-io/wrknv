@@ -98,7 +98,8 @@
       "Read(//Users/tim/.wrknv/gitignore-templates/**)",
       "Bash(gh:*)",
       "Bash(do echo \"=== Run $i ===\")",
-      "Bash(git restore src/provide/foundation/parsers/attrs_integration.py)"
+      "Bash(git restore src/provide/foundation/parsers/attrs_integration.py)",
+      "Bash(git restore src/provide/testkit/base/foundation.py)"
     ],
     "deny": [],
     "additionalDirectories": [
