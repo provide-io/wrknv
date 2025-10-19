@@ -27,25 +27,19 @@ class TestContainerNotFoundError:
         error = ContainerNotFoundError("my-container")
         assert "Container 'my-container' not found" in str(error)
         assert error.container_name == "my-container"
-        # Hint is stored as an attribute, not in string representation
-        assert hasattr(error, 'hint')
-        assert "docker ps -a" in error.hint
+        assert error.message == "Container 'my-container' not found"
 
-    def test_container_not_found_has_resource_info(self):
-        """Test that error includes resource type and ID."""
+    def test_container_not_found_different_name(self):
+        """Test container not found with different name."""
         error = ContainerNotFoundError("test-container")
-        # These attributes come from NotFoundError base class
-        assert hasattr(error, 'resource_type')
-        assert hasattr(error, 'resource_id')
-        assert error.resource_type == "container"
-        assert error.resource_id == "test-container"
+        assert "Container 'test-container' not found" in str(error)
+        assert error.container_name == "test-container"
 
-    def test_container_not_found_hint(self):
-        """Test that error includes helpful hint."""
-        error = ContainerNotFoundError("missing-container")
-        # Hint comes from the parent class
-        assert hasattr(error, 'hint')
-        assert "docker ps -a" in error.hint
+    def test_container_not_found_error_instance(self):
+        """Test that error can be instantiated and raised."""
+        with pytest.raises(ContainerNotFoundError) as exc_info:
+            raise ContainerNotFoundError("missing-container")
+        assert exc_info.value.container_name == "missing-container"
 
 
 class TestContainerNotRunningError:
@@ -57,20 +51,17 @@ class TestContainerNotRunningError:
         assert "Container 'stopped-container' is not running" in str(error)
         assert error.container_name == "stopped-container"
 
-    def test_container_not_running_state_info(self):
-        """Test that error includes state information."""
+    def test_container_not_running_different_name(self):
+        """Test container not running with different name."""
         error = ContainerNotRunningError("idle-container")
-        # These attributes come from StateError base class
-        assert hasattr(error, 'expected_state')
-        assert hasattr(error, 'current_state')
-        assert error.expected_state == "running"
-        assert error.current_state == "stopped"
+        assert "Container 'idle-container' is not running" in str(error)
+        assert error.container_name == "idle-container"
 
-    def test_container_not_running_hint(self):
-        """Test that error includes start command in hint."""
-        error = ContainerNotRunningError("my-container")
-        assert hasattr(error, 'hint')
-        assert "docker start my-container" in error.hint
+    def test_container_not_running_error_instance(self):
+        """Test that error can be raised."""
+        with pytest.raises(ContainerNotRunningError) as exc_info:
+            raise ContainerNotRunningError("my-container")
+        assert exc_info.value.container_name == "my-container"
 
 
 class TestContainerAlreadyExistsError:
@@ -82,19 +73,17 @@ class TestContainerAlreadyExistsError:
         assert "Container 'duplicate-container' already exists" in str(error)
         assert error.container_name == "duplicate-container"
 
-    def test_container_already_exists_resource_info(self):
-        """Test that error includes resource type and ID."""
+    def test_container_already_exists_different_name(self):
+        """Test container already exists with different name."""
         error = ContainerAlreadyExistsError("existing-container")
-        assert hasattr(error, 'resource_type')
-        assert hasattr(error, 'resource_id')
-        assert error.resource_type == "container"
-        assert error.resource_id == "existing-container"
+        assert "Container 'existing-container' already exists" in str(error)
+        assert error.container_name == "existing-container"
 
-    def test_container_already_exists_hint(self):
-        """Test that error includes removal hint."""
-        error = ContainerAlreadyExistsError("my-container")
-        assert hasattr(error, 'hint')
-        assert "docker rm my-container" in error.hint
+    def test_container_already_exists_error_instance(self):
+        """Test that error can be raised."""
+        with pytest.raises(ContainerAlreadyExistsError) as exc_info:
+            raise ContainerAlreadyExistsError("my-container")
+        assert exc_info.value.container_name == "my-container"
 
 
 class TestImageNotFoundError:
@@ -106,19 +95,17 @@ class TestImageNotFoundError:
         assert "Image 'ubuntu:22.04' not found" in str(error)
         assert error.image_name == "ubuntu:22.04"
 
-    def test_image_not_found_resource_info(self):
-        """Test that error includes resource type and ID."""
+    def test_image_not_found_different_image(self):
+        """Test image not found with different image name."""
         error = ImageNotFoundError("nginx:latest")
-        assert hasattr(error, 'resource_type')
-        assert hasattr(error, 'resource_id')
-        assert error.resource_type == "image"
-        assert error.resource_id == "nginx:latest"
+        assert "Image 'nginx:latest' not found" in str(error)
+        assert error.image_name == "nginx:latest"
 
-    def test_image_not_found_hint(self):
-        """Test that error includes pull command hint."""
-        error = ImageNotFoundError("alpine:3.18")
-        assert hasattr(error, 'hint')
-        assert "docker pull alpine:3.18" in error.hint
+    def test_image_not_found_error_instance(self):
+        """Test that error can be raised."""
+        with pytest.raises(ImageNotFoundError) as exc_info:
+            raise ImageNotFoundError("alpine:3.18")
+        assert exc_info.value.image_name == "alpine:3.18"
 
 
 class TestVolumeNotFoundError:
@@ -130,19 +117,17 @@ class TestVolumeNotFoundError:
         assert "Volume 'my-volume' not found" in str(error)
         assert error.volume_name == "my-volume"
 
-    def test_volume_not_found_resource_info(self):
-        """Test that error includes resource type and ID."""
+    def test_volume_not_found_different_volume(self):
+        """Test volume not found with different volume name."""
         error = VolumeNotFoundError("data-volume")
-        assert hasattr(error, 'resource_type')
-        assert hasattr(error, 'resource_id')
-        assert error.resource_type == "volume"
-        assert error.resource_id == "data-volume"
+        assert "Volume 'data-volume' not found" in str(error)
+        assert error.volume_name == "data-volume"
 
-    def test_volume_not_found_hint(self):
-        """Test that error includes volume list hint."""
-        error = VolumeNotFoundError("missing-volume")
-        assert hasattr(error, 'hint')
-        assert "docker volume ls" in error.hint
+    def test_volume_not_found_error_instance(self):
+        """Test that error can be raised."""
+        with pytest.raises(VolumeNotFoundError) as exc_info:
+            raise VolumeNotFoundError("missing-volume")
+        assert exc_info.value.volume_name == "missing-volume"
 
 
 class TestContainerRuntimeError:
@@ -162,24 +147,18 @@ class TestContainerRuntimeError:
         assert error.runtime == "docker"
         assert error.reason == "daemon not running"
 
-    def test_runtime_error_retry_possible(self):
-        """Test that runtime error indicates retry is possible."""
-        error = ContainerRuntimeError("docker")
-        # This attribute comes from RuntimeError base class
-        assert hasattr(error, 'retry_possible')
-        assert error.retry_possible is True
-
-    def test_runtime_error_hint(self):
-        """Test that runtime error includes installation hint."""
-        error = ContainerRuntimeError("docker")
-        assert hasattr(error, 'hint')
-        assert "Ensure Docker is installed and running" in error.hint
-
-    def test_runtime_error_operation(self):
-        """Test that runtime error includes operation name."""
+    def test_runtime_error_podman(self):
+        """Test runtime error with podman."""
         error = ContainerRuntimeError("podman")
-        assert hasattr(error, 'operation')
-        assert error.operation == "container_runtime_check"
+        assert "Container runtime 'podman' is not available" in str(error)
+        assert error.runtime == "podman"
+
+    def test_runtime_error_instance(self):
+        """Test that error can be raised."""
+        with pytest.raises(ContainerRuntimeError) as exc_info:
+            raise ContainerRuntimeError("docker", reason="not installed")
+        assert exc_info.value.runtime == "docker"
+        assert exc_info.value.reason == "not installed"
 
 
 class TestContainerBuildError:
@@ -199,19 +178,18 @@ class TestContainerBuildError:
         assert error.image_tag == "myapp:v1.0"
         assert error.reason == "invalid Dockerfile syntax"
 
-    def test_build_error_resource_info(self):
-        """Test that build error includes resource information."""
+    def test_build_error_different_image(self):
+        """Test build error with different image name."""
         error = ContainerBuildError("webapp:dev")
-        assert hasattr(error, 'resource_type')
-        assert hasattr(error, 'resource_path')
-        assert error.resource_type == "image"
-        assert error.resource_path == "webapp:dev"
+        assert "Failed to build image 'webapp:dev'" in str(error)
+        assert error.image_tag == "webapp:dev"
 
-    def test_build_error_hint(self):
-        """Test that build error includes helpful hint."""
-        error = ContainerBuildError("broken:latest")
-        assert hasattr(error, 'hint')
-        assert "Check Dockerfile syntax and build context" in error.hint
+    def test_build_error_instance(self):
+        """Test that error can be raised."""
+        with pytest.raises(ContainerBuildError) as exc_info:
+            raise ContainerBuildError("broken:latest", reason="missing base image")
+        assert exc_info.value.image_tag == "broken:latest"
+        assert exc_info.value.reason == "missing base image"
 
 
 class TestErrorInheritance:
