@@ -91,6 +91,8 @@ class TestSecretsCommand(FoundationTestCase):
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
+                # Mock get_setting to return default variant (used in single-arg mode)
+                mock_config.get_setting.return_value = "vault"
                 mock_load.return_value = mock_config
 
                 mock_manager = Mock()
