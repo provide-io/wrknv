@@ -6,6 +6,8 @@
 """Template Handler for Gitignore Files
 =====================================
 Manages gitignore templates from GitHub's collection.
+"""
+
 from __future__ import annotations
 from pathlib import Path
 import tempfile

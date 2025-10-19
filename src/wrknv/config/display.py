@@ -6,4 +6,4 @@
 """Configuration Display for wrknv
 ================================
 Display and output methods for configuration.
-from __future__ import annotations
+"""

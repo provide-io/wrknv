@@ -6,4 +6,6 @@
 """wrknv Emoji Hierarchy Definitions
 ==================================
 Defines the emoji hierarchy for wrknv modules.
+"""
+
 from __future__ import annotations

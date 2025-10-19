@@ -6,4 +6,6 @@
 """Shell Completion Generation
 ===========================
 Generate shell completion scripts for various shells.
+"""
+
 from __future__ import annotations

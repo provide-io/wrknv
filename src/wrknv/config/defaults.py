@@ -3,8 +3,6 @@
 # SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-
-
 All defaults are defined here instead of inline in field definitions.
 """
 

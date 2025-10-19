@@ -7,6 +7,8 @@
 wrknv Configuration Schema
 ===========================
 Type-safe configuration models with validation for wrknv.toml using attrs.
+"""
+
 from __future__ import annotations
 
 import pathlib

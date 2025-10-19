@@ -6,6 +6,8 @@
 """GitHub Releases API Client
 ===========================
 Client for interacting with GitHub Releases API using provide-foundation transport.
+"""
+
 from __future__ import annotations
 from collections.abc import Callable
 import pathlib

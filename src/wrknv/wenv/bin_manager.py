@@ -6,6 +6,8 @@
 """Workenv Bin Management
 ======================
 General utilities for managing workenv bin directories and tool binaries.
+"""
+
 from __future__ import annotations
 import os
 import pathlib

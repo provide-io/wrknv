@@ -7,6 +7,8 @@
 
 This ensures tests use the proper workenv/package_os_arch pattern
 that wrknv is designed to manage.
+"""
+
 from __future__ import annotations
 import contextlib
 import os
