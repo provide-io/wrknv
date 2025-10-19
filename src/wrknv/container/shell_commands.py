@@ -9,8 +9,6 @@
 Container Shell Commands
 ========================
 Commands for interacting with running containers.
-"""
-
 from __future__ import annotations
 
 from typing import Any

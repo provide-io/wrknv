@@ -9,8 +9,6 @@
 wrknv Download Operations
 ====================================
 Functions for downloading and verifying tool archives using Foundation's ToolDownloader.
-"""
-
 from __future__ import annotations
 
 import asyncio

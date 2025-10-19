@@ -10,8 +10,6 @@
 Container Lifecycle Operations
 ==============================
 Start, stop, restart, and status operations for containers.
-"""
-
 from __future__ import annotations
 
 from typing import Any

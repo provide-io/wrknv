@@ -9,8 +9,6 @@
 Tf Manager Utilities
 ====================
 Utility functions for Terraform/OpenTofu managers.
-"""
-
 from __future__ import annotations
 
 import hashlib

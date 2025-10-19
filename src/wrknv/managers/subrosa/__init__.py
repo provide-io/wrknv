@@ -13,8 +13,6 @@ Secret management tools - 'sub rosa' (under the rose) - in confidence.
 Provides base class and variants for managing secret management tools:
 - OpenBao (open source Vault fork)
 - IBM Vault (HashiCorp Vault)
-"""
-
 from __future__ import annotations
 
 from wrknv.managers.subrosa.bao import BaoVariant

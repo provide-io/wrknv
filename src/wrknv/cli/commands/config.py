@@ -10,8 +10,6 @@
 Config Commands
 ===============
 Commands for managing workenv configuration.
-"""
-
 from __future__ import annotations
 
 import json

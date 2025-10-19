@@ -10,8 +10,6 @@
 Secret Management Commands
 ===========================
 Commands for managing secret management tools (OpenBao, IBM Vault).
-"""
-
 from __future__ import annotations
 
 import sys

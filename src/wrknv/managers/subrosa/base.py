@@ -12,8 +12,6 @@ Base class for sub rosa (secret) management tools.
 
 'Sub rosa' - under the rose - in confidence.
 Manages secret management tool variants (OpenBao, HashiCorp Vault, etc.)
-"""
-
 from __future__ import annotations
 
 from abc import abstractmethod

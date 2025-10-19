@@ -9,8 +9,6 @@
 OpenBao Tool Manager for wrknv
 ===============================
 Manages OpenBao (open source Vault fork) versions for development.
-"""
-
 from __future__ import annotations
 
 import asyncio

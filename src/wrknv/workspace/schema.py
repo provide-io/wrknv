@@ -6,8 +6,6 @@
 """Workspace Configuration Schema
 =============================
 Configuration models for multi-repo workspace management.
-"""
-
 from __future__ import annotations
 from pathlib import Path
 from typing import Any

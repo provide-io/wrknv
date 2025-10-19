@@ -9,8 +9,6 @@
 Tf Metadata Management
 ======================
 Metadata and RECENT file management for Terraform/OpenTofu managers.
-"""
-
 from __future__ import annotations
 
 import json

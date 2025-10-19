@@ -10,8 +10,6 @@
 Lockfile Management
 ==================
 Manage wrknv.lock files for reproducible environments.
-"""
-
 from __future__ import annotations
 
 import hashlib

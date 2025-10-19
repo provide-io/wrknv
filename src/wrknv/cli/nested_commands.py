@@ -12,8 +12,6 @@ Enhanced command registration with nested group support.
 This module extends the Foundation Hub to support nested command groups,
 allowing natural CLI structures like `wrknv container status` instead of
 `wrknv container-status`.
-"""
-
 from __future__ import annotations
 
 from collections.abc import Callable

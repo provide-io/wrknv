@@ -10,8 +10,6 @@
 Container Runtime Base Abstraction
 ===================================
 Abstract base class for container runtime implementations.
-"""
-
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

@@ -7,8 +7,6 @@
 
 This module provides diagnostic tools to help users identify and fix
 common problems with their wrknv setup.
-"""
-
 from __future__ import annotations
 import os
 from pathlib import Path

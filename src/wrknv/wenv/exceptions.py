@@ -8,7 +8,5 @@
 Centralized exception definitions with helpful error messages and suggestions.
 
 Requires Python 3.11+ for native type hint support with pipe operators.
-"""
-
 from __future__ import annotations
 from provide.foundation.errors import FoundationError

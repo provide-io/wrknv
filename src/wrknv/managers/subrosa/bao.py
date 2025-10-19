@@ -9,8 +9,6 @@
 OpenBao Variant for SubRosaManager
 ===================================
 Manages OpenBao (open source Vault fork) versions for development.
-"""
-
 from __future__ import annotations
 
 import asyncio

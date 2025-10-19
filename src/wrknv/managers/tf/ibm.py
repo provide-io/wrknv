@@ -9,8 +9,6 @@
 IBM Terraform Tool Manager for wrknv
 =====================================
 Manages IBM Terraform (formerly HashiCorp Terraform) versions for development environment.
-"""
-
 from __future__ import annotations
 
 import re

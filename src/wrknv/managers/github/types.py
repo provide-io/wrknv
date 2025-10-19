@@ -6,7 +6,5 @@
 """GitHub API Types
 ================
 Type definitions for GitHub API responses.
-"""
-
 from __future__ import annotations
 from attrs import define, field

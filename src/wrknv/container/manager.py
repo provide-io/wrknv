@@ -7,8 +7,6 @@
 Container Manager Implementation
 ================================
 Thin orchestration facade for container operations.
-"""
-
 from __future__ import annotations
 
 from pathlib import Path

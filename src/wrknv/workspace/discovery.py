@@ -6,8 +6,6 @@
 """Workspace Repository Discovery
 =============================
 Discover and analyze repositories in workspace.
-"""
-
 from __future__ import annotations
 from pathlib import Path
 import tomllib

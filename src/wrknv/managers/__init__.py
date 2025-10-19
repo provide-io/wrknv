@@ -9,8 +9,6 @@
 wrknv Tool Managers
 ====================
 Tool managers for different development tools.
-"""
-
 from __future__ import annotations
 
 from wrknv.managers.bao import BaoManager

@@ -11,8 +11,6 @@ Tf Manager Base
 Base class for Tf (IBM Terraform/OpenTofu) managers that use ~/.terraform.versions
 directory structure. This implementation is compatible with tfswitch and
 designed for managing Tf tool versions.
-"""
-
 from __future__ import annotations
 
 from abc import abstractmethod

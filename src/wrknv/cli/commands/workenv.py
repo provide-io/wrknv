@@ -6,8 +6,6 @@
 """Workenv CLI Commands
 ===================
 Commands for managing development workenvs.
-"""
-
 from __future__ import annotations
 from pathlib import Path
 from provide.foundation import logger

@@ -10,8 +10,6 @@
 Setup Commands
 ==============
 Commands for setting up wrknv environment and integrations.
-"""
-
 from __future__ import annotations
 
 from pathlib import Path

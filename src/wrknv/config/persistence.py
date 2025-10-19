@@ -6,8 +6,6 @@
 """Configuration Persistence for wrknv
 ====================================
 Save, load, and file operations for configuration data.
-"""
-
 from __future__ import annotations
 import os
 from pathlib import Path

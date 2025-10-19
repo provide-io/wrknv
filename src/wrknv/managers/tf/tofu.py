@@ -9,8 +9,6 @@
 OpenTofu Tool Manager for wrknv
 ==================================
 Manages OpenTofu versions for development environment.
-"""
-
 from __future__ import annotations
 
 import re

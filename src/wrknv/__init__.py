@@ -10,8 +10,6 @@ A flexible tool for managing development environments and tool versions.
 Supports Terraform, OpenTofu, Go, UV, and more.
 
 Can be used standalone or integrated with other tools.
-"""
-
 from __future__ import annotations
 from wrknv import errors
 from wrknv._version import __version__

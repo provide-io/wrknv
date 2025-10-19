@@ -9,8 +9,6 @@
 IBM Vault Variant for SubRosaManager
 =====================================
 Manages IBM Vault (HashiCorp Vault) versions for development.
-"""
-
 from __future__ import annotations
 
 import pathlib

@@ -9,8 +9,6 @@
 wrknv Installation Operations
 ========================================
 Functions for extracting archives and making files executable.
-"""
-
 from __future__ import annotations
 
 import pathlib

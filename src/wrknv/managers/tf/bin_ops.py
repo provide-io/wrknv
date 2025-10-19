@@ -6,8 +6,6 @@
 """Tf Bin Operations
 =================
 Tf-specific binary operations for workenv bin directory.
-"""
-
 from __future__ import annotations
 import pathlib
 from provide.foundation import logger
