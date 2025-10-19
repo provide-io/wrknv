@@ -1,5 +1,9 @@
-"""
-GitHub API Types
+# wrknv/managers/github/types.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""GitHub API Types
 ================
 Type definitions for GitHub API responses.
 """
@@ -96,3 +100,4 @@ __all__ = [
     "Release",
     "Tag",
 ]
+# 🧰🌍🧱🪄

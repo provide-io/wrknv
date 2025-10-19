@@ -1,5 +1,9 @@
-"""
-Workenv Bin Management
+# wrknv/wenv/bin_manager.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Workenv Bin Management
 ======================
 General utilities for managing workenv bin directories and tool binaries.
 """
@@ -97,3 +101,6 @@ def copy_tool_binary(source_path: pathlib.Path, target_name: str, bin_dir: pathl
     except Exception as e:
         logger.warning(f"Failed to copy binary: {e}")
         return False
+
+
+# 🧰🌍📋🪄

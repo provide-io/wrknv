@@ -1,5 +1,9 @@
-"""
-Multi-Repo Workspace Management Package
+# wrknv/workspace/__init__.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Multi-Repo Workspace Management Package
 =======================================
 Manage configurations across multiple independent Git repositories.
 """
@@ -18,3 +22,4 @@ __all__ = [
     "WorkspaceManager",
     "WorkspaceSync",
 ]
+# 🧰🌍📦🪄

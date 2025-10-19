@@ -1,5 +1,9 @@
-"""
-wrknv CLI Module
+# wrknv/cli/__init__.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""wrknv CLI Module
 ================
 Command-line interface for wrknv tool management.
 """
@@ -12,3 +16,4 @@ from wrknv.cli.hub_cli import create_cli, main
 entry_point = main
 
 __all__ = ["create_cli", "entry_point", "main"]
+# 🧰🌍📦🪄

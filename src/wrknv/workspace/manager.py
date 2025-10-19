@@ -1,5 +1,9 @@
-"""
-Workspace Manager
+# wrknv/workspace/manager.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Workspace Manager
 ================
 Manage multi-repo workspaces with configuration synchronization.
 """
@@ -231,3 +235,6 @@ class WorkspaceManager:
             "license": "Apache-2.0",
             "development_status": "3 - Alpha",
         }
+
+
+# 🧰🌍📋🪄

@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/cli/commands/lock.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/cli/commands/lock.py
 #
@@ -173,3 +177,6 @@ def lock_sync():
     except Exception as e:
         echo_error(f"Failed to sync from lockfile: {e}")
         sys.exit(1)
+
+
+# 🧰🌍🖥️🪄

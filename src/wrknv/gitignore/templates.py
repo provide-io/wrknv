@@ -1,5 +1,9 @@
-"""
-Template Handler for Gitignore Files
+# wrknv/gitignore/templates.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Template Handler for Gitignore Files
 =====================================
 Manages gitignore templates from GitHub's collection.
 """
@@ -249,3 +253,6 @@ class TemplateHandler:
         logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
+
+
+# 🧰🌍📝🪄

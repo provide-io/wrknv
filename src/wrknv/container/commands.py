@@ -1,4 +1,8 @@
+# wrknv/container/commands.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/container/commands.py
 #
 """
@@ -277,3 +281,6 @@ def clean_volumes(config: WorkenvConfig | None = None, preserve: list[str] | Non
     except Exception as e:
         console.print(f"[red]❌ Failed to clean volumes: {e}[/red]")
         return False
+
+
+# 🧰🌍🖥️🪄

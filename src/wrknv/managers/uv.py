@@ -1,4 +1,8 @@
+# wrknv/managers/uv.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/managers/uv.py
 #
 """
@@ -212,4 +216,4 @@ class UvManager(BaseToolManager):
         }
 
 
-# 🍲🥄📄🪄
+# 🧰🌍📋🪄

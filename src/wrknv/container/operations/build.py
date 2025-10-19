@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/container/operations/build.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/container/operations/build.py
 #
@@ -283,3 +287,6 @@ class ContainerBuilder:
         )
 
         return "\n".join(lines)
+
+
+# 🧰🌍📄🪄

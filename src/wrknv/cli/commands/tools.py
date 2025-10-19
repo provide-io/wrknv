@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/cli/commands/tools.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/cli/commands/tools.py
 #
@@ -199,3 +203,6 @@ def doctor(verbose: bool = False):
         verbose: Show detailed diagnostic output
     """
     sys.exit(run_doctor(verbose))
+
+
+# 🧰🌍🖥️🪄

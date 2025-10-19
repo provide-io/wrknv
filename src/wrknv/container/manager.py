@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+# wrknv/container/manager.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 
 """
 Container Manager Implementation
@@ -383,3 +386,6 @@ def create_container_manager(project_name: str | None = None) -> ContainerManage
     """Create a ContainerManager with default configuration."""
     config = get_default_config(project_name or "my-project")
     return ContainerManager(config=config)
+
+
+# 🧰🌍📋🪄

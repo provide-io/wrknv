@@ -1,4 +1,8 @@
+# wrknv/managers/subrosa/base.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/managers/subrosa/base.py
 #
 """
@@ -292,3 +296,4 @@ class SubRosaManager(BaseToolManager):
 __all__ = [
     "SubRosaManager",
 ]
+# 🧰🌍🏗️🪄

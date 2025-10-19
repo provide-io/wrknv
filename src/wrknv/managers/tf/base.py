@@ -1,4 +1,8 @@
+# wrknv/managers/tf/base.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/managers/tf_base.py
 #
 """
@@ -398,4 +402,4 @@ class TfManager(BaseToolManager):
         logger.info(f"Switched to {self.tool_name} {version}")
 
 
-# 🍲🥄📄🪄
+# 🧰🌍🏗️🪄

@@ -1,5 +1,9 @@
-"""
-Gitignore Manager
+# wrknv/gitignore/manager.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Gitignore Manager
 =================
 Central manager for gitignore operations.
 """
@@ -300,3 +304,6 @@ class GitignoreManager:
             report_lines.append("No project characteristics detected")
 
         return "\n".join(report_lines)
+
+
+# 🧰🌍📋🪄

@@ -1,5 +1,9 @@
-"""
-Test helpers for using wrknv-managed workenv directories instead of .venv.
+# wrknv/testing/helpers.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Test helpers for using wrknv-managed workenv directories instead of .venv.
 
 This ensures tests use the proper workenv/package_os_arch pattern
 that wrknv is designed to manage.
@@ -233,3 +237,6 @@ def pytest_with_workenv(package_name: str | None = None, *pytest_args) -> int:
     runner.setup()
     result = runner.run_pytest(*pytest_args, capture_output=False)
     return result.returncode
+
+
+# 🧰🌍📄🪄

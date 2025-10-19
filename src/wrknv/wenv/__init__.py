@@ -1,4 +1,8 @@
+# wrknv/wenv/__init__.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/env/__init__.py
 #
 """
@@ -23,6 +27,4 @@ __version__ = "0.1.0"
 # Use explicit imports: from wrknv.wenv import config, managers, etc.
 
 __all__ = ["config", "managers", "operations"]
-
-
-# 🧰🌍🖥️🪄
+# 🧰🌍📦🪄

@@ -1,4 +1,8 @@
+# wrknv/managers/tf/ibm.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/managers/ibm_tf.py
 #
 """
@@ -178,4 +182,4 @@ class IbmTfVariant(TfManager):
         }
 
 
-# 🍲🥄📄🪄
+# 🧰🌍📋🪄

@@ -1,5 +1,9 @@
-"""
-Configuration Validation for wrknv
+# wrknv/config/validation.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Configuration Validation for wrknv
 ===================================
 Validation methods for configuration data.
 """
@@ -271,3 +275,6 @@ class WorkenvConfigValidator:
         # Basic URL validation for container registries
         pattern = r"^[a-zA-Z0-9.-]+(\.[a-zA-Z]{2,})?(/[a-zA-Z0-9._-]+)*$"
         return bool(re.match(pattern, url))
+
+
+# 🧰🌍⚙️🪄

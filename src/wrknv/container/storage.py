@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+# wrknv/container/storage.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 
 """
 Container Storage Management
@@ -208,3 +211,6 @@ class ContainerStorage:
         except Exception as e:
             logger.error("❌ Failed to clean storage", error=str(e))
             return False
+
+
+# 🧰🌍📄🪄

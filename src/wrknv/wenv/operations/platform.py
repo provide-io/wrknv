@@ -1,4 +1,8 @@
+# wrknv/wenv/operations/platform.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/operations/platform.py
 #
 """
@@ -192,4 +196,4 @@ def get_download_platform_mappings() -> dict[str, dict[str, str]]:
     }
 
 
-# 🧰🌍🔍🪄
+# 🧰🌍📄🪄

@@ -1,4 +1,8 @@
+# wrknv/cli/visual.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/env/visual.py
 #
 """
@@ -120,3 +124,6 @@ def get_tool_emoji(tool_name: str) -> str:
         "uv": Emoji.UV,
     }
     return tool_emojis.get(tool_name.lower(), Emoji.WORKBENCH)
+
+
+# 🧰🌍🖥️🪄

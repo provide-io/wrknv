@@ -1,4 +1,8 @@
+# wrknv/managers/bao.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/managers/bao.py
 #
 """
@@ -160,6 +164,4 @@ class BaoManager(BaseToolManager):
 __all__ = [
     "BaoManager",
 ]
-
-
-# 🍲🥄📄🪄
+# 🧰🌍📋🪄

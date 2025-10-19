@@ -1,5 +1,9 @@
-"""
-Resilience Configuration for wrknv
+# wrknv/wenv/resilience.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Resilience Configuration for wrknv
 ===================================
 Retry policies, circuit breakers, and fallback chains for network operations.
 """
@@ -61,3 +65,6 @@ def get_circuit_breaker(operation_type: str = "default") -> SyncCircuitBreaker:
         "default": github_circuit_breaker,
     }
     return breakers.get(operation_type, github_circuit_breaker)
+
+
+# 🧰🌍📄🪄

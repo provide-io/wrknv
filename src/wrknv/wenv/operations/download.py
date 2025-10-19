@@ -1,4 +1,8 @@
+# wrknv/wenv/operations/download.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/operations/download.py
 #
 """
@@ -274,4 +278,4 @@ def validate_download_url(url: str) -> bool:
         return False
 
 
-# 🍲🥄📄🪄
+# 🧰🌍📄🪄

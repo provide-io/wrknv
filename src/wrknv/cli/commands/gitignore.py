@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/cli/commands/gitignore.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/cli/commands/gitignore.py
 #
@@ -273,3 +277,6 @@ def gitignore_update():
     except Exception as e:
         echo_error(f"Failed to update templates: {e}")
         sys.exit(1)
+
+
+# 🧰🌍🖥️🪄

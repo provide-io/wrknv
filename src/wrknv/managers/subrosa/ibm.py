@@ -1,4 +1,8 @@
+# wrknv/managers/subrosa/ibm.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/managers/subrosa/ibm.py
 #
 """
@@ -132,3 +136,4 @@ class IbmVaultVariant(SubRosaManager):
 __all__ = [
     "IbmVaultVariant",
 ]
+# 🧰🌍📋🪄

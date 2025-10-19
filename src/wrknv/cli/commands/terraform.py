@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/cli/commands/terraform.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/cli/commands/terraform.py
 #
@@ -144,3 +148,6 @@ def tf_command(
 
         echo_error(traceback.format_exc())
         sys.exit(1)
+
+
+# 🧰🌍🖥️🪄

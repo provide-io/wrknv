@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/cli/commands/config.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/cli/commands/config.py
 #
@@ -229,3 +233,6 @@ def config_set(key: str, value: str):
     except Exception as e:
         echo_error(f"Error setting value: {e}")
         sys.exit(1)
+
+
+# 🧰🌍⚙️🪄

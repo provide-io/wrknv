@@ -1,4 +1,8 @@
+# wrknv/container/shell_commands.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # src/wrknv/container/shell_commands.py
 #
 """
@@ -353,3 +357,6 @@ def get_container_stats(config: WorkenvConfig) -> dict[str, Any] | None:
         logger.error(f"Failed to get container stats: {e}")
 
     return None
+
+
+# 🧰🌍🖥️🪄

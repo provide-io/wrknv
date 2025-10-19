@@ -1,5 +1,9 @@
-"""
-Doctor command for diagnosing wrknv environment issues.
+# wrknv/wenv/doctor.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Doctor command for diagnosing wrknv environment issues.
 
 This module provides diagnostic tools to help users identify and fix
 common problems with their wrknv setup.
@@ -431,3 +435,6 @@ def run_doctor(verbose: bool = False) -> int:
     """
     doctor = WrknvDoctor()
     return doctor.run(verbose)
+
+
+# 🧰🌍📄🪄

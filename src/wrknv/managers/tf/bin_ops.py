@@ -1,5 +1,9 @@
-"""
-Tf Bin Operations
+# wrknv/managers/tf/bin_ops.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Tf Bin Operations
 =================
 Tf-specific binary operations for workenv bin directory.
 """
@@ -47,3 +51,6 @@ def copy_tf_binaries_to_workenv(bin_dir: pathlib.Path, config) -> None:
 
         except Exception as e:
             logger.warning(f"Failed to copy {tool_name} binary: {e}")
+
+
+# 🧰🌍📋🪄

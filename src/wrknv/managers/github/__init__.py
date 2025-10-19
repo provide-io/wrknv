@@ -1,5 +1,9 @@
-"""
-GitHub API Client Module
+# wrknv/managers/github/__init__.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""GitHub API Client Module
 =========================
 Client for interacting with GitHub Releases API and archive downloads.
 """
@@ -15,3 +19,4 @@ __all__ = [
     "Release",
     "Tag",
 ]
+# 🧰🌍📦🪄

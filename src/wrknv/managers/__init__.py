@@ -1,4 +1,8 @@
+# wrknv/managers/__init__.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/env/managers/__init__.py
 #
 """
@@ -28,6 +32,4 @@ __all__ = [
     "get_supported_tools",
     "get_tool_manager",
 ]
-
-
-# 🧰🌍🖥️🪄
+# 🧰🌍📦🪄

@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/container/operations/logs.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/container/operations/logs.py
 #
@@ -192,3 +196,6 @@ class ContainerLogs:
             )
             self.console.print("[yellow]⚠️  Log clearing not supported or failed[/yellow]")
             return False
+
+
+# 🧰🌍📄🪄

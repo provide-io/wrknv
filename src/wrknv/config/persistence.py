@@ -1,5 +1,9 @@
-"""
-Configuration Persistence for wrknv
+# wrknv/config/persistence.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Configuration Persistence for wrknv
 ====================================
 Save, load, and file operations for configuration data.
 """
@@ -151,3 +155,6 @@ class WorkenvConfigPersistence:
     def get_config_path(self) -> Path:
         """Get path to configuration file."""
         return self.config.config_path
+
+
+# 🧰🌍⚙️🪄

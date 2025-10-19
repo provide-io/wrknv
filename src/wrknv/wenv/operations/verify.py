@@ -1,4 +1,8 @@
+# wrknv/wenv/operations/verify.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/operations/verify.py
 #
 """
@@ -304,4 +308,4 @@ def verify_file(file_path: pathlib.Path, signature_path: pathlib.Path = None) ->
         return True
 
 
-# 🍲🥄📄🪄
+# 🧰🌍📄🪄

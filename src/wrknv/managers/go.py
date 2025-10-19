@@ -1,4 +1,8 @@
+# wrknv/managers/go.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/managers/go.py
 #
 """
@@ -243,4 +247,4 @@ class GoManager(BaseToolManager):
         return self.install_path / self.tool_name / version / "gopath"
 
 
-# 🍲🥄📄🪄
+# 🧰🌍📋🪄

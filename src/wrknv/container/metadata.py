@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+# wrknv/container/metadata.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 
 """
 Container Metadata Management
@@ -110,3 +113,6 @@ class ContainerMetadata:
             )
 
         return (len(issues) == 0, issues)
+
+
+# 🧰🌍📄🪄

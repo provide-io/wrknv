@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/cli/commands/profile.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/cli/commands/profile.py
 #
@@ -219,3 +223,6 @@ def profile_import(file: str):
     except Exception as e:
         echo_error(f"Failed to import profile: {e}")
         sys.exit(1)
+
+
+# 🧰🌍🖥️🪄

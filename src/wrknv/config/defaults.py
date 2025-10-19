@@ -1,6 +1,9 @@
-from __future__ import annotations
+# wrknv/config/defaults.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 
-from pathlib import Path
+"""from pathlib import Path
 
 """Centralized default values for wrknv configuration.
 All defaults are defined here instead of inline in field definitions.
@@ -130,3 +133,6 @@ def default_empty_dict() -> dict[str, str]:
 def default_custom_values() -> dict[str, any]:
     """Factory for custom values dictionary."""
     return {}
+
+
+# 🧰🌍⚙️🪄

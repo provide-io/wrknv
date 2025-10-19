@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/container/operations/volumes.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/container/operations/volumes.py
 #
@@ -329,3 +333,6 @@ class VolumeManager:
         # For now, just return True as a stub
         # Full implementation would clean up volumes
         return True
+
+
+# 🧰🌍📄🪄

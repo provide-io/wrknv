@@ -1,4 +1,8 @@
+# wrknv/managers/subrosa/bao.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/managers/subrosa/bao.py
 #
 """
@@ -76,3 +80,4 @@ class BaoVariant(SubRosaManager):
 __all__ = [
     "BaoVariant",
 ]
+# 🧰🌍📋🪄

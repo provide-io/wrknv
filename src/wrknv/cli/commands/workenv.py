@@ -1,5 +1,9 @@
-"""
-Workenv CLI Commands
+# wrknv/cli/commands/workenv.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Workenv CLI Commands
 ===================
 Commands for managing development workenvs.
 """
@@ -324,3 +328,6 @@ def clean(registry_url: str | None = None):
             raise
 
     asyncio.run(_clean())
+
+
+# 🧰🌍🖥️🪄

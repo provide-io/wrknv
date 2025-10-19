@@ -1,5 +1,9 @@
-"""
-wrknv CLI Commands
+# wrknv/cli/commands/__init__.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""wrknv CLI Commands
 ==================
 All command modules for the wrknv CLI.
 
@@ -13,3 +17,4 @@ from __future__ import annotations
 # No exports needed
 
 __all__ = []
+# 🧰🌍📦🪄

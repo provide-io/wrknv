@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/container/operations/lifecycle.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/container/operations/lifecycle.py
 #
@@ -244,3 +248,6 @@ class ContainerLifecycle:
             )
             self.console.print(f"[red]❌ Failed to remove container: {e}[/red]")
             return False
+
+
+# 🧰🌍📄🪄

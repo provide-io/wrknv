@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/cli/commands/doctor.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/cli/commands/doctor.py
 #
@@ -343,3 +347,6 @@ def _check_permissions() -> dict[str, Any]:
 
     except Exception as e:
         return {"name": "Permissions", "status": "fail", "message": f"Permission check failed: {e}"}
+
+
+# 🧰🌍🖥️🪄

@@ -1,5 +1,9 @@
-"""
-wrknv Logging Setup
+# wrknv/logging/setup.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""wrknv Logging Setup
 ===================
 Provides setup functions for wrknv logging configuration.
 """
@@ -51,3 +55,6 @@ def setup_wrknv_config_logging() -> None:
 
     # Always register emoji hierarchy
     register_emoji_hierarchy("wrknv", WRKNV_EMOJI_HIERARCHY)
+
+
+# 🧰🌍🗃️🪄

@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+# wrknv/wenv/schema.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 
 """
 wrknv Configuration Schema
@@ -432,3 +435,6 @@ def config_to_toml(config: WorkenvConfig) -> str:
 
     # Convert to TOML
     return toml_dumps(config_dict)
+
+
+# 🧰🌍📄🪄

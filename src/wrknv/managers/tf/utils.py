@@ -1,4 +1,8 @@
+# wrknv/managers/tf/utils.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/managers/tf/utils.py
 #
 """
@@ -46,3 +50,6 @@ def version_sort_key(version: str):
 def get_tool_version_key(tool_name: str) -> str:
     """Get the metadata key for storing tool version."""
     return "opentofu_version" if tool_name == "tofu" else f"{tool_name}_version"
+
+
+# 🧰🌍📋🪄

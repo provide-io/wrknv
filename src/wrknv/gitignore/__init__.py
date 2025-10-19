@@ -1,5 +1,9 @@
-"""
-Gitignore Management Module
+# wrknv/gitignore/__init__.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Gitignore Management Module
 ===========================
 Comprehensive gitignore file management for wrknv projects.
 """
@@ -17,3 +21,4 @@ __all__ = [
     "ProjectDetector",
     "TemplateHandler",
 ]
+# 🧰🌍📦🪄

@@ -1,4 +1,8 @@
+# wrknv/wenv/env_generator.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/env/env_generator.py
 #
 """
@@ -237,4 +241,4 @@ def create_project_env_scripts(project_dir: Path, workenv_name: str | None = Non
     return sh_path, ps1_path
 
 
-# 🧰🌍🖥️🪄
+# 🧰🌍📄🪄

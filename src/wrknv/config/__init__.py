@@ -1,5 +1,9 @@
-"""
-wrknv Configuration Management
+# wrknv/config/__init__.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""wrknv Configuration Management
 ==============================
 Configuration system for wrknv using provide.foundation.
 """
@@ -33,3 +37,4 @@ __all__ = [
     "WorkenvSettings",
     "WorkenvToolConfig",
 ]
+# 🧰🌍📦🪄

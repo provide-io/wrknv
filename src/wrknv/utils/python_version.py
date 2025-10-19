@@ -1,4 +1,7 @@
-"""Python version checking and compatibility utilities."""
+# wrknv/utils/python_version.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 
 from __future__ import annotations
 
@@ -141,3 +144,6 @@ def read_venv_python_version(venv_dir: Path) -> str | None:
 def get_python_version() -> str:
     """Get current Python version string."""
     return f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+
+
+# 🧰🌍📄🪄

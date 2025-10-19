@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/container/runtime/base.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/container/runtime/base.py
 #
@@ -219,3 +223,6 @@ class ContainerRuntime(ABC):
             True if runtime is available and functional
         """
         pass
+
+
+# 🧰🌍🏗️🪄

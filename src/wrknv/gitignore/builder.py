@@ -1,5 +1,9 @@
-"""
-Gitignore File Builder
+# wrknv/gitignore/builder.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Gitignore File Builder
 ======================
 Constructs gitignore files with proper formatting and sections.
 """
@@ -204,3 +208,6 @@ class GitignoreBuilder:
             self.add_custom_rules(custom_rules)
 
         return self.build()
+
+
+# 🧰🌍📄🪄

@@ -1,5 +1,9 @@
-"""
-Workspace Configuration Schema
+# wrknv/workspace/schema.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Workspace Configuration Schema
 =============================
 Configuration models for multi-repo workspace management.
 """
@@ -171,3 +175,6 @@ class WorkspaceConfig(BaseConfig):
     def get_outdated_repos(self, current_version: str) -> list[RepoConfig]:
         """Get repositories that need template updates."""
         return [repo for repo in self.repos if repo.template_version != current_version]
+
+
+# 🧰🌍📄🪄

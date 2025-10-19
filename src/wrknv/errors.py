@@ -1,5 +1,9 @@
-"""
-wrknv Errors
+# wrknv/errors.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""wrknv Errors
 ============
 Centralized exception definitions using provide.foundation error hierarchy.
 
@@ -348,3 +352,6 @@ class ContainerBuildError(ResourceError):
         )
         self.image_tag = image_tag
         self.reason = reason
+
+
+# 🧰🌍🐛🪄

@@ -1,4 +1,8 @@
+# wrknv/wenv/workenv.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/env/workenv.py
 #
 """
@@ -179,4 +183,4 @@ Write-Host "   wrknv: $(Get-Command wrknv | Select-Object -ExpandProperty Source
             print_info("  Bash/Zsh: source ./env.sh", Emoji.CONFIG)
 
 
-# 🧰🌍🖥️🪄
+# 🧰🌍📄🪄

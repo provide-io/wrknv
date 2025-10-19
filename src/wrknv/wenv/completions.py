@@ -1,5 +1,9 @@
-"""
-Shell Completion Generation
+# wrknv/wenv/completions.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Shell Completion Generation
 ===========================
 Generate shell completion scripts for various shells.
 """
@@ -289,3 +293,6 @@ complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_s
 complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "publish" -d "Publish package"
 complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "config" -d "Show config"
 """
+
+
+# 🧰🌍📄🪄

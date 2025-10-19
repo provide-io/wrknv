@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/container/runtime/docker.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/container/runtime/docker.py
 #
@@ -317,3 +321,6 @@ class DockerRuntime(ContainerRuntime):
         except (ProcessError, OSError):
             # Re-raise to let circuit breaker count this as a failure
             raise
+
+
+# 🧰🌍📄🪄

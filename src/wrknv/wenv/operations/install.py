@@ -1,4 +1,8 @@
+# wrknv/wenv/operations/install.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/workenv/operations/install.py
 #
 """
@@ -184,4 +188,4 @@ def is_executable(file_path: pathlib.Path) -> bool:
         return bool(file_path.stat().st_mode & stat.S_IXUSR)
 
 
-# 🍲🥄📄🪄
+# 🧰🌍📄🪄

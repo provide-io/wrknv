@@ -1,4 +1,8 @@
+# wrknv/managers/factory.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # wrknv/env/managers/factory.py
 #
 """
@@ -82,4 +86,4 @@ def get_secondary_tools() -> list[str]:
     return []
 
 
-# 🧰🌍🖥️🪄
+# 🧰🌍📋🪄

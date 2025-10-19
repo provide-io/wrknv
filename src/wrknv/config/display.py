@@ -1,5 +1,9 @@
-"""
-Configuration Display for wrknv
+# wrknv/config/display.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+"""Configuration Display for wrknv
 ================================
 Display and output methods for configuration.
 """
@@ -37,3 +41,6 @@ class WorkenvConfigDisplay:
         echo_info(f"    use_cache: {self.config.workenv.use_cache}")
         echo_info(f"    cache_ttl: {self.config.workenv.cache_ttl}")
         echo_info(f"    log_level: {self.config.workenv.log_level}")
+
+
+# 🧰🌍⚙️🪄

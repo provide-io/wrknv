@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# wrknv/cli/commands/setup.py
+#
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # wrknv/cli/commands/setup.py
 #
@@ -179,3 +183,6 @@ def setup_command(
         echo_info("  --shell-integration   Set up shell aliases and shortcuts")
         echo_info("  --check               Check system dependencies")
         echo_info("  --completions SHELL   Generate shell completions (bash/zsh/fish)")
+
+
+# 🧰🌍🖥️🪄
