@@ -56,7 +56,6 @@ def load_commands():
         "wrknv.cli.commands.setup",
         "wrknv.cli.commands.terraform",
         "wrknv.cli.commands.tools",
-        "wrknv.cli.commands.workenv",
         "wrknv.cli.commands.workspace",
     ]
 

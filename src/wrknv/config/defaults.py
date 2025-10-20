@@ -3,8 +3,10 @@
 # SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+from pathlib import Path
+
+"""Centralized default values for wrknv configuration.
 All defaults are defined here instead of inline in field definitions.
-"""
 """
 
 # =================================
