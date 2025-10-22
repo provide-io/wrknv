@@ -7,7 +7,7 @@ Test suite for CLI setup command.
 from __future__ import annotations
 
 import subprocess
-from unittest.mock import Mock, patch
+from provide.testkit.mocking import Mock, patch
 
 import click.testing
 from provide.testkit import FoundationTestCase, isolated_cli_runner

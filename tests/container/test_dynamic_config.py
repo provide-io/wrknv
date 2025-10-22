@@ -9,7 +9,7 @@ import pytest
 Test suite for dynamic container configuration.
 """
 
-from unittest.mock import MagicMock, patch
+from provide.testkit.mocking import MagicMock, patch
 
 from wrknv.container.manager import ContainerManager
 from wrknv.config import WorkenvConfig

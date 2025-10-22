@@ -7,7 +7,7 @@ import pytest
 """Test container operations modules."""
 
 from pathlib import Path
-from unittest.mock import patch
+from provide.testkit.mocking import patch
 
 from provide.foundation.process import CompletedProcess, ProcessError
 from rich.console import Console

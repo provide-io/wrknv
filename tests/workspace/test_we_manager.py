@@ -5,7 +5,7 @@ Tests for workspace manager functionality.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import AsyncMock, Mock, patch
+from provide.testkit.mocking import AsyncMock, Mock, patch
 
 from provide.foundation.file.temp import temp_dir
 import pytest

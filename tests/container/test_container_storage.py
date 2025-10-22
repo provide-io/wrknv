@@ -14,7 +14,7 @@ Tests for container storage structure under ~/.wrknv
 import json
 from pathlib import Path
 import shutil
-from unittest.mock import Mock, patch
+from provide.testkit.mocking import Mock, patch
 
 from wrknv.container.manager import ContainerManager
 from wrknv.config import WorkenvConfig

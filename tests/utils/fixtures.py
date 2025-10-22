@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, TYPE_CHECKING
-from unittest.mock import Mock
+from provide.testkit.mocking import Mock
 
 # Use TYPE_CHECKING to avoid runtime imports
 if TYPE_CHECKING:

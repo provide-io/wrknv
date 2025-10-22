@@ -6,7 +6,7 @@ import pytest
 #!/usr/bin/env python3
 """Test container runtime implementations."""
 
-from unittest.mock import patch
+from provide.testkit.mocking import patch
 
 from provide.foundation.process import CompletedProcess, ProcessError
 

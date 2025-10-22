@@ -12,7 +12,7 @@ Tests for container volume management commands.
 """
 
 import tarfile
-from unittest.mock import Mock, patch
+from provide.testkit.mocking import Mock, patch
 
 from click.testing import CliRunner
 

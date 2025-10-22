@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from unittest.mock import patch
+from provide.testkit.mocking import patch
 
 from provide.testkit import FoundationTestCase
 import pytest

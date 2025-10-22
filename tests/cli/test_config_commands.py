@@ -7,7 +7,7 @@ Test suite for CLI config commands.
 from __future__ import annotations
 
 import os
-from unittest.mock import Mock, patch
+from provide.testkit.mocking import Mock, patch
 
 import click.testing
 from provide.testkit import FoundationTestCase

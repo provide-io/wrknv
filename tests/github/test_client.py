@@ -7,7 +7,7 @@ Unit tests for GitHubReleasesClient.
 from __future__ import annotations
 
 import pathlib
-from unittest.mock import AsyncMock, MagicMock, patch
+from provide.testkit.mocking import AsyncMock, MagicMock, patch
 
 import pytest
 

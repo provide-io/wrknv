@@ -7,7 +7,7 @@ Tests for the download functionality in wrknv.
 from __future__ import annotations
 
 import hashlib
-from unittest.mock import MagicMock, patch
+from provide.testkit.mocking import MagicMock, patch
 import urllib.error
 import urllib.request
 

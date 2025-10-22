@@ -4,7 +4,7 @@ Test siblings configuration handling in wrknv
 
 from __future__ import annotations
 
-from unittest.mock import patch
+from provide.testkit.mocking import patch
 
 from wrknv.wenv.env_generator import EnvScriptGenerator, create_project_env_scripts
 

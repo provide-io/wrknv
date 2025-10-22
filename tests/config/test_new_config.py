@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import pathlib
 import tempfile
-from unittest.mock import patch
+from provide.testkit.mocking import patch
 
 import pytest
 

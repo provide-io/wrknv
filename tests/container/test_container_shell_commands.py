@@ -11,7 +11,7 @@ Test Container Shell Commands
 Tests for container shell, exec, and logs commands.
 """
 
-from unittest.mock import Mock, patch
+from provide.testkit.mocking import Mock, patch
 
 from click.testing import CliRunner
 

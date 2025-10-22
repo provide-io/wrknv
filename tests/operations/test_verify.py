@@ -10,7 +10,7 @@ from __future__ import annotations
 
 
 import subprocess
-from unittest.mock import Mock, patch
+from provide.testkit.mocking import Mock, patch
 
 import pytest
 from provide.testkit import FoundationTestCase

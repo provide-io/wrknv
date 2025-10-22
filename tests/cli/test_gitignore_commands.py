@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import patch
+from provide.testkit.mocking import patch
 
 from click.testing import CliRunner
 from provide.testkit import FoundationTestCase

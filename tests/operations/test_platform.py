@@ -7,7 +7,7 @@ Test suite for platform detection operations.
 from __future__ import annotations
 
 
-from unittest.mock import patch
+from provide.testkit.mocking import patch
 
 import pytest
 from provide.testkit import FoundationTestCase
