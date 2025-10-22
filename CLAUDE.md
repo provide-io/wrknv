@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Running Tests
 ```bash
 # Run all tests with coverage
-source env.sh
+uv sync
 python -m pytest tests/ -v --cov=src/wrknv --cov-report=term-missing
 
 # Run specific test file
@@ -25,11 +25,11 @@ python -m pytest -m cli   # CLI tests only
 ### Code Quality
 ```bash
 # Linting and formatting
-ruff check src tests
-ruff format src tests
+uv run ruff check src tests
+uv run ruff format src tests
 
 # Type checking
-mypy src --ignore-missing-imports
+uv run mypy src --ignore-missing-imports
 ```
 
 ### Building and Installing
@@ -38,7 +38,7 @@ mypy src --ignore-missing-imports
 uv build
 
 # Install in development mode (uses workenv/ not .venv/)
-source env.sh
+uv sync
 uv pip install -e .
 ```
 
