@@ -53,7 +53,7 @@
 
 4.  **Activate Your Environment**:
     ```bash
-    source env.sh
+    uv sync
     ```
     Your shell is now configured with the specified tool versions and all Python dependencies installed in `./workenv/`.
 

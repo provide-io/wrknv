@@ -16,7 +16,7 @@ git clone https://github.com/provide-io/wrknv.git
 cd wrknv
 
 # Set up development environment (uses workenv/ not .venv/)
-source env.sh
+uv sync
 
 # Verify setup
 pytest tests/
