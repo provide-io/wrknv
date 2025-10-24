@@ -68,7 +68,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_list_versions_default_variant(self) -> None:
         """Test listing versions for default variant (tofu)."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "tofu"
                 mock_load.return_value = mock_config
@@ -89,7 +89,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_list_versions_explicit_variant_tofu(self) -> None:
         """Test listing versions for explicit tofu variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 # Mock get_setting to return tofu as default variant (used in single-arg mode)
                 mock_config.get_setting.return_value = "tofu"
@@ -111,7 +111,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_list_versions_explicit_variant_ibm(self) -> None:
         """Test listing versions for explicit IBM variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 # Mock get_setting to return ibm as default variant (used in single-arg mode)
                 mock_config.get_setting.return_value = "ibm"
@@ -133,7 +133,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_list_many_versions(self) -> None:
         """Test listing truncates to 20 versions."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "tofu"
                 mock_load.return_value = mock_config
@@ -155,7 +155,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_switch_version_default_variant(self) -> None:
         """Test switching to a version using default variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "tofu"
                 mock_load.return_value = mock_config
@@ -177,7 +177,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_switch_version_explicit_variant_tofu(self) -> None:
         """Test switching to OpenTofu with explicit variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_load.return_value = mock_config
 
@@ -197,7 +197,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_switch_version_explicit_variant_ibm(self) -> None:
         """Test switching to IBM Terraform with explicit variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_load.return_value = mock_config
 
@@ -217,7 +217,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_switch_version_dry_run(self) -> None:
         """Test dry-run mode."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "tofu"
                 mock_load.return_value = mock_config
@@ -251,7 +251,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_opentofu_alias(self) -> None:
         """Test that 'opentofu' is an alias for 'tofu'."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_load.return_value = mock_config
 
@@ -270,7 +270,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_terraform_alias(self) -> None:
         """Test that 'terraform' is an alias for 'ibmtf'."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_load.return_value = mock_config
 
@@ -289,7 +289,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_switch_version_error(self) -> None:
         """Test error handling during version switch."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "tofu"
                 mock_load.return_value = mock_config
@@ -308,7 +308,7 @@ class TestTerraformCommand(FoundationTestCase):
     def test_list_versions_error(self) -> None:
         """Test error handling during version listing."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "tofu"
                 mock_load.return_value = mock_config
