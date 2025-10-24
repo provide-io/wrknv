@@ -32,6 +32,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_list_variants(self) -> None:
         """Test listing available secret management variants."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -47,6 +50,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_no_args_error(self) -> None:
         """Test that calling without args shows error."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             mock_config = Mock()
             mock_config.get_setting.return_value = "bao"
@@ -61,6 +67,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_list_versions_default_variant(self) -> None:
         """Test listing versions for default variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -72,7 +81,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "--list"])
 
                 assert result.exit_code == 0
@@ -82,6 +90,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_list_versions_explicit_variant(self) -> None:
         """Test listing versions for explicit variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -94,7 +105,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "vault", "--list"])
 
                 assert result.exit_code == 0
@@ -104,6 +114,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_list_many_versions(self) -> None:
         """Test listing truncates to 20 versions."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -117,7 +130,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "--list"])
 
                 assert result.exit_code == 0
@@ -126,6 +138,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_switch_version_default_variant(self) -> None:
         """Test switching to a version using default variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -137,7 +152,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "2.1.0"])
 
                 assert result.exit_code == 0
@@ -148,6 +162,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_switch_version_explicit_variant(self) -> None:
         """Test switching to a version with explicit variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -158,7 +175,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "vault", "1.15.0"])
 
                 assert result.exit_code == 0
@@ -168,6 +184,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_switch_version_dry_run(self) -> None:
         """Test dry-run mode."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -179,7 +198,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "2.1.0", "--dry-run"])
 
                 assert result.exit_code == 0
@@ -188,6 +206,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_unknown_variant(self) -> None:
         """Test error for unknown variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -202,6 +223,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_ibm_alias(self) -> None:
         """Test that 'ibm' is an alias for 'vault'."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -212,7 +236,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "ibm", "1.15.0"])
 
                 assert result.exit_code == 0
@@ -221,6 +244,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_switch_version_error(self) -> None:
         """Test error handling during version switch."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -232,7 +258,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "2.1.0"])
 
                 assert result.exit_code == 1
@@ -240,6 +265,9 @@ class TestSecretsCommand(FoundationTestCase):
 
     def test_list_versions_error(self) -> None:
         """Test error handling during version listing."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -251,7 +279,6 @@ class TestSecretsCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["secrets", "--list"])
 
                 assert result.exit_code == 1

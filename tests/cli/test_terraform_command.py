@@ -32,6 +32,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_list_variants(self) -> None:
         """Test listing available Terraform variants."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -47,6 +50,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_no_args_error(self) -> None:
         """Test that calling without args shows error."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             mock_config = Mock()
             mock_config.get_setting.return_value = "tofu"
@@ -61,6 +67,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_list_versions_default_variant(self) -> None:
         """Test listing versions for default variant (tofu)."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -72,7 +81,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "--list"])
 
                 assert result.exit_code == 0
@@ -82,6 +90,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_list_versions_explicit_variant_tofu(self) -> None:
         """Test listing versions for explicit tofu variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -94,7 +105,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "tofu", "--list"])
 
                 assert result.exit_code == 0
@@ -104,6 +114,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_list_versions_explicit_variant_ibm(self) -> None:
         """Test listing versions for explicit IBM variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -116,7 +129,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "ibm", "--list"])
 
                 assert result.exit_code == 0
@@ -126,6 +138,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_list_many_versions(self) -> None:
         """Test listing truncates to 20 versions."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -139,7 +154,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "--list"])
 
                 assert result.exit_code == 0
@@ -148,6 +162,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_switch_version_default_variant(self) -> None:
         """Test switching to a version using default variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -159,7 +176,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "1.9.0"])
 
                 assert result.exit_code == 0
@@ -170,6 +186,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_switch_version_explicit_variant_tofu(self) -> None:
         """Test switching to OpenTofu with explicit variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -180,7 +199,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "tofu", "1.9.0"])
 
                 assert result.exit_code == 0
@@ -190,6 +208,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_switch_version_explicit_variant_ibm(self) -> None:
         """Test switching to IBM Terraform with explicit variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -200,7 +221,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "ibm", "1.6.2"])
 
                 assert result.exit_code == 0
@@ -210,6 +230,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_switch_version_dry_run(self) -> None:
         """Test dry-run mode."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -221,7 +244,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "1.9.0", "--dry-run"])
 
                 assert result.exit_code == 0
@@ -230,6 +252,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_unknown_variant(self) -> None:
         """Test error for unknown variant."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -244,6 +269,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_opentofu_alias(self) -> None:
         """Test that 'opentofu' is an alias for 'tofu'."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -254,7 +282,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "opentofu", "1.9.0"])
 
                 assert result.exit_code == 0
@@ -263,6 +290,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_terraform_alias(self) -> None:
         """Test that 'terraform' is an alias for 'ibmtf'."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -273,7 +303,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "terraform", "1.6.2"])
 
                 assert result.exit_code == 0
@@ -282,6 +311,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_switch_version_error(self) -> None:
         """Test error handling during version switch."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -293,7 +325,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "1.9.0"])
 
                 assert result.exit_code == 1
@@ -301,6 +332,9 @@ class TestTerraformCommand(FoundationTestCase):
 
     def test_list_versions_error(self) -> None:
         """Test error handling during version listing."""
+        # Create CLI before patching to ensure module reload happens first
+        cli = get_test_cli()
+
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             with patch("wrknv.cli.commands.terraform.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
@@ -312,7 +346,6 @@ class TestTerraformCommand(FoundationTestCase):
                 mock_get_manager.return_value = mock_manager
 
                 runner = click.testing.CliRunner()
-                cli = get_test_cli()
                 result = runner.invoke(cli, ["tf", "--list"])
 
                 assert result.exit_code == 1
