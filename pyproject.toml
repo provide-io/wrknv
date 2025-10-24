@@ -216,6 +216,7 @@ module = [
     "jinja2.*",
     "cattrs.*",
     "tomli_w.*",
+    "opentelemetry.*",
 ]
 ignore_missing_imports = true
 
