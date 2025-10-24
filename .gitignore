@@ -112,3 +112,6 @@ Desktop.ini
 uv.lockworkenv/
 *bfiles*
 ai_studio*
+
+# Synced theme files (source: provide-foundry/shared-theme/)
+docs/.shared-theme/
