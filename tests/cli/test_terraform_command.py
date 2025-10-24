@@ -14,16 +14,10 @@ import pytest
 from wrknv.cli.hub_cli import create_cli
 
 
-# Module-level shared CLI instance
-_test_cli = None
-
-
 def get_test_cli():
     """Get or create the test CLI instance."""
-    global _test_cli
-    if _test_cli is None:
-        _test_cli = create_cli()
-    return _test_cli
+    # Always create a fresh CLI to ensure module reloading works with mocks
+    return create_cli()
 
 
 class TestTerraformCommand(FoundationTestCase):
