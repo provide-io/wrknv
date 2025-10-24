@@ -103,57 +103,60 @@ class TestSetupCommand(FoundationTestCase):
         assert "Shell integration configured successfully" in result.output
         # Note: mock_run assertion removed due to CLI module caching
 
-    @patch("provide.foundation.process.run")
-    @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
-    def test_setup_shell_integration_script_not_found(self, mock_get_path, mock_run):
+    def test_setup_shell_integration_script_not_found(self):
         """Test shell integration when script is missing."""
+        # Create CLI first, then patch
+        cli = get_test_cli()
+
         # Mock the path to not exist
         from pathlib import Path
 
-        mock_script_path = Mock(spec=Path)
-        mock_script_path.exists = Mock(return_value=False)
-        mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
-        mock_get_path.return_value = mock_script_path
+        with patch("wrknv.cli.commands.setup._get_shell_integration_script_path") as mock_get_path:
+            with patch("provide.foundation.process.run") as mock_run:
+                mock_script_path = Mock(spec=Path)
+                mock_script_path.exists = Mock(return_value=False)
+                mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
+                mock_get_path.return_value = mock_script_path
 
-        runner = click.testing.CliRunner()
-        cli = get_test_cli()
-        result = runner.invoke(cli, ["setup", "--shell-integration"])
+                runner = click.testing.CliRunner()
+                result = runner.invoke(cli, ["setup", "--shell-integration"])
 
-        # The command raises NotFoundError - verify it was called and didn't run script
-        assert mock_get_path.called, "Script path getter should be called"
-        assert mock_script_path.exists.called, "Path exists check should be called"
-        mock_run.assert_not_called()
-        # Check for error indication in output or exception
-        assert (result.exit_code != 0 or result.exception is not None or
-                "Shell integration script not found" in result.output or
-                "not found" in result.output.lower())
+                # The command raises NotFoundError - verify it was called and didn't run script
+                assert mock_get_path.called, "Script path getter should be called"
+                assert mock_script_path.exists.called, "Path exists check should be called"
+                mock_run.assert_not_called()
+                # Check for error indication in output or exception
+                assert (result.exit_code != 0 or result.exception is not None or
+                        "Shell integration script not found" in result.output or
+                        "not found" in result.output.lower())
 
-    @patch("wrknv.cli.commands.setup.run")
-    @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
-    def test_setup_shell_integration_script_fails(self, mock_get_path, mock_run):
+    def test_setup_shell_integration_script_fails(self):
         """Test shell integration when script execution fails."""
+        # Create CLI first, then patch
+        cli = get_test_cli()
+
         # Mock the path to exist
         from pathlib import Path
-
-        mock_script_path = Mock(spec=Path)
-        mock_script_path.exists = Mock(return_value=True)
-        mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
-        mock_get_path.return_value = mock_script_path
-
         from provide.foundation.process import ProcessError
 
-        mock_run.side_effect = ProcessError("Script failed", returncode=1)
+        with patch("wrknv.cli.commands.setup._get_shell_integration_script_path") as mock_get_path:
+            with patch("wrknv.cli.commands.setup.run") as mock_run:
+                mock_script_path = Mock(spec=Path)
+                mock_script_path.exists = Mock(return_value=True)
+                mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
+                mock_get_path.return_value = mock_script_path
 
-        runner = click.testing.CliRunner()
-        cli = get_test_cli()
-        result = runner.invoke(cli, ["setup", "--shell-integration"])
+                mock_run.side_effect = ProcessError("Script failed", returncode=1)
 
-        # The command should fail when run raises ProcessError
-        assert mock_get_path.called, "Script path getter should be called"
-        assert mock_run.called, "Run command should be called"
-        # Check for error indication in output or exception
-        assert (result.exit_code != 0 or result.exception is not None or
-                "Failed" in result.output or "failed" in result.output.lower())
+                runner = click.testing.CliRunner()
+                result = runner.invoke(cli, ["setup", "--shell-integration"])
+
+                # The command should fail when run raises ProcessError
+                assert mock_get_path.called, "Script path getter should be called"
+                assert mock_run.called, "Run command should be called"
+                # Check for error indication in output or exception
+                assert (result.exit_code != 0 or result.exception is not None or
+                        "Failed" in result.output or "failed" in result.output.lower())
 
     @patch("wrknv.cli.commands.setup.run")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
