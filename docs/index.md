@@ -15,6 +15,86 @@ WrkNv provides:
 
 ## Quick Start
 
+### Installation
+
+<div class="termy">
+
+```console
+$ pip install wrknv
+// Installing wrknv...
+Successfully installed wrknv
+
+$ wrknv --version
+wrknv, version 0.1.0
+```
+
+</div>
+
+### Initialize a New Work Environment
+
+<div class="termy">
+
+```console
+$ wrknv init my-project
+// Creating work environment...
+✓ Created workenv/my-project/
+✓ Initialized configuration
+✓ Generated env.sh
+✓ Generated env.ps1
+
+Environment initialized successfully!
+
+$ cd my-project
+$ source workenv/*/bin/activate
+// Activating work environment...
+(my-project) $
+```
+
+</div>
+
+### Check Environment Status
+
+<div class="termy">
+
+```console
+$ wrknv status
+// Checking environment status...
+
+Environment: my-project
+Status: ✓ active
+Python: 3.11.12
+UV: 0.5.1
+Platform: darwin_arm64
+
+Tools installed:
+  ✓ uv
+  ✓ terraform
+  ✓ go
+```
+
+</div>
+
+### Manage Tools and Dependencies
+
+<div class="termy">
+
+```console
+$ wrknv tool install terraform --version 1.9.0
+// Downloading terraform 1.9.0...
+---> 100%
+✓ Installed terraform 1.9.0
+✓ Added to PATH
+
+$ wrknv sync
+// Synchronizing dependencies...
+Resolved 45 packages
+✓ Environment synchronized
+```
+
+</div>
+
+### Python API Usage
+
 ```python
 from wrknv import Environment, Container
 
