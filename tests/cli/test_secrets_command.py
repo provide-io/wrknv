@@ -68,7 +68,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_list_versions_default_variant(self) -> None:
         """Test listing versions for default variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "bao"
                 mock_load.return_value = mock_config
@@ -89,7 +89,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_list_versions_explicit_variant(self) -> None:
         """Test listing versions for explicit variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 # Mock get_setting to return default variant (used in single-arg mode)
                 mock_config.get_setting.return_value = "vault"
@@ -111,7 +111,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_list_many_versions(self) -> None:
         """Test listing truncates to 20 versions."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "bao"
                 mock_load.return_value = mock_config
@@ -133,7 +133,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_switch_version_default_variant(self) -> None:
         """Test switching to a version using default variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "bao"
                 mock_load.return_value = mock_config
@@ -155,7 +155,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_switch_version_explicit_variant(self) -> None:
         """Test switching to a version with explicit variant."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_load.return_value = mock_config
 
@@ -175,7 +175,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_switch_version_dry_run(self) -> None:
         """Test dry-run mode."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "bao"
                 mock_load.return_value = mock_config
@@ -209,7 +209,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_ibm_alias(self) -> None:
         """Test that 'ibm' is an alias for 'vault'."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_load.return_value = mock_config
 
@@ -228,7 +228,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_switch_version_error(self) -> None:
         """Test error handling during version switch."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "bao"
                 mock_load.return_value = mock_config
@@ -247,7 +247,7 @@ class TestSecretsCommand(FoundationTestCase):
     def test_list_versions_error(self) -> None:
         """Test error handling during version listing."""
         with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager:
+            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
                 mock_config = Mock()
                 mock_config.get_setting.return_value = "bao"
                 mock_load.return_value = mock_config
