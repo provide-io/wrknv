@@ -33,7 +33,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "provide-foundation[all]>=0.0.0",
+    "provide-foundation[all]",
     "cattrs>=23.0.0",
     "packaging>=23.0",
     "semver>=3.0.0",
