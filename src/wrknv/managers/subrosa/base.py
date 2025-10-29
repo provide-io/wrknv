@@ -208,13 +208,12 @@ class SubRosaManager(BaseToolManager):
             logger.info(f"Removed {self.variant_name} {version}")
 
             # Update metadata if this was the current version
-            if self.get_installed_version() == version:
-                if (
-                    "active_versions" in self.metadata
-                    and self.variant_name in self.metadata["active_versions"]
-                ):
-                    del self.metadata["active_versions"][self.variant_name]
-                    self._save_metadata()
+            if self.get_installed_version() == version and (
+                "active_versions" in self.metadata
+                and self.variant_name in self.metadata["active_versions"]
+            ):
+                del self.metadata["active_versions"][self.variant_name]
+                self._save_metadata()
 
     def _install_from_archive(self, archive_path: pathlib.Path, version: str) -> None:
         """Install tool from downloaded archive.

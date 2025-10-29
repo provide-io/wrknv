@@ -8,9 +8,9 @@ from __future__ import annotations
 
 import stat
 import tarfile
-from provide.testkit.mocking import patch
 import zipfile
 
+from provide.testkit.mocking import patch
 import pytest
 
 from wrknv.wenv.operations.install import (
@@ -28,7 +28,7 @@ from wrknv.wenv.operations.install import (
 class TestExtractOperations:
     """Test archive extraction functionality."""
 
-    def test_extract_archive_zip(self, tmp_path):
+    def test_extract_archive_zip(self, tmp_path) -> None:
         """Test extracting ZIP archive."""
         # Create a test ZIP file
         archive_path = tmp_path / "test.zip"
@@ -47,7 +47,7 @@ class TestExtractOperations:
         assert (extract_dir / "subdir" / "file.txt").exists()
         assert (extract_dir / "subdir" / "file.txt").read_text() == "Nested file"
 
-    def test_extract_archive_tar_gz(self, tmp_path):
+    def test_extract_archive_tar_gz(self, tmp_path) -> None:
         """Test extracting tar.gz archive."""
         # Create a test tar.gz file
         archive_path = tmp_path / "test.tar.gz"
@@ -75,7 +75,7 @@ class TestExtractOperations:
         assert (extract_dir / "subdir" / "file.txt").exists()
         assert (extract_dir / "subdir" / "file.txt").read_text() == "Nested file"
 
-    def test_extract_archive_tar(self, tmp_path):
+    def test_extract_archive_tar(self, tmp_path) -> None:
         """Test extracting plain tar archive."""
         # Create a test tar file
         archive_path = tmp_path / "test.tar"
@@ -96,7 +96,7 @@ class TestExtractOperations:
         assert (extract_dir / "test.txt").exists()
         assert (extract_dir / "test.txt").read_text() == "Hello World"
 
-    def test_extract_archive_nonexistent(self, tmp_path):
+    def test_extract_archive_nonexistent(self, tmp_path) -> None:
         """Test extracting non-existent archive."""
         from provide.foundation.errors import ResourceError
 
@@ -106,7 +106,7 @@ class TestExtractOperations:
         with pytest.raises(ResourceError, match="Archive not found"):
             extract_archive(archive_path, extract_dir)
 
-    def test_extract_archive_unsupported(self, tmp_path):
+    def test_extract_archive_unsupported(self, tmp_path) -> None:
         """Test extracting unsupported archive type."""
         archive_path = tmp_path / "test.unknown"
         archive_path.write_text("Not an archive")
@@ -115,7 +115,7 @@ class TestExtractOperations:
         with pytest.raises(Exception, match="Unsupported archive format"):
             extract_archive(archive_path, extract_dir)
 
-    def test_extract_archive_path_traversal_zip(self, tmp_path):
+    def test_extract_archive_path_traversal_zip(self, tmp_path) -> None:
         """Test ZIP extraction prevents path traversal."""
         archive_path = tmp_path / "malicious.zip"
         extract_dir = tmp_path / "extract"
@@ -127,7 +127,7 @@ class TestExtractOperations:
         with pytest.raises(Exception, match="Unsafe path in archive"):
             extract_archive(archive_path, extract_dir)
 
-    def test_extract_archive_path_traversal_tar(self, tmp_path):
+    def test_extract_archive_path_traversal_tar(self, tmp_path) -> None:
         """Test TAR extraction prevents path traversal."""
         archive_path = tmp_path / "malicious.tar.gz"
         extract_dir = tmp_path / "extract"
@@ -149,7 +149,7 @@ class TestExtractOperations:
 class TestExecutableOperations:
     """Test executable-related operations."""
 
-    def test_make_executable_unix(self, tmp_path):
+    def test_make_executable_unix(self, tmp_path) -> None:
         """Test making file executable on Unix."""
         test_file = tmp_path / "script.sh"
         test_file.write_text("#!/bin/sh\necho hello")
@@ -165,7 +165,7 @@ class TestExecutableOperations:
         assert test_file.stat().st_mode & stat.S_IXGRP
         assert test_file.stat().st_mode & stat.S_IXOTH
 
-    def test_make_executable_windows(self, tmp_path):
+    def test_make_executable_windows(self, tmp_path) -> None:
         """Test making file executable on Windows (no-op)."""
         test_file = tmp_path / "script.bat"
         test_file.write_text("echo hello")
@@ -178,7 +178,7 @@ class TestExecutableOperations:
         # Mode should not change on Windows
         assert test_file.stat().st_mode == initial_mode
 
-    def test_make_executable_nonexistent(self, tmp_path):
+    def test_make_executable_nonexistent(self, tmp_path) -> None:
         """Test making non-existent file executable."""
         from provide.foundation.errors import ResourceError
 
@@ -187,7 +187,7 @@ class TestExecutableOperations:
         with pytest.raises(ResourceError, match="File not found"):
             make_executable(test_file)
 
-    def test_is_executable_unix(self, tmp_path):
+    def test_is_executable_unix(self, tmp_path) -> None:
         """Test checking if file is executable on Unix."""
         test_file = tmp_path / "script.sh"
         test_file.write_text("#!/bin/sh\necho hello")
@@ -201,7 +201,7 @@ class TestExecutableOperations:
             test_file.chmod(0o755)
             assert is_executable(test_file)
 
-    def test_is_executable_windows(self, tmp_path):
+    def test_is_executable_windows(self, tmp_path) -> None:
         """Test checking if file is executable on Windows."""
         with patch("platform.system", return_value="Windows"):
             # .exe file should be executable
@@ -219,7 +219,7 @@ class TestExecutableOperations:
             txt_file.write_text("readme")
             assert not is_executable(txt_file)
 
-    def test_is_executable_nonexistent(self, tmp_path):
+    def test_is_executable_nonexistent(self, tmp_path) -> None:
         """Test checking if non-existent file is executable."""
         test_file = tmp_path / "nonexistent.sh"
         assert not is_executable(test_file)
@@ -228,7 +228,7 @@ class TestExecutableOperations:
 class TestFileOperations:
     """Test file operation functionality."""
 
-    def test_copy_file_success(self, tmp_path):
+    def test_copy_file_success(self, tmp_path) -> None:
         """Test successful file copy."""
         source = tmp_path / "source.txt"
         source.write_text("Hello World")
@@ -244,7 +244,7 @@ class TestFileOperations:
         # Permissions should be preserved by default
         assert dest.stat().st_mode == source.stat().st_mode
 
-    def test_copy_file_no_preserve_permissions(self, tmp_path):
+    def test_copy_file_no_preserve_permissions(self, tmp_path) -> None:
         """Test file copy without preserving permissions."""
         source = tmp_path / "source.txt"
         source.write_text("Hello World")
@@ -259,7 +259,7 @@ class TestFileOperations:
         assert dest.read_text() == "Hello World"
         # Permissions might differ
 
-    def test_copy_file_nonexistent_source(self, tmp_path):
+    def test_copy_file_nonexistent_source(self, tmp_path) -> None:
         """Test copying non-existent file."""
         source = tmp_path / "nonexistent.txt"
         dest = tmp_path / "dest.txt"
@@ -267,7 +267,7 @@ class TestFileOperations:
         with pytest.raises(FileNotFoundError, match="Source file does not exist"):
             copy_file(source, dest)
 
-    def test_create_symlink_success(self, tmp_path):
+    def test_create_symlink_success(self, tmp_path) -> None:
         """Test creating symbolic link."""
         target = tmp_path / "target.txt"
         target.write_text("Hello World")
@@ -281,7 +281,7 @@ class TestFileOperations:
         assert link.is_symlink()
         assert link.read_text() == "Hello World"
 
-    def test_create_symlink_overwrites_existing(self, tmp_path):
+    def test_create_symlink_overwrites_existing(self, tmp_path) -> None:
         """Test creating symlink overwrites existing link."""
         target1 = tmp_path / "target1.txt"
         target1.write_text("First")
@@ -299,7 +299,7 @@ class TestFileOperations:
         create_symlink(target2, link)
         assert link.read_text() == "Second"
 
-    def test_create_symlink_nonexistent_target(self, tmp_path):
+    def test_create_symlink_nonexistent_target(self, tmp_path) -> None:
         """Test creating symlink to non-existent target."""
         from provide.foundation.errors import ResourceError
 
@@ -309,7 +309,7 @@ class TestFileOperations:
         with pytest.raises(ResourceError, match="Target does not exist"):
             create_symlink(target, link)
 
-    def test_create_symlink_windows_fallback(self, tmp_path):
+    def test_create_symlink_windows_fallback(self, tmp_path) -> None:
         """Test symlink falls back to copy on Windows."""
         target = tmp_path / "target.txt"
         target.write_text("Hello World")
@@ -325,7 +325,7 @@ class TestFileOperations:
         assert not link.is_symlink()
         assert link.read_text() == "Hello World"
 
-    def test_get_file_size(self, tmp_path):
+    def test_get_file_size(self, tmp_path) -> None:
         """Test getting file size."""
         test_file = tmp_path / "test.txt"
         content = "Hello World"
@@ -334,7 +334,7 @@ class TestFileOperations:
         size = get_file_size(test_file)
         assert size == len(content)
 
-    def test_get_file_size_nonexistent(self, tmp_path):
+    def test_get_file_size_nonexistent(self, tmp_path) -> None:
         """Test getting size of non-existent file."""
         from provide.foundation.errors import ResourceError
 
@@ -347,7 +347,7 @@ class TestFileOperations:
 class TestDirectoryOperations:
     """Test directory operation functionality."""
 
-    def test_ensure_directory_creates_new(self, tmp_path):
+    def test_ensure_directory_creates_new(self, tmp_path) -> None:
         """Test ensuring directory creates new directory."""
         test_dir = tmp_path / "new" / "nested" / "dir"
 
@@ -356,7 +356,7 @@ class TestDirectoryOperations:
         assert test_dir.exists()
         assert test_dir.is_dir()
 
-    def test_ensure_directory_existing(self, tmp_path):
+    def test_ensure_directory_existing(self, tmp_path) -> None:
         """Test ensuring directory with existing directory."""
         test_dir = tmp_path / "existing"
         test_dir.mkdir()
@@ -367,7 +367,7 @@ class TestDirectoryOperations:
         assert test_dir.exists()
         assert test_dir.is_dir()
 
-    def test_ensure_directory_file_exists(self, tmp_path):
+    def test_ensure_directory_file_exists(self, tmp_path) -> None:
         """Test ensuring directory when file exists at path."""
         test_path = tmp_path / "file.txt"
         test_path.write_text("I'm a file")
@@ -375,7 +375,7 @@ class TestDirectoryOperations:
         with pytest.raises(Exception, match="Path exists but is not a directory"):
             ensure_directory(test_path)
 
-    def test_clean_directory_removes_files(self, tmp_path):
+    def test_clean_directory_removes_files(self, tmp_path) -> None:
         """Test cleaning directory removes files."""
         test_dir = tmp_path / "test"
         test_dir.mkdir()
@@ -393,7 +393,7 @@ class TestDirectoryOperations:
         assert test_dir.exists()
         assert len(list(test_dir.iterdir())) == 0
 
-    def test_clean_directory_keeps_hidden(self, tmp_path):
+    def test_clean_directory_keeps_hidden(self, tmp_path) -> None:
         """Test cleaning directory keeps hidden files by default."""
         test_dir = tmp_path / "test"
         test_dir.mkdir()
@@ -408,7 +408,7 @@ class TestDirectoryOperations:
         assert not (test_dir / "file.txt").exists()
         assert (test_dir / ".hidden").exists()
 
-    def test_clean_directory_remove_hidden(self, tmp_path):
+    def test_clean_directory_remove_hidden(self, tmp_path) -> None:
         """Test cleaning directory can remove hidden files."""
         test_dir = tmp_path / "test"
         test_dir.mkdir()
@@ -422,14 +422,14 @@ class TestDirectoryOperations:
         # All files should be removed
         assert len(list(test_dir.iterdir())) == 0
 
-    def test_clean_directory_nonexistent(self, tmp_path):
+    def test_clean_directory_nonexistent(self, tmp_path) -> None:
         """Test cleaning non-existent directory."""
         test_dir = tmp_path / "nonexistent"
 
         # Should not raise error
         clean_directory(test_dir)
 
-    def test_clean_directory_not_directory(self, tmp_path):
+    def test_clean_directory_not_directory(self, tmp_path) -> None:
         """Test cleaning path that's not a directory."""
         test_file = tmp_path / "file.txt"
         test_file.write_text("I'm a file")

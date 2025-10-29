@@ -36,7 +36,7 @@ class ToolManagerError(WrkenvError):
 class BaseToolManager(ABC):
     """Base class for all tool managers in wrknv."""
 
-    def __init__(self, config: WorkenvConfig | None = None):
+    def __init__(self, config: WorkenvConfig | None = None) -> None:
         self.config = config or WorkenvConfig.load()
         self.install_path = pathlib.Path(
             self.config.get_setting("install_path", "~/.wrknv/tools")

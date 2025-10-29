@@ -5,9 +5,9 @@ Tests for workspace manager functionality.
 from __future__ import annotations
 
 from pathlib import Path
-from provide.testkit.mocking import AsyncMock, Mock, patch
 
 from provide.foundation.file.temp import temp_dir
+from provide.testkit.mocking import AsyncMock, Mock, patch
 import pytest
 
 from wrknv.workspace.discovery import RepoInfo
@@ -54,7 +54,7 @@ def sample_workspace_config(workspace_root, sample_repo_config):
 class TestWorkspaceManager:
     """Test WorkspaceManager functionality."""
 
-    def test_manager_initialization(self, workspace_root):
+    def test_manager_initialization(self, workspace_root) -> None:
         """Test manager initialization."""
         manager = WorkspaceManager(workspace_root)
 
@@ -63,7 +63,7 @@ class TestWorkspaceManager:
         assert manager.config_path == workspace_root / ".wrknv" / "workspace.toml"
         assert manager.discovery is not None
 
-    def test_init_workspace_basic(self, manager):
+    def test_init_workspace_basic(self, manager) -> None:
         """Test basic workspace initialization."""
         with patch.object(manager.discovery, "discover_repos", return_value=[]):
             config = manager.init_workspace(auto_discover=False)
@@ -73,7 +73,7 @@ class TestWorkspaceManager:
             assert config.sync_strategy == "manual"
             assert manager.config_dir.exists()
 
-    def test_init_workspace_with_discovery(self, manager):
+    def test_init_workspace_with_discovery(self, manager) -> None:
         """Test workspace initialization with auto-discovery."""
         mock_repo = RepoInfo(
             path=Path("/test/repo"),
@@ -91,7 +91,7 @@ class TestWorkspaceManager:
             assert config.repos[0].name == "test-repo"
             assert config.repos[0].type == "foundation-based"
 
-    def test_init_workspace_with_template_source(self, manager):
+    def test_init_workspace_with_template_source(self, manager) -> None:
         """Test workspace initialization with template source."""
         template_path = "/test/templates"
 
@@ -102,7 +102,7 @@ class TestWorkspaceManager:
             assert config.template_source.location == template_path
             assert config.template_source.type == "git"  # Since path doesn't exist
 
-    def test_save_and_load_config(self, manager, sample_workspace_config):
+    def test_save_and_load_config(self, manager, sample_workspace_config) -> None:
         """Test saving and loading workspace configuration."""
         # Save config
         manager.save_config(sample_workspace_config)
@@ -114,12 +114,12 @@ class TestWorkspaceManager:
         assert loaded_config.root == sample_workspace_config.root
         assert len(loaded_config.repos) == len(sample_workspace_config.repos)
 
-    def test_load_config_not_found(self, manager):
+    def test_load_config_not_found(self, manager) -> None:
         """Test loading config when file doesn't exist."""
         config = manager.load_config()
         assert config is None
 
-    def test_add_repo(self, manager):
+    def test_add_repo(self, manager) -> None:
         """Test adding repository to workspace."""
         repo_path = manager.root / "test-repo"
         repo_path.mkdir()
@@ -146,14 +146,14 @@ version = "1.0.0"
         assert config.repos[0].name == "test-repo"
         assert config.repos[0].type == "foundation-based"
 
-    def test_add_repo_nonexistent_path(self, manager):
+    def test_add_repo_nonexistent_path(self, manager) -> None:
         """Test adding repository with non-existent path."""
         nonexistent_path = Path("/nonexistent/repo")
 
         with pytest.raises(FileNotFoundError):
             manager.add_repo(nonexistent_path)
 
-    def test_remove_repo(self, manager, sample_workspace_config):
+    def test_remove_repo(self, manager, sample_workspace_config) -> None:
         """Test removing repository from workspace."""
         # Save initial config
         manager.save_config(sample_workspace_config)
@@ -163,13 +163,13 @@ version = "1.0.0"
 
         assert len(config.repos) == 0
 
-    def test_remove_repo_no_config(self, manager):
+    def test_remove_repo_no_config(self, manager) -> None:
         """Test removing repo when no workspace config exists."""
         with pytest.raises(RuntimeError, match="No workspace configuration found"):
             manager.remove_repo("test-repo")
 
     @pytest.mark.asyncio
-    async def test_sync_all(self, manager, sample_workspace_config):
+    async def test_sync_all(self, manager, sample_workspace_config) -> None:
         """Test syncing all repositories."""
         manager.save_config(sample_workspace_config)
 
@@ -184,7 +184,7 @@ version = "1.0.0"
             assert "test-repo" in result
 
     @pytest.mark.asyncio
-    async def test_sync_repo(self, manager, sample_workspace_config):
+    async def test_sync_repo(self, manager, sample_workspace_config) -> None:
         """Test syncing specific repository."""
         manager.save_config(sample_workspace_config)
 
@@ -199,14 +199,14 @@ version = "1.0.0"
             assert "test-repo" in result
 
     @pytest.mark.asyncio
-    async def test_sync_repo_not_found(self, manager, sample_workspace_config):
+    async def test_sync_repo_not_found(self, manager, sample_workspace_config) -> None:
         """Test syncing non-existent repository."""
         manager.save_config(sample_workspace_config)
 
         with pytest.raises(ValueError, match="Repository not found"):
             await manager.sync_repo("nonexistent-repo")
 
-    def test_check_drift(self, manager, sample_workspace_config):
+    def test_check_drift(self, manager, sample_workspace_config) -> None:
         """Test checking configuration drift."""
         manager.save_config(sample_workspace_config)
 
@@ -220,7 +220,7 @@ version = "1.0.0"
             mock_sync.check_drift.assert_called_once()
             assert "drift_detected" in result
 
-    def test_get_workspace_status(self, manager, sample_workspace_config):
+    def test_get_workspace_status(self, manager, sample_workspace_config) -> None:
         """Test getting workspace status."""
         manager.save_config(sample_workspace_config)
 
@@ -239,18 +239,18 @@ version = "1.0.0"
                 assert "type_distribution" in status
                 assert "issues" in status
 
-    def test_get_workspace_status_no_config(self, manager):
+    def test_get_workspace_status_no_config(self, manager) -> None:
         """Test getting status when no config exists."""
         status = manager.get_workspace_status()
         assert "error" in status
 
-    def test_get_default_profile(self, manager):
+    def test_get_default_profile(self, manager) -> None:
         """Test getting default profile for repo types."""
         assert manager._get_default_profile("foundation") == "foundation-based"
         assert manager._get_default_profile("pyvider-plugin") == "pyvider-plugin"
         assert manager._get_default_profile("unknown") == "standalone"
 
-    def test_get_default_features(self, manager):
+    def test_get_default_features(self, manager) -> None:
         """Test getting default features for repo types."""
         features = manager._get_default_features("foundation-based")
         assert "pyproject" in features
@@ -262,7 +262,7 @@ version = "1.0.0"
         assert "claude" in features
         assert "coverage" not in features
 
-    def test_get_default_standards(self, manager):
+    def test_get_default_standards(self, manager) -> None:
         """Test getting default global standards."""
         standards = manager._get_default_standards()
 
@@ -275,7 +275,7 @@ version = "1.0.0"
 class TestWorkspaceManagerIntegration:
     """Integration tests for WorkspaceManager."""
 
-    def test_full_workspace_lifecycle(self, workspace_root):
+    def test_full_workspace_lifecycle(self, workspace_root) -> None:
         """Test complete workspace lifecycle."""
         manager = WorkspaceManager(workspace_root)
 
@@ -326,7 +326,7 @@ version = "1.0.0"
         assert any(repo.name == "repo3" for repo in loaded_config.repos)
         assert not any(repo.name == "repo2" for repo in loaded_config.repos)
 
-    def test_workspace_with_template_source(self, workspace_root):
+    def test_workspace_with_template_source(self, workspace_root) -> None:
         """Test workspace with template source configuration."""
         manager = WorkspaceManager(workspace_root)
 

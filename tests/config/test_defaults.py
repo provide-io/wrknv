@@ -6,7 +6,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
 from wrknv.config.defaults import (
     DEFAULT_ACTIVATE,
     DEFAULT_AUTO_DISCOVER,

@@ -15,13 +15,13 @@ from pathlib import Path
 import shutil
 import time
 
-import pytest
 from provide.foundation.process import run
 from provide.testkit import FoundationTestCase
+import pytest
 
-from wrknv.container.manager import ContainerManager
 from wrknv.config import WorkenvConfig
-from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
+from wrknv.container.manager import ContainerManager
+from wrknv.wenv.schema import ContainerConfig
 
 
 def docker_available():
@@ -72,7 +72,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         except:
             pass
 
-    def test_shared_storage_write_from_container(self, container_manager):
+    def test_shared_storage_write_from_container(self, container_manager) -> None:
         """Test writing to shared storage from within a container."""
         # Ensure container is built
         assert container_manager.build_image(), "Failed to build container image"
@@ -113,7 +113,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         assert verify_result.returncode == 0, "File should exist in container"
         assert verify_result.stdout.strip() == test_content, "File content should match"
 
-    def test_volume_persistence_across_restarts(self, container_manager):
+    def test_volume_persistence_across_restarts(self, container_manager) -> None:
         """Test that volume data persists across container restarts."""
         # Build and start container
         assert container_manager.build_image()
@@ -171,7 +171,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         retrieved_data = json.loads(result.stdout)
         assert retrieved_data == test_data, "Data should persist across restarts"
 
-    def test_shared_downloads_readonly(self, container_manager):
+    def test_shared_downloads_readonly(self, container_manager) -> None:
         """Test that shared downloads is mounted as read-only."""
         # Build and start container
         assert container_manager.build_image()
@@ -206,7 +206,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         assert result.returncode != 0, "Should not be able to write to read-only mount"
         assert "Read-only file system" in result.stderr or "Permission denied" in result.stderr
 
-    def test_volume_backup_restore_with_real_data(self, container_manager):
+    def test_volume_backup_restore_with_real_data(self, container_manager) -> None:
         """Test backup and restore with actual container data."""
         # Build and start container
         assert container_manager.build_image()
@@ -236,7 +236,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 container_manager.container_name,
                 "sh",
                 "-c",
-                f"printf '%s' {repr(content)} > {filepath}",
+                f"printf '%s' {content!r} > {filepath}",
             ]
             result = run(cmd, capture_output=True)
             assert result.returncode == 0, f"Failed to create {filepath}"
@@ -360,7 +360,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 except:
                     pass
 
-    def test_metadata_persistence(self, container_manager):
+    def test_metadata_persistence(self, container_manager) -> None:
         """Test that container metadata is saved and persisted correctly."""
         # Build container
         assert container_manager.build_image()
@@ -386,7 +386,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         assert "last_started" in loaded_metadata
         assert loaded_metadata["config"]["python_version"] == "3.11"
 
-    def test_volume_permissions(self, container_manager):
+    def test_volume_permissions(self, container_manager) -> None:
         """Test that volume permissions allow container to read/write properly."""
         # Build and start container
         assert container_manager.build_image()
@@ -411,7 +411,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
             assert result.returncode == 0, f"Failed to write to {volume}: {result.stderr}"
             assert "success" in result.stdout
 
-    def test_large_file_handling(self, container_manager):
+    def test_large_file_handling(self, container_manager) -> None:
         """Test handling of large files in volumes."""
         # Build and start container
         assert container_manager.build_image()

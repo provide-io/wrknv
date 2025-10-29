@@ -26,7 +26,7 @@ from wrknv.errors import ProfileError
 
 # Register the config group first
 @register_command("config", group=True, description="Configuration management")
-def config_group():
+def config_group() -> None:
     """Configuration management commands."""
     pass
 
@@ -38,7 +38,7 @@ def config_group():
 def config_show(
     output_json: bool = False,
     profile: str | None = None,
-):
+) -> None:
     """Show current configuration."""
     config = WrknvContext.get_config()
 
@@ -67,7 +67,7 @@ def config_show(
     "config.edit",
     description="Edit configuration file",
 )
-def config_edit():
+def config_edit() -> None:
     """Edit configuration file."""
     config = WrknvContext.get_config()
     try:
@@ -81,7 +81,7 @@ def config_edit():
     "config.validate",
     description="Validate configuration file syntax and values",
 )
-def config_validate(strict: bool = False, verbose: bool = False):
+def config_validate(strict: bool = False, verbose: bool = False) -> None:
     """Validate configuration file syntax and values."""
     try:
         config = WrknvContext.get_config()
@@ -130,7 +130,7 @@ def config_validate(strict: bool = False, verbose: bool = False):
     "config.init",
     description="Initialize a new configuration file interactively",
 )
-def config_init(force: bool = False):
+def config_init(force: bool = False) -> None:
     """Initialize a new configuration file interactively."""
     config = WrknvContext.get_config()
 
@@ -173,7 +173,7 @@ def config_init(force: bool = False):
     "config.path",
     description="Show path to configuration file",
 )
-def config_path():
+def config_path() -> None:
     """Show path to configuration file."""
     config = WrknvContext.get_config()
     if config.config_exists():
@@ -187,7 +187,7 @@ def config_path():
     "config.get",
     description="Get a specific configuration setting",
 )
-def config_get(key: str):
+def config_get(key: str) -> None:
     """Get a specific configuration setting."""
     config = WrknvContext.get_config()
 
@@ -209,7 +209,7 @@ def config_get(key: str):
     "config.set",
     description="Set a configuration value",
 )
-def config_set(key: str, value: str):
+def config_set(key: str, value: str) -> None:
     """Set a configuration value."""
     config = WrknvContext.get_config()
 

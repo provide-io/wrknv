@@ -6,11 +6,9 @@ Test suite for platform detection operations.
 
 from __future__ import annotations
 
-
-from provide.testkit.mocking import patch
-
-import pytest
 from provide.testkit import FoundationTestCase
+from provide.testkit.mocking import patch
+import pytest
 
 from wrknv.wenv.operations.platform import (
     format_platform_string,
@@ -29,27 +27,27 @@ from wrknv.wenv.operations.platform import (
 class TestPlatformOperations(FoundationTestCase):
     """Test platform detection operations."""
 
-    def test_get_os_name_darwin(self):
+    def test_get_os_name_darwin(self) -> None:
         """Test OS name detection re-exports foundation."""
         # These tests verify the re-export works - just check current platform
         result = get_os_name()
         assert isinstance(result, str)
         assert result in ["darwin", "linux", "windows", "freebsd", "unknown"]
 
-    def test_get_os_name_matches_foundation(self):
+    def test_get_os_name_matches_foundation(self) -> None:
         """Test OS name matches foundation."""
         from provide.foundation.platform import get_os_name as foundation_get_os
 
         assert get_os_name() == foundation_get_os()
 
-    def test_get_architecture_matches_foundation(self):
+    def test_get_architecture_matches_foundation(self) -> None:
         """Test architecture matches foundation."""
         from provide.foundation.platform import get_arch_name as foundation_get_arch
 
         assert get_architecture() == foundation_get_arch()
 
     @patch("wrknv.wenv.operations.platform.get_system_info")
-    def test_get_platform_info(self, mock_get_system_info):
+    def test_get_platform_info(self, mock_get_system_info) -> None:
         """Test getting complete platform info."""
         from unittest.mock import MagicMock
 
@@ -67,7 +65,7 @@ class TestPlatformOperations(FoundationTestCase):
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
-    def test_is_supported_platform_darwin_arm64(self, mock_arch, mock_os):
+    def test_is_supported_platform_darwin_arm64(self, mock_arch, mock_os) -> None:
         """Test supported platform check for Darwin ARM64."""
         mock_os.return_value = "darwin"
         mock_arch.return_value = "arm64"
@@ -75,7 +73,7 @@ class TestPlatformOperations(FoundationTestCase):
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
-    def test_is_supported_platform_linux_amd64(self, mock_arch, mock_os):
+    def test_is_supported_platform_linux_amd64(self, mock_arch, mock_os) -> None:
         """Test supported platform check for Linux AMD64."""
         mock_os.return_value = "linux"
         mock_arch.return_value = "amd64"
@@ -83,7 +81,7 @@ class TestPlatformOperations(FoundationTestCase):
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
-    def test_is_supported_platform_windows_amd64(self, mock_arch, mock_os):
+    def test_is_supported_platform_windows_amd64(self, mock_arch, mock_os) -> None:
         """Test supported platform check for Windows AMD64."""
         mock_os.return_value = "windows"
         mock_arch.return_value = "amd64"
@@ -91,32 +89,32 @@ class TestPlatformOperations(FoundationTestCase):
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
-    def test_is_supported_platform_unsupported(self, mock_arch, mock_os):
+    def test_is_supported_platform_unsupported(self, mock_arch, mock_os) -> None:
         """Test unsupported platform check."""
         mock_os.return_value = "aix"
         mock_arch.return_value = "ppc64"
         assert not is_supported_platform()
 
     @patch("wrknv.wenv.operations.platform.is_windows")
-    def test_get_executable_extension_windows(self, mock_is_win):
+    def test_get_executable_extension_windows(self, mock_is_win) -> None:
         """Test executable extension for Windows."""
         mock_is_win.return_value = True
         assert get_executable_extension() == ".exe"
 
     @patch("wrknv.wenv.operations.platform.is_windows")
-    def test_get_executable_extension_unix(self, mock_is_win):
+    def test_get_executable_extension_unix(self, mock_is_win) -> None:
         """Test executable extension for Unix-like systems."""
         mock_is_win.return_value = False
         assert get_executable_extension() == ""
 
     @patch("wrknv.wenv.operations.platform.is_windows")
-    def test_get_archive_extension_windows(self, mock_is_win):
+    def test_get_archive_extension_windows(self, mock_is_win) -> None:
         """Test archive extension for Windows."""
         mock_is_win.return_value = True
         assert get_archive_extension() == ".zip"
 
     @patch("wrknv.wenv.operations.platform.is_windows")
-    def test_get_archive_extension_unix(self, mock_is_win):
+    def test_get_archive_extension_unix(self, mock_is_win) -> None:
         """Test archive extension for Unix-like systems."""
         mock_is_win.return_value = False
         assert get_archive_extension() == ".tar.gz"
@@ -181,7 +179,7 @@ class TestPlatformEdgeCases(FoundationTestCase):
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
-    def test_is_supported_platform_freebsd(self, mock_arch, mock_os):
+    def test_is_supported_platform_freebsd(self, mock_arch, mock_os) -> None:
         """Test FreeBSD platform support."""
         mock_os.return_value = "freebsd"
         mock_arch.return_value = "amd64"
@@ -190,7 +188,7 @@ class TestPlatformEdgeCases(FoundationTestCase):
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
-    def test_is_supported_platform_windows_386(self, mock_arch, mock_os):
+    def test_is_supported_platform_windows_386(self, mock_arch, mock_os) -> None:
         """Test Windows 32-bit platform support."""
         mock_os.return_value = "windows"
         mock_arch.return_value = "386"
@@ -199,7 +197,7 @@ class TestPlatformEdgeCases(FoundationTestCase):
 
     @patch("wrknv.wenv.operations.platform.get_os_name")
     @patch("wrknv.wenv.operations.platform.get_architecture")
-    def test_is_supported_platform_linux_386(self, mock_arch, mock_os):
+    def test_is_supported_platform_linux_386(self, mock_arch, mock_os) -> None:
         """Test Linux 32-bit platform support."""
         mock_os.return_value = "linux"
         mock_arch.return_value = "386"

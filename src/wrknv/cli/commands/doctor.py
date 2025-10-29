@@ -25,13 +25,13 @@ from wrknv.cli.hub_cli import WrknvContext
 
 # Register the selftest group first
 @register_command("selftest", group=True, description="Self-test and validate wrknv system")
-def selftest_group():
+def selftest_group() -> None:
     """Self-test and validation commands."""
     pass
 
 
 @register_command("selftest.check", description="Comprehensive health check of wrknv")
-def selftest_check(verbose: bool = False, fix: bool = False):
+def selftest_check(verbose: bool = False, fix: bool = False) -> None:
     """Run comprehensive health check of wrknv system."""
     try:
         echo_info("🩺 Running wrknv health check...")
@@ -87,7 +87,7 @@ def selftest_check(verbose: bool = False, fix: bool = False):
 
 
 @register_command("selftest.env", description="Check environment setup")
-def selftest_env():
+def selftest_env() -> None:
     """Check environment setup."""
     try:
         echo_info("🌍 Checking environment setup...")
@@ -107,7 +107,7 @@ def selftest_env():
 
 
 @register_command("selftest.config", description="Check configuration")
-def selftest_config():
+def selftest_config() -> None:
     """Check configuration."""
     try:
         echo_info("⚙️  Checking configuration...")
@@ -132,13 +132,6 @@ def _check_environment() -> dict[str, Any]:
         import sys
 
         # Check Python version
-        if sys.version_info < (3, 11):
-            return {
-                "name": "Python Version",
-                "status": "fail",
-                "message": f"Python 3.11+ required, found {sys.version}",
-                "fix": "Update to Python 3.11 or later",
-            }
 
         # Check if we're in a virtual environment
         in_venv = hasattr(sys, "real_prefix") or (

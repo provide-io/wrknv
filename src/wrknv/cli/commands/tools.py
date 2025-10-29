@@ -34,7 +34,7 @@ from wrknv.wenv.env_generator import create_project_env_scripts
 
 
 @register_command("status", description="Show status of all managed tools", category="tools")
-def status_command():
+def status_command() -> None:
     """Show status of all managed tools."""
     config = WrknvContext.get_config()
     tools = config.get_all_tools()
@@ -92,7 +92,7 @@ def status_command():
 
 
 @register_command("sync", description="Install all tools defined in configuration", category="tools")
-def sync_command(lock: bool = True):
+def sync_command(lock: bool = True) -> None:
     """Install all tools defined in configuration."""
     config = WrknvContext.get_config()
     tools = config.get_all_tools()
@@ -153,7 +153,7 @@ def generate_env_command(
     output: pathlib.Path = pathlib.Path("env.sh"),
     shell: str = "sh",
     project_dir: pathlib.Path = pathlib.Path.cwd(),
-):
+) -> None:
     """Generate optimized environment setup script.
 
     Args:
@@ -188,7 +188,7 @@ def generate_env_command(
 
 
 @register_command("doctor", description="Diagnose and fix common wrknv environment issues", category="tools")
-def doctor(verbose: bool = False):
+def doctor(verbose: bool = False) -> None:
     """Diagnose and fix common wrknv environment issues.
 
     Checks for:

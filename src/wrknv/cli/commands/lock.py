@@ -24,13 +24,13 @@ from wrknv.lockfile import LockfileManager
 
 # Register the lock group first
 @register_command("lock", group=True, description="Manage version lockfiles")
-def lock_group():
+def lock_group() -> None:
     """Commands for managing lockfiles."""
     pass
 
 
 @register_command("lock.generate", description="Generate lockfile from current configuration")
-def lock_generate(force: bool = False):
+def lock_generate(force: bool = False) -> None:
     """Generate lockfile from current configuration."""
     try:
         config = WrknvContext.get_config()
@@ -53,7 +53,7 @@ def lock_generate(force: bool = False):
 
 
 @register_command("lock.check", description="Check if lockfile is valid for current config")
-def lock_check():
+def lock_check() -> None:
     """Check if lockfile is valid for current configuration."""
     try:
         config = WrknvContext.get_config()
@@ -79,7 +79,7 @@ def lock_check():
 
 
 @register_command("lock.show", description="Show lockfile contents")
-def lock_show():
+def lock_show() -> None:
     """Show lockfile contents."""
     try:
         lockfile_manager = LockfileManager()
@@ -112,7 +112,7 @@ def lock_show():
 
 
 @register_command("lock.clean", description="Remove lockfile")
-def lock_clean():
+def lock_clean() -> None:
     """Remove lockfile."""
     try:
         lockfile_manager = LockfileManager()
@@ -130,7 +130,7 @@ def lock_clean():
 
 
 @register_command("lock.sync", description="Install tools using locked versions")
-def lock_sync():
+def lock_sync() -> None:
     """Install tools using locked versions."""
     try:
         config = WrknvContext.get_config()

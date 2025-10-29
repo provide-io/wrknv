@@ -30,7 +30,7 @@ def secrets_command(
     list: bool = False,
     list_variants: bool = False,
     dry_run: bool = False,
-):
+) -> None:
     """Manage secret management tools (OpenBao, IBM Vault).
 
     Switch to a specific variant and version of secret management tools.

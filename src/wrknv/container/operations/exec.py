@@ -185,7 +185,7 @@ class ContainerExec:
         for shell in self.available_shells:
             try:
                 # Check if shell exists
-                result = self.runtime.exec_in_container(
+                self.runtime.exec_in_container(
                     name=self.container_name,
                     command=["test", "-f", shell],
                     interactive=False,

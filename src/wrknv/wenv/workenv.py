@@ -169,7 +169,7 @@ Write-Host "   wrknv: $(Get-Command wrknv | Select-Object -ExpandProperty Source
     def setup_workenv(cls, base_path: Path | None = None, force: bool = False) -> None:
         """Complete workenv setup including creation and scripts."""
         # Create workenv
-        workenv_path = cls.create_workenv(base_path, force)
+        cls.create_workenv(base_path, force)
 
         # Generate activation scripts
         cls.generate_env_scripts(base_path)

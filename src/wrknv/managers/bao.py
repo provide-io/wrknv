@@ -24,7 +24,7 @@ from wrknv.managers.github import GitHubReleasesClient
 class BaoManager(BaseToolManager):
     """Manages OpenBao versions using GitHub releases API."""
 
-    def __init__(self, config=None):
+    def __init__(self, config=None) -> None:
         super().__init__(config)
         self._github_client: GitHubReleasesClient | None = None
 

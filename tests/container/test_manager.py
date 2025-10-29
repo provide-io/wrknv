@@ -13,16 +13,15 @@ Comprehensive tests for the ContainerManager class.
 
 from pathlib import Path
 import shutil
-import subprocess
+
 from provide.testkit.mocking import Mock, patch
 
+# Test utilities - available from conftest
+from tests.conftest import create_mock_builder
+from wrknv.config import WorkenvConfig
 from wrknv.container.manager import ContainerManager
 from wrknv.container.operations.lifecycle import ContainerLifecycle
 from wrknv.container.runtime.docker import DockerRuntime
-from wrknv.config import WorkenvConfig
-
-# Test utilities - available from conftest
-from tests.conftest import create_mock_builder, create_mock_logs
 
 
 @pytest.mark.container
@@ -159,7 +158,7 @@ class TestContainerManager(FoundationTestCase):
 
     def test_start_container_success(self) -> None:
         """Test successful container start."""
-        from tests.conftest import create_mock_lifecycle, create_mock_builder, create_mock_storage
+        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
 
         # Replace dependencies with mocks that control behavior
         mock_lifecycle = create_mock_lifecycle(exists=False, running=False)
@@ -184,7 +183,7 @@ class TestContainerManager(FoundationTestCase):
 
     def test_start_container_docker_not_available(self) -> None:
         """Test container start when lifecycle start fails."""
-        from tests.conftest import create_mock_lifecycle, create_mock_builder, create_mock_storage
+        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
 
         # Replace dependencies - lifecycle start fails
         mock_lifecycle = create_mock_lifecycle(exists=False, running=False)
@@ -223,7 +222,7 @@ class TestContainerManager(FoundationTestCase):
 
     def test_start_container_already_running(self) -> None:
         """Test start when container is already running."""
-        from tests.conftest import create_mock_runtime, create_mock_builder, create_mock_lifecycle
+        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_runtime
 
         # Replace dependencies with mocks
         mock_runtime = create_mock_runtime(available=True)
@@ -330,7 +329,7 @@ class TestContainerManager(FoundationTestCase):
 
     def test_status_method(self) -> None:
         """Test getting container status."""
-        from tests.conftest import create_mock_runtime, create_mock_lifecycle
+        from tests.conftest import create_mock_lifecycle, create_mock_runtime
 
         # Replace dependencies with mocks
         mock_runtime = create_mock_runtime(available=True)
@@ -391,10 +390,10 @@ class TestContainerManager(FoundationTestCase):
     def test_clean_success(self) -> None:
         """Test successful cleanup."""
         from tests.conftest import (
-            create_mock_lifecycle,
             create_mock_builder,
-            create_mock_volumes,
+            create_mock_lifecycle,
             create_mock_storage,
+            create_mock_volumes,
         )
 
         # Replace dependencies with mocks
@@ -421,10 +420,10 @@ class TestContainerManager(FoundationTestCase):
     def test_clean_partial_failure(self) -> None:
         """Test cleanup with partial failure."""
         from tests.conftest import (
-            create_mock_lifecycle,
             create_mock_builder,
-            create_mock_volumes,
+            create_mock_lifecycle,
             create_mock_storage,
+            create_mock_volumes,
         )
 
         # Replace dependencies with mocks - lifecycle remove fails

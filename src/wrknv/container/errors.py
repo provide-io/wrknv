@@ -25,7 +25,7 @@ from provide.foundation.errors import (
 class ContainerNotFoundError(NotFoundError):
     """Raised when a container is not found."""
 
-    def __init__(self, container_name: str):
+    def __init__(self, container_name: str) -> None:
         super().__init__(
             message=f"Container '{container_name}' not found",
             resource_type="container",
@@ -38,7 +38,7 @@ class ContainerNotFoundError(NotFoundError):
 class ContainerNotRunningError(StateError):
     """Raised when a container is not running but needs to be."""
 
-    def __init__(self, container_name: str):
+    def __init__(self, container_name: str) -> None:
         super().__init__(
             message=f"Container '{container_name}' is not running",
             expected_state="running",
@@ -51,7 +51,7 @@ class ContainerNotRunningError(StateError):
 class ContainerAlreadyExistsError(AlreadyExistsError):
     """Raised when trying to create a container that already exists."""
 
-    def __init__(self, container_name: str):
+    def __init__(self, container_name: str) -> None:
         super().__init__(
             message=f"Container '{container_name}' already exists",
             resource_type="container",
@@ -64,7 +64,7 @@ class ContainerAlreadyExistsError(AlreadyExistsError):
 class ImageNotFoundError(NotFoundError):
     """Raised when a container image is not found."""
 
-    def __init__(self, image_name: str):
+    def __init__(self, image_name: str) -> None:
         super().__init__(
             message=f"Image '{image_name}' not found",
             resource_type="image",
@@ -77,7 +77,7 @@ class ImageNotFoundError(NotFoundError):
 class VolumeNotFoundError(NotFoundError):
     """Raised when a volume is not found."""
 
-    def __init__(self, volume_name: str):
+    def __init__(self, volume_name: str) -> None:
         super().__init__(
             message=f"Volume '{volume_name}' not found",
             resource_type="volume",
@@ -90,7 +90,7 @@ class VolumeNotFoundError(NotFoundError):
 class ContainerRuntimeError(RuntimeError):
     """Raised when the container runtime is not available."""
 
-    def __init__(self, runtime: str, reason: str | None = None):
+    def __init__(self, runtime: str, reason: str | None = None) -> None:
         message = f"Container runtime '{runtime}' is not available"
         if reason:
             message += f": {reason}"
@@ -108,7 +108,7 @@ class ContainerRuntimeError(RuntimeError):
 class ContainerBuildError(ResourceError):
     """Raised when container build fails."""
 
-    def __init__(self, image_tag: str, reason: str | None = None):
+    def __init__(self, image_tag: str, reason: str | None = None) -> None:
         message = f"Failed to build image '{image_tag}'"
         if reason:
             message += f": {reason}"

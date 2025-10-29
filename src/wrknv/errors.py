@@ -28,7 +28,7 @@ from provide.foundation.errors import (
 class WrkenvError(FoundationError):
     """Base exception for all wrknv errors."""
 
-    def __init__(self, message: str, hint: str | None = None, exit_code: int = 1):
+    def __init__(self, message: str, hint: str | None = None, exit_code: int = 1) -> None:
         super().__init__(message)
         self.message = message
         self.hint = hint
@@ -52,7 +52,7 @@ class ConfigurationError(WrkenvError):
         message: str,
         hint: str | None = None,
         line_number: int | None = None,
-    ):
+    ) -> None:
         if line_number:
             message = f"Line {line_number}: {message}"
         super().__init__(message, hint)
@@ -77,7 +77,7 @@ class ProfileError(WrkenvError):
         profile_name: str,
         message: str | None = None,
         available_profiles: list[str] | None = None,
-    ):
+    ) -> None:
         if not message:
             message = f"Profile '{profile_name}' not found"
 
@@ -96,7 +96,7 @@ class ProfileError(WrkenvError):
 class ToolNotFoundError(NotFoundError):
     """Tool or version not found errors."""
 
-    def __init__(self, tool: str, version: str | None = None, available_versions: list[str] | None = None):
+    def __init__(self, tool: str, version: str | None = None, available_versions: list[str] | None = None) -> None:
         if version:
             message = f"{tool} version {version} not found"
             resource_id = f"{tool}@{version}"
@@ -129,7 +129,7 @@ class ToolNotFoundError(NotFoundError):
 class NetworkError(WrkenvError):
     """Network-related errors during downloads."""
 
-    def __init__(self, message: str, url: str | None = None):
+    def __init__(self, message: str, url: str | None = None) -> None:
         hint = "Check your internet connection and proxy settings"
         if url:
             message = f"Failed to download from {url}: {message}"
@@ -146,7 +146,7 @@ class NetworkError(WrkenvError):
 class WrkenvPermissionError(WrkenvError):
     """File or directory permission errors."""
 
-    def __init__(self, path: str, operation: str = "access"):
+    def __init__(self, path: str, operation: str = "access") -> None:
         message = f"Permission denied: Cannot {operation} {path}"
         hint = f"Try running with sudo or check file ownership: ls -la {path}"
         super().__init__(message, hint)
@@ -160,7 +160,7 @@ class WrkenvPermissionError(WrkenvError):
 class DependencyError(WrkenvError):
     """Missing system dependencies."""
 
-    def __init__(self, missing_deps: list[str], required_for: str | None = None):
+    def __init__(self, missing_deps: list[str], required_for: str | None = None) -> None:
         deps_str = ", ".join(missing_deps)
         message = f"Missing required dependencies: {deps_str}"
 
@@ -191,7 +191,7 @@ class DependencyError(WrkenvError):
 class CommandNotFoundError(WrkenvError):
     """Command or subcommand not found."""
 
-    def __init__(self, command: str, similar_commands: list[str] | None = None):
+    def __init__(self, command: str, similar_commands: list[str] | None = None) -> None:
         message = f"Command '{command}' not found"
 
         hint = None
@@ -209,7 +209,7 @@ class CommandNotFoundError(WrkenvError):
 class WorkenvError(WrkenvError):
     """Workenv environment errors."""
 
-    def __init__(self, message: str, workenv_path: str | None = None):
+    def __init__(self, message: str, workenv_path: str | None = None) -> None:
         hint = None
         if workenv_path:
             hint = f"Try recreating the workenv: rm -rf {workenv_path} && wrknv setup --init"
@@ -225,7 +225,7 @@ class WorkenvError(WrkenvError):
 class PackageError(ResourceError):
     """Package building or verification errors."""
 
-    def __init__(self, message: str, package_name: str | None = None, hint: str | None = None):
+    def __init__(self, message: str, package_name: str | None = None, hint: str | None = None) -> None:
         super().__init__(
             message=message,
             resource_type="package",
@@ -242,7 +242,7 @@ class PackageError(ResourceError):
 class ContainerError(WrkenvError):
     """Base container-related errors."""
 
-    def __init__(self, message: str, container_name: str | None = None, hint: str | None = None):
+    def __init__(self, message: str, container_name: str | None = None, hint: str | None = None) -> None:
         if not hint:
             hint = "Make sure Docker is installed and running"
             if container_name:
@@ -255,7 +255,7 @@ class ContainerError(WrkenvError):
 class ContainerNotFoundError(NotFoundError):
     """Raised when a container is not found."""
 
-    def __init__(self, container_name: str):
+    def __init__(self, container_name: str) -> None:
         super().__init__(
             message=f"Container '{container_name}' not found",
             resource_type="container",
@@ -268,7 +268,7 @@ class ContainerNotFoundError(NotFoundError):
 class ContainerNotRunningError(StateError):
     """Raised when a container is not running but needs to be."""
 
-    def __init__(self, container_name: str):
+    def __init__(self, container_name: str) -> None:
         super().__init__(
             message=f"Container '{container_name}' is not running",
             expected_state="running",
@@ -281,7 +281,7 @@ class ContainerNotRunningError(StateError):
 class ContainerAlreadyExistsError(AlreadyExistsError):
     """Raised when trying to create a container that already exists."""
 
-    def __init__(self, container_name: str):
+    def __init__(self, container_name: str) -> None:
         super().__init__(
             message=f"Container '{container_name}' already exists",
             resource_type="container",
@@ -294,7 +294,7 @@ class ContainerAlreadyExistsError(AlreadyExistsError):
 class ImageNotFoundError(NotFoundError):
     """Raised when a container image is not found."""
 
-    def __init__(self, image_name: str):
+    def __init__(self, image_name: str) -> None:
         super().__init__(
             message=f"Image '{image_name}' not found",
             resource_type="image",
@@ -307,7 +307,7 @@ class ImageNotFoundError(NotFoundError):
 class VolumeNotFoundError(NotFoundError):
     """Raised when a volume is not found."""
 
-    def __init__(self, volume_name: str):
+    def __init__(self, volume_name: str) -> None:
         super().__init__(
             message=f"Volume '{volume_name}' not found",
             resource_type="volume",
@@ -320,7 +320,7 @@ class VolumeNotFoundError(NotFoundError):
 class ContainerRuntimeError(RuntimeError):
     """Raised when the container runtime is not available."""
 
-    def __init__(self, runtime: str, reason: str | None = None):
+    def __init__(self, runtime: str, reason: str | None = None) -> None:
         message = f"Container runtime '{runtime}' is not available"
         if reason:
             message += f": {reason}"
@@ -338,7 +338,7 @@ class ContainerRuntimeError(RuntimeError):
 class ContainerBuildError(ResourceError):
     """Raised when container build fails."""
 
-    def __init__(self, image_tag: str, reason: str | None = None):
+    def __init__(self, image_tag: str, reason: str | None = None) -> None:
         message = f"Failed to build image '{image_tag}'"
         if reason:
             message += f": {reason}"

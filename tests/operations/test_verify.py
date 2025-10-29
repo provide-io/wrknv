@@ -8,12 +8,11 @@ Comprehensive tests for the operations/verify module.
 
 from __future__ import annotations
 
-
 import subprocess
-from provide.testkit.mocking import Mock, patch
 
-import pytest
 from provide.testkit import FoundationTestCase
+from provide.testkit.mocking import Mock, patch
+import pytest
 
 from wrknv.wenv.operations.verify import (
     check_binary_compatibility,
@@ -41,7 +40,7 @@ class TestVerifyOperations(FoundationTestCase):
 
     # Test verify_tool_installation
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_verify_tool_installation_success(self, mock_run_check):
+    def test_verify_tool_installation_success(self, mock_run_check) -> None:
         """Test successful tool installation verification."""
         binary_path = self.temp_path / "bin" / "terraform"
         binary_path.parent.mkdir(parents=True)
@@ -55,7 +54,7 @@ class TestVerifyOperations(FoundationTestCase):
         mock_run_check.assert_called_once_with(binary_path, "terraform")
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_verify_tool_installation_binary_not_found(self, mock_run_check):
+    def test_verify_tool_installation_binary_not_found(self, mock_run_check) -> None:
         """Test verification when binary doesn't exist."""
         binary_path = self.temp_path / "bin" / "terraform"
 
@@ -65,7 +64,7 @@ class TestVerifyOperations(FoundationTestCase):
         mock_run_check.assert_not_called()
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_verify_tool_installation_version_mismatch(self, mock_run_check):
+    def test_verify_tool_installation_version_mismatch(self, mock_run_check) -> None:
         """Test verification with version mismatch."""
         binary_path = self.temp_path / "bin" / "terraform"
         binary_path.parent.mkdir(parents=True)
@@ -78,7 +77,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert not result
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_verify_tool_installation_check_fails(self, mock_run_check):
+    def test_verify_tool_installation_check_fails(self, mock_run_check) -> None:
         """Test verification when version check fails."""
         binary_path = self.temp_path / "bin" / "terraform"
         binary_path.parent.mkdir(parents=True)
@@ -91,7 +90,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert not result
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_verify_tool_installation_exception(self, mock_run_check):
+    def test_verify_tool_installation_exception(self, mock_run_check) -> None:
         """Test verification with exception."""
         binary_path = self.temp_path / "bin" / "terraform"
         binary_path.parent.mkdir(parents=True)
@@ -105,7 +104,7 @@ class TestVerifyOperations(FoundationTestCase):
 
     # Test run_version_check
     @patch("wrknv.wenv.operations.verify.run")
-    def test_run_version_check_success(self, mock_run):
+    def test_run_version_check_success(self, mock_run) -> None:
         """Test successful version check."""
         binary_path = self.temp_path / "terraform"
         binary_path.touch()
@@ -126,7 +125,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result is None
 
     @patch("wrknv.wenv.operations.verify.run")
-    def test_run_version_check_failure(self, mock_run):
+    def test_run_version_check_failure(self, mock_run) -> None:
         """Test version check with non-zero return code."""
         binary_path = self.temp_path / "terraform"
         binary_path.touch()
@@ -138,7 +137,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result is None
 
     @patch("wrknv.wenv.operations.verify.run")
-    def test_run_version_check_timeout(self, mock_run):
+    def test_run_version_check_timeout(self, mock_run) -> None:
         """Test version check with timeout."""
         binary_path = self.temp_path / "terraform"
         binary_path.touch()
@@ -150,7 +149,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result is None
 
     @patch("wrknv.wenv.operations.verify.run")
-    def test_run_version_check_exception(self, mock_run):
+    def test_run_version_check_exception(self, mock_run) -> None:
         """Test version check with general exception."""
         binary_path = self.temp_path / "terraform"
         binary_path.touch()
@@ -189,7 +188,7 @@ class TestVerifyOperations(FoundationTestCase):
 
     # Test check_binary_compatibility
     @patch("wrknv.wenv.operations.verify.run")
-    def test_check_binary_compatibility_success(self, mock_run):
+    def test_check_binary_compatibility_success(self, mock_run) -> None:
         """Test successful binary compatibility check."""
         binary_path = self.temp_path / "terraform"
         binary_path.touch()
@@ -212,7 +211,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result["error"] == "Binary not found"
 
     @patch("wrknv.wenv.operations.verify.run")
-    def test_check_binary_compatibility_incompatible(self, mock_run):
+    def test_check_binary_compatibility_incompatible(self, mock_run) -> None:
         """Test incompatible binary."""
         binary_path = self.temp_path / "terraform"
         binary_path.touch()
@@ -225,7 +224,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result["returncode"] == 127
 
     @patch("wrknv.wenv.operations.verify.run")
-    def test_check_binary_compatibility_timeout(self, mock_run):
+    def test_check_binary_compatibility_timeout(self, mock_run) -> None:
         """Test compatibility check with timeout."""
         binary_path = self.temp_path / "terraform"
         binary_path.touch()
@@ -238,7 +237,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert "timed out" in result["error"]
 
     @patch("wrknv.wenv.operations.verify.run")
-    def test_check_binary_compatibility_exception(self, mock_run):
+    def test_check_binary_compatibility_exception(self, mock_run) -> None:
         """Test compatibility check with exception."""
         binary_path = self.temp_path / "terraform"
         binary_path.touch()
@@ -253,7 +252,7 @@ class TestVerifyOperations(FoundationTestCase):
     # Test validate_installation_directory
     @patch("wrknv.wenv.operations.install.is_executable")
     @patch("wrknv.wenv.operations.platform.get_executable_extension")
-    def test_validate_installation_directory_success(self, mock_get_ext, mock_is_exec):
+    def test_validate_installation_directory_success(self, mock_get_ext, mock_is_exec) -> None:
         """Test successful installation directory validation."""
         install_dir = self.temp_path / "terraform" / "1.5.0"
         bin_dir = install_dir / "bin"
@@ -278,7 +277,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert not result
 
     @patch("wrknv.wenv.operations.platform.get_executable_extension")
-    def test_validate_installation_directory_no_bin(self, mock_get_ext):
+    def test_validate_installation_directory_no_bin(self, mock_get_ext) -> None:
         """Test validation when bin directory doesn't exist."""
         install_dir = self.temp_path / "terraform" / "1.5.0"
         install_dir.mkdir(parents=True)
@@ -289,7 +288,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert not result
 
     @patch("wrknv.wenv.operations.platform.get_executable_extension")
-    def test_validate_installation_directory_no_binary(self, mock_get_ext):
+    def test_validate_installation_directory_no_binary(self, mock_get_ext) -> None:
         """Test validation when binary doesn't exist."""
         install_dir = self.temp_path / "terraform" / "1.5.0"
         bin_dir = install_dir / "bin"
@@ -302,7 +301,7 @@ class TestVerifyOperations(FoundationTestCase):
 
     @patch("wrknv.wenv.operations.install.is_executable")
     @patch("wrknv.wenv.operations.platform.get_executable_extension")
-    def test_validate_installation_directory_not_executable(self, mock_get_ext, mock_is_exec):
+    def test_validate_installation_directory_not_executable(self, mock_get_ext, mock_is_exec) -> None:
         """Test validation when binary is not executable."""
         install_dir = self.temp_path / "terraform" / "1.5.0"
         bin_dir = install_dir / "bin"
@@ -319,7 +318,7 @@ class TestVerifyOperations(FoundationTestCase):
 
     # Test get_installed_version_info
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_get_installed_version_info_terraform(self, mock_run_check):
+    def test_get_installed_version_info_terraform(self, mock_run_check) -> None:
         """Test getting terraform version info."""
         binary_path = self.temp_path / "terraform"
         mock_run_check.return_value = "Terraform v1.5.0\non linux_amd64"
@@ -332,7 +331,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result["platform"] == "linux_amd64"
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_get_installed_version_info_tofu(self, mock_run_check):
+    def test_get_installed_version_info_tofu(self, mock_run_check) -> None:
         """Test getting tofu version info."""
         binary_path = self.temp_path / "tofu"
         mock_run_check.return_value = "OpenTofu v1.6.0\non darwin_arm64"
@@ -344,7 +343,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result["version"] == "1.6.0"
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_get_installed_version_info_go(self, mock_run_check):
+    def test_get_installed_version_info_go(self, mock_run_check) -> None:
         """Test getting go version info."""
         binary_path = self.temp_path / "go"
         mock_run_check.return_value = "go version go1.21.0 linux/amd64"
@@ -357,7 +356,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result["platform"] == "linux/amd64"
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_get_installed_version_info_uv(self, mock_run_check):
+    def test_get_installed_version_info_uv(self, mock_run_check) -> None:
         """Test getting uv version info."""
         binary_path = self.temp_path / "uv"
         mock_run_check.return_value = "uv 0.1.0"
@@ -369,7 +368,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert result["version"] == "0.1.0"
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_get_installed_version_info_generic(self, mock_run_check):
+    def test_get_installed_version_info_generic(self, mock_run_check) -> None:
         """Test getting generic tool version info."""
         binary_path = self.temp_path / "tool"
         mock_run_check.return_value = "tool version 2.3.4"
@@ -381,7 +380,7 @@ class TestVerifyOperations(FoundationTestCase):
         assert "2.3.4" in result["raw_output"]
 
     @patch("wrknv.wenv.operations.verify.run_version_check")
-    def test_get_installed_version_info_no_output(self, mock_run_check):
+    def test_get_installed_version_info_no_output(self, mock_run_check) -> None:
         """Test getting version info with no output."""
         binary_path = self.temp_path / "tool"
         mock_run_check.return_value = None

@@ -6,9 +6,8 @@ import pytest
 #!/usr/bin/env python3
 """Test container runtime implementations."""
 
-from provide.testkit.mocking import patch
-
 from provide.foundation.process import CompletedProcess, ProcessError
+from provide.testkit.mocking import patch
 
 from wrknv.container.runtime.docker import DockerRuntime
 

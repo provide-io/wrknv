@@ -46,7 +46,7 @@ except ImportError:
 
 # Register the container group first
 @register_command("container", group=True, description="Docker container management")
-def container_group():
+def container_group() -> None:
     """Docker container management commands."""
     pass
 
@@ -55,7 +55,7 @@ def container_group():
     "container.status",
     description="Show container status",
 )
-def container_status_command():
+def container_status_command() -> None:
     """Display container status information."""
     config = WrknvContext.get_config()
     container_status(config)
@@ -65,7 +65,7 @@ def container_status_command():
     "container.build",
     description="Build container image",
 )
-def container_build_command(rebuild: bool = False):
+def container_build_command(rebuild: bool = False) -> None:
     """Build the development container image."""
     config = WrknvContext.get_config()
 
@@ -87,7 +87,7 @@ def container_build_command(rebuild: bool = False):
     "container.start",
     description="Start development container",
 )
-def container_start_command(rebuild: bool = False):
+def container_start_command(rebuild: bool = False) -> None:
     """Start the development container."""
     config = WrknvContext.get_config()
 
@@ -107,7 +107,7 @@ def container_start_command(rebuild: bool = False):
     "container.stop",
     description="Stop development container",
 )
-def container_stop_command():
+def container_stop_command() -> None:
     """Stop the development container."""
     config = WrknvContext.get_config()
 
@@ -126,7 +126,7 @@ def container_stop_command():
     "container.restart",
     description="Restart development container",
 )
-def container_restart_command():
+def container_restart_command() -> None:
     """Restart the development container."""
     config = WrknvContext.get_config()
 
@@ -151,7 +151,7 @@ def container_enter_command(
     working_dir: str | None = None,
     user: str | None = None,
     auto_start: bool = False,
-):
+) -> None:
     """Enter the running container."""
     config = WrknvContext.get_config()
 
@@ -178,7 +178,7 @@ def container_logs_command(
     since: str | None = None,
     timestamps: bool = False,
     details: bool = False,
-):
+) -> None:
     """Show container logs."""
     config = WrknvContext.get_config()
 
@@ -196,7 +196,7 @@ def container_logs_command(
     "container.clean",
     description="Clean up container and image",
 )
-def container_clean_command():
+def container_clean_command() -> None:
     """Clean up container and image."""
     config = WrknvContext.get_config()
 
@@ -223,7 +223,7 @@ def container_clean_command():
     "container.rebuild",
     description="Rebuild container from scratch",
 )
-def container_rebuild_command():
+def container_rebuild_command() -> None:
     """Rebuild the container from scratch."""
     config = WrknvContext.get_config()
 
@@ -248,7 +248,7 @@ def container_rebuild_command():
     group=True,
     description="Container volume management",
 )
-def container_volumes_group():
+def container_volumes_group() -> None:
     """Container volume management commands."""
     pass
 
@@ -257,7 +257,7 @@ def container_volumes_group():
     "container.volumes.list",
     description="List container volumes",
 )
-def container_volumes_list_command():
+def container_volumes_list_command() -> None:
     """List container volumes with information."""
     config = WrknvContext.get_config()
     list_volumes(config)
@@ -268,7 +268,7 @@ def container_volumes_list_command():
     description="Backup container volumes",
     force_options=True,
 )
-def container_volumes_backup_command(name: str | None = None):
+def container_volumes_backup_command(name: str | None = None) -> None:
     """Create a backup of container volumes.
 
     Args:
@@ -289,7 +289,7 @@ def container_volumes_backup_command(name: str | None = None):
 def container_volumes_restore_command(
     backup_path: str | None = None,
     force: bool = False,
-):
+) -> None:
     """Restore container volumes from a backup."""
     config = WrknvContext.get_config()
 
@@ -304,7 +304,7 @@ def container_volumes_restore_command(
     description="Clean container volumes",
     force_options=True,
 )
-def container_volumes_clean_command(preserve: tuple[str, ...] = ()):
+def container_volumes_clean_command(preserve: tuple[str, ...] = ()) -> None:
     """Clean container volumes.
 
     Args:
@@ -329,7 +329,7 @@ def container_volumes_clean_command(preserve: tuple[str, ...] = ()):
     description="Open shell in container (alias for enter)",
     hidden=True,
 )
-def container_shell_command():
+def container_shell_command() -> None:
     """Open an interactive shell in the container."""
     config = WrknvContext.get_config()
 
@@ -345,7 +345,7 @@ def container_shell_command():
     "container.exec",
     description="Execute command in container",
 )
-def container_exec_command(cmd: str):
+def container_exec_command(cmd: str) -> None:
     """Execute a command in the container."""
     config = WrknvContext.get_config()
 

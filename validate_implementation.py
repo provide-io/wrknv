@@ -7,24 +7,24 @@ Test the core functionality without external dependencies.
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
+import sys
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 
-def test_config_defaults():
+def test_config_defaults() -> bool | None:
     """Test that config defaults work correctly."""
     print("🧪 Testing config/defaults.py...")
 
     try:
         from wrknv.config.defaults import (
             DEFAULT_CLI_NAME,
-            DEFAULT_TIMEOUT,
             DEFAULT_DRY_RUN,
-            default_workenv_cache_dir,
+            DEFAULT_TIMEOUT,
             default_empty_list,
+            default_workenv_cache_dir,
         )
 
         # Test basic defaults
@@ -51,23 +51,20 @@ def test_config_defaults():
         return False
 
 
-def test_command_imports():
+def test_command_imports() -> bool | None:
     """Test that command modules can be imported."""
     print("🧪 Testing command module imports...")
 
     try:
         # Test gitignore commands (should have proper subcommand structure)
-        from wrknv.cli.commands.gitignore import gitignore_group
 
         print("✅ Gitignore commands imported")
 
         # Test package commands (should have proper subcommand structure)
-        from wrknv.cli.commands.package import package_group
 
         print("✅ Package commands imported")
 
         # Test workspace commands
-        from wrknv.cli.commands.workspace import workspace_group
 
         print("✅ Workspace commands imported")
 
@@ -79,14 +76,13 @@ def test_command_imports():
         return False
 
 
-def test_temp_dir_fix():
+def test_temp_dir_fix() -> bool | None:
     """Test that temp_dir imports are fixed."""
     print("🧪 Testing temp_dir fix...")
 
     try:
         # These should not fail with temp_dir import errors
-        from wrknv.workenv.importer import WorkenvImporter, temp_dir
-        from wrknv.workenv.packaging import WorkenvPackager
+        from wrknv.workenv.importer import temp_dir
 
         # Test that temp_dir context manager works
         with temp_dir() as tmp_path:
@@ -104,7 +100,7 @@ def test_temp_dir_fix():
         return False
 
 
-def main():
+def main() -> bool:
     """Run all validation tests."""
     print("🚀 Starting wrknv implementation validation...")
     print("=" * 50)

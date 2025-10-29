@@ -61,7 +61,7 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
     # Determine version command for different tools
     version_args = get_version_command_args(tool_name)
 
-    cmd = [str(binary_path)] + version_args
+    cmd = [str(binary_path), *version_args]
 
     try:
         logger.debug(f"Running version check: {' '.join(cmd)}")
@@ -283,7 +283,7 @@ def parse_generic_version(output: str, tool_name: str) -> dict[str, str]:
     return info
 
 
-def verify_file(file_path: pathlib.Path, signature_path: pathlib.Path = None) -> bool:
+def verify_file(file_path: pathlib.Path, signature_path: pathlib.Path | None = None) -> bool:
     """Verify file integrity using signature if available.
 
     Args:

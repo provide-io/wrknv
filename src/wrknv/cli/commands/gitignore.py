@@ -25,7 +25,7 @@ from wrknv.gitignore import GitignoreManager, ProjectDetector
 
 # Register the gitignore group first
 @register_command("gitignore", group=True, description="Manage .gitignore files")
-def gitignore_group():
+def gitignore_group() -> None:
     """Commands for managing .gitignore files."""
     pass
 
@@ -34,7 +34,7 @@ def gitignore_group():
     "gitignore.list",
     description="List available gitignore templates",
 )
-def gitignore_list(category: str | None = None):
+def gitignore_list(category: str | None = None) -> None:
     """List available gitignore templates."""
     try:
         config = WrknvContext.get_config()
@@ -70,7 +70,7 @@ def gitignore_list(category: str | None = None):
     "gitignore.search",
     description="Search for gitignore templates",
 )
-def gitignore_search(pattern: str):
+def gitignore_search(pattern: str) -> None:
     """Search for gitignore templates matching a pattern."""
     try:
         config = WrknvContext.get_config()
@@ -99,7 +99,7 @@ def gitignore_search(pattern: str):
     "gitignore.detect",
     description="Detect project types and suggest templates",
 )
-def gitignore_detect(path: str | None = None):
+def gitignore_detect(path: str | None = None) -> None:
     """Detect project types and suggest appropriate gitignore templates."""
     try:
         target_path = Path(path) if path else Path.cwd()
@@ -152,7 +152,7 @@ def gitignore_build(
     output: str | None = None,
     append: bool = False,
     auto_detect: bool = False,
-):
+) -> None:
     """Build a .gitignore file from templates.
 
     Args:
@@ -226,7 +226,7 @@ def gitignore_build(
     "gitignore.show",
     description="Show content of a gitignore template",
 )
-def gitignore_show(template: str):
+def gitignore_show(template: str) -> None:
     """Show the content of a specific gitignore template."""
     try:
         config = WrknvContext.get_config()
@@ -257,7 +257,7 @@ def gitignore_show(template: str):
     "gitignore.update",
     description="Update gitignore template cache",
 )
-def gitignore_update():
+def gitignore_update() -> None:
     """Update the local gitignore template cache from GitHub."""
     try:
         config = WrknvContext.get_config()

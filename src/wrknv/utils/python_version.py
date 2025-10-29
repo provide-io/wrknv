@@ -122,7 +122,7 @@ def should_recreate_venv(venv_dir: Path, project_requirement: str | None) -> tup
     return (False, None)
 
 
-def save_venv_python_version(venv_dir: Path):
+def save_venv_python_version(venv_dir: Path) -> None:
     """Save current Python version to a marker file in venv.
 
     This is used by the generated shell script to track the Python

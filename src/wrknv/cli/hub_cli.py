@@ -37,12 +37,12 @@ class WrknvContext:
         return cls._config
 
     @classmethod
-    def reset(cls):
+    def reset(cls) -> None:
         """Reset config cache (for testing)."""
         cls._config = None
 
 
-def load_commands():
+def load_commands() -> None:
     """Import all command modules to trigger registration."""
     # List of command modules to load
     command_modules = [
@@ -101,7 +101,7 @@ def create_cli():
     return cli
 
 
-def main():
+def main() -> None:
     """Main entry point for the CLI."""
     # Note: Logging setup disabled for now due to missing dependencies
     # from wrknv.logging.setup import setup_wrknv_logging

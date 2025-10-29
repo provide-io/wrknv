@@ -47,7 +47,7 @@ def setup_command(
     check: bool = False,
     completions: str | None = None,
     install: bool = False,
-):
+) -> None:
     """Set up wrknv environment and integrations.
 
     Args:

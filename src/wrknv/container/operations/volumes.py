@@ -57,7 +57,7 @@ class VolumeManager:
 
             cmd.append(name)
 
-            result = run(cmd, check=True)
+            run(cmd, check=True)
 
             logger.info("Volume created", name=name, driver=driver)
             self.console.print(f"[green]✅ Volume {name} created[/green]")
@@ -86,7 +86,7 @@ class VolumeManager:
 
             cmd.append(name)
 
-            result = run(cmd, check=True)
+            run(cmd, check=True)
 
             logger.info("Volume removed", name=name)
             self.console.print(f"[green]✅ Volume {name} removed[/green]")
@@ -187,7 +187,7 @@ class VolumeManager:
                 ".",
             ]
 
-            result = run(cmd, check=True)
+            run(cmd, check=True)
 
             logger.info(
                 "Volume backed up",
@@ -242,7 +242,7 @@ class VolumeManager:
                 mount_path,
             ]
 
-            result = run(cmd, check=True)
+            run(cmd, check=True)
 
             logger.info(
                 "Volume restored",

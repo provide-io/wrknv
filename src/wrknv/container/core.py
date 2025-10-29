@@ -38,7 +38,7 @@ class ContainerManager:
     CLEAN_EMOJI = "🧹"
     STATUS_EMOJI = "📊"
 
-    def __init__(self, config: WorkenvConfig | None = None):
+    def __init__(self, config: WorkenvConfig | None = None) -> None:
         self.config = config or get_default_config()
         self.console = Console()
 

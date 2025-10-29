@@ -6,7 +6,6 @@ Tests for Gitignore Builder
 from __future__ import annotations
 
 from provide.testkit.mocking import patch
-
 import pytest
 
 from wrknv.gitignore.builder import GitignoreBuilder
@@ -20,12 +19,12 @@ class TestGitignoreBuilder:
         """Create a GitignoreBuilder instance."""
         return GitignoreBuilder()
 
-    def test_init(self, builder):
+    def test_init(self, builder) -> None:
         """Test builder initialization."""
         assert builder.sections == []
         assert builder.custom_rules == []
 
-    def test_add_header_without_project(self, builder):
+    def test_add_header_without_project(self, builder) -> None:
         """Test adding header without project name."""
         with patch("wrknv.gitignore.builder.provide_now") as mock_now:
             mock_now.return_value.strftime.return_value = "2024-01-01 12:00:00"
@@ -38,7 +37,7 @@ class TestGitignoreBuilder:
         assert "Date: 2024-01-01 12:00:00" in content
         assert "Project:" not in content
 
-    def test_add_header_with_project(self, builder):
+    def test_add_header_with_project(self, builder) -> None:
         """Test adding header with project name."""
         with patch("wrknv.gitignore.builder.provide_now") as mock_now:
             mock_now.return_value.strftime.return_value = "2024-01-01 12:00:00"
@@ -49,7 +48,7 @@ class TestGitignoreBuilder:
         assert section_name == "header"
         assert "Project: test-project" in content
 
-    def test_add_template_section(self, builder):
+    def test_add_template_section(self, builder) -> None:
         """Test adding a template section."""
         builder.add_template_section("Python", "*.pyc\n__pycache__/")
 
@@ -60,12 +59,12 @@ class TestGitignoreBuilder:
         assert "*.pyc" in content
         assert "__pycache__/" in content
 
-    def test_add_template_section_empty_content(self, builder):
+    def test_add_template_section_empty_content(self, builder) -> None:
         """Test adding template section with empty content."""
         builder.add_template_section("Empty", "")
         assert len(builder.sections) == 0
 
-    def test_add_wrknv_section(self, builder):
+    def test_add_wrknv_section(self, builder) -> None:
         """Test adding wrknv-specific section."""
         builder.add_wrknv_section()
 
@@ -77,19 +76,19 @@ class TestGitignoreBuilder:
         assert "wrknv_*/" in content
         assert ".wrknv/" in content
 
-    def test_add_custom_rules(self, builder):
+    def test_add_custom_rules(self, builder) -> None:
         """Test adding custom rules."""
         rules = ["*.secret", "local-config.toml", "# My custom comment"]
         builder.add_custom_rules(rules)
 
         assert builder.custom_rules == rules
 
-    def test_add_custom_rules_empty(self, builder):
+    def test_add_custom_rules_empty(self, builder) -> None:
         """Test adding empty custom rules."""
         builder.add_custom_rules([])
         assert builder.custom_rules == []
 
-    def test_build_simple(self, builder):
+    def test_build_simple(self, builder) -> None:
         """Test building a simple gitignore."""
         builder.add_template_section("Python", "*.pyc\n__pycache__/")
         builder.add_template_section("Node", "node_modules/")
@@ -102,7 +101,7 @@ class TestGitignoreBuilder:
         assert "node_modules/" in result
         assert result.endswith("\n")
 
-    def test_build_with_duplicates(self, builder):
+    def test_build_with_duplicates(self, builder) -> None:
         """Test building with duplicate patterns removed."""
         builder.add_template_section("Template1", "*.pyc\n.env")
         builder.add_template_section("Template2", "*.pyc\n.secret")  # *.pyc is duplicate
@@ -114,7 +113,7 @@ class TestGitignoreBuilder:
         assert ".env" in result
         assert ".secret" in result
 
-    def test_build_without_merge_duplicates(self, builder):
+    def test_build_without_merge_duplicates(self, builder) -> None:
         """Test building without removing duplicates."""
         builder.add_template_section("Template1", "*.pyc\n.env")
         builder.add_template_section("Template2", "*.pyc\n.secret")
@@ -124,7 +123,7 @@ class TestGitignoreBuilder:
         # *.pyc should appear twice
         assert result.count("*.pyc") == 2
 
-    def test_build_with_custom_rules(self, builder):
+    def test_build_with_custom_rules(self, builder) -> None:
         """Test building with custom rules."""
         builder.add_template_section("Python", "*.pyc")
         builder.add_custom_rules(["*.secret", "# My custom pattern", "local.conf"])
@@ -136,7 +135,7 @@ class TestGitignoreBuilder:
         assert "# My custom pattern" in result
         assert "local.conf" in result
 
-    def test_build_custom_rules_deduplication(self, builder):
+    def test_build_custom_rules_deduplication(self, builder) -> None:
         """Test that custom rules are deduplicated against template patterns."""
         builder.add_template_section("Python", "*.pyc\n.env")
         builder.add_custom_rules(["*.pyc", ".secret"])  # *.pyc is duplicate
@@ -147,7 +146,7 @@ class TestGitignoreBuilder:
         assert result.count("*.pyc") == 1
         assert ".secret" in result
 
-    def test_build_preserves_comments(self, builder):
+    def test_build_preserves_comments(self, builder) -> None:
         """Test that comments are preserved and not deduplicated."""
         builder.add_template_section("Template1", "# Python files\n*.pyc")
         builder.add_template_section("Template2", "# Python files\n*.pyo")
@@ -157,7 +156,7 @@ class TestGitignoreBuilder:
         # Comments should be preserved even if identical
         assert result.count("# Python files") == 2
 
-    def test_build_complete_gitignore(self, builder):
+    def test_build_complete_gitignore(self, builder) -> None:
         """Test building a complete gitignore with all sections."""
         with patch("wrknv.gitignore.builder.provide_now") as mock_now:
             mock_now.return_value.strftime.return_value = "2024-01-01 12:00:00"
@@ -177,7 +176,7 @@ class TestGitignoreBuilder:
         assert result.index("=== Node ===") < result.index("=== wrknv ===")
         assert result.index("=== wrknv ===") < result.index("=== Custom Rules ===")
 
-    def test_merge_with_existing_no_file(self, builder, tmp_path):
+    def test_merge_with_existing_no_file(self, builder, tmp_path) -> None:
         """Test merging when no existing file exists."""
         builder.add_template_section("Python", "*.pyc")
 
@@ -186,7 +185,7 @@ class TestGitignoreBuilder:
 
         assert "*.pyc" in result
 
-    def test_merge_with_existing_preserves_custom_rules(self, builder, tmp_path):
+    def test_merge_with_existing_preserves_custom_rules(self, builder, tmp_path) -> None:
         """Test merging preserves custom rules from existing file."""
         # Create existing gitignore with custom section
         existing_file = tmp_path / ".gitignore"
@@ -212,7 +211,7 @@ private/
         assert "private/" in result
         assert ".venv/" in result
 
-    def test_merge_with_existing_various_custom_markers(self, builder, tmp_path):
+    def test_merge_with_existing_various_custom_markers(self, builder, tmp_path) -> None:
         """Test merging recognizes various custom section markers."""
         existing_file = tmp_path / ".gitignore"
         existing_content = """
@@ -230,7 +229,7 @@ debug.log
         assert "*.secret" in result
         assert "debug.log" in result
 
-    def test_sections_are_separated_by_double_newlines(self, builder):
+    def test_sections_are_separated_by_double_newlines(self, builder) -> None:
         """Test that sections are separated by double newlines."""
         builder.add_template_section("Python", "*.pyc")
         builder.add_template_section("Node", "node_modules/")
@@ -240,7 +239,7 @@ debug.log
         # Check for double newline between sections
         assert "\n\n" in result
 
-    def test_empty_lines_preserved_in_templates(self, builder):
+    def test_empty_lines_preserved_in_templates(self, builder) -> None:
         """Test that empty lines within templates are preserved."""
         template_content = """*.pyc
 __pycache__/

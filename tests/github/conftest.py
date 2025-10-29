@@ -10,7 +10,7 @@ import os
 import subprocess
 
 
-def pytest_configure(config):
+def pytest_configure(config) -> None:
     """Configure GitHub token from gh CLI if available and not already set."""
     # Don't override if already set
     if os.environ.get("GITHUB_TOKEN"):
@@ -28,7 +28,7 @@ def pytest_configure(config):
         token = result.stdout.strip()
         if token:
             os.environ["GITHUB_TOKEN"] = token
-            print(f"\n✓ Auto-configured GITHUB_TOKEN from gh CLI")
+            print("\n✓ Auto-configured GITHUB_TOKEN from gh CLI")
     except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
         # gh not installed or not authenticated - tests will be skipped
         pass

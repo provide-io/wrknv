@@ -7,14 +7,10 @@ Tests for the download functionality in wrknv.
 from __future__ import annotations
 
 import hashlib
-from provide.testkit.mocking import MagicMock, patch
-import urllib.error
-import urllib.request
 
-import pytest
+from provide.testkit.mocking import patch
 
 from wrknv.wenv.operations.download import (
-    download_checksum_file,
     download_file,
     get_filename_from_url,
     parse_checksum_file,
@@ -26,7 +22,7 @@ from wrknv.wenv.operations.download import (
 class TestDownloadOperations:
     """Test download operations functionality."""
 
-    def test_verify_checksum_success(self, tmp_path):
+    def test_verify_checksum_success(self, tmp_path) -> None:
         """Test successful checksum verification."""
         # Create a test file
         test_file = tmp_path / "test.txt"
@@ -40,7 +36,7 @@ class TestDownloadOperations:
         result = verify_checksum(test_file, expected_hash)
         assert result is True
 
-    def test_verify_checksum_mismatch(self, tmp_path):
+    def test_verify_checksum_mismatch(self, tmp_path) -> None:
         """Test checksum verification with mismatch."""
         # Create a test file
         test_file = tmp_path / "test.txt"
@@ -50,7 +46,7 @@ class TestDownloadOperations:
         result = verify_checksum(test_file, "wronghash")
         assert result is False
 
-    def test_verify_checksum_nonexistent_file(self, tmp_path):
+    def test_verify_checksum_nonexistent_file(self, tmp_path) -> None:
         """Test checksum verification with non-existent file."""
         test_file = tmp_path / "nonexistent.txt"
 
@@ -58,7 +54,7 @@ class TestDownloadOperations:
         result = verify_checksum(test_file, "somehash")
         assert result is False
 
-    def test_verify_checksum_different_algorithms(self, tmp_path):
+    def test_verify_checksum_different_algorithms(self, tmp_path) -> None:
         """Test checksum verification with different algorithms."""
         # Create a test file
         test_file = tmp_path / "test.txt"
@@ -77,7 +73,7 @@ class TestDownloadOperations:
         md5_hash = hashlib.md5(test_content).hexdigest()
         assert verify_checksum(test_file, md5_hash, "md5") is True
 
-    def test_verify_checksum_unsupported_algorithm(self, tmp_path):
+    def test_verify_checksum_unsupported_algorithm(self, tmp_path) -> None:
         """Test checksum verification with unsupported algorithm."""
         # Create a test file
         test_file = tmp_path / "test.txt"
@@ -88,7 +84,7 @@ class TestDownloadOperations:
         assert result is False
 
     @patch("wrknv.wenv.operations.download.UniversalClient")
-    def test_download_file_success(self, mock_client_class, tmp_path):
+    def test_download_file_success(self, mock_client_class, tmp_path) -> None:
         """Test successful file download."""
         from unittest.mock import AsyncMock, MagicMock
 
@@ -121,7 +117,7 @@ class TestDownloadOperations:
         assert dest_path.read_bytes() == b"ZIP file content"
 
     @patch("wrknv.wenv.operations.download.UniversalClient")
-    def test_download_file_with_progress(self, mock_client_class, tmp_path):
+    def test_download_file_with_progress(self, mock_client_class, tmp_path) -> None:
         """Test file download with progress display."""
         from unittest.mock import AsyncMock, MagicMock
 
@@ -151,7 +147,7 @@ class TestDownloadOperations:
         assert dest_path.exists()
         assert dest_path.read_bytes() == b"ZIP file content"
 
-    def test_parse_checksum_file_success(self, tmp_path):
+    def test_parse_checksum_file_success(self, tmp_path) -> None:
         """Test parsing checksum file."""
         checksum_file = tmp_path / "checksums.sha256"
         checksum_file.write_text("""
@@ -169,7 +165,7 @@ def456  other.zip
         result = parse_checksum_file(checksum_file, "marked.zip")
         assert result == "789xyz"
 
-    def test_parse_checksum_file_not_found(self, tmp_path):
+    def test_parse_checksum_file_not_found(self, tmp_path) -> None:
         """Test parsing checksum file when target not found."""
         checksum_file = tmp_path / "checksums.sha256"
         checksum_file.write_text("abc123  other.zip\n")
@@ -177,7 +173,7 @@ def456  other.zip
         result = parse_checksum_file(checksum_file, "test.zip")
         assert result is None
 
-    def test_parse_checksum_file_nonexistent(self, tmp_path):
+    def test_parse_checksum_file_nonexistent(self, tmp_path) -> None:
         """Test parsing non-existent checksum file."""
         checksum_file = tmp_path / "missing.sha256"
         result = parse_checksum_file(checksum_file, "test.zip")

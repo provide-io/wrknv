@@ -70,7 +70,7 @@ class CommandGroup:
             hidden=self.hidden,
         )
 
-        for cmd_name, cmd_info in self.commands.items():
+        for _cmd_name, cmd_info in self.commands.items():
             if isinstance(cmd_info, CommandGroup):
                 # Add subgroup
                 subgroup = cmd_info.to_click_group()
@@ -151,7 +151,7 @@ class CommandGroup:
 class NestedCommandRegistry:
     """Registry that supports nested command groups."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.root = CommandGroup(name="cli", description="CLI root")
         self._flat_registry: dict[str, CommandInfo | CommandGroup] = {}
 
@@ -178,10 +178,7 @@ class NestedCommandRegistry:
             aliases: Command aliases
         """
         # Parse the command path
-        if parent:
-            path = parent.split() + [name]
-        else:
-            path = name.split()
+        path = [*parent.split(), name] if parent else name.split()
 
         # Get or create parent groups
         current = self.root
@@ -345,7 +342,7 @@ def create_nested_cli(
     # Add version option
     @cli.command(hidden=True)
     @click.option("--version", is_flag=True, help="Show version")
-    def version_cmd(version: bool):
+    def version_cmd(version: bool) -> None:
         if version:
             click.echo(f"{name} {version}")
 

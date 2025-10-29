@@ -7,14 +7,13 @@ Test suite for CLI config commands.
 from __future__ import annotations
 
 import os
-from provide.testkit.mocking import Mock, patch
 
 import click.testing
 from provide.testkit import FoundationTestCase
+from provide.testkit.mocking import Mock, patch
 import pytest
 
 from wrknv.cli.hub_cli import create_cli
-
 
 # Create CLI once at module level and reuse across all tests
 _test_cli = None

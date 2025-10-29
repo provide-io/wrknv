@@ -162,7 +162,7 @@ class TestContainerConfigValidation:
     def test_invalid_volume_mapping_raises_error(self) -> None:
         """Test that invalid volume mapping raises error."""
         with pytest.raises(ValueError, match="Invalid volume mapping"):
-            config = ContainerConfig(volume_mappings={"invalid": "not-a-valid-mapping"})
+            ContainerConfig(volume_mappings={"invalid": "not-a-valid-mapping"})
 
     def test_volume_mapping_normalization(self) -> None:
         """Test volume mapping path normalization."""

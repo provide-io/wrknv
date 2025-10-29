@@ -22,7 +22,7 @@ from .schema import RepoConfig, WorkspaceConfig
 class WorkspaceSync:
     """Synchronize configurations across repositories."""
 
-    def __init__(self, workspace_config: WorkspaceConfig):
+    def __init__(self, workspace_config: WorkspaceConfig) -> None:
         self.config = workspace_config
 
     async def sync_all(self, dry_run: bool = False) -> dict[str, Any]:

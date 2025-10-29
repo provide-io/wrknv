@@ -12,7 +12,7 @@ from wrknv.wenv.env_generator import EnvScriptGenerator, create_project_env_scri
 class TestSiblingsConfiguration:
     """Test the new unified siblings configuration."""
 
-    def test_simple_string_siblings(self, tmp_path):
+    def test_simple_string_siblings(self, tmp_path) -> None:
         """Test simple string patterns in siblings list."""
         # Create test pyproject.toml
         pyproject = tmp_path / "pyproject.toml"
@@ -32,7 +32,7 @@ siblings = ["pyvider-*", "test-*"]
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
-            sh_path, ps1_path = create_project_env_scripts(tmp_path)
+            sh_path, _ps1_path = create_project_env_scripts(tmp_path)
 
             # Check that siblings are in the generated script
             sh_content = sh_path.read_text()
@@ -50,7 +50,7 @@ siblings = ["pyvider-*", "test-*"]
             assert "uv pip install -e" in sibling_section
             assert "--no-deps" in sibling_section  # Should have --no-deps for the fallback
 
-    def test_siblings_with_explicit_config(self, tmp_path):
+    def test_siblings_with_explicit_config(self, tmp_path) -> None:
         """Test siblings with explicit configuration."""
         # Create test pyproject.toml
         pyproject = tmp_path / "pyproject.toml"
@@ -73,7 +73,7 @@ siblings = [
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
-            sh_path, ps1_path = create_project_env_scripts(tmp_path)
+            sh_path, _ps1_path = create_project_env_scripts(tmp_path)
 
             # Check that siblings are in the generated script
             sh_content = sh_path.read_text()
@@ -96,7 +96,7 @@ siblings = [
             assert "Installing pyvider-telemetry without dependencies" in sibling_section
             assert "--no-deps" in sibling_section  # Should have --no-deps for telemetry
 
-    def test_siblings_with_pattern_config(self, tmp_path):
+    def test_siblings_with_pattern_config(self, tmp_path) -> None:
         """Test siblings with pattern configuration."""
         # Create test pyproject.toml
         pyproject = tmp_path / "pyproject.toml"
@@ -119,7 +119,7 @@ siblings = [
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
-            sh_path, ps1_path = create_project_env_scripts(tmp_path)
+            sh_path, _ps1_path = create_project_env_scripts(tmp_path)
 
             # Check that patterns are in the generated script
             sh_content = sh_path.read_text()
@@ -128,7 +128,7 @@ siblings = [
             assert "without dependencies" in sh_content
             assert "with dependencies" in sh_content
 
-    def test_mixed_siblings_config(self, tmp_path):
+    def test_mixed_siblings_config(self, tmp_path) -> None:
         """Test mixing different sibling configurations."""
         # Create test pyproject.toml
         pyproject = tmp_path / "pyproject.toml"
@@ -152,7 +152,7 @@ siblings = [
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
-            sh_path, ps1_path = create_project_env_scripts(tmp_path)
+            sh_path, _ps1_path = create_project_env_scripts(tmp_path)
 
             # Check all types are in the generated script
             sh_content = sh_path.read_text()
@@ -161,7 +161,7 @@ siblings = [
             assert "explicit-package" in sh_content
             assert "EXPLICIT_PKG_DIR" in sh_content  # Custom var name
 
-    def test_backward_compatibility(self, tmp_path):
+    def test_backward_compatibility(self, tmp_path) -> None:
         """Test backward compatibility with old format."""
         # Create test pyproject.toml
         pyproject = tmp_path / "pyproject.toml"
@@ -184,7 +184,7 @@ special_siblings = [
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
-            sh_path, ps1_path = create_project_env_scripts(tmp_path)
+            sh_path, _ps1_path = create_project_env_scripts(tmp_path)
 
             # Check that old format still works
             sh_content = sh_path.read_text()
@@ -194,7 +194,7 @@ special_siblings = [
             # Old pattern format always uses --no-deps
             assert "--no-deps" in sh_content
 
-    def test_default_with_deps_behavior(self, tmp_path):
+    def test_default_with_deps_behavior(self, tmp_path) -> None:
         """Test that with_deps defaults to true for new format."""
         generator = EnvScriptGenerator()
 
@@ -220,7 +220,7 @@ special_siblings = [
         assert "Installing package3 without dependencies" in sh_content
         assert "--no-deps" in sh_content  # Only for package3
 
-    def test_powershell_siblings_generation(self, tmp_path):
+    def test_powershell_siblings_generation(self, tmp_path) -> None:
         """Test PowerShell script generation with siblings."""
         # Create test pyproject.toml
         pyproject = tmp_path / "pyproject.toml"
@@ -243,7 +243,7 @@ siblings = [
             mock_find.return_value = wrknv_toml
 
             # Generate scripts
-            sh_path, ps1_path = create_project_env_scripts(tmp_path)
+            _sh_path, ps1_path = create_project_env_scripts(tmp_path)
 
             # Check PowerShell script
             ps1_content = ps1_path.read_text()
@@ -256,7 +256,7 @@ siblings = [
 class TestSiblingsConfigIntegration:
     """Integration tests for siblings configuration."""
 
-    def test_env_generator_processes_siblings_correctly(self, tmp_path):
+    def test_env_generator_processes_siblings_correctly(self, tmp_path) -> None:
         """Test that env generator correctly processes siblings config."""
         # Create a more complex scenario
         pyproject = tmp_path / "pyproject.toml"

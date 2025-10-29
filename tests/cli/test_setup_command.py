@@ -6,11 +6,9 @@ Test suite for CLI setup command.
 
 from __future__ import annotations
 
-import subprocess
-from provide.testkit.mocking import Mock, patch
-
 import click.testing
 from provide.testkit import FoundationTestCase, isolated_cli_runner
+from provide.testkit.mocking import Mock, patch
 import pytest
 
 from wrknv.cli.hub_cli import create_cli
@@ -43,7 +41,7 @@ class TestSetupCommand(FoundationTestCase):
         assert "--shell-integration" in result.output
 
     @patch("wrknv.wenv.workenv.WorkenvManager.setup_workenv")
-    def test_setup_init(self, mock_setup_workenv):
+    def test_setup_init(self, mock_setup_workenv) -> None:
         """Test setup --init to create wrknv's own workenv."""
         mock_setup_workenv.return_value = True
 
@@ -56,7 +54,7 @@ class TestSetupCommand(FoundationTestCase):
         mock_setup_workenv.assert_called_once_with(force=False)
 
     @patch("wrknv.wenv.workenv.WorkenvManager.setup_workenv")
-    def test_setup_init_force(self, mock_setup_workenv):
+    def test_setup_init_force(self, mock_setup_workenv) -> None:
         """Test setup --init --force to recreate workenv."""
         mock_setup_workenv.return_value = True
 
@@ -68,7 +66,7 @@ class TestSetupCommand(FoundationTestCase):
         mock_setup_workenv.assert_called_once_with(force=True)
 
     @patch("wrknv.wenv.workenv.WorkenvManager.setup_workenv")
-    def test_setup_init_failure(self, mock_setup_workenv):
+    def test_setup_init_failure(self, mock_setup_workenv) -> None:
         """Test setup --init when creation fails."""
         mock_setup_workenv.side_effect = Exception("Failed to create virtualenv")
 
@@ -82,7 +80,7 @@ class TestSetupCommand(FoundationTestCase):
 
     @patch("wrknv.cli.commands.setup.run")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
-    def test_setup_shell_integration_success(self, mock_get_path, mock_run):
+    def test_setup_shell_integration_success(self, mock_get_path, mock_run) -> None:
         """Test successful shell integration setup."""
         # Mock the path to exist
         from pathlib import Path
@@ -103,7 +101,7 @@ class TestSetupCommand(FoundationTestCase):
         assert "Shell integration configured successfully" in result.output
         # Note: mock_run assertion removed due to CLI module caching
 
-    def test_setup_shell_integration_script_not_found(self):
+    def test_setup_shell_integration_script_not_found(self) -> None:
         """Test shell integration when script is missing."""
         # Create CLI first, then patch
         cli = get_test_cli()
@@ -126,17 +124,21 @@ class TestSetupCommand(FoundationTestCase):
                 assert mock_script_path.exists.called, "Path exists check should be called"
                 mock_run.assert_not_called()
                 # Check for error indication in output or exception
-                assert (result.exit_code != 0 or result.exception is not None or
-                        "Shell integration script not found" in result.output or
-                        "not found" in result.output.lower())
+                assert (
+                    result.exit_code != 0
+                    or result.exception is not None
+                    or "Shell integration script not found" in result.output
+                    or "not found" in result.output.lower()
+                )
 
-    def test_setup_shell_integration_script_fails(self):
+    def test_setup_shell_integration_script_fails(self) -> None:
         """Test shell integration when script execution fails."""
         # Create CLI first, then patch
         cli = get_test_cli()
 
         # Mock the path to exist
         from pathlib import Path
+
         from provide.foundation.process import ProcessError
 
         with patch("wrknv.cli.commands.setup._get_shell_integration_script_path") as mock_get_path:
@@ -155,12 +157,16 @@ class TestSetupCommand(FoundationTestCase):
                 assert mock_get_path.called, "Script path getter should be called"
                 assert mock_run.called, "Run command should be called"
                 # Check for error indication in output or exception
-                assert (result.exit_code != 0 or result.exception is not None or
-                        "Failed" in result.output or "failed" in result.output.lower())
+                assert (
+                    result.exit_code != 0
+                    or result.exception is not None
+                    or "Failed" in result.output
+                    or "failed" in result.output.lower()
+                )
 
     @patch("wrknv.cli.commands.setup.run")
     @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
-    def test_setup_shell_integration_creates_aliases(self, mock_get_path, mock_run):
+    def test_setup_shell_integration_creates_aliases(self, mock_get_path, mock_run) -> None:
         """Test that shell integration calls the shell script."""
         # Mock the path to exist
         from pathlib import Path
@@ -181,7 +187,7 @@ class TestSetupCommand(FoundationTestCase):
         # Note: mock_run assertion removed due to CLI module caching
 
     @patch("wrknv.wenv.workenv.WorkenvManager.setup_workenv")
-    def test_setup_all_options(self, mock_setup_workenv):
+    def test_setup_all_options(self, mock_setup_workenv) -> None:
         """Test setup with --init takes precedence (only one option processed)."""
         mock_setup_workenv.return_value = True
 
@@ -294,7 +300,7 @@ class TestSetupCommandIntegration(FoundationTestCase):
 
                 # Run with catch_exceptions=False to avoid Click's stream handling issues
                 try:
-                    result = runner.invoke(cli, ["setup", "--init"], catch_exceptions=False)
+                    runner.invoke(cli, ["setup", "--init"], catch_exceptions=False)
                 except Exception as e:
                     # If there's a genuine error, reraise it
                     if not isinstance(e, ValueError) or "I/O operation" not in str(e):

@@ -11,9 +11,9 @@ Test suite for dynamic container configuration.
 
 from provide.testkit.mocking import MagicMock, patch
 
-from wrknv.container.manager import ContainerManager
 from wrknv.config import WorkenvConfig
-from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
+from wrknv.container.manager import ContainerManager
+from wrknv.wenv.schema import ContainerConfig
 
 
 @pytest.mark.container
@@ -89,7 +89,7 @@ class TestDynamicContainerConfiguration(FoundationTestCase):
     @patch("wrknv.container.manager.ContainerManager.image_exists")
     def test_start_with_custom_volumes_and_ports(
         self, mock_image_exists, mock_container_exists, mock_container_running, mock_run
-    ):
+    ) -> None:
         """Test container start with custom volumes and ports."""
         mock_image_exists.return_value = True
         mock_container_exists.return_value = False

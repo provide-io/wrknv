@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 from pathlib import Path
-from provide.testkit.mocking import patch
 
 from click.testing import CliRunner
 from provide.testkit import FoundationTestCase
+from provide.testkit.mocking import patch
 import pytest
 
 from wrknv.cli.hub_cli import create_cli
-
 
 # Single CLI instance shared across all tests to avoid module re-import issues
 # (commands are registered at module import time via decorators)
@@ -37,10 +36,8 @@ def gitignore_templates_dir(tmp_path):
 
 @pytest.mark.skip(reason="Click+xdist incompatibility - run without xdist")
 class TestGitignoreCommands(FoundationTestCase):
-    def test_gitignore_build_from_config(self, cli, runner, tmp_path, gitignore_templates_dir):
+    def test_gitignore_build_from_config(self, cli, runner, tmp_path, gitignore_templates_dir) -> None:
         """Test building .gitignore from wrknv.toml config."""
-        from pathlib import Path
-        import os
 
         # Patch WorkenvConfig in cli.py to return our pre-configured instance
         with runner.isolated_filesystem():
@@ -93,9 +90,8 @@ templates_path = "{templates_path_actual}"
                 assert "npm-debug.log" in content or "logs" in content  # Real template may differ
                 assert ".DS_Store" not in content  # Should not include Global.gitignore
 
-    def test_gitignore_build_with_templates_option(self, cli, runner, tmp_path, gitignore_templates_dir):
+    def test_gitignore_build_with_templates_option(self, cli, runner, tmp_path, gitignore_templates_dir) -> None:
         """Test building .gitignore using --templates option (should override config)."""
-        from pathlib import Path
 
         with runner.isolated_filesystem():
             test_dir = Path.cwd()
@@ -151,7 +147,7 @@ templates_path = "{templates_path_actual}"
                 assert "*.pyc" in content or "__pycache__" in content
                 assert "node_modules/" not in content  # Should not include Node.gitignore
 
-    def test_gitignore_build_no_templates_specified(self, cli, runner, tmp_path):
+    def test_gitignore_build_no_templates_specified(self, cli, runner, tmp_path) -> None:
         """Test building .gitignore when no templates are specified in config or via option."""
         # Create a dummy wrknv.toml without gitignore section
         config_path = tmp_path / "wrknv.toml"
@@ -181,9 +177,8 @@ version = "0.1.0"
 
     def test_gitignore_build_with_non_existent_template(
         self, cli, runner, tmp_path, gitignore_templates_dir, capsys
-    ):
+    ) -> None:
         """Test building .gitignore with a non-existent template."""
-        from pathlib import Path
 
         with runner.isolated_filesystem():
             test_dir = Path.cwd()
@@ -230,9 +225,8 @@ templates_path = "{templates_path_actual}"
                 assert "# === NonExistent ===" not in content  # Should not include header for non-existent
                 assert "NonExistent" not in content  # Template shouldn't appear at all
 
-    def test_gitignore_build_with_output_option(self, cli, runner, tmp_path, gitignore_templates_dir, capsys):
+    def test_gitignore_build_with_output_option(self, cli, runner, tmp_path, gitignore_templates_dir, capsys) -> None:
         """Test building .gitignore to a custom output path."""
-        from pathlib import Path
 
         with runner.isolated_filesystem():
             test_dir = Path.cwd()

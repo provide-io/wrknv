@@ -58,7 +58,7 @@ def get_tf_flavor():
     return "ibm"  # Default to IBM Terraform
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     flavor = get_tf_flavor()
 
@@ -80,7 +80,7 @@ def main():
 
         if binary_path.exists():
             # Execute the actual binary with all arguments
-            os.execv(str(binary_path), [binary_name] + sys.argv[1:])
+            os.execv(str(binary_path), [binary_name, *sys.argv[1:]])
         else:
             print(f"Error: {flavor} binary not found at {binary_path}", file=sys.stderr)
             if flavor == "opentofu":

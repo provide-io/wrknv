@@ -108,8 +108,7 @@ class ContainerLogs:
         cmd.append(self.container_name)
 
         try:
-            for line in stream(cmd):
-                yield line
+            yield from stream(cmd)
         except ProcessError as e:
             logger.error(
                 "Failed to stream logs",
@@ -174,7 +173,7 @@ class ContainerLogs:
 
             # Docker doesn't have a direct clear logs command
             # This is a workaround using truncate
-            result = run(
+            run(
                 [
                     "sh",
                     "-c",

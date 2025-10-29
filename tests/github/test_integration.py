@@ -13,7 +13,6 @@ import pytest
 
 from wrknv.managers.github import GitHubReleasesClient
 
-
 # Skip if no GitHub token available (CI-friendly)
 pytestmark = pytest.mark.skipif(
     not os.environ.get("GITHUB_TOKEN"), reason="GITHUB_TOKEN not set - skipping integration tests"
@@ -22,7 +21,7 @@ pytestmark = pytest.mark.skipif(
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_list_releases_real():
+async def test_list_releases_real() -> None:
     """Test listing releases from real repository."""
     # Use astral-sh/uv as test repository (stable, well-maintained)
     client = GitHubReleasesClient("astral-sh/uv")
@@ -36,7 +35,7 @@ async def test_list_releases_real():
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_get_latest_release_real():
+async def test_get_latest_release_real() -> None:
     """Test getting latest release from real repository."""
     client = GitHubReleasesClient("astral-sh/uv")
 
@@ -50,7 +49,7 @@ async def test_get_latest_release_real():
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_list_tags_real():
+async def test_list_tags_real() -> None:
     """Test listing tags from real repository."""
     client = GitHubReleasesClient("astral-sh/uv")
 
@@ -63,7 +62,7 @@ async def test_list_tags_real():
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_get_versions_real():
+async def test_get_versions_real() -> None:
     """Test getting versions from real repository."""
     client = GitHubReleasesClient("astral-sh/uv")
 
@@ -76,7 +75,7 @@ async def test_get_versions_real():
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_find_asset_real():
+async def test_find_asset_real() -> None:
     """Test finding asset in real release."""
     client = GitHubReleasesClient("astral-sh/uv")
 
@@ -92,7 +91,7 @@ async def test_find_asset_real():
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_download_asset_real(tmp_path: pathlib.Path):
+async def test_download_asset_real(tmp_path: pathlib.Path) -> None:
     """Test downloading a real asset (small file)."""
     client = GitHubReleasesClient("astral-sh/uv")
 
@@ -112,7 +111,7 @@ async def test_download_asset_real(tmp_path: pathlib.Path):
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_download_archive_real(tmp_path: pathlib.Path):
+async def test_download_archive_real(tmp_path: pathlib.Path) -> None:
     """Test downloading repository archive."""
     # Use a small test repository
     client = GitHubReleasesClient("provide-io/supsrc")
@@ -133,7 +132,7 @@ async def test_download_archive_real(tmp_path: pathlib.Path):
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_download_archive_tarball_real(tmp_path: pathlib.Path):
+async def test_download_archive_tarball_real(tmp_path: pathlib.Path) -> None:
     """Test downloading repository archive as tarball."""
     client = GitHubReleasesClient("provide-io/supsrc")
 
@@ -155,7 +154,7 @@ async def test_download_archive_tarball_real(tmp_path: pathlib.Path):
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_download_tag_archive_real(tmp_path: pathlib.Path):
+async def test_download_tag_archive_real(tmp_path: pathlib.Path) -> None:
     """Test downloading tag as archive."""
     client = GitHubReleasesClient("astral-sh/uv")
 
@@ -174,7 +173,7 @@ async def test_download_tag_archive_real(tmp_path: pathlib.Path):
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_progress_callback_real(tmp_path: pathlib.Path):
+async def test_progress_callback_real(tmp_path: pathlib.Path) -> None:
     """Test download with progress callback."""
     client = GitHubReleasesClient("provide-io/supsrc")
 
@@ -182,7 +181,7 @@ async def test_progress_callback_real(tmp_path: pathlib.Path):
 
     progress_updates = []
 
-    def progress_callback(downloaded: int, total: int):
+    def progress_callback(downloaded: int, total: int) -> None:
         progress_updates.append((downloaded, total))
 
     await client.download_archive("main", destination, progress_callback=progress_callback)
@@ -202,7 +201,7 @@ async def test_progress_callback_real(tmp_path: pathlib.Path):
 
 @pytest.mark.asyncio
 @pytest.mark.network
-async def test_authenticated_client_real():
+async def test_authenticated_client_real() -> None:
     """Test authenticated client with GitHub token."""
     token = os.environ.get("GITHUB_TOKEN")
 

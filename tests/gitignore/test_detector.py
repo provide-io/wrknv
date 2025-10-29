@@ -23,14 +23,14 @@ class TestProjectDetector:
         """Create a temporary project directory."""
         return tmp_path / "project"
 
-    def test_init(self, detector):
+    def test_init(self, detector) -> None:
         """Test detector initialization."""
         assert detector.detected_languages == set()
         assert detector.detected_frameworks == set()
         assert detector.detected_tools == set()
         assert detector.detected_os == set()
 
-    def test_detect_python_files(self, detector, project_dir):
+    def test_detect_python_files(self, detector, project_dir) -> None:
         """Test detection of Python project."""
         project_dir.mkdir()
         (project_dir / "main.py").touch()
@@ -42,7 +42,7 @@ class TestProjectDetector:
 
         assert "Python" in detector.detected_languages
 
-    def test_detect_python_requirements(self, detector, project_dir):
+    def test_detect_python_requirements(self, detector, project_dir) -> None:
         """Test detection of Python requirements files."""
         project_dir.mkdir()
         (project_dir / "requirements.txt").touch()
@@ -51,7 +51,7 @@ class TestProjectDetector:
 
         assert "Python" in detector.detected_languages
 
-    def test_detect_python_tools(self, detector, project_dir):
+    def test_detect_python_tools(self, detector, project_dir) -> None:
         """Test detection of Python tools."""
         project_dir.mkdir()
 
@@ -78,7 +78,7 @@ class TestProjectDetector:
         detector.scan_directory(project_dir)
         assert "Ruff" in detector.detected_tools
 
-    def test_detect_javascript_files(self, detector, project_dir):
+    def test_detect_javascript_files(self, detector, project_dir) -> None:
         """Test detection of JavaScript project."""
         project_dir.mkdir()
         (project_dir / "index.js").touch()
@@ -88,7 +88,7 @@ class TestProjectDetector:
 
         assert "Node" in detector.detected_languages
 
-    def test_detect_node_package_json(self, detector, project_dir):
+    def test_detect_node_package_json(self, detector, project_dir) -> None:
         """Test detection of Node.js via package.json."""
         project_dir.mkdir()
         (project_dir / "package.json").touch()
@@ -97,7 +97,7 @@ class TestProjectDetector:
 
         assert "Node" in detector.detected_languages
 
-    def test_detect_typescript(self, detector, project_dir):
+    def test_detect_typescript(self, detector, project_dir) -> None:
         """Test detection of TypeScript."""
         project_dir.mkdir()
         (project_dir / "index.ts").touch()
@@ -108,7 +108,7 @@ class TestProjectDetector:
         assert "TypeScript" in detector.detected_languages
         assert "Node" in detector.detected_languages  # TypeScript implies Node
 
-    def test_detect_go_files(self, detector, project_dir):
+    def test_detect_go_files(self, detector, project_dir) -> None:
         """Test detection of Go project."""
         project_dir.mkdir()
         (project_dir / "main.go").touch()
@@ -118,7 +118,7 @@ class TestProjectDetector:
 
         assert "Go" in detector.detected_languages
 
-    def test_detect_rust_files(self, detector, project_dir):
+    def test_detect_rust_files(self, detector, project_dir) -> None:
         """Test detection of Rust project."""
         project_dir.mkdir()
         (project_dir / "main.rs").touch()
@@ -128,7 +128,7 @@ class TestProjectDetector:
 
         assert "Rust" in detector.detected_languages
 
-    def test_detect_java_files(self, detector, project_dir):
+    def test_detect_java_files(self, detector, project_dir) -> None:
         """Test detection of Java project."""
         project_dir.mkdir()
         (project_dir / "Main.java").touch()
@@ -139,7 +139,7 @@ class TestProjectDetector:
         assert "Java" in detector.detected_languages
         assert "Maven" in detector.detected_tools
 
-    def test_detect_gradle(self, detector, project_dir):
+    def test_detect_gradle(self, detector, project_dir) -> None:
         """Test detection of Gradle."""
         project_dir.mkdir()
         (project_dir / "build.gradle").touch()
@@ -148,7 +148,7 @@ class TestProjectDetector:
 
         assert "Gradle" in detector.detected_tools
 
-    def test_detect_docker(self, detector, project_dir):
+    def test_detect_docker(self, detector, project_dir) -> None:
         """Test detection of Docker."""
         project_dir.mkdir()
         (project_dir / "Dockerfile").touch()
@@ -158,7 +158,7 @@ class TestProjectDetector:
 
         assert "Docker" in detector.detected_tools
 
-    def test_detect_terraform(self, detector, project_dir):
+    def test_detect_terraform(self, detector, project_dir) -> None:
         """Test detection of Terraform."""
         project_dir.mkdir()
         (project_dir / "main.tf").touch()
@@ -168,7 +168,7 @@ class TestProjectDetector:
 
         assert "Terraform" in detector.detected_tools
 
-    def test_detect_os_files(self, detector, project_dir):
+    def test_detect_os_files(self, detector, project_dir) -> None:
         """Test detection of OS-specific files."""
         project_dir.mkdir()
 
@@ -183,7 +183,7 @@ class TestProjectDetector:
         detector.scan_directory(project_dir)
         assert "Windows" in detector.detected_os
 
-    def test_detect_ide_files(self, detector, project_dir):
+    def test_detect_ide_files(self, detector, project_dir) -> None:
         """Test detection of IDE files."""
         project_dir.mkdir()
 
@@ -198,7 +198,7 @@ class TestProjectDetector:
         detector.scan_directory(project_dir)
         assert "JetBrains" in detector.detected_tools
 
-    def test_detect_react(self, detector, project_dir):
+    def test_detect_react(self, detector, project_dir) -> None:
         """Test detection of React framework."""
         project_dir.mkdir()
         package_json = project_dir / "package.json"
@@ -208,7 +208,7 @@ class TestProjectDetector:
 
         assert "React" in detector.detected_frameworks
 
-    def test_detect_vue(self, detector, project_dir):
+    def test_detect_vue(self, detector, project_dir) -> None:
         """Test detection of Vue framework."""
         project_dir.mkdir()
         package_json = project_dir / "package.json"
@@ -218,7 +218,7 @@ class TestProjectDetector:
 
         assert "Vue" in detector.detected_frameworks
 
-    def test_detect_django(self, detector, project_dir):
+    def test_detect_django(self, detector, project_dir) -> None:
         """Test detection of Django framework."""
         project_dir.mkdir()
         (project_dir / "manage.py").touch()
@@ -228,7 +228,7 @@ class TestProjectDetector:
 
         assert "Django" in detector.detected_frameworks
 
-    def test_detect_flask(self, detector, project_dir):
+    def test_detect_flask(self, detector, project_dir) -> None:
         """Test detection of Flask framework."""
         project_dir.mkdir()
         requirements = project_dir / "requirements.txt"
@@ -238,7 +238,7 @@ class TestProjectDetector:
 
         assert "Flask" in detector.detected_frameworks
 
-    def test_suggest_templates(self, detector, project_dir):
+    def test_suggest_templates(self, detector, project_dir) -> None:
         """Test template suggestions based on detection."""
         project_dir.mkdir()
         (project_dir / "main.py").touch()
@@ -253,7 +253,7 @@ class TestProjectDetector:
         assert "macOS" in suggestions
         assert "VisualStudioCode" in suggestions
 
-    def test_suggest_templates_with_priority(self, detector, project_dir):
+    def test_suggest_templates_with_priority(self, detector, project_dir) -> None:
         """Test that suggestions are prioritized correctly."""
         project_dir.mkdir()
         (project_dir / "main.py").touch()
@@ -268,7 +268,7 @@ class TestProjectDetector:
         # Frameworks should come before tools
         assert suggestions.index("Django") < suggestions.index("Poetry")
 
-    def test_reset(self, detector, project_dir):
+    def test_reset(self, detector, project_dir) -> None:
         """Test resetting detector state."""
         project_dir.mkdir()
         (project_dir / "main.py").touch()
@@ -282,7 +282,7 @@ class TestProjectDetector:
         assert detector.detected_tools == set()
         assert detector.detected_os == set()
 
-    def test_scan_ignores_hidden_directories(self, detector, project_dir):
+    def test_scan_ignores_hidden_directories(self, detector, project_dir) -> None:
         """Test that hidden directories are ignored by default."""
         project_dir.mkdir()
         git_dir = project_dir / ".git"
@@ -293,7 +293,7 @@ class TestProjectDetector:
         detector.scan_directory(project_dir)
         assert "Git" not in detector.detected_tools
 
-    def test_scan_respects_max_depth(self, detector, project_dir):
+    def test_scan_respects_max_depth(self, detector, project_dir) -> None:
         """Test that scan respects maximum depth."""
         project_dir.mkdir()
         deep_dir = project_dir / "a" / "b" / "c" / "d" / "e"
@@ -309,7 +309,7 @@ class TestProjectDetector:
         detector.scan_directory(project_dir, max_depth=2)
         assert "Python" not in detector.detected_languages
 
-    def test_detect_multiple_languages(self, detector, project_dir):
+    def test_detect_multiple_languages(self, detector, project_dir) -> None:
         """Test detection of multiple languages in one project."""
         project_dir.mkdir()
         (project_dir / "main.py").touch()
@@ -322,7 +322,7 @@ class TestProjectDetector:
         assert "Node" in detector.detected_languages
         assert "Go" in detector.detected_languages
 
-    def test_comprehensive_project(self, detector, project_dir):
+    def test_comprehensive_project(self, detector, project_dir) -> None:
         """Test detection in a comprehensive project."""
         project_dir.mkdir()
 

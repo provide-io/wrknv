@@ -45,7 +45,7 @@ class IbmVaultVariant(SubRosaManager):
             include_prereleases = self.config.get_setting("include_prereleases", False)
 
             # Parse versions from release data
-            for version_str, version_data in data.get("versions", {}).items():
+            for version_str, _version_data in data.get("versions", {}).items():
                 # Skip pre-releases unless configured
                 if not include_prereleases:
                     # Skip versions with -rc, -beta, -alpha, etc.

@@ -11,18 +11,17 @@ Test Container Shell Commands
 Tests for container shell, exec, and logs commands.
 """
 
+from click.testing import CliRunner
 from provide.testkit.mocking import Mock, patch
 
-from click.testing import CliRunner
-
+from wrknv.config import WorkenvConfig
 from wrknv.container.manager import ContainerManager
 from wrknv.container.shell_commands import (
     exec_in_container,
     get_container_logs,
     shell_into_container,
 )
-from wrknv.config import WorkenvConfig
-from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
+from wrknv.wenv.schema import ContainerConfig
 
 
 @pytest.mark.container
@@ -48,7 +47,7 @@ class TestShellCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_shell_basic(self, mock_manager_class, mock_run, test_config):
+    def test_shell_basic(self, mock_manager_class, mock_run, test_config) -> None:
         """Test basic shell command execution."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -67,7 +66,7 @@ class TestShellCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_shell_with_custom_shell(self, mock_manager_class, mock_run, test_config):
+    def test_shell_with_custom_shell(self, mock_manager_class, mock_run, test_config) -> None:
         """Test shell command with custom shell."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -85,7 +84,7 @@ class TestShellCommand:
         )
 
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_shell_container_not_running(self, mock_manager_class, test_config):
+    def test_shell_container_not_running(self, mock_manager_class, test_config) -> None:
         """Test shell when container is not running."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -100,7 +99,7 @@ class TestShellCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_shell_auto_start(self, mock_manager_class, mock_run, test_config):
+    def test_shell_auto_start(self, mock_manager_class, mock_run, test_config) -> None:
         """Test shell with auto-start when container is stopped."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -123,7 +122,7 @@ class TestShellCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_shell_with_working_dir(self, mock_manager_class, mock_run, test_config):
+    def test_shell_with_working_dir(self, mock_manager_class, mock_run, test_config) -> None:
         """Test shell with custom working directory."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -142,7 +141,7 @@ class TestShellCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_shell_with_environment(self, mock_manager_class, mock_run, test_config):
+    def test_shell_with_environment(self, mock_manager_class, mock_run, test_config) -> None:
         """Test shell with environment variables."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -184,7 +183,7 @@ class TestExecCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_exec_basic(self, mock_manager_class, mock_run, test_config):
+    def test_exec_basic(self, mock_manager_class, mock_run, test_config) -> None:
         """Test basic command execution."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -201,7 +200,7 @@ class TestExecCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_exec_with_working_dir(self, mock_manager_class, mock_run, test_config):
+    def test_exec_with_working_dir(self, mock_manager_class, mock_run, test_config) -> None:
         """Test exec with working directory."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -219,7 +218,7 @@ class TestExecCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_exec_with_environment(self, mock_manager_class, mock_run, test_config):
+    def test_exec_with_environment(self, mock_manager_class, mock_run, test_config) -> None:
         """Test exec with environment variables."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -237,7 +236,7 @@ class TestExecCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_exec_interactive(self, mock_manager_class, mock_run, test_config):
+    def test_exec_interactive(self, mock_manager_class, mock_run, test_config) -> None:
         """Test interactive command execution."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -255,7 +254,7 @@ class TestExecCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_exec_with_user(self, mock_manager_class, mock_run, test_config):
+    def test_exec_with_user(self, mock_manager_class, mock_run, test_config) -> None:
         """Test exec with specific user."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -272,7 +271,7 @@ class TestExecCommand:
         )
 
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_exec_container_not_running(self, mock_manager_class, test_config):
+    def test_exec_container_not_running(self, mock_manager_class, test_config) -> None:
         """Test exec when container is not running."""
         mock_manager = Mock()
         mock_manager.container_running.return_value = False
@@ -297,7 +296,7 @@ class TestLogsCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_logs_basic(self, mock_manager_class, mock_run, test_config):
+    def test_logs_basic(self, mock_manager_class, mock_run, test_config) -> None:
         """Test basic logs retrieval."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -313,7 +312,7 @@ class TestLogsCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_logs_with_follow(self, mock_manager_class, mock_run, test_config):
+    def test_logs_with_follow(self, mock_manager_class, mock_run, test_config) -> None:
         """Test logs with follow option."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -327,7 +326,7 @@ class TestLogsCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_logs_with_tail(self, mock_manager_class, mock_run, test_config):
+    def test_logs_with_tail(self, mock_manager_class, mock_run, test_config) -> None:
         """Test logs with tail option."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -343,7 +342,7 @@ class TestLogsCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_logs_with_timestamps(self, mock_manager_class, mock_run, test_config):
+    def test_logs_with_timestamps(self, mock_manager_class, mock_run, test_config) -> None:
         """Test logs with timestamps."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -359,7 +358,7 @@ class TestLogsCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_logs_with_since(self, mock_manager_class, mock_run, test_config):
+    def test_logs_with_since(self, mock_manager_class, mock_run, test_config) -> None:
         """Test logs with since option."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -378,7 +377,7 @@ class TestLogsCommand:
 
     @patch("wrknv.container.shell_commands.run")
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_logs_combined_options(self, mock_manager_class, mock_run, test_config):
+    def test_logs_combined_options(self, mock_manager_class, mock_run, test_config) -> None:
         """Test logs with multiple options combined."""
         mock_manager = Mock()
         mock_manager.container_name = "test-project-dev"
@@ -396,7 +395,7 @@ class TestLogsCommand:
         )
 
     @patch("wrknv.container.shell_commands.ContainerManager")
-    def test_logs_container_not_exists(self, mock_manager_class, test_config):
+    def test_logs_container_not_exists(self, mock_manager_class, test_config) -> None:
         """Test logs when container doesn't exist."""
         mock_manager = Mock()
         mock_manager.container_exists.return_value = False
@@ -448,7 +447,7 @@ class TestCLIIntegration:
             with patch("wrknv.container.commands.ContainerManager", return_value=manager):
                 yield manager
 
-    def test_cli_enter_command(self, runner, mock_config, mock_container_manager):
+    def test_cli_enter_command(self, runner, mock_config, mock_container_manager) -> None:
         """Test CLI enter command."""
         from wrknv.cli.hub_cli import create_cli
 
@@ -458,7 +457,7 @@ class TestCLIIntegration:
         mock_container_manager.enter.assert_called_once()
 
     @pytest.mark.skip(reason="Hub CLI parameter duplication bug when tests run in sequence")
-    def test_cli_exec_command(self, runner, mock_config, mock_container_manager):
+    def test_cli_exec_command(self, runner, mock_config, mock_container_manager) -> None:
         """Test CLI exec command."""
         from wrknv.cli.hub_cli import create_cli
 
@@ -474,7 +473,7 @@ class TestCLIIntegration:
             # Verify enter_container was called with the command
             mock_enter.assert_called_once()
 
-    def test_cli_logs_command(self, runner, mock_config, mock_container_manager):
+    def test_cli_logs_command(self, runner, mock_config, mock_container_manager) -> None:
         """Test CLI logs command."""
         from wrknv.cli.hub_cli import create_cli
 
@@ -483,7 +482,7 @@ class TestCLIIntegration:
         assert result.exit_code == 0
         mock_container_manager.logs.get_logs.assert_called_once()
 
-    def test_cli_logs_with_options(self, runner, mock_config, mock_container_manager):
+    def test_cli_logs_with_options(self, runner, mock_config, mock_container_manager) -> None:
         """Test CLI logs command with options."""
         from wrknv.cli.hub_cli import create_cli
 
@@ -496,7 +495,7 @@ class TestCLIIntegration:
         )
 
     @pytest.mark.skip(reason="stats command not implemented yet")
-    def test_cli_stats_command(self, runner, mock_config, mock_container_manager):
+    def test_cli_stats_command(self, runner, mock_config, mock_container_manager) -> None:
         """Test CLI stats command."""
         from wrknv.cli.hub_cli import create_cli
 

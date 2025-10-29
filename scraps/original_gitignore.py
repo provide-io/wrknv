@@ -23,7 +23,7 @@ from wrknv.wenv.config import WorkenvConfig
     description="List available gitignore templates",
     category="gitignore",
 )
-def gitignore_list(category: str | None = None):
+def gitignore_list(category: str | None = None) -> None:
     """List available gitignore templates."""
     manager = GitignoreManager()
     templates = manager.list_available_templates(category=category)
@@ -48,7 +48,7 @@ def gitignore_list(category: str | None = None):
     description="Search for gitignore templates",
     category="gitignore",
 )
-def gitignore_search(pattern: str):
+def gitignore_search(pattern: str) -> None:
     """Search for gitignore templates matching a pattern."""
     manager = GitignoreManager()
     results = manager.search_templates(pattern)
@@ -69,7 +69,7 @@ def gitignore_search(pattern: str):
     description="Detect project types and suggest templates",
     category="gitignore",
 )
-def gitignore_detect(path: str | None = None):
+def gitignore_detect(path: str | None = None) -> None:
     """Detect project types and suggest appropriate gitignore templates."""
     target_path = Path(path) if path else Path.cwd()
 
@@ -113,7 +113,7 @@ def gitignore_build(
     output: str | None = None,
     append: bool = False,
     auto_detect: bool = False,
-):
+) -> None:
     """Build a .gitignore file from templates."""
     config = WorkenvConfig()
     manager = GitignoreManager(config)
@@ -180,7 +180,7 @@ def gitignore_build(
     description="Show content of a gitignore template",
     category="gitignore",
 )
-def gitignore_show(template: str):
+def gitignore_show(template: str) -> None:
     """Show the content of a specific gitignore template."""
     manager = GitignoreManager()
 
@@ -204,7 +204,7 @@ def gitignore_show(template: str):
     description="Update gitignore template cache",
     category="gitignore",
 )
-def gitignore_update():
+def gitignore_update() -> None:
     """Update the local gitignore template cache from GitHub."""
     manager = GitignoreManager()
 

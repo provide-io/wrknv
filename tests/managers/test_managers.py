@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from pathlib import Path
-from provide.testkit.mocking import MagicMock, patch
 
 from provide.testkit import FoundationTestCase
+from provide.testkit.mocking import MagicMock, patch
 import pytest
 
 from wrknv.config import WorkenvConfig
@@ -52,7 +52,7 @@ class TestManagers(FoundationTestCase):
 
     @patch("pathlib.Path.iterdir")
     @patch("pathlib.Path.exists", return_value=True)
-    def test_get_installed_versions(self, mock_exists, mock_iterdir):
+    def test_get_installed_versions(self, mock_exists, mock_iterdir) -> None:
         # Arrange
         config = WorkenvConfig()
         manager = ConcreteToolManager(config)

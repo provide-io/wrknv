@@ -6,12 +6,10 @@ Unit tests for GitHubReleasesClient.
 
 from __future__ import annotations
 
-import pathlib
-from provide.testkit.mocking import AsyncMock, MagicMock, patch
-
+from provide.testkit.mocking import MagicMock, patch
 import pytest
 
-from wrknv.managers.github import Asset, GitHubReleasesClient, Release, Tag
+from wrknv.managers.github import GitHubReleasesClient, Release, Tag
 
 
 @pytest.fixture
@@ -64,13 +62,13 @@ def sample_tag_data():
 class TestGitHubReleasesClient:
     """Test GitHubReleasesClient."""
 
-    def test_init(self):
+    def test_init(self) -> None:
         """Test client initialization."""
         client = GitHubReleasesClient("owner/repo")
         assert client.repo == "owner/repo"
         assert client.token is None
 
-    def test_init_with_token(self):
+    def test_init_with_token(self) -> None:
         """Test client initialization with token."""
         client = GitHubReleasesClient("owner/repo", token="ghp_test")
         assert client.repo == "owner/repo"
@@ -78,7 +76,7 @@ class TestGitHubReleasesClient:
         assert "Authorization" in client.client.default_headers
 
     @pytest.mark.asyncio
-    async def test_list_releases(self, sample_release_data, mock_response):
+    async def test_list_releases(self, sample_release_data, mock_response) -> None:
         """Test listing releases."""
         mock_response.json = MagicMock(return_value=[sample_release_data])
 
@@ -98,7 +96,7 @@ class TestGitHubReleasesClient:
             mock_get.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_list_releases_filter_prereleases(self, sample_release_data, mock_response):
+    async def test_list_releases_filter_prereleases(self, sample_release_data, mock_response) -> None:
         """Test filtering prereleases."""
         prerelease_data = sample_release_data.copy()
         prerelease_data["prerelease"] = True
@@ -118,7 +116,7 @@ class TestGitHubReleasesClient:
             assert len(releases) == 2
 
     @pytest.mark.asyncio
-    async def test_get_latest_release(self, sample_release_data, mock_response):
+    async def test_get_latest_release(self, sample_release_data, mock_response) -> None:
         """Test getting latest release."""
         mock_response.json = MagicMock(return_value=sample_release_data)
 
@@ -137,7 +135,7 @@ class TestGitHubReleasesClient:
             assert "releases/latest" in call_args[0][0]
 
     @pytest.mark.asyncio
-    async def test_get_release_by_tag(self, sample_release_data, mock_response):
+    async def test_get_release_by_tag(self, sample_release_data, mock_response) -> None:
         """Test getting release by tag."""
         mock_response.json = MagicMock(return_value=sample_release_data)
 
@@ -156,7 +154,7 @@ class TestGitHubReleasesClient:
             assert "releases/tags/v1.0.0" in call_args[0][0]
 
     @pytest.mark.asyncio
-    async def test_list_tags(self, sample_tag_data, mock_response):
+    async def test_list_tags(self, sample_tag_data, mock_response) -> None:
         """Test listing tags."""
         mock_response.json = MagicMock(return_value=[sample_tag_data])
 
@@ -175,7 +173,7 @@ class TestGitHubReleasesClient:
             mock_get.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_get_versions(self, sample_release_data, mock_response):
+    async def test_get_versions(self, sample_release_data, mock_response) -> None:
         """Test getting version strings."""
         mock_response.json = MagicMock(return_value=[sample_release_data])
 
@@ -188,7 +186,7 @@ class TestGitHubReleasesClient:
             assert versions[0] == "1.0.0"  # v prefix stripped
 
     @pytest.mark.asyncio
-    async def test_get_versions_no_v_prefix(self, sample_release_data, mock_response):
+    async def test_get_versions_no_v_prefix(self, sample_release_data, mock_response) -> None:
         """Test getting versions without v prefix."""
         sample_release_data["tag_name"] = "1.0.0"  # No 'v' prefix
         mock_response.json = MagicMock(return_value=[sample_release_data])
@@ -200,7 +198,7 @@ class TestGitHubReleasesClient:
 
             assert versions[0] == "1.0.0"
 
-    def test_find_asset(self, sample_release_data):
+    def test_find_asset(self, sample_release_data) -> None:
         """Test finding asset by pattern."""
         release = Release.from_api(sample_release_data)
         client = GitHubReleasesClient("owner/repo")
@@ -226,7 +224,7 @@ class TestGitHubReleasesClient:
     # Unit testing downloads with mocked transport is complex due to context managers
 
     @pytest.mark.asyncio
-    async def test_context_manager(self):
+    async def test_context_manager(self) -> None:
         """Test client as context manager."""
         async with GitHubReleasesClient("owner/repo") as client:
             assert client.repo == "owner/repo"

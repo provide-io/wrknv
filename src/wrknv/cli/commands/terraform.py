@@ -31,7 +31,7 @@ def tf_command(
     list: bool = False,
     list_variants: bool = False,
     dry_run: bool = False,
-):
+) -> None:
     """Manage Terraform/OpenTofu versions.
 
     Switch to a specific variant and version of Terraform ecosystem tools.

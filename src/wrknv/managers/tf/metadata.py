@@ -21,7 +21,7 @@ from provide.foundation import logger
 class TfMetadataManager:
     """Manages metadata and RECENT files for tf tools."""
 
-    def __init__(self, install_path: pathlib.Path, tool_name: str):
+    def __init__(self, install_path: pathlib.Path, tool_name: str) -> None:
         self.install_path = install_path
         self.tool_name = tool_name
         self.metadata_file = install_path / "metadata.json"

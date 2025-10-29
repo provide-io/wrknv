@@ -15,21 +15,14 @@ issues when this module is loaded by conftest.py.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
+
 from provide.testkit.mocking import Mock
 
 # Use TYPE_CHECKING to avoid runtime imports
 if TYPE_CHECKING:
-    from wrknv.container.manager import ContainerManager
-    from wrknv.container.operations.build import ContainerBuilder
-    from wrknv.container.operations.exec import ContainerExec
-    from wrknv.container.operations.lifecycle import ContainerLifecycle
-    from wrknv.container.operations.logs import ContainerLogs
-    from wrknv.container.operations.volumes import VolumeManager
-    from wrknv.container.runtime.docker import DockerRuntime
-    from wrknv.container.storage import ContainerStorage
     from wrknv.config import WorkenvConfig
-    from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
+    from wrknv.container.manager import ContainerManager
 
 
 def create_test_config(
@@ -362,7 +355,7 @@ def create_mock_manager(
 
 
 # Convenience function for pytest fixtures
-def pytest_configure_fixtures(config):
+def pytest_configure_fixtures(config) -> None:
     """Configure pytest with these fixtures.
 
     Add this to conftest.py:

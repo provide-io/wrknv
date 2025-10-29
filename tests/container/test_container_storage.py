@@ -14,11 +14,12 @@ Tests for container storage structure under ~/.wrknv
 import json
 from pathlib import Path
 import shutil
-from provide.testkit.mocking import Mock, patch
 
-from wrknv.container.manager import ContainerManager
+from provide.testkit.mocking import Mock
+
 from wrknv.config import WorkenvConfig
-from wrknv.wenv.schema import ContainerConfig, WorkenvSchema
+from wrknv.container.manager import ContainerManager
+from wrknv.wenv.schema import ContainerConfig
 
 
 @pytest.mark.container
@@ -40,14 +41,14 @@ class TestContainerStorageStructure:
         )
         return ContainerManager(config)
 
-    def test_storage_directory_exists(self, container_manager, test_storage_path):
+    def test_storage_directory_exists(self, container_manager, test_storage_path) -> None:
         """Test that storage directory is created."""
         # The directory should be created during __init__
         storage_dir = Path(test_storage_path)
         assert storage_dir.exists()
         assert storage_dir.is_dir()
 
-    def test_containers_directory_structure(self, container_manager, test_storage_path):
+    def test_containers_directory_structure(self, container_manager, test_storage_path) -> None:
         """Test that containers directory structure is created correctly."""
         storage_dir = Path(test_storage_path)
 
@@ -56,7 +57,7 @@ class TestContainerStorageStructure:
         assert shared_dir.exists()
         assert (shared_dir / "downloads").exists()
 
-    def test_container_specific_directories(self, container_manager, test_storage_path):
+    def test_container_specific_directories(self, container_manager, test_storage_path) -> None:
         """Test that container-specific directories are created."""
         container_name = container_manager.container_name
         storage_dir = Path(test_storage_path)
@@ -73,7 +74,7 @@ class TestContainerStorageStructure:
         assert (container_dir / "logs").exists()
         assert (container_dir / "backups").exists()
 
-    def test_get_container_path(self, container_manager, test_storage_path):
+    def test_get_container_path(self, container_manager, test_storage_path) -> None:
         """Test getting container-specific paths."""
         # Storage is now automatically set up in __attrs_post_init__
 
@@ -119,7 +120,7 @@ class TestContainerMetadata:
         # Storage is now automatically set up in __attrs_post_init__
         return manager
 
-    def test_save_metadata(self, container_manager, test_storage_path):
+    def test_save_metadata(self, container_manager, test_storage_path) -> None:
         """Test saving container metadata."""
         container_manager.save_metadata()
 
@@ -138,7 +139,7 @@ class TestContainerMetadata:
         assert metadata["container_name"] == "test-project-dev"
         assert metadata["project_name"] == "test-project"
 
-    def test_load_metadata(self, container_manager, test_storage_path):
+    def test_load_metadata(self, container_manager, test_storage_path) -> None:
         """Test loading container metadata."""
         # Save metadata first
         container_manager.save_metadata()
@@ -153,7 +154,7 @@ class TestContainerMetadata:
         assert "last_updated" in metadata
         assert metadata["project_name"] == "test-project"
 
-    def test_update_metadata(self, container_manager, test_storage_path):
+    def test_update_metadata(self, container_manager, test_storage_path) -> None:
         """Test updating container metadata."""
         # Save initial metadata
         container_manager.save_metadata()
@@ -167,7 +168,7 @@ class TestContainerMetadata:
         assert "container_name" in metadata  # Original field still exists
         assert "last_updated" in metadata  # Timestamp updated
 
-    def test_metadata_not_found(self, container_manager):
+    def test_metadata_not_found(self, container_manager) -> None:
         """Test loading metadata when file doesn't exist."""
         metadata = container_manager.load_metadata()
         assert metadata is None
@@ -194,7 +195,7 @@ class TestVolumeManagement:
         # Storage is now automatically set up in __attrs_post_init__
         return manager
 
-    def test_get_volume_mappings(self, container_manager):
+    def test_get_volume_mappings(self, container_manager) -> None:
         """Test getting volume mappings for container."""
         mappings = container_manager.get_volume_mappings()
 
@@ -213,7 +214,7 @@ class TestVolumeManagement:
             assert isinstance(container_path, str)
             assert container_path.startswith("/")
 
-    def test_custom_volume_mappings(self, test_storage_path):
+    def test_custom_volume_mappings(self, test_storage_path) -> None:
         """Test custom volume mappings from config."""
         config = WorkenvConfig(
             project_name="test-project",
@@ -239,7 +240,7 @@ class TestVolumeManagement:
         assert mappings["logs"] == "/host/logs:/container/logs:ro"
 
     @pytest.mark.skip(reason="list_volumes() not implemented yet")
-    def test_list_volumes(self, container_manager, test_storage_path):
+    def test_list_volumes(self, container_manager, test_storage_path) -> None:
         """Test listing container volumes."""
         # Create some test files in volumes
         workspace = container_manager.storage.get_container_path("volumes/workspace")
@@ -252,7 +253,7 @@ class TestVolumeManagement:
         # volumes = container_manager.list_volumes()
         pass
 
-    def test_backup_volumes(self, container_manager, test_storage_path):
+    def test_backup_volumes(self, container_manager, test_storage_path) -> None:
         """Test backing up container volumes."""
         # Create test data
         workspace = container_manager.storage.get_container_path("volumes/workspace")
@@ -266,7 +267,7 @@ class TestVolumeManagement:
         assert result.exists()  # Backup file exists
         assert result.suffix == ".gz"  # Compressed backup
 
-    def test_restore_volumes(self, container_manager, test_storage_path):
+    def test_restore_volumes(self, container_manager, test_storage_path) -> None:
         """Test restoring container volumes from backup."""
         # Create test data
         workspace = container_manager.storage.get_container_path("volumes/workspace")
@@ -284,11 +285,11 @@ class TestVolumeManagement:
         backup_dir = container_manager.volumes.backup_dir
         if backup_dir.exists() and list(backup_dir.glob("*.tar.gz")):
             # If a backup exists, test restore
-            backup_file = list(backup_dir.glob("*.tar.gz"))[0]
+            backup_file = next(iter(backup_dir.glob("*.tar.gz")))
             result = container_manager.restore_volumes(backup_file, force=True)
             assert isinstance(result, bool)
 
-    def test_clean_volumes(self, container_manager, test_storage_path):
+    def test_clean_volumes(self, container_manager, test_storage_path) -> None:
         """Test cleaning container volumes."""
         # Create test data
         workspace = container_manager.storage.get_container_path("volumes/workspace")
@@ -305,7 +306,7 @@ class TestVolumeManagement:
         assert isinstance(result, bool)
         assert result is True  # Clean succeeded
 
-    def test_clean_volumes_with_preserve(self, container_manager, test_storage_path):
+    def test_clean_volumes_with_preserve(self, container_manager, test_storage_path) -> None:
         """Test cleaning volumes with preservation of specific volumes."""
         # Create test data
         workspace = container_manager.storage.get_container_path("volumes/workspace")
@@ -344,7 +345,7 @@ class TestDockerIntegration:
         # Storage is now automatically set up in __attrs_post_init__
         return manager
 
-    def test_build_uses_new_path(self, container_manager, test_storage_path):
+    def test_build_uses_new_path(self, container_manager, test_storage_path) -> None:
         """Test that Docker build uses new build directory."""
         from tests.conftest import create_mock_builder
 
@@ -363,9 +364,9 @@ class TestDockerIntegration:
         build_path = container_manager.storage.get_container_path("build")
         assert build_path.exists()
 
-    def test_start_mounts_persistent_volumes(self, container_manager, test_storage_path):
+    def test_start_mounts_persistent_volumes(self, container_manager, test_storage_path) -> None:
         """Test that Docker start mounts persistent volumes."""
-        from tests.conftest import create_mock_runtime, create_mock_builder, create_mock_lifecycle
+        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_runtime
 
         # Replace attrs dependencies with mocks
         mock_runtime = create_mock_runtime(available=True)
@@ -387,9 +388,9 @@ class TestDockerIntegration:
         call_kwargs = mock_lifecycle.start.call_args[1]
         assert "volumes" in call_kwargs
 
-    def test_clean_preserves_volumes_optionally(self, container_manager):
+    def test_clean_preserves_volumes_optionally(self, container_manager) -> None:
         """Test that clean can optionally preserve volumes."""
-        from tests.conftest import create_mock_lifecycle, create_mock_builder, create_mock_storage
+        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
 
         # Replace attrs dependencies with mocks
         mock_lifecycle = create_mock_lifecycle(exists=True, running=False)

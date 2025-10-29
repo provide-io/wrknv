@@ -65,7 +65,7 @@ class Lockfile:
         resolved_from: str,
         checksum: str | None = None,
         install_path: str | None = None,
-    ):
+    ) -> None:
         """Add a resolved tool to the lockfile."""
         from provide.foundation.time import provide_now
 
@@ -132,7 +132,7 @@ class Lockfile:
 class LockfileManager:
     """Manages wrknv.lock files."""
 
-    def __init__(self, project_dir: Path = Path.cwd()):
+    def __init__(self, project_dir: Path = Path.cwd()) -> None:
         self.project_dir = project_dir
         self.lockfile_path = project_dir / "wrknv.lock"
 
@@ -151,7 +151,7 @@ class LockfileManager:
             # Corrupted lockfile - return None to regenerate
             return None
 
-    def save_lockfile(self, lockfile: Lockfile):
+    def save_lockfile(self, lockfile: Lockfile) -> None:
         """Save lockfile to disk."""
         import json
 

@@ -24,7 +24,7 @@ from wrknv.managers.subrosa.base import SubRosaManager
 class BaoVariant(SubRosaManager):
     """OpenBao variant of secret management tools."""
 
-    def __init__(self, config=None):
+    def __init__(self, config=None) -> None:
         super().__init__(config)
         self._github_client: GitHubReleasesClient | None = None
 

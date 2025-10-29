@@ -8,9 +8,8 @@ from __future__ import annotations
 
 import pathlib
 import tempfile
-from provide.testkit.mocking import patch
 
-import pytest
+from provide.testkit.mocking import patch
 
 from wrknv.config import WorkenvConfig
 

@@ -5,11 +5,9 @@ Test suite for CLI secrets command.
 
 from __future__ import annotations
 
-from provide.testkit.mocking import Mock, patch
-
 import click.testing
 from provide.testkit import FoundationTestCase
-import pytest
+from provide.testkit.mocking import Mock, patch
 
 from wrknv.cli.hub_cli import create_cli
 

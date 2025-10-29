@@ -26,7 +26,7 @@ from wrknv.managers.factory import get_tool_manager
 
 # Register the profile group first
 @register_command("profile", group=True, description="Manage tool version profiles")
-def profile_group():
+def profile_group() -> None:
     """Commands for managing profiles."""
     pass
 
@@ -35,7 +35,7 @@ def profile_group():
     "profile.list",
     description="List available profiles",
 )
-def profile_list():
+def profile_list() -> None:
     """List available profiles."""
     config = WrknvContext.get_config()
     profiles = config.list_profiles()
@@ -55,7 +55,7 @@ def profile_list():
     "profile.save",
     description="Save current tool versions as a profile",
 )
-def profile_save(name: str, force: bool = False):
+def profile_save(name: str, force: bool = False) -> None:
     """Save current tool versions as a profile."""
     config = WrknvContext.get_config()
 
@@ -80,7 +80,7 @@ def profile_save(name: str, force: bool = False):
     "profile.load",
     description="Load and apply a profile",
 )
-def profile_load(name: str):
+def profile_load(name: str) -> None:
     """Load and apply a profile."""
     config = WrknvContext.get_config()
 
@@ -117,7 +117,7 @@ def profile_load(name: str):
     "profile.delete",
     description="Delete a profile",
 )
-def profile_delete(name: str):
+def profile_delete(name: str) -> None:
     """Delete a profile."""
     config = WrknvContext.get_config()
 
@@ -139,7 +139,7 @@ def profile_delete(name: str):
     "profile.show",
     description="Show profile details",
 )
-def profile_show(name: str):
+def profile_show(name: str) -> None:
     """Show profile details."""
     config = WrknvContext.get_config()
 
@@ -157,7 +157,7 @@ def profile_show(name: str):
     "profile.export",
     description="Export a profile to a file",
 )
-def profile_export(name: str, output: str):
+def profile_export(name: str, output: str) -> None:
     """Export a profile to a file."""
     import json
 
@@ -186,7 +186,7 @@ def profile_export(name: str, output: str):
     "profile.import",
     description="Import a profile from a file",
 )
-def profile_import(file: str):
+def profile_import(file: str) -> None:
     """Import a profile from a file."""
     import json
 

@@ -37,7 +37,7 @@ from wrknv.config.defaults import (
 )
 
 
-def validate_version(instance, attribute, value):
+def validate_version(instance, attribute, value) -> None:
     """Validate version format."""
     if not value:
         raise ValueError("Version cannot be empty")
@@ -46,7 +46,7 @@ def validate_version(instance, attribute, value):
         raise ValueError(f"Invalid version format: {value}")
 
 
-def validate_python_version(instance, attribute, value):
+def validate_python_version(instance, attribute, value) -> None:
     """Validate Python version format."""
     parts = value.split(".")
     if len(parts) < 2:
@@ -60,7 +60,7 @@ def validate_python_version(instance, attribute, value):
         raise ValueError(f"Invalid Python version format: {value}") from e
 
 
-def validate_profile_name(instance, attribute, value):
+def validate_profile_name(instance, attribute, value) -> None:
     """Validate profile name."""
     if not value:
         raise ValueError("Profile name cannot be empty")
@@ -68,7 +68,7 @@ def validate_profile_name(instance, attribute, value):
         raise ValueError(f"Invalid profile name: {value}")
 
 
-def validate_package_name_validator(instance, attribute, value):
+def validate_package_name_validator(instance, attribute, value) -> None:
     """Validate package name."""
     if not value:
         raise ValueError("Package name cannot be empty")
@@ -94,7 +94,7 @@ def convert_registry_url(value):
     return value.rstrip("/")
 
 
-def validate_timeout(instance, attribute, value):
+def validate_timeout(instance, attribute, value) -> None:
     """Validate timeout value."""
     if value <= 0:
         raise ValueError("Timeout must be positive")
@@ -124,14 +124,14 @@ def validate_volume_mapping(mapping: str) -> bool:
     return True
 
 
-def validate_volume_mappings(instance, attribute, value):
+def validate_volume_mappings(instance, attribute, value) -> None:
     """Validate volume mappings dictionary."""
     for name, mapping in value.items():
         if not validate_volume_mapping(mapping):
             raise ValueError(f"Invalid volume mapping for '{name}': {mapping}")
 
 
-def validate_project_name(instance, attribute, value):
+def validate_project_name(instance, attribute, value) -> None:
     """Validate project name."""
     if not value:
         raise ValueError("Project name cannot be empty")

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from provide.testkit.mocking import patch
-
 from provide.testkit import FoundationTestCase
+from provide.testkit.mocking import patch
 import pytest
 
+from wrknv.config import WorkenvConfig
 from wrknv.container.commands import (
     build_container,
     clean_container,
@@ -16,7 +16,6 @@ from wrknv.container.commands import (
     start_container,
     stop_container,
 )
-from wrknv.config import WorkenvConfig
 
 
 @pytest.mark.container
