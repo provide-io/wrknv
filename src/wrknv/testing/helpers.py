@@ -11,10 +11,12 @@ that wrknv is designed to manage.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 import contextlib
 import os
 from pathlib import Path
 import platform
+import subprocess
 import sys
 from typing import Any
 
@@ -94,7 +96,7 @@ def activate_workenv(package_name: str | None = None) -> dict[str, str]:
 
 
 @contextlib.contextmanager
-def workenv_context(package_name: str | None = None):
+def workenv_context(package_name: str | None = None) -> Iterator[None]:
     """
     Context manager for running code with workenv activated.
 

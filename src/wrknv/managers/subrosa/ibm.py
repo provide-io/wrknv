@@ -47,10 +47,10 @@ class IbmVaultVariant(SubRosaManager):
             # Parse versions from release data
             for version_str, _version_data in data.get("versions", {}).items():
                 # Skip pre-releases unless configured
-                if not include_prereleases:
-                    # Skip versions with -rc, -beta, -alpha, etc.
-                    if any(tag in version_str for tag in ["-rc", "-beta", "-alpha", "-dev"]):
-                        continue
+                if not include_prereleases and any(
+                    tag in version_str for tag in ["-rc", "-beta", "-alpha", "-dev"]
+                ):
+                    continue
 
                 versions.append(version_str)
 

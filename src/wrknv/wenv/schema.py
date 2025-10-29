@@ -307,7 +307,7 @@ class WorkenvSchema:
         validator=validators.optional(validators.instance_of(GitignoreConfig)),
     )
 
-    def __attrs_post_init__(self):
+    def __attrs_post_init__(self) -> None:
         """Post-initialization processing."""
         # Expand user home directory
         self.install_dir = str(pathlib.Path(self.install_dir).expanduser())

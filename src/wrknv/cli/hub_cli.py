@@ -16,6 +16,7 @@ from __future__ import annotations
 import importlib
 import sys
 
+import click
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 
@@ -72,7 +73,7 @@ def load_commands() -> None:
     logger.debug("Loaded wrknv command modules")
 
 
-def create_cli():
+def create_cli() -> click.Command:
     """Create the main CLI application using the hub."""
     # Get or create hub
     hub = get_hub()

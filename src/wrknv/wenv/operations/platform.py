@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from provide.foundation.platform import (
     get_arch_name,
-    get_os_name,
+    get_os_name as foundation_get_os_name,
     get_platform_string,
     get_system_info,
 )
@@ -85,8 +85,6 @@ def get_os_name() -> str:
 
     DEPRECATED: Use provide.foundation.platform.get_os_name directly.
     """
-    from provide.foundation.platform import get_os_name as foundation_get_os_name
-
     return foundation_get_os_name()
 
 

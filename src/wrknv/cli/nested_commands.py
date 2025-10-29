@@ -109,7 +109,7 @@ class CommandGroup:
                 if param.annotation != inspect.Parameter.empty:
                     param_type = _extract_click_type(param.annotation)
 
-                    if param_type == bool:
+                    if param_type is bool:
                         click_func = click.option(
                             option_name,
                             is_flag=True,

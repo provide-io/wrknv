@@ -58,7 +58,7 @@ class Emoji:
     SUCCESS = "✅"
     ERROR = "❌"
     WARNING = "⚠️"
-    INFO = "ℹ️"
+    INFO = "ⓘ"
     RUNNING = "🟢"
     STOPPED = "🟡"
 
