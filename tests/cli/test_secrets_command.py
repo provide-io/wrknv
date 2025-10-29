@@ -236,60 +236,66 @@ class TestSecretsCommand(FoundationTestCase):
         # Create CLI before patching to ensure module reload happens first
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
-                mock_config = Mock()
-                mock_load.return_value = mock_config
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
+            patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager,
+        ):
+            mock_config = Mock()
+            mock_load.return_value = mock_config
 
-                mock_manager = Mock()
-                mock_manager.switch_version.return_value = None
-                mock_get_manager.return_value = mock_manager
+            mock_manager = Mock()
+            mock_manager.switch_version.return_value = None
+            mock_get_manager.return_value = mock_manager
 
-                runner = click.testing.CliRunner()
-                result = runner.invoke(cli, ["secrets", "ibm", "1.15.0"])
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["secrets", "ibm", "1.15.0"])
 
-                assert result.exit_code == 0
-                assert "IBM Vault" in result.output
-                mock_get_manager.assert_called_once_with("vault", mock_config)
+            assert result.exit_code == 0
+            assert "IBM Vault" in result.output
+            mock_get_manager.assert_called_once_with("vault", mock_config)
 
     def test_switch_version_error(self) -> None:
         """Test error handling during version switch."""
         # Create CLI before patching to ensure module reload happens first
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
-                mock_config = Mock()
-                mock_config.get_setting.return_value = "bao"
-                mock_load.return_value = mock_config
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
+            patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager,
+        ):
+            mock_config = Mock()
+            mock_config.get_setting.return_value = "bao"
+            mock_load.return_value = mock_config
 
-                mock_manager = Mock()
-                mock_manager.switch_version.side_effect = Exception("Version not found")
-                mock_get_manager.return_value = mock_manager
+            mock_manager = Mock()
+            mock_manager.switch_version.side_effect = Exception("Version not found")
+            mock_get_manager.return_value = mock_manager
 
-                runner = click.testing.CliRunner()
-                result = runner.invoke(cli, ["secrets", "2.1.0"])
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["secrets", "2.1.0"])
 
-                assert result.exit_code == 1
-                assert "Error" in result.output
+            assert result.exit_code == 1
+            assert "Error" in result.output
 
     def test_list_versions_error(self) -> None:
         """Test error handling during version listing."""
         # Create CLI before patching to ensure module reload happens first
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager:
-                mock_config = Mock()
-                mock_config.get_setting.return_value = "bao"
-                mock_load.return_value = mock_config
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
+            patch("wrknv.cli.commands.secrets.get_tool_manager") as mock_get_manager,
+        ):
+            mock_config = Mock()
+            mock_config.get_setting.return_value = "bao"
+            mock_load.return_value = mock_config
 
-                mock_manager = Mock()
-                mock_manager.get_available_versions.side_effect = Exception("Network error")
-                mock_get_manager.return_value = mock_manager
+            mock_manager = Mock()
+            mock_manager.get_available_versions.side_effect = Exception("Network error")
+            mock_get_manager.return_value = mock_manager
 
-                runner = click.testing.CliRunner()
-                result = runner.invoke(cli, ["secrets", "--list"])
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["secrets", "--list"])
 
-                assert result.exit_code == 1
-                assert "Error listing versions" in result.output
+            assert result.exit_code == 1
+            assert "Error listing versions" in result.output

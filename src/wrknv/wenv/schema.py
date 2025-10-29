@@ -432,9 +432,7 @@ def config_to_toml(config: WorkenvConfig) -> str:
     def remove_empty(data: Any) -> Any:
         if isinstance(data, dict):
             return {
-                k: remove_empty(v)
-                for k, v in data.items()
-                if v and (not isinstance(v, (dict, list)) or v)
+                k: remove_empty(v) for k, v in data.items() if v and (not isinstance(v, (dict, list)) or v)
             }
         if isinstance(data, list):
             return [remove_empty(item) for item in data if item]
