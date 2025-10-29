@@ -17,6 +17,7 @@ from __future__ import annotations
 from abc import abstractmethod
 import os
 import pathlib
+from typing import TYPE_CHECKING
 
 from provide.foundation import logger
 from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
@@ -28,6 +29,9 @@ from wrknv.managers.tf.metadata import TfMetadataManager
 from wrknv.managers.tf.utils import calculate_file_hash, get_tool_version_key, version_sort_key
 from wrknv.wenv.bin_manager import get_workenv_bin_dir
 
+if TYPE_CHECKING:
+    from wrknv.config import WorkenvConfig
+
 
 class TfManager(BaseToolManager):
     """
@@ -38,7 +42,7 @@ class TfManager(BaseToolManager):
     for advanced features. Supports both IBM Terraform (formerly HashiCorp) and OpenTofu.
     """
 
-    def __init__(self, config=None) -> None:
+    def __init__(self, config: WorkenvConfig | None = None) -> None:
         super().__init__(config)
         # Override install path to use tf versions directory
         self.install_path = pathlib.Path("~/.terraform.versions").expanduser()

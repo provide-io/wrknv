@@ -65,7 +65,7 @@ class WorkspaceDiscovery:
 
         if has_pyproject:
             try:
-                with open(path / "pyproject.toml", "rb") as f:
+                with (path / "pyproject.toml").open("rb") as f:
                     pyproject = tomllib.load(f)
 
                 current_config = pyproject

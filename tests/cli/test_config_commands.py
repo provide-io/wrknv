@@ -132,43 +132,47 @@ class TestConfigCommands(FoundationTestCase):
 
         self.config_file.write_text('project_name = "test-project"')
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch.dict(os.environ, {}, clear=True):
-                # Remove EDITOR from environment
-                if "EDITOR" in os.environ:
-                    del os.environ["EDITOR"]
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
+            patch.dict(os.environ, {}, clear=True),
+        ):
+            # Remove EDITOR from environment
+            if "EDITOR" in os.environ:
+                del os.environ["EDITOR"]
 
-                mock_config = Mock()
-                mock_config.get_config_path.return_value = self.config_file
-                mock_config.edit_config.side_effect = RuntimeError(
-                    "No editor configured. Set EDITOR or VISUAL environment variable."
-                )
-                mock_load.return_value = mock_config
+            mock_config = Mock()
+            mock_config.get_config_path.return_value = self.config_file
+            mock_config.edit_config.side_effect = RuntimeError(
+                "No editor configured. Set EDITOR or VISUAL environment variable."
+            )
+            mock_load.return_value = mock_config
 
-                result = runner.invoke(cli, ["config", "edit"])
+            result = runner.invoke(cli, ["config", "edit"])
 
-                # The command catches the exception and shows error message
-                assert "No editor configured" in result.output
+            # The command catches the exception and shows error message
+            assert "No editor configured" in result.output
 
     def test_config_edit_creates_file_if_missing(self) -> None:
         """Test that edit creates a config file if it doesn't exist."""
         runner = click.testing.CliRunner()
         cli = get_test_cli()
 
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("provide.foundation.process.run") as mock_run:
-                with patch.dict(os.environ, {"EDITOR": "nano"}):
-                    mock_config = Mock()
-                    mock_config.get_config_path.return_value = self.config_file
-                    mock_config.config_exists.return_value = False
-                    mock_config.edit_config.return_value = None
-                    mock_load.return_value = mock_config
-                    mock_run.return_value = Mock(returncode=0)
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
+            patch("provide.foundation.process.run") as mock_run,
+            patch.dict(os.environ, {"EDITOR": "nano"}),
+        ):
+            mock_config = Mock()
+            mock_config.get_config_path.return_value = self.config_file
+            mock_config.config_exists.return_value = False
+            mock_config.edit_config.return_value = None
+            mock_load.return_value = mock_config
+            mock_run.return_value = Mock(returncode=0)
 
-                    result = runner.invoke(cli, ["config", "edit"])
+            result = runner.invoke(cli, ["config", "edit"])
 
-                    assert result.exit_code == 0
-                    mock_config.edit_config.assert_called_once()
+            assert result.exit_code == 0
+            mock_config.edit_config.assert_called_once()
 
     def test_config_validate(self) -> None:
         """Test validating configuration file."""

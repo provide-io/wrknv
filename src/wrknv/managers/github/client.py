@@ -10,9 +10,9 @@ Client for interacting with GitHub Releases API using provide-foundation transpo
 
 from __future__ import annotations
 
+from collections.abc import Callable
 import pathlib
 import re
-from collections.abc import Callable
 from types import TracebackType
 from typing import Literal
 
@@ -216,7 +216,7 @@ class GitHubReleasesClient:
 
         # Stream download
         async with self.client:
-            with open(destination, "wb") as f:
+            with destination.open("wb") as f:
                 async for chunk in self.client.stream(url):
                     f.write(chunk)
                     downloaded += len(chunk)

@@ -266,7 +266,7 @@ class WrknvDoctor:
         try:
             import tomli
 
-            with open(config_file, "rb") as f:
+            with config_file.open("rb") as f:
                 config = tomli.load(f)
 
             # Check for required sections
@@ -298,7 +298,7 @@ class WrknvDoctor:
         try:
             import tomli
 
-            with open(config_file, "rb") as f:
+            with config_file.open("rb") as f:
                 config = tomli.load(f)
 
             siblings = config.get("siblings", {}).get("patterns", [])

@@ -22,8 +22,6 @@ from provide.foundation.hub import register_command
 from provide.foundation.logger import get_logger
 from rich.table import Table
 
-logger = get_logger(__name__)
-
 from wrknv.cli.hub_cli import WrknvContext
 from wrknv.cli.visual import Emoji, get_console, get_tool_emoji
 from wrknv.lockfile import LockfileManager
@@ -31,6 +29,8 @@ from wrknv.managers.factory import get_tool_manager
 from wrknv.utils.version_resolver import resolve_tool_versions
 from wrknv.wenv.doctor import run_doctor
 from wrknv.wenv.env_generator import create_project_env_scripts
+
+logger = get_logger(__name__)
 
 
 @register_command("status", description="Show status of all managed tools", category="tools")

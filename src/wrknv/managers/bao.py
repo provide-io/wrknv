@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import asyncio
 import pathlib
-
 from typing import TYPE_CHECKING
 
 from provide.foundation import logger

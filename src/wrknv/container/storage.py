@@ -109,7 +109,7 @@ class ContainerStorage:
         metadata["last_updated"] = provide_now().isoformat()
 
         try:
-            with open(metadata_path, "w") as f:
+            with metadata_path.open("w") as f:
                 json.dump(metadata, f, indent=2)
             logger.debug("📝 Saved container metadata", path=str(metadata_path))
         except Exception as e:
@@ -123,7 +123,7 @@ class ContainerStorage:
             return None
 
         try:
-            with open(metadata_path) as f:
+            with metadata_path.open() as f:
                 metadata = json.load(f)
             logger.debug("📖 Loaded container metadata", path=str(metadata_path))
             return metadata

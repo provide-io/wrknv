@@ -12,9 +12,9 @@ Type-safe configuration models with validation for wrknv.toml using attrs.
 from __future__ import annotations
 
 import pathlib
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from attrs import define, field, validators
+from attrs import Attribute, define, field, validators
 import cattrs
 
 from wrknv.config.defaults import (
@@ -36,8 +36,11 @@ from wrknv.config.defaults import (
     DEFAULT_WORKENV_INSTALL_DIR,
 )
 
+if TYPE_CHECKING:
+    from wrknv.config.core import WorkenvConfig
 
-def validate_version(instance, attribute, value) -> None:
+
+def validate_version(instance: Any, attribute: Attribute[Any], value: str) -> None:
     """Validate version format."""
     if not value:
         raise ValueError("Version cannot be empty")
@@ -46,7 +49,7 @@ def validate_version(instance, attribute, value) -> None:
         raise ValueError(f"Invalid version format: {value}")
 
 
-def validate_python_version(instance, attribute, value) -> None:
+def validate_python_version(instance: Any, attribute: Attribute[Any], value: str) -> None:
     """Validate Python version format."""
     parts = value.split(".")
     if len(parts) < 2:
@@ -60,7 +63,7 @@ def validate_python_version(instance, attribute, value) -> None:
         raise ValueError(f"Invalid Python version format: {value}") from e
 
 
-def validate_profile_name(instance, attribute, value) -> None:
+def validate_profile_name(instance: Any, attribute: Attribute[Any], value: str) -> None:
     """Validate profile name."""
     if not value:
         raise ValueError("Profile name cannot be empty")
@@ -68,7 +71,7 @@ def validate_profile_name(instance, attribute, value) -> None:
         raise ValueError(f"Invalid profile name: {value}")
 
 
-def validate_package_name_validator(instance, attribute, value) -> None:
+def validate_package_name_validator(instance: Any, attribute: Attribute[Any], value: str) -> None:
     """Validate package name."""
     if not value:
         raise ValueError("Package name cannot be empty")
@@ -77,7 +80,7 @@ def validate_package_name_validator(instance, attribute, value) -> None:
         raise ValueError(f"Invalid package name: {value}")
 
 
-def convert_package_name(value):
+def convert_package_name(value: str) -> str:
     """Convert package name to lowercase."""
     if not value:
         raise ValueError("Package name cannot be empty")
@@ -87,14 +90,14 @@ def convert_package_name(value):
     return value.lower()
 
 
-def convert_registry_url(value):
+def convert_registry_url(value: str) -> str:
     """Convert registry URL by removing trailing slash."""
     if not value.startswith(("http://", "https://")):
         raise ValueError(f"Invalid registry URL: {value}")
     return value.rstrip("/")
 
 
-def validate_timeout(instance, attribute, value) -> None:
+def validate_timeout(instance: Any, attribute: Attribute[Any], value: int) -> None:
     """Validate timeout value."""
     if value <= 0:
         raise ValueError("Timeout must be positive")
@@ -124,20 +127,24 @@ def validate_volume_mapping(mapping: str) -> bool:
     return True
 
 
-def validate_volume_mappings(instance, attribute, value) -> None:
+def validate_volume_mappings(
+    instance: Any,
+    attribute: Attribute[Any],
+    value: dict[str, str],
+) -> None:
     """Validate volume mappings dictionary."""
     for name, mapping in value.items():
         if not validate_volume_mapping(mapping):
             raise ValueError(f"Invalid volume mapping for '{name}': {mapping}")
 
 
-def validate_project_name(instance, attribute, value) -> None:
+def validate_project_name(instance: Any, attribute: Attribute[Any], value: str) -> None:
     """Validate project name."""
     if not value:
         raise ValueError("Project name cannot be empty")
 
 
-def convert_log_level(value):
+def convert_log_level(value: str) -> str:
     """Convert log level to uppercase and validate."""
     valid_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
     value = value.upper()
@@ -348,14 +355,13 @@ class WorkenvSchema:
         return data
 
 
-def remove_none_values(d):
+def remove_none_values(data: Any) -> Any:
     """Recursively remove None values from dictionary."""
-    if isinstance(d, dict):
-        return {k: remove_none_values(v) for k, v in d.items() if v is not None}
-    elif isinstance(d, list):
-        return [remove_none_values(item) for item in d]
-    else:
-        return d
+    if isinstance(data, dict):
+        return {k: remove_none_values(v) for k, v in data.items() if v is not None}
+    if isinstance(data, list):
+        return [remove_none_values(item) for item in data]
+    return data
 
 
 def validate_config_dict(config_dict: dict[str, Any]) -> tuple[bool, list[str]]:
@@ -423,13 +429,16 @@ def config_to_toml(config: WorkenvConfig) -> str:
     config_dict = config.model_dump(exclude_none=True)
 
     # Remove empty collections
-    def remove_empty(d):
-        if isinstance(d, dict):
-            return {k: remove_empty(v) for k, v in d.items() if v and (not isinstance(v, (dict, list)) or v)}
-        elif isinstance(d, list):
-            return [remove_empty(item) for item in d if item]
-        else:
-            return d
+    def remove_empty(data: Any) -> Any:
+        if isinstance(data, dict):
+            return {
+                k: remove_empty(v)
+                for k, v in data.items()
+                if v and (not isinstance(v, (dict, list)) or v)
+            }
+        if isinstance(data, list):
+            return [remove_empty(item) for item in data if item]
+        return data
 
     config_dict = remove_empty(config_dict)
 

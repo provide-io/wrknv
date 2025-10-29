@@ -31,7 +31,7 @@ class TfMetadataManager:
         """Load metadata from JSON file."""
         if self.metadata_file.exists():
             try:
-                with open(self.metadata_file) as f:
+                with self.metadata_file.open() as f:
                     self.metadata = json.load(f)
                 # Migrate old format if needed
                 self._migrate_metadata_format()
@@ -70,7 +70,7 @@ class TfMetadataManager:
     def save_metadata(self) -> None:
         """Save metadata to JSON file."""
         try:
-            with open(self.metadata_file, "w") as f:
+            with self.metadata_file.open("w") as f:
                 json.dump(self.metadata, f, indent=2, sort_keys=True, default=str)
         except Exception as e:
             logger.warning(f"Failed to save metadata: {e}")
@@ -83,7 +83,7 @@ class TfMetadataManager:
         # Read existing RECENT file if it exists
         if recent_file.exists():
             try:
-                with open(recent_file) as f:
+                with recent_file.open() as f:
                     recent_data = json.load(f)
             except:
                 recent_data = {}
@@ -100,7 +100,7 @@ class TfMetadataManager:
 
         # Write updated RECENT file
         try:
-            with open(recent_file, "w") as f:
+            with recent_file.open("w") as f:
                 json.dump(recent_data, f)
         except Exception as e:
             logger.warning(f"Failed to update RECENT file: {e}")
@@ -113,7 +113,7 @@ class TfMetadataManager:
         # Read existing RECENT file if it exists
         if recent_file.exists():
             try:
-                with open(recent_file) as f:
+                with recent_file.open() as f:
                     recent_data = json.load(f)
             except:
                 recent_data = {}
@@ -131,7 +131,7 @@ class TfMetadataManager:
 
         # Write updated RECENT file
         try:
-            with open(recent_file, "w") as f:
+            with recent_file.open("w") as f:
                 json.dump(recent_data, f)
         except Exception as e:
             logger.warning(f"Failed to update RECENT file with active version: {e}")

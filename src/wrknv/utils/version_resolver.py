@@ -13,6 +13,8 @@ from __future__ import annotations
 from provide.foundation.logger import get_logger
 import semver
 
+from wrknv.managers.base import BaseToolManager
+
 logger = get_logger(__name__)
 
 
@@ -147,7 +149,10 @@ class VersionResolver:
         return resolved_versions
 
 
-def resolve_tool_versions(tool_manager, version_patterns: str | list[str]) -> list[str]:
+def resolve_tool_versions(
+    tool_manager: BaseToolManager,
+    version_patterns: str | list[str],
+) -> list[str]:
     """
     Convenience function to resolve version patterns using a tool manager.
 

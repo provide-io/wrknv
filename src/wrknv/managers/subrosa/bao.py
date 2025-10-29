@@ -13,6 +13,7 @@ Manages OpenBao (open source Vault fork) versions for development.
 from __future__ import annotations
 
 import asyncio
+from typing import TYPE_CHECKING
 
 from provide.foundation import logger
 
@@ -20,11 +21,14 @@ from wrknv.managers.base import ToolManagerError
 from wrknv.managers.github import GitHubReleasesClient
 from wrknv.managers.subrosa.base import SubRosaManager
 
+if TYPE_CHECKING:
+    from wrknv.config import WorkenvConfig
+
 
 class BaoVariant(SubRosaManager):
     """OpenBao variant of secret management tools."""
 
-    def __init__(self, config=None) -> None:
+    def __init__(self, config: WorkenvConfig | None = None) -> None:
         super().__init__(config)
         self._github_client: GitHubReleasesClient | None = None
 

@@ -144,7 +144,7 @@ class LockfileManager:
         try:
             import json
 
-            with open(self.lockfile_path) as f:
+            with self.lockfile_path.open() as f:
                 data = json.load(f)
             return Lockfile.from_dict(data)
         except (json.JSONDecodeError, KeyError, TypeError):
@@ -155,7 +155,7 @@ class LockfileManager:
         """Save lockfile to disk."""
         import json
 
-        with open(self.lockfile_path, "w") as f:
+        with self.lockfile_path.open("w") as f:
             json.dump(lockfile.to_dict(), f, indent=2)
 
     def create_lockfile(self, config: WorkenvConfig) -> Lockfile:

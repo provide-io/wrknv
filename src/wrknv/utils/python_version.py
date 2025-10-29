@@ -60,7 +60,7 @@ def get_project_python_requirement() -> str | None:
         return None
 
     try:
-        with open(pyproject_path, "rb") as f:
+        with pyproject_path.open("rb") as f:
             data = tomllib.load(f)
 
         # Check for requires-python in [project] section

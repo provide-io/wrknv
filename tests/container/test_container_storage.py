@@ -127,7 +127,7 @@ class TestContainerMetadata:
         metadata_file = container_manager.storage.get_container_path("metadata.json")
         assert metadata_file.exists()
 
-        with open(metadata_file) as f:
+        with metadata_file.open() as f:
             metadata = json.load(f)
 
         # Check actual metadata fields from implementation

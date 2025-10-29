@@ -21,7 +21,7 @@ import semver
 def calculate_file_hash(file_path: pathlib.Path, algorithm: str = "sha256") -> str:
     """Calculate hash of a file."""
     hash_func = hashlib.new(algorithm)
-    with open(file_path, "rb") as f:
+    with file_path.open("rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_func.update(chunk)
     return hash_func.hexdigest()

@@ -126,52 +126,56 @@ project_name = "test-project"
 
     def test_profile_load_success(self) -> None:
         """Test successfully loading a profile."""
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager:
-                mock_config = Mock()
-                mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
-                mock_load.return_value = mock_config
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
+            patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager,
+        ):
+            mock_config = Mock()
+            mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
+            mock_load.return_value = mock_config
 
-                mock_manager = Mock()
-                mock_manager.install_version.return_value = None
-                mock_get_manager.return_value = mock_manager
+            mock_manager = Mock()
+            mock_manager.install_version.return_value = None
+            mock_get_manager.return_value = mock_manager
 
-                runner = click.testing.CliRunner()
-                cli = get_test_cli()
-                result = runner.invoke(cli, ["profile", "load", "dev"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "load", "dev"])
 
-                assert result.exit_code == 0
-                assert "Loading profile 'dev'" in result.output
-                assert "Successfully installed terraform 1.5.0" in result.output
-                assert "Successfully installed go 1.21.0" in result.output
+            assert result.exit_code == 0
+            assert "Loading profile 'dev'" in result.output
+            assert "Successfully installed terraform 1.5.0" in result.output
+            assert "Successfully installed go 1.21.0" in result.output
 
-                # Verify install was called for each tool
-                assert mock_manager.install_version.call_count == 2
+            # Verify install was called for each tool
+            assert mock_manager.install_version.call_count == 2
 
     def test_profile_load_partial_failure(self) -> None:
         """Test loading a profile when some tools fail to install."""
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
-            with patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager:
-                mock_config = Mock()
-                mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
-                mock_load.return_value = mock_config
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
+            patch("wrknv.cli.commands.profile.get_tool_manager") as mock_get_manager,
+        ):
+            mock_config = Mock()
+            mock_config.get_profile.return_value = {"terraform": "1.5.0", "go": "1.21.0"}
+            mock_load.return_value = mock_config
 
-                # First tool succeeds, second fails
-                mock_manager = Mock()
-                mock_manager.install_version.side_effect = [
-                    None,  # terraform succeeds
-                    Exception("Failed to download Go"),  # go fails
-                ]
-                mock_get_manager.return_value = mock_manager
+            # First tool succeeds, second fails
+            mock_manager = Mock()
+            mock_manager.install_version.side_effect = [
+                None,  # terraform succeeds
+                Exception("Failed to download Go"),  # go fails
+            ]
+            mock_get_manager.return_value = mock_manager
 
-                runner = click.testing.CliRunner()
-                cli = get_test_cli()
-                result = runner.invoke(cli, ["profile", "load", "dev"])
+            runner = click.testing.CliRunner()
+            cli = get_test_cli()
+            result = runner.invoke(cli, ["profile", "load", "dev"])
 
-                # Should not exit with error, but show error message
-                assert result.exit_code == 0
-                assert "Successfully installed terraform 1.5.0" in result.output
-                assert "Error installing go 1.21.0" in result.output
+            # Should not exit with error, but show error message
+            assert result.exit_code == 0
+            assert "Successfully installed terraform 1.5.0" in result.output
+            assert "Error installing go 1.21.0" in result.output
 
     def test_profile_delete(self) -> None:
         """Test deleting a profile."""

@@ -16,9 +16,9 @@ Manages secret management tool variants (OpenBao, HashiCorp Vault, etc.)
 from __future__ import annotations
 
 from abc import abstractmethod
+import json
 import pathlib
 from typing import TYPE_CHECKING
-import json
 
 from provide.foundation import logger
 from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
@@ -73,7 +73,7 @@ class SubRosaManager(BaseToolManager):
         """Load metadata from JSON file."""
         if self.metadata_file.exists():
             try:
-                with open(self.metadata_file) as f:
+                with self.metadata_file.open() as f:
                     return json.load(f)
             except Exception as e:
                 logger.warning(f"Failed to load subrosa metadata: {e}")
@@ -83,7 +83,7 @@ class SubRosaManager(BaseToolManager):
     def _save_metadata(self) -> None:
         """Save metadata to JSON file."""
         try:
-            with open(self.metadata_file, "w") as f:
+            with self.metadata_file.open("w") as f:
                 json.dump(self.metadata, f, indent=2)
         except Exception as e:
             logger.error(f"Failed to save subrosa metadata: {e}")

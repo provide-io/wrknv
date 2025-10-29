@@ -165,15 +165,16 @@ version = "0.1.0"
             mock_config_instance = WorkenvConfig.load()
 
         # Patch WorkenvConfig in cli.py to return our pre-configured instance
-        with patch("wrknv.cli.hub_cli.WrknvContext.get_config", return_value=mock_config_instance):
-            # Change current working directory to tmp_path for the test
-            with runner.isolated_filesystem(tmp_path):
-                # Use shared cli fixture
-                result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config", return_value=mock_config_instance),
+            runner.isolated_filesystem(tmp_path),
+        ):
+            # Use shared cli fixture
+            result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
-                assert result.exit_code == 0
-                assert "No gitignore templates specified in config or via --templates." in result.output
-                assert not (tmp_path / ".gitignore").exists()
+            assert result.exit_code == 0
+            assert "No gitignore templates specified in config or via --templates." in result.output
+            assert not (tmp_path / ".gitignore").exists()
 
     def test_gitignore_build_with_non_existent_template(
         self, cli, runner, tmp_path, gitignore_templates_dir, capsys

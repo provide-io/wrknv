@@ -14,17 +14,21 @@ from __future__ import annotations
 
 import asyncio
 import pathlib
+from typing import TYPE_CHECKING
 
 from provide.foundation import logger
 
 from wrknv.managers.base import BaseToolManager, ToolManagerError
 from wrknv.managers.github import GitHubReleasesClient
 
+if TYPE_CHECKING:
+    from wrknv.config import WorkenvConfig
+
 
 class UvManager(BaseToolManager):
     """Manages UV versions using GitHub releases API."""
 
-    def __init__(self, config=None) -> None:
+    def __init__(self, config: WorkenvConfig | None = None) -> None:
         super().__init__(config)
         self._github_client: GitHubReleasesClient | None = None
 

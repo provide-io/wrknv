@@ -220,7 +220,7 @@ def parse_checksum_file(checksum_path: pathlib.Path, target_filename: str) -> st
         return None
 
     try:
-        with open(checksum_path) as f:
+        with checksum_path.open() as f:
             for line in f:
                 line = line.strip()
                 if not line or line.startswith("#"):
