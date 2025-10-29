@@ -43,7 +43,7 @@ class ContainerLifecycle:
         """Check if container is running."""
         return self.runtime.container_running(self.container_name)
 
-    def start(self, create_if_missing: bool, **run_options) -> bool:
+    def start(self, create_if_missing: bool, **run_options: Any) -> bool:
         """Start the container.
 
         Args:

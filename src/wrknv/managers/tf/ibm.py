@@ -68,7 +68,7 @@ class IbmTfVariant(TfManager):
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch IBM Terraform versions: {e}")
+            raise ToolManagerError(f"Failed to fetch IBM Terraform versions: {e}") from e
 
     def _is_prerelease(self, version: str) -> bool:
         """Check if version is a prerelease."""

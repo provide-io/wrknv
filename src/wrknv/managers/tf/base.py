@@ -159,7 +159,7 @@ class TfManager(BaseToolManager):
         if self.get_installed_version() == version:
             try:
                 self.config.set_tool_version(self.tool_name, "")
-            except:
+            except Exception:
                 logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def _install_from_archive(self, archive_path: pathlib.Path, version: str) -> None:

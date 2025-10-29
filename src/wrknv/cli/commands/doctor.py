@@ -13,6 +13,7 @@ Doctor Commands
 Commands for diagnosing and testing the wrknv system.
 from __future__ import annotations
 
+from importlib.util import find_spec
 from pathlib import Path
 import sys
 from typing import Any
@@ -219,12 +220,7 @@ def _check_dependencies() -> dict[str, Any]:
                 missing_deps.append(dep_name)
 
         # Check for TOML support (tomllib in Python 3.11+, tomli as fallback)
-        try:
-            try:
-                import tomllib
-            except ImportError:
-                import tomli
-        except ImportError:
+        if find_spec("tomllib") is None and find_spec("tomli") is None:
             missing_deps.append("tomli (for TOML parsing)")
 
         # Check optional dependencies

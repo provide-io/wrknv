@@ -113,7 +113,7 @@ class SubRosaManager(BaseToolManager):
             from packaging.version import parse as parse_version
 
             versions.sort(key=lambda v: parse_version(v), reverse=True)
-        except:
+        except Exception:
             versions.sort(reverse=True)
 
         return versions

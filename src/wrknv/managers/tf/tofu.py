@@ -71,7 +71,7 @@ class TofuTfVariant(TfManager):
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch OpenTofu versions: {e}")
+            raise ToolManagerError(f"Failed to fetch OpenTofu versions: {e}") from e
 
     def get_download_url(self, version: str) -> str:
         """Get download URL for OpenTofu version."""
@@ -155,7 +155,7 @@ class TofuTfVariant(TfManager):
         try:
             major, minor = map(int, major_minor.split("."))
             is_compatible = major > 1 or (major == 1 and minor >= 6)
-        except:
+        except (ValueError, TypeError):
             is_compatible = False
 
         return {

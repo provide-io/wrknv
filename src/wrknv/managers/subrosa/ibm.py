@@ -61,13 +61,13 @@ class IbmVaultVariant(SubRosaManager):
                 from packaging.version import parse as parse_version
 
                 versions.sort(key=lambda v: parse_version(v), reverse=True)
-            except:
+            except Exception:
                 versions.sort(reverse=True)
 
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch Vault versions: {e}")
+            raise ToolManagerError(f"Failed to fetch Vault versions: {e}") from e
 
     def get_download_url(self, version: str) -> str:
         """Get download URL for HashiCorp Vault version."""
