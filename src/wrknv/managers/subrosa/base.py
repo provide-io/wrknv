@@ -16,14 +16,18 @@ Manages secret management tool variants (OpenBao, HashiCorp Vault, etc.)
 from __future__ import annotations
 
 from abc import abstractmethod
-import json
 import pathlib
+from typing import TYPE_CHECKING
+import json
 
 from provide.foundation import logger
 from provide.foundation.file import safe_copy, safe_delete, safe_rmtree
 
 from wrknv.managers.base import BaseToolManager, ToolManagerError
 from wrknv.wenv.bin_manager import get_workenv_bin_dir
+
+if TYPE_CHECKING:
+    from wrknv.config import WorkenvConfig
 
 
 class SubRosaManager(BaseToolManager):
@@ -35,7 +39,7 @@ class SubRosaManager(BaseToolManager):
     workenv integration.
     """
 
-    def __init__(self, config=None) -> None:
+    def __init__(self, config: WorkenvConfig | None = None) -> None:
         super().__init__(config)
 
         # Override install path to use subrosa directory

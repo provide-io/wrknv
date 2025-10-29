@@ -11,12 +11,16 @@ Central manager for gitignore operations.
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from provide.foundation import logger
 
 from .builder import GitignoreBuilder
 from .detector import ProjectDetector
 from .templates import TemplateHandler
+
+if TYPE_CHECKING:
+    from wrknv.wenv.schema import GitignoreConfig
 
 
 class GitignoreManager:
@@ -157,7 +161,7 @@ class GitignoreManager:
             project_name=self.project_dir.name,
         )
 
-    def build_from_config(self, config) -> bool:
+    def build_from_config(self, config: GitignoreConfig) -> bool:
         """
         Build gitignore from configuration object.
 
