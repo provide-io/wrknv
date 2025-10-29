@@ -224,7 +224,7 @@ class GoManager(BaseToolManager):
     def _version_compare(self, version1: str, version2: str) -> int:
         """Compare two version strings. Returns -1, 0, or 1."""
 
-        def version_tuple(v):
+        def version_tuple(v: str) -> tuple[int, ...]:
             return tuple(map(int, v.split(".")))
 
         v1_tuple = version_tuple(version1)

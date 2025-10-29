@@ -10,9 +10,10 @@ Client for interacting with GitHub Releases API using provide-foundation transpo
 
 from __future__ import annotations
 
-from collections.abc import Callable
 import pathlib
 import re
+from collections.abc import Callable
+from types import TracebackType
 from typing import Literal
 
 from provide.foundation.hub import get_hub
@@ -284,7 +285,12 @@ class GitHubReleasesClient:
         """Context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
         """Context manager exit."""
         await self.close()
 
