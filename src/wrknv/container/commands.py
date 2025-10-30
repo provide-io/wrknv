@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -177,7 +177,6 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
     table.add_column("Files", justify="right")
 
     for volume in volumes:
-
         # Format size
         size = volume["size"]
         if size > 1024 * 1024 * 1024:  # GB
@@ -200,7 +199,6 @@ def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None)
     """Create a backup of container volumes."""
     manager = ContainerManager(config)
     console = Console()
-
 
     try:
         backup_path = manager.backup_volumes(compress=True, include_metadata=True, name=name)
@@ -234,7 +232,6 @@ def restore_volumes(
             console.print("[red]❌ No backups found[/red]")
             console.print("[dim]Create a backup first with 'wrknv container volumes backup'[/dim]")
             return False
-
 
     try:
         success = manager.restore_volumes(backup, force=force)
@@ -271,10 +268,12 @@ def clean_volumes(config: WorkenvConfig | None = None, preserve: list[str] | Non
     try:
         success = manager.clean_volumes(preserve=preserve)
         if success:
+            console.print("[green]✅ Volumes cleaned successfully[/green]")
         return success
 
     except Exception as e:
         console.print(f"[red]❌ Failed to clean volumes: {e}[/red]")
         return False
+
 
 # 🧰🌍🔚

@@ -118,6 +118,7 @@ def container_stop_command() -> None:
     success = stop_container(config)
 
     if success:
+        echo_success("✅ Container stopped successfully")
     else:
         echo_error("❌ Failed to stop container")
         sys.exit(1)

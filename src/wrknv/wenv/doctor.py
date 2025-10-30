@@ -392,7 +392,9 @@ class WrknvDoctor:
             if "env.sh" in check or "Workenv Path" in check:
                 has_env_issues = True
             elif "uv" in check:
+                recommendations.append(("🔧 Install uv", "curl -LsSf https://astral.sh/uv/install.sh | sh"))
             elif "wrknv Installation" in check:
+                recommendations.append(("🔧 Reinstall wrknv", "See installation docs"))
 
         # If there are any env.sh issues, recommend regeneration
         if has_env_issues:

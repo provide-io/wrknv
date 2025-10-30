@@ -195,7 +195,9 @@ def sync_repo(name: str, dry_run: bool = False) -> None:
 
             if result.get(name, {}).get("success"):
                 if dry_run:
+                    logger.info(f"✅ {name} is ready to sync")
                 else:
+                    logger.info(f"✅ {name} synced successfully")
             else:
                 error = result.get(name, {}).get("error", "Unknown error")
                 logger.error(f"❌ {name}: {error}")
