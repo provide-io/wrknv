@@ -74,7 +74,9 @@ class ProfileError(WrkenvError):
 class ToolNotFoundError(WrkenvError):
     """Tool or version not found errors."""
 
-    def __init__(self, tool: str, version: str | None = None, available_versions: list[str] | None = None) -> None:
+    def __init__(
+        self, tool: str, version: str | None = None, available_versions: list[str] | None = None
+    ) -> None:
         message = f"{tool} version {version} not found" if version else f"{tool} not found"
 
         suggestion = None

@@ -86,7 +86,7 @@ class TfMetadataManager:
             try:
                 with recent_file.open() as f:
                     recent_data = json.load(f)
-            except:
+            except (json.JSONDecodeError, OSError):
                 recent_data = {}
 
         # Get tool key for RECENT file
@@ -116,7 +116,7 @@ class TfMetadataManager:
             try:
                 with recent_file.open() as f:
                     recent_data = json.load(f)
-            except:
+            except (json.JSONDecodeError, OSError):
                 recent_data = {}
 
         # Get tool key

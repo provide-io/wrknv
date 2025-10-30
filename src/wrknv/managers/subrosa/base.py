@@ -114,7 +114,7 @@ class SubRosaManager(BaseToolManager):
             from packaging.version import parse as parse_version
 
             versions.sort(key=lambda v: parse_version(v), reverse=True)
-        except:
+        except Exception:
             versions.sort(reverse=True)
 
         return versions
@@ -214,8 +214,7 @@ class SubRosaManager(BaseToolManager):
 
             # Update metadata if this was the current version
             if self.get_installed_version() == version and (
-                "active_versions" in self.metadata
-                and self.variant_name in self.metadata["active_versions"]
+                "active_versions" in self.metadata and self.variant_name in self.metadata["active_versions"]
             ):
                 del self.metadata["active_versions"][self.variant_name]
                 self._save_metadata()

@@ -224,20 +224,22 @@ version = "1.0.0"
         """Test getting workspace status."""
         manager.save_config(sample_workspace_config)
 
-        with patch.object(manager.discovery, "get_workspace_summary") as mock_summary:
-            with patch.object(manager.discovery, "validate_workspace_structure") as mock_validate:
-                mock_summary.return_value = {
-                    "total_repos": 1,
-                    "type_distribution": {"foundation-based": 1},
-                }
-                mock_validate.return_value = []
+        with (
+            patch.object(manager.discovery, "get_workspace_summary") as mock_summary,
+            patch.object(manager.discovery, "validate_workspace_structure") as mock_validate,
+        ):
+            mock_summary.return_value = {
+                "total_repos": 1,
+                "type_distribution": {"foundation-based": 1},
+            }
+            mock_validate.return_value = []
 
-                status = manager.get_workspace_status()
+            status = manager.get_workspace_status()
 
-                assert status["repos_configured"] == 1
-                assert status["repos_discovered"] == 1
-                assert "type_distribution" in status
-                assert "issues" in status
+            assert status["repos_configured"] == 1
+            assert status["repos_discovered"] == 1
+            assert "type_distribution" in status
+            assert "issues" in status
 
     def test_get_workspace_status_no_config(self, manager) -> None:
         """Test getting status when no config exists."""

@@ -22,10 +22,10 @@ from provide.foundation.file import safe_delete, safe_rmtree
 from provide.foundation.logger import get_logger
 from provide.foundation.process import run
 
-logger = get_logger(__name__)
-
 from wrknv.config import WorkenvConfig
 from wrknv.errors import WrkenvError
+
+logger = get_logger(__name__)
 
 
 class ToolManagerError(WrkenvError):
@@ -248,7 +248,7 @@ class BaseToolManager(ABC):
             if self.config.get_setting("clean_on_failure", True):
                 self._cleanup_failed_installation(version)
 
-            raise ToolManagerError(f"Failed to install {self.tool_name} {version}: {e}")
+            raise ToolManagerError(f"Failed to install {self.tool_name} {version}: {e}") from e
 
     def _verify_download_checksum(self, download_path: pathlib.Path, checksum_url: str) -> None:
         """Download and verify checksum file using Foundation helpers."""
@@ -311,7 +311,7 @@ class BaseToolManager(ABC):
                 print(f"... and {len(versions) - limit} more versions available")
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch versions for {self.tool_name}: {e}")
+            raise ToolManagerError(f"Failed to fetch versions for {self.tool_name}: {e}") from e
 
     def show_current(self) -> None:
         """Show current installed version."""

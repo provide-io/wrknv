@@ -15,6 +15,7 @@ Execute commands inside running containers.
 from __future__ import annotations
 
 import os
+from typing import Any
 
 from attrs import define
 from provide.foundation import logger
@@ -122,7 +123,7 @@ class ContainerExec:
             self.console.print(f"[red]❌ Exec failed: {e}[/red]")
             return False
 
-    def enter(self, shell: str | None, **kwargs) -> bool:
+    def enter(self, shell: str | None, **kwargs: Any) -> bool:
         """Enter the container with an interactive shell.
 
         Args:
@@ -135,7 +136,12 @@ class ContainerExec:
         return self.exec(command=None, shell=shell, interactive=True, tty=True, **kwargs)
 
     @resilient
-    def run_command(self, command: list[str], capture_output: bool, **kwargs) -> str | None:
+    def run_command(
+        self,
+        command: list[str],
+        capture_output: bool,
+        **kwargs: Any,
+    ) -> str | None:
         """Run a command in the container and return output.
 
         Args:
