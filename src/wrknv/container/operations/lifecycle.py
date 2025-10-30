@@ -90,8 +90,7 @@ class ContainerLifecycle:
                     command=run_options.get("command"),
                 )
 
-                self.console.print(
-                )
+                self.console.print()
                 return True
 
             else:
@@ -239,5 +238,6 @@ class ContainerLifecycle:
             )
             self.console.print(f"[red]❌ Failed to remove container: {e}[/red]")
             return False
+
 
 # 🧰🌍🔚

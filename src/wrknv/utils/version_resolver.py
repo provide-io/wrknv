@@ -176,4 +176,5 @@ def resolve_tool_versions(
     resolver = VersionResolver(available_versions)
     return resolver.resolve_versions(version_patterns)
 
+
 # 🧰🌍🔚

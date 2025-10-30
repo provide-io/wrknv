@@ -57,12 +57,9 @@ def test_command_imports() -> bool | None:
     try:
         # Test gitignore commands (should have proper subcommand structure)
 
-
         # Test package commands (should have proper subcommand structure)
 
-
         # Test workspace commands
-
 
         return True
 

@@ -375,4 +375,5 @@ class TestTerraformCommand(FoundationTestCase):
             assert result.exit_code == 1
             assert "Error listing versions" in result.output
 
+
 # 🧰🌍🔚

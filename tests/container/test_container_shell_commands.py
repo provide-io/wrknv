@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -522,5 +522,6 @@ class TestCLIIntegration:
             assert result.exit_code == 0
             assert "Container Resource Usage" in result.output
             mock_stats.assert_called_once()
+
 
 # 🧰🌍🔚

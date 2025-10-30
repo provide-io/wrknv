@@ -226,4 +226,5 @@ def config_set(key: str, value: str) -> None:
         echo_error(f"Error setting value: {e}")
         sys.exit(1)
 
+
 # 🧰🌍🔚

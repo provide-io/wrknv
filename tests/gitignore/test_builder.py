@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -256,5 +256,6 @@ env/"""
 
         # The empty line between __pycache__/ and # Virtual environments should be preserved
         assert "__pycache__/\n\n# Virtual environments" in result
+
 
 # 🧰🌍🔚

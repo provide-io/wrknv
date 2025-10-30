@@ -303,4 +303,5 @@ def verify_file(file_path: pathlib.Path, signature_path: pathlib.Path | None = N
         logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
+
 # 🧰🌍🔚

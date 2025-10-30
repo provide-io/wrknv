@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -35,5 +35,6 @@ def pytest_configure(config) -> None:
     except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
         # gh not installed or not authenticated - tests will be skipped
         pass
+
 
 # 🧰🌍🔚

@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -303,5 +303,6 @@ siblings = [
             ps1_content = ps1_path.read_text()
             assert "auto-discovered-*" in ps1_content
             assert "special-package" in ps1_content
+
 
 # 🧰🌍🔚

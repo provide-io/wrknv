@@ -176,4 +176,5 @@ Write-Host "   wrknv: $(Get-Command wrknv | Select-Object -ExpandProperty Source
         else:
             print_info("  Bash/Zsh: source ./env.sh", Emoji.CONFIG)
 
+
 # 🧰🌍🔚

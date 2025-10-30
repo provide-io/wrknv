@@ -217,4 +217,5 @@ class LockfileManager:
 
         return {tool.name: tool.version for tool in lockfile.resolved_tools.values()}
 
+
 # 🧰🌍🔚

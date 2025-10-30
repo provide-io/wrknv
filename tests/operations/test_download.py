@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -205,5 +205,6 @@ def456  other.zip
         assert validate_download_url("not-a-url") is False
         assert validate_download_url("") is False
         assert validate_download_url("file:///path/to/file") is False
+
 
 # 🧰🌍🔚
