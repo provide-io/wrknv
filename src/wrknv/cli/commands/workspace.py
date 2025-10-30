@@ -164,9 +164,11 @@ def sync_all(dry_run: bool = False) -> None:
             if dry_run:
                 logger.info(f"🔍 Sync check completed: {success_count}/{total_count} repos ready")
             else:
+                logger.info(f"✅ Sync completed: {success_count}/{total_count} repos synced")
 
             for repo_name, result in results.items():
                 if result.get("success"):
+                    logger.info(f"  ✅ {repo_name}")
                 else:
                     error = result.get("error", "Unknown error")
                     logger.error(f"  ❌ {repo_name}: {error}")

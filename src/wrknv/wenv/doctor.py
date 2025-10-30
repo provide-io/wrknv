@@ -351,6 +351,7 @@ class WrknvDoctor:
 
         # Add passed checks
         for check, details in self.checks_passed:
+            table.add_row(check, "[green]✅ PASS[/green]", details)
 
         # Add warnings
         for check, details in self.checks_warning:

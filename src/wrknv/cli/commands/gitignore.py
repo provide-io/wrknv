@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -271,11 +271,13 @@ def gitignore_update() -> None:
 
         updated = manager.update_cache()
         if updated:
+            echo_success("✅ Templates updated successfully")
         else:
             echo_info("Templates are already up to date")
 
     except Exception as e:
         echo_error(f"Failed to update templates: {e}")
         sys.exit(1)
+
 
 # 🧰🌍🔚

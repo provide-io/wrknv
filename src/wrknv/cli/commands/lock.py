@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -47,7 +47,6 @@ def lock_generate(force: bool = False) -> None:
         echo_info("🔒 Generating lockfile from configuration...")
         lockfile = lockfile_manager.resolve_and_lock(config)
 
-
     except Exception as e:
         echo_error(f"Failed to generate lockfile: {e}")
         sys.exit(1)
@@ -68,6 +67,7 @@ def lock_check() -> None:
         is_valid = lockfile_manager.is_lockfile_valid(config)
 
         if is_valid:
+            echo_success("✅ Lockfile is valid and up to date")
         else:
             echo_error("❌ Lockfile is outdated or invalid")
             echo_info("Regenerate with: wrknv lock generate --force")
@@ -167,9 +167,9 @@ def lock_sync() -> None:
             except Exception as e:
                 echo_error(f"❌ Error installing {tool.name} {tool.version}: {e}")
 
-
     except Exception as e:
         echo_error(f"Failed to sync from lockfile: {e}")
         sys.exit(1)
+
 
 # 🧰🌍🔚

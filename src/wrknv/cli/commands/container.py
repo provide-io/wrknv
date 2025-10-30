@@ -80,6 +80,7 @@ def container_build_command(rebuild: bool = False) -> None:
     success = build_container(config, rebuild=rebuild)
 
     if success:
+        echo_success("✅ Container image built successfully")
     else:
         echo_error("❌ Failed to build container image")
         sys.exit(1)

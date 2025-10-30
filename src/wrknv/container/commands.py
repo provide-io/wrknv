@@ -239,6 +239,7 @@ def restore_volumes(
     try:
         success = manager.restore_volumes(backup, force=force)
         if success:
+            console.print("[green]✅ Volumes restored successfully[/green]")
         else:
             console.print("[red]❌ Failed to restore volumes[/red]")
             if not force:
