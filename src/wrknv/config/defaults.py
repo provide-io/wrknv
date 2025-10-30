@@ -1,7 +1,9 @@
-# wrknv/config/defaults.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
+
+"""TODO: Add module docstring."""
 
 from pathlib import Path
 
@@ -95,7 +97,6 @@ DEFAULT_AUTO_UPDATE = False
 DEFAULT_CLI_NAME = "wrknv"
 DEFAULT_CLI_VERSION = "0.1.0"
 DEFAULT_CLI_HELP = (
-    "🧰🌍 Manage development environment tools and versions.\n\n"
     "wrknv provides cross-platform tool installation and version management "
     "for development environments, including Terraform, OpenTofu, Go, UV, and more."
 )
@@ -134,5 +135,4 @@ def default_custom_values() -> dict[str, any]:
     """Factory for custom values dictionary."""
     return {}
 
-
-# 🧰🌍⚙️🪄
+# 🧰🌍🔚

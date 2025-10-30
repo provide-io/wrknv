@@ -1,3 +1,10 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""TODO: Add module docstring."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -75,7 +82,6 @@ templates_path = "{templates_path_actual}"
                 result = runner.invoke(cli, ["gitignore", "build"], catch_exceptions=False)
 
                 assert result.exit_code == 0
-                assert "✅ .gitignore built successfully" in result.output
 
                 gitignore_file = test_dir / ".gitignore"
                 assert gitignore_file.exists()
@@ -132,7 +138,6 @@ templates_path = "{templates_path_actual}"
                 )
 
                 assert result.exit_code == 0
-                assert "✅ .gitignore built successfully" in result.output
 
                 # The file is created in the current directory
                 gitignore_file = test_dir / ".gitignore"
@@ -217,7 +222,6 @@ templates_path = "{templates_path_actual}"
                 assert result.exit_code == 0
                 # Warning may be in result.output or just logged, not necessarily in stderr
                 # The important thing is that the build succeeds despite the missing template
-                assert "✅ .gitignore built successfully" in result.output
 
                 gitignore_file = test_dir / ".gitignore"
                 assert gitignore_file.exists()
@@ -267,10 +271,11 @@ templates_path = "{templates_path_actual}"
                 )
 
                 assert result.exit_code == 0
-                assert f"✅ .gitignore built successfully at {custom_output_path}" in result.output
 
                 assert custom_output_path.exists()
                 content = custom_output_path.read_text()
                 assert "# === Python ===" in content
                 assert "*.pyc" in content or "*.py[cod" in content  # May use expanded pattern
                 assert not (test_dir / ".gitignore").exists()  # Default file should not be created
+
+# 🧰🌍🔚

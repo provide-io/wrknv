@@ -1,16 +1,19 @@
-# wrknv/cli/commands/container.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# wrknv/cli/commands/container.py
-#
-"""
-"""
-Container Commands
+
+"""Container Commands
 ==================
-Commands for managing development containers.
+Commands for managing development containers."""
+
 from __future__ import annotations
 
 import sys
@@ -77,7 +80,6 @@ def container_build_command(rebuild: bool = False) -> None:
     success = build_container(config, rebuild=rebuild)
 
     if success:
-        echo_success("✅ Container image built successfully")
     else:
         echo_error("❌ Failed to build container image")
         sys.exit(1)
@@ -96,7 +98,6 @@ def container_start_command(rebuild: bool = False) -> None:
     success = start_container(config, rebuild=rebuild)
 
     if success:
-        echo_success("✅ Container started successfully")
         echo_info("Run 'wrknv container enter' to access the container")
     else:
         echo_error("❌ Failed to start container")
@@ -116,7 +117,6 @@ def container_stop_command() -> None:
     success = stop_container(config)
 
     if success:
-        echo_success("✅ Container stopped successfully")
     else:
         echo_error("❌ Failed to stop container")
         sys.exit(1)
@@ -135,7 +135,6 @@ def container_restart_command() -> None:
     success = restart_container(config)
 
     if success:
-        echo_success("✅ Container restarted successfully")
     else:
         echo_error("❌ Failed to restart container")
         sys.exit(1)
@@ -213,7 +212,6 @@ def container_clean_command() -> None:
     success = clean_container(config)
 
     if success:
-        echo_success("✅ Container resources cleaned successfully")
     else:
         echo_error("❌ Failed to clean container resources")
         sys.exit(1)
@@ -232,7 +230,6 @@ def container_rebuild_command() -> None:
     success = rebuild_container(config)
 
     if success:
-        echo_success("✅ Container rebuilt successfully")
         echo_info("Run 'wrknv container enter' to access the new container")
     else:
         echo_error("❌ Failed to rebuild container")
@@ -360,5 +357,4 @@ def container_exec_command(cmd: str) -> None:
         auto_start=True,
     )
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

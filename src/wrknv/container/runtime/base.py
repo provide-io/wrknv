@@ -1,16 +1,12 @@
-# wrknv/container/runtime/base.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/container/runtime/base.py
-#
-"""
-"""
-Container Runtime Base Abstraction
+"""Container Runtime Base Abstraction
 ===================================
-Abstract base class for container runtime implementations.
+Abstract base class for container runtime implementations."""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -223,5 +219,4 @@ class ContainerRuntime(ABC):
         """
         pass
 
-
-# 🧰🌍🏗️🪄
+# 🧰🌍🔚

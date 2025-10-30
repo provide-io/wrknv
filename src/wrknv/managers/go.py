@@ -1,15 +1,12 @@
-# wrknv/managers/go.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/managers/go.py
 #
-"""
-"""
-Go Tool Manager for wrknv
+
+"""Go Tool Manager for wrknv
 ============================
-Manages Go versions for development.
+Manages Go versions for development."""
+
 from __future__ import annotations
 
 import pathlib
@@ -245,5 +242,4 @@ class GoManager(BaseToolManager):
         """Get default GOPATH for a specific Go version."""
         return self.install_path / self.tool_name / version / "gopath"
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

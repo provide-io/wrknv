@@ -1,13 +1,18 @@
-# wrknv/container/metadata.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-Container Metadata Management
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Container Metadata Management
 ==============================
-Handles persistence and management of container metadata.
-"""
+Handles persistence and management of container metadata."""
 
 from __future__ import annotations
 
@@ -54,7 +59,6 @@ class ContainerMetadata:
         metadata = self.storage.load_metadata()
 
         if metadata:
-            logger.debug("📖 Loaded container metadata", container=self.container_name)
 
         return metadata
 
@@ -114,5 +118,4 @@ class ContainerMetadata:
 
         return (len(issues) == 0, issues)
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

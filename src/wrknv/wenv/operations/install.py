@@ -1,15 +1,12 @@
-# wrknv/wenv/operations/install.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/operations/install.py
 #
-"""
-"""
-wrknv Installation Operations
+
+"""wrknv Installation Operations
 ========================================
-Functions for extracting archives and making files executable.
+Functions for extracting archives and making files executable."""
+
 from __future__ import annotations
 
 import pathlib
@@ -186,5 +183,4 @@ def is_executable(file_path: pathlib.Path) -> bool:
         # On Unix-like systems, check execute permission
         return bool(file_path.stat().st_mode & stat.S_IXUSR)
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

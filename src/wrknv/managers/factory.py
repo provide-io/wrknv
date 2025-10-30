@@ -1,15 +1,12 @@
-# wrknv/managers/factory.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/env/managers/factory.py
 #
-"""
-"""
-Tool Manager Factory for wrknv
+
+"""Tool Manager Factory for wrknv
 ================================
-Factory for creating appropriate tool managers.
+Factory for creating appropriate tool managers."""
+
 from __future__ import annotations
 
 from wrknv.config import WorkenvConfig
@@ -84,5 +81,4 @@ def get_secondary_tools() -> list[str]:
     # This will be expanded later for tools like python, node, docker, etc.
     return []
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

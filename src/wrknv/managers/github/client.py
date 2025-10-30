@@ -1,12 +1,11 @@
-# wrknv/managers/github/client.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """GitHub Releases API Client
 ===========================
-Client for interacting with GitHub Releases API using provide-foundation transport.
-"""
+Client for interacting with GitHub Releases API using provide-foundation transport."""
 
 from __future__ import annotations
 
@@ -298,4 +297,5 @@ class GitHubReleasesClient:
 __all__ = [
     "GitHubReleasesClient",
 ]
-# 🧰🌍🖥️🪄
+
+# 🧰🌍🔚

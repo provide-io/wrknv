@@ -1,16 +1,12 @@
-# wrknv/container/runtime/docker.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/container/runtime/docker.py
-#
-"""
-"""
-Docker Runtime Implementation
+"""Docker Runtime Implementation
 =============================
-Docker-specific implementation of the container runtime.
+Docker-specific implementation of the container runtime."""
+
 from __future__ import annotations
 
 import json
@@ -321,5 +317,4 @@ class DockerRuntime(ContainerRuntime):
             # Re-raise to let circuit breaker count this as a failure
             raise
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

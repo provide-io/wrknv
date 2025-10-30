@@ -1,15 +1,19 @@
-# wrknv/container/commands.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/container/commands.py
 #
-"""
-"""
-Container Command Implementations
+
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Container Command Implementations
 =================================
-Command implementations for container management.
+Command implementations for container management."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -81,11 +85,9 @@ def container_status(config: WorkenvConfig | None = None) -> None:
     table.add_column("Status", style="green")
 
     # Docker status
-    docker_status = "✅ Available" if status["docker_available"] else "❌ Not Available"
     table.add_row("Docker", docker_status)
 
     # Image status
-    image_status = "✅ Exists" if status["image_exists"] else "❌ Not Found"
     table.add_row(f"Image ({manager.full_image})", image_status)
 
     # Container status
@@ -168,7 +170,6 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
         return
 
     # Create table
-    table = Table(title="📦 Container Volumes", show_header=True)
     table.add_column("Volume", style="cyan")
     table.add_column("Path", style="dim")
     table.add_column("Status", style="green")
@@ -176,7 +177,6 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
     table.add_column("Files", justify="right")
 
     for volume in volumes:
-        status = "✅ Exists" if volume["exists"] else "❌ Not Created"
 
         # Format size
         size = volume["size"]
@@ -201,7 +201,6 @@ def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None)
     manager = ContainerManager(config)
     console = Console()
 
-    console.print("📦 Backing up volumes...")
 
     try:
         backup_path = manager.backup_volumes(compress=True, include_metadata=True, name=name)
@@ -210,7 +209,6 @@ def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None)
         size = backup_path.stat().st_size
         size_str = f"{size / (1024 * 1024):.1f} MB" if size > 1024 * 1024 else f"{size / 1024:.1f} KB"
 
-        console.print(f"[green]✅ Successfully created backup: {backup_path.name} ({size_str})[/green]")
         console.print(f"[dim]Location: {backup_path}[/dim]")
         return True
 
@@ -237,12 +235,10 @@ def restore_volumes(
             console.print("[dim]Create a backup first with 'wrknv container volumes backup'[/dim]")
             return False
 
-    console.print(f"📦 Restoring volumes from: {backup.name}")
 
     try:
         success = manager.restore_volumes(backup, force=force)
         if success:
-            console.print("[green]✅ Successfully restored volumes[/green]")
         else:
             console.print("[red]❌ Failed to restore volumes[/red]")
             if not force:
@@ -274,12 +270,10 @@ def clean_volumes(config: WorkenvConfig | None = None, preserve: list[str] | Non
     try:
         success = manager.clean_volumes(preserve=preserve)
         if success:
-            console.print("[green]✅ Successfully cleaned volumes[/green]")
         return success
 
     except Exception as e:
         console.print(f"[red]❌ Failed to clean volumes: {e}[/red]")
         return False
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

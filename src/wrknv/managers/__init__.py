@@ -1,15 +1,12 @@
-# wrknv/managers/__init__.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/env/managers/__init__.py
 #
-"""
-"""
-wrknv Tool Managers
+
+"""wrknv Tool Managers
 ====================
-Tool managers for different development tools.
+Tool managers for different development tools."""
+
 from __future__ import annotations
 
 from wrknv.managers.bao import BaoManager
@@ -31,4 +28,5 @@ __all__ = [
     "get_supported_tools",
     "get_tool_manager",
 ]
-# 🧰🌍📦🪄
+
+# 🧰🌍🔚

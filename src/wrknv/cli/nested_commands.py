@@ -1,18 +1,14 @@
-# wrknv/cli/nested_commands.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/cli/nested_commands.py
-#
-"""
-"""
-Enhanced command registration with nested group support.
+"""Enhanced command registration with nested group support.
 
 This module extends the Foundation Hub to support nested command groups,
 allowing natural CLI structures like `wrknv container status` instead of
-`wrknv container-status`.
+`wrknv container-status`."""
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -353,5 +349,4 @@ def get_nested_registry() -> NestedCommandRegistry:
     """Get the global nested command registry."""
     return _nested_registry
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

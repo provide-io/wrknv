@@ -1,8 +1,11 @@
-"""
-Test the new foundation-based config system
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Test the new foundation-based config system
 ===========================================
-Tests for the WorkenvConfig implementation using provide.foundation.
-"""
+Tests for the WorkenvConfig implementation using provide.foundation."""
 
 from __future__ import annotations
 
@@ -182,3 +185,5 @@ class TestWorkenvConfigMethods:
         assert data["project_name"] == "test"
         assert data["tools"]["terraform"] == "1.5.7"
         assert data["workenv"]["log_level"] == "WARNING"
+
+# 🧰🌍🔚

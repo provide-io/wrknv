@@ -1,15 +1,12 @@
-# wrknv/wenv/operations/__init__.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/operations/__init__.py
 #
-"""
-"""
-wrknv Operations
+
+"""wrknv Operations
 ===========================
-Core operation modules for workenv functionality.
+Core operation modules for workenv functionality."""
+
 from __future__ import annotations
 
 from .download import download_file, verify_checksum
@@ -28,4 +25,5 @@ __all__ = [
     "verify_checksum",
     "verify_tool_installation",
 ]
-# 🧰🌍📦🪄
+
+# 🧰🌍🔚

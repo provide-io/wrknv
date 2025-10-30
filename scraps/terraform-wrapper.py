@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# wrknv/workenv/scripts/tf-wrapper.py
-#
-"""
-Tf Wrapper Script
+
+"""Tf Wrapper Script
 =================
 This script acts as a 'tf' command that delegates to the
-developer's chosen Tf flavor (IBM Terraform or OpenTofu).
-"""
+developer's chosen Tf flavor (IBM Terraform or OpenTofu)."""
 
 import os
 import pathlib
@@ -102,5 +101,4 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-
-# 🍲🥄📄🪄
+# 🧰🌍🔚

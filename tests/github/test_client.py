@@ -1,8 +1,11 @@
-"""
-GitHub Client Unit Tests
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""GitHub Client Unit Tests
 =========================
-Unit tests for GitHubReleasesClient.
-"""
+Unit tests for GitHubReleasesClient."""
 
 from __future__ import annotations
 
@@ -228,3 +231,5 @@ class TestGitHubReleasesClient:
         """Test client as context manager."""
         async with GitHubReleasesClient("owner/repo") as client:
             assert client.repo == "owner/repo"
+
+# 🧰🌍🔚

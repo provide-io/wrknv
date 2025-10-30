@@ -1,15 +1,12 @@
-# wrknv/container/__init__.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/container/__init__.py
 #
-"""
-"""
-Container Management Module
+
+"""Container Management Module
 ===========================
-Docker container management for wrknv development environments.
+Docker container management for wrknv development environments."""
+
 from __future__ import annotations
 
 from .commands import (
@@ -37,4 +34,5 @@ __all__ = [
     "start_container",
     "stop_container",
 ]
-# 🧰🌍📦🪄
+
+# 🧰🌍🔚

@@ -1,15 +1,12 @@
-# wrknv/container/shell_commands.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# src/wrknv/container/shell_commands.py
 #
-"""
-"""
-Container Shell Commands
+
+"""Container Shell Commands
 ========================
-Commands for interacting with running containers.
+Commands for interacting with running containers."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -357,5 +354,4 @@ def get_container_stats(config: WorkenvConfig) -> dict[str, Any] | None:
 
     return None
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

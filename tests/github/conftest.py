@@ -1,8 +1,11 @@
-"""
-GitHub Tests Configuration
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""GitHub Tests Configuration
 ===========================
-Auto-configure GitHub token from gh CLI if available.
-"""
+Auto-configure GitHub token from gh CLI if available."""
 
 from __future__ import annotations
 
@@ -32,3 +35,5 @@ def pytest_configure(config) -> None:
     except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
         # gh not installed or not authenticated - tests will be skipped
         pass
+
+# 🧰🌍🔚

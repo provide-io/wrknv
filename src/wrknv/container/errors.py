@@ -1,16 +1,12 @@
-# wrknv/container/errors.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/container/errors.py
-#
-"""
-"""
-Container-specific Errors
+"""Container-specific Errors
 =========================
-Custom exceptions for container operations using foundation error hierarchy.
+Custom exceptions for container operations using foundation error hierarchy."""
+
 from __future__ import annotations
 
 from provide.foundation.errors import (
@@ -122,5 +118,4 @@ class ContainerBuildError(ResourceError):
         self.image_tag = image_tag
         self.reason = reason
 
-
-# 🧰🌍🐛🪄
+# 🧰🌍🔚

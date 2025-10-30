@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-Test suite for CLI config commands.
-"""
+"""Test suite for CLI config commands."""
 
 from __future__ import annotations
 
@@ -343,3 +344,5 @@ class TestConfigCommandIntegration(FoundationTestCase):
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
+# 🧰🌍🔚

@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# wrknv/cli/commands/gitignore.py
-#
-"""
-Gitignore Commands
+
+"""Gitignore Commands
 ==================
-Commands for managing .gitignore files.
-"""
+Commands for managing .gitignore files."""
 
 from pathlib import Path
 import sys
@@ -168,7 +167,6 @@ def gitignore_build(
             content = existing + "\n" + content
 
         output_path.write_text(content)
-        echo_success(f"✅ .gitignore built successfully at {output_path}")
 
     except Exception as e:
         echo_error(f"Failed to build .gitignore: {e}")
@@ -212,7 +210,8 @@ def gitignore_update() -> None:
 
     try:
         count = manager.update_templates()
-        echo_success(f"✅ Updated {count} templates")
     except Exception as e:
         echo_error(f"Failed to update templates: {e}")
         sys.exit(1)
+
+# 🧰🌍🔚

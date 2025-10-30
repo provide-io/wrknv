@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""
-Test Fixtures and Mock Factories
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Test Fixtures and Mock Factories
 =================================
 Utilities for creating properly mocked attrs-based objects for testing.
 
@@ -9,8 +12,7 @@ mocking individual methods. These factories create mock objects that
 work with the attrs architecture.
 
 Note: Imports are done lazily inside functions to avoid circular import
-issues when this module is loaded by conftest.py.
-"""
+issues when this module is loaded by conftest.py."""
 
 from __future__ import annotations
 
@@ -362,3 +364,5 @@ def pytest_configure_fixtures(config) -> None:
         from tests.utils.fixtures import *
     """
     pass
+
+# 🧰🌍🔚

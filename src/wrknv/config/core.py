@@ -1,12 +1,11 @@
-# wrknv/config/core.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """Core Configuration for wrknv
 =============================
-Main configuration classes using provide.foundation.
-"""
+Main configuration classes using provide.foundation."""
 
 from __future__ import annotations
 
@@ -327,5 +326,4 @@ class WorkenvConfig(RuntimeConfig):
         # Allow version patterns (for matrix testing)
         return bool("*" in version or "~" in version or "^" in version)
 
-
-# 🧰🌍⚙️🪄
+# 🧰🌍🔚

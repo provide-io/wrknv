@@ -1,16 +1,19 @@
-# wrknv/cli/commands/doctor.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# wrknv/cli/commands/doctor.py
-#
-"""
-"""
-Doctor Commands
+
+"""Doctor Commands
 ===============
-Commands for diagnosing and testing the wrknv system.
+Commands for diagnosing and testing the wrknv system."""
+
 from __future__ import annotations
 
 from importlib.util import find_spec
@@ -51,7 +54,6 @@ def selftest_check(verbose: bool = False, fix: bool = False) -> None:
 
         for check_result in checks:
             if check_result["status"] == "pass":
-                echo_success(f"✅ {check_result['name']}")
                 passed += 1
             elif check_result["status"] == "fail":
                 echo_error(f"❌ {check_result['name']}")
@@ -68,7 +70,6 @@ def selftest_check(verbose: bool = False, fix: bool = False) -> None:
                 echo_info(f"   Details: {check_result['details']}")
 
         echo_info("\n📊 Health Check Summary:")
-        echo_success(f"   ✅ Passed: {passed}")
         if warnings > 0:
             echo_warning(f"   ⚠️  Warnings: {warnings}")
         if failed > 0:
@@ -80,7 +81,6 @@ def selftest_check(verbose: bool = False, fix: bool = False) -> None:
         elif warnings > 0:
             echo_warning("\n⚠️  Health check completed with warnings.")
         else:
-            echo_success("\n✅ All health checks passed!")
 
     except Exception as e:
         echo_error(f"Health check failed: {e}")
@@ -91,11 +91,9 @@ def selftest_check(verbose: bool = False, fix: bool = False) -> None:
 def selftest_env() -> None:
     """Check environment setup."""
     try:
-        echo_info("🌍 Checking environment setup...")
 
         result = _check_environment()
         if result["status"] == "pass":
-            echo_success(f"✅ {result['name']}")
             if result.get("details"):
                 echo_info(f"   {result['details']}")
         else:
@@ -111,11 +109,9 @@ def selftest_env() -> None:
 def selftest_config() -> None:
     """Check configuration."""
     try:
-        echo_info("⚙️  Checking configuration...")
 
         result = _check_config()
         if result["status"] == "pass":
-            echo_success(f"✅ {result['name']}")
             if result.get("details"):
                 echo_info(f"   {result['details']}")
         else:
@@ -336,5 +332,4 @@ def _check_permissions() -> dict[str, Any]:
     except Exception as e:
         return {"name": "Permissions", "status": "fail", "message": f"Permission check failed: {e}"}
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

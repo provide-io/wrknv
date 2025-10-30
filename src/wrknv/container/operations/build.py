@@ -1,16 +1,12 @@
-# wrknv/container/operations/build.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/container/operations/build.py
-#
-"""
-"""
-Container Build Operations
+"""Container Build Operations
 ==========================
-Build container images with streaming output.
+Build container images with streaming output."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -66,7 +62,6 @@ class ContainerBuilder:
                 for line in stream(cmd):
                     self.console.print(line, end="")
 
-                self.console.print(f"[green]✅ Image {tag} built successfully[/green]")
                 logger.info("Image built successfully", tag=tag, dockerfile=dockerfile)
                 return True
             else:
@@ -75,7 +70,6 @@ class ContainerBuilder:
                     dockerfile=dockerfile, tag=tag, context=context, build_args=build_args, **extra_options
                 )
 
-                self.console.print(f"[green]✅ Image {tag} built successfully[/green]")
                 return True
 
         except ProcessError as e:
@@ -144,7 +138,6 @@ class ContainerBuilder:
             run([self.runtime.runtime_command, "tag", source_tag, target_tag], check=True)
 
             logger.info("Image tagged", source=source_tag, target=target_tag)
-            self.console.print(f"[green]✅ Tagged {source_tag} as {target_tag}[/green]")
             return True
 
         except ProcessError as e:
@@ -174,7 +167,6 @@ class ContainerBuilder:
             run([self.runtime.runtime_command, "push", tag], check=True)
 
             logger.info("Image pushed", tag=tag)
-            self.console.print(f"[green]✅ Pushed {tag} successfully[/green]")
             return True
 
         except ProcessError as e:
@@ -287,5 +279,4 @@ class ContainerBuilder:
 
         return "\n".join(lines)
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

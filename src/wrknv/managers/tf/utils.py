@@ -1,15 +1,12 @@
-# wrknv/managers/tf/utils.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/managers/tf/utils.py
 #
-"""
-"""
-Tf Manager Utilities
+
+"""Tf Manager Utilities
 ====================
-Utility functions for Terraform/OpenTofu managers.
+Utility functions for Terraform/OpenTofu managers."""
+
 from __future__ import annotations
 
 import hashlib
@@ -50,5 +47,4 @@ def get_tool_version_key(tool_name: str) -> str:
     """Get the metadata key for storing tool version."""
     return "opentofu_version" if tool_name == "tofu" else f"{tool_name}_version"
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

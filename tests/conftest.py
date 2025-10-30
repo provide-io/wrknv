@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""
-Pytest configuration and shared fixtures.
-"""
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Pytest configuration and shared fixtures."""
 
 from __future__ import annotations
 
@@ -74,3 +76,5 @@ def mock_volumes():
 def mock_storage():
     """Create a mock ContainerStorage."""
     return create_mock_storage()
+
+# 🧰🌍🔚

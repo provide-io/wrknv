@@ -1,15 +1,12 @@
-# wrknv/wenv/operations/verify.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/operations/verify.py
 #
-"""
-"""
-wrknv Verification Operations
+
+"""wrknv Verification Operations
 ========================================
-Functions for verifying tool installations.
+Functions for verifying tool installations."""
+
 from __future__ import annotations
 
 import pathlib
@@ -306,5 +303,4 @@ def verify_file(file_path: pathlib.Path, signature_path: pathlib.Path | None = N
         logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

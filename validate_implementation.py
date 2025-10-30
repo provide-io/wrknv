@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""
-Validation script for wrknv implementation
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Validation script for wrknv implementation
 ==========================================
-Test the core functionality without external dependencies.
-"""
+Test the core functionality without external dependencies."""
 
 from __future__ import annotations
 
@@ -16,7 +18,6 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 def test_config_defaults() -> bool | None:
     """Test that config defaults work correctly."""
-    print("🧪 Testing config/defaults.py...")
 
     try:
         from wrknv.config.defaults import (
@@ -43,7 +44,6 @@ def test_config_defaults() -> bool | None:
         assert list1 == list2 == []
         assert list1 is not list2
 
-        print("✅ Config defaults test passed")
         return True
 
     except Exception as e:
@@ -53,22 +53,17 @@ def test_config_defaults() -> bool | None:
 
 def test_command_imports() -> bool | None:
     """Test that command modules can be imported."""
-    print("🧪 Testing command module imports...")
 
     try:
         # Test gitignore commands (should have proper subcommand structure)
 
-        print("✅ Gitignore commands imported")
 
         # Test package commands (should have proper subcommand structure)
 
-        print("✅ Package commands imported")
 
         # Test workspace commands
 
-        print("✅ Workspace commands imported")
 
-        print("✅ Command imports test passed")
         return True
 
     except Exception as e:
@@ -78,7 +73,6 @@ def test_command_imports() -> bool | None:
 
 def test_temp_dir_fix() -> bool | None:
     """Test that temp_dir imports are fixed."""
-    print("🧪 Testing temp_dir fix...")
 
     try:
         # These should not fail with temp_dir import errors
@@ -92,7 +86,6 @@ def test_temp_dir_fix() -> bool | None:
         # After context exit, directory should be cleaned up
         assert not tmp_path.exists()
 
-        print("✅ temp_dir fix test passed")
         return True
 
     except Exception as e:
@@ -124,7 +117,6 @@ def main() -> bool:
 
     if passed == total:
         print("🎉 All validation tests passed!")
-        print("\n✅ Implementation Summary:")
         print("   • config/defaults.py created with centralized defaults")
         print("   • Command structure fixed (dash → subcommands)")
         print("   • temp_dir import issues resolved")
@@ -138,3 +130,5 @@ def main() -> bool:
 if __name__ == "__main__":
     success = main()
     sys.exit(0 if success else 1)
+
+# 🧰🌍🔚

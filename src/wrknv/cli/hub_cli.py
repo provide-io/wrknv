@@ -1,16 +1,19 @@
-# wrknv/cli/hub_cli.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# wrknv/cli/hub_cli.py
-#
-"""
-"""
-Hub-based CLI Entry Point
+
+"""Hub-based CLI Entry Point
 =========================
-Main CLI using provide.foundation.hub for command registration.
+Main CLI using provide.foundation.hub for command registration."""
+
 from __future__ import annotations
 
 import importlib
@@ -94,7 +97,6 @@ def create_cli() -> click.Command:
     cli = hub.create_cli(
         name="wrknv",
         version="0.1.0",
-        help="🧰🌍 Manage development environment tools and versions.\n\n"
         "wrknv provides cross-platform tool installation and version management "
         "for development environments, including Terraform, OpenTofu, Go, UV, and more.",
     )
@@ -114,4 +116,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-# 🧰🌍🖥️🪄
+
+# 🧰🌍🔚

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-Test suite for platform detection operations.
-"""
+"""Test suite for platform detection operations."""
 
 from __future__ import annotations
 
@@ -213,3 +214,5 @@ class TestPlatformEdgeCases(FoundationTestCase):
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
+# 🧰🌍🔚
