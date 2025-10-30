@@ -137,6 +137,7 @@ def container_restart_command() -> None:
     success = restart_container(config)
 
     if success:
+        echo_success("✅ Container restarted successfully")
     else:
         echo_error("❌ Failed to restart container")
         sys.exit(1)

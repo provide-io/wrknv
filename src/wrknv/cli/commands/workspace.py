@@ -228,6 +228,7 @@ def check_drift() -> None:
 
             logger.info("💡 Run 'wrknv workspace sync' to resolve drift")
         else:
+            logger.info("✅ No configuration drift detected")
 
     except Exception as e:
         logger.error("❌ Failed to check drift", error=str(e))

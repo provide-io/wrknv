@@ -406,6 +406,7 @@ class WrknvDoctor:
             if ".venv Directory" in check:
                 recommendations.append(("🗑️  Remove .venv", "rm -rf .venv && source env.sh"))
             elif "workenv Directory" in check and not has_env_issues:
+                recommendations.append(("🔧 Check workenv", "wrknv doctor"))
             elif "Virtual Environment" in check:
                 recommendations.append(("🚪 Exit current venv", "deactivate && source env.sh"))
 
