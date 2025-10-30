@@ -11,11 +11,14 @@ that wrknv is designed to manage.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 import contextlib
 import os
 from pathlib import Path
 import platform
+import subprocess
 import sys
+from typing import Any
 
 from provide.foundation.process import run
 
@@ -93,7 +96,7 @@ def activate_workenv(package_name: str | None = None) -> dict[str, str]:
 
 
 @contextlib.contextmanager
-def workenv_context(package_name: str | None = None):
+def workenv_context(package_name: str | None = None) -> Iterator[None]:
     """
     Context manager for running code with workenv activated.
 
@@ -187,7 +190,7 @@ class WorkenvTestRunner:
         print(f"Installing dependencies: {' '.join(cmd)}")
         run(cmd, env=env, check=True)
 
-    def run_pytest(self, *args, **kwargs) -> subprocess.CompletedProcess:
+    def run_pytest(self, *args: str, **kwargs: Any) -> subprocess.CompletedProcess:
         """
         Run pytest with the workenv activated.
 
@@ -207,7 +210,7 @@ class WorkenvTestRunner:
         print(f"Running tests: {' '.join(pytest_cmd)}")
         return run(pytest_cmd, env=env, **kwargs)
 
-    def run(self, cmd: list, **kwargs) -> subprocess.CompletedProcess:
+    def run(self, cmd: list, **kwargs: Any) -> subprocess.CompletedProcess:
         """
         Run any command with the workenv activated.
 
@@ -222,7 +225,7 @@ class WorkenvTestRunner:
         return run(cmd, env=env, **kwargs)
 
 
-def pytest_with_workenv(package_name: str | None = None, *pytest_args) -> int:
+def pytest_with_workenv(package_name: str | None = None, *pytest_args: str) -> int:
     """
     Convenience function to run pytest with workenv activated.
 

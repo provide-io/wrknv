@@ -316,9 +316,11 @@ class TestFileOperations:
 
         link = tmp_path / "link.txt"
 
-        with patch("platform.system", return_value="Windows"):
-            with patch("pathlib.Path.symlink_to", side_effect=OSError("Permission denied")):
-                create_symlink(target, link)
+        with (
+            patch("platform.system", return_value="Windows"),
+            patch("pathlib.Path.symlink_to", side_effect=OSError("Permission denied")),
+        ):
+            create_symlink(target, link)
 
         # Should have copied instead
         assert link.exists()

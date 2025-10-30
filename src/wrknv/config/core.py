@@ -100,7 +100,7 @@ class WorkenvConfig(RuntimeConfig):
     _persistence = field(init=False, repr=False, default=None)
     _display = field(init=False, repr=False, default=None)
 
-    def __attrs_post_init__(self):
+    def __attrs_post_init__(self) -> None:
         """Initialize helper instances after attrs initialization."""
         from wrknv.config.display import WorkenvConfigDisplay
         from wrknv.config.persistence import WorkenvConfigPersistence

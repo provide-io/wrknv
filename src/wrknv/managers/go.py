@@ -62,7 +62,7 @@ class GoManager(BaseToolManager):
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch Go versions: {e}")
+            raise ToolManagerError(f"Failed to fetch Go versions: {e}") from e
 
     def get_download_url(self, version: str) -> str:
         """Get download URL for Go version."""

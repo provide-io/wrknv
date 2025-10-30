@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import ClassVar
 
 from provide.foundation import logger
 
@@ -20,7 +21,7 @@ class ProjectDetector:
     """Detects project characteristics to suggest gitignore templates."""
 
     # File patterns for language detection
-    LANGUAGE_PATTERNS = {
+    LANGUAGE_PATTERNS: ClassVar[dict[str, list[str]]] = {
         "Python": ["*.py", "requirements.txt", "setup.py", "pyproject.toml"],
         "Node": ["*.js", "*.mjs", "*.cjs", "package.json"],
         "TypeScript": ["*.ts", "*.tsx", "tsconfig.json"],
@@ -38,7 +39,7 @@ class ProjectDetector:
     }
 
     # Framework detection patterns
-    FRAMEWORK_PATTERNS = {
+    FRAMEWORK_PATTERNS: ClassVar[dict[str, list[str]]] = {
         "Django": ["manage.py", "settings.py", "urls.py"],
         "Flask": ["app.py", "flask_app.py"],
         "React": ["react", "react-dom"],  # Check in package.json
@@ -51,7 +52,7 @@ class ProjectDetector:
     }
 
     # Tool detection patterns
-    TOOL_PATTERNS = {
+    TOOL_PATTERNS: ClassVar[dict[str, list[str]]] = {
         "Poetry": ["poetry.lock", "pyproject.toml"],
         "PDM": ["pdm.lock"],
         "Pipenv": ["Pipfile", "Pipfile.lock"],
@@ -69,7 +70,7 @@ class ProjectDetector:
     }
 
     # OS detection patterns
-    OS_PATTERNS = {
+    OS_PATTERNS: ClassVar[dict[str, list[str]]] = {
         "macOS": [".DS_Store", ".AppleDouble", ".LSOverride"],
         "Windows": ["Thumbs.db", "Desktop.ini", "ehthumbs.db"],
         "Linux": [".directory", ".Trash-*"],

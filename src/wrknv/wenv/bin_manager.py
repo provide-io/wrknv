@@ -34,10 +34,7 @@ def get_workenv_bin_dir(config: Any | None) -> pathlib.Path:
     # Check if we're in a virtual environment
     if hasattr(sys, "real_prefix") or (hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix):
         # We're in a venv - determine bin directory based on platform
-        if os.name == "nt":  # Windows
-            bin_dir = venv_path / "Scripts"
-        else:  # Unix/Linux/macOS
-            bin_dir = venv_path / "bin"
+        bin_dir = venv_path / ("Scripts" if os.name == "nt" else "bin")
     else:
         # Not in a venv, check for workenv directory relative to project root
         project_root = find_project_root()

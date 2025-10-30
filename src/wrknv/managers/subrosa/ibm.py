@@ -48,10 +48,10 @@ class IbmVaultVariant(SubRosaManager):
             # Parse versions from release data
             for version_str, _version_data in data.get("versions", {}).items():
                 # Skip pre-releases unless configured
-                if not include_prereleases:
-                    # Skip versions with -rc, -beta, -alpha, etc.
-                    if any(tag in version_str for tag in ["-rc", "-beta", "-alpha", "-dev"]):
-                        continue
+                if not include_prereleases and any(
+                    tag in version_str for tag in ["-rc", "-beta", "-alpha", "-dev"]
+                ):
+                    continue
 
                 versions.append(version_str)
 
@@ -62,13 +62,13 @@ class IbmVaultVariant(SubRosaManager):
                 from packaging.version import parse as parse_version
 
                 versions.sort(key=lambda v: parse_version(v), reverse=True)
-            except:
+            except Exception:
                 versions.sort(reverse=True)
 
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch Vault versions: {e}")
+            raise ToolManagerError(f"Failed to fetch Vault versions: {e}") from e
 
     def get_download_url(self, version: str) -> str:
         """Get download URL for HashiCorp Vault version."""

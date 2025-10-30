@@ -69,7 +69,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
         try:
             run(["docker", "stop", manager.container_name], capture_output=True, timeout=10)
             run(["docker", "rm", manager.container_name], capture_output=True, timeout=10)
-        except:
+        except Exception:
             pass
 
     def test_shared_storage_write_from_container(self, container_manager) -> None:
@@ -357,7 +357,7 @@ class TestContainerVolumeIntegration(FoundationTestCase):
                 try:
                     run(["docker", "stop", manager.container_name], capture_output=True, timeout=10)
                     run(["docker", "rm", manager.container_name], capture_output=True, timeout=10)
-                except:
+                except Exception:
                     pass
 
     def test_metadata_persistence(self, container_manager) -> None:

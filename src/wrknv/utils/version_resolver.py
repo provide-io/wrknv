@@ -119,7 +119,7 @@ class VersionResolver:
         logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
-    def _version_sort_key(self, version: str):
+    def _version_sort_key(self, version: str) -> semver.VersionInfo:
         """Generate sort key for semantic versioning using semver module."""
         try:
             # Try to parse as a semantic version

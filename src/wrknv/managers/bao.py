@@ -63,7 +63,7 @@ class BaoManager(BaseToolManager):
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch OpenBao versions: {e}")
+            raise ToolManagerError(f"Failed to fetch OpenBao versions: {e}") from e
 
     def get_download_url(self, version: str) -> str:
         """Get download URL for OpenBao version."""

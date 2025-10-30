@@ -28,7 +28,7 @@ def calculate_file_hash(file_path: pathlib.Path, algorithm: str = "sha256") -> s
     return hash_func.hexdigest()
 
 
-def version_sort_key(version: str):
+def version_sort_key(version: str) -> semver.VersionInfo:
     """Generate sort key for semantic versioning using semver module."""
     try:
         # Try to parse as a semantic version
