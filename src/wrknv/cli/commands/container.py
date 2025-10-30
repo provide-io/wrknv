@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -215,6 +215,7 @@ def container_clean_command() -> None:
     success = clean_container(config)
 
     if success:
+        echo_success("✅ Container resources cleaned successfully")
     else:
         echo_error("❌ Failed to clean container resources")
         sys.exit(1)
@@ -359,5 +360,6 @@ def container_exec_command(cmd: str) -> None:
         command=cmd.split(),
         auto_start=True,
     )
+
 
 # 🧰🌍🔚
