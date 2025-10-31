@@ -189,4 +189,5 @@ def get_download_platform_mappings() -> dict[str, dict[str, str]]:
         },
     }
 
+
 # 🧰🌍🔚

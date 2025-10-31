@@ -293,4 +293,5 @@ complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_s
 complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "config" -d "Show config"
 """
 
+
 # 🧰🌍🔚

@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -283,5 +283,6 @@ class TestPackageError:
         error = PackageError("Failed to build package")
         assert isinstance(error, WrkenvError)
         assert "Failed to build package" in str(error)
+
 
 # 🧰🌍🔚

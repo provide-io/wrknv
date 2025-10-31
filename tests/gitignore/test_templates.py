@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -239,5 +239,6 @@ class TestTemplateHandler:
         version_file = temp_cache_dir / ".version"
         assert version_file.exists()
         assert version_file.read_text() == "2024-01-01T12:00:00"
+
 
 # 🧰🌍🔚

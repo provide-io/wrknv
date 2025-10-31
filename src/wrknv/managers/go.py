@@ -242,4 +242,5 @@ class GoManager(BaseToolManager):
         """Get default GOPATH for a specific Go version."""
         return self.install_path / self.tool_name / version / "gopath"
 
+
 # 🧰🌍🔚

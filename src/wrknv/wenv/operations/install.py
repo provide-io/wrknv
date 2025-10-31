@@ -183,4 +183,5 @@ def is_executable(file_path: pathlib.Path) -> bool:
         # On Unix-like systems, check execute permission
         return bool(file_path.stat().st_mode & stat.S_IXUSR)
 
+
 # 🧰🌍🔚

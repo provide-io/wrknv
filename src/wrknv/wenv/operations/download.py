@@ -273,4 +273,5 @@ def validate_download_url(url: str) -> bool:
     except Exception:
         return False
 
+
 # 🧰🌍🔚

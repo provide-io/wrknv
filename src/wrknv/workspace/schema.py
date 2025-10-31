@@ -175,4 +175,5 @@ class WorkspaceConfig(BaseConfig):
         """Get repositories that need template updates."""
         return [repo for repo in self.repos if repo.template_version != current_version]
 
+
 # 🧰🌍🔚

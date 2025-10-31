@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -111,6 +111,7 @@ def profile_load(name: str) -> None:
         for tool, version, error in failed_tools:
             echo_error(f"  - {tool} {version}: {error}")
     else:
+        echo_success(f"✅ All tools installed successfully")
 
 
 @register_command(
@@ -179,7 +180,6 @@ def profile_export(name: str, output: str) -> None:
         output_path.write_text(toml_dumps({"name": name, "tools": profile_data}))
 
 
-
 @register_command(
     "profile.import",
     description="Import a profile from a file",
@@ -219,5 +219,6 @@ def profile_import(file: str) -> None:
     except Exception as e:
         echo_error(f"Failed to import profile: {e}")
         sys.exit(1)
+
 
 # 🧰🌍🔚

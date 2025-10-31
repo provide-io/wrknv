@@ -308,4 +308,5 @@ class GitignoreManager:
 
         return "\n".join(report_lines)
 
+
 # 🧰🌍🔚

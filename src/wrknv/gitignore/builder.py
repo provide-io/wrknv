@@ -208,4 +208,5 @@ class GitignoreBuilder:
 
         return self.build()
 
+
 # 🧰🌍🔚

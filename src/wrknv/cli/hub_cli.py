@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -97,7 +97,7 @@ def create_cli() -> click.Command:
     cli = hub.create_cli(
         name="wrknv",
         version="0.1.0",
-        "wrknv provides cross-platform tool installation and version management "
+        help="wrknv provides cross-platform tool installation and version management "
         "for development environments, including Terraform, OpenTofu, Go, UV, and more.",
     )
 

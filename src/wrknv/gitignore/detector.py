@@ -279,4 +279,5 @@ class ProjectDetector:
         logger.info(f"Suggested templates: {suggestions}")
         return suggestions
 
+
 # 🧰🌍🔚

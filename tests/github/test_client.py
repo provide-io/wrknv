@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -231,5 +231,6 @@ class TestGitHubReleasesClient:
         """Test client as context manager."""
         async with GitHubReleasesClient("owner/repo") as client:
             assert client.repo == "owner/repo"
+
 
 # 🧰🌍🔚

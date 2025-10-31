@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -351,6 +351,7 @@ class WrknvDoctor:
 
         # Add passed checks
         for check, details in self.checks_passed:
+            table.add_row(check, "[green]✅ PASS[/green]", details)
 
         # Add warnings
         for check, details in self.checks_warning:
@@ -391,7 +392,9 @@ class WrknvDoctor:
             if "env.sh" in check or "Workenv Path" in check:
                 has_env_issues = True
             elif "uv" in check:
+                recommendations.append(("🔧 Install uv", "curl -LsSf https://astral.sh/uv/install.sh | sh"))
             elif "wrknv Installation" in check:
+                recommendations.append(("🔧 Reinstall wrknv", "See installation docs"))
 
         # If there are any env.sh issues, recommend regeneration
         if has_env_issues:
@@ -403,6 +406,7 @@ class WrknvDoctor:
             if ".venv Directory" in check:
                 recommendations.append(("🗑️  Remove .venv", "rm -rf .venv && source env.sh"))
             elif "workenv Directory" in check and not has_env_issues:
+                recommendations.append(("🔧 Check workenv", "wrknv doctor"))
             elif "Virtual Environment" in check:
                 recommendations.append(("🚪 Exit current venv", "deactivate && source env.sh"))
 
@@ -437,5 +441,6 @@ def run_doctor(verbose: bool = False) -> int:
     """
     doctor = WrknvDoctor()
     return doctor.run(verbose)
+
 
 # 🧰🌍🔚

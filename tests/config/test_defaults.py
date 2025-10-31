@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -198,5 +198,6 @@ class TestValueConstraints:
         parts = DEFAULT_PYTHON_VERSION.split(".")
         assert len(parts) >= 2
         assert all(part.isdigit() for part in parts)
+
 
 # 🧰🌍🔚

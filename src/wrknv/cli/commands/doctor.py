@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -81,6 +81,7 @@ def selftest_check(verbose: bool = False, fix: bool = False) -> None:
         elif warnings > 0:
             echo_warning("\n⚠️  Health check completed with warnings.")
         else:
+            echo_success("\n✅ All health checks passed!")
 
     except Exception as e:
         echo_error(f"Health check failed: {e}")
@@ -91,7 +92,6 @@ def selftest_check(verbose: bool = False, fix: bool = False) -> None:
 def selftest_env() -> None:
     """Check environment setup."""
     try:
-
         result = _check_environment()
         if result["status"] == "pass":
             if result.get("details"):
@@ -109,7 +109,6 @@ def selftest_env() -> None:
 def selftest_config() -> None:
     """Check configuration."""
     try:
-
         result = _check_config()
         if result["status"] == "pass":
             if result.get("details"):
@@ -331,5 +330,6 @@ def _check_permissions() -> dict[str, Any]:
 
     except Exception as e:
         return {"name": "Permissions", "status": "fail", "message": f"Permission check failed: {e}"}
+
 
 # 🧰🌍🔚

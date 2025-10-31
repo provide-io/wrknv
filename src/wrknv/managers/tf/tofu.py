@@ -167,4 +167,5 @@ class TofuTfVariant(TfManager):
             "notes": "Conformance testing supports all OpenTofu versions",
         }
 
+
 # 🧰🌍🔚

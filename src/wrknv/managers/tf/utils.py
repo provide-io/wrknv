@@ -47,4 +47,5 @@ def get_tool_version_key(tool_name: str) -> str:
     """Get the metadata key for storing tool version."""
     return "opentofu_version" if tool_name == "tofu" else f"{tool_name}_version"
 
+
 # 🧰🌍🔚

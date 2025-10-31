@@ -349,4 +349,5 @@ def get_nested_registry() -> NestedCommandRegistry:
     """Get the global nested command registry."""
     return _nested_registry
 
+
 # 🧰🌍🔚

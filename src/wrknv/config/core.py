@@ -326,4 +326,5 @@ class WorkenvConfig(RuntimeConfig):
         # Allow version patterns (for matrix testing)
         return bool("*" in version or "~" in version or "^" in version)
 
+
 # 🧰🌍🔚

@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -59,6 +59,7 @@ class ContainerMetadata:
         metadata = self.storage.load_metadata()
 
         if metadata:
+            logger.debug(f"Loaded metadata: {metadata}")
 
         return metadata
 
@@ -117,5 +118,6 @@ class ContainerMetadata:
             )
 
         return (len(issues) == 0, issues)
+
 
 # 🧰🌍🔚

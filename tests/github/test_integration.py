@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -217,5 +217,6 @@ async def test_authenticated_client_real() -> None:
     releases = await client.list_releases()
 
     assert len(releases) > 0
+
 
 # 🧰🌍🔚

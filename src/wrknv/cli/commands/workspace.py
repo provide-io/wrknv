@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -164,9 +164,11 @@ def sync_all(dry_run: bool = False) -> None:
             if dry_run:
                 logger.info(f"🔍 Sync check completed: {success_count}/{total_count} repos ready")
             else:
+                logger.info(f"✅ Sync completed: {success_count}/{total_count} repos synced")
 
             for repo_name, result in results.items():
                 if result.get("success"):
+                    logger.info(f"  ✅ {repo_name}")
                 else:
                     error = result.get("error", "Unknown error")
                     logger.error(f"  ❌ {repo_name}: {error}")
@@ -193,7 +195,9 @@ def sync_repo(name: str, dry_run: bool = False) -> None:
 
             if result.get(name, {}).get("success"):
                 if dry_run:
+                    logger.info(f"✅ {name} is ready to sync")
                 else:
+                    logger.info(f"✅ {name} synced successfully")
             else:
                 error = result.get(name, {}).get("error", "Unknown error")
                 logger.error(f"❌ {name}: {error}")
@@ -224,9 +228,11 @@ def check_drift() -> None:
 
             logger.info("💡 Run 'wrknv workspace sync' to resolve drift")
         else:
+            logger.info("✅ No configuration drift detected")
 
     except Exception as e:
         logger.error("❌ Failed to check drift", error=str(e))
         raise
+
 
 # 🧰🌍🔚

@@ -45,10 +45,7 @@ def setup_wrknv_config_logging() -> None:
         config = WorkenvConfig.load()
 
         # Only override if PROVIDE_LOG_LEVEL is not already set
-        if (
-            not os.environ.get("PROVIDE_LOG_LEVEL")
-            and config.workenv.log_level != "WARNING"
-        ):
+        if not os.environ.get("PROVIDE_LOG_LEVEL") and config.workenv.log_level != "WARNING":
             os.environ["PROVIDE_LOG_LEVEL"] = config.workenv.log_level
     except Exception:
         # If config loading fails, don't break logging setup
@@ -56,5 +53,6 @@ def setup_wrknv_config_logging() -> None:
 
     # Always register emoji hierarchy
     register_emoji_hierarchy("wrknv", WRKNV_EMOJI_HIERARCHY)
+
 
 # 🧰🌍🔚

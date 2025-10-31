@@ -178,4 +178,5 @@ def setup_command(
         echo_info("  --check               Check system dependencies")
         echo_info("  --completions SHELL   Generate shell completions (bash/zsh/fish)")
 
+
 # 🧰🌍🔚

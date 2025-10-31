@@ -65,4 +65,5 @@ def get_circuit_breaker(operation_type: str = "default") -> SyncCircuitBreaker:
     }
     return breakers.get(operation_type, github_circuit_breaker)
 
+
 # 🧰🌍🔚
