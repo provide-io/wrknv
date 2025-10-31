@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""
-Test suite for CLI terraform command.
-"""
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Test suite for CLI terraform command."""
 
 from __future__ import annotations
 
@@ -372,3 +374,5 @@ class TestTerraformCommand(FoundationTestCase):
 
             assert result.exit_code == 1
             assert "Error listing versions" in result.output
+
+# 🧰🌍🔚

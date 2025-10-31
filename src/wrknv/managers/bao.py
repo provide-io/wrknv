@@ -1,15 +1,11 @@
-# wrknv/managers/bao.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/managers/bao.py
 #
-"""
-OpenBao Tool Manager for wrknv
+
+"""OpenBao Tool Manager for wrknv
 ===============================
-Manages OpenBao (open source Vault fork) versions for development.
-"""
+Manages OpenBao (open source Vault fork) versions for development."""
 
 from __future__ import annotations
 
@@ -168,4 +164,5 @@ class BaoManager(BaseToolManager):
 __all__ = [
     "BaoManager",
 ]
-# 🧰🌍📋🪄
+
+# 🧰🌍🔚

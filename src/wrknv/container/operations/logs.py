@@ -1,16 +1,11 @@
-# wrknv/container/operations/logs.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/container/operations/logs.py
-#
-"""
-Container Logs Operations
+"""Container Logs Operations
 =========================
-Stream and retrieve container logs.
-"""
+Stream and retrieve container logs."""
 
 from __future__ import annotations
 
@@ -184,7 +179,6 @@ class ContainerLogs:
             )
 
             logger.info("Container logs cleared", container=self.container_name)
-            self.console.print(f"[green]✅ Logs cleared for {self.container_name}[/green]")
             return True
 
         except ProcessError as e:
@@ -196,5 +190,4 @@ class ContainerLogs:
             self.console.print("[yellow]⚠️  Log clearing not supported or failed[/yellow]")
             return False
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

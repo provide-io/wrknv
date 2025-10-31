@@ -1,16 +1,18 @@
-# wrknv/cli/commands/profile.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# wrknv/cli/commands/profile.py
-#
-"""
-Profile Commands
+
+"""Profile Commands
 ================
-Commands for managing workenv profiles.
-"""
+Commands for managing workenv profiles."""
 
 from __future__ import annotations
 
@@ -74,7 +76,6 @@ def profile_save(name: str, force: bool = False) -> None:
 
     # Save profile
     config.save_profile(name, tools)
-    echo_success(f"✅ Saved profile '{name}' with {len(tools)} tools")
 
 
 @register_command(
@@ -100,7 +101,6 @@ def profile_load(name: str) -> None:
         try:
             manager = get_tool_manager(tool_name, config)
             manager.install_version(version)
-            echo_success(f"✅ Successfully installed {tool_name} {version}")
         except Exception as e:
             logger.error(f"Failed to install {tool_name} {version}: {e}")
             failed_tools.append((tool_name, version, str(e)))
@@ -111,7 +111,6 @@ def profile_load(name: str) -> None:
         for tool, version, error in failed_tools:
             echo_error(f"  - {tool} {version}: {error}")
     else:
-        echo_success(f"✅ Profile '{name}' loaded successfully")
 
 
 @register_command(
@@ -133,7 +132,6 @@ def profile_delete(name: str) -> None:
         sys.exit(0)
 
     config.delete_profile(name)
-    echo_success(f"✅ Profile '{name}' deleted")
 
 
 @register_command(
@@ -180,7 +178,6 @@ def profile_export(name: str, output: str) -> None:
         # Default to TOML
         output_path.write_text(toml_dumps({"name": name, "tools": profile_data}))
 
-    echo_success(f"✅ Exported profile '{name}' to {output_path}")
 
 
 @register_command(
@@ -218,11 +215,9 @@ def profile_import(file: str) -> None:
 
         config = WrknvContext.get_config()
         config.save_profile(name, tools)
-        echo_success(f"✅ Imported profile '{name}'")
 
     except Exception as e:
         echo_error(f"Failed to import profile: {e}")
         sys.exit(1)
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

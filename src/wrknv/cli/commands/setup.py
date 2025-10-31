@@ -1,16 +1,11 @@
-# wrknv/cli/commands/setup.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/cli/commands/setup.py
-#
-"""
-Setup Commands
+"""Setup Commands
 ==============
-Commands for setting up wrknv environment and integrations.
-"""
+Commands for setting up wrknv environment and integrations."""
 
 from __future__ import annotations
 
@@ -138,7 +133,6 @@ def setup_command(
 
             if install_path:
                 install_path.write_text(completion_script)
-                echo_success(f"✅ Installed {completions} completions to {install_path}")
 
                 if completions == "bash":
                     echo_info("Add this to your ~/.bashrc:")
@@ -184,5 +178,4 @@ def setup_command(
         echo_info("  --check               Check system dependencies")
         echo_info("  --completions SHELL   Generate shell completions (bash/zsh/fish)")
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

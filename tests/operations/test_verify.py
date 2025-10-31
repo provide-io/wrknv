@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# tests/test_operations_verify.py
-#
-"""
-Comprehensive tests for the operations/verify module.
-"""
+
+"""Comprehensive tests for the operations/verify module."""
 
 from __future__ import annotations
 
@@ -437,3 +436,5 @@ class TestVerifyOperations(FoundationTestCase):
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
+# 🧰🌍🔚

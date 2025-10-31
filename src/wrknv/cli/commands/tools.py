@@ -1,16 +1,11 @@
-# wrknv/cli/commands/tools.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/cli/commands/tools.py
-#
-"""
-Tool Management Commands
+"""Tool Management Commands
 ========================
-Commands for managing development tools (status, sync, doctor, etc).
-"""
+Commands for managing development tools (status, sync, doctor, etc)."""
 
 from __future__ import annotations
 
@@ -108,7 +103,6 @@ def sync_command(lock: bool = True) -> None:
     if lock:
         echo_info("🔒 Resolving and locking tool versions...")
         lockfile = lockfile_manager.resolve_and_lock(config)
-        echo_success(f"✅ Lockfile updated with {len(lockfile.resolved_tools)} resolved tools")
 
     echo_info("Syncing tools from configuration...")
 
@@ -125,7 +119,6 @@ def sync_command(lock: bool = True) -> None:
                 for v in resolved_versions:
                     echo_info(f"Installing {tool_name} {v}...")
                     manager.install_version(v, dry_run=False)
-                    echo_success(f"✅ Successfully installed {tool_name} {v}")
             else:
                 # Resolve single version pattern
                 resolved_versions = resolve_tool_versions(manager, version)
@@ -136,7 +129,6 @@ def sync_command(lock: bool = True) -> None:
 
                     echo_info(f"Installing {tool_name} {resolved_version}...")
                     manager.install_version(resolved_version, dry_run=False)
-                    echo_success(f"✅ Successfully installed {tool_name} {resolved_version}")
                 else:
                     echo_error(f"❌ Could not resolve version pattern '{version}' for {tool_name}")
 
@@ -162,7 +154,6 @@ def generate_env_command(
         shell: Target shell type (bash/zsh/sh/powershell/ps1)
         project_dir: Project directory to generate env script for
     """
-    echo_info(f"🔧 Generating environment scripts for {project_dir.name}...")
 
     try:
         # Use the existing function that works
@@ -173,12 +164,10 @@ def generate_env_command(
             if output != ps1_path:
                 safe_move(ps1_path, output)
                 ps1_path = output
-            echo_success(f"✅ Generated {ps1_path}")
         else:
             if output != sh_path:
                 safe_move(sh_path, output)
                 sh_path = output
-            echo_success(f"✅ Generated {sh_path}")
 
         echo_info("\nTo use the environment:")
         echo_info(f"  source {output}")
@@ -204,5 +193,4 @@ def doctor(verbose: bool = False) -> None:
     """
     sys.exit(run_doctor(verbose))
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

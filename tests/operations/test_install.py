@@ -1,8 +1,11 @@
-"""
-Tests for Install Operations
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Tests for Install Operations
 =============================
-Tests for the install functionality in wrknv.
-"""
+Tests for the install functionality in wrknv."""
 
 from __future__ import annotations
 
@@ -439,5 +442,4 @@ class TestDirectoryOperations:
         with pytest.raises(Exception, match="Path is not a directory"):
             clean_directory(test_file)
 
-
-# 🍲🥄🧪🪄
+# 🧰🌍🔚

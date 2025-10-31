@@ -1,15 +1,11 @@
-# wrknv/wenv/operations/download.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/operations/download.py
 #
-"""
-wrknv Download Operations
+
+"""wrknv Download Operations
 ====================================
-Functions for downloading and verifying tool archives using Foundation's ToolDownloader.
-"""
+Functions for downloading and verifying tool archives using Foundation's ToolDownloader."""
 
 from __future__ import annotations
 
@@ -277,5 +273,4 @@ def validate_download_url(url: str) -> bool:
     except Exception:
         return False
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

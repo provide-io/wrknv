@@ -1,16 +1,11 @@
-# wrknv/container/operations/volumes.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/container/operations/volumes.py
-#
-"""
-Container Volume Operations
+"""Container Volume Operations
 ===========================
-Manage container volumes and mounts.
-"""
+Manage container volumes and mounts."""
 
 from __future__ import annotations
 
@@ -61,7 +56,6 @@ class VolumeManager:
             run(cmd, check=True)
 
             logger.info("Volume created", name=name, driver=driver)
-            self.console.print(f"[green]✅ Volume {name} created[/green]")
             return True
 
         except ProcessError as e:
@@ -90,7 +84,6 @@ class VolumeManager:
             run(cmd, check=True)
 
             logger.info("Volume removed", name=name)
-            self.console.print(f"[green]✅ Volume {name} removed[/green]")
             return True
 
         except ProcessError as e:
@@ -195,7 +188,6 @@ class VolumeManager:
                 volume=volume_name,
                 backup_file=str(backup_file),
             )
-            self.console.print(f"[green]✅ Volume backed up to {backup_file}[/green]")
             return backup_file
 
         except ProcessError as e:
@@ -250,7 +242,6 @@ class VolumeManager:
                 volume=volume_name,
                 backup_file=str(backup_file),
             )
-            self.console.print(f"[green]✅ Volume restored from {backup_file}[/green]")
             return True
 
         except ProcessError as e:
@@ -334,5 +325,4 @@ class VolumeManager:
         # Full implementation would clean up volumes
         return True
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

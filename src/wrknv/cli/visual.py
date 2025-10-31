@@ -1,15 +1,11 @@
-# wrknv/cli/visual.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/env/visual.py
 #
-"""
-Visual UX Enhancements
+
+"""Visual UX Enhancements
 ======================
-Emoji and color support for enhanced CLI output.
-"""
+Emoji and color support for enhanced CLI output."""
 
 from __future__ import annotations
 
@@ -37,8 +33,6 @@ class Emoji:
     TERRAFORM = "🔷"
     OPENTOFU = "🌿"
     GO = "🐹"
-    PYTHON = "🐍"
-    UV = "📦"
 
     # Action emojis
     BUILD = "🔨"
@@ -49,14 +43,11 @@ class Emoji:
     SYNC = "🔄"
     DOWNLOAD = "⬇️"
     INSTALL = "📥"
-    CONFIG = "⚙️"
-    PACKAGE = "📦"
 
     # Container emojis
     CONTAINER = "🐳"
 
     # Status emojis
-    SUCCESS = "✅"
     ERROR = "❌"
     WARNING = "⚠️"
     INFO = "ⓘ"
@@ -65,8 +56,6 @@ class Emoji:
 
     # Environment emojis
     PROFILE = "👤"
-    ENVIRONMENT = "🌍"
-    WORKBENCH = "🧰"
 
 
 def get_console() -> Console:
@@ -125,5 +114,4 @@ def get_tool_emoji(tool_name: str) -> str:
     }
     return tool_emojis.get(tool_name.lower(), Emoji.WORKBENCH)
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

@@ -1,7 +1,9 @@
-# wrknv/utils/python_version.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
+
+"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -145,5 +147,4 @@ def get_python_version() -> str:
     """Get current Python version string."""
     return f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

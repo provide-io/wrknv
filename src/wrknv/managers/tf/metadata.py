@@ -1,15 +1,11 @@
-# wrknv/managers/tf/metadata.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/managers/tf/metadata.py
 #
-"""
-Tf Metadata Management
+
+"""Tf Metadata Management
 ======================
-Metadata and RECENT file management for Terraform/OpenTofu managers.
-"""
+Metadata and RECENT file management for Terraform/OpenTofu managers."""
 
 from __future__ import annotations
 
@@ -137,5 +133,4 @@ class TfMetadataManager:
         except Exception as e:
             logger.warning(f"Failed to update RECENT file with active version: {e}")
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

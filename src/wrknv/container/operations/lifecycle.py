@@ -1,16 +1,11 @@
-# wrknv/container/operations/lifecycle.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/container/operations/lifecycle.py
-#
-"""
-Container Lifecycle Operations
+"""Container Lifecycle Operations
 ==============================
-Start, stop, restart, and status operations for containers.
-"""
+Start, stop, restart, and status operations for containers."""
 
 from __future__ import annotations
 
@@ -66,7 +61,6 @@ class ContainerLifecycle:
 
                 self.console.print(f"{self.start_emoji} Starting container {self.container_name}...")
                 self.runtime.start_container(self.container_name)
-                self.console.print(f"[green]✅ Container {self.container_name} started successfully[/green]")
                 return True
 
             elif create_if_missing and "image" in run_options:
@@ -97,7 +91,6 @@ class ContainerLifecycle:
                 )
 
                 self.console.print(
-                    f"[green]✅ Container {self.container_name} created and started successfully[/green]"
                 )
                 return True
 
@@ -133,7 +126,6 @@ class ContainerLifecycle:
 
             self.runtime.stop_container(self.container_name, timeout=timeout)
 
-            self.console.print(f"[green]✅ Container {self.container_name} stopped successfully[/green]")
             return True
 
         except ProcessError as e:
@@ -237,7 +229,6 @@ class ContainerLifecycle:
 
             self.runtime.remove_container(self.container_name, force=force)
 
-            self.console.print(f"[green]✅ Container {self.container_name} removed successfully[/green]")
             return True
 
         except ProcessError as e:
@@ -249,5 +240,4 @@ class ContainerLifecycle:
             self.console.print(f"[red]❌ Failed to remove container: {e}[/red]")
             return False
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

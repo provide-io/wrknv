@@ -1,6 +1,9 @@
-"""
-Test siblings configuration handling in wrknv
-"""
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Test siblings configuration handling in wrknv"""
 
 from __future__ import annotations
 
@@ -300,3 +303,5 @@ siblings = [
             ps1_content = ps1_path.read_text()
             assert "auto-discovered-*" in ps1_content
             assert "special-package" in ps1_content
+
+# 🧰🌍🔚

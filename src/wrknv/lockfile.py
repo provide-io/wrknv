@@ -1,16 +1,11 @@
-# wrknv/lockfile.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/lockfile.py
-#
-"""
-Lockfile Management
+"""Lockfile Management
 ==================
-Manage wrknv.lock files for reproducible environments.
-"""
+Manage wrknv.lock files for reproducible environments."""
 
 from __future__ import annotations
 
@@ -222,5 +217,4 @@ class LockfileManager:
 
         return {tool.name: tool.version for tool in lockfile.resolved_tools.values()}
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

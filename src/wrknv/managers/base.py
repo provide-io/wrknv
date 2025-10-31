@@ -1,15 +1,18 @@
-# wrknv/managers/base.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/env/managers/base.py
 #
-"""
-Base Tool Manager for wrknv
+
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Base Tool Manager for wrknv
 =============================
-Common functionality for all tool managers.
-"""
+Common functionality for all tool managers."""
 
 from __future__ import annotations
 
@@ -241,7 +244,6 @@ class BaseToolManager(ABC):
             if self.config.get_setting("create_symlinks", True):
                 self.create_symlink(version)
 
-            logger.info(f"✅ {self.tool_name} {version} installed successfully")
 
         except Exception as e:
             # Clean up on failure if configured
@@ -268,7 +270,6 @@ class BaseToolManager(ABC):
             # Verify using Foundation's verify method
             if not self.verify_checksum(download_path, expected_checksum):
                 raise ToolManagerError(f"Checksum verification failed for {download_path}")
-            logger.info(f"✅ Checksum verified for {download_filename}")
         else:
             logger.warning(f"No checksum found for {download_filename} in {checksum_path.name}")
 
@@ -304,7 +305,6 @@ class BaseToolManager(ABC):
 
             for _i, version in enumerate(versions[:limit]):
                 marker = " (current)" if version == current else ""
-                status = "✅" if version == current else "  "
                 print(f"{status} {version}{marker}")
 
             if len(versions) > limit:
@@ -319,7 +319,6 @@ class BaseToolManager(ABC):
         if version:
             binary_path = self.get_current_binary_path()
             if binary_path and binary_path.exists():
-                print(f"{self.tool_name}: {version} ✅")
             else:
                 print(f"{self.tool_name}: {version} (binary missing)")
         else:
@@ -384,5 +383,4 @@ class BaseToolManager(ABC):
             logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
-
-# 🧰🌍🏗️🪄
+# 🧰🌍🔚
