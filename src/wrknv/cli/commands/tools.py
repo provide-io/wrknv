@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -12,7 +12,7 @@ from __future__ import annotations
 import pathlib
 import sys
 
-from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
+from provide.foundation.cli import echo_error, echo_info, echo_warning
 from provide.foundation.file import safe_move
 from provide.foundation.hub import register_command
 from provide.foundation.logger import get_logger
