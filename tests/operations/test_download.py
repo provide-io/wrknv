@@ -1,8 +1,11 @@
-"""
-Tests for Download Operations
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Tests for Download Operations
 =============================
-Tests for the download functionality in wrknv.
-"""
+Tests for the download functionality in wrknv."""
 
 from __future__ import annotations
 
@@ -203,5 +206,4 @@ def456  other.zip
         assert validate_download_url("") is False
         assert validate_download_url("file:///path/to/file") is False
 
-
-# 🍲🥄🧪🪄
+# 🧰🌍🔚

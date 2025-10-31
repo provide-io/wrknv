@@ -1,12 +1,11 @@
-# wrknv/workspace/sync.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """Workspace Configuration Synchronization
 =======================================
-Synchronize configurations across repositories in workspace.
-"""
+Synchronize configurations across repositories in workspace."""
 
 from __future__ import annotations
 
@@ -39,12 +38,10 @@ class WorkspaceSync:
                 results[repo.name] = {"error": str(e)}
 
         success_count = sum(1 for r in results.values() if "error" not in r)
-        logger.info("✅ Workspace sync completed", success=success_count, total=len(results))
         return results
 
     async def sync_repo(self, repo: RepoConfig, dry_run: bool = False) -> dict[str, Any]:
         """Sync single repository configuration."""
-        logger.info("🔄📁 Syncing repository", repo=repo.name, type=repo.type)
 
         # Build template context
         context = self._build_template_context(repo)
@@ -141,7 +138,6 @@ class WorkspaceSync:
 
         # Check if content changed
         if current_content.strip() == new_content.strip():
-            logger.debug("📄 File unchanged", path=str(file_path))
             return change_info
 
         # Generate diff
@@ -167,7 +163,6 @@ class WorkspaceSync:
 
                 # Write new content
                 file_path.write_text(new_content)
-                logger.info("✅ Updated file", path=str(file_path))
 
             except Exception as e:
                 logger.error("❌ Failed to write file", path=str(file_path), error=str(e))
@@ -235,7 +230,6 @@ class WorkspaceSync:
 
     def validate_templates(self) -> bool:
         """Validate that all templates are available and functional."""
-        logger.info("✅ Validating templates")
 
         try:
             # Test template generation with minimal context
@@ -251,12 +245,10 @@ class WorkspaceSync:
             self.template_generator.generate_claude_md(test_context)
             self.template_generator.generate_gitignore(test_context)
 
-            logger.info("✅ All templates validated")
             return True
 
         except Exception as e:
             logger.error("❌ Template validation failed", error=str(e))
             return False
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

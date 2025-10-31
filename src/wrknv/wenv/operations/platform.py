@@ -1,15 +1,11 @@
-# wrknv/wenv/operations/platform.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/operations/platform.py
 #
-"""
-wrknv Platform Detection
+
+"""wrknv Platform Detection
 ===================================
-Platform and architecture information using provide.foundation.
-"""
+Platform and architecture information using provide.foundation."""
 
 from __future__ import annotations
 
@@ -193,5 +189,4 @@ def get_download_platform_mappings() -> dict[str, dict[str, str]]:
         },
     }
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

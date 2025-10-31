@@ -1,13 +1,11 @@
-# wrknv/wenv/schema.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-wrknv Configuration Schema
+"""wrknv Configuration Schema
 ===========================
-Type-safe configuration models with validation for wrknv.toml using attrs.
-"""
+Type-safe configuration models with validation for wrknv.toml using attrs."""
 
 from __future__ import annotations
 
@@ -443,5 +441,4 @@ def config_to_toml(config: WorkenvConfig) -> str:
     # Convert to TOML
     return toml_dumps(config_dict)
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

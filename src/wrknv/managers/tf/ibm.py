@@ -1,15 +1,11 @@
-# wrknv/managers/tf/ibm.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/managers/ibm_tf.py
 #
-"""
-IBM Terraform Tool Manager for wrknv
+
+"""IBM Terraform Tool Manager for wrknv
 =====================================
-Manages IBM Terraform (formerly HashiCorp Terraform) versions for development environment.
-"""
+Manages IBM Terraform (formerly HashiCorp Terraform) versions for development environment."""
 
 from __future__ import annotations
 
@@ -181,5 +177,4 @@ class IbmTfVariant(TfManager):
             "notes": "Conformance testing supports all IBM Terraform versions",
         }
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

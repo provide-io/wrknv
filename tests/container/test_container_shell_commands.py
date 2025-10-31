@@ -1,3 +1,10 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""TODO: Add module docstring."""
+
 from __future__ import annotations
 
 import pytest
@@ -515,3 +522,5 @@ class TestCLIIntegration:
             assert result.exit_code == 0
             assert "Container Resource Usage" in result.output
             mock_stats.assert_called_once()
+
+# 🧰🌍🔚

@@ -1,13 +1,11 @@
-# wrknv/container/storage.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-Container Storage Management
+"""Container Storage Management
 ============================
-Storage path management and volume operations for containers.
-"""
+Storage path management and volume operations for containers."""
 
 from __future__ import annotations
 
@@ -125,7 +123,6 @@ class ContainerStorage:
         try:
             with metadata_path.open() as f:
                 metadata = json.load(f)
-            logger.debug("📖 Loaded container metadata", path=str(metadata_path))
             return metadata
         except Exception as e:
             logger.warning("⚠️ Failed to load metadata", error=str(e))
@@ -168,7 +165,6 @@ class ContainerStorage:
         container_dir = self.get_container_path()
 
         if not container_dir.exists():
-            logger.info("📁 Container directory doesn't exist", path=str(container_dir))
             return True
 
         try:
@@ -212,5 +208,4 @@ class ContainerStorage:
             logger.error("❌ Failed to clean storage", error=str(e))
             return False
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

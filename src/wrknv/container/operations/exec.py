@@ -1,16 +1,11 @@
-# wrknv/container/operations/exec.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/container/operations/exec.py
-#
-"""
-Container Exec Operations
+"""Container Exec Operations
 =========================
-Execute commands inside running containers.
-"""
+Execute commands inside running containers."""
 
 from __future__ import annotations
 
@@ -76,7 +71,6 @@ class ContainerExec:
                 command = [shell]
 
             # Execute command
-            self.console.print(f"[cyan]🔧 Executing in container {self.container_name}...[/cyan]")
 
             # For interactive commands, we need to use os.system or similar
             # as foundation.process might not support interactive TTY yet
@@ -253,5 +247,4 @@ class ContainerExec:
 
         return " ".join(quote(part) for part in parts)
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

@@ -1,15 +1,11 @@
-# wrknv/managers/uv.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/managers/uv.py
 #
-"""
-UV Tool Manager for wrknv
+
+"""UV Tool Manager for wrknv
 ============================
-Manages UV (Python package manager) versions for development.
-"""
+Manages UV (Python package manager) versions for development."""
 
 from __future__ import annotations
 
@@ -219,5 +215,4 @@ class UvManager(BaseToolManager):
             "notes": "Python wire protocol tools compatible with all UV versions",
         }
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

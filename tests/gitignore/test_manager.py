@@ -1,7 +1,10 @@
-"""
-Tests for Gitignore Manager
-============================
-"""
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Tests for Gitignore Manager
+============================"""
 
 from __future__ import annotations
 
@@ -343,3 +346,5 @@ class TestGitignoreManager:
                 exclude_patterns=["*.md"],
                 append=False,
             )
+
+# 🧰🌍🔚

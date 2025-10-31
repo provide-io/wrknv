@@ -1,16 +1,18 @@
-# wrknv/cli/commands/lock.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# wrknv/cli/commands/lock.py
-#
-"""
-Lock Commands
+
+"""Lock Commands
 =============
-Commands for managing wrknv.lock files.
-"""
+Commands for managing wrknv.lock files."""
 
 from __future__ import annotations
 
@@ -45,8 +47,6 @@ def lock_generate(force: bool = False) -> None:
         echo_info("🔒 Generating lockfile from configuration...")
         lockfile = lockfile_manager.resolve_and_lock(config)
 
-        echo_success(f"✅ Lockfile generated with {len(lockfile.resolved_tools)} resolved tools")
-        echo_info(f"📁 Lockfile saved to: {lockfile_manager.lockfile_path}")
 
     except Exception as e:
         echo_error(f"Failed to generate lockfile: {e}")
@@ -68,7 +68,6 @@ def lock_check() -> None:
         is_valid = lockfile_manager.is_lockfile_valid(config)
 
         if is_valid:
-            echo_success("✅ Lockfile is valid for current configuration")
         else:
             echo_error("❌ Lockfile is outdated or invalid")
             echo_info("Regenerate with: wrknv lock generate --force")
@@ -95,10 +94,8 @@ def lock_show() -> None:
             echo_error("Failed to load lockfile (corrupted?)")
             return
 
-        echo_info(f"📁 Lockfile: {lockfile_manager.lockfile_path}")
         echo_info(f"🔐 Config checksum: {lockfile.config_checksum}")
         echo_info(f"📅 Created: {lockfile.created_at}")
-        echo_info(f"🔧 wrknv version: {lockfile.wrknv_version}")
         echo_info(f"🛠️  Tools: {len(lockfile.resolved_tools)}")
 
         if lockfile.resolved_tools:
@@ -123,7 +120,6 @@ def lock_clean() -> None:
             return
 
         lockfile_manager.lockfile_path.unlink()
-        echo_success(f"✅ Removed lockfile: {lockfile_manager.lockfile_path}")
 
     except Exception as e:
         echo_error(f"Failed to remove lockfile: {e}")
@@ -166,17 +162,14 @@ def lock_sync() -> None:
                 manager = get_tool_manager(tool.name, config)
                 echo_info(f"Installing {tool.name} {tool.version}...")
                 manager.install_version(tool.version, dry_run=False)
-                echo_success(f"✅ Successfully installed {tool.name} {tool.version}")
                 installed_count += 1
 
             except Exception as e:
                 echo_error(f"❌ Error installing {tool.name} {tool.version}: {e}")
 
-        echo_success(f"✅ Sync completed: {installed_count} tools installed from lockfile")
 
     except Exception as e:
         echo_error(f"Failed to sync from lockfile: {e}")
         sys.exit(1)
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

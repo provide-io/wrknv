@@ -1,15 +1,11 @@
-# wrknv/managers/subrosa/bao.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/managers/subrosa/bao.py
 #
-"""
-OpenBao Variant for SubRosaManager
+
+"""OpenBao Variant for SubRosaManager
 ===================================
-Manages OpenBao (open source Vault fork) versions for development.
-"""
+Manages OpenBao (open source Vault fork) versions for development."""
 
 from __future__ import annotations
 
@@ -84,4 +80,5 @@ class BaoVariant(SubRosaManager):
 __all__ = [
     "BaoVariant",
 ]
-# 🧰🌍📋🪄
+
+# 🧰🌍🔚

@@ -1,15 +1,11 @@
-# wrknv/managers/subrosa/ibm.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/managers/subrosa/ibm.py
 #
-"""
-IBM Vault Variant for SubRosaManager
+
+"""IBM Vault Variant for SubRosaManager
 =====================================
-Manages IBM Vault (HashiCorp Vault) versions for development.
-"""
+Manages IBM Vault (HashiCorp Vault) versions for development."""
 
 from __future__ import annotations
 
@@ -136,4 +132,5 @@ class IbmVaultVariant(SubRosaManager):
 __all__ = [
     "IbmVaultVariant",
 ]
-# 🧰🌍📋🪄
+
+# 🧰🌍🔚

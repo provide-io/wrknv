@@ -1,8 +1,11 @@
-"""
-GitHub Client Integration Tests
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""GitHub Client Integration Tests
 ================================
-Integration tests using real GitHub API.
-"""
+Integration tests using real GitHub API."""
 
 from __future__ import annotations
 
@@ -214,3 +217,5 @@ async def test_authenticated_client_real() -> None:
     releases = await client.list_releases()
 
     assert len(releases) > 0
+
+# 🧰🌍🔚

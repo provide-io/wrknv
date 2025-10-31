@@ -1,15 +1,11 @@
-# wrknv/container/core.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/container/core.py
 #
-"""
-Container Core Management
+
+"""Container Core Management
 =========================
-Core container management functionality for wrknv.
-"""
+Core container management functionality for wrknv."""
 
 from __future__ import annotations
 
@@ -182,5 +178,4 @@ class ContainerManager:
 
         return mappings
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

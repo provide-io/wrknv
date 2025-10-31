@@ -1,12 +1,18 @@
-# wrknv/cli/commands/workspace.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
+
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 
 """Workspace CLI Commands
 ======================
-Commands for managing multi-repo workspaces.
-"""
+Commands for managing multi-repo workspaces."""
 
 from __future__ import annotations
 
@@ -34,7 +40,6 @@ def init(template_source: str | None = None, auto_discover: bool = True) -> None
         manager = WorkspaceManager()
         config = manager.init_workspace(template_source=template_source, auto_discover=auto_discover)
 
-        logger.success(f"✅ Workspace initialized with {len(config.repos)} repositories")
         if config.template_source:
             logger.info(f"📋 Template source: {config.template_source.location}")
 
@@ -49,7 +54,6 @@ def add_repo(
 ) -> None:
     """Add repository to workspace."""
     path = Path(repo_path)
-    logger.info("📦 Adding repository to workspace", path=str(path), name=name)
 
     try:
         manager = WorkspaceManager()
@@ -57,7 +61,6 @@ def add_repo(
             repo_path=path, name=name, repo_type=repo_type, template_profile=template_profile
         )
 
-        logger.success(f"✅ Repository added: {name or path.name}")
         logger.info(f"📊 Total repositories: {len(config.repos)}")
 
     except Exception as e:
@@ -74,7 +77,6 @@ def remove_repo(name: str) -> None:
         manager = WorkspaceManager()
         config = manager.remove_repo(name)
 
-        logger.success(f"✅ Repository removed: {name}")
         logger.info(f"📊 Remaining repositories: {len(config.repos)}")
 
     except Exception as e:
@@ -96,11 +98,9 @@ def list_repos() -> None:
             logger.info("💡 Initialize with: wrknv workspace init")
             return
 
-        logger.info(f"📁 Workspace root: {config.root}")
         logger.info(f"📊 Total repositories: {len(config.repos)}")
 
         for repo in config.repos:
-            logger.info(f"  📦 {repo.name} ({repo.type})")
             logger.info(f"    📍 Path: {repo.path}")
             logger.info(f"    🎯 Profile: {repo.template_profile}")
             logger.info(f"    🎨 Features: {', '.join(repo.features)}")
@@ -123,9 +123,6 @@ def status() -> None:
             logger.error(f"❌ {status_info['error']}")
             return
 
-        logger.info(f"📁 Root: {status_info['root']}")
-        logger.info(f"⚙️ Config: {status_info['config_path']}")
-        logger.info(f"📦 Configured repos: {status_info['repos_configured']}")
         logger.info(f"🔍 Discovered repos: {status_info['repos_discovered']}")
         logger.info(f"🔄 Sync strategy: {status_info['sync_strategy']}")
 
@@ -167,11 +164,9 @@ def sync_all(dry_run: bool = False) -> None:
             if dry_run:
                 logger.info(f"🔍 Sync check completed: {success_count}/{total_count} repos ready")
             else:
-                logger.success(f"✅ Sync completed: {success_count}/{total_count} repos updated")
 
             for repo_name, result in results.items():
                 if result.get("success"):
-                    logger.info(f"  ✅ {repo_name}")
                 else:
                     error = result.get("error", "Unknown error")
                     logger.error(f"  ❌ {repo_name}: {error}")
@@ -198,9 +193,7 @@ def sync_repo(name: str, dry_run: bool = False) -> None:
 
             if result.get(name, {}).get("success"):
                 if dry_run:
-                    logger.success(f"✅ {name} is ready for sync")
                 else:
-                    logger.success(f"✅ {name} synchronized successfully")
             else:
                 error = result.get(name, {}).get("error", "Unknown error")
                 logger.error(f"❌ {name}: {error}")
@@ -231,11 +224,9 @@ def check_drift() -> None:
 
             logger.info("💡 Run 'wrknv workspace sync' to resolve drift")
         else:
-            logger.success("✅ No configuration drift detected")
 
     except Exception as e:
         logger.error("❌ Failed to check drift", error=str(e))
         raise
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

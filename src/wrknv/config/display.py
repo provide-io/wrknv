@@ -1,7 +1,7 @@
-# wrknv/config/display.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """Display convenience helpers for `WorkenvConfig`."""
 
@@ -44,5 +44,4 @@ class WorkenvConfigDisplay:
         echo_info(f"    cache_ttl: {self.config.workenv.cache_ttl}")
         echo_info(f"    log_level: {self.config.workenv.log_level}")
 
-
-# 🧰🌍⚙️🪄
+# 🧰🌍🔚

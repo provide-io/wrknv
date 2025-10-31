@@ -1,17 +1,13 @@
-# wrknv/managers/tf/base.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/workenv/managers/tf_base.py
 #
-"""
-Tf Manager Base
+
+"""Tf Manager Base
 ===============
 Base class for Tf (IBM Terraform/OpenTofu) managers that use ~/.terraform.versions
 directory structure. This implementation is compatible with tfswitch and
-designed for managing Tf tool versions.
-"""
+designed for managing Tf tool versions."""
 
 from __future__ import annotations
 
@@ -405,5 +401,4 @@ class TfManager(BaseToolManager):
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
-
-# 🧰🌍🏗️🪄
+# 🧰🌍🔚

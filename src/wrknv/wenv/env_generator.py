@@ -1,15 +1,11 @@
-# wrknv/wenv/env_generator.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/env/env_generator.py
 #
-"""
-Environment Script Generator
+
+"""Environment Script Generator
 ============================
-Generate env.sh and env.ps1 scripts from templates.
-"""
+Generate env.sh and env.ps1 scripts from templates."""
 
 from __future__ import annotations
 
@@ -240,5 +236,4 @@ def create_project_env_scripts(project_dir: Path, workenv_name: str | None = Non
 
     return sh_path, ps1_path
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

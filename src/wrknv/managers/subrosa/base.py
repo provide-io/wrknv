@@ -1,18 +1,14 @@
-# wrknv/managers/subrosa/base.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# wrknv/managers/subrosa/base.py
 #
-"""
-SubRosaManager Base Class
+
+"""SubRosaManager Base Class
 =========================
 Base class for sub rosa (secret) management tools.
 
 'Sub rosa' - under the rose - in confidence.
-Manages secret management tool variants (OpenBao, HashiCorp Vault, etc.)
-"""
+Manages secret management tool variants (OpenBao, HashiCorp Vault, etc.)"""
 
 from __future__ import annotations
 
@@ -298,4 +294,5 @@ class SubRosaManager(BaseToolManager):
 __all__ = [
     "SubRosaManager",
 ]
-# 🧰🌍🏗️🪄
+
+# 🧰🌍🔚

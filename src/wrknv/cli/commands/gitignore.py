@@ -1,16 +1,18 @@
-# wrknv/cli/commands/gitignore.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
+"""TODO: Add module docstring."""
+
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# wrknv/cli/commands/gitignore.py
-#
-"""
-Gitignore Commands
+
+"""Gitignore Commands
 ==================
-Commands for managing .gitignore files.
-"""
+Commands for managing .gitignore files."""
 
 from __future__ import annotations
 
@@ -213,7 +215,6 @@ def gitignore_build(
 
         if success:
             final_output_path = output_path if output_path else manager.gitignore_path
-            echo_success(f"✅ .gitignore built successfully at {final_output_path}")
         else:
             echo_error("Failed to build .gitignore")
             sys.exit(1)
@@ -270,7 +271,6 @@ def gitignore_update() -> None:
 
         updated = manager.update_cache()
         if updated:
-            echo_success("✅ Templates updated successfully")
         else:
             echo_info("Templates are already up to date")
 
@@ -278,5 +278,4 @@ def gitignore_update() -> None:
         echo_error(f"Failed to update templates: {e}")
         sys.exit(1)
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

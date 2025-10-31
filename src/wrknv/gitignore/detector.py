@@ -1,12 +1,11 @@
-# wrknv/gitignore/detector.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """Project Detector for Gitignore Templates
 =========================================
-Auto-detects project types and suggests appropriate gitignore templates.
-"""
+Auto-detects project types and suggests appropriate gitignore templates."""
 
 from __future__ import annotations
 
@@ -280,5 +279,4 @@ class ProjectDetector:
         logger.info(f"Suggested templates: {suggestions}")
         return suggestions
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

@@ -1,8 +1,11 @@
-"""
-Tests for wrknv.container.errors
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Tests for wrknv.container.errors
 =================================
-Comprehensive tests for all container error classes.
-"""
+Comprehensive tests for all container error classes."""
 
 from __future__ import annotations
 
@@ -221,3 +224,5 @@ class TestErrorInheritance:
         assert issubclass(VolumeNotFoundError, NotFoundError)
         assert issubclass(ContainerRuntimeError, RuntimeError)
         assert issubclass(ContainerBuildError, ResourceError)
+
+# 🧰🌍🔚

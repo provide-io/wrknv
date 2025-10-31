@@ -1,12 +1,11 @@
-# wrknv/workspace/manager.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """Workspace Manager
 ================
-Manage multi-repo workspaces with configuration synchronization.
-"""
+Manage multi-repo workspaces with configuration synchronization."""
 
 from __future__ import annotations
 
@@ -74,7 +73,6 @@ class WorkspaceManager:
         # Save configuration
         self.save_config(config)
 
-        logger.info("✅ Workspace initialized", repos=len(repos))
         return config
 
     def load_config(self) -> WorkspaceConfig | None:
@@ -135,7 +133,6 @@ class WorkspaceManager:
         updated_config = config.add_repo(repo_config)
         self.save_config(updated_config)
 
-        logger.info("✅ Repository added to workspace", name=repo_config.name)
         return updated_config
 
     def remove_repo(self, name: str) -> WorkspaceConfig:
@@ -147,7 +144,6 @@ class WorkspaceManager:
         updated_config = config.remove_repo(name)
         self.save_config(updated_config)
 
-        logger.info("✅ Repository removed from workspace", name=name)
         return updated_config
 
     async def sync_all(self, dry_run: bool = False) -> dict[str, Any]:
@@ -236,5 +232,4 @@ class WorkspaceManager:
             "development_status": "3 - Alpha",
         }
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

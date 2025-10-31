@@ -1,7 +1,10 @@
-"""
-Tests for Project Detector
-===========================
-"""
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Tests for Project Detector
+==========================="""
 
 from __future__ import annotations
 
@@ -354,3 +357,5 @@ class TestProjectDetector:
         assert "React" in detector.detected_frameworks
         assert "Docker" in detector.detected_tools
         assert "VisualStudioCode" in detector.detected_tools
+
+# 🧰🌍🔚

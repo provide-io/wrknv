@@ -1,13 +1,11 @@
-# wrknv/container/manager.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-Container Manager Implementation
+"""Container Manager Implementation
 ================================
-Thin orchestration facade for container operations.
-"""
+Thin orchestration facade for container operations."""
 
 from __future__ import annotations
 
@@ -260,7 +258,6 @@ class ContainerManager:
             with tarfile.open(backup_path, "w:gz" if compress else "w") as tar:
                 tar.add(volumes_dir, arcname="volumes")
 
-            logger.info("📦 Backed up volumes", backup=str(backup_path))
             return backup_path
 
         except Exception as e:
@@ -387,5 +384,4 @@ def create_container_manager(project_name: str | None = None) -> ContainerManage
     config = get_default_config(project_name or "my-project")
     return ContainerManager(config=config)
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

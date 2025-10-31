@@ -1,16 +1,11 @@
-# wrknv/cli/commands/secrets.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/cli/commands/secrets.py
-#
-"""
-Secret Management Commands
+"""Secret Management Commands
 ===========================
-Commands for managing secret management tools (OpenBao, IBM Vault).
-"""
+Commands for managing secret management tools (OpenBao, IBM Vault)."""
 
 from __future__ import annotations
 
@@ -132,7 +127,6 @@ def secrets_command(
         manager.switch_version(actual_version, dry_run=dry_run)
 
         if not dry_run:
-            echo_success(f"✅ Switched to {display_name} {actual_version}")
             echo_info("💡 Run 'source env.sh' to activate in current shell")
             echo_info("💡 Or restart your terminal")
     except Exception as e:
@@ -142,5 +136,4 @@ def secrets_command(
         echo_error(traceback.format_exc())
         sys.exit(1)
 
-
-# 🧰🌍🖥️🪄
+# 🧰🌍🔚

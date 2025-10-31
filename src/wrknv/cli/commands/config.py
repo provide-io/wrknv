@@ -1,16 +1,11 @@
-# wrknv/cli/commands/config.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-#
-# wrknv/cli/commands/config.py
-#
-"""
-Config Commands
+"""Config Commands
 ===============
-Commands for managing workenv configuration.
-"""
+Commands for managing workenv configuration."""
 
 from __future__ import annotations
 
@@ -104,7 +99,6 @@ def config_validate(strict: bool = False, verbose: bool = False) -> None:
             echo_info("   Checking environment variables...")
 
         if is_valid:
-            echo_success("✅ Configuration is valid")
             if verbose:
                 echo_info("   All checks passed")
         else:
@@ -163,7 +157,6 @@ def config_init(force: bool = False) -> None:
 
         # Write configuration
         config.write_config(config_data)
-        echo_success(f"✅ Configuration created at {config.config_path}")
 
     except Exception as e:
         echo_error(f"Failed to create configuration: {e}")
@@ -229,10 +222,8 @@ def config_set(key: str, value: str) -> None:
                 parsed_value = value
 
         config.set_setting(key, parsed_value)
-        echo_success(f"✅ Set {key} = {parsed_value}")
     except Exception as e:
         echo_error(f"Error setting value: {e}")
         sys.exit(1)
 
-
-# 🧰🌍⚙️🪄
+# 🧰🌍🔚

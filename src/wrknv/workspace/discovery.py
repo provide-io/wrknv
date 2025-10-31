@@ -1,12 +1,11 @@
-# wrknv/workspace/discovery.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """Workspace Repository Discovery
 =============================
-Discover and analyze repositories in workspace.
-"""
+Discover and analyze repositories in workspace."""
 
 from __future__ import annotations
 
@@ -239,5 +238,4 @@ class WorkspaceDiscovery:
             ],
         }
 
-
-# 🧰🌍🔍🪄
+# 🧰🌍🔚

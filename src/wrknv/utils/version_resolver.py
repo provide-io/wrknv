@@ -1,12 +1,11 @@
-# wrknv/utils/version_resolver.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """Version Resolution Utilities
 ============================
-Handles resolution of version patterns like "1.11.x" to specific versions.
-"""
+Handles resolution of version patterns like "1.11.x" to specific versions."""
 
 from __future__ import annotations
 
@@ -177,5 +176,4 @@ def resolve_tool_versions(
     resolver = VersionResolver(available_versions)
     return resolver.resolve_versions(version_patterns)
 
-
-# 🧰🌍📄🪄
+# 🧰🌍🔚

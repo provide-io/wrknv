@@ -1,12 +1,11 @@
-# wrknv/managers/tf/bin_ops.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
 """Tf Bin Operations
 =================
-Tf-specific binary operations for workenv bin directory.
-"""
+Tf-specific binary operations for workenv bin directory."""
 
 from __future__ import annotations
 
@@ -56,5 +55,4 @@ def copy_tf_binaries_to_workenv(bin_dir: pathlib.Path, config: WorkenvConfig | N
         except Exception as e:
             logger.warning(f"Failed to copy {tool_name} binary: {e}")
 
-
-# 🧰🌍📋🪄
+# 🧰🌍🔚

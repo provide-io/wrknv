@@ -1,6 +1,9 @@
-"""
-Tests for workspace manager functionality.
-"""
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Tests for workspace manager functionality."""
 
 from __future__ import annotations
 
@@ -345,3 +348,5 @@ version = "1.0.0"
         loaded_config = manager.load_config()
         assert loaded_config.template_source is not None
         assert loaded_config.template_source.location == config.template_source.location
+
+# 🧰🌍🔚
