@@ -107,4 +107,5 @@ def copy_tool_binary(source_path: pathlib.Path, target_name: str, bin_dir: pathl
         logger.warning(f"Failed to copy binary: {e}")
         return False
 
+
 # 🧰🌍🔚

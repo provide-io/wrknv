@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -348,5 +348,6 @@ version = "1.0.0"
         loaded_config = manager.load_config()
         assert loaded_config.template_source is not None
         assert loaded_config.template_source.location == config.template_source.location
+
 
 # 🧰🌍🔚

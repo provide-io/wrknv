@@ -193,4 +193,5 @@ def doctor(verbose: bool = False) -> None:
     """
     sys.exit(run_doctor(verbose))
 
+
 # 🧰🌍🔚

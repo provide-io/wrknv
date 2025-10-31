@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -244,7 +244,6 @@ class BaseToolManager(ABC):
             if self.config.get_setting("create_symlinks", True):
                 self.create_symlink(version)
 
-
         except Exception as e:
             # Clean up on failure if configured
             if self.config.get_setting("clean_on_failure", True):
@@ -319,6 +318,7 @@ class BaseToolManager(ABC):
         if version:
             binary_path = self.get_current_binary_path()
             if binary_path and binary_path.exists():
+                print(f"{self.tool_name}: {version} (installed at {binary_path})")
             else:
                 print(f"{self.tool_name}: {version} (binary missing)")
         else:
@@ -382,5 +382,6 @@ class BaseToolManager(ABC):
         except Exception as e:
             logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
+
 
 # 🧰🌍🔚

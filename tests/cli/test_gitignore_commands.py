@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -96,7 +96,9 @@ templates_path = "{templates_path_actual}"
                 assert "npm-debug.log" in content or "logs" in content  # Real template may differ
                 assert ".DS_Store" not in content  # Should not include Global.gitignore
 
-    def test_gitignore_build_with_templates_option(self, cli, runner, tmp_path, gitignore_templates_dir) -> None:
+    def test_gitignore_build_with_templates_option(
+        self, cli, runner, tmp_path, gitignore_templates_dir
+    ) -> None:
         """Test building .gitignore using --templates option (should override config)."""
 
         with runner.isolated_filesystem():
@@ -230,7 +232,9 @@ templates_path = "{templates_path_actual}"
                 assert "# === NonExistent ===" not in content  # Should not include header for non-existent
                 assert "NonExistent" not in content  # Template shouldn't appear at all
 
-    def test_gitignore_build_with_output_option(self, cli, runner, tmp_path, gitignore_templates_dir, capsys) -> None:
+    def test_gitignore_build_with_output_option(
+        self, cli, runner, tmp_path, gitignore_templates_dir, capsys
+    ) -> None:
         """Test building .gitignore to a custom output path."""
 
         with runner.isolated_filesystem():
@@ -277,5 +281,6 @@ templates_path = "{templates_path_actual}"
                 assert "# === Python ===" in content
                 assert "*.pyc" in content or "*.py[cod" in content  # May use expanded pattern
                 assert not (test_dir / ".gitignore").exists()  # Default file should not be created
+
 
 # 🧰🌍🔚

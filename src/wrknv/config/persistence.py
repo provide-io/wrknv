@@ -166,4 +166,5 @@ class WorkenvConfigPersistence:
         """Get path to configuration file."""
         return self._ensure_config_path()
 
+
 # 🧰🌍🔚

@@ -215,4 +215,5 @@ class UvManager(BaseToolManager):
             "notes": "Python wire protocol tools compatible with all UV versions",
         }
 
+
 # 🧰🌍🔚

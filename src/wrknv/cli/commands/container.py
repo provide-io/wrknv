@@ -1,11 +1,11 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 """TODO: Add module docstring."""
 
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -80,6 +80,7 @@ def container_build_command(rebuild: bool = False) -> None:
     success = build_container(config, rebuild=rebuild)
 
     if success:
+        echo_success("✅ Container image built successfully")
     else:
         echo_error("❌ Failed to build container image")
         sys.exit(1)
@@ -117,6 +118,7 @@ def container_stop_command() -> None:
     success = stop_container(config)
 
     if success:
+        echo_success("✅ Container stopped successfully")
     else:
         echo_error("❌ Failed to stop container")
         sys.exit(1)
@@ -135,6 +137,7 @@ def container_restart_command() -> None:
     success = restart_container(config)
 
     if success:
+        echo_success("✅ Container restarted successfully")
     else:
         echo_error("❌ Failed to restart container")
         sys.exit(1)
@@ -212,6 +215,7 @@ def container_clean_command() -> None:
     success = clean_container(config)
 
     if success:
+        echo_success("✅ Container resources cleaned successfully")
     else:
         echo_error("❌ Failed to clean container resources")
         sys.exit(1)
@@ -356,5 +360,6 @@ def container_exec_command(cmd: str) -> None:
         command=cmd.split(),
         auto_start=True,
     )
+
 
 # 🧰🌍🔚
