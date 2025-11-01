@@ -1,0 +1,45 @@
+# Inherit shared configuration from provide-foundry
+INHERIT: ../provide-foundry/base-mkdocs.yml
+
+# Project-Specific Configuration
+site_name: WrkNv Documentation
+site_description: Work environment management and toolchain automation
+site_author: provide.io
+site_url: https://foundry.provide.io/wrknv/
+repo_url: https://github.com/provide-io/wrknv
+repo_name: provide-io/wrknv
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2024-2025 provide.io
+
+# Development server configuration
+dev_addr: '127.0.0.1:8008'
+
+# Standalone mode settings
+docs_dir: docs
+
+# Project-specific theme overrides
+theme:
+  font:
+    text: Inter
+    code: Fira Code
+  palette:
+    # Light mode - custom colors for wrknv
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode - custom colors for wrknv
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - API Reference: api/index.md
