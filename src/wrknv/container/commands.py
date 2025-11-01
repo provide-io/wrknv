@@ -79,10 +79,7 @@ def container_status(config: WorkenvConfig | None = None) -> None:
         docker_status = "[green]✅ Available[/green]"
 
     # Image status
-    if not status["image_found"]:
-        image_status = "[red]❌ Not Found[/red]"
-    else:
-        image_status = "[green]✅ Found[/green]"
+    image_status = "[red]❌ Not Found[/red]" if not status["image_found"] else "[green]✅ Found[/green]"
 
     # Create status table
     table = Table(title="📊 Container Status", show_header=True)
@@ -211,10 +208,7 @@ def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None)
         backup_path = manager.backup_volumes(compress=True, include_metadata=True, name=name)
 
         size = backup_path.stat().st_size
-        if size > 1024 * 1024:
-            size_str = f"{size / (1024 * 1024):.1f} MB"
-        else:
-            size_str = f"{size / 1024:.1f} KB"
+        size_str = f"{size / (1024 * 1024):.1f} MB" if size > 1024 * 1024 else f"{size / 1024:.1f} KB"
 
         console.print(f"[green]✅ Backup created successfully: {name} ({size_str})[/green]")
         return True

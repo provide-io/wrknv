@@ -9,8 +9,8 @@ Commands for managing workenv profiles."""
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
+import sys
 
 from provide.foundation import logger
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
