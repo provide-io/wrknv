@@ -37,7 +37,6 @@ class WorkspaceSync:
                 logger.error("❌ Failed to sync repo", repo=repo.name, error=str(e))
                 results[repo.name] = {"error": str(e)}
 
-        success_count = sum(1 for r in results.values() if "error" not in r)
         return results
 
     async def sync_repo(self, repo: RepoConfig, dry_run: bool = False) -> dict[str, Any]:

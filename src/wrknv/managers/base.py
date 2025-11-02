@@ -9,9 +9,9 @@ Common functionality for all tool managers."""
 
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 import pathlib
 import platform
-from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
 from provide.foundation.file import safe_delete, safe_rmtree
