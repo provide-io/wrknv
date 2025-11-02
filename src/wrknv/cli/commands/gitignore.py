@@ -3,13 +3,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""TODO: Add module docstring."""
-
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
 """Gitignore Commands
 ==================
 Commands for managing .gitignore files."""
@@ -214,7 +207,7 @@ def gitignore_build(
         )
 
         if success:
-            final_output_path = output_path if output_path else manager.gitignore_path
+            pass
         else:
             echo_error("Failed to build .gitignore")
             sys.exit(1)

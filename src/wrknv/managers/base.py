@@ -3,22 +3,15 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""TODO: Add module docstring."""
-
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
 """Base Tool Manager for wrknv
 =============================
 Common functionality for all tool managers."""
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 import pathlib
 import platform
+from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
 from provide.foundation.file import safe_delete, safe_rmtree
@@ -304,6 +297,7 @@ class BaseToolManager(ABC):
 
             for _i, version in enumerate(versions[:limit]):
                 marker = " (current)" if version == current else ""
+                status = ""
                 print(f"{status} {version}{marker}")
 
             if len(versions) > limit:

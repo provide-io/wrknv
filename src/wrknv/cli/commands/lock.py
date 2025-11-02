@@ -3,13 +3,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""TODO: Add module docstring."""
-
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
 """Lock Commands
 =============
 Commands for managing wrknv.lock files."""
@@ -45,7 +38,7 @@ def lock_generate(force: bool = False) -> None:
             sys.exit(1)
 
         echo_info("🔒 Generating lockfile from configuration...")
-        lockfile = lockfile_manager.resolve_and_lock(config)
+        lockfile_manager.resolve_and_lock(config)
 
     except Exception as e:
         echo_error(f"Failed to generate lockfile: {e}")
