@@ -3,21 +3,14 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""TODO: Add module docstring."""
-
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
 """Profile Commands
 ================
 Commands for managing workenv profiles."""
 
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from provide.foundation import logger
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
@@ -111,7 +104,7 @@ def profile_load(name: str) -> None:
         for tool, version, error in failed_tools:
             echo_error(f"  - {tool} {version}: {error}")
     else:
-        echo_success(f"✅ All tools installed successfully")
+        echo_success("✅ All tools installed successfully")
 
 
 @register_command(

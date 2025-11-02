@@ -102,7 +102,7 @@ def sync_command(lock: bool = True) -> None:
 
     if lock:
         echo_info("🔒 Resolving and locking tool versions...")
-        lockfile = lockfile_manager.resolve_and_lock(config)
+        lockfile_manager.resolve_and_lock(config)
 
     echo_info("Syncing tools from configuration...")
 

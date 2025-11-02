@@ -3,13 +3,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""TODO: Add module docstring."""
-
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
 """Container Command Implementations
 =================================
 Command implementations for container management."""
@@ -78,6 +71,18 @@ def container_status(config: WorkenvConfig | None = None) -> None:
     console = Console()
 
     status = manager.status()
+
+    # Docker status
+    if not status["docker_available"]:
+        docker_status = "[red]❌ Not Available[/red]"
+    else:
+        docker_status = "[green]✅ Available[/green]"
+
+    # Image status
+    if not status["image_found"]:
+        image_status = "[red]❌ Not Found[/red]"
+    else:
+        image_status = "[green]✅ Found[/green]"
 
     # Create status table
     table = Table(title="📊 Container Status", show_header=True)
@@ -170,6 +175,7 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
         return
 
     # Create table
+    table = Table(title="📦 Container Volumes", show_header=True)
     table.add_column("Volume", style="cyan")
     table.add_column("Path", style="dim")
     table.add_column("Status", style="green")
@@ -189,6 +195,7 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
             size_str = f"{size} B"
 
         files_str = f"{volume['files']} files" if volume["exists"] else "-"
+        status = "[green]✅ Mounted[/green]" if volume["exists"] else "[yellow]⚠️ Not Mounted[/yellow]"
 
         table.add_row(volume["name"], volume["path"], status, size_str if volume["exists"] else "-", files_str)
 
@@ -203,11 +210,13 @@ def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None)
     try:
         backup_path = manager.backup_volumes(compress=True, include_metadata=True, name=name)
 
-        # Get backup size
         size = backup_path.stat().st_size
-        size_str = f"{size / (1024 * 1024):.1f} MB" if size > 1024 * 1024 else f"{size / 1024:.1f} KB"
+        if size > 1024 * 1024:
+            size_str = f"{size / (1024 * 1024):.1f} MB"
+        else:
+            size_str = f"{size / 1024:.1f} KB"
 
-        console.print(f"[dim]Location: {backup_path}[/dim]")
+        console.print(f"[green]✅ Backup created successfully: {name} ({size_str})[/green]")
         return True
 
     except Exception as e:
