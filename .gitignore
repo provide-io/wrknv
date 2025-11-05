@@ -118,3 +118,4 @@ docs/.shared-theme/
 
 # Extracted provide.io tooling artifacts
 .provide/
+site/
