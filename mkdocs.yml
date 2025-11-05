@@ -2,7 +2,7 @@
 INHERIT: .provide/foundry/base-mkdocs.yml
 
 # Project-Specific Configuration
-site_name: WrkNv Documentation
+site_name: wrknv
 site_description: Work environment management and toolchain automation
 site_author: provide.io
 site_url: https://foundry.provide.io/wrknv/
