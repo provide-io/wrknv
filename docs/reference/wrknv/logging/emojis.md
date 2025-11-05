@@ -1,0 +1,1 @@
+::: wrknv.logging.emojis
