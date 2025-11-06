@@ -17,8 +17,8 @@ from provide.foundation.hub import register_command
 from wrknv.workspace.manager import WorkspaceManager
 
 
-# Register the workspace group with 'ws' as an alias
-@register_command("workspace", group=True, aliases=["ws"], description="Manage multi-repo workspaces")
+# Register the workspace group
+@register_command("workspace", group=True, description="Manage multi-repo workspaces")
 def workspace_group() -> None:
     """Commands for managing workspaces."""
     pass
