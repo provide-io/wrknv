@@ -24,7 +24,15 @@ def workspace_group() -> None:
     pass
 
 
+# Register 'ws' as an alias for workspace
+@register_command("ws", group=True, description="Manage multi-repo workspaces (alias for workspace)")
+def ws_group() -> None:
+    """Commands for managing workspaces (shorthand)."""
+    pass
+
+
 @register_command("workspace.init", description="Initialize workspace in current directory")
+@register_command("ws.init", description="Initialize workspace in current directory")
 def init(template_source: str | None = None, auto_discover: bool = True) -> None:
     """Initialize workspace in current directory."""
     logger.info("🚀 Initializing workspace", auto_discover=auto_discover)
@@ -42,6 +50,7 @@ def init(template_source: str | None = None, auto_discover: bool = True) -> None
 
 
 @register_command("workspace.add", description="Add repository to workspace")
+@register_command("ws.add", description="Add repository to workspace")
 def add_repo(
     repo_path: str, name: str | None = None, repo_type: str | None = None, template_profile: str | None = None
 ) -> None:
@@ -62,6 +71,7 @@ def add_repo(
 
 
 @register_command("workspace.remove", description="Remove repository from workspace")
+@register_command("ws.remove", description="Remove repository from workspace")
 def remove_repo(name: str) -> None:
     """Remove repository from workspace."""
     logger.info("🗑️ Removing repository from workspace", name=name)
@@ -78,6 +88,7 @@ def remove_repo(name: str) -> None:
 
 
 @register_command("workspace.list", description="List repositories in workspace")
+@register_command("ws.list", description="List repositories in workspace")
 def list_repos() -> None:
     """List repositories in workspace."""
     logger.info("📋 Listing workspace repositories")
@@ -104,6 +115,7 @@ def list_repos() -> None:
 
 
 @register_command("workspace.status", description="Show workspace status")
+@register_command("ws.status", description="Show workspace status")
 def status() -> None:
     """Show workspace status."""
     logger.info("📊 Getting workspace status")
@@ -225,6 +237,37 @@ def check_drift() -> None:
 
     except Exception as e:
         logger.error("❌ Failed to check drift", error=str(e))
+        raise
+
+
+@register_command("workspace.setup", description="Setup all repositories in workspace")
+def setup_workspace(generate_only: bool = False) -> None:
+    """Setup all repositories in workspace.
+
+    Args:
+        generate_only: If True, only generate env scripts without running them
+    """
+    logger.info("🚀 Setting up workspace", generate_only=generate_only)
+
+    try:
+        manager = WorkspaceManager()
+        results = manager.setup_workspace(generate_only=generate_only)
+
+        success_count = results.get("success_count", 0)
+        total_count = results.get("total_count", 0)
+
+        if generate_only:
+            logger.info(f"✅ Generated env scripts: {success_count}/{total_count} repos")
+        else:
+            logger.info(f"✅ Setup completed: {success_count}/{total_count} repos")
+
+        if results.get("failures"):
+            logger.warning("⚠️ Some repositories failed:")
+            for repo_name, error in results["failures"].items():
+                logger.error(f"  ❌ {repo_name}: {error}")
+
+    except Exception as e:
+        logger.error("❌ Failed to setup workspace", error=str(e))
         raise
 
 
