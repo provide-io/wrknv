@@ -17,22 +17,14 @@ from provide.foundation.hub import register_command
 from wrknv.workspace.manager import WorkspaceManager
 
 
-# Register the workspace group first
-@register_command("workspace", group=True, description="Manage multi-repo workspaces")
+# Register the workspace group with 'ws' as an alias
+@register_command("workspace", group=True, aliases=["ws"], description="Manage multi-repo workspaces")
 def workspace_group() -> None:
     """Commands for managing workspaces."""
     pass
 
 
-# Register 'ws' as an alias for workspace
-@register_command("ws", group=True, description="Manage multi-repo workspaces (alias for workspace)")
-def ws_group() -> None:
-    """Commands for managing workspaces (shorthand)."""
-    pass
-
-
 @register_command("workspace.init", description="Initialize workspace in current directory")
-@register_command("ws.init", description="Initialize workspace in current directory")
 def init(template_source: str | None = None, auto_discover: bool = True) -> None:
     """Initialize workspace in current directory."""
     logger.info("🚀 Initializing workspace", auto_discover=auto_discover)
@@ -50,7 +42,6 @@ def init(template_source: str | None = None, auto_discover: bool = True) -> None
 
 
 @register_command("workspace.add", description="Add repository to workspace")
-@register_command("ws.add", description="Add repository to workspace")
 def add_repo(
     repo_path: str, name: str | None = None, repo_type: str | None = None, template_profile: str | None = None
 ) -> None:
@@ -71,7 +62,6 @@ def add_repo(
 
 
 @register_command("workspace.remove", description="Remove repository from workspace")
-@register_command("ws.remove", description="Remove repository from workspace")
 def remove_repo(name: str) -> None:
     """Remove repository from workspace."""
     logger.info("🗑️ Removing repository from workspace", name=name)
@@ -88,7 +78,6 @@ def remove_repo(name: str) -> None:
 
 
 @register_command("workspace.list", description="List repositories in workspace")
-@register_command("ws.list", description="List repositories in workspace")
 def list_repos() -> None:
     """List repositories in workspace."""
     logger.info("📋 Listing workspace repositories")
@@ -115,7 +104,6 @@ def list_repos() -> None:
 
 
 @register_command("workspace.status", description="Show workspace status")
-@register_command("ws.status", description="Show workspace status")
 def status() -> None:
     """Show workspace status."""
     logger.info("📊 Getting workspace status")
