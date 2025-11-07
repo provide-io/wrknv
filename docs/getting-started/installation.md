@@ -494,13 +494,5 @@ If you encounter issues:
 ### Quick Start
 
 1. **[Quick Start Guide](quick-start.md)** - Generate your first environment in 5 minutes
-2. **[Configuration Guide](../user-guide/configuration.md)** - Learn about all configuration options
-3. **[Tool Management](../user-guide/tools.md)** - Managing tool versions
-
-### Advanced Topics
-
-- **[Container Development](../user-guide/containers.md)** - Using Docker-based environments
-- **[Sibling Packages](../user-guide/siblings.md)** - Multi-package development workflows
-- **[Custom Tools](../development/custom-tools.md)** - Creating custom tool managers
 
 Ready to manage your development environment? Start with the [Quick Start Guide](quick-start.md)!
