@@ -17,7 +17,7 @@ from provide.foundation.hub import register_command
 from wrknv.workspace.manager import WorkspaceManager
 
 
-# Register the workspace group first
+# Register the workspace group
 @register_command("workspace", group=True, description="Manage multi-repo workspaces")
 def workspace_group() -> None:
     """Commands for managing workspaces."""
@@ -225,6 +225,37 @@ def check_drift() -> None:
 
     except Exception as e:
         logger.error("❌ Failed to check drift", error=str(e))
+        raise
+
+
+@register_command("workspace.setup", description="Setup all repositories in workspace")
+def setup_workspace(generate_only: bool = False) -> None:
+    """Setup all repositories in workspace.
+
+    Args:
+        generate_only: If True, only generate env scripts without running them
+    """
+    logger.info("🚀 Setting up workspace", generate_only=generate_only)
+
+    try:
+        manager = WorkspaceManager()
+        results = manager.setup_workspace(generate_only=generate_only)
+
+        success_count = results.get("success_count", 0)
+        total_count = results.get("total_count", 0)
+
+        if generate_only:
+            logger.info(f"✅ Generated env scripts: {success_count}/{total_count} repos")
+        else:
+            logger.info(f"✅ Setup completed: {success_count}/{total_count} repos")
+
+        if results.get("failures"):
+            logger.warning("⚠️ Some repositories failed:")
+            for repo_name, error in results["failures"].items():
+                logger.error(f"  ❌ {repo_name}: {error}")
+
+    except Exception as e:
+        logger.error("❌ Failed to setup workspace", error=str(e))
         raise
 
 
