@@ -51,11 +51,19 @@ class Emoji:
     ERROR = "❌"
     WARNING = "⚠️"
     INFO = "ⓘ"
+    SUCCESS = "✅"
     RUNNING = "🟢"
     STOPPED = "🟡"
 
     # Environment emojis
     PROFILE = "👤"
+    WORKBENCH = "🧰"
+    CONFIG = "⚙️"
+
+    # Language emojis
+    PYTHON = "🐍"
+    UV = "📦"
+    PACKAGE = "📦"
 
 
 def get_console() -> Console:

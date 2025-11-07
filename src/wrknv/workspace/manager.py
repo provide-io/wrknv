@@ -232,5 +232,55 @@ class WorkspaceManager:
             "development_status": "3 - Alpha",
         }
 
+    def setup_workspace(self, generate_only: bool = False) -> dict[str, Any]:
+        """Setup all repositories in workspace.
+
+        Args:
+            generate_only: If True, only generate env scripts without running them
+
+        Returns:
+            Dictionary with setup results
+        """
+        from wrknv.wenv.env_generator import create_project_env_scripts
+
+        config = self.load_config()
+        if config is None:
+            raise RuntimeError("No workspace configuration found. Run 'wrknv workspace init' first.")
+
+        results: dict[str, Any] = {
+            "success_count": 0,
+            "total_count": len(config.repos),
+            "failures": {},
+            "generated": [],
+        }
+
+        for repo in config.repos:
+            repo_path = repo.path if repo.path.is_absolute() else self.root / repo.path
+
+            if not repo_path.exists():
+                results["failures"][repo.name] = f"Repository path does not exist: {repo_path}"
+                continue
+
+            if not (repo_path / "pyproject.toml").exists():
+                results["failures"][repo.name] = "No pyproject.toml found"
+                continue
+
+            try:
+                # Generate env scripts
+                logger.info(f"📝 Generating env scripts for {repo.name}")
+                sh_path, ps1_path = create_project_env_scripts(repo_path)
+
+                results["generated"].append(
+                    {"repo": repo.name, "sh_path": str(sh_path), "ps1_path": str(ps1_path)}
+                )
+
+                results["success_count"] += 1
+
+            except Exception as e:
+                logger.error(f"❌ Failed to setup {repo.name}", error=str(e))
+                results["failures"][repo.name] = str(e)
+
+        return results
+
 
 # 🧰🌍🔚
