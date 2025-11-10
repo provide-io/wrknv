@@ -99,13 +99,8 @@ def create_cli() -> click.Command:
 
 def main() -> None:
     """Main entry point for the CLI."""
-    import os
     from attrs import evolve
     from provide.foundation import TelemetryConfig
-
-    # Bridge WRKNV_LOG_LEVEL to Foundation setup logs if not already set
-    if os.environ.get("WRKNV_LOG_LEVEL") and not os.environ.get("FOUNDATION_SETUP_LOG_LEVEL"):
-        os.environ["FOUNDATION_SETUP_LOG_LEVEL"] = os.environ["WRKNV_LOG_LEVEL"]
 
     # Load wrknv configuration to get log level
     from wrknv.config import WorkenvConfig
