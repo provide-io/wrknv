@@ -99,9 +99,35 @@ def create_cli() -> click.Command:
 
 def main() -> None:
     """Main entry point for the CLI."""
-    # Note: Logging setup disabled for now due to missing dependencies
-    # from wrknv.logging.setup import setup_wrknv_logging
-    # setup_wrknv_logging()
+    from attrs import evolve
+    from provide.foundation import TelemetryConfig
+
+    # Load wrknv configuration to get log level
+    from wrknv.config import WorkenvConfig
+
+    wrknv_config = WorkenvConfig.from_env()  # type: ignore[attr-defined]
+
+    # Get base telemetry config from environment
+    base_telemetry = TelemetryConfig.from_env()
+
+    # Merge with wrknv-specific settings
+    telemetry_config = evolve(
+        base_telemetry,
+        service_name="wrknv",
+        logging=evolve(
+            base_telemetry.logging,
+            default_level=wrknv_config.workenv.log_level,
+        ),
+    )
+
+    # Initialize Foundation with merged config
+    hub = get_hub()
+    hub.initialize_foundation(telemetry_config)
+
+    # Set up wrknv-specific logging (emoji hierarchy)
+    from wrknv.logging.setup import setup_wrknv_logging
+
+    setup_wrknv_logging()
 
     cli = create_cli()
     cli()
