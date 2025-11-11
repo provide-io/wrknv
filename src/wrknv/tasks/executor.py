@@ -137,10 +137,10 @@ class TaskExecutor:
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
                 ):
-                    # Print line immediately for user feedback
-                    print(line, end="", flush=True)
-                    # Also accumulate for TaskResult
-                    stdout_lines.append(line)
+                    # Print line immediately for user feedback (add newline back)
+                    print(line, flush=True)
+                    # Also accumulate for TaskResult (preserve original format)
+                    stdout_lines.append(line + "\n")
 
                 duration = time.time() - start
 
