@@ -146,6 +146,7 @@ class TaskExecutor:
                 stream_env["PYTHONUNBUFFERED"] = "1"
 
                 stdout_chunks = []
+                chunk_count = 0
 
                 async for chunk in async_stream(
                     cmd=cmd_list,
@@ -154,11 +155,19 @@ class TaskExecutor:
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
                 ):
+                    chunk_count += 1
                     # Print chunk immediately for user feedback
                     # Chunks may contain partial lines, so don't add newlines
                     print(chunk, end="", flush=True)
                     # Also accumulate for TaskResult
                     stdout_chunks.append(chunk)
+
+                logger.debug(
+                    "Streaming completed",
+                    task=task.full_name,
+                    chunks_received=chunk_count,
+                    total_bytes=sum(len(c) for c in stdout_chunks),
+                )
 
                 duration = time.time() - start
 
@@ -214,6 +223,16 @@ class TaskExecutor:
                     stderr=result.stderr or "",
                     duration=duration,
                 )
+
+        except KeyboardInterrupt:
+            duration = time.time() - start
+            logger.info(
+                "Task interrupted by user",
+                task=task.full_name,
+                duration=f"{duration:.2f}s",
+            )
+            # Re-raise to allow graceful shutdown
+            raise
 
         except ProcessTimeoutError as e:
             duration = time.time() - start
