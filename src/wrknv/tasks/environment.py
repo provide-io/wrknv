@@ -21,12 +21,8 @@ import platform
 import sys
 from typing import Literal
 
-try:
-    import tomllib
-except ImportError:
-    import tomli as tomllib  # type: ignore[no-redef]
-
 from provide.foundation import logger
+from provide.foundation.file.formats import read_toml
 
 ExecutionMode = Literal["auto", "uv_run", "direct", "system"]
 
@@ -194,11 +190,10 @@ class ExecutionEnvironment:
         pyproject = self.project_dir / "pyproject.toml"
         if pyproject.exists():
             try:
-                with pyproject.open("rb") as f:
-                    data = tomllib.load(f)
-                    if "tool" in data and "uv" in data["tool"]:
-                        logger.trace("UV project detected via pyproject.toml [tool.uv]")
-                        return True
+                data = read_toml(pyproject, default={})
+                if data and "tool" in data and "uv" in data["tool"]:
+                    logger.trace("UV project detected via pyproject.toml [tool.uv]")
+                    return True
             except Exception:
                 pass
 
