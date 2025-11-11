@@ -7,6 +7,18 @@
 
 from __future__ import annotations
 
-from .schema import TaskConfig, TaskResult
+from .schema import (
+    ExportedTask,
+    PackageTaskReference,
+    TaskConfig,
+    TaskNamespace,
+    TaskResult,
+)
 
-__all__ = ["TaskConfig", "TaskResult"]
+__all__ = [
+    "ExportedTask",
+    "PackageTaskReference",
+    "TaskConfig",
+    "TaskNamespace",
+    "TaskResult",
+]
