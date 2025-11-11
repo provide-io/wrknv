@@ -124,7 +124,7 @@ class TaskExecutor:
 
         try:
             if use_streaming:
-                # Streaming mode: show output in real-time
+                # Streaming mode: show output in real-time using chunk-based streaming
                 # Parse shell command into list for async_stream
                 # Use shlex.split() to properly parse quoted args, shell features, etc.
                 try:
@@ -137,25 +137,26 @@ class TaskExecutor:
                 stream_env = exec_env.copy() if exec_env else {}
                 stream_env["PYTHONUNBUFFERED"] = "1"
 
-                stdout_lines = []
+                stdout_chunks = []
 
-                async for line in async_stream(
+                async for chunk in async_stream(
                     cmd=cmd_list,
                     cwd=cwd,
                     env=stream_env,
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
                 ):
-                    # Print line immediately for user feedback (add newline back)
-                    print(line, flush=True)
-                    # Also accumulate for TaskResult (preserve original format)
-                    stdout_lines.append(line + "\n")
+                    # Print chunk immediately for user feedback
+                    # Chunks may contain partial lines, so don't add newlines
+                    print(chunk, end="", flush=True)
+                    # Also accumulate for TaskResult
+                    stdout_chunks.append(chunk)
 
                 duration = time.time() - start
 
                 # async_stream doesn't provide exit code, assume success if no exception
                 exit_code = 0
-                stdout_text = "".join(stdout_lines)
+                stdout_text = "".join(stdout_chunks)
                 stderr_text = ""  # Merged into stdout
 
                 logger.info(
