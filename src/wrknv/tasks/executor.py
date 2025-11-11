@@ -154,6 +154,12 @@ class TaskExecutor:
             timeout=timeout,
         )
 
+        # Set parent process title
+        from provide.foundation.process import set_process_title
+
+        formatted_task_name = format_task_title(task)
+        set_process_title(f"we: {formatted_task_name}")
+
         # Build environment: merge executor env with task env
         exec_env = {}
         if self.env:
@@ -198,6 +204,7 @@ class TaskExecutor:
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
                     print_output=True,  # Print chunks immediately to stdout
+                    process_title=formatted_task_name,  # Set child process title
                 ):
                     # Accumulate chunks for TaskResult
                     stdout_chunks.append(chunk)
@@ -235,6 +242,7 @@ class TaskExecutor:
                     check=False,  # We handle errors ourselves
                     timeout=timeout,
                     shell=True,  # Explicit shell usage for command strings
+                    process_title=formatted_task_name,  # Set child process title
                 )
 
                 duration = time.time() - start
