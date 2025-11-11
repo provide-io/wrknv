@@ -66,11 +66,13 @@ class WorkenvConfig(RuntimeConfig):
     """Main workenv configuration with WRKNV_ environment variable support."""
 
     # Project metadata
-    project_name: str = config_field(
-        default="my-project", description="Project name", env_var="WRKNV_PROJECT_NAME"
+    project_name: str | None = config_field(
+        default=None, description="Project name", env_var="WRKNV_PROJECT_NAME"
     )
-    version: str = config_field(default="1.0.0", description="Project version", env_var="WRKNV_VERSION")
-    description: str = config_field(default="", description="Project description", env_var="WRKNV_DESCRIPTION")
+    version: str | None = config_field(default=None, description="Project version", env_var="WRKNV_VERSION")
+    description: str | None = config_field(
+        default=None, description="Project description", env_var="WRKNV_DESCRIPTION"
+    )
 
     # Tool configurations
     tools: dict[str, dict[str, Any]] = field(factory=dict)
@@ -95,9 +97,9 @@ class WorkenvConfig(RuntimeConfig):
     _manager: ConfigManager | None = field(init=False, repr=False, default=None)
 
     # Helper instances for delegation
-    _validator = field(init=False, repr=False, default=None)
-    _persistence = field(init=False, repr=False, default=None)
-    _display = field(init=False, repr=False, default=None)
+    _validator: Any = field(init=False, repr=False, default=None)
+    _persistence: Any = field(init=False, repr=False, default=None)
+    _display: Any = field(init=False, repr=False, default=None)
 
     def __attrs_post_init__(self) -> None:
         """Initialize helper instances after attrs initialization."""
@@ -121,10 +123,12 @@ class WorkenvConfig(RuntimeConfig):
         env_config = cls.from_env(prefix="WRKNV")
 
         # Merge environment config over file config
-        if env_config.project_name != "my-project":
+        if env_config.project_name is not None:
             instance.project_name = env_config.project_name
-        if env_config.version != "1.0.0":
+        if env_config.version is not None:
             instance.version = env_config.version
+        if env_config.description is not None:
+            instance.description = env_config.description
 
         # Merge workenv settings from environment
         env_settings = WorkenvSettings.from_env(prefix="WRKNV")
@@ -174,11 +178,16 @@ class WorkenvConfig(RuntimeConfig):
 
     def config_exists(self) -> bool:
         """Check if configuration file exists."""
-        return self._persistence.config_exists()
+        if self._persistence is None:
+            return False
+        return self._persistence.config_exists()  # type: ignore[no-any-return]
 
     def get_config_path(self) -> Path:
         """Get path to configuration file."""
-        return self._persistence.get_config_path()
+        if self._persistence is None:
+            msg = "Persistence handler not initialized"
+            raise RuntimeError(msg)
+        return self._persistence.get_config_path()  # type: ignore[no-any-return]
 
     def get_tool_version(self, tool_name: str) -> str | None:
         """Get version for a specific tool."""
@@ -279,9 +288,11 @@ class WorkenvConfig(RuntimeConfig):
         """Save configuration to file."""
         self._persistence.save_config()
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self, include_sensitive: bool = True) -> dict[str, Any]:
         """Convert configuration to dictionary."""
-        return self._persistence.to_dict()
+        if self._persistence is None:
+            return {}
+        return self._persistence.to_dict()  # type: ignore[no-any-return]
 
     def write_config(self, config_data: dict[str, Any]) -> None:
         """Write configuration data to file."""
@@ -295,9 +306,15 @@ class WorkenvConfig(RuntimeConfig):
         """Display configuration in a readable format."""
         self._display.show_config()
 
-    def validate(self) -> tuple[bool, list[str]]:
-        """Validate configuration comprehensively."""
-        return self._validator.validate()
+    def validate_config(self) -> tuple[bool, list[str]]:
+        """Validate configuration comprehensively.
+
+        Returns:
+            Tuple of (is_valid, list of error messages)
+        """
+        if self._validator is None:
+            return True, []
+        return self._validator.validate()  # type: ignore[no-any-return]
 
     def validate_version(self, tool_name: str, version: str) -> bool:
         """Validate a tool version format.

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import sys
+from typing import Any
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.console.output import pout
@@ -88,7 +89,7 @@ def config_validate(strict: bool = False, verbose: bool = False) -> None:
             sys.exit(1)
 
         # Perform validation
-        is_valid, errors = config.validate()
+        is_valid, errors = config.validate_config()
 
         if verbose:
             echo_info(f"📋 Validating configuration: {config.config_path}")
@@ -140,21 +141,25 @@ def config_init(force: bool = False) -> None:
         echo_info("Creating new wrknv configuration...")
 
         # Prompt for basic settings
-        project_name = input("Project name [my-project]: ").strip() or "my-project"
+        project_name_input = input("Project name (leave empty to skip): ").strip()
+        version_input = input("Version (leave empty to skip): ").strip()
 
         # Create default config structure
-        config_data = {
-            "project_name": project_name,
+        config_data: dict[str, Any] = {
             "workenv": {
-                "settings": {
-                    "auto_install": True,
-                    "use_cache": True,
-                    "cache_ttl": "7d",
-                }
+                "auto_install": True,
+                "use_cache": True,
+                "cache_ttl": "7d",
             },
             "tools": {},
             "profiles": {},
         }
+
+        # Only add project metadata if provided
+        if project_name_input:
+            config_data["project_name"] = project_name_input
+        if version_input:
+            config_data["version"] = version_input
 
         # Write configuration
         config.write_config(config_data)
