@@ -101,7 +101,13 @@
       "Bash(git restore src/provide/foundation/parsers/attrs_integration.py)",
       "Bash(git restore src/provide/testkit/base/foundation.py)",
       "Bash(git add:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.astral.sh)",
+      "Bash(do if [ -f \"$dir/pyproject.toml\" ])",
+      "Bash([ -f \"$dir/wrknv.toml\" ])",
+      "Bash(then basename \"$dir\")",
+      "Bash(fi)"
     ],
     "deny": [],
     "additionalDirectories": [
