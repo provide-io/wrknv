@@ -128,12 +128,16 @@ class TaskExecutor:
                 # Parse command into list for async_stream (which doesn't support shell=True)
                 cmd_list = ["/bin/sh", "-c", command]
 
+                # Add PYTHONUNBUFFERED to force immediate output from Python subprocesses
+                stream_env = exec_env.copy() if exec_env else {}
+                stream_env["PYTHONUNBUFFERED"] = "1"
+
                 stdout_lines = []
 
                 async for line in async_stream(
                     cmd=cmd_list,
                     cwd=cwd,
-                    env=exec_env if exec_env else None,
+                    env=stream_env,
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
                 ):
