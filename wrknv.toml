@@ -38,10 +38,20 @@ container_registry = "ghcr.io"
 # Task definitions
 [tasks]
 # Simple test tasks
-test = "uv run pytest tests/ -v"
 lint = "uv run ruff check src/ tests/"
 format = "uv run ruff format src/ tests/"
 typecheck = "uv run mypy src/ --ignore-missing-imports"
+
+# Nested test tasks
+[tasks.test]
+_default = "uv run pytest tests/ -v"
+unit = "uv run pytest tests/tasks/ -v"
+cli = "uv run pytest tests/cli/ -v"
+fast = "uv run pytest tests/ -x"
+
+[tasks.test.coverage]
+run = "uv run pytest tests/ --cov=src/wrknv --cov-report=term-missing"
+description = "Run tests with coverage"
 
 # Funny hello world demo task
 [tasks.hello]

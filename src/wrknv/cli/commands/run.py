@@ -18,6 +18,7 @@ from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.hub import register_command
 
 from wrknv.tasks.registry import TaskRegistry
+from wrknv.tasks.schema import TaskConfig
 
 
 @register_command("run", description="Run tasks defined in wrknv.toml")
@@ -38,7 +39,7 @@ def run_command(
 
     # Parse environment variables
     env_dict = {}
-    for e in (env or ()):
+    for e in env or ():
         if "=" not in e:
             echo_error(f"Invalid env format: {e}. Use KEY=VALUE")
             sys.exit(1)
@@ -83,7 +84,7 @@ async def _run_tasks(
         echo_info(f"\n▶ Running task: {task_name}")
 
         try:
-            result = await registry.run_task(task_name, dry_run, env)
+            result = await registry.run_task(task_name, args=None, dry_run=dry_run, env=env)
 
             if result.stdout:
                 print(result.stdout, end="")
@@ -99,6 +100,82 @@ async def _run_tasks(
         except ValueError as e:
             echo_error(str(e))
             sys.exit(1)
+
+
+def _display_tasks_hierarchical(tasks: list[TaskConfig], verbose: bool) -> None:
+    """Display tasks in a hierarchical tree structure.
+
+    Groups tasks by namespace and shows them in a tree format.
+    Flat tasks are shown separately at the end.
+
+    Args:
+        tasks: List of TaskConfig objects to display
+        verbose: If True, show detailed task information
+    """
+    # Organize tasks by namespace
+    namespaced_tasks: dict[str, list[TaskConfig]] = {}
+    flat_tasks: list[TaskConfig] = []
+
+    for task in tasks:
+        if task.namespace:
+            if task.namespace not in namespaced_tasks:
+                namespaced_tasks[task.namespace] = []
+            namespaced_tasks[task.namespace].append(task)
+        else:
+            flat_tasks.append(task)
+
+    echo_info("\nAvailable tasks:")
+
+    # Display namespaced tasks as trees
+    for namespace in sorted(namespaced_tasks.keys()):
+        echo_info(f"\n{namespace}")
+        tasks_in_namespace = sorted(namespaced_tasks[namespace], key=lambda t: t.name)
+
+        for i, task in enumerate(tasks_in_namespace):
+            is_last = i == len(tasks_in_namespace) - 1
+            prefix = "└── " if is_last else "├── "
+
+            # Build task display
+            task_display = task.name
+            if task.is_default:
+                task_display += " (default)"
+
+            if task.description:
+                task_display += f"  {task.description}"
+
+            echo_info(f"{prefix}{task_display}")
+
+            # Show details in verbose mode
+            if verbose:
+                detail_prefix = "    " if is_last else "│   "
+                if task.is_composite:
+                    assert isinstance(task.run, list)
+                    echo_info(f"{detail_prefix}Runs: {', '.join(task.run)}")
+                else:
+                    cmd_preview = str(task.run)[:60]
+                    if len(str(task.run)) > 60:
+                        cmd_preview += "..."
+                    echo_info(f"{detail_prefix}Command: {cmd_preview}")
+
+    # Display flat tasks
+    if flat_tasks:
+        echo_info("\nFlat tasks:")
+        for task in sorted(flat_tasks, key=lambda t: t.name):
+            task_display = f"• {task.name}"
+            if task.description:
+                task_display += f"  {task.description}"
+
+            echo_info(f"  {task_display}")
+
+            if verbose:
+                if task.is_composite:
+                    assert isinstance(task.run, list)
+                    echo_info(f"    Runs: {', '.join(task.run)}")
+                else:
+                    cmd_preview = str(task.run)[:60]
+                    if len(str(task.run)) > 60:
+                        cmd_preview += "..."
+                    echo_info(f"    Command: {cmd_preview}")
 
 
 @register_command("tasks", description="List available tasks")
@@ -118,17 +195,4 @@ def tasks_command(verbose: bool = False) -> None:
         echo_info("No tasks defined in wrknv.toml")
         return
 
-    echo_info("\nAvailable tasks:")
-    for task_item in tasks:
-        if verbose:
-            echo_info(f"\n  {task_item.name}")
-            if task_item.description:
-                echo_info(f"    {task_item.description}")
-            if task_item.is_composite:
-                assert isinstance(task_item.run, list)
-                echo_info(f"    Runs: {', '.join(task_item.run)}")
-            else:
-                echo_info(f"    Command: {task_item.run}")
-        else:
-            desc = f" - {task_item.description}" if task_item.description else ""
-            echo_info(f"  {task_item.name}{desc}")
+    _display_tasks_hierarchical(tasks, verbose)
