@@ -13,18 +13,18 @@ Patterns adopted from pyvider's launch-context for robust detection.
 
 from __future__ import annotations
 
+from importlib.metadata import Distribution, PackageNotFoundError
 import json
 import os
+from pathlib import Path
 import platform
 import sys
-from importlib.metadata import Distribution, PackageNotFoundError
-from pathlib import Path
 from typing import Literal
 
 try:
-    import tomllib  # Python 3.11+
+    import tomllib
 except ImportError:
-    import tomli as tomllib  # Fallback
+    import tomli as tomllib  # type: ignore[no-redef]
 
 from provide.foundation import logger
 
@@ -51,7 +51,7 @@ class ExecutionEnvironment:
         project_dir: Path,
         package_name: str | None = None,
         mode: ExecutionMode = "auto",
-    ):
+    ) -> None:
         """Initialize environment detection.
 
         Args:
@@ -194,7 +194,7 @@ class ExecutionEnvironment:
         pyproject = self.project_dir / "pyproject.toml"
         if pyproject.exists():
             try:
-                with open(pyproject, "rb") as f:
+                with pyproject.open("rb") as f:
                     data = tomllib.load(f)
                     if "tool" in data and "uv" in data["tool"]:
                         logger.trace("UV project detected via pyproject.toml [tool.uv]")
@@ -235,16 +235,17 @@ class ExecutionEnvironment:
             import importlib
 
             module = importlib.import_module(self.package_name.replace("-", "_"))
-            module_path = Path(module.__file__).parent
+            if module.__file__ is not None:
+                module_path = Path(module.__file__).parent
 
-            # Check if module is in src/ directory structure
-            if module_path.parent.name == "src":
-                logger.trace(
-                    "Editable install detected via src/ structure",
-                    package=self.package_name,
-                    path=str(module_path),
-                )
-                return True
+                # Check if module is in src/ directory structure
+                if module_path.parent.name == "src":
+                    logger.trace(
+                        "Editable install detected via src/ structure",
+                        package=self.package_name,
+                        path=str(module_path),
+                    )
+                    return True
         except (ImportError, AttributeError, TypeError):
             pass
 
