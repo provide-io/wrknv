@@ -17,8 +17,6 @@ This module can be used standalone or integrated with other tools."""
 
 from __future__ import annotations
 
-__version__ = "0.1.0"
-
 # Submodules are available but not imported to avoid circular imports
 # Use explicit imports: from wrknv.wenv import config, managers, etc.
 

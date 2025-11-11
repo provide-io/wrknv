@@ -13,8 +13,11 @@ Can be used standalone or integrated with other tools."""
 
 from __future__ import annotations
 
+from provide.foundation.utils.versioning import get_version
+
 from wrknv import errors
-from wrknv._version import __version__
+
+__version__ = get_version("wrknv", caller_file=__file__)
 
 # Public API exports
 from wrknv.config import WorkenvConfig, WorkenvConfigError
