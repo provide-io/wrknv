@@ -81,7 +81,7 @@ DEFAULT_TEMPLATE_BRANCH = None
 # =================================
 # Logging defaults
 # =================================
-DEFAULT_LOG_LEVEL = "INFO"
+DEFAULT_LOG_LEVEL = "WARNING"
 
 # =================================
 # Configuration defaults
