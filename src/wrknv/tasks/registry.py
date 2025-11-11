@@ -15,7 +15,8 @@ from typing import Any
 
 from attrs import define
 
-from .schema import TaskConfig
+from .executor import TaskExecutor
+from .schema import TaskConfig, TaskResult
 
 
 @define
@@ -104,3 +105,75 @@ class TaskRegistry:
             List of all TaskConfig objects
         """
         return list(self.tasks.values())
+
+    async def run_task(
+        self,
+        name: str,
+        dry_run: bool = False,
+        env: dict[str, str] | None = None,
+    ) -> TaskResult:
+        """Run a task by name.
+
+        Args:
+            name: Task name to execute
+            dry_run: If True, show what would be executed without running
+            env: Additional environment variables
+
+        Returns:
+            TaskResult with execution details
+
+        Raises:
+            ValueError: If task not found
+        """
+        task = self.get_task(name)
+        if not task:
+            msg = f"Task not found: {name}"
+            raise ValueError(msg)
+
+        # Check if composite task
+        if task.is_composite:
+            return await self._run_composite_task(task, dry_run, env)
+
+        # Run single task
+        executor = TaskExecutor(self.repo_path, env)
+        return await executor.execute(task, dry_run)
+
+    async def _run_composite_task(
+        self,
+        task: TaskConfig,
+        dry_run: bool,
+        env: dict[str, str] | None,
+    ) -> TaskResult:
+        """Run a composite task that executes other tasks.
+
+        Args:
+            task: Composite task to execute
+            dry_run: If True, show what would be executed
+            env: Additional environment variables
+
+        Returns:
+            TaskResult aggregating all subtask results
+        """
+        assert isinstance(task.run, list)
+
+        results = []
+        for subtask_name in task.run:
+            result = await self.run_task(subtask_name, dry_run, env)
+            results.append(result)
+
+            if not result.success:
+                # Stop on first failure
+                break
+
+        # Aggregate results
+        success = all(r.success for r in results)
+        exit_code = 0 if success else 1
+
+        return TaskResult(
+            task=task,
+            success=success,
+            exit_code=exit_code,
+            stdout="",
+            stderr="",
+            duration=sum(r.duration for r in results),
+        )
