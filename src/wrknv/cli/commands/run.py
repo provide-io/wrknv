@@ -12,6 +12,7 @@ from __future__ import annotations
 import asyncio
 from pathlib import Path
 import sys
+from typing import Annotated
 
 from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.hub import register_command
@@ -21,26 +22,23 @@ from wrknv.tasks.registry import TaskRegistry
 
 @register_command("run", description="Run tasks defined in wrknv.toml")
 def run_command(
-    tasks: tuple[str, ...],
+    task: Annotated[str, "argument"],
     dry_run: bool = False,
     info: bool = False,
-    env: tuple[str, ...] = (),
+    env: tuple[str, ...] | None = None,
 ) -> None:
-    """Run one or more tasks.
+    """Run a task.
 
     Examples:
         wrknv run test
-        wrknv run lint format typecheck
         wrknv run build --dry-run
         wrknv run test --env PYTEST_WORKERS=4
     """
-    if not tasks:
-        echo_error("No tasks specified. Usage: wrknv run <task> [<task>...]")
-        sys.exit(1)
+    tasks = (task,)  # Convert to tuple for compatibility
 
     # Parse environment variables
     env_dict = {}
-    for e in env:
+    for e in (env or ()):
         if "=" not in e:
             echo_error(f"Invalid env format: {e}. Use KEY=VALUE")
             sys.exit(1)
@@ -54,19 +52,19 @@ def run_command(
     # Show info mode
     if info:
         for task_name in tasks:
-            task = registry.get_task(task_name)
-            if not task:
+            found_task = registry.get_task(task_name)
+            if not found_task:
                 echo_error(f"Task not found: {task_name}")
                 continue
 
-            echo_info(f"\nTask: {task.name}")
-            if task.description:
-                echo_info(f"  Description: {task.description}")
-            echo_info(f"  Command: {task.run}")
-            if task.depends_on:
-                echo_info(f"  Depends on: {', '.join(task.depends_on)}")
-            if task.env:
-                echo_info(f"  Environment: {task.env}")
+            echo_info(f"\nTask: {found_task.name}")
+            if found_task.description:
+                echo_info(f"  Description: {found_task.description}")
+            echo_info(f"  Command: {found_task.run}")
+            if found_task.depends_on:
+                echo_info(f"  Depends on: {', '.join(found_task.depends_on)}")
+            if found_task.env:
+                echo_info(f"  Environment: {found_task.env}")
         return
 
     # Execute tasks
@@ -121,15 +119,16 @@ def tasks_command(verbose: bool = False) -> None:
         return
 
     echo_info("\nAvailable tasks:")
-    for task in tasks:
+    for task_item in tasks:
         if verbose:
-            echo_info(f"\n  {task.name}")
-            if task.description:
-                echo_info(f"    {task.description}")
-            if task.is_composite:
-                echo_info(f"    Runs: {', '.join(task.run)}")  # type: ignore[arg-type]
+            echo_info(f"\n  {task_item.name}")
+            if task_item.description:
+                echo_info(f"    {task_item.description}")
+            if task_item.is_composite:
+                assert isinstance(task_item.run, list)
+                echo_info(f"    Runs: {', '.join(task_item.run)}")
             else:
-                echo_info(f"    Command: {task.run}")
+                echo_info(f"    Command: {task_item.run}")
         else:
-            desc = f" - {task.description}" if task.description else ""
-            echo_info(f"  {task.name}{desc}")
+            desc = f" - {task_item.description}" if task_item.description else ""
+            echo_info(f"  {task_item.name}{desc}")

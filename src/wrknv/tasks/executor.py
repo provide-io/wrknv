@@ -11,8 +11,8 @@ from __future__ import annotations
 
 import asyncio
 import os
-import time
 from pathlib import Path
+import time
 
 from attrs import define
 from provide.foundation import logger

@@ -7,8 +7,9 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
+
+import pytest
 
 from wrknv.tasks.executor import TaskExecutor
 from wrknv.tasks.schema import TaskConfig

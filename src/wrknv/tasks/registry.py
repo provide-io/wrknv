@@ -9,8 +9,8 @@ Manages task discovery and loading from wrknv.toml files."""
 
 from __future__ import annotations
 
-import tomllib
 from pathlib import Path
+import tomllib
 from typing import Any
 
 from attrs import define
@@ -41,7 +41,7 @@ class TaskRegistry:
         if not config_path.exists():
             return cls(repo_path=repo_path, tasks={})
 
-        with open(config_path, "rb") as f:
+        with config_path.open("rb") as f:
             config = tomllib.load(f)
 
         tasks = {}

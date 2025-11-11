@@ -7,8 +7,9 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
+
+import pytest
 
 from wrknv.tasks.registry import TaskRegistry
 from wrknv.tasks.schema import TaskConfig
@@ -136,7 +137,7 @@ class TestTaskRegistryAPI:
     def test_get_task_returns_task_when_exists(self) -> None:
         """Test get_task returns TaskConfig when task exists."""
         task = TaskConfig(name="test", run="pytest")
-        registry = TaskRegistry(repo_path=Path("."), tasks={"test": task})
+        registry = TaskRegistry(repo_path=Path(), tasks={"test": task})
 
         result = registry.get_task("test")
 
@@ -144,7 +145,7 @@ class TestTaskRegistryAPI:
 
     def test_get_task_returns_none_when_not_exists(self) -> None:
         """Test get_task returns None when task doesn't exist."""
-        registry = TaskRegistry(repo_path=Path("."), tasks={})
+        registry = TaskRegistry(repo_path=Path(), tasks={})
 
         result = registry.get_task("nonexistent")
 
@@ -155,7 +156,7 @@ class TestTaskRegistryAPI:
         task1 = TaskConfig(name="test", run="pytest")
         task2 = TaskConfig(name="lint", run="ruff")
         registry = TaskRegistry(
-            repo_path=Path("."),
+            repo_path=Path(),
             tasks={"test": task1, "lint": task2},
         )
 
@@ -167,7 +168,7 @@ class TestTaskRegistryAPI:
 
     def test_list_tasks_returns_empty_list_when_no_tasks(self) -> None:
         """Test list_tasks returns empty list when registry is empty."""
-        registry = TaskRegistry(repo_path=Path("."), tasks={})
+        registry = TaskRegistry(repo_path=Path(), tasks={})
 
         tasks = registry.list_tasks()
 
