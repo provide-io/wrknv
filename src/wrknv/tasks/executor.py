@@ -153,11 +153,9 @@ class TaskExecutor:
                     env=stream_env,
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
+                    print_output=True,  # Print chunks immediately to stdout
                 ):
-                    # Print chunk immediately for user feedback
-                    # Chunks may contain partial lines, so don't add newlines
-                    print(chunk, end="", flush=True)
-                    # Also accumulate for TaskResult
+                    # Accumulate chunks for TaskResult
                     stdout_chunks.append(chunk)
 
                 duration = time.time() - start
