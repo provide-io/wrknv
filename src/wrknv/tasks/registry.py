@@ -16,7 +16,7 @@ from typing import Any
 from attrs import define
 
 from .executor import TaskExecutor
-from .schema import TaskConfig, TaskResult
+from .schema import ExportedTask, TaskConfig, TaskNamespace, TaskResult
 
 
 @define
@@ -44,31 +44,117 @@ class TaskRegistry:
         with config_path.open("rb") as f:
             config = tomllib.load(f)
 
-        tasks = {}
+        tasks: dict[str, TaskConfig] = {}
 
-        # Load tasks section
+        # Load tasks section (supports nested tasks)
         if "tasks" in config and isinstance(config["tasks"], dict):
-            for name, value in config["tasks"].items():
-                task = cls._parse_task(name, value)
-                if task:
-                    tasks[name] = task
+            cls._parse_tasks_recursive(config["tasks"], tasks, namespace=None)
 
         return cls(repo_path=repo_path, tasks=tasks)
 
     @classmethod
-    def _parse_task(cls, name: str, value: Any) -> TaskConfig | None:
+    def from_repo_with_exports(cls, repo_path: Path) -> TaskRegistry:
+        """Load tasks from wrknv.toml including export section.
+
+        Args:
+            repo_path: Path to repository root containing wrknv.toml
+
+        Returns:
+            TaskRegistry with loaded tasks and export markers
+        """
+        config_path = repo_path / "wrknv.toml"
+
+        if not config_path.exists():
+            return cls(repo_path=repo_path, tasks={})
+
+        with config_path.open("rb") as f:
+            config = tomllib.load(f)
+
+        tasks: dict[str, TaskConfig] = {}
+
+        # Load tasks section (supports nested tasks)
+        if "tasks" in config and isinstance(config["tasks"], dict):
+            cls._parse_tasks_recursive(config["tasks"], tasks, namespace=None)
+
+        # Process export section
+        exported_names: set[str] = set()
+        if "export" in config and isinstance(config["export"], dict):
+            export_config = config["export"]
+            if "tasks" in export_config and isinstance(export_config["tasks"], list):
+                exported_names.update(export_config["tasks"])
+
+        # Mark exported tasks
+        for task_name in exported_names:
+            if task_name in tasks:
+                # Replace task with is_exported=True version
+                old_task = tasks[task_name]
+                tasks[task_name] = TaskConfig(
+                    name=old_task.name,
+                    run=old_task.run,
+                    description=old_task.description,
+                    env=old_task.env,
+                    depends_on=old_task.depends_on,
+                    working_dir=old_task.working_dir,
+                    namespace=old_task.namespace,
+                    is_exported=True,
+                    package=old_task.package,
+                    requires=old_task.requires,
+                )
+
+        return cls(repo_path=repo_path, tasks=tasks)
+
+    @classmethod
+    def _parse_tasks_recursive(
+        cls,
+        tasks_dict: dict[str, Any],
+        output: dict[str, TaskConfig],
+        namespace: str | None,
+        depth: int = 1,
+    ) -> None:
+        """Recursively parse nested task tables.
+
+        Args:
+            tasks_dict: TOML dictionary containing tasks
+            output: Output dictionary to populate with TaskConfig objects
+            namespace: Current namespace (e.g., "test" or "test.unit")
+            depth: Current nesting depth (1=flat, 2=one level, 3=two levels)
+
+        Raises:
+            ValueError: If nesting exceeds 3 levels
+        """
+        if depth > 3:
+            msg = "Task nesting too deep (max 3 levels)"
+            raise ValueError(msg)
+
+        for name, value in tasks_dict.items():
+            # Build full task name
+            full_name = f"{namespace}.{name}" if namespace else name
+
+            # Check if this is a nested table or a task definition
+            if isinstance(value, dict) and "run" not in value:
+                # This is a namespace table, recurse
+                cls._parse_tasks_recursive(value, output, namespace=full_name, depth=depth + 1)
+            else:
+                # This is a task definition
+                task = cls._parse_task(name, value, namespace=namespace)
+                if task:
+                    output[full_name] = task
+
+    @classmethod
+    def _parse_task(cls, name: str, value: Any, namespace: str | None = None) -> TaskConfig | None:
         """Parse a task definition from TOML value.
 
         Args:
-            name: Task name
+            name: Task name (last part, e.g., "unit" in "test.unit")
             value: Task definition (string or dict)
+            namespace: Parent namespace (e.g., "test" for "test.unit")
 
         Returns:
             TaskConfig or None if invalid
         """
         if isinstance(value, str):
             # Simple task: name = "command"
-            return TaskConfig(name=name, run=value)
+            return TaskConfig(name=name, run=value, namespace=namespace)
 
         if isinstance(value, dict):
             # Complex task with full configuration
@@ -83,6 +169,7 @@ class TaskRegistry:
                 env=value.get("env", {}),
                 depends_on=value.get("depends_on", []),
                 working_dir=Path(value["working_dir"]) if "working_dir" in value else None,
+                namespace=namespace,
             )
 
         return None
@@ -105,6 +192,88 @@ class TaskRegistry:
             List of all TaskConfig objects
         """
         return list(self.tasks.values())
+
+    def resolve_task(self, name: str, args: list[str] | None = None) -> tuple[TaskConfig, list[str]]:
+        """Smart task resolution with hierarchical fallback.
+
+        Resolution priority:
+        1. Exact match (e.g., "test.unit.fast")
+        2. Parent + args (e.g., "test.unit" with args=["fast"])
+        3. Grandparent + args (e.g., "test" with args=["unit", "fast"])
+        4. Check for _default task in namespace
+
+        Args:
+            name: Task name to resolve
+            args: Optional arguments to pass to task
+
+        Returns:
+            Tuple of (TaskConfig, remaining_args)
+
+        Raises:
+            ValueError: If task cannot be resolved
+        """
+        if args is None:
+            args = []
+
+        # Parse the task name into namespace
+        ns = TaskNamespace.parse(name)
+
+        # Priority 1: Exact match
+        if ns.full_name in self.tasks:
+            return (self.tasks[ns.full_name], args)
+
+        # Priority 2: Check for _default task in this namespace
+        default_name = f"{ns.full_name}._default"
+        if default_name in self.tasks:
+            return (self.tasks[default_name], args)
+
+        # Priority 3: Try parent namespace + args
+        if ns.depth >= 2:
+            parent_ns = ns.parent()
+            if parent_ns:
+                # Check exact parent match
+                if parent_ns.full_name in self.tasks:
+                    # Last part becomes an argument
+                    new_args = [ns.name, *args]
+                    return (self.tasks[parent_ns.full_name], new_args)
+
+                # Check for _default in parent
+                parent_default = f"{parent_ns.full_name}._default"
+                if parent_default in self.tasks:
+                    new_args = [ns.name, *args]
+                    return (self.tasks[parent_default], new_args)
+
+        # Priority 4: Try grandparent namespace + args
+        if ns.depth >= 3:
+            parent_ns = ns.parent()
+            if parent_ns:
+                grandparent_ns = parent_ns.parent()
+                if grandparent_ns and grandparent_ns.full_name in self.tasks:
+                    # Last two parts become arguments
+                    new_args = [parent_ns.name, ns.name, *args]
+                    return (self.tasks[grandparent_ns.full_name], new_args)
+
+        # Not found
+        msg = f"Task not found: {name}"
+        raise ValueError(msg)
+
+    def get_exported_tasks(self) -> list[ExportedTask]:
+        """Get all tasks marked for export.
+
+        Returns:
+            List of ExportedTask objects
+        """
+        exported = []
+        for task in self.tasks.values():
+            if task.is_exported:
+                exported.append(
+                    ExportedTask(
+                        task=task,
+                        description=task.description,
+                        requires=task.requires,
+                    )
+                )
+        return exported
 
     async def run_task(
         self,

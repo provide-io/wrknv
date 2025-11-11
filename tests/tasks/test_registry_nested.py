@@ -12,7 +12,6 @@ from pathlib import Path
 import pytest
 
 from wrknv.tasks.registry import TaskRegistry
-from wrknv.tasks.schema import TaskConfig
 
 
 class TestNestedTaskLoading:
@@ -108,10 +107,8 @@ format = "ruff format src/"
 [tasks]
 lint = "ruff check src/"
 
-[tasks.test]
-unit = "pytest tests/unit/"
-
 [tasks.test.unit]
+_default = "pytest tests/unit/"
 fast = "pytest tests/unit/ -x"
 """
         )
@@ -119,7 +116,7 @@ fast = "pytest tests/unit/ -x"
         registry = TaskRegistry.from_repo(tmp_path)
 
         assert "lint" in registry.tasks  # Flat
-        assert "test.unit" in registry.tasks  # 2-level
+        assert "test.unit._default" in registry.tasks  # 3-level default
         assert "test.unit.fast" in registry.tasks  # 3-level
 
 
@@ -137,9 +134,9 @@ class TestExportSection:
 
         assert len(exported) == 3
         exported_names = [e.task.full_name for e in exported]
-        assert "test" in exported_names
         assert "test.unit" in exported_names
-        assert "quality" in exported_names
+        assert "test.all" in exported_names
+        assert "quality.check" in exported_names
 
     def test_export_section_optional(self, tmp_path: Path) -> None:
         """Test that [export] section is optional."""
