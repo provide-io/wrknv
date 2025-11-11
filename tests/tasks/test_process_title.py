@@ -24,9 +24,7 @@ class TestFormatTaskTitle:
 
     def test_format_title_full_nested_task(self) -> None:
         """Test formatting a nested task name with full format."""
-        task = TaskConfig(
-            name="coverage", run="echo test", namespace="test.unit", process_title_format="full"
-        )
+        task = TaskConfig(name="coverage", run="echo test", namespace="test.unit", process_title_format="full")
         result = format_task_title(task)
         assert result == "test.unit.coverage"
 
@@ -45,9 +43,7 @@ class TestFormatTaskTitle:
 
     def test_format_title_leaf_nested_task(self) -> None:
         """Test formatting a nested task name with leaf format."""
-        task = TaskConfig(
-            name="coverage", run="echo test", namespace="test.unit", process_title_format="leaf"
-        )
+        task = TaskConfig(name="coverage", run="echo test", namespace="test.unit", process_title_format="leaf")
         result = format_task_title(task)
         assert result == "coverage"
 
@@ -60,9 +56,7 @@ class TestFormatTaskTitle:
 
     def test_format_title_abbreviated_two_level_task(self) -> None:
         """Test formatting a two-level task name with abbreviated format."""
-        task = TaskConfig(
-            name="unit", run="echo test", namespace="test", process_title_format="abbreviated"
-        )
+        task = TaskConfig(name="unit", run="echo test", namespace="test", process_title_format="abbreviated")
         result = format_task_title(task)
         # Not deep enough to abbreviate (only 2 levels)
         assert result == "test.unit"
@@ -90,9 +84,7 @@ class TestFormatTaskTitle:
 
     def test_format_title_invalid_format_fallback(self) -> None:
         """Test that invalid format falls back to full."""
-        task = TaskConfig(
-            name="test", run="echo test", namespace="ci.test", process_title_format="invalid"
-        )
+        task = TaskConfig(name="test", run="echo test", namespace="ci.test", process_title_format="invalid")
         result = format_task_title(task)
         # Should fall back to full format
         assert result == "ci.test.test"
