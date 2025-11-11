@@ -53,9 +53,7 @@ class TestExecutorWithArgs:
         assert "hello world test" in result.stdout
 
     @pytest.mark.asyncio
-    async def test_execute_command_with_args_containing_spaces(
-        self, tmp_path: Path
-    ) -> None:
+    async def test_execute_command_with_args_containing_spaces(self, tmp_path: Path) -> None:
         """Test that arguments with spaces are properly quoted."""
         task = TaskConfig(name="test", run="echo")
         executor = TaskExecutor(repo_path=tmp_path)
@@ -83,9 +81,7 @@ class TestExecutorWithArgs:
     @pytest.mark.asyncio
     async def test_execute_with_env_and_args(self, tmp_path: Path) -> None:
         """Test combining environment variables and arguments."""
-        task = TaskConfig(
-            name="test", run="bash -c 'echo $TEST_VAR'", env={"TEST_VAR": "from_task"}
-        )
+        task = TaskConfig(name="test", run="bash -c 'echo $TEST_VAR'", env={"TEST_VAR": "from_task"})
         executor = TaskExecutor(repo_path=tmp_path, env={"OTHER_VAR": "from_executor"})
 
         result = await executor.execute(task, args=["extra", "args"])
