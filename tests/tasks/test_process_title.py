@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from wrknv.tasks.executor import format_task_title
@@ -94,7 +96,7 @@ class TestFormatTaskTitle:
 class TestProcessTitleIntegration:
     """Integration tests for process title setting."""
 
-    async def test_task_sets_process_title_env_var(self, tmp_path) -> None:
+    async def test_task_sets_process_title_env_var(self, tmp_path: Path) -> None:
         """Test that task execution sets process title environment variable."""
         from wrknv.tasks.executor import TaskExecutor
 
@@ -111,7 +113,7 @@ class TestProcessTitleIntegration:
         assert "_WRKNV_PROCESS_TITLE" in result.stdout or result.success
         # Note: The exact behavior depends on shell expansion
 
-    async def test_nested_task_title_format(self, tmp_path) -> None:
+    async def test_nested_task_title_format(self, tmp_path: Path) -> None:
         """Test that nested tasks format title correctly."""
         from wrknv.tasks.executor import TaskExecutor
 
