@@ -119,6 +119,14 @@ class TaskExecutor:
         # Determine if we should stream output
         use_streaming = _should_stream_output(task)
 
+        if use_streaming:
+            logger.debug(
+                "Streaming enabled",
+                task=task.full_name,
+                explicit_config=task.stream_output,
+                tty_detected=sys.stdout.isatty(),
+            )
+
         # Execute command using foundation's async_run or async_stream
         start = time.time()
 
