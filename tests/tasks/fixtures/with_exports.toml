@@ -1,0 +1,26 @@
+#
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Tasks with export section
+
+[tasks]
+lint = "ruff check src/"
+
+[tasks.test]
+unit = "pytest tests/unit/"
+integration = "pytest tests/integration/"
+all = "pytest tests/"
+
+[tasks.quality]
+check = "ruff check src/ && mypy src/"
+
+# Export section - simple list
+[export]
+tasks = ["test", "test.unit", "quality"]
+
+# Could also use detailed export format (for future):
+# [export.tasks.test]
+# description = "Run all tests"
+# requires = ["pytest>=7.0"]
