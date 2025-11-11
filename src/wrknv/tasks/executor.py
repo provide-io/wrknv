@@ -164,6 +164,15 @@ class TaskExecutor:
                 final_command=command[:100] + "..." if len(command) > 100 else command,
                 use_uv_run=self.execution_env.use_uv_run,
             )
+        elif task.command_prefix is not None:
+            # Apply per-task prefix even without ExecutionEnvironment
+            if task.command_prefix:  # Non-empty string
+                command = f"{task.command_prefix} {command}"
+            logger.debug(
+                "Per-task command prefix applied",
+                task=task.full_name,
+                prefix=task.command_prefix,
+            )
 
         if dry_run:
             logger.info(
