@@ -30,7 +30,7 @@ container_registry = "ghcr.io"
 # ==============================================================================
 
 [tasks]
-typecheck = "uv run mypy src/"
+typecheck = "mypy src/"
 build = "uv build"
 
 [tasks.setup]
@@ -57,27 +57,27 @@ echo "✓ Pre-commit hooks installed"
 """
 
 [tasks.lint]
-_default = "uv run ruff check ."
-fix = "uv run ruff check . --fix"
+_default = "ruff check ."
+fix = "ruff check . --fix"
 
 [tasks.format]
-_default = "uv run ruff format ."
-check = "uv run ruff format . --check"
+_default = "ruff format ."
+check = "ruff format . --check"
 
 [tasks.test]
-_default = "uv run pytest"
-unit = "uv run pytest -m unit"
-cli = "uv run pytest tests/cli/ -v"
-fast = "uv run pytest tests/ -x"
-parallel = "uv run pytest -n auto"
-verbose = "uv run pytest -vvv"
-integration = "uv run pytest -m integration"
+_default = "pytest"
+unit = "pytest -m unit"
+cli = "pytest tests/cli/ -v"
+fast = "pytest tests/ -x"
+parallel = "pytest -n auto"
+verbose = "pytest -vvv"
+integration = "pytest -m integration"
 
 [tasks.test.coverage]
-run = "uv run pytest tests/ --cov=src/wrknv --cov-report=term-missing"
+run = "pytest tests/ --cov=src/wrknv --cov-report=term-missing"
 description = "Run tests with coverage"
-_default = "uv run pytest --cov=src --cov-report=html --cov-report=term-missing"
-xml = "uv run pytest --cov=src --cov-report=xml --cov-report=term"
+_default = "pytest --cov=src --cov-report=html --cov-report=term-missing"
+xml = "pytest --cov=src --cov-report=xml --cov-report=term"
 
 [tasks.hello]
 run = """
@@ -111,9 +111,9 @@ test = ["test.parallel", "test.coverage"]
 quality = ["format.check", "lint", "typecheck"]
 
 [tasks.mutation]
-_default = "uv run mutmut run"
-results = "uv run mutmut results"
-browse = "uv run mutmut browse"
+_default = "mutmut run"
+results = "mutmut results"
+browse = "mutmut browse"
 clean = "rm -rf .mutmut-cache html/"
 
 [tasks.pkg]
@@ -132,10 +132,10 @@ find . -type f -name '*.pyo' -delete 2>/dev/null || true
 """
 
 [tasks.docs]
-_default = "uv run mkdocs serve"
+_default = "mkdocs serve"
 setup = "python -c \"from provide.foundry.config import extract_base_mkdocs; from pathlib import Path; extract_base_mkdocs(Path('.'))\""
-build = "uv run mkdocs build"
-serve = "uv run mkdocs serve"
+build = "mkdocs build"
+serve = "mkdocs serve"
 clean = "rm -rf site .provide"
 
 [tasks.docs.links]
@@ -146,5 +146,5 @@ external = "lychee --verbose --no-progress './docs/**/*.md' './src/**/*.md' './R
 
 [tasks.dev]
 setup = "uv sync"
-test = "uv run pytest -n auto"
-check = "uv run ruff format . && uv run ruff check . && uv run mypy src/"
+test = "pytest -n auto"
+check = "ruff format . && ruff check . && mypy src/"
