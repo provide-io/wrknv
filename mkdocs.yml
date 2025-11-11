@@ -59,6 +59,4 @@ nav:
     - Task System: features/task-system.md
     - Task Runner: features/task-runner.md
     - CLI Reference: features/we-cli-reference.md
-  - Guides:
-    - Makefile Migration: guides/makefile-migration.md
   - API Reference: reference/
