@@ -1,4 +1,4 @@
-# wrknv.toml Reference
+# Configuration Reference
 
 Complete reference for the `wrknv.toml` configuration file.
 
