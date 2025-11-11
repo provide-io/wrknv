@@ -140,6 +140,8 @@ class TaskConfig:
     is_exported: bool = False  # Whether this task is exported to other packages
     package: str | None = None  # Source package if imported
     requires: list[str] = field(factory=list)  # Dependencies required to run
+    timeout: float | None = None  # Task execution timeout in seconds
+    stream_output: bool = False  # Stream output in real-time
 
     @property
     def is_composite(self) -> bool:

@@ -15,6 +15,8 @@ from typing import Any
 
 from attrs import define
 
+from wrknv.errors import TaskNotFoundError
+
 from .executor import TaskExecutor
 from .schema import ExportedTask, TaskConfig, TaskNamespace, TaskResult
 
@@ -292,12 +294,11 @@ class TaskRegistry:
             TaskResult with execution details
 
         Raises:
-            ValueError: If task not found
+            TaskNotFoundError: If task not found
         """
         task = self.get_task(name)
         if not task:
-            msg = f"Task not found: {name}"
-            raise ValueError(msg)
+            raise TaskNotFoundError(name, available_tasks=list(self.tasks.keys()))
 
         # Check if composite task
         if task.is_composite:
@@ -305,7 +306,7 @@ class TaskRegistry:
 
         # Run single task
         executor = TaskExecutor(self.repo_path, env)
-        return await executor.execute(task, dry_run)
+        return await executor.execute(task, args=None, dry_run=dry_run)
 
     async def _run_composite_task(
         self,

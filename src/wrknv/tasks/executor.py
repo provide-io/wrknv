@@ -5,28 +5,31 @@
 
 """Task Executor
 
-Executes task commands and captures results."""
+Executes task commands and captures results using provide.foundation process APIs."""
 
 from __future__ import annotations
 
-import asyncio
-import os
 from pathlib import Path
 import shlex
 import time
 
 from attrs import define
 from provide.foundation import logger
+from provide.foundation.errors import ProcessError, ProcessTimeoutError
+from provide.foundation.process import async_run
+
+from wrknv.errors import TaskTimeoutError
 
 from .schema import TaskConfig, TaskResult
 
 
 @define
 class TaskExecutor:
-    """Executes tasks defined in wrknv.toml."""
+    """Executes tasks defined in wrknv.toml using provide-foundation process APIs."""
 
     repo_path: Path
     env: dict[str, str] | None = None
+    default_timeout: float = 300.0  # 5 minute default timeout
 
     async def execute(
         self,
@@ -57,8 +60,12 @@ class TaskExecutor:
             raise NotImplementedError(msg)
 
         if dry_run:
-            logger.info(f"[DRY RUN] Would execute: {task.name}")
-            logger.info(f"  Command: {command}")
+            logger.info(
+                "Dry run task",
+                task=task.full_name,
+                command=command,
+                cwd=str(task.working_dir or self.repo_path),
+            )
             return TaskResult(
                 task=task,
                 success=True,
@@ -68,67 +75,86 @@ class TaskExecutor:
                 duration=0.0,
             )
 
-        # Build environment
-        exec_env = {**os.environ}
+        # Determine working directory
+        cwd = task.working_dir or self.repo_path
+        timeout = task.timeout or self.default_timeout
+
+        # Log task start
+        logger.info(
+            "Starting task",
+            task=task.full_name,
+            command=command[:100] + "..." if len(command) > 100 else command,
+            cwd=str(cwd),
+            timeout=timeout,
+        )
+
+        # Build environment: merge executor env with task env
+        exec_env = {}
         if self.env:
             exec_env.update(self.env)
         exec_env.update(task.env)
 
-        # Determine working directory
-        cwd = task.working_dir or self.repo_path
-
-        # Execute command
-        return await self._execute_command(task, command, exec_env, cwd)
-
-    async def _execute_command(
-        self,
-        task: TaskConfig,
-        command: str,
-        env: dict[str, str],
-        cwd: Path,
-    ) -> TaskResult:
-        """Execute a shell command.
-
-        Args:
-            task: Task being executed
-            command: Shell command to run
-            env: Environment variables
-            cwd: Working directory
-
-        Returns:
-            TaskResult with command output and exit code
-        """
+        # Execute command using foundation's async_run
         start = time.time()
 
         try:
-            proc = await asyncio.create_subprocess_shell(
-                command,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                env=env,
-                cwd=str(cwd),
+            result = await async_run(
+                cmd=command,
+                cwd=cwd,
+                env=exec_env if exec_env else None,  # Foundation merges with os.environ
+                capture_output=True,
+                check=False,  # We handle errors ourselves
+                timeout=timeout,
+                shell=True,  # Explicit shell usage for command strings
             )
 
-            stdout_bytes, stderr_bytes = await proc.communicate()
             duration = time.time() - start
+
+            # Log task completion
+            logger.info(
+                "Task completed",
+                task=task.full_name,
+                success=result.returncode == 0,
+                duration=f"{duration:.2f}s",
+                exit_code=result.returncode,
+            )
 
             return TaskResult(
                 task=task,
-                success=proc.returncode == 0,
-                exit_code=proc.returncode or 0,
-                stdout=stdout_bytes.decode(),
-                stderr=stderr_bytes.decode(),
+                success=result.returncode == 0,
+                exit_code=result.returncode,
+                stdout=result.stdout or "",
+                stderr=result.stderr or "",
                 duration=duration,
             )
 
-        except Exception as e:
+        except ProcessTimeoutError as e:
             duration = time.time() - start
-            logger.error(f"Task {task.name} failed: {e}")
+            logger.error(
+                "Task timeout",
+                task=task.full_name,
+                timeout=timeout,
+                duration=f"{duration:.2f}s",
+            )
 
+            # Raise task-specific timeout error
+            raise TaskTimeoutError(task.full_name, timeout) from e
+
+        except ProcessError as e:
+            duration = time.time() - start
+            logger.error(
+                "Task execution failed",
+                task=task.full_name,
+                exit_code=e.exit_code if hasattr(e, "exit_code") else 1,
+                duration=f"{duration:.2f}s",
+                error=str(e),
+            )
+
+            # Return error result instead of raising (for non-critical failures)
             return TaskResult(
                 task=task,
                 success=False,
-                exit_code=1,
+                exit_code=e.exit_code if hasattr(e, "exit_code") else 1,
                 stdout="",
                 stderr=str(e),
                 duration=duration,

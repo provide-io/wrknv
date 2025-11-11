@@ -354,4 +354,87 @@ class ContainerBuildError(ResourceError):
         self.reason = reason
 
 
+# Task Errors
+# ===========
+
+
+class TaskError(WrkenvError):
+    """Base exception for task-related errors."""
+
+    def __init__(self, message: str, task_name: str | None = None, hint: str | None = None) -> None:
+        super().__init__(message, hint)
+        self.task_name = task_name
+
+
+class TaskNotFoundError(NotFoundError):
+    """Task not found in registry."""
+
+    def __init__(self, task_name: str, available_tasks: list[str] | None = None) -> None:
+        message = f"Task '{task_name}' not found"
+
+        hint = None
+        if available_tasks:
+            # Show up to 5 similar tasks
+            tasks_str = ", ".join(available_tasks[:5])
+            if len(available_tasks) > 5:
+                tasks_str += "..."
+            hint = f"Available tasks: {tasks_str}. Use 'wrknv tasks' to see all"
+
+        super().__init__(
+            message=message,
+            resource_type="task",
+            resource_id=task_name,
+            hint=hint,
+        )
+        self.task_name = task_name
+
+
+class TaskExecutionError(RuntimeError):
+    """Task execution failed."""
+
+    def __init__(
+        self,
+        task_name: str,
+        exit_code: int,
+        stderr: str | None = None,
+        retry_possible: bool = False,
+    ) -> None:
+        message = f"Task '{task_name}' failed with exit code {exit_code}"
+
+        hint = None
+        if stderr:
+            # Show first 200 chars of stderr
+            stderr_preview = stderr[:200]
+            if len(stderr) > 200:
+                stderr_preview += "..."
+            hint = f"Error output: {stderr_preview}"
+
+        super().__init__(
+            message=message,
+            operation="task_execution",
+            retry_possible=retry_possible,
+            hint=hint,
+        )
+        self.task_name = task_name
+        self.exit_code = exit_code
+        self.stderr = stderr
+
+
+class TaskTimeoutError(RuntimeError):
+    """Task execution timed out."""
+
+    def __init__(self, task_name: str, timeout: float) -> None:
+        message = f"Task '{task_name}' timed out after {timeout} seconds"
+        hint = f"Increase timeout in wrknv.toml:\n[tasks.{task_name}]\ntimeout = {timeout * 2}"
+
+        super().__init__(
+            message=message,
+            operation="task_execution",
+            retry_possible=False,
+            hint=hint,
+        )
+        self.task_name = task_name
+        self.timeout = timeout
+
+
 # 🧰🌍🔚
