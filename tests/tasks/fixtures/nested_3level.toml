@@ -8,12 +8,10 @@
 [tasks]
 format = "ruff format src/"
 
-# Two-level with explicit tasks
-[tasks.test]
-unit = "pytest tests/unit/"
-integration = "pytest tests/integration/"
-
 # Three-level nesting with _default
+# Note: In TOML, you can't have both [tasks.test] with key-value pairs
+# AND [tasks.test.unit] as a table. They must be consistent.
+
 [tasks.test.unit]
 _default = "pytest tests/unit/ -v"
 fast = "pytest tests/unit/ -x --ff"
@@ -24,7 +22,6 @@ verbose = "pytest tests/unit/ -vv"
 _default = "pytest tests/integration/ -v"
 slow = "pytest tests/integration/ -m slow"
 
-# Another three-level hierarchy
 [tasks.docs]
 _default = "mkdocs serve"
 
