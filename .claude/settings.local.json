@@ -114,7 +114,10 @@
       "Bash(then)",
       "Bash(else)",
       "Bash(do echo \"=== Testing $project ===\" cd /Users/tim/code/gh/provide-io/$project wrknv run typecheck --dry-run)",
-      "Bash(we workspace --help:*)"
+      "Bash(we workspace --help:*)",
+      "Bash(we workspace run --help:*)",
+      "Bash(we tasks)",
+      "Bash(we workspace run:*)"
     ],
     "deny": [],
     "additionalDirectories": [
