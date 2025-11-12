@@ -24,6 +24,50 @@ from wrknv.errors import TaskTimeoutError
 from .schema import TaskConfig, TaskResult
 
 
+def format_task_title(task: TaskConfig) -> str:
+    """Format task name for process title based on configured format.
+
+    Args:
+        task: Task configuration
+
+    Returns:
+        Formatted task name string
+
+    Examples:
+        >>> task = TaskConfig(name="coverage", namespace="test.unit", process_title_format="full")
+        >>> format_task_title(task)
+        "test.unit.coverage"
+
+        >>> task = TaskConfig(name="coverage", namespace="test.unit", process_title_format="leaf")
+        >>> format_task_title(task)
+        "coverage"
+
+        >>> task = TaskConfig(name="coverage", namespace="test.unit", process_title_format="abbreviated")
+        >>> format_task_title(task)
+        "test...coverage"
+    """
+    full_name = task.full_name
+    fmt = task.process_title_format
+
+    if fmt == "leaf":
+        # Return only the leaf (last part)
+        return task.name
+
+    if fmt == "abbreviated":
+        # Return first...last for nested tasks
+        if task.namespace:
+            parts = full_name.split(".")
+            if len(parts) <= 2:
+                # Not deep enough to abbreviate
+                return full_name
+            # Show first and last with ellipsis
+            return f"{parts[0]}...{parts[-1]}"
+        return full_name
+
+    # Default: "full" - return complete namespaced name
+    return full_name
+
+
 def _should_stream_output(task: TaskConfig) -> bool:
     """Determine if task output should be streamed in real-time.
 
@@ -110,6 +154,12 @@ class TaskExecutor:
             timeout=timeout,
         )
 
+        # Set parent process title
+        from provide.foundation.process import set_process_title
+
+        formatted_task_name = format_task_title(task)
+        set_process_title(f"we: {formatted_task_name}")
+
         # Build environment: merge executor env with task env
         exec_env = {}
         if self.env:
@@ -154,6 +204,7 @@ class TaskExecutor:
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
                     print_output=True,  # Print chunks immediately to stdout
+                    process_title=formatted_task_name,  # Set child process title
                 ):
                     # Accumulate chunks for TaskResult
                     stdout_chunks.append(chunk)
@@ -191,6 +242,7 @@ class TaskExecutor:
                     check=False,  # We handle errors ourselves
                     timeout=timeout,
                     shell=True,  # Explicit shell usage for command strings
+                    process_title=formatted_task_name,  # Set child process title
                 )
 
                 duration = time.time() - start
