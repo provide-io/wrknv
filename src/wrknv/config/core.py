@@ -114,36 +114,36 @@ class WorkenvConfig(RuntimeConfig):
     @classmethod
     def load(cls, config_file: Path | None = None) -> WorkenvConfig:
         """Load configuration from file and environment variables."""
+        import os
+
         instance = cls()
         instance.config_path = config_file or instance._find_config_file()
         instance._manager = instance._create_manager()
         instance._load_config()
 
-        # Also load from environment variables with WRKNV_ prefix
-        env_config = cls.from_env(prefix="WRKNV")
+        # Load from environment variables with WRKNV_ prefix only if they are set
+        if "WRKNV_PROJECT_NAME" in os.environ:
+            instance.project_name = os.environ["WRKNV_PROJECT_NAME"]
+        if "WRKNV_VERSION" in os.environ:
+            instance.version = os.environ["WRKNV_VERSION"]
+        if "WRKNV_DESCRIPTION" in os.environ:
+            instance.description = os.environ["WRKNV_DESCRIPTION"]
 
-        # Merge environment config over file config
-        if env_config.project_name is not None:
-            instance.project_name = env_config.project_name
-        if env_config.version is not None:
-            instance.version = env_config.version
-        if env_config.description is not None:
-            instance.description = env_config.description
-
-        # Merge workenv settings from environment
-        env_settings = WorkenvSettings.from_env(prefix="WRKNV")
-        if env_settings.log_level != "WARNING":
-            instance.workenv.log_level = env_settings.log_level
-        if not env_settings.auto_install:
-            instance.workenv.auto_install = env_settings.auto_install
-        if not env_settings.use_cache:
-            instance.workenv.use_cache = env_settings.use_cache
-        if env_settings.cache_ttl != "7d":
-            instance.workenv.cache_ttl = env_settings.cache_ttl
-        if env_settings.container_runtime != "docker":
-            instance.workenv.container_runtime = env_settings.container_runtime
-        if env_settings.container_registry != "ghcr.io":
-            instance.workenv.container_registry = env_settings.container_registry
+        # Merge workenv settings from environment only if they are set
+        if "WRKNV_LOG_LEVEL" in os.environ:
+            instance.workenv.log_level = os.environ["WRKNV_LOG_LEVEL"]
+        if "WRKNV_AUTO_INSTALL" in os.environ:
+            auto_install_str = os.environ["WRKNV_AUTO_INSTALL"].lower()
+            instance.workenv.auto_install = auto_install_str in ("true", "yes", "1", "on")
+        if "WRKNV_USE_CACHE" in os.environ:
+            use_cache_str = os.environ["WRKNV_USE_CACHE"].lower()
+            instance.workenv.use_cache = use_cache_str in ("true", "yes", "1", "on")
+        if "WRKNV_CACHE_TTL" in os.environ:
+            instance.workenv.cache_ttl = os.environ["WRKNV_CACHE_TTL"]
+        if "WRKNV_CONTAINER_RUNTIME" in os.environ:
+            instance.workenv.container_runtime = os.environ["WRKNV_CONTAINER_RUNTIME"]
+        if "WRKNV_CONTAINER_REGISTRY" in os.environ:
+            instance.workenv.container_registry = os.environ["WRKNV_CONTAINER_REGISTRY"]
 
         return instance
 
