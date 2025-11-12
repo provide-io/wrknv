@@ -133,8 +133,10 @@ class WorkspaceOrchestrator:
                 # Load task registry for this repo
                 registry = TaskRegistry.from_repo(repo.path)
 
-                # Check if task exists
-                if task_name not in registry.tasks:
+                # Resolve task (handles _default resolution)
+                try:
+                    task, task_args = registry.resolve_task(task_name)
+                except ValueError:
                     logger.warning(
                         f"Task '{task_name}' not found in {repo_name}",
                         repo=repo_name,
@@ -151,11 +153,8 @@ class WorkspaceOrchestrator:
                     auto_detect_env=True,
                 )
 
-                # Get task config
-                task = registry.tasks[task_name]
-
                 # Execute with streaming
-                result = await executor.execute(task, dry_run=False)
+                result = await executor.execute(task, args=task_args, dry_run=False)
                 results[repo_name] = result
 
                 if result.success:
@@ -255,8 +254,10 @@ class WorkspaceOrchestrator:
                 # Load task registry
                 registry = TaskRegistry.from_repo(repo.path)
 
-                # Check if task exists
-                if task_name not in registry.tasks:
+                # Resolve task (handles _default resolution)
+                try:
+                    task, task_args = registry.resolve_task(task_name)
+                except ValueError:
                     logger.warning(
                         f"Task '{task_name}' not found in {repo_name}",
                         repo=repo_name,
@@ -272,11 +273,8 @@ class WorkspaceOrchestrator:
                     auto_detect_env=True,
                 )
 
-                # Get task config
-                task = registry.tasks[task_name]
-
                 # Execute
-                result = await executor.execute(task, dry_run=False)
+                result = await executor.execute(task, args=task_args, dry_run=False)
                 return (repo_name, result)
 
             except Exception as e:
