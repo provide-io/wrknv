@@ -142,6 +142,7 @@ class TaskConfig:
     requires: list[str] = field(factory=list)  # Dependencies required to run
     timeout: float | None = None  # Task execution timeout in seconds
     stream_output: bool = False  # Stream output in real-time
+    process_title_format: str = "full"  # How to format process title: "full", "leaf", "abbreviated"
 
     @property
     def is_composite(self) -> bool:

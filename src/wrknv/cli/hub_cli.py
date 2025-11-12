@@ -207,6 +207,11 @@ async def _run_task_for_intercept(
         task_name: Task name to run
         args: Arguments to pass to the task
     """
+    from provide.foundation.process import set_process_title
+
+    # Set process title for the task
+    set_process_title(f"we: {task_name}")
+
     echo_info(f"\n▶ Running task: {task_name}")
 
     try:
@@ -233,6 +238,7 @@ def main() -> None:
     """Main entry point for the CLI."""
     from attrs import evolve
     from provide.foundation import TelemetryConfig
+    from provide.foundation.process import set_process_title
 
     # Load wrknv configuration to get log level
     from wrknv.config import WorkenvConfig
@@ -260,6 +266,9 @@ def main() -> None:
     from wrknv.logging.setup import setup_wrknv_logging
 
     setup_wrknv_logging()
+
+    # Set initial process title
+    set_process_title("we")
 
     # Try to intercept and run task commands directly (auto-detection)
     if intercept_task_command():
