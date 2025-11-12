@@ -50,13 +50,18 @@ plugins:
 
 nav:
   - Home: index.md
+
   - Getting Started:
     - getting-started/index.md
     - Installation: getting-started/installation.md
     - Concepts: getting-started/concepts.md
     - Quick Start: getting-started/quick-start.md
+
   - Features:
     - Task System: features/task-system.md
     - Task Runner: features/task-runner.md
     - CLI Reference: features/we-cli-reference.md
-  - API Reference: reference/
+
+  - Configuration Reference: reference/configuration.md
+
+  - Full API Reference: reference/
