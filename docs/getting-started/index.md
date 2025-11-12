@@ -62,7 +62,7 @@ Fully configured development environment!
 
     Step-by-step walkthrough of setting up a complete project.
 
-    [:octicons-arrow-right-24: Project Tutorial](first-project.md)
+    [:octicons-arrow-right-24: Project Tutorial](#first-commands)
 
 </div>
 
@@ -240,24 +240,6 @@ $ wrknv config show
 - [Core Concepts](concepts.md) - Understanding wrknv
 - [Installation Guide](installation.md) - Complete setup
 
-### 2. Configuration (1 hour)
-
-- [wrknv.toml Reference](../guides/configuration/wrknv-toml-reference.md)
-- [Tool Versions](../guides/configuration/tool-versions.md)
-- [Sibling Packages](../guides/configuration/sibling-packages.md)
-
-### 3. Practical Usage (2 hours)
-
-- [First Project Tutorial](first-project.md)
-- [Managing Tools](../guides/usage/managing-tools.md)
-- [Workspace Management](../guides/usage/workspace-management.md)
-
-### 4. Advanced Topics (3+ hours)
-
-- [Container Development](../guides/container/container-development.md)
-- [Custom Tool Managers](../guides/advanced/custom-tool-managers.md)
-- [Multi-Project Workspaces](../guides/advanced/multi-project-workspaces.md)
-
 ## System Requirements
 
 - **Python**: 3.11 or higher
@@ -267,10 +249,8 @@ $ wrknv config show
 
 ## Getting Help
 
-- **[Troubleshooting Guide](../troubleshooting/index.md)** - Common issues
-- **[FAQ](../faq.md)** - Frequently asked questions
-- **[GitHub Issues](https://github.com/provide-io/wrknv/issues)** - Bug reports
-- **[API Reference](../reference/api/)** - Python API documentation
+- **[GitHub Issues](https://github.com/provide-io/wrknv/issues)** - Bug reports and feature requests
+- **[API Reference](../reference/)** - Python API documentation
 
 ## Next Steps
 
@@ -278,10 +258,4 @@ Ready to get started?
 
 1. **[Quick Start Guide](quick-start.md)** - Get running in 5 minutes
 2. **[Installation Guide](installation.md)** - Detailed setup
-3. **[First Project Tutorial](first-project.md)** - Complete walkthrough
-
-Or explore specific topics:
-
-- [Configuration Options](../guides/configuration/wrknv-toml-reference.md)
-- [CLI Commands](../reference/cli/index.md)
-- [Tool Management](../guides/usage/managing-tools.md)
+3. **[Core Concepts](concepts.md)** - Understand how wrknv works

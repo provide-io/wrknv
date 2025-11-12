@@ -274,10 +274,9 @@ PS> .\env.ps1
 
 ## Learn More
 
-- **[Configuration Reference](../reference/configuration/wrknv-toml-spec.md)** - Complete wrknv.toml specification
-- **[CLI Reference](../reference/cli/index.md)** - All wrknv commands
-- **[Multi-Project Tutorial](../tutorials/multi-project-workspace.md)** - Working with monorepos
-- **[Troubleshooting Guide](../troubleshooting/index.md)** - Common issues and solutions
+- **[Complete Installation Guide](installation.md)** - Detailed installation and configuration
+- **[Core Concepts](concepts.md)** - Understanding wrknv architecture
+- **[API Reference](../reference/)** - Python API documentation
 
 ## Summary
 
@@ -289,4 +288,4 @@ You've now:
 ✓ Learned basic wrknv commands
 ✓ Understood what wrknv does
 
-Ready to dive deeper? Check out the [Complete Installation Guide](installation.md) or explore [Configuration Options](../guides/configuration/wrknv-toml-reference.md).
+Ready to dive deeper? Check out the [Complete Installation Guide](installation.md) or explore [Core Concepts](concepts.md).

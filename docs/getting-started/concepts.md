@@ -380,13 +380,10 @@ $ for dir in */; do (cd "$dir" && wrknv generate); done
 
 Now that you understand wrknv's concepts:
 
-- **[Configuration Reference](../guides/configuration/wrknv-toml-reference.md)** - Complete config options
-- **[Tool Management Guide](../guides/usage/managing-tools.md)** - Working with tools
-- **[Architecture Deep Dive](../explanation/architecture.md)** - Implementation details
-- **[API Reference](../reference/api/)** - Python API documentation
+- **[API Reference](../reference/)** - Python API documentation
+- **[Quick Start Guide](quick-start.md)** - Get wrknv running
+- **[Installation Guide](installation.md)** - Complete setup guide
 
 Or return to:
 
 - **[Getting Started Index](index.md)**
-- **[Quick Start Guide](quick-start.md)**
-- **[Installation Guide](installation.md)**
