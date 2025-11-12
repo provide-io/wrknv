@@ -107,7 +107,9 @@
       "Bash(do if [ -f \"$dir/pyproject.toml\" ])",
       "Bash([ -f \"$dir/wrknv.toml\" ])",
       "Bash(then basename \"$dir\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv_darwin_arm64/bin/wrknv run typecheck:*)",
+      "Bash(we run typecheck --dry-run)"
     ],
     "deny": [],
     "additionalDirectories": [
