@@ -114,7 +114,7 @@ class WorkenvConfig(RuntimeConfig):
     @classmethod
     def load(cls, config_file: Path | None = None) -> WorkenvConfig:
         """Load configuration from file and environment variables."""
-        from provide.foundation.config.source import ConfigSource
+        from provide.foundation.config.types import ConfigSource
 
         instance = cls()
         instance.config_path = config_file or instance._find_config_file()
