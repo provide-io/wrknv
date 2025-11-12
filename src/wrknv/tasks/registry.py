@@ -27,6 +27,9 @@ class TaskRegistry:
 
     repo_path: Path
     tasks: dict[str, TaskConfig]
+    package_name: str | None = None
+    execution_mode: str = "auto"
+    auto_detect_env: bool = True
 
     @classmethod
     def from_repo(cls, repo_path: Path) -> TaskRegistry:
@@ -52,7 +55,18 @@ class TaskRegistry:
         if "tasks" in config and isinstance(config["tasks"], dict):
             cls._parse_tasks_recursive(config["tasks"], tasks, namespace=None)
 
-        return cls(repo_path=repo_path, tasks=tasks)
+        # Extract configuration metadata for environment detection
+        package_name = config.get("project_name") or config.get("package", {}).get("name")
+        execution_mode = config.get("execution_mode", "auto")
+        auto_detect_env = config.get("task_auto_detect", True)
+
+        return cls(
+            repo_path=repo_path,
+            tasks=tasks,
+            package_name=package_name,
+            execution_mode=execution_mode,
+            auto_detect_env=auto_detect_env,
+        )
 
     @classmethod
     def from_repo_with_exports(cls, repo_path: Path) -> TaskRegistry:
@@ -101,9 +115,25 @@ class TaskRegistry:
                     is_exported=True,
                     package=old_task.package,
                     requires=old_task.requires,
+                    timeout=old_task.timeout,
+                    stream_output=old_task.stream_output,
+                    process_title_format=old_task.process_title_format,
+                    command_prefix=old_task.command_prefix,
+                    execution_mode=old_task.execution_mode,
                 )
 
-        return cls(repo_path=repo_path, tasks=tasks)
+        # Extract configuration metadata for environment detection
+        package_name = config.get("project_name") or config.get("package", {}).get("name")
+        execution_mode = config.get("execution_mode", "auto")
+        auto_detect_env = config.get("task_auto_detect", True)
+
+        return cls(
+            repo_path=repo_path,
+            tasks=tasks,
+            package_name=package_name,
+            execution_mode=execution_mode,
+            auto_detect_env=auto_detect_env,
+        )
 
     @classmethod
     def _parse_tasks_recursive(
@@ -172,6 +202,11 @@ class TaskRegistry:
                 depends_on=value.get("depends_on", []),
                 working_dir=Path(value["working_dir"]) if "working_dir" in value else None,
                 namespace=namespace,
+                timeout=value.get("timeout"),
+                stream_output=value.get("stream_output", False),
+                process_title_format=value.get("process_title_format", "full"),
+                command_prefix=value.get("command_prefix"),
+                execution_mode=value.get("execution_mode", "auto"),
             )
 
         return None
@@ -310,8 +345,14 @@ class TaskRegistry:
         if task.is_composite:
             return await self._run_composite_task(task, dry_run, env)
 
-        # Run single task
-        executor = TaskExecutor(self.repo_path, env)
+        # Run single task with environment auto-detection
+        executor = TaskExecutor(
+            repo_path=self.repo_path,
+            env=env,
+            package_name=self.package_name,
+            execution_mode=self.execution_mode,  # type: ignore[arg-type]
+            auto_detect_env=self.auto_detect_env,
+        )
         return await executor.execute(task, args=final_args, dry_run=dry_run)
 
     async def _run_composite_task(

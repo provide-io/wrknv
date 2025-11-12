@@ -21,6 +21,7 @@ from provide.foundation.process import async_run, async_stream
 
 from wrknv.errors import TaskTimeoutError
 
+from .environment import ExecutionEnvironment, ExecutionMode
 from .schema import TaskConfig, TaskResult
 
 
@@ -96,6 +97,32 @@ class TaskExecutor:
     repo_path: Path
     env: dict[str, str] | None = None
     default_timeout: float = 300.0  # 5 minute default timeout
+    package_name: str | None = None
+    execution_mode: ExecutionMode = "auto"
+    auto_detect_env: bool = True
+    execution_env: ExecutionEnvironment | None = None
+
+    def __attrs_post_init__(self) -> None:
+        """Initialize execution environment after attrs creates instance."""
+        if self.auto_detect_env:
+            object.__setattr__(
+                self,
+                "execution_env",
+                ExecutionEnvironment(
+                    project_dir=self.repo_path,
+                    package_name=self.package_name,
+                    mode=self.execution_mode,
+                ),
+            )
+            logger.debug(
+                "Execution environment initialized",
+                venv_path=str(self.execution_env.venv_path)
+                if self.execution_env and self.execution_env.venv_path
+                else None,
+                is_uv_project=self.execution_env.is_uv_project if self.execution_env else False,
+                package_is_editable=self.execution_env.package_is_editable if self.execution_env else False,
+                use_uv_run=self.execution_env.use_uv_run if self.execution_env else False,
+            )
 
     async def execute(
         self,
@@ -124,6 +151,28 @@ class TaskExecutor:
             # Composite tasks should be handled by registry
             msg = "Composite tasks should be handled by registry"
             raise NotImplementedError(msg)
+
+        # Apply execution environment command preparation (uv run prefix, etc.)
+        if self.execution_env:
+            command = self.execution_env.prepare_command(
+                command=command,
+                prefix_override=task.command_prefix,
+            )
+            logger.debug(
+                "Command prepared",
+                task=task.full_name,
+                final_command=command[:100] + "..." if len(command) > 100 else command,
+                use_uv_run=self.execution_env.use_uv_run,
+            )
+        elif task.command_prefix is not None:
+            # Apply per-task prefix even without ExecutionEnvironment
+            if task.command_prefix:  # Non-empty string
+                command = f"{task.command_prefix} {command}"
+            logger.debug(
+                "Per-task command prefix applied",
+                task=task.full_name,
+                prefix=task.command_prefix,
+            )
 
         if dry_run:
             logger.info(
@@ -165,6 +214,15 @@ class TaskExecutor:
         if self.env:
             exec_env.update(self.env)
         exec_env.update(task.env)
+
+        # Apply execution environment preparation (PATH modification for venv)
+        if self.execution_env:
+            exec_env = self.execution_env.prepare_environment(base_env=exec_env)
+            logger.trace(
+                "Environment prepared",
+                task=task.full_name,
+                path_modified=self.execution_env.venv_path is not None and not self.execution_env.use_uv_run,
+            )
 
         # Determine if we should stream output
         use_streaming = _should_stream_output(task)

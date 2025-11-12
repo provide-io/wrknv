@@ -293,6 +293,12 @@ class WorkenvSchema:
     telemetry_enabled: bool = field(default=DEFAULT_TELEMETRY_ENABLED, validator=validators.instance_of(bool))
     auto_update: bool = field(default=DEFAULT_AUTO_UPDATE, validator=validators.instance_of(bool))
 
+    # Task execution settings
+    task_runner_prefix: str | None = field(
+        default=None, validator=validators.optional(validators.instance_of(str))
+    )
+    task_auto_detect: bool = field(default=True, validator=validators.instance_of(bool))
+
     # Environment variables
     environment: dict[str, str] = field(factory=dict, validator=validators.instance_of(dict))
 

@@ -143,6 +143,8 @@ class TaskConfig:
     timeout: float | None = None  # Task execution timeout in seconds
     stream_output: bool = False  # Stream output in real-time
     process_title_format: str = "full"  # How to format process title: "full", "leaf", "abbreviated"
+    command_prefix: str | None = None  # Optional command prefix (e.g., "uv run")
+    execution_mode: str = "auto"  # Execution mode: "auto", "uv_run", "direct", "system"
 
     @property
     def is_composite(self) -> bool:
