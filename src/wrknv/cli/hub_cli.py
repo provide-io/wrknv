@@ -9,14 +9,21 @@ Main CLI using provide.foundation.hub for command registration."""
 
 from __future__ import annotations
 
+import asyncio
 import importlib
+from pathlib import Path
 import sys
+from typing import TYPE_CHECKING
 
 import click
+from provide.foundation.cli import echo_error, echo_info, echo_success
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 
 from wrknv.config import WorkenvConfig
+
+if TYPE_CHECKING:
+    from wrknv.tasks.registry import TaskRegistry
 
 logger = get_logger(__name__)
 
@@ -98,6 +105,130 @@ def create_cli() -> click.Command:
     return cli
 
 
+def intercept_task_command() -> bool:
+    """Intercept and run task commands before Click processes them.
+
+    Enables running tasks without the 'run' subcommand (e.g., `we test` instead of `we run test`).
+
+    Returns:
+        True if a task was intercepted and executed, False to continue with normal CLI flow
+    """
+    # Built-in commands that should not be intercepted
+    BUILT_IN_COMMANDS = {
+        "config",
+        "container",
+        "doctor",
+        "gitignore",
+        "lock",
+        "profile",
+        "run",
+        "secrets",
+        "setup",
+        "terraform",
+        "tools",
+        "workspace",
+        "tasks",
+        "--help",
+        "-h",
+        "--version",
+        "-v",
+    }
+
+    # Get command line args (skip program name)
+    args = sys.argv[1:]
+
+    if not args or args[0] in BUILT_IN_COMMANDS:
+        return False
+
+    # Try to resolve as a task
+    try:
+        repo_path = Path.cwd()
+        from wrknv.tasks.registry import TaskRegistry
+
+        registry = TaskRegistry.from_repo(repo_path)
+
+        # Try to match task name from args (greedy matching)
+        match = _try_resolve_task_from_args(registry, args)
+        if not match:
+            return False
+
+        task_name, remaining_args = match
+
+        # Run the task
+        asyncio.run(_run_task_for_intercept(registry, task_name, remaining_args))
+        return True
+
+    except Exception as e:
+        # If anything goes wrong, let Click handle it
+        logger.debug(f"Task intercept failed: {e}")
+        return False
+
+
+def _try_resolve_task_from_args(
+    registry: TaskRegistry,
+    args: list[str],
+) -> tuple[str, list[str]] | None:
+    """Try to resolve a task name from command args using greedy matching.
+
+    Tries progressively longer task names from left to right until a match is found.
+
+    Args:
+        registry: Task registry to search
+        args: Command line arguments
+
+    Returns:
+        (task_name, remaining_args) if task found, None otherwise
+
+    Examples:
+        ["test", "unit", "--verbose"] -> ("test.unit", ["--verbose"])
+        ["test", "--verbose"] -> ("test", ["--verbose"])
+    """
+    # Try progressively longer task names (greedy matching from longest to shortest)
+    for i in range(len(args), 0, -1):
+        task_parts = args[:i]
+        task_name = ".".join(task_parts)
+        remaining_args = args[i:]
+
+        if registry.get_task(task_name):
+            return (task_name, remaining_args)
+
+    return None
+
+
+async def _run_task_for_intercept(
+    registry: TaskRegistry,
+    task_name: str,
+    args: list[str],
+) -> None:
+    """Run a task for auto-detection (simplified version of run command).
+
+    Args:
+        registry: Task registry
+        task_name: Task name to run
+        args: Arguments to pass to the task
+    """
+    echo_info(f"\n▶ Running task: {task_name}")
+
+    try:
+        result = await registry.run_task(task_name, args=args, dry_run=False, env=None)
+
+        if result.stdout:
+            print(result.stdout, end="")
+        if result.stderr:
+            print(result.stderr, end="", file=sys.stderr)
+
+        if result.success:
+            echo_success(f"✓ Task {task_name} completed in {result.duration:.2f}s")
+            sys.exit(0)
+        else:
+            echo_error(f"✗ Task {task_name} failed (exit code {result.exit_code})")
+            sys.exit(result.exit_code)
+
+    except Exception as e:
+        echo_error(f"Error running task: {e}")
+        sys.exit(1)
+
+
 def main() -> None:
     """Main entry point for the CLI."""
     from attrs import evolve
@@ -106,7 +237,7 @@ def main() -> None:
     # Load wrknv configuration to get log level
     from wrknv.config import WorkenvConfig
 
-    wrknv_config = WorkenvConfig.from_env()  # type: ignore[attr-defined]
+    wrknv_config = WorkenvConfig.from_env()
 
     # Get base telemetry config from environment
     base_telemetry = TelemetryConfig.from_env()
@@ -130,6 +261,11 @@ def main() -> None:
 
     setup_wrknv_logging()
 
+    # Try to intercept and run task commands directly (auto-detection)
+    if intercept_task_command():
+        return  # Task was run, exit
+
+    # Fall through to normal CLI if not a task
     cli = create_cli()
     cli()
 

@@ -51,7 +51,8 @@ docs = [
 ]
 
 [project.scripts]
-wrknv = "wrknv.cli.hub_cli:main"
+we = "wrknv.cli.hub_cli:main"
+wrknv = "wrknv.cli.hub_cli:main"  # Backward compatibility
 
 [project.urls]
 Homepage = "https://github.com/provide-io/wrknv"

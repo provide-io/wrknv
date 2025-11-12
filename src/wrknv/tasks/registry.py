@@ -280,6 +280,7 @@ class TaskRegistry:
     async def run_task(
         self,
         name: str,
+        args: list[str] | None = None,
         dry_run: bool = False,
         env: dict[str, str] | None = None,
     ) -> TaskResult:
@@ -287,6 +288,7 @@ class TaskRegistry:
 
         Args:
             name: Task name to execute
+            args: Optional arguments to pass to the task command
             dry_run: If True, show what would be executed without running
             env: Additional environment variables
 
@@ -306,7 +308,7 @@ class TaskRegistry:
 
         # Run single task
         executor = TaskExecutor(self.repo_path, env)
-        return await executor.execute(task, args=None, dry_run=dry_run)
+        return await executor.execute(task, args=args, dry_run=dry_run)
 
     async def _run_composite_task(
         self,
@@ -328,7 +330,7 @@ class TaskRegistry:
 
         results = []
         for subtask_name in task.run:
-            result = await self.run_task(subtask_name, dry_run, env)
+            result = await self.run_task(subtask_name, args=None, dry_run=dry_run, env=env)
             results.append(result)
 
             if not result.success:
