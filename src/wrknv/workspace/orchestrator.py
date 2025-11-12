@@ -12,7 +12,6 @@ from __future__ import annotations
 import asyncio
 from fnmatch import fnmatch
 from pathlib import Path
-from typing import Any
 
 from attrs import define, field
 from provide.foundation import logger
