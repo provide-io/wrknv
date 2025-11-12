@@ -1,0 +1,71 @@
+project_name = "wrknv"
+version = "0.1.0"
+
+[tools]
+terraform = [
+    "1.11.x",
+    "1.13.x",
+]
+tofu = [
+    "1.9.x",
+    "1.10.x",
+]
+
+[tools.bao]
+version = "2.1.0"
+
+[profiles.dev]
+terraform = [
+    "1.11.x",
+    "1.13.x",
+]
+tofu = [
+    "1.9.x",
+    "1.10.x",
+]
+bao = "2.1.0"
+
+[workenv]
+auto_install = true
+use_cache = true
+cache_ttl = "7d"
+log_level = "WARNING"
+container_runtime = "docker"
+container_registry = "ghcr.io"
+
+[env]
+
+# Task definitions
+[tasks]
+# Simple test tasks
+test = "uv run pytest tests/ -v"
+lint = "uv run ruff check src/ tests/"
+format = "uv run ruff format src/ tests/"
+typecheck = "uv run mypy src/ --ignore-missing-imports"
+
+# Funny hello world demo task
+[tasks.hello]
+run = """
+echo '🎉═══════════════════════════════════════════════════════════════'
+echo '   Welcome to wrknv - The Work Environment Manager!'
+echo '   Your friendly neighborhood task runner is ready to work! 🚀'
+echo '═══════════════════════════════════════════════════════════════🎉'
+echo ''
+echo '💡 Pro tip: Try running:'
+echo '   • wrknv tasks          (see all available tasks)'
+echo '   • wrknv run test       (run the tests)'
+echo '   • wrknv run lint       (check code quality)'
+echo ''
+echo '✨ May your builds be swift and your tests be green! ✨'
+"""
+description = "A delightfully enthusiastic greeting from wrknv"
+
+# Composite task for quality checks
+[tasks.quality]
+run = ["lint", "typecheck"]
+description = "Run all quality checks"
+
+# Full CI pipeline
+[tasks.ci]
+run = ["quality", "test"]
+description = "Complete CI pipeline"
