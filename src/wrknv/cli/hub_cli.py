@@ -49,6 +49,7 @@ def load_commands() -> None:
         "wrknv.cli.commands.gitignore",
         "wrknv.cli.commands.lock",
         "wrknv.cli.commands.profile",
+        "wrknv.cli.commands.run",
         "wrknv.cli.commands.secrets",
         "wrknv.cli.commands.setup",
         "wrknv.cli.commands.terraform",
