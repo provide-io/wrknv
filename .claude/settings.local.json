@@ -109,7 +109,11 @@
       "Bash(then basename \"$dir\")",
       "Bash(fi)",
       "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv_darwin_arm64/bin/wrknv run typecheck:*)",
-      "Bash(we run typecheck --dry-run)"
+      "Bash(we run typecheck --dry-run)",
+      "Bash(if [ -f \"/Users/tim/code/gh/provide-io/wrknv.toml\" ])",
+      "Bash(then)",
+      "Bash(else)",
+      "Bash(do echo \"=== Testing $project ===\" cd /Users/tim/code/gh/provide-io/$project wrknv run typecheck --dry-run)"
     ],
     "deny": [],
     "additionalDirectories": [
