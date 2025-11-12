@@ -7,11 +7,11 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
 
+import pytest
+
 from wrknv.workspace.orchestrator import WorkspaceOrchestrator
-from wrknv.tasks.schema import TaskConfig
 
 
 @pytest.mark.asyncio

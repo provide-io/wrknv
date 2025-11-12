@@ -7,11 +7,11 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
 
+import pytest
+
 from wrknv.workspace.orchestrator import WorkspaceOrchestrator, WorkspaceTaskResult
-from wrknv.workspace.discovery import RepoInfo
 
 
 class TestWorkspaceOrchestrator:
@@ -138,7 +138,9 @@ class TestWorkspaceTaskResult:
         task = TaskConfig(name="test", run="echo test")
         repo_results = {
             "repo1": TaskResult(task=task, success=True, exit_code=0, stdout="", stderr="", duration=1.0),
-            "repo2": TaskResult(task=task, success=False, exit_code=1, stdout="", stderr="error", duration=1.0),
+            "repo2": TaskResult(
+                task=task, success=False, exit_code=1, stdout="", stderr="error", duration=1.0
+            ),
         }
 
         result = WorkspaceTaskResult(
@@ -160,8 +162,12 @@ class TestWorkspaceTaskResult:
         task = TaskConfig(name="test", run="echo test")
         repo_results = {
             "repo1": TaskResult(task=task, success=True, exit_code=0, stdout="", stderr="", duration=1.0),
-            "repo2": TaskResult(task=task, success=False, exit_code=1, stdout="", stderr="error", duration=1.0),
-            "repo3": TaskResult(task=task, success=False, exit_code=1, stdout="", stderr="error", duration=1.0),
+            "repo2": TaskResult(
+                task=task, success=False, exit_code=1, stdout="", stderr="error", duration=1.0
+            ),
+            "repo3": TaskResult(
+                task=task, success=False, exit_code=1, stdout="", stderr="error", duration=1.0
+            ),
         }
 
         result = WorkspaceTaskResult(
@@ -184,7 +190,9 @@ class TestWorkspaceTaskResult:
         task = TaskConfig(name="test", run="echo test")
         repo_results = {
             "repo1": TaskResult(task=task, success=True, exit_code=0, stdout="", stderr="", duration=1.0),
-            "repo2": TaskResult(task=task, success=False, exit_code=1, stdout="", stderr="error", duration=1.0),
+            "repo2": TaskResult(
+                task=task, success=False, exit_code=1, stdout="", stderr="error", duration=1.0
+            ),
             "repo3": TaskResult(task=task, success=True, exit_code=0, stdout="", stderr="", duration=1.0),
         }
 
