@@ -119,12 +119,20 @@ class TaskExecutor:
         # Determine if we should stream output
         use_streaming = _should_stream_output(task)
 
+        if use_streaming:
+            logger.info(
+                "Streaming enabled for task",
+                task=task.full_name,
+                explicit_config=task.stream_output,
+                tty_detected=sys.stdout.isatty(),
+            )
+
         # Execute command using foundation's async_run or async_stream
         start = time.time()
 
         try:
             if use_streaming:
-                # Streaming mode: show output in real-time
+                # Streaming mode: show output in real-time using chunk-based streaming
                 # Parse shell command into list for async_stream
                 # Use shlex.split() to properly parse quoted args, shell features, etc.
                 try:
@@ -137,25 +145,35 @@ class TaskExecutor:
                 stream_env = exec_env.copy() if exec_env else {}
                 stream_env["PYTHONUNBUFFERED"] = "1"
 
-                stdout_lines = []
+                stdout_chunks = []
+                chunk_count = 0
 
-                async for line in async_stream(
+                async for chunk in async_stream(
                     cmd=cmd_list,
                     cwd=cwd,
                     env=stream_env,
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
                 ):
-                    # Print line immediately for user feedback (add newline back)
-                    print(line, flush=True)
-                    # Also accumulate for TaskResult (preserve original format)
-                    stdout_lines.append(line + "\n")
+                    chunk_count += 1
+                    # Print chunk immediately for user feedback
+                    # Chunks may contain partial lines, so don't add newlines
+                    print(chunk, end="", flush=True)
+                    # Also accumulate for TaskResult
+                    stdout_chunks.append(chunk)
+
+                logger.debug(
+                    "Streaming completed",
+                    task=task.full_name,
+                    chunks_received=chunk_count,
+                    total_bytes=sum(len(c) for c in stdout_chunks),
+                )
 
                 duration = time.time() - start
 
                 # async_stream doesn't provide exit code, assume success if no exception
                 exit_code = 0
-                stdout_text = "".join(stdout_lines)
+                stdout_text = "".join(stdout_chunks)
                 stderr_text = ""  # Merged into stdout
 
                 logger.info(
@@ -205,6 +223,16 @@ class TaskExecutor:
                     stderr=result.stderr or "",
                     duration=duration,
                 )
+
+        except KeyboardInterrupt:
+            duration = time.time() - start
+            logger.info(
+                "Task interrupted by user",
+                task=task.full_name,
+                duration=f"{duration:.2f}s",
+            )
+            # Re-raise to allow graceful shutdown
+            raise
 
         except ProcessTimeoutError as e:
             duration = time.time() - start
