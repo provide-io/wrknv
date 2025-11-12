@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 import sys
 
-from provide.foundation.cli import echo_error, echo_info, echo_warning
+from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.console.output import pout
 from provide.foundation.hub import register_command
 
@@ -101,6 +101,7 @@ def config_validate(strict: bool = False, verbose: bool = False) -> None:
         if is_valid:
             if verbose:
                 echo_info("   All checks passed")
+            echo_success("✓ Configuration is valid")
         else:
             echo_error("❌ Configuration validation failed:")
             for error in errors:
