@@ -113,7 +113,8 @@
       "Bash(if [ -f \"/Users/tim/code/gh/provide-io/wrknv.toml\" ])",
       "Bash(then)",
       "Bash(else)",
-      "Bash(do echo \"=== Testing $project ===\" cd /Users/tim/code/gh/provide-io/$project wrknv run typecheck --dry-run)"
+      "Bash(do echo \"=== Testing $project ===\" cd /Users/tim/code/gh/provide-io/$project wrknv run typecheck --dry-run)",
+      "Bash(we workspace --help:*)"
     ],
     "deny": [],
     "additionalDirectories": [
