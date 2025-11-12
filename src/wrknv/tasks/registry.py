@@ -284,10 +284,10 @@ class TaskRegistry:
         dry_run: bool = False,
         env: dict[str, str] | None = None,
     ) -> TaskResult:
-        """Run a task by name.
+        """Run a task by name with smart resolution.
 
         Args:
-            name: Task name to execute
+            name: Task name to execute (supports default task resolution)
             args: Optional arguments to pass to the task command
             dry_run: If True, show what would be executed without running
             env: Additional environment variables
@@ -298,9 +298,13 @@ class TaskRegistry:
         Raises:
             TaskNotFoundError: If task not found
         """
-        task = self.get_task(name)
-        if not task:
-            raise TaskNotFoundError(name, available_tasks=list(self.tasks.keys()))
+        # Try smart resolution (handles _default tasks)
+        try:
+            task, resolved_args = self.resolve_task(name, args or [])
+            # Merge provided args with resolved args
+            final_args = resolved_args if resolved_args else args
+        except ValueError as err:
+            raise TaskNotFoundError(name, available_tasks=list(self.tasks.keys())) from err
 
         # Check if composite task
         if task.is_composite:
@@ -308,7 +312,7 @@ class TaskRegistry:
 
         # Run single task
         executor = TaskExecutor(self.repo_path, env)
-        return await executor.execute(task, args=args, dry_run=dry_run)
+        return await executor.execute(task, args=final_args, dry_run=dry_run)
 
     async def _run_composite_task(
         self,
