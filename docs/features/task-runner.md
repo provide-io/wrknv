@@ -12,6 +12,14 @@ The task runner feature enables wrknv to execute predefined tasks from `wrknv.to
 4. **Composability**: Tasks can depend on or run other tasks
 5. **Discoverability**: `wrknv tasks` lists all available tasks
 
+## Features
+
+- **Auto-Detection**: Automatically detects environment and chooses optimal execution strategy
+- **Editable Install Preservation**: Detects editable installs and preserves them (no `uv run`)
+- **UV Integration**: Automatically uses `uv run` for UV projects when appropriate
+- **Process Title Management**: Sets meaningful process titles for better process visibility
+- **Flexible Configuration**: Global defaults with per-task overrides
+
 ## Non-Goals (Future Work)
 
 - Workspace-level task orchestration (Phase 2)
@@ -23,26 +31,50 @@ The task runner feature enables wrknv to execute predefined tasks from `wrknv.to
 
 ### Simple Tasks
 
+> **Note**: No need to prefix commands with `uv run` - wrknv auto-detects the environment!
+
 ```toml
 [tasks]
-test = "uv run pytest tests/"
-lint = "uv run ruff check src/ tests/"
-format = "uv run ruff format src/ tests/"
+test = "pytest tests/"
+lint = "ruff check src/ tests/"
+format = "ruff format src/ tests/"
 ```
 
 ### Complex Tasks
 
 ```toml
 [tasks.build]
-run = "uv build"
+run = "python -m build"
 description = "Build Python package"
 env = { PYTHONPATH = "src" }
 working_dir = "."
+timeout = 300  # Optional: task timeout in seconds
+stream_output = true  # Optional: stream output in real-time
 
 [tasks.test-verbose]
-run = "uv run pytest tests/ -vvv --tb=long"
+run = "pytest tests/ -vvv --tb=long"
 description = "Run tests with verbose output"
 depends_on = ["format", "lint"]
+process_title_format = "full"  # Optional: "full", "leaf", or "abbreviated"
+```
+
+### Advanced Configuration
+
+```toml
+# Force UV run for specific task (override auto-detection)
+[tasks.build-with-uv]
+run = "python -m build"
+execution_mode = "uv_run"
+
+# Explicitly disable prefix
+[tasks.system-python]
+run = "python --version"
+command_prefix = ""  # Empty string = no prefix
+
+# Custom prefix
+[tasks.docker-test]
+run = "pytest tests/"
+command_prefix = "docker run myimage"
 ```
 
 ### Composite Tasks
@@ -118,6 +150,80 @@ wrknv tasks --verbose
 - Error output displayed to stderr
 - Exit code propagated to shell
 
+## Environment Auto-Detection
+
+wrknv automatically detects the optimal execution strategy for tasks:
+
+### Detection Priority
+
+1. **Environment Variable Override**: `WRKNV_TASK_RUNNER` env var (highest priority)
+2. **Editable Install**: If package is installed with `pip install -e .`, use direct execution with PATH modification
+3. **UV Project**: If `uv.lock` or `[tool.uv]` in pyproject.toml exists, use `uv run`
+4. **Virtual Environment**: If `.venv/`, `venv/`, or `workenv/` exists, use direct execution with PATH
+5. **System Python**: Use system Python (lowest priority)
+
+### Why This Matters
+
+**Problem**: `uv run` uninstalls editable installs (UV issue #3843)
+**Solution**: Auto-detect editable installs and use direct execution to preserve them
+
+### Virtual Environment Detection
+
+wrknv searches for virtual environments in this order:
+1. `workenv/{package}_{os}_{arch}/` (wrknv pattern)
+2. `.venv/` (standard)
+3. `venv/` (fallback)
+4. Current Python's venv (if already in one)
+
+### Configuration Options
+
+**Global Configuration** (wrknv.toml):
+```toml
+project_name = "myproject"
+task_auto_detect = true  # Enable auto-detection (default)
+execution_mode = "auto"  # "auto", "uv_run", "direct", or "system"
+```
+
+**Per-Task Override**:
+```toml
+[tasks.build]
+run = "python -m build"
+execution_mode = "direct"  # Override auto-detection
+command_prefix = "uv run"  # Or custom prefix
+```
+
+**Environment Variable Override**:
+```bash
+# Override for all tasks
+export WRKNV_TASK_RUNNER="poetry run"
+wrknv run test  # Uses "poetry run pytest tests/"
+
+# Disable prefix
+export WRKNV_TASK_RUNNER=""
+wrknv run test  # Uses "pytest tests/" directly
+```
+
+### Migration Guide
+
+**Before** (old pattern with hardcoded `uv run`):
+```toml
+[tasks]
+test = "uv run pytest tests/"
+lint = "uv run ruff check src/"
+```
+
+**After** (new pattern with auto-detection):
+```toml
+[tasks]
+test = "pytest tests/"
+lint = "ruff check src/"
+```
+
+wrknv will automatically:
+- Use `uv run` if it's a UV project AND not editable
+- Use direct execution (with PATH modification) if editable install detected
+- Preserve your development workflow
+
 ## Data Models
 
 ### TaskConfig
@@ -129,8 +235,16 @@ class TaskConfig:
     run: str | list[str]  # Command or list of task names
     description: str | None = None
     env: dict[str, str] = field(factory=dict)
-    depends_on: list[str] = field(factory=list)  # Future: dependency execution
-    working_dir: str | None = None
+    depends_on: list[str] = field(factory=list)
+    working_dir: Path | None = None
+    namespace: str | None = None  # Parent namespace (e.g., "test" for test.unit)
+
+    # Execution configuration
+    timeout: float | None = None  # Task timeout in seconds
+    stream_output: bool = False  # Stream output in real-time
+    process_title_format: str = "full"  # "full", "leaf", "abbreviated"
+    command_prefix: str | None = None  # Optional command prefix override
+    execution_mode: str = "auto"  # "auto", "uv_run", "direct", "system"
 
     @property
     def is_composite(self) -> bool:
@@ -210,19 +324,23 @@ wrknv run clean build
 ```toml
 # wrknv/wrknv.toml
 
+project_name = "wrknv"
+
 [tasks]
-# Simple tasks
-test = "uv run pytest tests/ -v"
-lint = "uv run ruff check src/ tests/"
-format = "uv run ruff format src/ tests/"
-typecheck = "uv run mypy src/ --ignore-missing-imports"
+# Simple tasks (no "uv run" needed - auto-detected!)
+test = "pytest tests/ -v"
+lint = "ruff check src/ tests/"
+format = "ruff format src/ tests/"
+typecheck = "mypy src/ --ignore-missing-imports"
 clean = "rm -rf dist/ build/ *.egg-info .pytest_cache .mypy_cache .ruff_cache"
 
 # Complex task with environment
 [tasks.test-coverage]
-run = "uv run pytest tests/ --cov=src/wrknv --cov-report=term-missing"
+run = "pytest tests/ --cov=src/wrknv --cov-report=term-missing"
 description = "Run tests with coverage report"
 env = { COVERAGE_CORE = "sysmon" }
+stream_output = true  # Show output in real-time
+timeout = 600  # 10 minute timeout
 
 # Composite tasks
 [tasks.quality]

@@ -151,10 +151,13 @@ working_dir = "tests"
 - `run` (string or array, required) - Command to execute or list of tasks
 - `description` (string, optional) - Task description
 - `timeout` (float, optional) - Timeout in seconds (default: 300)
-- `env` (object, optional) - Environment variables
+- `env` (object, optional) - Task-specific environment variables
 - `working_dir` (string, optional) - Working directory
 - `depends_on` (array, optional) - Task dependencies (not yet implemented)
-- `stream_output` (bool, optional) - Stream output in real-time (not yet implemented)
+- `stream_output` (bool, optional) - Stream output in real-time (default: false)
+- `process_title_format` (string, optional) - Process title format: "full", "leaf", "abbreviated" (default: "full")
+- `command_prefix` (string, optional) - Override command prefix (e.g., "uv run", "docker run myimage", or "" for none)
+- `execution_mode` (string, optional) - Execution mode: "auto", "uv_run", "direct", "system" (default: "auto")
 
 #### Nested Tasks
 
@@ -196,6 +199,44 @@ description = "Run all quality checks"
 run = ["quality", "test", "build"]
 description = "Complete CI pipeline"
 ```
+
+#### Environment Auto-Detection
+
+wrknv automatically detects the optimal execution strategy (no need to prefix commands with `uv run`!):
+
+**Basic Example** (auto-detection):
+```toml
+[tasks]
+test = "pytest tests/"  # No "uv run" prefix needed!
+lint = "ruff check src/"
+```
+
+**Advanced Configuration**:
+```toml
+# Force specific execution mode
+[tasks.build]
+run = "python -m build"
+execution_mode = "uv_run"  # Override auto-detection
+
+# Custom prefix
+[tasks.docker-test]
+run = "pytest tests/"
+command_prefix = "docker run myimage"
+
+# Disable prefix explicitly
+[tasks.system-python]
+run = "python --version"
+command_prefix = ""  # Empty string = no prefix
+```
+
+**Detection Priority**:
+1. `WRKNV_TASK_RUNNER` environment variable (highest)
+2. Editable install detection (preserves `pip install -e .`)
+3. UV project detection (`uv.lock` or `[tool.uv]`)
+4. Virtual environment detection (`.venv/`, `venv/`, `workenv/`)
+5. System Python (lowest)
+
+**Why This Matters**: `uv run` can uninstall editable installs (UV issue #3843). wrknv auto-detects editable installs and uses direct execution to preserve them.
 
 ### Profiles
 
