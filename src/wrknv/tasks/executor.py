@@ -120,8 +120,8 @@ class TaskExecutor:
         use_streaming = _should_stream_output(task)
 
         if use_streaming:
-            logger.info(
-                "Streaming enabled for task",
+            logger.debug(
+                "Streaming enabled",
                 task=task.full_name,
                 explicit_config=task.stream_output,
                 tty_detected=sys.stdout.isatty(),
@@ -146,7 +146,6 @@ class TaskExecutor:
                 stream_env["PYTHONUNBUFFERED"] = "1"
 
                 stdout_chunks = []
-                chunk_count = 0
 
                 async for chunk in async_stream(
                     cmd=cmd_list,
@@ -154,20 +153,10 @@ class TaskExecutor:
                     env=stream_env,
                     timeout=timeout,
                     stream_stderr=True,  # Merge stderr into stdout for streaming
+                    print_output=True,  # Print chunks immediately to stdout
                 ):
-                    chunk_count += 1
-                    # Print chunk immediately for user feedback
-                    # Chunks may contain partial lines, so don't add newlines
-                    print(chunk, end="", flush=True)
-                    # Also accumulate for TaskResult
+                    # Accumulate chunks for TaskResult
                     stdout_chunks.append(chunk)
-
-                logger.debug(
-                    "Streaming completed",
-                    task=task.full_name,
-                    chunks_received=chunk_count,
-                    total_bytes=sum(len(c) for c in stdout_chunks),
-                )
 
                 duration = time.time() - start
 
