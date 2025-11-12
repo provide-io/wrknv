@@ -159,6 +159,8 @@ def config_init(force: bool = False) -> None:
         # Write configuration
         config.write_config(config_data)
 
+        echo_success(f"✓ Configuration created at {config.config_path}")
+
     except Exception as e:
         echo_error(f"Failed to create configuration: {e}")
         sys.exit(1)
@@ -223,6 +225,7 @@ def config_set(key: str, value: str) -> None:
                 parsed_value = value
 
         config.set_setting(key, parsed_value)
+        echo_success(f"✓ Set {key} = {parsed_value}")
     except Exception as e:
         echo_error(f"Error setting value: {e}")
         sys.exit(1)
