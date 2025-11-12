@@ -120,7 +120,7 @@ DATABASE_URL = "postgresql://localhost/mydb"
 
 ### Tasks
 
-Define development tasks. See [Task System](../features/task-system.md) for full details.
+Define development tasks. See [Task System](../features/task-system/) for full details.
 
 #### Flat Tasks
 
@@ -538,6 +538,6 @@ lint = "ruff check ."
 
 ## See Also
 
-- [Task System](../features/task-system.md) - Task execution details
-- [CLI Reference](../features/we-cli-reference.md) - Command documentation
+- [Task System](../features/task-system/) - Task execution details
+- [CLI Reference](../features/we-cli-reference/) - Command documentation
 - [Examples](../../examples/) - Sample configurations

@@ -376,7 +376,7 @@ These commands bypass task resolution:
 
 ### wrknv.toml
 
-Main configuration file. See [wrknv.toml Reference](../reference/wrknv-toml.md).
+Main configuration file. See [wrknv.toml Reference](../reference/wrknv-toml/).
 
 **Location:**
 - Project root: `./wrknv.toml`
@@ -527,6 +527,6 @@ If container commands fail:
 
 ## See Also
 
-- [Task System](task-system.md) - Task definition and execution
-- [wrknv.toml Reference](../reference/wrknv-toml.md) - Configuration schema
+- [Task System](task-system/) - Task definition and execution
+- [wrknv.toml Reference](../reference/wrknv-toml/) - Configuration schema
 - [Examples](../../examples/) - Sample projects and workflows
