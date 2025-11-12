@@ -188,9 +188,12 @@ class WorkspaceOrchestrator:
                     error_type=type(e).__name__,
                 )
 
-                # Create error result
+                # Create minimal task config for error result
+                from wrknv.tasks.schema import TaskConfig
+
+                error_task = TaskConfig(name=task_name, run=f"# Error: {e}")
                 results[repo_name] = TaskResult(
-                    task_name=task_name,
+                    task=error_task,
                     success=False,
                     exit_code=-1,
                     stdout="",
@@ -285,8 +288,11 @@ class WorkspaceOrchestrator:
                 )
 
                 # Return error result
+                from wrknv.tasks.schema import TaskConfig
+
+                error_task = TaskConfig(name=task_name, run=f"# Error: {e}")
                 error_result = TaskResult(
-                    task_name=task_name,
+                    task=error_task,
                     success=False,
                     exit_code=-1,
                     stdout="",
