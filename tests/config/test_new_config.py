@@ -50,7 +50,7 @@ log_level = "DEBUG"
 auto_install = false
 """)
 
-            with patch("pathlib.Path.cwd", return_value=pathlib.Path(tmpdir)):
+            with patch("wrknv.config.core.Path.cwd", return_value=pathlib.Path(tmpdir)):
                 config = WorkenvConfig.load()
 
                 assert config.project_name == "test-project"

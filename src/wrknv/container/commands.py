@@ -210,7 +210,7 @@ def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None)
         size = backup_path.stat().st_size
         size_str = f"{size / (1024 * 1024):.1f} MB" if size > 1024 * 1024 else f"{size / 1024:.1f} KB"
 
-        console.print(f"[green]✅ Backup created successfully: {name} ({size_str})[/green]")
+        console.print(f"[green]✅ Backup created successfully: {backup_path.name} ({size_str})[/green]")
         return True
 
     except Exception as e:
@@ -239,7 +239,7 @@ def restore_volumes(
     try:
         success = manager.restore_volumes(backup, force=force)
         if success:
-            console.print("[green]✅ Volumes restored successfully[/green]")
+            console.print(f"[green]✅ Volumes restored successfully from {backup.name}[/green]")
         else:
             console.print("[red]❌ Failed to restore volumes[/red]")
             if not force:
