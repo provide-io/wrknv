@@ -89,7 +89,7 @@ def config_validate(strict: bool = False, verbose: bool = False) -> None:
             sys.exit(1)
 
         # Perform validation
-        is_valid, errors = config.validate_config()
+        is_valid, errors = config.validate()
 
         if verbose:
             echo_info(f"📋 Validating configuration: {config.config_path}")

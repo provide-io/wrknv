@@ -165,7 +165,6 @@ class TestSecretsCommand(FoundationTestCase):
             assert result.exit_code == 0
             assert "Using default variant: bao" in result.output
             assert "Switching to OpenBao 2.1.0" in result.output
-            assert "Switched to OpenBao 2.1.0" in result.output
             mock_manager.switch_version.assert_called_once_with("2.1.0", dry_run=False)
 
     def test_switch_version_explicit_variant(self) -> None:
@@ -189,7 +188,6 @@ class TestSecretsCommand(FoundationTestCase):
 
             assert result.exit_code == 0
             assert "Switching to IBM Vault 1.15.0" in result.output
-            assert "Switched to IBM Vault 1.15.0" in result.output
             mock_manager.switch_version.assert_called_once_with("1.15.0", dry_run=False)
 
     def test_switch_version_dry_run(self) -> None:

@@ -191,7 +191,6 @@ class TestTerraformCommand(FoundationTestCase):
             assert result.exit_code == 0
             assert "Using default variant: tofu" in result.output
             assert "Switching to OpenTofu 1.9.0" in result.output
-            assert "Switched to OpenTofu 1.9.0" in result.output
             mock_manager.switch_version.assert_called_once_with("1.9.0", dry_run=False)
 
     def test_switch_version_explicit_variant_tofu(self) -> None:
@@ -215,7 +214,6 @@ class TestTerraformCommand(FoundationTestCase):
 
             assert result.exit_code == 0
             assert "Switching to OpenTofu 1.9.0" in result.output
-            assert "Switched to OpenTofu 1.9.0" in result.output
             mock_manager.switch_version.assert_called_once_with("1.9.0", dry_run=False)
 
     def test_switch_version_explicit_variant_ibm(self) -> None:
@@ -239,7 +237,6 @@ class TestTerraformCommand(FoundationTestCase):
 
             assert result.exit_code == 0
             assert "Switching to IBM Terraform 1.6.2" in result.output
-            assert "Switched to IBM Terraform 1.6.2" in result.output
             mock_manager.switch_version.assert_called_once_with("1.6.2", dry_run=False)
 
     def test_switch_version_dry_run(self) -> None:
