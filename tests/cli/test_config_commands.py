@@ -239,7 +239,7 @@ version = "1.0.0"
             mock_config.write_config.return_value = None
             mock_load.return_value = mock_config
 
-            result = runner.invoke(cli, ["config", "init"], input="my-project\n")
+            result = runner.invoke(cli, ["config", "init"], input="my-project\n1.0.0\n")
 
             assert result.exit_code == 0
             assert "Configuration created" in result.output

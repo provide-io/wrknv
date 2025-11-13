@@ -97,7 +97,7 @@ class TestContainerManager(FoundationTestCase):
         # Arrange
         mock_status.return_value = {
             "docker_available": True,
-            "image_exists": True,
+            "image_found": True,
             "container_exists": True,
             "container_running": True,
             "container_info": {"id": "12345", "state": "running"},

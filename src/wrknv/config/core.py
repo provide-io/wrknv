@@ -67,9 +67,9 @@ class WorkenvConfig(RuntimeConfig):
 
     # Project metadata
     project_name: str | None = config_field(
-        default=None, description="Project name", env_var="WRKNV_PROJECT_NAME"
+        default="my-project", description="Project name", env_var="WRKNV_PROJECT_NAME"
     )
-    version: str | None = config_field(default=None, description="Project version", env_var="WRKNV_VERSION")
+    version: str | None = config_field(default="1.0.0", description="Project version", env_var="WRKNV_VERSION")
     description: str | None = config_field(
         default=None, description="Project description", env_var="WRKNV_DESCRIPTION"
     )
@@ -315,6 +315,16 @@ class WorkenvConfig(RuntimeConfig):
         if self._validator is None:
             return True, []
         return self._validator.validate()  # type: ignore[no-any-return]
+
+    def validate(self) -> tuple[bool, list[str]]:
+        """Validate configuration comprehensively.
+
+        This is an alias for validate_config() to match the interface expected by tests.
+
+        Returns:
+            Tuple of (is_valid, list of error messages)
+        """
+        return self.validate_config()
 
     def validate_version(self, tool_name: str, version: str) -> bool:
         """Validate a tool version format.

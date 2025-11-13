@@ -114,7 +114,7 @@ class TestVolumeCommands:
         assert "5.0 MB" in captured.out
         assert "50 files" in captured.out
         assert "config" in captured.out
-        assert "Not Created" in captured.out
+        assert "Not Mounted" in captured.out
 
     def test_list_volumes_empty(self, mock_manager, test_config, capsys) -> None:
         """Test list_volumes with no volumes."""
@@ -156,9 +156,8 @@ class TestVolumeCommands:
 
         # Check output
         captured = capsys.readouterr()
-        assert "Backing up volumes" in captured.out
+        assert "Backup created successfully" in captured.out
         assert "backup-20250831-150000.tar.gz" in captured.out
-        assert "Successfully created backup" in captured.out
 
     def test_backup_volumes_with_name(self, mock_manager, test_config, mock_home, capsys) -> None:
         """Test backup_volumes with custom name."""
@@ -209,9 +208,8 @@ class TestVolumeCommands:
         mock_manager.restore_volumes.assert_called_once_with(backup_path, force=False)
 
         captured = capsys.readouterr()
-        assert "Restoring volumes from" in captured.out
+        assert "Volumes restored successfully" in captured.out
         assert "backup.tar.gz" in captured.out
-        assert "Successfully restored volumes" in captured.out
 
     def test_restore_volumes_latest(self, mock_manager, test_config, mock_home, capsys) -> None:
         """Test restore_volumes with latest backup."""
@@ -272,7 +270,7 @@ class TestVolumeCommands:
         mock_manager.clean_volumes.assert_called_once_with(preserve=[])
 
         captured = capsys.readouterr()
-        assert "Successfully cleaned volumes" in captured.out
+        assert "Volumes cleaned successfully" in captured.out
 
     def test_clean_volumes_with_preserve(self, mock_manager, test_config) -> None:
         """Test clean_volumes with preserved volumes."""

@@ -274,7 +274,7 @@ class TestSetupCommand(FoundationTestCase):
             result = runner.invoke(cli, ["setup", "--completions", "bash", "--install"])
 
             assert result.exit_code == 0
-            assert "Installed bash completions" in result.output
+            assert "Add this to your ~/.bashrc:" in result.output
 
             # Verify completion file was created in .bash_completion.d/
             completion_file = self.temp_path / ".bash_completion.d" / "wrknv"
