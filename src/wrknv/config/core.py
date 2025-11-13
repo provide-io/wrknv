@@ -114,36 +114,36 @@ class WorkenvConfig(RuntimeConfig):
     @classmethod
     def load(cls, config_file: Path | None = None) -> WorkenvConfig:
         """Load configuration from file and environment variables."""
+        from provide.foundation.config.types import ConfigSource
+
         instance = cls()
         instance.config_path = config_file or instance._find_config_file()
         instance._manager = instance._create_manager()
         instance._load_config()
 
-        # Also load from environment variables with WRKNV_ prefix
+        # Load environment config using foundation's from_env
         env_config = cls.from_env(prefix="WRKNV")
 
-        # Merge environment config over file config
-        if env_config.project_name is not None:
+        # Merge only values that came from environment (not defaults)
+        if env_config.get_source("project_name") == ConfigSource.ENV:
             instance.project_name = env_config.project_name
-        if env_config.version is not None:
+        if env_config.get_source("version") == ConfigSource.ENV:
             instance.version = env_config.version
-        if env_config.description is not None:
+        if env_config.get_source("description") == ConfigSource.ENV:
             instance.description = env_config.description
 
         # Merge workenv settings from environment
         env_settings = WorkenvSettings.from_env(prefix="WRKNV")
-        if env_settings.log_level != "WARNING":
-            instance.workenv.log_level = env_settings.log_level
-        if not env_settings.auto_install:
-            instance.workenv.auto_install = env_settings.auto_install
-        if not env_settings.use_cache:
-            instance.workenv.use_cache = env_settings.use_cache
-        if env_settings.cache_ttl != "7d":
-            instance.workenv.cache_ttl = env_settings.cache_ttl
-        if env_settings.container_runtime != "docker":
-            instance.workenv.container_runtime = env_settings.container_runtime
-        if env_settings.container_registry != "ghcr.io":
-            instance.workenv.container_registry = env_settings.container_registry
+        for field_name in [
+            "log_level",
+            "auto_install",
+            "use_cache",
+            "cache_ttl",
+            "container_runtime",
+            "container_registry",
+        ]:
+            if env_settings.get_source(field_name) == ConfigSource.ENV:
+                setattr(instance.workenv, field_name, getattr(env_settings, field_name))
 
         return instance
 

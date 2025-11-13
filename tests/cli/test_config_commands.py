@@ -327,11 +327,11 @@ class TestConfigCommandIntegration(FoundationTestCase):
 
         config_file = self.temp_path / ".wrknv.toml"
 
-        with patch("pathlib.Path.cwd") as mock_cwd:
+        with patch("wrknv.config.core.Path.cwd") as mock_cwd:
             mock_cwd.return_value = self.temp_path
 
-            # Initialize config
-            result = runner.invoke(cli, ["config", "init"], input="test-project\n")
+            # Initialize config (provide both project name and version inputs)
+            result = runner.invoke(cli, ["config", "init"], input="test-project\n\n")
             assert result.exit_code == 0
 
             # Verify file was created
