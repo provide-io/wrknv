@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from .discovery import WorkspaceDiscovery
 from .manager import WorkspaceManager
+from .orchestrator import WorkspaceOrchestrator, WorkspaceTaskResult
 from .schema import RepoConfig, WorkspaceConfig
 from .sync import WorkspaceSync
 
@@ -19,7 +20,9 @@ __all__ = [
     "WorkspaceConfig",
     "WorkspaceDiscovery",
     "WorkspaceManager",
+    "WorkspaceOrchestrator",
     "WorkspaceSync",
+    "WorkspaceTaskResult",
 ]
 
 # 🧰🌍🔚
