@@ -15,6 +15,7 @@ from provide.foundation import logger
 from provide.foundation.hub import register_command
 
 from wrknv.workspace.manager import WorkspaceManager
+from wrknv.workspace.orchestrator import WorkspaceOrchestrator
 
 
 # Register the workspace group
@@ -257,6 +258,94 @@ def setup_workspace(generate_only: bool = False) -> None:
     except Exception as e:
         logger.error("❌ Failed to setup workspace", error=str(e))
         raise
+
+
+@register_command("workspace.run", description="Run task across workspace repositories")
+def run_task(
+    task: str,
+    repos: str | None = None,
+    parallel: bool = False,
+    fail_fast: bool = False,
+) -> None:
+    """Run task across workspace repositories.
+
+    Args:
+        task: Name of task to run (e.g., "test", "typecheck", "build")
+        repos: Glob pattern to filter repositories (e.g., "pyvider-*")
+        parallel: Run in parallel across all repos (default: sequential)
+        fail_fast: Stop on first failure (sequential mode only, default: continue-on-error)
+
+    Examples:
+        # Run tests across all repositories
+        we workspace run test
+
+        # Run typecheck on pyvider packages only
+        we workspace run typecheck --repos="pyvider-*"
+
+        # Parallel execution with fail-fast
+        we workspace run test --parallel --fail-fast
+    """
+    import asyncio
+
+    async def _run_task() -> None:
+        try:
+            # Determine workspace root (parent of current directory by default)
+            root = Path.cwd().parent
+            logger.info(
+                "🚀 Running task across workspace",
+                task=task,
+                root=str(root),
+                repos_filter=repos,
+                parallel=parallel,
+                fail_fast=fail_fast,
+            )
+
+            # Create orchestrator
+            orchestrator = WorkspaceOrchestrator(root=root)
+
+            # Run task
+            result = await orchestrator.run_task(
+                task_name=task,
+                repo_filter=repos,
+                parallel=parallel,
+                fail_fast=fail_fast,
+            )
+
+            # Print summary separator
+            logger.info("")
+            logger.info("=" * 80)
+            logger.info("📊 Workspace Task Summary")
+            logger.info("=" * 80)
+
+            # Print summary
+            logger.info(f"Task: {result.task_name}")
+            logger.info(f"Total repos: {result.total_repos}")
+            logger.info(f"✅ Succeeded: {result.succeeded}")
+            logger.info(f"❌ Failed: {result.failed}")
+            logger.info(f"⏭️  Skipped: {result.skipped}")
+            logger.info(f"⏱️  Duration: {result.duration:.2f}s")
+
+            # Show failed repos if any
+            if result.failed > 0:
+                logger.error("")
+                logger.error("Failed repositories:")
+                for repo_name in result.get_failed_repos():
+                    repo_result = result.repo_results[repo_name]
+                    logger.error(f"  ❌ {repo_name} (exit code: {repo_result.exit_code})")
+
+                # Exit with error code
+                import sys
+
+                sys.exit(1)
+            else:
+                logger.info("")
+                logger.info("✅ All repositories succeeded!")
+
+        except Exception as e:
+            logger.error("❌ Failed to run workspace task", error=str(e), error_type=type(e).__name__)
+            raise
+
+    asyncio.run(_run_task())
 
 
 # 🧰🌍🔚
