@@ -1,22 +1,19 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# wrknv/env/workenv.py
 #
-
-"""Workenv Management
+"""
+Workenv Management
 ==================
-Manages wrknv's own virtual environment."""
+Manages wrknv's own virtual environment.
+"""
 
-from __future__ import annotations
-
-from pathlib import Path
 import platform
 import shutil
+import subprocess
 import sys
+from pathlib import Path
 
-from provide.foundation.process import run
-
-from wrknv.cli.visual import Emoji, print_info, print_success
+from wrknv.wenv.visual import Emoji, print_info, print_success
 
 
 class WorkenvManager:
@@ -72,7 +69,7 @@ class WorkenvManager:
         workenv_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Create virtual environment
-        run(
+        subprocess.run(
             [sys.executable, "-m", "venv", str(workenv_path)],
             check=True,
         )
@@ -82,14 +79,14 @@ class WorkenvManager:
         wrknv_root = Path(__file__).parent.parent.parent.parent
 
         print_info("Installing wrknv in development mode...", Emoji.INSTALL)
-        run(
+        subprocess.run(
             [str(pip_path), "install", "-e", str(wrknv_root)],
             check=True,
         )
 
         # Install development dependencies
         print_info("Installing development dependencies...", Emoji.PACKAGE)
-        run(
+        subprocess.run(
             [str(pip_path), "install", "-e", f"{wrknv_root}[dev]"],
             check=True,
         )
@@ -134,6 +131,7 @@ class WorkenvManager:
 # Activate the workenv
 source workenv/{workenv_name}/bin/activate
 
+echo "✅ Activated wrknv: {workenv_name}"
 echo "   Python: $(which python)"
 echo "   wrknv: $(which wrknv)"
 """
@@ -148,6 +146,7 @@ echo "   wrknv: $(which wrknv)"
 # Activate the workenv
 & workenv\\{workenv_name}\\Scripts\\Activate.ps1
 
+Write-Host "✅ Activated wrknv: {workenv_name}" -ForegroundColor Green
 Write-Host "   Python: $(Get-Command python | Select-Object -ExpandProperty Source)"
 Write-Host "   wrknv: $(Get-Command wrknv | Select-Object -ExpandProperty Source)"
 """
@@ -164,7 +163,7 @@ Write-Host "   wrknv: $(Get-Command wrknv | Select-Object -ExpandProperty Source
     def setup_workenv(cls, base_path: Path | None = None, force: bool = False) -> None:
         """Complete workenv setup including creation and scripts."""
         # Create workenv
-        cls.create_workenv(base_path, force)
+        workenv_path = cls.create_workenv(base_path, force)
 
         # Generate activation scripts
         cls.generate_env_scripts(base_path)
@@ -177,4 +176,4 @@ Write-Host "   wrknv: $(Get-Command wrknv | Select-Object -ExpandProperty Source
             print_info("  Bash/Zsh: source ./env.sh", Emoji.CONFIG)
 
 
-# 🧰🌍🔚
+# 🧰🌍🖥️🪄

@@ -1,21 +1,20 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# wrknv/container/commands.py
 #
-
-"""Container Command Implementations
+"""
+Container Command Implementations
 =================================
-Command implementations for container management."""
-
-from __future__ import annotations
+Command implementations for container management.
+"""
 
 from pathlib import Path
+from typing import Optional
 
 import click
 from rich.console import Console
 from rich.table import Table
 
-from wrknv.config import WorkenvConfig
+from wrknv.wenv.config import WorkenvConfig
 
 from .manager import ContainerManager
 
@@ -72,32 +71,28 @@ def container_status(config: WorkenvConfig | None = None) -> None:
 
     status = manager.status()
 
-    # Docker status
-    if not status["docker_available"]:
-        docker_status = "[red]❌ Not Available[/red]"
-    else:
-        docker_status = "[green]✅ Available[/green]"
-
-    # Image status
-    image_status = "[red]❌ Not Found[/red]" if not status["image_found"] else "[green]✅ Found[/green]"
-
     # Create status table
-    table = Table(title="📊 Container Status", show_header=True)
+    table = Table(title=f"{manager.STATUS_EMOJI} Container Status", show_header=True)
     table.add_column("Property", style="cyan")
     table.add_column("Status", style="green")
 
     # Docker status
+    docker_status = "✅ Available" if status["docker_available"] else "❌ Not Available"
     table.add_row("Docker", docker_status)
 
     # Image status
+    image_status = "✅ Exists" if status["image_exists"] else "❌ Not Found"
     table.add_row(f"Image ({manager.full_image})", image_status)
 
     # Container status
     if status["container_exists"]:
-        container_status = "\U0001f7e2 Running" if status["container_running"] else "\U0001f7e1 Stopped"
+        if status["container_running"]:
+            container_status = "🟢 Running"
+        else:
+            container_status = "🟡 Stopped"
     else:
         container_status = "❌ Not Created"
-    table.add_row(f"Container ({manager.container_name})", container_status)
+    table.add_row(f"Container ({manager.CONTAINER_NAME})", container_status)
 
     # Additional info if container exists
     if status["container_info"]:
@@ -109,11 +104,17 @@ def container_status(config: WorkenvConfig | None = None) -> None:
 
     # Show helpful commands
     if not status["docker_available"]:
-        console.print("\n[yellow]Please install Docker to use container features[/yellow]")
+        console.print(
+            "\n[yellow]Please install Docker to use container features[/yellow]"
+        )
     elif not status["container_running"]:
-        console.print("\n[dim]Run 'wrknv container start' to start the container[/dim]")
+        console.print(
+            "\n[dim]Run 'wrknv container start' to start the container[/dim]"
+        )
     else:
-        console.print("\n[dim]Run 'wrknv container enter' to access the container[/dim]")
+        console.print(
+            "\n[dim]Run 'wrknv container enter' to access the container[/dim]"
+        )
 
 
 def container_logs(
@@ -126,12 +127,12 @@ def container_logs(
 ) -> None:
     """Show container logs."""
     manager = ContainerManager(config)
-    # Note: details parameter is ignored for now
-    manager.logs.get_logs(
+    manager.logs(
         follow=follow,
         tail=tail,
         since=since,
         timestamps=timestamps,
+        details=details,
     )
 
 
@@ -146,7 +147,7 @@ def rebuild_container(config: WorkenvConfig | None = None) -> bool:
     manager = ContainerManager(config)
     console = Console()
 
-    console.print("🔨 Rebuilding container from scratch...")
+    console.print(f"{manager.BUILD_EMOJI} Rebuilding container from scratch...")
 
     # Clean existing resources
     if not manager.clean():
@@ -164,13 +165,13 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
     """List container volumes with information."""
     manager = ContainerManager(config)
     console = Console()
-
+    
     volumes = manager.list_volumes()
-
+    
     if not volumes:
         console.print("[yellow]No volumes found[/yellow]")
         return
-
+    
     # Create table
     table = Table(title="📦 Container Volumes", show_header=True)
     table.add_column("Volume", style="cyan")
@@ -178,8 +179,10 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
     table.add_column("Status", style="green")
     table.add_column("Size", justify="right")
     table.add_column("Files", justify="right")
-
+    
     for volume in volumes:
+        status = "✅ Exists" if volume["exists"] else "❌ Not Created"
+        
         # Format size
         size = volume["size"]
         if size > 1024 * 1024 * 1024:  # GB
@@ -190,41 +193,64 @@ def list_volumes(config: WorkenvConfig | None = None) -> None:
             size_str = f"{size / 1024:.1f} KB"
         else:
             size_str = f"{size} B"
-
+        
         files_str = f"{volume['files']} files" if volume["exists"] else "-"
-        status = "[green]✅ Mounted[/green]" if volume["exists"] else "[yellow]⚠️ Not Mounted[/yellow]"
-
-        table.add_row(volume["name"], volume["path"], status, size_str if volume["exists"] else "-", files_str)
-
+        
+        table.add_row(
+            volume["name"],
+            volume["path"],
+            status,
+            size_str if volume["exists"] else "-",
+            files_str
+        )
+    
     console.print(table)
 
 
-def backup_volumes(config: WorkenvConfig | None = None, name: str | None = None) -> bool:
+def backup_volumes(
+    config: WorkenvConfig | None = None,
+    name: Optional[str] = None
+) -> bool:
     """Create a backup of container volumes."""
     manager = ContainerManager(config)
     console = Console()
-
+    
+    console.print("📦 Backing up volumes...")
+    
     try:
-        backup_path = manager.backup_volumes(compress=True, include_metadata=True, name=name)
-
+        backup_path = manager.backup_volumes(
+            compress=True,
+            include_metadata=True,
+            name=name
+        )
+        
+        # Get backup size
         size = backup_path.stat().st_size
-        size_str = f"{size / (1024 * 1024):.1f} MB" if size > 1024 * 1024 else f"{size / 1024:.1f} KB"
-
-        console.print(f"[green]✅ Backup created successfully: {backup_path.name} ({size_str})[/green]")
+        if size > 1024 * 1024:
+            size_str = f"{size / (1024 * 1024):.1f} MB"
+        else:
+            size_str = f"{size / 1024:.1f} KB"
+        
+        console.print(
+            f"[green]✅ Successfully created backup: {backup_path.name} ({size_str})[/green]"
+        )
+        console.print(f"[dim]Location: {backup_path}[/dim]")
         return True
-
+        
     except Exception as e:
         console.print(f"[red]❌ Failed to create backup: {e}[/red]")
         return False
 
 
 def restore_volumes(
-    config: WorkenvConfig | None = None, backup_path: str | None = None, force: bool = False
+    config: WorkenvConfig | None = None,
+    backup_path: Optional[str] = None,
+    force: bool = False
 ) -> bool:
     """Restore container volumes from a backup."""
     manager = ContainerManager(config)
     console = Console()
-
+    
     # Get backup path
     if backup_path:
         backup = Path(backup_path)
@@ -235,48 +261,50 @@ def restore_volumes(
             console.print("[red]❌ No backups found[/red]")
             console.print("[dim]Create a backup first with 'wrknv container volumes backup'[/dim]")
             return False
-
+    
+    console.print(f"📦 Restoring volumes from: {backup.name}")
+    
     try:
         success = manager.restore_volumes(backup, force=force)
         if success:
-            console.print(f"[green]✅ Volumes restored successfully from {backup.name}[/green]")
+            console.print("[green]✅ Successfully restored volumes[/green]")
         else:
             console.print("[red]❌ Failed to restore volumes[/red]")
             if not force:
                 console.print("[dim]Use --force to overwrite existing volumes[/dim]")
         return success
-
+        
     except Exception as e:
         console.print(f"[red]❌ Failed to restore volumes: {e}[/red]")
         return False
 
 
-def clean_volumes(config: WorkenvConfig | None = None, preserve: list[str] | None = None) -> bool:
+def clean_volumes(
+    config: WorkenvConfig | None = None,
+    preserve: list[str] = None
+) -> bool:
     """Clean container volumes."""
     manager = ContainerManager(config)
     console = Console()
-
+    
     preserve = preserve or []
-
+    
     # Confirm with user
     if preserve:
         console.print(f"[yellow]⚠️  This will clean all volumes except: {', '.join(preserve)}[/yellow]")
     else:
         console.print("[yellow]⚠️  This will clean ALL container volumes[/yellow]")
-
+    
     if not click.confirm("Are you sure you want to continue?"):
         console.print("[dim]Cancelled[/dim]")
         return False
-
+    
     try:
         success = manager.clean_volumes(preserve=preserve)
         if success:
-            console.print("[green]✅ Volumes cleaned successfully[/green]")
+            console.print("[green]✅ Successfully cleaned volumes[/green]")
         return success
-
+        
     except Exception as e:
         console.print(f"[red]❌ Failed to clean volumes: {e}[/red]")
         return False
-
-
-# 🧰🌍🔚

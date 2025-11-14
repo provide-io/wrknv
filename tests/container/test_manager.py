@@ -1,15 +1,3 @@
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
-"""TODO: Add module docstring."""
-
-from __future__ import annotations
-
-from provide.testkit import FoundationTestCase
-import pytest
-
 #!/usr/bin/env python3
 #
 # tests/test_container_manager.py
@@ -18,473 +6,484 @@ import pytest
 Comprehensive tests for the ContainerManager class.
 """
 
-from pathlib import Path
+import json
+import os
 import shutil
+import subprocess
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import MagicMock, Mock, call, patch
 
-from provide.testkit.mocking import Mock, patch
-
-# Test utilities - available from conftest
-from tests.conftest import create_mock_builder
-from wrknv.config import WorkenvConfig
 from wrknv.container.manager import ContainerManager
-from wrknv.container.operations.lifecycle import ContainerLifecycle
-from wrknv.container.runtime.docker import DockerRuntime
+from wrknv.wenv.schema import WorkenvConfig
 
 
-@pytest.mark.container
-class TestContainerManager(FoundationTestCase):
+class TestContainerManager(unittest.TestCase):
     """Test suite for ContainerManager class."""
 
-    def setup_method(self) -> None:
+    def setUp(self):
         """Set up test fixtures."""
-        super().setup_method()
         self.config = WorkenvConfig(project_name="test-project")
         self.manager = ContainerManager(self.config)
 
-    def teardown_method(self) -> None:
+    def tearDown(self):
         """Clean up after tests."""
         # Clean up any test directories
         test_build_dir = Path.home() / ".wrknv" / "container-build"
         if test_build_dir.exists():
             shutil.rmtree(test_build_dir, ignore_errors=True)
 
-    @patch.object(DockerRuntime, "is_available", return_value=True)
-    def test_check_docker_success(self, mock_is_available) -> None:
+    @patch("subprocess.run")
+    def test_check_docker_success(self, mock_run):
         """Test check_docker when Docker is available and running."""
+        mock_run.return_value = Mock(returncode=0)
+        
         result = self.manager.check_docker()
-        assert result
-        assert mock_is_available.called
+        
+        self.assertTrue(result)
+        mock_run.assert_called_once_with(
+            ["docker", "info"], capture_output=True, text=True, check=False
+        )
 
-    @patch.object(DockerRuntime, "is_available", return_value=False)
-    def test_check_docker_daemon_not_running(self, mock_is_available) -> None:
+    @patch("subprocess.run")
+    def test_check_docker_daemon_not_running(self, mock_run):
         """Test check_docker when Docker daemon is not running."""
+        mock_run.return_value = Mock(returncode=1)
+        
         result = self.manager.check_docker()
-        assert not result
+        
+        self.assertFalse(result)
 
-    @patch.object(DockerRuntime, "is_available", return_value=False)
-    def test_check_docker_not_installed(self, mock_is_available) -> None:
+    @patch("subprocess.run")
+    def test_check_docker_not_installed(self, mock_run):
         """Test check_docker when Docker is not installed."""
+        mock_run.side_effect = FileNotFoundError()
+        
         result = self.manager.check_docker()
-        assert not result
+        
+        self.assertFalse(result)
 
-    @patch.object(ContainerLifecycle, "exists", return_value=True)
-    def test_container_exists_true(self, mock_exists) -> None:
+    @patch("subprocess.run")
+    def test_container_exists_true(self, mock_run):
         """Test container_exists when container exists."""
+        mock_run.return_value = Mock(
+            returncode=0, stdout="test-project-dev\nother-container\n"
+        )
+        
         result = self.manager.container_exists()
-        assert result
-        assert mock_exists.called
+        
+        self.assertTrue(result)
+        mock_run.assert_called_once_with(
+            ["docker", "ps", "-a", "--format", "{{.Names}}"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
 
-    @patch.object(ContainerLifecycle, "exists", return_value=False)
-    def test_container_exists_false(self, mock_exists) -> None:
+    @patch("subprocess.run")
+    def test_container_exists_false(self, mock_run):
         """Test container_exists when container doesn't exist."""
+        mock_run.return_value = Mock(returncode=0, stdout="other-container\n")
+        
         result = self.manager.container_exists()
-        assert not result
+        
+        self.assertFalse(result)
 
-    @patch.object(ContainerLifecycle, "is_running", return_value=True)
-    def test_container_running_true(self, mock_is_running) -> None:
+    @patch("subprocess.run")
+    def test_container_running_true(self, mock_run):
         """Test container_running when container is running."""
+        mock_run.return_value = Mock(returncode=0, stdout="test-project-dev\n")
+        
         result = self.manager.container_running()
-        assert result
-        assert mock_is_running.called
+        
+        self.assertTrue(result)
+        mock_run.assert_called_once_with(
+            ["docker", "ps", "--format", "{{.Names}}"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
 
-    @patch.object(ContainerLifecycle, "is_running", return_value=False)
-    def test_container_running_false(self, mock_is_running) -> None:
+    @patch("subprocess.run")
+    def test_container_running_false(self, mock_run):
         """Test container_running when container is not running."""
+        mock_run.return_value = Mock(returncode=0, stdout="")
+        
         result = self.manager.container_running()
-        assert not result
+        
+        self.assertFalse(result)
 
-    @patch("provide.foundation.process.run")
-    def test_image_exists_true(self, mock_run) -> None:
+    @patch("subprocess.run")
+    def test_image_exists_true(self, mock_run):
         """Test image_exists when image exists."""
-        mock_run.return_value = Mock(returncode=0, stdout="test-project-dev:latest\nother:tag\n")
-
+        mock_run.return_value = Mock(
+            returncode=0, stdout="test-project-dev:latest\nother:tag\n"
+        )
+        
         result = self.manager.image_exists()
+        
+        self.assertTrue(result)
+        mock_run.assert_called_once_with(
+            ["docker", "images", "--format", "{{.Repository}}:{{.Tag}}"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
 
-        assert result
-        # Verify docker images was called (don't check exact kwargs)
-        assert mock_run.called
-
-    @patch("provide.foundation.process.run")
-    def test_image_exists_false(self, mock_run) -> None:
+    @patch("subprocess.run")
+    def test_image_exists_false(self, mock_run):
         """Test image_exists when image doesn't exist."""
         mock_run.return_value = Mock(returncode=0, stdout="other:tag\n")
-
+        
         result = self.manager.image_exists()
+        
+        self.assertFalse(result)
 
-        assert not result
-
+    @patch("subprocess.run")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    def test_build_image_success(self, mock_mkdir, mock_write) -> None:
+    def test_build_image_success(self, mock_mkdir, mock_write, mock_run):
         """Test successful image build."""
-        # Replace the entire builder with a mock (attrs objects are read-only)
-        mock_builder = create_mock_builder()
-        self.manager.builder = mock_builder
-
+        mock_run.return_value = Mock(returncode=0)
+        
         result = self.manager.build_image()
-
-        assert result
+        
+        self.assertTrue(result)
         mock_mkdir.assert_called_once_with(parents=True, exist_ok=True)
         mock_write.assert_called_once()
         # Verify dockerfile content was generated
         dockerfile_content = mock_write.call_args[0][0]
-        assert "FROM ubuntu:22.04" in dockerfile_content
-        # Verify builder.build was called
-        mock_builder.build.assert_called_once()
+        self.assertIn("FROM ubuntu:22.04", dockerfile_content)
+        # Build directory is now persistent, no cleanup
 
+    @patch("subprocess.run")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.mkdir")
-    def test_build_image_with_rebuild(self, mock_mkdir, mock_write) -> None:
+    def test_build_image_with_rebuild(self, mock_mkdir, mock_write, mock_run):
         """Test image build with rebuild flag."""
-        # Replace the entire builder with a mock (attrs objects are read-only)
-        mock_builder = create_mock_builder()
-        self.manager.builder = mock_builder
-
+        mock_run.return_value = Mock(returncode=0)
+        
         result = self.manager.build_image(rebuild=True)
+        
+        self.assertTrue(result)
+        # Check that --no-cache was added to the command
+        build_cmd = mock_run.call_args[0][0]
+        self.assertIn("--no-cache", build_cmd)
 
-        assert result
-        # Verify builder.build was called
-        mock_builder.build.assert_called_once()
-
-    def test_build_image_failure(self) -> None:
+    @patch("subprocess.run")
+    @patch("pathlib.Path.write_text")
+    @patch("pathlib.Path.mkdir")
+    def test_build_image_failure(self, mock_mkdir, mock_write, mock_run):
         """Test image build failure."""
-        from tests.conftest import create_mock_builder, create_mock_storage
-
-        # Replace builder with one that fails to build
-        mock_builder = create_mock_builder()
-        mock_builder.build = Mock(return_value=False)  # Build fails
-        mock_storage = create_mock_storage()
-
-        self.manager.builder = mock_builder
-        self.manager.storage = mock_storage
-
+        mock_run.side_effect = subprocess.CalledProcessError(1, "docker build")
+        
         result = self.manager.build_image()
+        
+        self.assertFalse(result)
+        # Build directory is now persistent, no cleanup
 
-        assert not result
-        mock_builder.build.assert_called_once()
-
-    def test_start_container_success(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.build_image")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    @patch("subprocess.run")
+    @patch("os.getuid")
+    @patch("os.getgid")
+    def test_start_container_success(
+        self,
+        mock_getgid,
+        mock_getuid,
+        mock_run,
+        mock_exists,
+        mock_running,
+        mock_build,
+        mock_image_exists,
+        mock_check_docker,
+    ):
         """Test successful container start."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
-
-        # Replace dependencies with mocks that control behavior
-        mock_lifecycle = create_mock_lifecycle(exists=False, running=False)
-        mock_builder = create_mock_builder()
-        mock_builder.image_exists = Mock(return_value=True)
-        mock_storage = create_mock_storage()
-
-        # Mock lifecycle.start to return success
-        mock_lifecycle.start = Mock(return_value=True)
-
-        self.manager.lifecycle = mock_lifecycle
-        self.manager.builder = mock_builder
-        self.manager.storage = mock_storage
-
+        mock_check_docker.return_value = True
+        mock_image_exists.return_value = True
+        mock_running.return_value = False
+        mock_exists.return_value = False
+        mock_getuid.return_value = 1000
+        mock_getgid.return_value = 1000
+        
         result = self.manager.start()
+        
+        self.assertTrue(result)
+        mock_check_docker.assert_called_once()
+        mock_image_exists.assert_called_once()
+        mock_running.assert_called_once()
+        # Verify docker run command
+        docker_run_cmd = mock_run.call_args[0][0]
+        self.assertEqual(docker_run_cmd[0], "docker")
+        self.assertEqual(docker_run_cmd[1], "run")
+        self.assertIn("-d", docker_run_cmd)
+        self.assertIn("--name", docker_run_cmd)
+        self.assertIn("test-project-dev", docker_run_cmd)
 
-        assert result
-        # Verify image existence was checked
-        mock_builder.image_exists.assert_called()
-        # Verify container was started
-        mock_lifecycle.start.assert_called_once()
-
-    def test_start_container_docker_not_available(self) -> None:
-        """Test container start when lifecycle start fails."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
-
-        # Replace dependencies - lifecycle start fails
-        mock_lifecycle = create_mock_lifecycle(exists=False, running=False)
-        mock_lifecycle.start = Mock(return_value=False)  # Start fails
-        mock_builder = create_mock_builder()
-        mock_builder.image_exists = Mock(return_value=True)
-        mock_storage = create_mock_storage()
-
-        self.manager.lifecycle = mock_lifecycle
-        self.manager.builder = mock_builder
-        self.manager.storage = mock_storage
-
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    def test_start_container_docker_not_available(self, mock_check_docker):
+        """Test container start when Docker is not available."""
+        mock_check_docker.return_value = False
+        
         result = self.manager.start()
+        
+        self.assertFalse(result)
 
-        assert not result
-        mock_lifecycle.start.assert_called()
-
-    def test_start_container_build_image_if_missing(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.build_image")
+    def test_start_container_build_image_if_missing(
+        self, mock_build, mock_image_exists, mock_check_docker
+    ):
         """Test that start builds image if it doesn't exist."""
-        from tests.conftest import create_mock_builder, create_mock_storage
-
-        # Replace dependencies with mocks
-        mock_builder = create_mock_builder()
-        mock_builder.image_exists = Mock(return_value=False)
-        mock_builder.build = Mock(return_value=False)  # Build fails
-        mock_storage = create_mock_storage()
-
-        self.manager.builder = mock_builder
-        self.manager.storage = mock_storage
-
+        mock_check_docker.return_value = True
+        mock_image_exists.return_value = False
+        mock_build.return_value = False  # Build fails
+        
         result = self.manager.start()
+        
+        self.assertFalse(result)
+        mock_build.assert_called_once_with(rebuild=False)
 
-        assert not result
-        # Verify build was called (via build_image method)
-        mock_storage.get_container_path.assert_called()
-
-    def test_start_container_already_running(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    def test_start_container_already_running(self, mock_running, mock_image_exists, mock_check_docker):
         """Test start when container is already running."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_runtime
-
-        # Replace dependencies with mocks
-        mock_runtime = create_mock_runtime(available=True)
-        mock_builder = create_mock_builder()
-        mock_builder.image_exists = Mock(return_value=True)
-        mock_lifecycle = create_mock_lifecycle(running=True)  # Already running
-
-        self.manager.runtime = mock_runtime
-        self.manager.builder = mock_builder
-        self.manager.lifecycle = mock_lifecycle
-
+        mock_check_docker.return_value = True
+        mock_image_exists.return_value = True
+        mock_running.return_value = True
+        
         result = self.manager.start()
+        
+        self.assertTrue(result)  # Returns True but doesn't try to start again
 
-        assert result  # Returns True but doesn't try to start again
-
-    def test_enter_container_running(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("os.system")
+    def test_enter_container_running(self, mock_system, mock_running):
         """Test entering a running container."""
-        mock_exec = Mock()
-        mock_exec.enter = Mock(return_value=True)
-        self.manager.exec = mock_exec
+        mock_running.return_value = True
+        
+        self.manager.enter()
+        
+        mock_system.assert_called_once_with(
+            "docker exec -it test-project-dev /bin/bash"
+        )
 
-        result = self.manager.enter()
-
-        assert result is True
-        mock_exec.enter.assert_called_once_with(command=None, user=None, workdir=None, environment=None)
-
-    def test_enter_container_with_command(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("os.system")
+    def test_enter_container_with_command(self, mock_system, mock_running):
         """Test entering container with specific command."""
-        mock_exec = Mock()
-        mock_exec.enter = Mock(return_value=True)
-        self.manager.exec = mock_exec
+        mock_running.return_value = True
+        
+        self.manager.enter(["ls", "-la"])
+        
+        mock_system.assert_called_once_with(
+            "docker exec -it test-project-dev ls -la"
+        )
 
-        result = self.manager.enter(command="ls -la")
-
-        assert result is True
-        mock_exec.enter.assert_called_once_with(command="ls -la", user=None, workdir=None, environment=None)
-
-    def test_enter_container_not_running(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("os.system")
+    def test_enter_container_not_running(self, mock_system, mock_running):
         """Test entering when container is not running."""
-        mock_exec = Mock()
-        mock_exec.enter = Mock(return_value=False)
-        self.manager.exec = mock_exec
+        mock_running.return_value = False
+        
+        self.manager.enter()
+        
+        mock_system.assert_not_called()
 
-        result = self.manager.enter()
-
-        assert result is False
-        mock_exec.enter.assert_called_once()
-
-    def test_stop_container_success(self) -> None:
+    @patch("subprocess.run")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    def test_stop_container_success(self, mock_running, mock_run):
         """Test successful container stop."""
-        from tests.conftest import create_mock_lifecycle
-
-        # Replace lifecycle with mock that's running
-        mock_lifecycle = create_mock_lifecycle(running=True)
-        mock_lifecycle.stop = Mock(return_value=True)
-        self.manager.lifecycle = mock_lifecycle
-
+        mock_running.return_value = True
+        mock_run.return_value = Mock(returncode=0)
+        
         result = self.manager.stop()
+        
+        self.assertTrue(result)
+        # Check that docker stop was called
+        stop_calls = [c for c in mock_run.call_args_list if "stop" in str(c)]
+        self.assertTrue(len(stop_calls) > 0)
 
-        assert result
-        mock_lifecycle.stop.assert_called_once()
-
-    def test_stop_container_failure(self) -> None:
+    @patch("subprocess.run")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    def test_stop_container_failure(self, mock_running, mock_run):
         """Test container stop failure."""
-        from tests.conftest import create_mock_lifecycle
-
-        # Replace lifecycle with mock that fails to stop
-        mock_lifecycle = create_mock_lifecycle(running=True)
-        mock_lifecycle.stop = Mock(return_value=False)
-        self.manager.lifecycle = mock_lifecycle
-
+        mock_running.return_value = True
+        mock_run.side_effect = subprocess.CalledProcessError(1, "docker stop")
+        
         result = self.manager.stop()
+        
+        self.assertFalse(result)
 
-        assert not result
-        mock_lifecycle.stop.assert_called_once()
-
-    def test_restart_container_success(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.stop")
+    @patch("wrknv.container.manager.ContainerManager.start")
+    def test_restart_container_success(self, mock_start, mock_stop):
         """Test successful container restart."""
-        from tests.conftest import create_mock_lifecycle
-
-        # Replace lifecycle with mock
-        mock_lifecycle = create_mock_lifecycle(running=True)
-        mock_lifecycle.restart = Mock(return_value=True)
-        self.manager.lifecycle = mock_lifecycle
-
+        mock_stop.return_value = True
+        mock_start.return_value = True
+        
         result = self.manager.restart()
+        
+        self.assertTrue(result)
+        mock_stop.assert_called_once()
+        mock_start.assert_called_once()
 
-        assert result
-        mock_lifecycle.restart.assert_called_once()
-
-    def test_restart_container_stop_failure(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.start")
+    @patch("wrknv.container.manager.ContainerManager.stop")
+    def test_restart_container_stop_failure(self, mock_stop, mock_start):
         """Test restart when stop fails."""
-        from tests.conftest import create_mock_lifecycle
-
-        # Replace lifecycle with mock that succeeds on restart even if stop would fail
-        mock_lifecycle = create_mock_lifecycle(running=True)
-        mock_lifecycle.restart = Mock(return_value=True)
-        self.manager.lifecycle = mock_lifecycle
-
+        mock_stop.return_value = False
+        
         result = self.manager.restart()
+        
+        self.assertTrue(result)  # restart continues even if stop fails
+        mock_start.assert_called_once()
 
-        assert result  # restart continues even if stop fails
-        mock_lifecycle.restart.assert_called_once()
-
-    def test_status_method(self) -> None:
+    @patch("subprocess.run")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists") 
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    def test_status_method(self, mock_docker, mock_image, mock_exists, mock_running, mock_run):
         """Test getting container status."""
-        from tests.conftest import create_mock_lifecycle, create_mock_runtime
-
-        # Replace dependencies with mocks
-        mock_runtime = create_mock_runtime(available=True)
-        mock_lifecycle = create_mock_lifecycle(exists=True, running=True)
-
-        self.manager.runtime = mock_runtime
-        self.manager.lifecycle = mock_lifecycle
-
+        mock_docker.return_value = True
+        mock_image.return_value = True
+        mock_exists.return_value = True
+        mock_running.return_value = True
+        mock_run.return_value = Mock(
+            returncode=0,
+            stdout='[{"Id": "abc123456789", "Created": "2024-01-01", "State": {"Status": "running"}, "NetworkSettings": {"Ports": {}}}]',
+        )
+        
         status = self.manager.status()
+        
+        self.assertIsNotNone(status)
+        self.assertTrue(status["docker_available"])
+        self.assertTrue(status["container_exists"])
+        self.assertEqual(status["container_info"]["state"], "running")
+        mock_run.assert_called_once_with(
+            ["docker", "inspect", "test-project-dev"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
 
-        assert status is not None
-        assert status["docker_available"]
-        assert status["container_exists"]
-        assert status["container_running"]
-        mock_lifecycle.status.assert_called()
-
-    def test_status_no_docker(self) -> None:
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    def test_status_no_docker(self, mock_check):
         """Test getting status when Docker is not available."""
-        from tests.conftest import create_mock_runtime
-
-        # Replace runtime with one that's not available
-        mock_runtime = create_mock_runtime(available=False)
-        self.manager.runtime = mock_runtime
-
+        mock_check.return_value = False
+        
         status = self.manager.status()
+        
+        self.assertIsNotNone(status)
+        self.assertFalse(status["docker_available"])
+        self.assertFalse(status["container_exists"])
 
-        assert status is not None
-        assert not status["docker_available"]
-
-    def test_logs_method(self) -> None:
+    @patch("subprocess.run")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    def test_logs_method(self, mock_exists, mock_run):
         """Test getting container logs."""
-        # Replace logs component with mock
-        from tests.utils.fixtures import create_mock_logs
+        mock_exists.return_value = True
+        mock_run.return_value = Mock(returncode=0, stdout="logs", stderr="")
+        
+        self.manager.logs(follow=False, tail=10)
+        
+        mock_run.assert_called_once_with(
+            ["docker", "logs", "--tail", "10", "test-project-dev"],
+            capture_output=True,
+            text=True
+        )
 
-        mock_logs = create_mock_logs()
-        mock_logs.get_logs = Mock(return_value="test logs")
-        self.manager.logs = mock_logs
-
-        result = self.manager.get_logs(follow=False, lines=10)
-
-        assert result == "test logs"
-        mock_logs.get_logs.assert_called_once_with(tail=10, follow=False, since=None, timestamps=False)
-
-    def test_logs_follow(self) -> None:
+    @patch("subprocess.run")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    def test_logs_follow(self, mock_exists, mock_run):
         """Test following container logs."""
-        # Replace logs component with mock
-        from tests.utils.fixtures import create_mock_logs
+        mock_exists.return_value = True
+        mock_run.return_value = Mock(returncode=0)
+        
+        self.manager.logs(follow=True)
+        
+        mock_run.assert_called_once_with(
+            ["docker", "logs", "-f", "--tail", "100", "test-project-dev"]
+        )
 
-        mock_logs = create_mock_logs()
-        mock_logs.get_logs = Mock(return_value=None)  # follow returns None
-        self.manager.logs = mock_logs
-
-        result = self.manager.get_logs(follow=True)
-
-        assert result is None
-        mock_logs.get_logs.assert_called_once_with(tail=None, follow=True, since=None, timestamps=False)
-
-    def test_clean_success(self) -> None:
+    @patch("subprocess.run")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    def test_clean_success(self, mock_image_exists, mock_container_exists, mock_running, mock_run):
         """Test successful cleanup."""
-        from tests.conftest import (
-            create_mock_builder,
-            create_mock_lifecycle,
-            create_mock_storage,
-            create_mock_volumes,
-        )
-
-        # Replace dependencies with mocks
-        mock_lifecycle = create_mock_lifecycle(exists=True, running=False)
-        mock_lifecycle.remove = Mock(return_value=True)
-        mock_builder = create_mock_builder()
-        mock_builder.remove_image = Mock(return_value=True)
-        mock_volumes = create_mock_volumes()
-        mock_volumes.clean = Mock(return_value=True)
-        mock_storage = create_mock_storage()
-        mock_storage.clean_storage = Mock(return_value=True)
-
-        self.manager.lifecycle = mock_lifecycle
-        self.manager.builder = mock_builder
-        self.manager.volumes = mock_volumes
-        self.manager.storage = mock_storage
-
+        mock_running.return_value = False
+        mock_container_exists.side_effect = [True, False]  # Exists first, then doesn't after rm
+        mock_image_exists.side_effect = [True, False]  # Exists first, then doesn't after rmi
+        mock_run.return_value = Mock(returncode=0)
+        
         result = self.manager.clean()
+        
+        self.assertTrue(result)
+        # Should call both rm and rmi
+        rm_calls = [c for c in mock_run.call_args_list if 'rm' in str(c)]
+        rmi_calls = [c for c in mock_run.call_args_list if 'rmi' in str(c)]
+        self.assertTrue(len(rm_calls) > 0)
+        self.assertTrue(len(rmi_calls) > 0)
 
-        assert result
-        # Should call lifecycle remove
-        mock_lifecycle.remove.assert_called()
-
-    def test_clean_partial_failure(self) -> None:
+    @patch("subprocess.run")
+    @patch("wrknv.container.manager.ContainerManager.container_running")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    def test_clean_partial_failure(self, mock_image_exists, mock_container_exists, mock_running, mock_run):
         """Test cleanup with partial failure."""
-        from tests.conftest import (
-            create_mock_builder,
-            create_mock_lifecycle,
-            create_mock_storage,
-            create_mock_volumes,
-        )
-
-        # Replace dependencies with mocks - lifecycle remove fails
-        mock_lifecycle = create_mock_lifecycle(exists=True, running=False)
-        mock_lifecycle.remove = Mock(return_value=False)  # Removal fails
-        mock_builder = create_mock_builder()
-        mock_volumes = create_mock_volumes()
-        mock_storage = create_mock_storage()
-
-        self.manager.lifecycle = mock_lifecycle
-        self.manager.builder = mock_builder
-        self.manager.volumes = mock_volumes
-        self.manager.storage = mock_storage
-
+        mock_running.return_value = False
+        mock_container_exists.return_value = True
+        mock_image_exists.return_value = False
+        # Container removal fails
+        mock_run.side_effect = subprocess.CalledProcessError(1, "docker rm")
+        
         result = self.manager.clean()
+        
+        self.assertFalse(result)  # Returns False if container removal fails
 
-        assert not result  # Returns False if container removal fails
-        mock_lifecycle.remove.assert_called()
-
-    def test_generate_dockerfile(self) -> None:
-        """Test Dockerfile generation through builder."""
-        # Now Dockerfile generation is done by the builder
-        dockerfile = self.manager.builder.generate_dockerfile(self.manager.container_config)
-
+    def test_generate_dockerfile(self):
+        """Test Dockerfile generation."""
+        dockerfile = self.manager._generate_dockerfile()
+        
         # Check for essential components
-        assert "FROM ubuntu:22.04" in dockerfile or "FROM python:" in dockerfile
-        assert "apt-get update" in dockerfile or "WORKDIR" in dockerfile
-        assert "WORKDIR /workspace" in dockerfile
-        assert "curl" in dockerfile or "git" in dockerfile
-        assert "CMD" in dockerfile or "sleep" in dockerfile
+        self.assertIn("FROM ubuntu:22.04", dockerfile)
+        self.assertIn("DEBIAN_FRONTEND=noninteractive", dockerfile)
+        self.assertIn("apt-get update", dockerfile)
+        self.assertIn("python3", dockerfile)
+        self.assertIn("curl -LsSf https://astral.sh/uv/install.sh", dockerfile)
+        self.assertIn("/workspace", dockerfile)
+        self.assertIn("zsh", dockerfile)
 
-    def test_start_starts_existing_stopped_container(self) -> None:
-        """Test that start will start an existing stopped container."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
-
-        # Replace dependencies with mocks
-        mock_builder = create_mock_builder()
-        mock_builder.image_exists = Mock(return_value=True)
-        mock_lifecycle = create_mock_lifecycle(exists=True, running=False)
-        mock_lifecycle.start = Mock(return_value=True)
-        mock_storage = create_mock_storage()
-
-        self.manager.builder = mock_builder
-        self.manager.lifecycle = mock_lifecycle
-        self.manager.storage = mock_storage
-
-        result = self.manager.start()
-
-        # Check that start was called (container is started, not removed)
-        assert result
-        mock_lifecycle.start.assert_called_once()
+    @patch("wrknv.container.manager.ContainerManager.check_docker")
+    @patch("wrknv.container.manager.ContainerManager.image_exists")
+    @patch("wrknv.container.manager.ContainerManager.container_exists")
+    @patch("subprocess.run")
+    def test_start_removes_stopped_container(
+        self, mock_run, mock_exists, mock_image_exists, mock_check_docker
+    ):
+        """Test that start removes existing stopped container."""
+        mock_check_docker.return_value = True
+        mock_image_exists.return_value = True
+        mock_exists.return_value = True  # Container exists but not running
+        
+        with patch("wrknv.container.manager.ContainerManager.container_running") as mock_running:
+            mock_running.return_value = False
+            
+            self.manager.start()
+            
+            # Check that docker rm was called
+            rm_calls = [c for c in mock_run.call_args_list if c[0][0][:2] == ["docker", "rm"]]
+            self.assertEqual(len(rm_calls), 1)
+            self.assertEqual(rm_calls[0][0][0], ["docker", "rm", "test-project-dev"])
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
-
-# 🧰🌍🔚
+    unittest.main()

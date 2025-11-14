@@ -1,34 +1,26 @@
+#!/usr/bin/env python3
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# wrknv/cli/commands/setup.py
 #
-
-"""Setup Commands
+"""
+Setup Commands
 ==============
-Commands for setting up wrknv environment and integrations."""
+Commands for setting up wrknv environment and integrations.
+"""
 
-from __future__ import annotations
-
-from pathlib import Path
 import shutil
+import subprocess
+import sys
+from pathlib import Path
 
-from provide.foundation.cli import echo_error, echo_info, echo_success
-from provide.foundation.console.output import pout
-from provide.foundation.errors import NotFoundError
 from provide.foundation.hub import register_command
-from provide.foundation.process import ProcessError, run
+from provide.foundation.cli import echo_error, echo_info, echo_success
+from provide.foundation.logger import get_logger
 
-from wrknv.errors import DependencyError
+from wrknv.wenv.exceptions import DependencyError
 from wrknv.wenv.workenv import WorkenvManager
 
-
-def _get_shell_integration_script_path() -> Path:
-    """Get the path to the shell integration script.
-
-    Returns:
-        Path to shell-integration.sh in the repository root
-    """
-    return Path(__file__).parent.parent.parent.parent.parent / "scripts" / "shell-integration.sh"
+log = get_logger(__name__)
 
 
 @register_command(
@@ -43,9 +35,9 @@ def setup_command(
     check: bool = False,
     completions: str | None = None,
     install: bool = False,
-) -> None:
+):
     """Set up wrknv environment and integrations.
-
+    
     Args:
         shell_integration: Set up shell aliases
         init: Initialize wrknv's own workenv
@@ -133,6 +125,7 @@ def setup_command(
 
             if install_path:
                 install_path.write_text(completion_script)
+                echo_success(f"✅ Installed {completions} completions to {install_path}")
 
                 if completions == "bash":
                     echo_info("Add this to your ~/.bashrc:")
@@ -143,7 +136,7 @@ def setup_command(
                     echo_info("  autoload -U compinit && compinit")
         else:
             # Just output the completion script
-            pout(completion_script)
+            print(completion_script)
         return
 
     if init:
@@ -154,29 +147,24 @@ def setup_command(
 
     if shell_integration:
         # Look for script in the repository root
-        script_path = _get_shell_integration_script_path()
+        script_path = (
+            Path(__file__).parent.parent.parent.parent.parent
+            / "scripts"
+            / "shell-integration.sh"
+        )
         if script_path.exists():
             echo_info("Setting up shell integration...")
             try:
-                run(["bash", str(script_path)], check=True)
-                echo_success("Shell integration configured successfully")
-            except ProcessError as e:
+                subprocess.run(["bash", str(script_path)], check=True)
+            except subprocess.CalledProcessError:
                 echo_error("Failed to set up shell integration")
-                raise e
+                sys.exit(1)
         else:
             echo_error(f"Shell integration script not found at {script_path}")
-            raise NotFoundError(
-                message=f"Shell integration script not found at {script_path}",
-                resource_type="file",
-                resource_id=str(script_path),
-                hint="Make sure you're running from the repository root or reinstall wrknv",
-            )
+            sys.exit(1)
     else:
         echo_info("Available setup options:")
         echo_info("  --init                Create wrknv's own workenv")
         echo_info("  --shell-integration   Set up shell aliases and shortcuts")
         echo_info("  --check               Check system dependencies")
         echo_info("  --completions SHELL   Generate shell completions (bash/zsh/fish)")
-
-
-# 🧰🌍🔚

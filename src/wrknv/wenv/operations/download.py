@@ -1,193 +1,98 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# wrknv/workenv/operations/download.py
 #
-
-"""wrknv Download Operations
+"""
+wrknv Download Operations
 ====================================
-Functions for downloading and verifying tool archives using Foundation's ToolDownloader."""
+Functions for downloading and verifying tool archives.
+"""
 
-from __future__ import annotations
-
-import asyncio
-from collections.abc import Callable
+import hashlib
 import pathlib
+import urllib.request
 from urllib.parse import urlparse
 
 from provide.foundation import logger
-from provide.foundation.crypto import verify_file
-from provide.foundation.hub import get_hub
-from provide.foundation.resilience import circuit_breaker
-from provide.foundation.tools.downloader import ToolDownloader
-from provide.foundation.transport import UniversalClient
 
 
-@circuit_breaker(
-    failure_threshold=5,
-    recovery_timeout=60.0,
-    expected_exception=Exception,
-)
-async def download_file_async(
-    url: str,
-    output_path: pathlib.Path,
-    show_progress: bool = True,
-    headers: dict[str, str] | None = None,
-    progress_callback: Callable[[int, int], None] | None = None,
-    checksum: str | None = None,
+def download_file(
+    url: str, output_path: pathlib.Path, show_progress: bool = True
 ) -> None:
-    """Download a file using Foundation's ToolDownloader with streaming.
+    """Download a file from URL to output path with optional progress display."""
 
-    Uses circuit breaker to prevent repeated attempts when downloads are failing.
-    After 5 failures, will fast-fail for 60 seconds before retrying.
-
-    Args:
-        url: URL to download from
-        output_path: Where to save the file
-        show_progress: Whether to log progress
-        headers: Optional custom headers
-        progress_callback: Optional callback(downloaded_bytes, total_bytes)
-        checksum: Optional checksum for verification
-
-    Raises:
-        RuntimeError: If circuit breaker is open (too many recent failures)
-        Exception: On download failure
-    """
     logger.info(f"Downloading {url} to {output_path}")
 
     # Create parent directories if they don't exist
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
+    def progress_hook(block_num: int, block_size: int, total_size: int) -> None:
+        """Progress hook for urllib.request.urlretrieve."""
+        if show_progress and total_size > 0:
+            downloaded = block_num * block_size
+            percent = min(100, (downloaded * 100) // total_size)
+            if block_num % 50 == 0:  # Only log every 50 blocks to avoid spam
+                logger.debug(
+                    f"Download progress: {percent}% ({downloaded}/{total_size} bytes)"
+                )
+
     try:
-        hub = get_hub()
-        async with UniversalClient(hub=hub, default_headers=headers or {}) as client:
-            # Create ToolDownloader instance
-            downloader = ToolDownloader(client)
-
-            # Add progress callback if provided
-            if progress_callback:
-                downloader.add_progress_callback(progress_callback)
-
-            # Add logging progress callback if enabled
-            if show_progress:
-
-                def log_progress(downloaded: int, total: int) -> None:
-                    if total > 0:
-                        percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
-                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
-
-                downloader.add_progress_callback(log_progress)
-
-            # Download with progress and optional checksum verification
-            await downloader.download_with_progress(url, output_path, checksum)
-
+        urllib.request.urlretrieve(url, output_path, reporthook=progress_hook)
         logger.info(f"Successfully downloaded {output_path.name}")
 
     except Exception as e:
-        # ToolDownloader already cleans up partial downloads on failure
-        raise Exception(f"Failed to download {url}: {e}") from e
+        # Clean up partial download
+        if output_path.exists():
+            output_path.unlink()
+        raise Exception(f"Failed to download {url}: {e}")
 
 
-def download_file(
-    url: str,
-    output_path: pathlib.Path,
-    show_progress: bool = True,
-    headers: dict[str, str] | None = None,
-    checksum: str | None = None,
-) -> None:
-    """Synchronous wrapper for download_file_async.
-
-    Args:
-        url: URL to download from
-        output_path: Where to save the file
-        show_progress: Whether to log progress
-        headers: Optional custom headers
-        checksum: Optional checksum for verification
-    """
-    asyncio.run(download_file_async(url, output_path, show_progress, headers, checksum=checksum))
-
-
-async def download_with_mirrors_async(
-    mirrors: list[str],
-    output_path: pathlib.Path,
-    show_progress: bool = True,
-    headers: dict[str, str] | None = None,
-    checksum: str | None = None,
-) -> None:
-    """Download a file trying multiple mirror URLs until one succeeds.
-
-    Args:
-        mirrors: List of mirror URLs to try in order
-        output_path: Where to save the file
-        show_progress: Whether to log progress
-        headers: Optional custom headers
-        checksum: Optional checksum for verification
-
-    Raises:
-        Exception: If all mirrors fail
-    """
-    logger.info(f"Downloading from mirrors to {output_path}")
-
-    # Create parent directories if they don't exist
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    try:
-        hub = get_hub()
-        async with UniversalClient(hub=hub, default_headers=headers or {}) as client:
-            downloader = ToolDownloader(client)
-
-            # Add logging progress callback if enabled
-            if show_progress:
-
-                def log_progress(downloaded: int, total: int) -> None:
-                    if total > 0:
-                        percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
-                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
-
-                downloader.add_progress_callback(log_progress)
-
-            # Download with mirror fallback
-            await downloader.download_with_mirrors(mirrors, output_path)
-
-            # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum and not verify_checksum(output_path, checksum):
-                output_path.unlink()
-                raise Exception(f"Checksum verification failed for {output_path.name}")
-
-        logger.info(f"Successfully downloaded {output_path.name}")
-
-    except Exception as e:
-        raise Exception(f"Failed to download from all mirrors: {e}") from e
-
-
-def download_with_mirrors(
-    mirrors: list[str],
-    output_path: pathlib.Path,
-    show_progress: bool = True,
-    headers: dict[str, str] | None = None,
-    checksum: str | None = None,
-) -> None:
-    """Synchronous wrapper for download_with_mirrors_async.
-
-    Args:
-        mirrors: List of mirror URLs to try in order
-        output_path: Where to save the file
-        show_progress: Whether to log progress
-        headers: Optional custom headers
-        checksum: Optional checksum for verification
-    """
-    asyncio.run(download_with_mirrors_async(mirrors, output_path, show_progress, headers, checksum))
-
-
-def verify_checksum(file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256") -> bool:
+def verify_checksum(
+    file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256"
+) -> bool:
     """Verify file checksum using specified algorithm."""
 
-    # Use foundation's verify_file which handles all the details
-    return verify_file(file_path, expected_checksum, algorithm)
+    if not file_path.exists():
+        logger.error(f"File not found for checksum verification: {file_path}")
+        return False
+
+    logger.debug(f"Verifying {algorithm} checksum for {file_path}")
+
+    try:
+        # Create hash object
+        if algorithm.lower() == "sha256":
+            hasher = hashlib.sha256()
+        elif algorithm.lower() == "sha1":
+            hasher = hashlib.sha1()
+        elif algorithm.lower() == "md5":
+            hasher = hashlib.md5()
+        else:
+            raise ValueError(f"Unsupported hash algorithm: {algorithm}")
+
+        # Read file in chunks to handle large files
+        with open(file_path, "rb") as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                hasher.update(chunk)
+
+        actual_checksum = hasher.hexdigest()
+
+        # Compare checksums (case-insensitive)
+        if actual_checksum.lower() == expected_checksum.lower():
+            logger.debug(f"Checksum verification successful for {file_path}")
+            return True
+        else:
+            logger.error(
+                f"Checksum mismatch for {file_path}: expected {expected_checksum}, got {actual_checksum}"
+            )
+            return False
+
+    except Exception as e:
+        logger.error(f"Failed to verify checksum for {file_path}: {e}")
+        return False
 
 
-def download_checksum_file(checksum_url: str, output_dir: pathlib.Path) -> pathlib.Path | None:
+def download_checksum_file(
+    checksum_url: str, output_dir: pathlib.Path
+) -> pathlib.Path | None:
     """Download checksum file and return path."""
 
     if not checksum_url:
@@ -210,14 +115,16 @@ def download_checksum_file(checksum_url: str, output_dir: pathlib.Path) -> pathl
         return None
 
 
-def parse_checksum_file(checksum_path: pathlib.Path, target_filename: str) -> str | None:
+def parse_checksum_file(
+    checksum_path: pathlib.Path, target_filename: str
+) -> str | None:
     """Parse checksum file to find checksum for target filename."""
 
     if not checksum_path.exists():
         return None
 
     try:
-        with checksum_path.open() as f:
+        with open(checksum_path) as f:
             for line in f:
                 line = line.strip()
                 if not line or line.startswith("#"):
@@ -233,8 +140,12 @@ def parse_checksum_file(checksum_path: pathlib.Path, target_filename: str) -> st
                     filename = filename.lstrip("*")
 
                     # Match target filename
-                    if filename == target_filename or filename.endswith(target_filename):
-                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                    if filename == target_filename or filename.endswith(
+                        target_filename
+                    ):
+                        logger.debug(
+                            f"Found checksum for {target_filename}: {checksum}"
+                        )
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -274,4 +185,4 @@ def validate_download_url(url: str) -> bool:
         return False
 
 
-# 🧰🌍🔚
+# 🍲🥄📄🪄

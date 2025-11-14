@@ -1,20 +1,33 @@
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
-"""wrknv CLI Commands
+"""
+wrknv CLI Commands
 ==================
 All command modules for the wrknv CLI.
+"""
 
-Commands are automatically registered via the @register_command decorator.
-Simply importing the modules is enough to register them with the hub."""
+from wrknv.cli.commands.config import config_group
+from wrknv.cli.commands.container import container_group
+from wrknv.cli.commands.gitignore import gitignore_group
+from wrknv.cli.commands.package import package_group
+from wrknv.cli.commands.profile import profile_group
+from wrknv.cli.commands.setup import setup_command
+from wrknv.cli.commands.terraform import tf_command
+from wrknv.cli.commands.tools import (
+    doctor,
+    generate_env_command,
+    status_command,
+    sync_command,
+)
 
-from __future__ import annotations
-
-# The modules themselves register commands when imported
-# No exports needed
-
-__all__ = []
-
-# 🧰🌍🔚
+__all__ = [
+    "config_group",
+    "container_group",
+    "gitignore_group",
+    "package_group",
+    "profile_group",
+    "setup_command",
+    "tf_command",
+    "status_command",
+    "sync_command",
+    "generate_env_command",
+    "doctor",
+]
