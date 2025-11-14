@@ -151,3 +151,9 @@ dev = [
     "pytest-cov>=6.2.1",
     "pytest-xdist>=3.8.0",
 ]
+
+[tool.flavor]
+# Configuration for packaging wrknv with flavor
+entry_point = "wrknv.wenv.cli:entry_point"
+app_name = "wrknv"
+description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"

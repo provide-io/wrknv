@@ -9,7 +9,7 @@ Main CLI using provide.foundation.hub for command registration.
 """
 
 from provide.foundation.hub import Hub, get_hub
-from provide.foundation.context import Context
+from provide.foundation.context import CLIContext
 from provide.foundation.logger import get_logger
 
 log = get_logger(__name__)
