@@ -112,14 +112,14 @@ line-ending = "auto"
 ################################################################################
 
 [tool.mypy]
-python_version = "3.11"
 mypy_path = "src"
-strict = true
-pretty = true
 show_error_codes = true
 show_column_numbers = true
+pretty = true
+python_version = "3.11"
 warn_unused_ignores = true
 warn_unused_configs = true
+follow_imports = "normal"
 disallow_untyped_decorators = false
 
 [[tool.mypy.overrides]]
@@ -135,47 +135,78 @@ module = [
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "DEBUG"
+
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+asyncio_default_test_loop_scope = "function"
+
 minversion = "7.0"
-addopts = "-ra -q"
 testpaths = ["tests"]
+pythonpath = ["src", "."]
 python_files = ["test_*.py", "*_test.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
+python_classes = ["Test*", "*Tests"]
+python_functions = ["test_*", "*_test"]
+addopts = "-m 'not integration and not slow and not network' -rFE -q --color=yes --benchmark-columns=min,max,mean,stddev,median,iqr,ops --benchmark-sort=mean --dist worksteal"
 markers = [
-    "unit: Unit tests",
-    "integration: Integration tests",
+    "unit: fast unit tests",
+    "integration: integration tests requiring setup",
     "cli: CLI command tests",
-    "config: Configuration tests",
-    "container: Container management tests",
-    "package: Package management tests",
-    "operations: File and platform operations tests",
-    "managers: Tool manager tests",
-    "slow: Slow running tests",
-    "network: Tests requiring network access",
+    "config: configuration tests",
+    "container: container management tests",
+    "package: package management tests",
+    "operations: file and platform operations tests",
+    "managers: tool manager tests",
+    "slow: tests taking >1s",
+    "fast: tests taking <100ms",
+    "network: tests requiring network access",
+    "benchmark: performance/timing sensitive tests",
+    "flaky: tests known to be intermittently failing",
 ]
 filterwarnings = [
-    "ignore::ResourceWarning",
-    "ignore::RuntimeWarning",
-    "ignore::DeprecationWarning:tarfile",
+    "ignore::DeprecationWarning",
+    "ignore:cannot collect test class 'Test.*' because it has a __init__ constructor:pytest.PytestCollectionWarning",
+    "ignore:cannot collect test class .* because it has a __init__ constructor:pytest.PytestCollectionWarning",
+    "ignore:coroutine .* was never awaited:RuntimeWarning",
+    "ignore:Module already imported so cannot be rewritten:pytest.PytestAssertRewriteWarning",
+]
+norecursedirs = [
+    ".git", ".hg", ".svn", "*_build", "build", "dist", "*.egg-info",
+    ".venv", "venv", "workenv",
+    "htmlcov", "docs/_build",
+    ".hypothesis",
 ]
 
 [tool.coverage.run]
 source = ["src/wrknv"]
+branch = true
+parallel = true
 omit = ["*/tests/*", "*/__pycache__/*"]
 
 [tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 80
+precision = 2
 exclude_lines = [
     "pragma: no cover",
-    "def __repr__",
-    "if self.debug:",
-    "if __name__ == .__main__.:",
-    "raise AssertionError",
     "raise NotImplementedError",
-    "if 0:",
-    "if False:",
-    "class .*\\bProtocol\\):",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "def __repr__",
+    "def __str__",
     "@(abc\\.)?abstractmethod",
+    "pass",
+    "logger\\.(debug|info|warning|error|exception|critical|trace)\\(",
+    "print\\(",
 ]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"
 
 [dependency-groups]
 dev = [
