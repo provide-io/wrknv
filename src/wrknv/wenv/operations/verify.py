@@ -1,22 +1,21 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# wrknv/workenv/operations/verify.py
 #
-
-"""wrknv Verification Operations
+"""
+wrknv Verification Operations
 ========================================
-Functions for verifying tool installations."""
-
-from __future__ import annotations
+Functions for verifying tool installations.
+"""
 
 import pathlib
+import subprocess
 
 from provide.foundation import logger
-from provide.foundation.process import ProcessError, run
-from provide.foundation.resilience import retry
 
 
-def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, tool_name: str) -> bool:
+def verify_tool_installation(
+    binary_path: pathlib.Path, expected_version: str, tool_name: str
+) -> bool:
     """Verify that tool installation works and version matches."""
 
     if not binary_path.exists():
@@ -45,12 +44,10 @@ def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, t
         return False
 
 
-@retry(ProcessError, OSError, max_attempts=3, base_delay=1.0)
-def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 10) -> str | None:
-    """Run version check command for a tool and return output.
-
-    Includes automatic retry with exponential backoff for transient failures.
-    """
+def run_version_check(
+    binary_path: pathlib.Path, tool_name: str, timeout: int = 10
+) -> str | None:
+    """Run version check command for a tool and return output."""
 
     if not binary_path.exists():
         return None
@@ -58,12 +55,12 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
     # Determine version command for different tools
     version_args = get_version_command_args(tool_name)
 
-    cmd = [str(binary_path), *version_args]
+    cmd = [str(binary_path)] + version_args
 
     try:
         logger.debug(f"Running version check: {' '.join(cmd)}")
 
-        result = run(cmd, timeout=timeout)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
 
         if result.returncode == 0:
             return result.stdout.strip()
@@ -71,12 +68,9 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
             logger.error(f"Version command failed for {tool_name}: {result.stderr}")
             return None
 
-    except ProcessError as e:
-        if e.timeout:
-            logger.error(f"Version check timed out for {tool_name}")
-        else:
-            logger.error(f"Version check failed for {tool_name}: {e}")
-        raise  # Re-raise to trigger retry
+    except subprocess.TimeoutExpired:
+        logger.error(f"Version check timed out for {tool_name}")
+        return None
     except Exception as e:
         logger.error(f"Version check failed for {tool_name}: {e}")
         return None
@@ -108,7 +102,9 @@ def check_binary_compatibility(binary_path: pathlib.Path) -> dict[str, any]:
 
     try:
         # Try to run the binary with help/version flag
-        result = run([str(binary_path), "--help"], timeout=5)
+        result = subprocess.run(
+            [str(binary_path), "--help"], capture_output=True, text=True, timeout=5
+        )
 
         # If it runs without error, it's likely compatible
         compatible = result.returncode == 0
@@ -120,16 +116,15 @@ def check_binary_compatibility(binary_path: pathlib.Path) -> dict[str, any]:
             "stderr": result.stderr[:200] if result.stderr else "",
         }
 
-    except ProcessError as e:
-        if e.timeout:
-            return {"compatible": False, "error": "Binary execution timed out"}
-        else:
-            return {"compatible": False, "error": str(e)}
+    except subprocess.TimeoutExpired:
+        return {"compatible": False, "error": "Binary execution timed out"}
     except Exception as e:
         return {"compatible": False, "error": str(e)}
 
 
-def validate_installation_directory(install_dir: pathlib.Path, tool_name: str, version: str) -> bool:
+def validate_installation_directory(
+    install_dir: pathlib.Path, tool_name: str, version: str
+) -> bool:
     """Validate that installation directory has expected structure."""
 
     if not install_dir.exists():
@@ -163,7 +158,9 @@ def validate_installation_directory(install_dir: pathlib.Path, tool_name: str, v
     return True
 
 
-def get_installed_version_info(binary_path: pathlib.Path, tool_name: str) -> dict[str, str] | None:
+def get_installed_version_info(
+    binary_path: pathlib.Path, tool_name: str
+) -> dict[str, str] | None:
     """Get detailed version information from installed tool."""
 
     version_output = run_version_check(binary_path, tool_name)
@@ -280,28 +277,4 @@ def parse_generic_version(output: str, tool_name: str) -> dict[str, str]:
     return info
 
 
-def verify_file(file_path: pathlib.Path, signature_path: pathlib.Path | None = None) -> bool:
-    """Verify file integrity using signature if available.
-
-    Args:
-        file_path: Path to file to verify
-        signature_path: Optional path to signature file
-
-    Returns:
-        True if verification passes, False otherwise
-    """
-    if not file_path.exists():
-        logger.error(f"File not found for verification: {file_path}")
-        return False
-
-    if signature_path and signature_path.exists():
-        logger.info(f"Verifying file signature: {file_path}")
-        # For now, just check that signature file exists
-        # In production, would verify actual signature
-        return True
-    else:
-        logger.debug(f"No signature file found, skipping verification: {file_path}")
-        return True
-
-
-# 🧰🌍🔚
+# 🍲🥄📄🪄

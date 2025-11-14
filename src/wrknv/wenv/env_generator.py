@@ -1,13 +1,11 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# wrknv/env/env_generator.py
 #
-
-"""Environment Script Generator
+"""
+Environment Script Generator
 ============================
-Generate env.sh and env.ps1 scripts from templates."""
-
-from __future__ import annotations
+Generate env.sh and env.ps1 scripts from templates.
+"""
 
 from pathlib import Path
 from typing import Any
@@ -15,13 +13,13 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from provide.foundation import logger
 
-from wrknv.cli.visual import Emoji, print_success
+from wrknv.wenv.visual import Emoji, print_success
 
 
 class EnvScriptGenerator:
     """Generate environment setup scripts for both bash and PowerShell."""
 
-    def __init__(self, template_base_dir: Path | None = None) -> None:
+    def __init__(self, template_base_dir: Path | None = None):
         """Initialize the generator with template directory."""
         if template_base_dir is None:
             template_base_dir = Path(__file__).parent.parent / "templates" / "env"
@@ -163,7 +161,9 @@ class EnvScriptGenerator:
         return sh_path, ps1_path
 
 
-def create_project_env_scripts(project_dir: Path, workenv_name: str | None = None) -> tuple[Path, Path]:
+def create_project_env_scripts(
+    project_dir: Path, workenv_name: str | None = None
+) -> tuple[Path, Path]:
     """Create environment scripts for a project based on its pyproject.toml.
 
     Args:
@@ -179,9 +179,13 @@ def create_project_env_scripts(project_dir: Path, workenv_name: str | None = Non
         raise FileNotFoundError(f"No pyproject.toml found in {project_dir}")
 
     # Parse project name from pyproject.toml
-    from provide.foundation.file.formats import read_toml
+    try:
+        import tomllib
+    except ImportError:
+        import tomli as tomllib  # type: ignore
 
-    pyproject = read_toml(pyproject_path)
+    with open(pyproject_path, "rb") as f:
+        pyproject = tomllib.load(f)
 
     project_name = pyproject.get("project", {}).get("name", project_dir.name)
     python_requirement = pyproject.get("project", {}).get("requires-python")
@@ -197,15 +201,17 @@ def create_project_env_scripts(project_dir: Path, workenv_name: str | None = Non
         extra_config["python_requirement"] = python_requirement
 
     # Get wrknv configuration
-    from wrknv.config import WorkenvConfig
+    from wrknv.wenv.config import WorkenvConfig
 
-    config = WorkenvConfig.load()
+    config = WorkenvConfig()
     env_config = config.get_env_config()
 
     # Use configuration from wrknv.toml if available
     if env_config:
         logger.info("Using env configuration from wrknv.toml", env_config=env_config)
-        extra_config["include_tool_verification"] = env_config.get("include_tool_verification", True)
+        extra_config["include_tool_verification"] = env_config.get(
+            "include_tool_verification", True
+        )
 
         # Handle new unified siblings format
         siblings_config = env_config.get("siblings", [])
@@ -229,7 +235,9 @@ def create_project_env_scripts(project_dir: Path, workenv_name: str | None = Non
 
     # Generate scripts
     generator = EnvScriptGenerator()
-    sh_path, ps1_path = generator.generate_both_scripts(project_name, project_dir, **extra_config)
+    sh_path, ps1_path = generator.generate_both_scripts(
+        project_name, project_dir, **extra_config
+    )
 
     print_success(f"Generated {sh_path}", Emoji.SUCCESS)
     print_success(f"Generated {ps1_path}", Emoji.SUCCESS)
@@ -237,4 +245,4 @@ def create_project_env_scripts(project_dir: Path, workenv_name: str | None = Non
     return sh_path, ps1_path
 
 
-# 🧰🌍🔚
+# 🧰🌍🖥️🪄

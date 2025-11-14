@@ -1,97 +1,118 @@
-#
-# wrknv/pyproject.toml
-#
-
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "wrknv"
+version = "0.1.0"
 description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"
-dynamic = ["version"]
-requires-python = ">=3.11"
-readme = "README.md"
-license = "Apache-2.0"
 authors = [
-    { name = "Tim Perkins", email = "code@tim.life" },
+    {name = "Provide.io", email = "code@provide.io"},
 ]
-maintainers = [
-    { name = "provide.io", email = "code@provide.io" },
-]
-keywords = ["development", "environment", "tools", "terraform", "opentofu", "provide"]
+readme = "README.md"
+license = {text = "MIT"}
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Build Tools",
     "Topic :: System :: Installation/Setup",
-    "Typing :: Typed",
 ]
+requires-python = ">=3.11"
 dependencies = [
-    "provide-foundation[all]",
-    "cattrs>=23.0.0",
+    "click>=8.0",
     "packaging>=23.0",
     "semver>=3.0.0",
     "tomli-w>=1.0.0",
-    "rich>=14.0.0",
+    "rich>=13.0.0",
     "jinja2>=3.0.0",
+    "attrs>=23.0.0",
+    "cattrs>=23.0.0",
+    "pyvider-telemetry>=0.0.15",
 ]
 
-[dependency-groups]
-dev = [
-    "provide-testkit[standard,build]",
+[project.optional-dependencies]
+package = [
+    # "flavor",  # Install with: uv pip install -e ~/code/gh/provide-io/flavor
 ]
-docs = [
-    "provide-testkit[docs]",
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "bandit>=1.7.0",
 ]
 
 [project.scripts]
-we = "wrknv.cli.hub_cli:main"
-wrknv = "wrknv.cli.hub_cli:main"  # Backward compatibility
+wrknv = "wrknv.wenv.cli:entry_point"
 
 [project.urls]
-Homepage = "https://github.com/provide-io/wrknv"
-Repository = "https://github.com/provide-io/wrknv"
-Issues = "https://github.com/provide-io/wrknv/issues"
-Documentation = "https://github.com/provide-io/wrknv#readme"
+"Homepage" = "https://github.com/provide-io/wrknv"
+"Bug Tracker" = "https://github.com/provide-io/wrknv/issues"
+"Documentation" = "https://github.com/provide-io/wrknv#readme"
+"Source Code" = "https://github.com/provide-io/wrknv"
 
-################################################################################
-# Build Configuration
-################################################################################
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.dynamic]
-version = {file = "VERSION"}
+[tool.setuptools]
+packages = [
+    "wrknv", 
+    "wrknv.wenv", 
+    "wrknv.wenv.managers", 
+    "wrknv.wenv.operations", 
+    "wrknv.package"
+]
+package-dir = {"" = "src"}
 
 [tool.setuptools.package-data]
 wrknv = ["py.typed"]
 
-################################################################################
-# Pytest Configuration
-################################################################################
+[tool.black]
+line-length = 88
+target-version = ['py311', 'py312', 'py313']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "I",    # isort
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
 
 [tool.pytest.ini_options]
-log_cli = true
-log_cli_level = "DEBUG"
-asyncio_mode = "auto"
-asyncio_default_fixture_loop_scope = "function"
-asyncio_default_test_loop_scope = "function"
 minversion = "7.0"
+addopts = "-ra -q"
 testpaths = ["tests"]
-pythonpath = ["src", "."]
 python_files = ["test_*.py", "*_test.py"]
-python_classes = ["Test*", "*Tests"]
-python_functions = ["test_*", "*_test"]
-addopts = "-m 'not integration and not benchmark and not slow' -rFE -q --color=yes --dist worksteal"
+python_classes = ["Test*"]
+python_functions = ["test_*"]
 markers = [
-    # Test categories
     "unit: Unit tests",
     "integration: Integration tests",
     "cli: CLI command tests",
@@ -100,139 +121,33 @@ markers = [
     "package: Package management tests",
     "operations: File and platform operations tests",
     "managers: Tool manager tests",
-    # Test characteristics
-    "tdd: TDD contract tests",
     "slow: Slow running tests",
-    "fast: tests taking <100ms",
     "network: Tests requiring network access",
-    "benchmark: performance/timing sensitive tests",
-    "flaky: tests known to be intermittently failing",
-    # Execution modifiers
-    "serial: run tests serially to avoid conflicts",
-    "time_sensitive: tests with strict timing requirements",
-    # Requirements
-    "requires_docker: skip if docker not available",
-    "requires_network: skip if offline",
 ]
-filterwarnings = [
-    "ignore::DeprecationWarning",
-    "ignore:cannot collect test class 'Test.*' because it has a __init__ constructor:pytest.PytestCollectionWarning",
-    "ignore:cannot collect test class .* because it has a __init__ constructor:pytest.PytestCollectionWarning",
-    "ignore:coroutine .* was never awaited:RuntimeWarning",
-    "ignore::pytest.PytestAssertRewriteWarning",
-]
-norecursedirs = [
-    ".git", ".hg", ".svn", "*_build", "build", "dist", "*.egg-info",
-    ".venv", "venv", "workenv",
-    "htmlcov", "docs/_build",
-    ".hypothesis",
-]
-
-################################################################################
-# Coverage.py Configuration
-################################################################################
 
 [tool.coverage.run]
 source = ["src/wrknv"]
-branch = true
-parallel = true
-omit = [
-    "*/tests/*",
-    "*/__pycache__/*",
-    "*/testing/*",
-]
+omit = ["*/tests/*", "*/__pycache__/*"]
 
 [tool.coverage.report]
-show_missing = true
-skip_covered = true
-fail_under = 70
-precision = 2
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",
-    "def __str__",
     "if self.debug:",
     "if __name__ == .__main__.:",
-    "if TYPE_CHECKING:",
     "raise AssertionError",
     "raise NotImplementedError",
     "if 0:",
     "if False:",
     "class .*\\bProtocol\\):",
     "@(abc\\.)?abstractmethod",
-    "logger\\.(debug|info|warning|error|exception|critical|trace)\\(",
-    "pass",
 ]
 
-[tool.coverage.html]
-directory = "htmlcov"
-
-[tool.coverage.xml]
-output = "coverage.xml"
-
-################################################################################
-# Ruff Linter and Formatter Configuration
-################################################################################
-
-[tool.ruff]
-line-length = 111
-indent-width = 4
-target-version = "py311"
-extend-exclude = ["scraps"]
-
-[tool.ruff.lint]
-select = ["E", "F", "W", "I", "UP", "ANN", "B", "C90", "SIM", "PTH", "RUF"]
-ignore = ["ANN401", "B008", "E501"]
-
-[tool.ruff.lint.isort]
-known-first-party = ["wrknv", "tests"]
-force-sort-within-sections = true
-combine-as-imports = true
-
-[tool.ruff.lint.per-file-ignores]
-"tests/**" = ["ANN001", "ANN002", "ANN003", "ANN201", "ANN202", "ANN204", "E402"]
-
-[tool.ruff.lint.mccabe]
-max-complexity = 25
-
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
-
-################################################################################
-# MyPy Static Type Checker Configuration
-################################################################################
-
-[tool.mypy]
-python_version = "3.11"
-mypy_path = "src"
-strict = true
-pretty = true
-show_error_codes = true
-show_column_numbers = true
-warn_unused_ignores = true
-warn_unused_configs = true
-disallow_untyped_decorators = false
-
-[[tool.mypy.overrides]]
-module = [
-    "packaging.*",
-    "semver.*",
-    "rich.*",
-    "jinja2.*",
-    "cattrs.*",
-    "tomli_w.*",
-    "opentelemetry.*",
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "pytest-benchmark>=5.1.0",
+    "pytest-cov>=6.2.1",
+    "pytest-xdist>=3.8.0",
 ]
-ignore_missing_imports = true
-
-################################################################################
-# Security Scanner Configuration
-################################################################################
-
-[tool.bandit]
-exclude_dirs = [".venv", "tests", "workenv"]
-
-# 🧰🌍🖥️🪄

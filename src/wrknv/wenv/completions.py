@@ -1,13 +1,9 @@
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
-"""Shell Completion Generation
+"""
+Shell Completion Generation
 ===========================
-Generate shell completion scripts for various shells."""
+Generate shell completion scripts for various shells.
+"""
 
-from __future__ import annotations
 
 
 def generate_completions(shell: str) -> str:
@@ -292,6 +288,3 @@ complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_s
 complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "publish" -d "Publish package"
 complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "config" -d "Show config"
 """
-
-
-# 🧰🌍🔚

@@ -1,11 +1,5 @@
 # 🧰🌍 wrknv
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![uv](https://img.shields.io/badge/uv-package_manager-FF6B35.svg)](https://github.com/astral-sh/uv)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![CI](https://github.com/provide-io/wrknv/actions/workflows/ci.yml/badge.svg)](https://github.com/provide-io/wrknv/actions)
-
 **Work Environment** - The foundation for the provide.io ecosystem, generating standardized development environments across all projects.
 
 ## Requirements
@@ -20,50 +14,14 @@
 
 ## Features
 
--   **🚀 Task Runner (`we`)**: Intuitive task execution with automatic command detection, nested task organization, and smart resolution
--   **📜 Environment Script Generation**: Creates standardized `env.sh` and `env.ps1` scripts from templates
--   **🔧 Tool Version Management**: Pin versions of Terraform, OpenTofu, Go, and `uv`
--   **🔗 Sibling Package Integration**: Automatically discover and install local, editable dependencies
--   **🐍 Python Version Safety**: Detects `pyproject.toml` Python requirements and manages virtual environments
--   **🐳 Containerized Development**: (Experimental) Manage Docker-based development environments
--   **📦 Provider Packaging**: (Experimental) Interface for building `flavor`-based provider packages
+-   **Environment Script Generation**: Creates standardized `env.sh` and `env.ps1` scripts from templates
+-   **Tool Version Management**: Pin versions of Terraform, OpenTofu, Go, and `uv`
+-   **Sibling Package Integration**: Automatically discover and install local, editable dependencies
+-   **Python Version Safety**: Detects `pyproject.toml` Python requirements and manages virtual environments
+-   **Containerized Development**: (Experimental) Manage Docker-based development environments
+-   **Provider Packaging**: (Experimental) Interface for building `flavor`-based provider packages
 
-## Quick Start: Task Runner
-
-The `we` command provides an intuitive way to run development tasks:
-
-```bash
-# Install wrknv
-pip install wrknv
-
-# Define tasks in wrknv.toml
-cat > wrknv.toml << EOF
-[tasks]
-test = "pytest tests/"
-lint = "ruff check src/"
-
-[tasks.test]
-unit = "pytest tests/unit/"
-integration = "pytest tests/integration/"
-EOF
-
-# Run tasks directly - no 'run' subcommand needed!
-we test                  # Run all tests
-we test unit             # Run unit tests
-we lint --fix            # Run lint with --fix flag
-we tasks                 # List all available tasks
-```
-
-**Key Features:**
-- ✅ **Auto-detection** - Just `we test`, not `we run test`
-- ✅ **Nested tasks** - Organize with namespaces like `test.unit`, `docs.build`
-- ✅ **Smart resolution** - Hierarchical fallback finds the right task
-- ✅ **Arguments** - Pass flags directly: `we test --verbose`
-- ✅ **Hierarchical display** - Beautiful tree view of tasks
-
-See [Task System Documentation](docs/features/task-system.md) for full details.
-
-## Quick Start: Environment Management
+## Quick Start
 
 1.  **Install wrknv**:
     ```bash
@@ -95,7 +53,7 @@ See [Task System Documentation](docs/features/task-system.md) for full details.
 
 4.  **Activate Your Environment**:
     ```bash
-    uv sync
+    source env.sh
     ```
     Your shell is now configured with the specified tool versions and all Python dependencies installed in `./workenv/`.
 
