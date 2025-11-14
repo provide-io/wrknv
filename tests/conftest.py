@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+import warnings
+
 import pytest
 
 # Import all test utilities to make them available
@@ -21,6 +23,28 @@ from tests.utils.fixtures import (
     create_mock_volumes,
     create_test_config,
 )
+
+
+def pytest_configure(config):
+    """Configure pytest - suppress benchmark warnings when using xdist."""
+    # Suppress pytest-benchmark warnings when xdist is active
+    try:
+        from pytest_benchmark.logger import PytestBenchmarkWarning
+
+        warnings.filterwarnings("ignore", category=PytestBenchmarkWarning)
+    except ImportError:
+        pass
+
+
+# Re-apply in sessionstart for worker processes
+def pytest_sessionstart(session):
+    """Session start hook - suppress warnings in each xdist worker."""
+    try:
+        from pytest_benchmark.logger import PytestBenchmarkWarning
+
+        warnings.filterwarnings("ignore", category=PytestBenchmarkWarning)
+    except ImportError:
+        pass
 
 
 # Make fixtures available as pytest fixtures

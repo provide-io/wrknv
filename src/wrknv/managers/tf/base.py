@@ -23,7 +23,11 @@ from provide.foundation.time import provide_now
 from wrknv.managers.base import BaseToolManager, ToolManagerError
 from wrknv.managers.tf.bin_ops import copy_tf_binaries_to_workenv
 from wrknv.managers.tf.metadata import TfMetadataManager
-from wrknv.managers.tf.utils import calculate_file_hash, get_tool_version_key, version_sort_key
+from wrknv.managers.tf.utils import (
+    calculate_file_hash,
+    get_tool_version_key,
+    version_sort_key,
+)
 from wrknv.wenv.bin_manager import get_workenv_bin_dir
 
 if TYPE_CHECKING:

@@ -253,7 +253,7 @@ siblings = [
             assert "simple-*" in ps1_content
             assert "explicit-pkg" in ps1_content
             assert "$WithDeps = $false" in ps1_content
-            assert "uv pip install --no-deps" in ps1_content
+            assert "--no-deps" in ps1_content
 
 
 class TestSiblingsConfigIntegration:

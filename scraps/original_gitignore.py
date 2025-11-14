@@ -7,14 +7,14 @@
 ==================
 Commands for managing .gitignore files."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
+from wrknv.wenv.config import WorkenvConfig
 
 from wrknv.gitignore import GitignoreManager, ProjectDetector
-from wrknv.wenv.config import WorkenvConfig
 
 
 @register_command(

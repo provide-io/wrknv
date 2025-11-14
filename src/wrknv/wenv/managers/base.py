@@ -1,30 +1,25 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# wrknv/env/managers/base.py
 #
-
-"""Base Tool Manager for wrknv
+"""
+Base Tool Manager for wrknv
 =============================
-Common functionality for all tool managers."""
-
-from __future__ import annotations
+Common functionality for all tool managers.
+"""
 
 from abc import ABC, abstractmethod
 import pathlib
 import platform
+import shutil
+import subprocess
 from urllib.parse import urlparse
 
-from provide.foundation.file import safe_delete, safe_rmtree
-from provide.foundation.logger import get_logger
-from provide.foundation.process import run
+from provide.foundation import logger
 
-from wrknv.config import WorkenvConfig
-from wrknv.errors import WrkenvError
-
-logger = get_logger(__name__)
+from wrknv.wenv.config import WorkenvConfig, WorkenvConfigError
 
 
-class ToolManagerError(WrkenvError):
+class ToolManagerError(Exception):
     """Raised when there's an error in tool management."""
 
     pass
@@ -33,8 +28,8 @@ class ToolManagerError(WrkenvError):
 class BaseToolManager(ABC):
     """Base class for all tool managers in wrknv."""
 
-    def __init__(self, config: WorkenvConfig | None = None) -> None:
-        self.config = config or WorkenvConfig.load()
+    def __init__(self, config: WorkenvConfig | None = None):
+        self.config = config or WorkenvConfig()
         self.install_path = pathlib.Path(
             self.config.get_setting("install_path", "~/.wrknv/tools")
         ).expanduser()
@@ -73,7 +68,7 @@ class BaseToolManager(ABC):
 
     def get_platform_info(self) -> dict[str, str]:
         """Get current platform information."""
-        from wrknv.wenv.operations.platform import get_platform_info
+        from ..operations.platform import get_platform_info
 
         return get_platform_info()
 
@@ -82,12 +77,11 @@ class BaseToolManager(ABC):
         return self.config.get_tool_version(self.tool_name)
 
     def set_installed_version(self, version: str) -> None:
-        """Set the installed version in config.
-
-        Base implementation is a no-op since config doesn't support writing.
-        Subclasses should override this to persist version information.
-        """
-        logger.debug(f"Would set {self.tool_name} version to {version} (base implementation - no persistence)")
+        """Set the installed version in config."""
+        try:
+            self.config.set_tool_version(self.tool_name, version)
+        except WorkenvConfigError as e:
+            logger.warning(f"Could not save {self.tool_name} version to config: {e}")
 
     def get_binary_path(self, version: str) -> pathlib.Path:
         """Get path to the installed binary for a version."""
@@ -111,7 +105,9 @@ class BaseToolManager(ABC):
         """Create symlink to make tool available in PATH."""
         binary_path = self.get_binary_path(version)
         if not binary_path.exists():
-            logger.warning(f"Binary not found at {binary_path}, skipping symlink creation")
+            logger.warning(
+                f"Binary not found at {binary_path}, skipping symlink creation"
+            )
             return
 
         # Create symlink in ~/.wrknv/tools/bin/
@@ -122,7 +118,7 @@ class BaseToolManager(ABC):
 
         # Remove existing symlink
         if symlink_path.exists() or symlink_path.is_symlink():
-            safe_delete(symlink_path, missing_ok=True)
+            symlink_path.unlink()
 
         try:
             symlink_path.symlink_to(binary_path)
@@ -130,43 +126,13 @@ class BaseToolManager(ABC):
         except OSError as e:
             logger.warning(f"Could not create symlink: {e}")
 
-    async def download_file_async(
-        self,
-        url: str,
-        destination: pathlib.Path,
-        show_progress: bool = True,
-        headers: dict[str, str] | None = None,
-    ) -> None:
-        """Download a file asynchronously using foundation transport.
-
-        Args:
-            url: URL to download from
-            destination: Where to save the file
-            show_progress: Whether to log progress
-            headers: Optional custom headers
-        """
-        from wrknv.wenv.operations.download import download_file_async
-
-        await download_file_async(url, destination, show_progress, headers)
-
     def download_file(
-        self,
-        url: str,
-        destination: pathlib.Path,
-        show_progress: bool = True,
-        headers: dict[str, str] | None = None,
+        self, url: str, destination: pathlib.Path, show_progress: bool = True
     ) -> None:
-        """Download a file with optional progress display (sync wrapper).
+        """Download a file with optional progress display."""
+        from ..operations.download import download_file
 
-        Args:
-            url: URL to download from
-            destination: Where to save the file
-            show_progress: Whether to log progress
-            headers: Optional custom headers
-        """
-        from wrknv.wenv.operations.download import download_file
-
-        download_file(url, destination, show_progress, headers)
+        download_file(url, destination, show_progress)
 
     def verify_checksum(
         self, file_path: pathlib.Path, expected_checksum: str, algorithm: str = "sha256"
@@ -176,19 +142,21 @@ class BaseToolManager(ABC):
             logger.debug("Checksum verification disabled")
             return True
 
-        from wrknv.wenv.operations.download import verify_checksum
+        from ..operations.download import verify_checksum
 
         return verify_checksum(file_path, expected_checksum, algorithm)
 
-    def extract_archive(self, archive_path: pathlib.Path, extract_to: pathlib.Path) -> None:
+    def extract_archive(
+        self, archive_path: pathlib.Path, extract_to: pathlib.Path
+    ) -> None:
         """Extract an archive file."""
-        from wrknv.wenv.operations.install import extract_archive
+        from ..operations.install import extract_archive
 
         extract_archive(archive_path, extract_to)
 
     def make_executable(self, file_path: pathlib.Path) -> None:
         """Make a file executable (Unix systems)."""
-        from wrknv.wenv.operations.install import make_executable
+        from ..operations.install import make_executable
 
         make_executable(file_path)
 
@@ -203,11 +171,15 @@ class BaseToolManager(ABC):
         # Check if already installed
         binary_path = self.get_binary_path(version)
         if binary_path.exists():
-            logger.info(f"{self.tool_name} {version} is already installed at {binary_path}")
+            logger.info(
+                f"{self.tool_name} {version} is already installed at {binary_path}"
+            )
             self.set_installed_version(version)
 
             # Create symlink if configured
-            if self.config.get_setting("create_symlinks", True):
+            if self.config.get_command_option(
+                f"workenv.{self.tool_name}", "create_symlinks", True
+            ):
                 self.create_symlink(version)
             return
 
@@ -217,7 +189,9 @@ class BaseToolManager(ABC):
             filename = pathlib.Path(urlparse(download_url).path).name
             download_path = self.cache_dir / filename
 
-            if not download_path.exists() or not self.config.get_setting("cache_downloads", True):
+            if not download_path.exists() or not self.config.get_setting(
+                "cache_downloads", True
+            ):
                 self.download_file(download_url, download_path)
             else:
                 logger.info(f"Using cached download: {download_path}")
@@ -234,39 +208,48 @@ class BaseToolManager(ABC):
             self.set_installed_version(version)
 
             # Create symlink if configured
-            if self.config.get_setting("create_symlinks", True):
+            if self.config.get_command_option(
+                f"workenv.{self.tool_name}", "create_symlinks", True
+            ):
                 self.create_symlink(version)
+
+            logger.info(f"✅ {self.tool_name} {version} installed successfully")
 
         except Exception as e:
             # Clean up on failure if configured
             if self.config.get_setting("clean_on_failure", True):
                 self._cleanup_failed_installation(version)
 
-            raise ToolManagerError(f"Failed to install {self.tool_name} {version}: {e}") from e
+            raise ToolManagerError(f"Failed to install {self.tool_name} {version}: {e}")
 
-    def _verify_download_checksum(self, download_path: pathlib.Path, checksum_url: str) -> None:
-        """Download and verify checksum file using Foundation helpers."""
-        from wrknv.wenv.operations.download import (
-            download_checksum_file,
-            parse_checksum_file,
-        )
+    def _verify_download_checksum(
+        self, download_path: pathlib.Path, checksum_url: str
+    ) -> None:
+        """Download and verify checksum file."""
+        checksum_filename = pathlib.Path(urlparse(checksum_url).path).name
+        checksum_path = self.cache_dir / checksum_filename
 
-        # Download checksum file using helper
-        checksum_path = download_checksum_file(checksum_url, self.cache_dir)
-        if not checksum_path:
-            logger.warning(f"Failed to download checksum file from {checksum_url}")
-            return
+        # Download checksum file
+        self.download_file(checksum_url, checksum_path, show_progress=False)
 
-        # Parse checksum file using helper
+        # Parse checksum file and verify
+        with open(checksum_path) as f:
+            checksum_content = f.read()
+
+        # Find checksum for our file
         download_filename = download_path.name
-        expected_checksum = parse_checksum_file(checksum_path, download_filename)
+        for line in checksum_content.split("\n"):
+            if download_filename in line and line.strip():
+                parts = line.strip().split()
+                if len(parts) >= 2:
+                    expected_checksum = parts[0]
+                    if not self.verify_checksum(download_path, expected_checksum):
+                        raise ToolManagerError(
+                            f"Checksum verification failed for {download_path}"
+                        )
+                    return
 
-        if expected_checksum:
-            # Verify using Foundation's verify method
-            if not self.verify_checksum(download_path, expected_checksum):
-                raise ToolManagerError(f"Checksum verification failed for {download_path}")
-        else:
-            logger.warning(f"No checksum found for {download_filename} in {checksum_path.name}")
+        logger.warning(f"No checksum found for {download_filename} in {checksum_path}")
 
     @abstractmethod
     def _install_from_archive(self, archive_path: pathlib.Path, version: str) -> None:
@@ -277,7 +260,7 @@ class BaseToolManager(ABC):
         """Clean up failed installation."""
         tool_dir = self.install_path / self.tool_name / version
         if tool_dir.exists():
-            safe_rmtree(tool_dir, missing_ok=True)
+            shutil.rmtree(tool_dir)
             logger.info(f"Cleaned up failed installation: {tool_dir}")
 
     def install_latest(self, dry_run: bool = False) -> None:
@@ -300,14 +283,16 @@ class BaseToolManager(ABC):
 
             for _i, version in enumerate(versions[:limit]):
                 marker = " (current)" if version == current else ""
-                status = ""
+                status = "✅" if version == current else "  "
                 print(f"{status} {version}{marker}")
 
             if len(versions) > limit:
                 print(f"... and {len(versions) - limit} more versions available")
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch versions for {self.tool_name}: {e}") from e
+            raise ToolManagerError(
+                f"Failed to fetch versions for {self.tool_name}: {e}"
+            )
 
     def show_current(self) -> None:
         """Show current installed version."""
@@ -315,7 +300,7 @@ class BaseToolManager(ABC):
         if version:
             binary_path = self.get_current_binary_path()
             if binary_path and binary_path.exists():
-                print(f"{self.tool_name}: {version} (installed at {binary_path})")
+                print(f"{self.tool_name}: {version} ✅")
             else:
                 print(f"{self.tool_name}: {version} (binary missing)")
         else:
@@ -348,18 +333,24 @@ class BaseToolManager(ABC):
 
         # Remove the version directory
         if version_dir.exists():
-            safe_rmtree(version_dir, missing_ok=True)
+            import shutil
+
+            shutil.rmtree(version_dir)
             logger.info(f"Removed {self.tool_name} {version} directory")
 
         # Remove the binary if it exists elsewhere
         if binary_path.exists() and binary_path.parent != version_dir:
-            safe_delete(binary_path, missing_ok=True)
+            binary_path.unlink()
             logger.info(f"Removed {self.tool_name} {version} binary")
 
         # Update config if this was the current version
         if self.get_installed_version() == version:
-            # Clear the version (subclasses should override set_installed_version to persist)
-            self.set_installed_version("")
+            # Clear the version in config
+            try:
+                self.config.set_tool_version(self.tool_name, "")
+            except:
+                # If set_tool_version doesn't exist, just log
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def verify_installation(self, version: str) -> bool:
         """Verify that installation works correctly."""
@@ -369,8 +360,10 @@ class BaseToolManager(ABC):
 
         try:
             # Try to run the tool with version flag
-            result = run(
+            result = subprocess.run(
                 [str(binary_path), "--version"],
+                capture_output=True,
+                text=True,
                 timeout=10,
             )
 
@@ -381,4 +374,4 @@ class BaseToolManager(ABC):
             return False
 
 
-# 🧰🌍🔚
+# 🍲🥄📄🪄

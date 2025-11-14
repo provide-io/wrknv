@@ -165,7 +165,11 @@ class TestContainerManager(FoundationTestCase):
 
     def test_start_container_success(self) -> None:
         """Test successful container start."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
+        from tests.conftest import (
+            create_mock_builder,
+            create_mock_lifecycle,
+            create_mock_storage,
+        )
 
         # Replace dependencies with mocks that control behavior
         mock_lifecycle = create_mock_lifecycle(exists=False, running=False)
@@ -190,7 +194,11 @@ class TestContainerManager(FoundationTestCase):
 
     def test_start_container_docker_not_available(self) -> None:
         """Test container start when lifecycle start fails."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
+        from tests.conftest import (
+            create_mock_builder,
+            create_mock_lifecycle,
+            create_mock_storage,
+        )
 
         # Replace dependencies - lifecycle start fails
         mock_lifecycle = create_mock_lifecycle(exists=False, running=False)
@@ -229,7 +237,11 @@ class TestContainerManager(FoundationTestCase):
 
     def test_start_container_already_running(self) -> None:
         """Test start when container is already running."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_runtime
+        from tests.conftest import (
+            create_mock_builder,
+            create_mock_lifecycle,
+            create_mock_runtime,
+        )
 
         # Replace dependencies with mocks
         mock_runtime = create_mock_runtime(available=True)
@@ -464,7 +476,11 @@ class TestContainerManager(FoundationTestCase):
 
     def test_start_starts_existing_stopped_container(self) -> None:
         """Test that start will start an existing stopped container."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
+        from tests.conftest import (
+            create_mock_builder,
+            create_mock_lifecycle,
+            create_mock_storage,
+        )
 
         # Replace dependencies with mocks
         mock_builder = create_mock_builder()

@@ -9,7 +9,12 @@ from __future__ import annotations
 
 import pytest
 
-from wrknv.tasks.schema import ExportedTask, PackageTaskReference, TaskConfig, TaskNamespace
+from wrknv.tasks.schema import (
+    ExportedTask,
+    PackageTaskReference,
+    TaskConfig,
+    TaskNamespace,
+)
 
 
 class TestTaskNamespace:

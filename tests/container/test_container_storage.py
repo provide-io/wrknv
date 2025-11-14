@@ -373,7 +373,11 @@ class TestDockerIntegration:
 
     def test_start_mounts_persistent_volumes(self, container_manager, test_storage_path) -> None:
         """Test that Docker start mounts persistent volumes."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_runtime
+        from tests.conftest import (
+            create_mock_builder,
+            create_mock_lifecycle,
+            create_mock_runtime,
+        )
 
         # Replace attrs dependencies with mocks
         mock_runtime = create_mock_runtime(available=True)
@@ -397,7 +401,11 @@ class TestDockerIntegration:
 
     def test_clean_preserves_volumes_optionally(self, container_manager) -> None:
         """Test that clean can optionally preserve volumes."""
-        from tests.conftest import create_mock_builder, create_mock_lifecycle, create_mock_storage
+        from tests.conftest import (
+            create_mock_builder,
+            create_mock_lifecycle,
+            create_mock_storage,
+        )
 
         # Replace attrs dependencies with mocks
         mock_lifecycle = create_mock_lifecycle(exists=True, running=False)

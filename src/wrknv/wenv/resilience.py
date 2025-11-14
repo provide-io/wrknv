@@ -9,7 +9,11 @@ Retry policies, circuit breakers, and fallback chains for network operations."""
 
 from __future__ import annotations
 
-from provide.foundation.resilience import BackoffStrategy, RetryPolicy, SyncCircuitBreaker
+from provide.foundation.resilience import (
+    BackoffStrategy,
+    RetryPolicy,
+    SyncCircuitBreaker,
+)
 
 # GitHub API Retry Policy
 GITHUB_RETRY_POLICY = RetryPolicy(

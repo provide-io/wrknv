@@ -117,7 +117,12 @@
       "Bash(we workspace --help:*)",
       "Bash(we workspace run --help:*)",
       "Bash(we tasks)",
-      "Bash(we workspace run:*)"
+      "Bash(we workspace run:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(git log:*)",
+      "Bash(do echo '=== $branch ===')",
+      "Bash(PYTHONWARNINGS=\"ignore::pytest_benchmark.logger.PytestBenchmarkWarning\" python -m pytest:*)",
+      "Bash(PYTHONWARNINGS=\"ignore:::pytest_benchmark\" python -m pytest:*)"
     ],
     "deny": [],
     "additionalDirectories": [
