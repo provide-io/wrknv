@@ -4,10 +4,11 @@
 """
 Package Commands Implementation
 ===============================
-Command implementations for package management.
+Command implementations for package management using flavor CLI.
 """
 
 import shutil
+import subprocess
 from pathlib import Path
 
 from provide.foundation import logger
@@ -17,16 +18,21 @@ from wrknv.wenv.config import WorkenvConfig
 from .manager import PackageManager
 
 
-def _get_flavor_api():
-    """Dynamically import flavor API if available."""
-    try:
-        import flavor.api as flavor_api
-
-        return flavor_api
-    except ImportError:
+def _check_flavor_cli() -> bool:
+    """Check if flavor CLI is available."""
+    if not shutil.which("flavor"):
         raise ImportError(
-            "flavor package not found. Install it with: pip install flavor"
-        ) from None
+            "flavor CLI not found. Install it with: uv pip install --system flavorpack"
+        )
+    return True
+
+
+def _run_flavor_command(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess:
+    """Run a flavor CLI command."""
+    _check_flavor_cli()
+    cmd = ["flavor"] + args
+    logger.debug(f"Running: {' '.join(cmd)}")
+    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=True)
 
 
 def build_package(
@@ -35,15 +41,15 @@ def build_package(
     """Build a package from manifest file."""
     if dry_run:
         logger.info(f"[DRY-RUN] Would build package from {manifest_path}")
-        return [manifest_path.parent / "dist" / "package.flavor"]
+        return [manifest_path.parent / "dist" / "package.psp"]
 
     # Check if flavor is available
+    _check_flavor_cli()
+
     if config is None:
         config = WorkenvConfig()
 
     manager = PackageManager(config)
-    if not manager.is_flavor_available():
-        raise ImportError("flavor package required for building packages")
 
     # Check required tools
     tools = manager.check_required_tools()
@@ -52,32 +58,87 @@ def build_package(
         logger.warning(f"Missing required tools: {list(missing.keys())}")
 
     # Set up build environment
-    manager.setup_build_environment()
+    env = manager.setup_build_environment()
 
-    # Use flavor API to build
-    flavor_api = _get_flavor_api()
-    return flavor_api.build_package_from_manifest(manifest_path)
+    # Build using flavor CLI
+    cmd = ["flavor", "pack", "--manifest", str(manifest_path)]
+
+    logger.info(f"Building package from {manifest_path}")
+    result = subprocess.run(
+        cmd,
+        cwd=manifest_path.parent,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    if result.returncode != 0:
+        logger.error(f"Build failed: {result.stderr}")
+        raise RuntimeError(f"flavor pack failed: {result.stderr}")
+
+    logger.info(result.stdout)
+
+    # Find generated packages in dist/
+    dist_dir = manifest_path.parent / "dist"
+    if dist_dir.exists():
+        packages = list(dist_dir.glob("*.psp"))
+        return packages
+
+    return []
 
 
 def verify_package(package_path: Path, config: WorkenvConfig | None = None) -> None:
     """Verify a package file."""
-    flavor_api = _get_flavor_api()
-    flavor_api.verify_package(package_path)
+    _check_flavor_cli()
+
+    logger.info(f"Verifying package: {package_path}")
+    result = _run_flavor_command(["verify", str(package_path)])
+
+    if result.returncode == 0:
+        logger.info("Package verification successful")
+    else:
+        raise RuntimeError(f"Package verification failed: {result.stderr}")
 
 
 def generate_keys(
     output_dir: Path, config: WorkenvConfig | None = None
 ) -> tuple[Path, Path]:
     """Generate signing key pair."""
-    flavor_api = _get_flavor_api()
-    return flavor_api.generate_keys(output_dir)
+    _check_flavor_cli()
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # flavor keygen generates keys in the specified directory
+    logger.info(f"Generating signing keys in {output_dir}")
+    result = _run_flavor_command(["keygen"], cwd=output_dir)
+
+    if result.returncode != 0:
+        raise RuntimeError(f"Key generation failed: {result.stderr}")
+
+    logger.info(result.stdout)
+
+    # flavor keygen creates private.pem and public.pem
+    private_key = output_dir / "private.pem"
+    public_key = output_dir / "public.pem"
+
+    if not private_key.exists() or not public_key.exists():
+        raise RuntimeError("Key files not found after generation")
+
+    return (private_key, public_key)
 
 
 def clean_cache(config: WorkenvConfig | None = None) -> None:
     """Clean package build cache."""
+    _check_flavor_cli()
+
     # Clean flavor cache
-    flavor_api = _get_flavor_api()
-    flavor_api.clean_cache()
+    logger.info("Cleaning flavor cache...")
+    result = _run_flavor_command(["clean"])
+
+    if result.returncode == 0:
+        logger.info("Flavor cache cleaned")
+    else:
+        logger.warning(f"Failed to clean flavor cache: {result.stderr}")
 
     # Clean wrknv package cache
     if config is None:
@@ -106,19 +167,19 @@ def init_provider(project_dir: Path, config: WorkenvConfig | None = None) -> Pat
 name = "provider-example"
 version = "0.1.0"
 description = "Example Terraform provider"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 
 [tool.flavor]
 provider_name = "example"
 entry_point = "provider.main:serve"
 
 [tool.flavor.signing]
-private_key_path = "keys/provider-private.key"
-public_key_path = "keys/provider-public.key"
-curve = "P-256"
+private_key_path = "keys/private.pem"
+public_key_path = "keys/public.pem"
 """
     )
 
+    logger.info(f"Initialized provider project at {project_dir}")
     return project_dir
 
 
@@ -132,14 +193,14 @@ def list_packages(config: WorkenvConfig | None = None) -> list[dict[str, str]]:
 
     packages = []
     if output_dir.exists():
-        for flavor_file in output_dir.glob("*.flavor"):
-            stat = flavor_file.stat()
+        for psp_file in output_dir.glob("*.psp"):
+            stat = psp_file.stat()
             packages.append(
                 {
-                    "name": flavor_file.stem,
-                    "version": "unknown",  # Would need to read from package
+                    "name": psp_file.stem,
+                    "version": "unknown",  # Would need to inspect package
                     "size": f"{stat.st_size / 1024 / 1024:.1f}MB",
-                    "path": str(flavor_file),
+                    "path": str(psp_file),
                 }
             )
 
@@ -150,16 +211,24 @@ def get_package_info(
     package_path: Path, config: WorkenvConfig | None = None
 ) -> dict[str, any]:
     """Get detailed information about a package."""
-    # This would need flavor API enhancement to read package metadata
-    # For now, return basic info
+    _check_flavor_cli()
+
+    # Use flavor inspect command
+    result = _run_flavor_command(["inspect", str(package_path)])
+
+    if result.returncode != 0:
+        raise RuntimeError(f"Package inspection failed: {result.stderr}")
+
+    # Parse the output (flavor inspect provides package metadata)
     stat = package_path.stat()
     return {
         "name": package_path.stem,
-        "version": "1.0.0",  # Would need to read from package
+        "version": "unknown",  # Parse from inspect output
         "size": f"{stat.st_size / 1024 / 1024:.1f}MB",
-        "signature": "valid",  # Would need to verify
-        "python_version": "3.13",
-        "dependencies": [],  # Would need to read from package
+        "signature": "unknown",  # Parse from inspect output
+        "python_version": "unknown",
+        "dependencies": [],
+        "raw_output": result.stdout,
     }
 
 
@@ -167,10 +236,14 @@ def sign_package(
     package_path: Path, key_path: Path, config: WorkenvConfig | None = None
 ) -> None:
     """Sign an existing package."""
-    # This would need flavor API enhancement
-    logger.info(f"Signing {package_path} with {key_path}")
-    # For now, this is a placeholder
-    raise NotImplementedError("Package signing not yet implemented in flavor API")
+    # Flavor packages are signed during the pack process
+    # Use --private-key flag with flavor pack to sign during build
+    logger.info(f"Package signing is done during build with --private-key")
+    logger.info(f"To sign {package_path}, rebuild with: flavor pack --private-key {key_path}")
+    raise NotImplementedError(
+        "Package signing is performed during build. "
+        "Use 'wrknv package build' with signing keys configured in pyproject.toml"
+    )
 
 
 def publish_package(
@@ -181,9 +254,11 @@ def publish_package(
     logger.info(f"Publishing {package_path} to {registry}")
 
     # For now, return mock data
+    # TODO: Implement actual registry publishing
     return {
         "url": f"https://{registry}.example.com/{package_path.stem}",
         "sha256": "abc123def456",  # Would calculate real hash
+        "status": "mock",
     }
 
 
