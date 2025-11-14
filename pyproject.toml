@@ -152,10 +152,11 @@ markers = [
     "managers: Tool manager tests",
     "slow: Slow running tests",
     "network: Tests requiring network access",
-    "benchmark: Performance benchmark tests",
 ]
 filterwarnings = [
-    "ignore::pytest_benchmark.logger.PytestBenchmarkWarning",
+    "ignore::ResourceWarning",
+    "ignore::RuntimeWarning",
+    "ignore::DeprecationWarning:tarfile",
 ]
 
 [tool.coverage.run]
