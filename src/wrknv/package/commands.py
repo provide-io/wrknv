@@ -21,16 +21,14 @@ from .manager import PackageManager
 def _check_flavor_cli() -> bool:
     """Check if flavor CLI is available."""
     if not shutil.which("flavor"):
-        raise ImportError(
-            "flavor CLI not found. Install it with: uv pip install --system flavorpack"
-        )
+        raise ImportError("flavor CLI not found. Install it with: uv pip install --system flavorpack")
     return True
 
 
 def _run_flavor_command(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess:
     """Run a flavor CLI command."""
     _check_flavor_cli()
-    cmd = ["flavor"] + args
+    cmd = ["flavor", *args]
     logger.debug(f"Running: {' '.join(cmd)}")
     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=True)
 
@@ -100,9 +98,7 @@ def verify_package(package_path: Path, config: WorkenvConfig | None = None) -> N
         raise RuntimeError(f"Package verification failed: {result.stderr}")
 
 
-def generate_keys(
-    output_dir: Path, config: WorkenvConfig | None = None
-) -> tuple[Path, Path]:
+def generate_keys(output_dir: Path, config: WorkenvConfig | None = None) -> tuple[Path, Path]:
     """Generate signing key pair."""
     _check_flavor_cli()
 
@@ -207,9 +203,7 @@ def list_packages(config: WorkenvConfig | None = None) -> list[dict[str, str]]:
     return packages
 
 
-def get_package_info(
-    package_path: Path, config: WorkenvConfig | None = None
-) -> dict[str, any]:
+def get_package_info(package_path: Path, config: WorkenvConfig | None = None) -> dict[str, any]:
     """Get detailed information about a package."""
     _check_flavor_cli()
 
@@ -232,9 +226,7 @@ def get_package_info(
     }
 
 
-def sign_package(
-    package_path: Path, key_path: Path, config: WorkenvConfig | None = None
-) -> None:
+def sign_package(package_path: Path, key_path: Path, config: WorkenvConfig | None = None) -> None:
     """Sign an existing package."""
     # Flavor packages are signed during the pack process
     # Use --private-key flag with flavor pack to sign during build
@@ -246,9 +238,7 @@ def sign_package(
     )
 
 
-def publish_package(
-    package_path: Path, registry: str, config: WorkenvConfig | None = None
-) -> dict[str, str]:
+def publish_package(package_path: Path, registry: str, config: WorkenvConfig | None = None) -> dict[str, str]:
     """Publish package to a registry."""
     # This would need a registry client implementation
     logger.info(f"Publishing {package_path} to {registry}")
