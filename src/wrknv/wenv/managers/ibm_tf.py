@@ -63,7 +63,7 @@ class IbmTfManager(TfVersionsManager):
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch IBM Terraform versions: {e}")
+            raise ToolManagerError(f"Failed to fetch IBM Terraform versions: {e}") from e
 
     def _is_prerelease(self, version: str) -> bool:
         """Check if version is a prerelease."""
@@ -76,7 +76,7 @@ class IbmTfManager(TfVersionsManager):
         version_lower = version.lower()
         return any(pattern in version_lower for pattern in prerelease_patterns)
 
-    def _version_sort_key(self, version: str):
+    def _version_sort_key(self, version: str) -> tuple[int, ...]:
         """Generate sort key for semantic versioning using semver module."""
         try:
             # Try to parse as a semantic version

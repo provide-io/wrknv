@@ -64,9 +64,9 @@ class TofuManager(TfVersionsManager):
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch OpenTofu versions: {e}")
+            raise ToolManagerError(f"Failed to fetch OpenTofu versions: {e}") from e
 
-    def _version_sort_key(self, version: str):
+    def _version_sort_key(self, version: str) -> tuple[int, ...]:
         """Generate sort key for semantic versioning using semver module."""
         try:
             # Try to parse as a semantic version
@@ -168,7 +168,7 @@ class TofuManager(TfVersionsManager):
         try:
             major, minor = map(int, major_minor.split("."))
             is_compatible = major > 1 or (major == 1 and minor >= 6)
-        except:
+        except Exception:
             is_compatible = False
 
         return {

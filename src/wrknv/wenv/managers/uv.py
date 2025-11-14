@@ -53,7 +53,7 @@ class UvManager(BaseToolManager):
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch UV versions: {e}")
+            raise ToolManagerError(f"Failed to fetch UV versions: {e}") from e
 
     def get_download_url(self, version: str) -> str:
         """Get download URL for UV version."""
