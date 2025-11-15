@@ -202,7 +202,8 @@ class TestLockCheckCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = side_effect=Exception("IO error")
+            mock_lockfile.lockfile_path.exists.return_value = True
+            mock_lockfile.is_lockfile_valid.side_effect = Exception("IO error")
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
