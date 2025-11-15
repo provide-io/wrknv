@@ -28,7 +28,7 @@ class ToolManagerError(Exception):
 class BaseToolManager(ABC):
     """Base class for all tool managers in wrknv."""
 
-    def __init__(self, config: WorkenvConfig | None = None):
+    def __init__(self, config: WorkenvConfig | None = None) -> None:
         self.config = config or WorkenvConfig()
         self.install_path = pathlib.Path(
             self.config.get_setting("install_path", "~/.wrknv/tools")
@@ -220,7 +220,7 @@ class BaseToolManager(ABC):
             if self.config.get_setting("clean_on_failure", True):
                 self._cleanup_failed_installation(version)
 
-            raise ToolManagerError(f"Failed to install {self.tool_name} {version}: {e}")
+            raise ToolManagerError(f"Failed to install {self.tool_name} {version}: {e}") from e
 
     def _verify_download_checksum(
         self, download_path: pathlib.Path, checksum_url: str
@@ -233,7 +233,7 @@ class BaseToolManager(ABC):
         self.download_file(checksum_url, checksum_path, show_progress=False)
 
         # Parse checksum file and verify
-        with open(checksum_path) as f:
+        with checksum_path.open() as f:
             checksum_content = f.read()
 
         # Find checksum for our file
@@ -292,7 +292,7 @@ class BaseToolManager(ABC):
         except Exception as e:
             raise ToolManagerError(
                 f"Failed to fetch versions for {self.tool_name}: {e}"
-            )
+            ) from e
 
     def show_current(self) -> None:
         """Show current installed version."""
@@ -348,7 +348,7 @@ class BaseToolManager(ABC):
             # Clear the version in config
             try:
                 self.config.set_tool_version(self.tool_name, "")
-            except:
+            except Exception:
                 # If set_tool_version doesn't exist, just log
                 logger.debug(f"Could not clear {self.tool_name} version in config")
 
