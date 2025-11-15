@@ -39,15 +39,6 @@ dependencies = [
 package = [
     # "flavor",  # Install with: uv pip install -e ~/code/gh/provide-io/flavor
 ]
-dev = [
-    "pytest>=7.0",
-    "pytest-asyncio>=0.21",
-    "pytest-cov>=4.0",
-    "black>=23.0",
-    "ruff>=0.1.0",
-    "mypy>=1.0",
-    "bandit>=1.7.0",
-]
 
 [project.scripts]
 wrknv = "wrknv.wenv.cli:entry_point"
@@ -70,11 +61,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.package-data]
 wrknv = ["py.typed"]
-
-[tool.black]
-line-length = 88
-target-version = ['py311', 'py312', 'py313']
-include = '\.pyi?$'
 
 [tool.ruff]
 line-length = 88
@@ -145,11 +131,7 @@ exclude_lines = [
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.1",
-    "pytest-asyncio>=1.1.0",
-    "pytest-benchmark>=5.1.0",
-    "pytest-cov>=6.2.1",
-    "pytest-xdist>=3.8.0",
+    "provide-testkit[standard,advanced-testing,build]",
 ]
 
 [tool.flavor]
