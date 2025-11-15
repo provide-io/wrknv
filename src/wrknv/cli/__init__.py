@@ -1,17 +1,19 @@
-"""
-wrknv CLI Module
+#
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""wrknv CLI Module
 ================
-Command-line interface for wrknv tool management.
-"""
+Command-line interface for wrknv tool management."""
+
+from __future__ import annotations
 
 from wrknv.cli.hub_cli import create_cli, main
 
-# Legacy compatibility - will be removed
-try:
-    from wrknv.cli.main import entry_point, workenv_cli
-except ImportError:
-    # If old modules don't exist, use new ones
-    entry_point = main
-    workenv_cli = create_cli
+# Compatibility aliases
+entry_point = main
 
-__all__ = ["create_cli", "main", "workenv_cli", "entry_point"]
+__all__ = ["create_cli", "entry_point", "main"]
+
+# 🧰🌍🔚

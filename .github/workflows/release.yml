@@ -86,8 +86,8 @@ jobs:
       - name: Test installation from wheel
         run: |
           python -m pip install dist/*.whl
-          wrkenv --version
-          wrkenv --help
+          wrknv --version
+          wrknv --help
 
   github-release:
     name: Create GitHub Release
@@ -117,7 +117,7 @@ jobs:
             git log --pretty=format:"- %s (%h)" $PREV_TAG..$CURRENT_TAG >> changelog.md
           else
             echo "## Initial Release" > changelog.md
-            echo "First release of wrkenv!" >> changelog.md
+            echo "First release of wrknv!" >> changelog.md
           fi
           
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
@@ -139,7 +139,7 @@ jobs:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     environment:
       name: pypi
-      url: https://pypi.org/project/wrkenv/
+      url: https://pypi.org/project/wrknv/
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
@@ -161,11 +161,11 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact: wrkenv-linux-x86_64
+            artifact: wrknv-linux-x86_64
           - os: macos-latest
-            artifact: wrkenv-macos-arm64
+            artifact: wrknv-macos-arm64
           - os: windows-latest
-            artifact: wrkenv-windows-x86_64.exe
+            artifact: wrknv-windows-x86_64.exe
     steps:
       - uses: actions/checkout@v4
       
@@ -182,7 +182,7 @@ jobs:
       
       - name: Build binary with PyInstaller
         run: |
-          pyinstaller --onefile --name ${{ matrix.artifact }} --add-data "src/wrkenv/templates:wrkenv/templates" src/wrkenv/env/cli.py
+          pyinstaller --onefile --name ${{ matrix.artifact }} --add-data "src/wrknv/templates:wrknv/templates" src/wrknv/env/cli.py
       
       - name: Test binary
         run: |

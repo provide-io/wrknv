@@ -9,17 +9,17 @@ directory structure. This implementation is compatible with tfswitch and
 designed for managing Tf tool versions.
 """
 
+from abc import abstractmethod
+from datetime import datetime
 import hashlib
 import json
 import os
 import pathlib
 import shutil
 import sys
-from abc import abstractmethod
-from datetime import datetime
 
-import semver
 from provide.foundation import logger
+import semver
 
 from .base import BaseToolManager, ToolManagerError
 
