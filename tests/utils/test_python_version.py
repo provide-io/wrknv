@@ -40,7 +40,7 @@ class TestGetVenvPythonVersion(FoundationTestCase):
         python_bin.parent.mkdir(parents=True)
         python_bin.write_text("#!/usr/bin/env python3")
 
-        with patch("wrknv.utils.python_version.run") as mock_run:
+        with patch("provide.foundation.process.run") as mock_run:
             mock_result = Mock()
             mock_result.returncode = 0
             mock_result.stdout = '{"version": "3.11.5", "major": 3, "minor": 11, "micro": 5}'
@@ -66,7 +66,7 @@ class TestGetVenvPythonVersion(FoundationTestCase):
         unix_bin.write_text("#!/usr/bin/env python3")
         win_bin.write_text("python executable")
 
-        with patch("wrknv.utils.python_version.run") as mock_run:
+        with patch("provide.foundation.process.run") as mock_run:
             mock_result = Mock()
             mock_result.returncode = 0
             mock_result.stdout = '{"version": "3.12.0", "major": 3, "minor": 12, "micro": 0}'
@@ -95,11 +95,15 @@ class TestGetVenvPythonVersion(FoundationTestCase):
     def test_get_venv_python_version_command_fails(self, tmp_path: Path) -> None:
         """Test when Python command fails."""
         venv_dir = tmp_path / "venv"
-        venv_bin = venv_dir / "bin" / "python"
+        # Create correct binary based on platform
+        if sys.platform.startswith("win"):
+            venv_bin = venv_dir / "Scripts" / "python.exe"
+        else:
+            venv_bin = venv_dir / "bin" / "python"
         venv_bin.parent.mkdir(parents=True)
         venv_bin.write_text("#!/usr/bin/env python3")
 
-        with patch("wrknv.utils.python_version.run") as mock_run:
+        with patch("provide.foundation.process.run") as mock_run:
             mock_result = Mock()
             mock_result.returncode = 1
             mock_result.stdout = ""
@@ -112,11 +116,15 @@ class TestGetVenvPythonVersion(FoundationTestCase):
     def test_get_venv_python_version_exception(self, tmp_path: Path) -> None:
         """Test when run raises an exception."""
         venv_dir = tmp_path / "venv"
-        venv_bin = venv_dir / "bin" / "python"
+        # Create correct binary based on platform
+        if sys.platform.startswith("win"):
+            venv_bin = venv_dir / "Scripts" / "python.exe"
+        else:
+            venv_bin = venv_dir / "bin" / "python"
         venv_bin.parent.mkdir(parents=True)
         venv_bin.write_text("#!/usr/bin/env python3")
 
-        with patch("wrknv.utils.python_version.run", side_effect=Exception("run failed")):
+        with patch("provide.foundation.process.run", side_effect=Exception("run failed")):
             result = get_venv_python_version(venv_dir)
 
         assert result is None
