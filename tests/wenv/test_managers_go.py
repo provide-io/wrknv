@@ -192,6 +192,7 @@ class TestGetChecksumUrl(FoundationTestCase):
 class TestInstallFromArchive(FoundationTestCase):
     """Test _install_from_archive method."""
 
+    @patch.object(Path, "symlink_to")
     @patch("shutil.rmtree")
     @patch("shutil.move")
     @patch.object(GoManager, "verify_installation", return_value=True)
@@ -202,6 +203,7 @@ class TestInstallFromArchive(FoundationTestCase):
         mock_verify: Mock,
         mock_move: Mock,
         mock_rmtree: Mock,
+        mock_symlink: Mock,
         tmp_path: Path,
     ) -> None:
         """Test successful installation from archive."""
@@ -226,6 +228,7 @@ class TestInstallFromArchive(FoundationTestCase):
 
         mock_extract.assert_called_once()
         mock_move.assert_called_once()
+        mock_symlink.assert_called_once()
         mock_verify.assert_called_once_with("1.22.0")
 
     @patch("shutil.rmtree")
@@ -273,6 +276,7 @@ class TestInstallFromArchive(FoundationTestCase):
         with pytest.raises(ToolManagerError, match="Go binary not found in extracted archive"):
             manager._install_from_archive(archive_path, "1.22.0")
 
+    @patch.object(Path, "symlink_to")
     @patch("shutil.rmtree")
     @patch("shutil.move")
     @patch.object(GoManager, "verify_installation", return_value=False)
@@ -283,6 +287,7 @@ class TestInstallFromArchive(FoundationTestCase):
         mock_verify: Mock,
         mock_move: Mock,
         mock_rmtree: Mock,
+        mock_symlink: Mock,
         tmp_path: Path,
     ) -> None:
         """Test installation fails when verification fails."""
