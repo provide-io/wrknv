@@ -13,7 +13,7 @@ from typing import Any
 
 from provide.foundation import logger
 
-from wrknv.wenv.config import WorkenvConfig
+from wrknv.config import WorkenvConfig
 
 from .manager import PackageManager
 
