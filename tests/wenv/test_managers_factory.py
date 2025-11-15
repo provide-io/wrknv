@@ -11,33 +11,49 @@ import pytest
 from provide.testkit import FoundationTestCase
 
 from wrknv.config import WorkenvConfig
-from wrknv.wenv.managers.factory import (
+from wrknv.managers.factory import (
     get_major_tools,
     get_secondary_tools,
     get_supported_tools,
     get_tool_manager,
 )
-from wrknv.wenv.managers.go import GoManager
-from wrknv.wenv.managers.ibm_tf import IbmTfManager
-from wrknv.wenv.managers.tofu import TofuManager
-from wrknv.wenv.managers.uv import UvManager
+from wrknv.managers.go import GoManager
+from wrknv.managers.subrosa.bao import BaoVariant
+from wrknv.managers.subrosa.ibm import IbmVaultVariant
+from wrknv.managers.tf.ibm import IbmTfVariant
+from wrknv.managers.tf.tofu import TofuTfVariant
+from wrknv.managers.uv import UvManager
 
 
 class TestGetToolManager(FoundationTestCase):
     """Test get_tool_manager factory function."""
 
     def test_get_ibmtf_manager(self) -> None:
-        """Test creating IbmTfManager."""
+        """Test creating IbmTfVariant."""
         config = WorkenvConfig()
         manager = get_tool_manager("ibmtf", config)
-        assert isinstance(manager, IbmTfManager)
+        assert isinstance(manager, IbmTfVariant)
         assert manager.config == config
 
     def test_get_tofu_manager(self) -> None:
-        """Test creating TofuManager."""
+        """Test creating TofuTfVariant."""
         config = WorkenvConfig()
         manager = get_tool_manager("tofu", config)
-        assert isinstance(manager, TofuManager)
+        assert isinstance(manager, TofuTfVariant)
+        assert manager.config == config
+
+    def test_get_bao_manager(self) -> None:
+        """Test creating BaoVariant."""
+        config = WorkenvConfig()
+        manager = get_tool_manager("bao", config)
+        assert isinstance(manager, BaoVariant)
+        assert manager.config == config
+
+    def test_get_vault_manager(self) -> None:
+        """Test creating IbmVaultVariant."""
+        config = WorkenvConfig()
+        manager = get_tool_manager("vault", config)
+        assert isinstance(manager, IbmVaultVariant)
         assert manager.config == config
 
     def test_get_uv_manager(self) -> None:
@@ -80,6 +96,8 @@ class TestGetSupportedTools(FoundationTestCase):
         tools = get_supported_tools()
         assert "ibmtf" in tools
         assert "tofu" in tools
+        assert "bao" in tools
+        assert "vault" in tools
         assert "uv" in tools
         assert "go" in tools
 
