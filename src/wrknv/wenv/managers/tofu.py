@@ -12,6 +12,7 @@ import re
 from urllib.request import urlopen
 
 from provide.foundation import logger
+from provide.foundation.process import run as process_run
 import semver
 
 from .tf_base import TfVersionsManager, ToolManagerError
@@ -106,13 +107,12 @@ class TofuManager(TfVersionsManager):
             return False
 
         try:
-            import subprocess
-
-            result = subprocess.run(
+            result = process_run(
                 [str(binary_path), "-version"],
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=10.0,
+                check=False,
             )
 
             if result.returncode == 0:
