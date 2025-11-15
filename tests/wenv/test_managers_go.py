@@ -208,9 +208,11 @@ class TestInstallFromArchive(FoundationTestCase):
     ) -> None:
         """Test successful installation from archive."""
         config = WorkenvConfig()
-        config.workenv_cache_dir = str(tmp_path / "cache")
-        config.workenv_install_dir = str(tmp_path / "tools")
-        manager = GoManager(config)
+        # Properly set install path via config setting
+        with patch.object(
+            config, "get_setting", return_value=str(tmp_path / "tools")
+        ):
+            manager = GoManager(config)
 
         # Create fake extracted Go structure
         extract_dir = manager.cache_dir / "go_1.22.0_extract"
@@ -238,9 +240,10 @@ class TestInstallFromArchive(FoundationTestCase):
     ) -> None:
         """Test error when go directory not found in archive."""
         config = WorkenvConfig()
-        config.workenv_cache_dir = str(tmp_path / "cache")
-        config.workenv_install_dir = str(tmp_path / "tools")
-        manager = GoManager(config)
+        with patch.object(
+            config, "get_setting", return_value=str(tmp_path / "tools")
+        ):
+            manager = GoManager(config)
 
         # Create extract dir without 'go' subdirectory
         extract_dir = manager.cache_dir / "go_1.22.0_extract"
@@ -260,9 +263,10 @@ class TestInstallFromArchive(FoundationTestCase):
     ) -> None:
         """Test error when go binary not found in archive."""
         config = WorkenvConfig()
-        config.workenv_cache_dir = str(tmp_path / "cache")
-        config.workenv_install_dir = str(tmp_path / "tools")
-        manager = GoManager(config)
+        with patch.object(
+            config, "get_setting", return_value=str(tmp_path / "tools")
+        ):
+            manager = GoManager(config)
 
         # Create go directory but no binary
         extract_dir = manager.cache_dir / "go_1.22.0_extract"
@@ -292,9 +296,10 @@ class TestInstallFromArchive(FoundationTestCase):
     ) -> None:
         """Test installation fails when verification fails."""
         config = WorkenvConfig()
-        config.workenv_cache_dir = str(tmp_path / "cache")
-        config.workenv_install_dir = str(tmp_path / "tools")
-        manager = GoManager(config)
+        with patch.object(
+            config, "get_setting", return_value=str(tmp_path / "tools")
+        ):
+            manager = GoManager(config)
 
         # Create proper structure
         extract_dir = manager.cache_dir / "go_1.22.0_extract"
