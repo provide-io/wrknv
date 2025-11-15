@@ -340,7 +340,10 @@ class TestLockSyncCommand(FoundationTestCase):
             mock_lockfile.is_lockfile_valid.return_value = True
 
             lockfile_data = Mock()
-            lockfile_data.resolved_tools = {"uv": Mock(name="uv", version="0.5.0")}
+            tool_mock = Mock()
+            tool_mock.name = "uv"
+            tool_mock.version = "0.5.0"
+            lockfile_data.resolved_tools = {"uv": tool_mock}
             mock_lockfile.load_lockfile.return_value = lockfile_data
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -417,10 +420,13 @@ class TestLockSyncCommand(FoundationTestCase):
             mock_lockfile.is_lockfile_valid.return_value = True
 
             lockfile_data = Mock()
-            lockfile_data.resolved_tools = {
-                "go@1": Mock(name="go@1", version="1.22.0"),
-                "uv": Mock(name="uv", version="0.5.0"),
-            }
+            go_mock = Mock()
+            go_mock.name = "go@1"
+            go_mock.version = "1.22.0"
+            uv_mock = Mock()
+            uv_mock.name = "uv"
+            uv_mock.version = "0.5.0"
+            lockfile_data.resolved_tools = {"go@1": go_mock, "uv": uv_mock}
             mock_lockfile.load_lockfile.return_value = lockfile_data
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -453,18 +459,19 @@ class TestLockCommandIntegration(FoundationTestCase):
 
             # Mock lockfile manager
             mock_lockfile = Mock()
-            mock_lockfile.lockfile_path = lockfile_path
+            mock_path = Mock()
+            mock_lockfile.lockfile_path = mock_path
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
 
             # Generate lockfile
-            mock_lockfile.lockfile_path.exists.return_value =False
+            mock_path.exists.return_value = False
             result1 = runner.invoke(cli, ["lock", "generate"])
             assert result1.exit_code == 0
 
             # Check lockfile
-            mock_lockfile.lockfile_path.exists.return_value =True
+            mock_path.exists.return_value = True
             mock_lockfile.is_lockfile_valid.return_value = True
             result2 = runner.invoke(cli, ["lock", "check"])
             assert result2.exit_code == 0
@@ -472,6 +479,7 @@ class TestLockCommandIntegration(FoundationTestCase):
 
             # Clean lockfile
             lockfile_path.touch()  # Create actual file for clean
+            mock_lockfile.lockfile_path = lockfile_path  # Use real path for clean
             result3 = runner.invoke(cli, ["lock", "clean"])
             assert result3.exit_code == 0
             assert not lockfile_path.exists()
