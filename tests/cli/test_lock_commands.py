@@ -15,7 +15,6 @@ from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import Mock, patch
 
 from wrknv.cli.hub_cli import create_cli
-from wrknv.lockfile import Lockfile, ResolvedTool
 
 
 def get_test_cli():
@@ -39,7 +38,7 @@ class TestLockGenerateCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=False
+            mock_lockfile.lockfile_path.exists.return_value =False
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
@@ -62,7 +61,7 @@ class TestLockGenerateCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value =True
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
@@ -86,7 +85,7 @@ class TestLockGenerateCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value =True
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
@@ -108,7 +107,7 @@ class TestLockGenerateCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=False
+            mock_lockfile.lockfile_path.exists.return_value =False
             mock_lockfile.resolve_and_lock.side_effect = Exception("Network error")
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -135,7 +134,7 @@ class TestLockCheckCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value =True
             mock_lockfile.is_lockfile_valid.return_value = True
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -158,7 +157,7 @@ class TestLockCheckCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value =True
             mock_lockfile.is_lockfile_valid.return_value = False
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -181,7 +180,7 @@ class TestLockCheckCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=False
+            mock_lockfile.lockfile_path.exists.return_value =False
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
@@ -223,23 +222,18 @@ class TestLockShowCommand(FoundationTestCase):
         with patch("wrknv.cli.commands.lock.LockfileManager") as mock_lockfile_cls:
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value = True
 
             # Create mock lockfile data
-            lockfile_data = Lockfile(
-                version="1.0",
-                config_checksum="abc123",
-                created_at=datetime.now().isoformat(),
-                resolved_tools={
-                    "uv": ResolvedTool(
-                        name="uv",
-                        version="0.5.0",
-                        resolved_from="0.5.0",
-                        checksum="xyz789",
-                        installed_at=None,
-                    )
-                },
-            )
+            lockfile_data = Mock()
+            lockfile_data.config_checksum = "abc123"
+            lockfile_data.created_at = datetime.now().isoformat()
+            tool_mock = Mock()
+            tool_mock.name = "uv"
+            tool_mock.version = "0.5.0"
+            tool_mock.resolved_from = "0.5.0"
+            tool_mock.installed_at = None
+            lockfile_data.resolved_tools = {"uv": tool_mock}
             mock_lockfile.load_lockfile.return_value = lockfile_data
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -259,7 +253,7 @@ class TestLockShowCommand(FoundationTestCase):
         with patch("wrknv.cli.commands.lock.LockfileManager") as mock_lockfile_cls:
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=False
+            mock_lockfile.lockfile_path.exists.return_value =False
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
@@ -275,7 +269,7 @@ class TestLockShowCommand(FoundationTestCase):
         with patch("wrknv.cli.commands.lock.LockfileManager") as mock_lockfile_cls:
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value =True
             mock_lockfile.load_lockfile.return_value = None
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -314,7 +308,7 @@ class TestLockCleanCommand(FoundationTestCase):
         with patch("wrknv.cli.commands.lock.LockfileManager") as mock_lockfile_cls:
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=False
+            mock_lockfile.lockfile_path.exists.return_value =False
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
@@ -334,30 +328,18 @@ class TestLockSyncCommand(FoundationTestCase):
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_get_config,
             patch("wrknv.cli.commands.lock.LockfileManager") as mock_lockfile_cls,
-            patch("wrknv.cli.commands.lock.get_tool_manager") as mock_get_manager,
+            patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager,
         ):
             mock_config = Mock()
             mock_get_config.return_value = mock_config
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value = True
             mock_lockfile.is_lockfile_valid.return_value = True
 
-            lockfile_data = Lockfile(
-                version="1.0",
-                config_checksum="abc123",
-                created_at=datetime.now().isoformat(),
-                resolved_tools={
-                    "uv": ResolvedTool(
-                        name="uv",
-                        version="0.5.0",
-                        resolved_from="0.5.0",
-                        checksum="xyz789",
-                        installed_at=None,
-                    )
-                },
-            )
+            lockfile_data = Mock()
+            lockfile_data.resolved_tools = {"uv": Mock(name="uv", version="0.5.0")}
             mock_lockfile.load_lockfile.return_value = lockfile_data
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -384,7 +366,7 @@ class TestLockSyncCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=False
+            mock_lockfile.lockfile_path.exists.return_value =False
             mock_lockfile_cls.return_value = mock_lockfile
 
             runner = click.testing.CliRunner()
@@ -406,7 +388,7 @@ class TestLockSyncCommand(FoundationTestCase):
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value =True
             mock_lockfile.is_lockfile_valid.return_value = False
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -423,37 +405,21 @@ class TestLockSyncCommand(FoundationTestCase):
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_get_config,
             patch("wrknv.cli.commands.lock.LockfileManager") as mock_lockfile_cls,
-            patch("wrknv.cli.commands.lock.get_tool_manager") as mock_get_manager,
+            patch("wrknv.managers.factory.get_tool_manager") as mock_get_manager,
         ):
             mock_config = Mock()
             mock_get_config.return_value = mock_config
 
             mock_lockfile = Mock()
             mock_lockfile.lockfile_path = Mock()
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value = True
             mock_lockfile.is_lockfile_valid.return_value = True
 
-            lockfile_data = Lockfile(
-                version="1.0",
-                config_checksum="abc123",
-                created_at=datetime.now().isoformat(),
-                resolved_tools={
-                    "go@1": ResolvedTool(  # Matrix entry - should be skipped
-                        name="go@1",
-                        version="1.22.0",
-                        resolved_from="1.22.*",
-                        checksum="xyz789",
-                        installed_at=None,
-                    ),
-                    "uv": ResolvedTool(  # Regular entry - should be installed
-                        name="uv",
-                        version="0.5.0",
-                        resolved_from="0.5.0",
-                        checksum="abc456",
-                        installed_at=None,
-                    ),
-                },
-            )
+            lockfile_data = Mock()
+            lockfile_data.resolved_tools = {
+                "go@1": Mock(name="go@1", version="1.22.0"),
+                "uv": Mock(name="uv", version="0.5.0"),
+            }
             mock_lockfile.load_lockfile.return_value = lockfile_data
             mock_lockfile_cls.return_value = mock_lockfile
 
@@ -492,12 +458,12 @@ class TestLockCommandIntegration(FoundationTestCase):
             runner = click.testing.CliRunner()
 
             # Generate lockfile
-            mock_lockfile.lockfile_path.exists.return_value = return_value=False
+            mock_lockfile.lockfile_path.exists.return_value =False
             result1 = runner.invoke(cli, ["lock", "generate"])
             assert result1.exit_code == 0
 
             # Check lockfile
-            mock_lockfile.lockfile_path.exists.return_value = return_value=True
+            mock_lockfile.lockfile_path.exists.return_value =True
             mock_lockfile.is_lockfile_valid.return_value = True
             result2 = runner.invoke(cli, ["lock", "check"])
             assert result2.exit_code == 0
