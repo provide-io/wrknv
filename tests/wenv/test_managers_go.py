@@ -11,8 +11,8 @@ import json
 from pathlib import Path
 from unittest.mock import MagicMock, Mock, patch
 
-import pytest
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.config import WorkenvConfig
 from wrknv.wenv.managers.base import ToolManagerError

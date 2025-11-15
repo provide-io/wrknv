@@ -7,9 +7,9 @@
 
 from __future__ import annotations
 
-import pytest
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import patch
+import pytest
 
 from wrknv.wenv.operations.platform import is_arm_mac, is_windows
 

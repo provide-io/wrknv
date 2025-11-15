@@ -7,9 +7,9 @@
 
 from __future__ import annotations
 
-import pytest
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import Mock
+import pytest
 
 from wrknv.config import WorkenvConfig
 from wrknv.container.metadata import ContainerMetadata

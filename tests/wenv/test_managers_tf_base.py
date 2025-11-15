@@ -7,14 +7,12 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from unittest.mock import MagicMock, Mock, patch
 
-import pytest
 from provide.testkit import FoundationTestCase
+import pytest
 
-from wrknv.config import WorkenvConfig
 from wrknv.wenv.managers.base import ToolManagerError
 from wrknv.wenv.managers.tf_base import TfVersionsManager
 
@@ -124,15 +122,14 @@ class TestMetadataMigration(FoundationTestCase):
         mock_file.__exit__.return_value = False
         mock_open.return_value = mock_file
 
-        with patch("json.load", return_value=old_metadata):
-            with patch("json.dump"):
-                manager = ConcreteTfManager()
+        with patch("json.load", return_value=old_metadata), patch("json.dump"):
+            manager = ConcreteTfManager()
 
-                # Check migration occurred
-                assert "workenv" in manager.metadata
-                assert "default" in manager.metadata["workenv"]
-                assert manager.metadata["workenv"]["default"]["opentofu_version"] == "1.6.0"
-                assert "active_tofu" not in manager.metadata
+            # Check migration occurred
+            assert "workenv" in manager.metadata
+            assert "default" in manager.metadata["workenv"]
+            assert manager.metadata["workenv"]["default"]["opentofu_version"] == "1.6.0"
+            assert "active_tofu" not in manager.metadata
 
     @patch("pathlib.Path.exists", return_value=True)
     @patch("pathlib.Path.open")
@@ -147,12 +144,11 @@ class TestMetadataMigration(FoundationTestCase):
         mock_file.__exit__.return_value = False
         mock_open.return_value = mock_file
 
-        with patch("json.load", return_value=old_metadata):
-            with patch("json.dump"):
-                manager = ConcreteTfManager()
+        with patch("json.load", return_value=old_metadata), patch("json.dump"):
+            manager = ConcreteTfManager()
 
-                assert manager.metadata["workenv"]["default"]["terraform_version"] == "1.5.7"
-                assert "active_terraform" not in manager.metadata
+            assert manager.metadata["workenv"]["default"]["terraform_version"] == "1.5.7"
+            assert "active_terraform" not in manager.metadata
 
 
 class TestRecentFileManagement(FoundationTestCase):
@@ -169,15 +165,14 @@ class TestRecentFileManagement(FoundationTestCase):
 
         manager = ConcreteTfManager()
 
-        with patch("json.load", return_value={}):
-            with patch("json.dump") as mock_dump:
-                manager._update_recent_file()
+        with patch("json.load", return_value={}), patch("json.dump") as mock_dump:
+            manager._update_recent_file()
 
-                # Verify JSON was dumped with terraform versions
-                call_args = mock_dump.call_args
-                recent_data = call_args[0][0]
-                assert "terraform" in recent_data
-                assert recent_data["terraform"] == ["1.6.0", "1.5.7"]
+            # Verify JSON was dumped with terraform versions
+            call_args = mock_dump.call_args
+            recent_data = call_args[0][0]
+            assert "terraform" in recent_data
+            assert recent_data["terraform"] == ["1.6.0", "1.5.7"]
 
     @patch("pathlib.Path.open")
     def test_update_recent_file_with_active(self, mock_open: Mock) -> None:
@@ -191,14 +186,13 @@ class TestRecentFileManagement(FoundationTestCase):
 
         existing_data = {"terraform": ["1.5.0", "1.4.0"]}
 
-        with patch("json.load", return_value=existing_data):
-            with patch("json.dump") as mock_dump:
-                manager._update_recent_file_with_active("1.6.0")
+        with patch("json.load", return_value=existing_data), patch("json.dump") as mock_dump:
+            manager._update_recent_file_with_active("1.6.0")
 
-                call_args = mock_dump.call_args
-                recent_data = call_args[0][0]
-                # 1.6.0 should be first
-                assert recent_data["terraform"][0] == "1.6.0"
+            call_args = mock_dump.call_args
+            recent_data = call_args[0][0]
+            # 1.6.0 should be first
+            assert recent_data["terraform"][0] == "1.6.0"
 
 
 class TestBinaryPathAndVersions(FoundationTestCase):
@@ -499,12 +493,11 @@ class TestProfileManagement(FoundationTestCase):
         mock_file.__exit__.return_value = False
         mock_open.return_value = mock_file
 
-        with patch("json.load", return_value=test_metadata):
-            with patch.dict("os.environ", {}, clear=True):
-                manager = ConcreteTfManager()
-                profile = manager._get_current_profile()
+        with patch("json.load", return_value=test_metadata), patch.dict("os.environ", {}, clear=True):
+            manager = ConcreteTfManager()
+            profile = manager._get_current_profile()
 
-                assert profile == "staging"
+            assert profile == "staging"
 
 
 class TestVenvIntegration(FoundationTestCase):

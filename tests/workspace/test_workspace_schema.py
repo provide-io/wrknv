@@ -7,8 +7,8 @@
 
 from __future__ import annotations
 
-import pytest
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.workspace.schema import RepoConfig, WorkspaceConfig
 
