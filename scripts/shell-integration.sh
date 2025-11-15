@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# wrkenv Shell Integration Script
+# wrknv Shell Integration Script
 # ===============================
-# Sets up shell aliases and environment for wrkenv development
+# Sets up shell aliases and environment for wrknv development
 #
 
 # Detect shell type
@@ -25,43 +25,43 @@ esac
 
 # Define aliases
 ALIASES='
-# wrkenv aliases
-alias wrkenv="wrkenv"
-alias we="wrkenv"  # Short alias
+# wrknv aliases
+alias wrknv="wrknv"
+alias we="wrknv"  # Short alias
 
 # Tool installation shortcuts
-alias tf-install="wrkenv tf"
-alias tofu-install="wrkenv tf"
-alias terraform-install="wrkenv terraform"
-alias go-install="wrkenv go"
-alias uv-install="wrkenv uv"
+alias tf-install="wrknv tf"
+alias tofu-install="wrknv tf"
+alias terraform-install="wrknv terraform"
+alias go-install="wrknv go"
+alias uv-install="wrknv uv"
 
 # Status and sync
-alias wrkenv-status="wrkenv status"
-alias wrkenv-sync="wrkenv sync"
+alias wrknv-status="wrknv status"
+alias wrknv-sync="wrknv sync"
 
 # Container shortcuts
-alias wrkenv-container="wrkenv container"
-alias wec="wrkenv container"  # Short alias (wrkenv container)
-alias wec-start="wrkenv container start"
-alias wec-enter="wrkenv container enter"
-alias wec-stop="wrkenv container stop"
-alias wec-status="wrkenv container status"
+alias wrknv-container="wrknv container"
+alias wec="wrknv container"  # Short alias (wrknv container)
+alias wec-start="wrknv container start"
+alias wec-enter="wrknv container enter"
+alias wec-stop="wrknv container stop"
+alias wec-status="wrknv container status"
 
 # Package shortcuts
-alias wrkenv-build="wrkenv package build"
-alias wrkenv-verify="wrkenv package verify"
-alias wrkenv-publish="wrkenv package publish"
+alias wrknv-build="wrknv package build"
+alias wrknv-verify="wrknv package verify"
+alias wrknv-publish="wrknv package publish"
 
 # Development helpers
-alias activate-wrkenv="source $(wrkenv env-path)/bin/activate 2>/dev/null || echo \"No wrkenv virtual environment found\""
+alias activate-wrknv="source $(wrknv env-path)/bin/activate 2>/dev/null || echo \"No wrknv virtual environment found\""
 '
 
 # Check if aliases already exist
-if grep -q "# wrkenv aliases" "$RC_FILE" 2>/dev/null; then
-    echo "✅ wrkenv aliases already configured in $RC_FILE"
+if grep -q "# wrknv aliases" "$RC_FILE" 2>/dev/null; then
+    echo "✅ wrknv aliases already configured in $RC_FILE"
 else
-    echo "📝 Adding wrkenv aliases to $RC_FILE..."
+    echo "📝 Adding wrknv aliases to $RC_FILE..."
     echo "$ALIASES" >> "$RC_FILE"
     echo "✅ Aliases added successfully!"
 fi
@@ -74,11 +74,11 @@ echo "To activate the aliases, run:"
 echo "  source $RC_FILE"
 echo ""
 echo "Available shortcuts:"
-echo "  we              - Short for wrkenv"
-echo "  wec             - Short for wrkenv container"
+echo "  we              - Short for wrknv"
+echo "  wec             - Short for wrknv container"
 echo "  tf-install      - Install OpenTofu"
 echo "  go-install      - Install Go"
 echo "  wec-start       - Start development container"
 echo "  wec-enter       - Enter development container"
 echo ""
-echo "Run 'alias | grep wrkenv' to see all available aliases"
+echo "Run 'alias | grep wrknv' to see all available aliases"

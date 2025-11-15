@@ -11,8 +11,8 @@ import json
 import re
 from urllib.request import urlopen
 
-import semver
 from provide.foundation import logger
+import semver
 
 from .tf_base import TfVersionsManager, ToolManagerError
 

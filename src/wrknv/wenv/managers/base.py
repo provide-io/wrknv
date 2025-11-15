@@ -7,11 +7,11 @@ Base Tool Manager for wrknv
 Common functionality for all tool managers.
 """
 
+from abc import ABC, abstractmethod
 import pathlib
 import platform
 import shutil
 import subprocess
-from abc import ABC, abstractmethod
 from urllib.parse import urlparse
 
 from provide.foundation import logger

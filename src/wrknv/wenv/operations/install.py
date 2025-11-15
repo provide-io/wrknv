@@ -1,25 +1,37 @@
 #
-# wrknv/workenv/operations/install.py
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-"""
-wrknv Installation Operations
+
+"""wrknv Installation Operations
 ========================================
-Functions for extracting archives and making files executable.
-"""
+Functions for extracting archives and making files executable."""
+
+from __future__ import annotations
 
 import pathlib
 import stat
-import tarfile
-import zipfile
 
 from provide.foundation import logger
+from provide.foundation.archive.operations import ArchiveOperations
+from provide.foundation.archive.tar import TarArchive
+from provide.foundation.archive.zip import ZipArchive
+from provide.foundation.errors import ResourceError, ValidationError, resilient
+from provide.foundation.file import (
+    ensure_dir,
+    get_size,
+    safe_copy,
+    safe_delete,
+    safe_rmtree,
+)
 
 
+@resilient
 def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
     """Extract archive to specified directory."""
 
     if not archive_path.exists():
-        raise FileNotFoundError(f"Archive not found: {archive_path}")
+        raise ResourceError(f"Archive not found: {archive_path}")
 
     # Create extraction directory
     extract_dir.mkdir(parents=True, exist_ok=True)
@@ -30,61 +42,29 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
 
     try:
         if archive_name.endswith(".tar.gz") or archive_name.endswith(".tgz"):
-            _extract_tar_gz(archive_path, extract_dir)
+            # Use foundation's extract_tar_gz with built-in path traversal protection
+            ArchiveOperations.extract_tar_gz(archive_path, extract_dir)
         elif archive_name.endswith(".tar"):
-            _extract_tar(archive_path, extract_dir)
+            # Use foundation's TarArchive with built-in path traversal protection
+            TarArchive().extract(archive_path, extract_dir)
         elif archive_name.endswith(".zip"):
-            _extract_zip(archive_path, extract_dir)
+            # Use foundation's ZipArchive with built-in path traversal protection
+            ZipArchive().extract(archive_path, extract_dir)
         else:
-            raise ValueError(f"Unsupported archive format: {archive_path}")
+            raise ValidationError(f"Unsupported archive format: {archive_path}")
 
         logger.debug(f"Successfully extracted {archive_path}")
 
     except Exception as e:
-        raise Exception(f"Failed to extract {archive_path}: {e}")
+        raise ResourceError(f"Failed to extract {archive_path}: {e}") from e
 
 
-def _extract_tar_gz(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
-    """Extract tar.gz archive."""
-
-    with tarfile.open(archive_path, "r:gz") as tar:
-        # Security check: ensure no path traversal
-        for member in tar.getmembers():
-            if member.name.startswith("/") or ".." in member.name:
-                raise Exception(f"Unsafe archive member: {member.name}")
-
-        tar.extractall(path=extract_dir)
-
-
-def _extract_tar(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
-    """Extract tar archive."""
-
-    with tarfile.open(archive_path, "r") as tar:
-        # Security check: ensure no path traversal
-        for member in tar.getmembers():
-            if member.name.startswith("/") or ".." in member.name:
-                raise Exception(f"Unsafe archive member: {member.name}")
-
-        tar.extractall(path=extract_dir)
-
-
-def _extract_zip(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> None:
-    """Extract ZIP archive."""
-
-    with zipfile.ZipFile(archive_path, "r") as zip_file:
-        # Security check: ensure no path traversal
-        for member in zip_file.namelist():
-            if member.startswith("/") or ".." in member:
-                raise Exception(f"Unsafe archive member: {member}")
-
-        zip_file.extractall(path=extract_dir)
-
-
+@resilient
 def make_executable(file_path: pathlib.Path) -> None:
     """Make file executable on Unix-like systems."""
 
     if not file_path.exists():
-        raise FileNotFoundError(f"File not found: {file_path}")
+        raise ResourceError(f"File not found: {file_path}")
 
     # Only needed on Unix-like systems
     import platform
@@ -109,11 +89,12 @@ def make_executable(file_path: pathlib.Path) -> None:
         logger.warning(f"Failed to make {file_path} executable: {e}")
 
 
+@resilient
 def create_symlink(target: pathlib.Path, link_path: pathlib.Path) -> None:
     """Create symbolic link, handling platform differences."""
 
     if not target.exists():
-        raise FileNotFoundError(f"Target does not exist: {target}")
+        raise ResourceError(f"Target does not exist: {target}")
 
     # Remove existing link if it exists
     if link_path.exists() or link_path.is_symlink():
@@ -139,35 +120,18 @@ def create_symlink(target: pathlib.Path, link_path: pathlib.Path) -> None:
             raise
 
 
-def copy_file(
-    source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True
-) -> None:
+def copy_file(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
-
-    if not source.exists():
-        raise FileNotFoundError(f"Source file not found: {source}")
-
-    # Create parent directories
-    destination.parent.mkdir(parents=True, exist_ok=True)
-
-    import shutil
-
-    if preserve_permissions:
-        shutil.copy2(source, destination)
-    else:
-        shutil.copy(source, destination)
-
+    # Use foundation's safe_copy which handles all edge cases
+    safe_copy(source, destination, overwrite=True, preserve_mode=preserve_permissions)
     logger.debug(f"Copied {source} to {destination}")
 
 
 def ensure_directory(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
-
-    if not dir_path.exists():
-        dir_path.mkdir(parents=True, mode=mode)
-        logger.debug(f"Created directory: {dir_path}")
-    elif not dir_path.is_dir():
-        raise Exception(f"Path exists but is not a directory: {dir_path}")
+    # Use foundation's ensure_dir which handles all edge cases
+    ensure_dir(dir_path, mode=mode)
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -179,30 +143,29 @@ def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
     if not dir_path.is_dir():
         raise Exception(f"Path is not a directory: {dir_path}")
 
-    import shutil
-
     for item in dir_path.iterdir():
         if keep_hidden and item.name.startswith("."):
             continue
 
         try:
             if item.is_dir():
-                shutil.rmtree(item)
+                safe_rmtree(item, missing_ok=True)
             else:
-                item.unlink()
+                safe_delete(item, missing_ok=True)
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
     logger.debug(f"Cleaned directory: {dir_path}")
 
 
+@resilient
 def get_file_size(file_path: pathlib.Path) -> int:
     """Get file size in bytes."""
-
-    if not file_path.exists():
-        raise FileNotFoundError(f"File not found: {file_path}")
-
-    return file_path.stat().st_size
+    # Use foundation's get_size which returns 0 for missing files
+    size = get_size(file_path)
+    if size == 0 and not file_path.exists():
+        raise ResourceError(f"File not found: {file_path}")
+    return size
 
 
 def is_executable(file_path: pathlib.Path) -> bool:
@@ -221,4 +184,4 @@ def is_executable(file_path: pathlib.Path) -> bool:
         return bool(file_path.stat().st_mode & stat.S_IXUSR)
 
 
-# 🍲🥄📄🪄
+# 🧰🌍🔚

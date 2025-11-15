@@ -7,9 +7,9 @@ Package Commands Implementation
 Command implementations for package management using flavor CLI.
 """
 
+from pathlib import Path
 import shutil
 import subprocess
-from pathlib import Path
 
 from provide.foundation import logger
 
@@ -238,7 +238,7 @@ def sign_package(
     """Sign an existing package."""
     # Flavor packages are signed during the pack process
     # Use --private-key flag with flavor pack to sign during build
-    logger.info(f"Package signing is done during build with --private-key")
+    logger.info("Package signing is done during build with --private-key")
     logger.info(f"To sign {package_path}, rebuild with: flavor pack --private-key {key_path}")
     raise NotImplementedError(
         "Package signing is performed during build. "
