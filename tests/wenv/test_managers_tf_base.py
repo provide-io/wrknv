@@ -381,18 +381,17 @@ class TestInstallation(FoundationTestCase):
         archive_path.touch()
 
         # Mock rglob to find the binary
-        with patch.object(Path, "rglob", return_value=[fake_binary]):
-            # Mock file hash calculation
-            with patch.object(
-                manager, "_calculate_file_hash", return_value="abc123"
-            ):
-                with patch("json.dump"):
-                    manager._install_from_archive(archive_path, "1.6.0")
+        with (
+            patch.object(Path, "rglob", return_value=[fake_binary]),
+            patch.object(manager, "_calculate_file_hash", return_value="abc123"),
+            patch("json.dump"),
+        ):
+            manager._install_from_archive(archive_path, "1.6.0")
 
-                    mock_extract.assert_called_once()
-                    mock_copy.assert_called_once()
-                    mock_make_exec.assert_called_once()
-                    mock_verify.assert_called_once_with("1.6.0")
+            mock_extract.assert_called_once()
+            mock_copy.assert_called_once()
+            mock_make_exec.assert_called_once()
+            mock_verify.assert_called_once_with("1.6.0")
 
     @patch("shutil.rmtree")
     @patch.object(ConcreteTfManager, "extract_archive")

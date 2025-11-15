@@ -367,7 +367,7 @@ class TestGenerateEnvCommand(FoundationTestCase):
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_get_config,
             patch("wrknv.cli.commands.tools.create_project_env_scripts") as mock_create,
-            patch("wrknv.cli.commands.tools.safe_move") as mock_move,
+            patch("wrknv.cli.commands.tools.safe_move"),
         ):
             mock_config = Mock()
             mock_get_config.return_value = mock_config
