@@ -207,15 +207,16 @@ class TestInstallFromArchive(FoundationTestCase):
         """Test successful installation from archive."""
         config = WorkenvConfig()
         config.workenv_cache_dir = str(tmp_path / "cache")
+        config.workenv_install_dir = str(tmp_path / "tools")
         manager = GoManager(config)
 
         # Create fake extracted Go structure
         extract_dir = manager.cache_dir / "go_1.22.0_extract"
         extract_dir.mkdir(parents=True, exist_ok=True)
         go_root = extract_dir / "go"
-        go_root.mkdir()
+        go_root.mkdir(exist_ok=True)
         go_bin = go_root / "bin"
-        go_bin.mkdir()
+        go_bin.mkdir(exist_ok=True)
         (go_bin / "go").touch()
 
         archive_path = tmp_path / "go.tar.gz"
@@ -235,6 +236,7 @@ class TestInstallFromArchive(FoundationTestCase):
         """Test error when go directory not found in archive."""
         config = WorkenvConfig()
         config.workenv_cache_dir = str(tmp_path / "cache")
+        config.workenv_install_dir = str(tmp_path / "tools")
         manager = GoManager(config)
 
         # Create extract dir without 'go' subdirectory
@@ -244,7 +246,7 @@ class TestInstallFromArchive(FoundationTestCase):
         archive_path = tmp_path / "go.tar.gz"
         archive_path.touch()
 
-        with pytest.raises(ToolManagerError, match="Go directory not found"):
+        with pytest.raises(ToolManagerError, match="Go directory not found in archive"):
             manager._install_from_archive(archive_path, "1.22.0")
 
     @patch("shutil.rmtree")
@@ -256,18 +258,19 @@ class TestInstallFromArchive(FoundationTestCase):
         """Test error when go binary not found in archive."""
         config = WorkenvConfig()
         config.workenv_cache_dir = str(tmp_path / "cache")
+        config.workenv_install_dir = str(tmp_path / "tools")
         manager = GoManager(config)
 
         # Create go directory but no binary
         extract_dir = manager.cache_dir / "go_1.22.0_extract"
         extract_dir.mkdir(parents=True, exist_ok=True)
         go_root = extract_dir / "go"
-        go_root.mkdir()
+        go_root.mkdir(exist_ok=True)
 
         archive_path = tmp_path / "go.tar.gz"
         archive_path.touch()
 
-        with pytest.raises(ToolManagerError, match="Go binary not found"):
+        with pytest.raises(ToolManagerError, match="Go binary not found in extracted archive"):
             manager._install_from_archive(archive_path, "1.22.0")
 
     @patch("shutil.rmtree")
@@ -285,21 +288,22 @@ class TestInstallFromArchive(FoundationTestCase):
         """Test installation fails when verification fails."""
         config = WorkenvConfig()
         config.workenv_cache_dir = str(tmp_path / "cache")
+        config.workenv_install_dir = str(tmp_path / "tools")
         manager = GoManager(config)
 
         # Create proper structure
         extract_dir = manager.cache_dir / "go_1.22.0_extract"
         extract_dir.mkdir(parents=True, exist_ok=True)
         go_root = extract_dir / "go"
-        go_root.mkdir()
+        go_root.mkdir(exist_ok=True)
         go_bin = go_root / "bin"
-        go_bin.mkdir()
+        go_bin.mkdir(exist_ok=True)
         (go_bin / "go").touch()
 
         archive_path = tmp_path / "go.tar.gz"
         archive_path.touch()
 
-        with pytest.raises(ToolManagerError, match="verification failed"):
+        with pytest.raises(ToolManagerError, match="installation verification failed"):
             manager._install_from_archive(archive_path, "1.22.0")
 
 
