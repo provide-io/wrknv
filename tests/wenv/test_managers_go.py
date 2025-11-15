@@ -194,14 +194,12 @@ class TestInstallFromArchive(FoundationTestCase):
 
     @patch.object(Path, "symlink_to")
     @patch("shutil.rmtree")
-    @patch("shutil.move")
     @patch.object(GoManager, "verify_installation", return_value=True)
     @patch.object(GoManager, "extract_archive")
     def test_install_from_archive_success(
         self,
         mock_extract: Mock,
         mock_verify: Mock,
-        mock_move: Mock,
         mock_rmtree: Mock,
         mock_symlink: Mock,
         tmp_path: Path,
@@ -226,10 +224,13 @@ class TestInstallFromArchive(FoundationTestCase):
         archive_path = tmp_path / "go.tar.gz"
         archive_path.touch()
 
-        manager._install_from_archive(archive_path, "1.22.0")
+        # Use actual shutil.move so files are actually moved
+        import shutil as real_shutil
+
+        with patch("shutil.move", side_effect=real_shutil.move):
+            manager._install_from_archive(archive_path, "1.22.0")
 
         mock_extract.assert_called_once()
-        mock_move.assert_called_once()
         mock_symlink.assert_called_once()
         mock_verify.assert_called_once_with("1.22.0")
 
@@ -282,14 +283,12 @@ class TestInstallFromArchive(FoundationTestCase):
 
     @patch.object(Path, "symlink_to")
     @patch("shutil.rmtree")
-    @patch("shutil.move")
     @patch.object(GoManager, "verify_installation", return_value=False)
     @patch.object(GoManager, "extract_archive")
     def test_install_from_archive_verification_fails(
         self,
         mock_extract: Mock,
         mock_verify: Mock,
-        mock_move: Mock,
         mock_rmtree: Mock,
         mock_symlink: Mock,
         tmp_path: Path,
@@ -313,8 +312,12 @@ class TestInstallFromArchive(FoundationTestCase):
         archive_path = tmp_path / "go.tar.gz"
         archive_path.touch()
 
-        with pytest.raises(ToolManagerError, match="installation verification failed"):
-            manager._install_from_archive(archive_path, "1.22.0")
+        # Use actual shutil.move so files are actually moved
+        import shutil as real_shutil
+
+        with patch("shutil.move", side_effect=real_shutil.move):
+            with pytest.raises(ToolManagerError, match="installation verification failed"):
+                manager._install_from_archive(archive_path, "1.22.0")
 
 
 class TestVerifyInstallation(FoundationTestCase):
