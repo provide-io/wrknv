@@ -56,7 +56,7 @@ class GoManager(BaseToolManager):
             return versions
 
         except Exception as e:
-            raise ToolManagerError(f"Failed to fetch Go versions: {e}")
+            raise ToolManagerError(f"Failed to fetch Go versions: {e}") from e
 
     def get_download_url(self, version: str) -> str:
         """Get download URL for Go version."""
@@ -221,7 +221,7 @@ class GoManager(BaseToolManager):
     def _version_compare(self, version1: str, version2: str) -> int:
         """Compare two version strings. Returns -1, 0, or 1."""
 
-        def version_tuple(v):
+        def version_tuple(v: str) -> tuple[int, ...]:
             return tuple(map(int, v.split(".")))
 
         v1_tuple = version_tuple(version1)
