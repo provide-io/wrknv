@@ -59,10 +59,11 @@ wrknv = "wrknv.cli:entry_point"
 
 [tool.setuptools]
 packages = [
-    "wrknv", 
-    "wrknv.wenv", 
-    "wrknv.wenv.managers", 
-    "wrknv.wenv.operations", 
+    "wrknv",
+    "wrknv.cli",
+    "wrknv.wenv",
+    "wrknv.wenv.managers",
+    "wrknv.wenv.operations",
     "wrknv.package"
 ]
 package-dir = {"" = "src"}
