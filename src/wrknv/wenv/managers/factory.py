@@ -7,13 +7,12 @@ Tool Manager Factory for wrknv
 Factory for creating appropriate tool managers.
 """
 
-from ..config import WorkenvConfig
+from wrknv.config import WorkenvConfig
+
 from .base import BaseToolManager
 
 
-def get_tool_manager(
-    tool_name: str, config: WorkenvConfig | None = None
-) -> BaseToolManager | None:
+def get_tool_manager(tool_name: str, config: WorkenvConfig | None = None) -> BaseToolManager | None:
     """Get appropriate tool manager for a tool."""
 
     if config is None:
