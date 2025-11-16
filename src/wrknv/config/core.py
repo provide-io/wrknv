@@ -196,6 +196,22 @@ class WorkenvConfig(RuntimeConfig):
             return tool_config.get("version")
         return tool_config if isinstance(tool_config, str) else None
 
+    def set_tool_version(self, tool_name: str, version: str) -> None:
+        """Set version for a specific tool."""
+        # Ensure tool entry exists
+        if tool_name not in self.tools:
+            self.tools[tool_name] = {}
+
+        # If it's a dict, set the version key
+        if isinstance(self.tools[tool_name], dict):
+            self.tools[tool_name]["version"] = version
+        else:
+            # If it's a string, replace with dict
+            self.tools[tool_name] = {"version": version}
+
+        # Save configuration
+        self.save_config()
+
     def get_all_tools(self) -> dict[str, str | list[str]]:
         """Get all tool versions."""
         result = {}
