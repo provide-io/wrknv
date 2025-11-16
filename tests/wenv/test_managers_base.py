@@ -161,32 +161,32 @@ class TestInstalledVersions(FoundationTestCase):
     def test_get_installed_versions_empty(self, tmp_path: Path) -> None:
         """Test getting installed versions when none exist."""
         config = WorkenvConfig()
-        config.workenv_cache_dir = str(tmp_path / "cache")
-        manager = ConcreteToolManager(config)
+        with patch.object(config, "get_setting", return_value=str(tmp_path / "tools")):
+            manager = ConcreteToolManager(config)
 
-        versions = manager.get_installed_versions()
-        assert versions == []
+            versions = manager.get_installed_versions()
+            assert versions == []
 
     def test_get_installed_versions_with_versions(self, tmp_path: Path) -> None:
         """Test getting installed versions when some exist."""
         config = WorkenvConfig()
-        config.workenv_cache_dir = str(tmp_path / "cache")
-        manager = ConcreteToolManager(config)
+        with patch.object(config, "get_setting", return_value=str(tmp_path / "tools")):
+            manager = ConcreteToolManager(config)
 
-        # Create fake version directories
-        tool_dir = manager.install_path / "testtool"
-        (tool_dir / "1.0.0").mkdir(parents=True)
-        (tool_dir / "2.0.0").mkdir(parents=True)
-        (tool_dir / "1.5.0").mkdir(parents=True)
-        (tool_dir / "invalid").mkdir(parents=True)  # Should be ignored
+            # Create fake version directories
+            tool_dir = manager.install_path / "testtool"
+            (tool_dir / "1.0.0").mkdir(parents=True)
+            (tool_dir / "2.0.0").mkdir(parents=True)
+            (tool_dir / "1.5.0").mkdir(parents=True)
+            (tool_dir / "invalid").mkdir(parents=True)  # Should be ignored
 
-        versions = manager.get_installed_versions()
-        assert "1.0.0" in versions
-        assert "2.0.0" in versions
-        assert "1.5.0" in versions
-        assert "invalid" not in versions
-        # Should be sorted in reverse order
-        assert versions[0] > versions[-1]
+            versions = manager.get_installed_versions()
+            assert "1.0.0" in versions
+            assert "2.0.0" in versions
+            assert "1.5.0" in versions
+            assert "invalid" not in versions
+            # Should be sorted in reverse order
+            assert versions[0] > versions[-1]
 
 
 class TestVersionDirCheck(FoundationTestCase):
