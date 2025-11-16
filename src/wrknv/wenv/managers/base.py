@@ -11,10 +11,10 @@ from abc import ABC, abstractmethod
 import pathlib
 import platform
 import shutil
-import subprocess
 from urllib.parse import urlparse
 
 from provide.foundation import logger
+from provide.foundation.process import run as process_run
 
 from wrknv.config import WorkenvConfig, WorkenvConfigError
 
@@ -340,11 +340,12 @@ class BaseToolManager(ABC):
 
         try:
             # Try to run the tool with version flag
-            result = subprocess.run(
+            result = process_run(
                 [str(binary_path), "--version"],
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=10.0,
+                check=False,
             )
 
             return result.returncode == 0

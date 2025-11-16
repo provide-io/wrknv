@@ -11,8 +11,8 @@ import json
 from pathlib import Path
 from unittest.mock import MagicMock, Mock, patch
 
-import pytest
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.config import WorkenvConfig
 from wrknv.wenv.managers.base import ToolManagerError
@@ -315,9 +315,11 @@ class TestInstallFromArchive(FoundationTestCase):
         # Use actual shutil.move so files are actually moved
         import shutil as real_shutil
 
-        with patch("shutil.move", side_effect=real_shutil.move):
-            with pytest.raises(ToolManagerError, match="installation verification failed"):
-                manager._install_from_archive(archive_path, "1.22.0")
+        with (
+            patch("shutil.move", side_effect=real_shutil.move),
+            pytest.raises(ToolManagerError, match="installation verification failed"),
+        ):
+            manager._install_from_archive(archive_path, "1.22.0")
 
 
 class TestVerifyInstallation(FoundationTestCase):
