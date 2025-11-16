@@ -92,6 +92,33 @@ class GitignoreBuilder:
         self.sections.append(("wrknv", "\n".join(wrknv_patterns)))
         logger.debug("Added wrknv-specific patterns")
 
+    def add_provide_section(self) -> None:
+        """Add provide ecosystem ignore patterns."""
+        provide_patterns = [
+            "",
+            "# === Provide Ecosystem ===",
+            "# Generated outputs and artifacts",
+            ".provide/output/",
+            ".provide/shared/",
+            ".provide/logs/",
+            ".provide/cache/",
+            "",
+            "# Log files",
+            "*.log",
+            "*.log.*",
+            "logs/",
+            "",
+            "# Local/temporary files",
+            "*.local",
+            "*.local.*",
+            ".*.local",
+            "*.bak",
+            "*.tmp",
+        ]
+
+        self.sections.append(("provide", "\n".join(provide_patterns)))
+        logger.debug("Added provide ecosystem patterns")
+
     def add_custom_rules(self, rules: list[str]) -> None:
         """
         Add custom rules.
