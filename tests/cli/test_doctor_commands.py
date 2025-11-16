@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import click.testing
 from provide.testkit import FoundationTestCase
-from provide.testkit.mocking import Mock, patch
+from provide.testkit.mocking import patch
 
 from wrknv.cli.hub_cli import create_cli
 

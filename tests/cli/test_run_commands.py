@@ -7,12 +7,10 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import click.testing
-import pytest
 from provide.testkit import FoundationTestCase
-from provide.testkit.mocking import AsyncMock, Mock, patch
+from provide.testkit.mocking import Mock, patch
+import pytest
 
 from wrknv.cli.hub_cli import create_cli
 

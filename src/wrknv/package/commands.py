@@ -9,9 +9,9 @@ Command implementations for package management using flavor CLI.
 
 from pathlib import Path
 import shutil
-import subprocess
 
 from provide.foundation import logger
+from provide.foundation.process import CompletedProcess, run as process_run
 
 from wrknv.wenv.config import WorkenvConfig
 
@@ -25,12 +25,12 @@ def _check_flavor_cli() -> bool:
     return True
 
 
-def _run_flavor_command(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess:
+def _run_flavor_command(args: list[str], cwd: Path | None = None) -> CompletedProcess:
     """Run a flavor CLI command."""
     _check_flavor_cli()
     cmd = ["flavor", *args]
     logger.debug(f"Running: {' '.join(cmd)}")
-    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=True)
+    return process_run(cmd, cwd=cwd, capture_output=True, text=True, check=True)
 
 
 def build_package(
@@ -62,12 +62,13 @@ def build_package(
     cmd = ["flavor", "pack", "--manifest", str(manifest_path)]
 
     logger.info(f"Building package from {manifest_path}")
-    result = subprocess.run(
+    result = process_run(
         cmd,
         cwd=manifest_path.parent,
         capture_output=True,
         text=True,
         env=env,
+        check=False,
     )
 
     if result.returncode != 0:

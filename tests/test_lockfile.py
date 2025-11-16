@@ -10,9 +10,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import pytest
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import Mock, patch
+import pytest
 
 from wrknv.config import WorkenvConfig
 from wrknv.lockfile import Lockfile, LockfileManager, ResolvedTool

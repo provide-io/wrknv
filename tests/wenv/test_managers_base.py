@@ -7,12 +7,11 @@
 
 from __future__ import annotations
 
-import platform
 from pathlib import Path
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
-import pytest
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.config import WorkenvConfig, WorkenvConfigError
 from wrknv.wenv.managers.base import BaseToolManager, ToolManagerError

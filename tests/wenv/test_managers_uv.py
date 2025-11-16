@@ -9,10 +9,10 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from unittest.mock import MagicMock, Mock, mock_open, patch
+from unittest.mock import MagicMock, Mock, patch
 
-import pytest
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.config import WorkenvConfig
 from wrknv.wenv.managers.base import ToolManagerError
@@ -247,9 +247,11 @@ class TestInstallFromArchive(FoundationTestCase):
         archive_path.touch()
 
         # Mock rglob to return empty list (no uv binary found)
-        with patch.object(Path, "rglob", return_value=iter([])):
-            with pytest.raises(ToolManagerError, match="UV binary not found"):
-                manager._install_from_archive(archive_path, "0.4.15")
+        with (
+            patch.object(Path, "rglob", return_value=iter([])),
+            pytest.raises(ToolManagerError, match="UV binary not found"),
+        ):
+            manager._install_from_archive(archive_path, "0.4.15")
 
 
 class TestVerifyInstallation(FoundationTestCase):

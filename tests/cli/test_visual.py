@@ -7,14 +7,13 @@
 
 from __future__ import annotations
 
-import pytest
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import Mock, patch
+import pytest
 from rich.console import Console
 
 from wrknv.cli.visual import (
     Emoji,
-    WRKENV_THEME,
     get_console,
     get_tool_emoji,
     print_dim,

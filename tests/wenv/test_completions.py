@@ -7,8 +7,8 @@
 
 from __future__ import annotations
 
-import pytest
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.wenv.completions import (
     generate_bash_completions,

@@ -8,12 +8,11 @@
 from __future__ import annotations
 
 import sys
-from pathlib import Path
 
 import click
-import pytest
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import Mock, patch
+import pytest
 
 from wrknv.cli.hub_cli import (
     WrknvContext,
