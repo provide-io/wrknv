@@ -14,14 +14,50 @@ from pathlib import Path
 from provide.foundation import logger
 from provide.foundation.time import provide_now
 
+# Pattern dictionaries for ecosystem-specific sections
+WRKNV_PATTERNS: dict[str, list[str]] = {
+    "Work environment directories": [
+        "workenv/",
+        "wrknv_*/",
+    ],
+    "wrknv configuration and cache": [
+        ".wrknv/",
+        "*.wrknv.bak",
+    ],
+    "Container volumes": [
+        ".wrknv_*/",
+    ],
+}
+
+PROVIDE_PATTERNS: dict[str, list[str]] = {
+    "Generated outputs and artifacts": [
+        ".provide/output/",
+        ".provide/shared/",
+        ".provide/logs/",
+        ".provide/cache/",
+    ],
+    "Log files": [
+        "*.log",
+        "*.log.*",
+        "logs/",
+    ],
+    "Local/temporary files": [
+        "*.local",
+        "*.local.*",
+        ".*.local",
+        "*.bak",
+        "*.tmp",
+    ],
+}
+
 
 class GitignoreBuilder:
     """Builds gitignore files with proper sections and formatting."""
 
     def __init__(self) -> None:
         """Initialize the builder."""
-        self.sections = []
-        self.custom_rules = []
+        self.sections: list[tuple[str, str]] = []
+        self.custom_rules: list[str] = []
         logger.debug("GitignoreBuilder initialized")
 
     def add_header(self, project_name: str | None = None) -> None:
@@ -72,25 +108,34 @@ class GitignoreBuilder:
         self.sections.append((name, section_header + section_content))
         logger.debug(f"Added template section: {name}")
 
+    def _build_section_content(self, section_name: str, patterns: dict[str, list[str]]) -> str:
+        """Build section content from pattern dictionary.
+
+        Args:
+            section_name: Name of the section (e.g., "wrknv", "Provide Ecosystem")
+            patterns: Dictionary mapping category names to lists of patterns
+
+        Returns:
+            Formatted section content string
+        """
+        lines = ["", f"# === {section_name} ==="]
+        for category, items in patterns.items():
+            lines.append(f"# {category}")
+            lines.extend(items)
+            lines.append("")
+        return "\n".join(lines)
+
     def add_wrknv_section(self) -> None:
         """Add wrknv-specific ignore patterns."""
-        wrknv_patterns = [
-            "",
-            "# === wrknv ===",
-            "# Work environment directories",
-            "workenv/",
-            "wrknv_*/",
-            "",
-            "# wrknv configuration and cache",
-            ".wrknv/",
-            "*.wrknv.bak",
-            "",
-            "# Container volumes",
-            ".wrknv_*/",
-        ]
-
-        self.sections.append(("wrknv", "\n".join(wrknv_patterns)))
+        content = self._build_section_content("wrknv", WRKNV_PATTERNS)
+        self.sections.append(("wrknv", content))
         logger.debug("Added wrknv-specific patterns")
+
+    def add_provide_section(self) -> None:
+        """Add provide ecosystem ignore patterns."""
+        content = self._build_section_content("Provide Ecosystem", PROVIDE_PATTERNS)
+        self.sections.append(("provide", content))
+        logger.debug("Added provide ecosystem patterns")
 
     def add_custom_rules(self, rules: list[str]) -> None:
         """

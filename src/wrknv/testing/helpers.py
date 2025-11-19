@@ -19,6 +19,7 @@ import subprocess
 import sys
 from typing import Any
 
+from provide.foundation import logger
 from provide.foundation.process import run
 
 
@@ -152,17 +153,17 @@ class WorkenvTestRunner:
         if force and self.workenv_dir.exists():
             import shutil
 
-            print(f"Removing existing workenv at {self.workenv_dir}...")
+            logger.info("removing_workenv", path=str(self.workenv_dir))
             shutil.rmtree(self.workenv_dir)
 
         # Source env.sh - this will create the workenv directory automatically
-        print("Setting up workenv by sourcing env.sh...")
+        logger.info("setting_up_workenv")
         result = run(["bash", "-c", f"source {env_script} && echo 'Workenv ready at: $VIRTUAL_ENV'"])
 
         if result.returncode != 0:
             raise RuntimeError(f"Failed to source env.sh: {result.stderr}")
 
-        print(result.stdout)
+        logger.debug("workenv_setup_output", stdout=result.stdout)
 
     def install_deps(self, editable: bool = True, extras: str | None = None) -> None:
         """
@@ -186,7 +187,7 @@ class WorkenvTestRunner:
             package_spec = f".[{extras}]"
         cmd.append(package_spec)
 
-        print(f"Installing dependencies: {' '.join(cmd)}")
+        logger.info("installing_dependencies", cmd=cmd)
         run(cmd, env=env, check=True)
 
     def run_pytest(self, *args: str, **kwargs: Any) -> subprocess.CompletedProcess:
@@ -206,7 +207,7 @@ class WorkenvTestRunner:
         pytest_cmd = [str(self.workenv_dir / "bin" / "python"), "-m", "pytest"]
         pytest_cmd.extend(args)
 
-        print(f"Running tests: {' '.join(pytest_cmd)}")
+        logger.info("running_tests", cmd=pytest_cmd)
         return run(pytest_cmd, env=env, **kwargs)
 
     def run(self, cmd: list, **kwargs: Any) -> subprocess.CompletedProcess:

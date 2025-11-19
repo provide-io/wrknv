@@ -31,7 +31,7 @@ dependencies = [
     "jinja2>=3.0.0",
     "attrs>=23.0.0",
     "cattrs>=23.0.0",
-    "pyvider-telemetry>=0.0.15",
+    "provide-foundation[all]>=0.0.0",
 ]
 
 [project.optional-dependencies]
@@ -49,7 +49,7 @@ dev = [
 ]
 
 [project.scripts]
-wrknv = "wrknv.wenv.cli:entry_point"
+wrknv = "wrknv.cli:entry_point"
 
 [project.urls]
 "Homepage" = "https://github.com/livingstaccato/wrknv"
@@ -59,10 +59,11 @@ wrknv = "wrknv.wenv.cli:entry_point"
 
 [tool.setuptools]
 packages = [
-    "wrknv", 
-    "wrknv.wenv", 
-    "wrknv.wenv.managers", 
-    "wrknv.wenv.operations", 
+    "wrknv",
+    "wrknv.cli",
+    "wrknv.wenv",
+    "wrknv.wenv.managers",
+    "wrknv.wenv.operations",
     "wrknv.package"
 ]
 package-dir = {"" = "src"}
@@ -221,6 +222,6 @@ dev = [
 
 [tool.flavor]
 # Configuration for packaging wrknv with flavor
-entry_point = "wrknv.wenv.cli:entry_point"
+entry_point = "wrknv.cli:entry_point"
 app_name = "wrknv"
 description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"

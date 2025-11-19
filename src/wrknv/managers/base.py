@@ -14,6 +14,7 @@ import pathlib
 import platform
 from urllib.parse import urlparse
 
+from provide.foundation.console.output import pout
 from provide.foundation.file import safe_delete, safe_rmtree
 from provide.foundation.logger import get_logger
 from provide.foundation.process import run
@@ -301,10 +302,10 @@ class BaseToolManager(ABC):
             for _i, version in enumerate(versions[:limit]):
                 marker = " (current)" if version == current else ""
                 status = ""
-                print(f"{status} {version}{marker}")
+                pout(f"{status} {version}{marker}")
 
             if len(versions) > limit:
-                print(f"... and {len(versions) - limit} more versions available")
+                pout(f"... and {len(versions) - limit} more versions available")
 
         except Exception as e:
             raise ToolManagerError(f"Failed to fetch versions for {self.tool_name}: {e}") from e
@@ -315,11 +316,11 @@ class BaseToolManager(ABC):
         if version:
             binary_path = self.get_current_binary_path()
             if binary_path and binary_path.exists():
-                print(f"{self.tool_name}: {version} (installed at {binary_path})")
+                pout(f"{self.tool_name}: {version} (installed at {binary_path})")
             else:
-                print(f"{self.tool_name}: {version} (binary missing)")
+                pout(f"{self.tool_name}: {version} (binary missing)")
         else:
-            print(f"{self.tool_name}: not installed")
+            pout(f"{self.tool_name}: not installed")
 
     def get_installed_versions(self) -> list[str]:
         """Get all installed versions of this tool."""

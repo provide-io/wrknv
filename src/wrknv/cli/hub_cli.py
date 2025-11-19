@@ -17,6 +17,7 @@ from typing import TYPE_CHECKING
 
 import click
 from provide.foundation.cli import echo_error, echo_info, echo_success
+from provide.foundation.console.output import perr, pout
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 
@@ -218,9 +219,9 @@ async def _run_task_for_intercept(
         result = await registry.run_task(task_name, args=args, dry_run=False, env=None)
 
         if result.stdout:
-            print(result.stdout, end="")
+            pout(result.stdout, end="")
         if result.stderr:
-            print(result.stderr, end="", file=sys.stderr)
+            perr(result.stderr, end="")
 
         if result.success:
             echo_success(f"✓ Task {task_name} completed in {result.duration:.2f}s")
