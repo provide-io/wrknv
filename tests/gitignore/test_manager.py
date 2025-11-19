@@ -286,7 +286,7 @@ class TestGitignoreManager:
         """Test building in overwrite mode."""
         # Create existing file
         existing_file = temp_dir / ".gitignore"
-        existing_file.write_text("# Original\n*.log\n\n# === Custom Rules ===\n*.secret")
+        existing_file.write_text("# Original\n*.obsolete\n\n# === Custom Rules ===\n*.secret")
 
         mock_handler = Mock()
         mock_handler.get_template.return_value = "*.pyc"
@@ -297,7 +297,8 @@ class TestGitignoreManager:
 
         content = existing_file.read_text()
         assert "# Original" not in content  # Original content gone
-        assert "*.log" not in content
+        assert "*.obsolete" not in content  # Original pattern removed
+        assert "*.log" in content  # Provide section adds *.log
         assert "*.secret" in content  # Custom rules preserved
         assert "*.pyc" in content
 

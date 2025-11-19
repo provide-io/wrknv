@@ -11,7 +11,6 @@ This module consolidates all wrknv exceptions with helpful error messages,
 suggestions, and proper inheritance from foundation errors."""
 
 from __future__ import annotations
-
 from provide.foundation.errors import (
     AlreadyExistsError,
     FoundationError,

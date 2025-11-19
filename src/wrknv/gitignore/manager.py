@@ -97,6 +97,9 @@ class GitignoreManager:
         # Add wrknv section
         builder.add_wrknv_section()
 
+        # Add provide ecosystem section
+        builder.add_provide_section()
+
         # Add custom rules
         if custom_rules:
             builder.add_custom_rules(custom_rules)
@@ -266,6 +269,7 @@ class GitignoreManager:
                 builder.add_template_section(template_name, content)
 
         builder.add_wrknv_section()
+        builder.add_provide_section()
 
         if custom_rules:
             builder.add_custom_rules(custom_rules)

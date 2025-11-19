@@ -15,6 +15,7 @@ import sys
 from typing import Annotated
 
 from provide.foundation.cli import echo_error, echo_info, echo_success
+from provide.foundation.console.output import perr, pout
 from provide.foundation.hub import register_command
 
 from wrknv.tasks.registry import TaskRegistry
@@ -87,9 +88,9 @@ async def _run_tasks(
             result = await registry.run_task(task_name, args=None, dry_run=dry_run, env=env)
 
             if result.stdout:
-                print(result.stdout, end="")
+                pout(result.stdout, end="")
             if result.stderr:
-                print(result.stderr, end="", file=sys.stderr)
+                perr(result.stderr, end="")
 
             if result.success:
                 echo_success(f"✓ Task {task_name} completed in {result.duration:.2f}s")
