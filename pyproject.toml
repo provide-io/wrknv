@@ -298,11 +298,12 @@ allowed_paths = []
 
 [dependency-groups]
 dev = [
-    "provide-testkit[quality]",
-    "types-pyyaml>=6.0.12.20250915",
-]
-docs = [
-    "provide-testkit[docs]",
+    "provide-testkit",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "pytest-benchmark>=5.1.0",
+    "pytest-cov>=6.2.1",
+    "pytest-xdist>=3.8.0",
 ]
 
 [tool.uv.sources]
