@@ -34,12 +34,10 @@ class TestLockGenerateCommand(FoundationTestCase):
 
     def test_generate_success(self) -> None:
         """Test generating lockfile successfully."""
-        with (
-            patch("wrknv.lockfile.LockfileManager") as mock_manager_class,
-            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-        ):
-            mock_config = Mock()
-            mock_load.return_value = mock_config
+        with patch("wrknv.lockfile.LockfileManager") as mock_manager_class:
+            with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+                mock_config = Mock()
+                mock_load.return_value = mock_config
 
                 mock_manager = Mock()
                 mock_lockfile_path = Mock()
