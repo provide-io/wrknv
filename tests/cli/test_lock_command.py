@@ -14,6 +14,9 @@ from provide.testkit import FoundationTestCase
 from wrknv.cli.hub_cli import create_cli
 from wrknv.lockfile import ResolvedTool
 
+# Module-level shared CLI instance
+_test_cli = None
+
 
 def get_test_cli():
     """Create a fresh test CLI instance.
