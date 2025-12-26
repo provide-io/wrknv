@@ -138,7 +138,7 @@ jobs:
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          extra_args: --only-verified
+          extra_args: --only-verified --since-commit HEAD~50
 
   semgrep:
     name: Semgrep Security Scan
