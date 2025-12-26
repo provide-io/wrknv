@@ -23,7 +23,7 @@ if [ $SYNC_EXIT_CODE -eq 0 ]; then
 else
     print_warning "Dependency sync failed - will install project and siblings manually"
     echo "Check /tmp/{{ project_name }}_setup/sync.log for details"
-
+    
     # Try to install just the project without dependencies first
     echo -n "Installing {{ project_name }} without dependencies..."
     {% if use_spinner %}
