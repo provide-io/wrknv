@@ -292,10 +292,7 @@ class ContainerManager:
 
             with tarfile.open(backup_path, "r:*") as tar:
                 # Filter members using foundation's is_safe_path to prevent path traversal
-                safe_members = [
-                    m for m in tar.getmembers()
-                    if is_safe_path(container_dir, m.name)
-                ]
+                safe_members = [m for m in tar.getmembers() if is_safe_path(container_dir, m.name)]
                 # Log any skipped members
                 skipped = len(tar.getmembers()) - len(safe_members)
                 if skipped > 0:
@@ -303,7 +300,7 @@ class ContainerManager:
                         "Skipped potentially unsafe tar members",
                         skipped_count=skipped,
                     )
-                tar.extractall(container_dir, members=safe_members)  # noqa: S202
+                tar.extractall(container_dir, members=safe_members)
 
             logger.info("📥 Restored volumes from backup", backup=str(backup_path))
             return True
