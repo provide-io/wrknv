@@ -170,40 +170,6 @@ module = [
 ]
 ignore_errors = true
 
-[[tool.mypy.overrides]]
-# CLI commands have many dynamic attribute accesses - ignore for now
-module = [
-    "wrknv.cli.commands.*",
-    "wrknv.cli.nested_commands",
-    "wrknv.cli.hub_cli",
-]
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-# Wenv modules have some API mismatches with foundation - ignore for now
-module = [
-    "wrknv.wenv.schema",
-    "wrknv.wenv.env_generator",
-    "wrknv.wenv.operations.*",
-    "wrknv.wenv.doctor",
-]
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-# Config module needs API updates
-module = [
-    "wrknv.config.core",
-]
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-# Managers module has async/API issues - ignore for now
-module = [
-    "wrknv.managers.*",
-    "wrknv.lockfile",
-]
-ignore_errors = true
-
 [tool.pytest.ini_options]
 log_cli = true
 log_cli_level = "DEBUG"
