@@ -24,7 +24,7 @@ from .manager import PackageManager
 def _check_flavor_installed() -> None:
     """Check if flavorpack is installed."""
     try:
-        import flavor
+        import flavor  # noqa: F401
     except ImportError as e:
         raise ImportError("flavorpack not installed. Install it with: uv tool install flavorpack") from e
 
