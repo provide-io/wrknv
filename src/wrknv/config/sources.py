@@ -43,7 +43,7 @@ class FileConfigSource(ConfigSource):
         """Initialize with file path and optional section."""
         self.path = path
         self.section = section
-        self._data = {}
+        self._data: dict[str, Any] = {}
         self._load()
 
     def _load(self) -> None:
@@ -74,7 +74,7 @@ class FileConfigSource(ConfigSource):
 
         # Then try navigating from root
         parts = key.split(".")
-        current = self._data
+        current: Any = self._data
         for part in parts:
             if isinstance(current, dict):
                 current = current.get(part)
