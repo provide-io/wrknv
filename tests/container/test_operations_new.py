@@ -17,7 +17,6 @@ from unittest.mock import MagicMock
 
 from provide.foundation.process import CompletedProcess, ProcessError
 from provide.testkit.mocking import patch
-from unittest.mock import MagicMock
 from rich.console import Console
 
 from wrknv.container.operations.build import ContainerBuilder
