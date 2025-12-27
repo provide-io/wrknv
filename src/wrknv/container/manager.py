@@ -269,6 +269,8 @@ class ContainerManager:
         import shutil
         import tarfile
 
+        from provide.foundation.archive.security import is_safe_path
+
         try:
             if not backup_path.exists():
                 logger.error("Backup file not found", path=str(backup_path))
@@ -285,7 +287,16 @@ class ContainerManager:
                 shutil.rmtree(volumes_dir)
 
             with tarfile.open(backup_path, "r:*") as tar:
-                tar.extractall(container_dir)
+                # Filter members using foundation's is_safe_path to prevent path traversal
+                safe_members = [m for m in tar.getmembers() if is_safe_path(container_dir, m.name)]
+                # Log any skipped members
+                skipped = len(tar.getmembers()) - len(safe_members)
+                if skipped > 0:
+                    logger.warning(
+                        "Skipped potentially unsafe tar members",
+                        skipped_count=skipped,
+                    )
+                tar.extractall(container_dir, members=safe_members)
 
             logger.info("📥 Restored volumes from backup", backup=str(backup_path))
             return True
