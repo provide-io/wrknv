@@ -9,6 +9,19 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., v1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  id-token: write
+
+env:
+  PYTHON_VERSION: "3.11"
+  UV_VERSION: "0.9.13"
 
 jobs:
   build:
@@ -78,24 +91,9 @@ jobs:
           assert wrknv.__version__ == '${{ steps.version.outputs.version }}'
           "
 
-  publish-pypi:
-    needs: [build, verify-testpypi]
-    if: github.event_name == 'release'
-    runs-on: ubuntu-24.04
-    permissions:
-      id-token: write
-      contents: read
-    environment:
-      name: pypi
-      url: https://pypi.org/p/wrknv
-    steps:
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8
-        with:
-          name: dist
-          path: dist
-      - uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e  # release/v1
-
-  sign-and-upload:
+  build-binaries:
+    name: Build Binary for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     needs: build
     if: github.event_name == 'release'
     runs-on: ubuntu-24.04
