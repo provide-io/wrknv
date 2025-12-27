@@ -14,8 +14,11 @@ import sys
 import tarfile
 import zipfile
 
-from provide.testkit.mocking import patch
 import pytest
+from provide.testkit.mocking import patch
+
+# Platform detection
+IS_WINDOWS = sys.platform == "win32"
 
 # Platform detection
 IS_WINDOWS = sys.platform == "win32"
