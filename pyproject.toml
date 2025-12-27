@@ -290,17 +290,6 @@ output = "coverage.xml"
 [tool.bandit]
 exclude_dirs = [".venv", "tests", "workenv"]
 
-################################################################################
-# Security Scanning Allowlist
-################################################################################
-
-[tool.security]
-# Paths to exclude from secret scanning (TruffleHog, GitGuardian, Gitleaks)
-# Run: we security generate (via wrknv) to regenerate tool configs
-# Add entries here only when a legitimately-committed file trips a scanner.
-description = "Scanner allowlist for intentionally-committed files"
-allowed_paths = []
-
 [dependency-groups]
 dev = [
     "provide-testkit[quality]",
