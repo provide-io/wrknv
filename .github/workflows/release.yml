@@ -57,7 +57,7 @@ jobs:
           ls -la dist/
       
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: dist
           path: dist/
@@ -190,7 +190,7 @@ jobs:
           ./dist/${{ matrix.artifact }} --help || dist/${{ matrix.artifact }} --help
       
       - name: Upload binary
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: binary-${{ matrix.os }}
           path: dist/${{ matrix.artifact }}
