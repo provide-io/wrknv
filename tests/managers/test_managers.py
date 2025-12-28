@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import platform
 
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import MagicMock, patch
@@ -48,7 +49,10 @@ class TestManagers(FoundationTestCase):
         # Arrange
         config = WorkenvConfig()
         manager = ConcreteToolManager(config)
-        expected_path = manager.install_path / manager.tool_name / "1.0.0" / "bin" / manager.executable_name
+        executable = manager.executable_name
+        if platform.system() == "Windows":
+            executable += ".exe"
+        expected_path = manager.install_path / manager.tool_name / "1.0.0" / "bin" / executable
 
         # Act
         binary_path = manager.get_binary_path("1.0.0")
