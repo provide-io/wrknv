@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "wrknv"
 dynamic = ["version"]
-description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"
+description = "wrknv - Task automation and development environment tooling"
 authors = [
     { name = "Tim Perkins", email = "code@tim.life" },
 ]
@@ -290,4 +290,4 @@ dev = [
 # Configuration for packaging wrknv with flavor
 entry_point = "wrknv.cli:entry_point"
 app_name = "wrknv"
-description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"
+description = "wrknv - Task automation and development environment tooling"
