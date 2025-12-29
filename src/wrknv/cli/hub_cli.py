@@ -51,14 +51,13 @@ def load_commands() -> None:
     """Import all command modules to trigger registration."""
     # List of command modules to load
     command_modules = [
+        "wrknv.cli.commands.check",
         "wrknv.cli.commands.config",
-        "wrknv.cli.commands.conform",
         "wrknv.cli.commands.container",
         "wrknv.cli.commands.doctor",
         "wrknv.cli.commands.gitignore",
         "wrknv.cli.commands.lock",
         "wrknv.cli.commands.profile",
-        "wrknv.cli.commands.pyproject",
         "wrknv.cli.commands.run",
         "wrknv.cli.commands.secrets",
         "wrknv.cli.commands.setup",
@@ -118,14 +117,13 @@ def intercept_task_command() -> bool:
     """
     # Built-in commands that should not be intercepted
     BUILT_IN_COMMANDS = {
+        "check",
         "config",
-        "conform",
         "container",
         "doctor",
         "gitignore",
         "lock",
         "profile",
-        "pyproject",
         "run",
         "secrets",
         "selftest",
