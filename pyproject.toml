@@ -41,7 +41,7 @@ dependencies = [
     "jinja2>=3.0.0",
     "attrs>=25.3.0",
     "cattrs>=24.1.3",
-    "provide-foundation[all]>=0.0.0",
+    "provide-foundation[all]",
 ]
 
 [project.optional-dependencies]
