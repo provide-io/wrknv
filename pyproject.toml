@@ -53,10 +53,10 @@ dev = [
 wrknv = "wrknv.cli:entry_point"
 
 [project.urls]
-"Homepage" = "https://github.com/livingstaccato/wrknv"
-"Bug Tracker" = "https://github.com/livingstaccato/wrknv/issues"
-"Documentation" = "https://github.com/livingstaccato/wrknv#readme"
-"Source Code" = "https://github.com/livingstaccato/wrknv"
+Homepage = "https://foundry.provide.io/wrknv/"
+Documentation = "https://foundry.provide.io/wrknv/"
+Repository = "https://github.com/provide-io/wrknv"
+Issues = "https://github.com/provide-io/wrknv/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
