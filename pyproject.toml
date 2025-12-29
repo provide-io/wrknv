@@ -7,7 +7,7 @@ name = "wrknv"
 dynamic = ["version"]
 description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"
 authors = [
-    {name = "Provide.io", email = "engineering@provide.io"},
+    { name = "Tim Perkins", email = "code@tim.life" },
 ]
 readme = "README.md"
 license = "Apache-2.0"
@@ -31,7 +31,7 @@ dependencies = [
     "jinja2>=3.0.0",
     "attrs>=25.3.0",
     "cattrs>=24.1.3",
-    "provide-foundation[all]>=0.0.0",
+    "provide-foundation[all]",
 ]
 
 [project.optional-dependencies]
