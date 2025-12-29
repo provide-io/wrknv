@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -12,12 +12,17 @@ from __future__ import annotations
 import ast
 import json
 from pathlib import Path
+import subprocess
 import sys
-import tomllib
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
-from provide.foundation.process import run as process_run
+
+try:
+    import tomllib  # Python 3.11+
+except ImportError:
+    import tomli as tomllib  # type: ignore[import-not-found]
+
 
 # =============================================================================
 # Check Group
@@ -36,7 +41,7 @@ def check_group() -> None:
 HEADER_SHEBANG = "#!/usr/bin/env python3"
 HEADER_LIBRARY = "# "
 SPDX_BLOCK = [
-    "# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.",
+    "# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.",
     "# SPDX-License-Identifier: Apache-2.0",
     "#",
 ]
@@ -75,21 +80,20 @@ FOOTER_EMOJIS = [
 def _detect_repo_name() -> str:
     """Auto-detect repository name from git remote or directory name."""
     try:
-        result = process_run(
+        result = subprocess.run(
             ["git", "remote", "get-url", "origin"],
             capture_output=True,
             text=True,
-            check=False,
-            timeout=5.0,
+            check=True,
+            timeout=5,
         )
-        if result.returncode == 0:
-            remote_url = result.stdout.strip()
-            repo_name = remote_url.rstrip("/").split("/")[-1]
-            repo_name = repo_name.removesuffix(".git")
-            if repo_name:
-                return repo_name
-    except Exception:  # noqa: S110
-        pass  # nosec B110 - Fallback to cwd name if git fails
+        remote_url = result.stdout.strip()
+        repo_name = remote_url.rstrip("/").split("/")[-1]
+        repo_name = repo_name.removesuffix(".git")
+        if repo_name:
+            return repo_name
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError):
+        pass
     return Path.cwd().name
 
 
@@ -97,7 +101,7 @@ def _load_footer_registry() -> dict[str, str]:
     """Load the footer registry from JSON file."""
     registry_path = Path(__file__).parent.parent.parent / "data" / "footer_registry.json"
     try:
-        with registry_path.open(encoding="utf-8") as f:
+        with registry_path.open() as f:
             data = json.load(f)
             return data.get("repositories", {})
     except (FileNotFoundError, json.JSONDecodeError) as e:
