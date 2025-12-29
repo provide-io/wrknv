@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""Conform Commands
-================
-Commands for enforcing SPDX headers and footer conformance."""
+"""Check Commands
+==============
+Commands for validating provide.io standards compliance."""
 
 from __future__ import annotations
 
@@ -15,10 +15,28 @@ from pathlib import Path
 import subprocess
 import sys
 
-from provide.foundation.cli import echo_error, echo_info, echo_success
+from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 
-# --- Protocol Constants ---
+try:
+    import tomllib  # Python 3.11+
+except ImportError:
+    import tomli as tomllib  # type: ignore[import-not-found]
+
+
+# =============================================================================
+# Check Group
+# =============================================================================
+
+
+@register_command("check", group=True, description="Validate provide.io standards compliance")
+def check_group() -> None:
+    """Check commands for validating standards compliance."""
+
+
+# =============================================================================
+# SPDX Command (headers + footers)
+# =============================================================================
 
 HEADER_SHEBANG = "#!/usr/bin/env python3"
 HEADER_LIBRARY = "# "
@@ -29,34 +47,33 @@ SPDX_BLOCK = [
 ]
 PLACEHOLDER_DOCSTRING = '"""TODO: Add module docstring."""'
 
-# Footer emojis to detect and strip
 FOOTER_EMOJIS = [
-    "\U0001f3d7\ufe0f",  # construction
-    "\U0001f40d",  # snake
-    "\U0001f9f1",  # brick
-    "\U0001f41d",  # bee
-    "\U0001f4c1",  # folder
-    "\U0001f37d\ufe0f",  # plate
-    "\U0001f4d6",  # book
-    "\U0001f9ea",  # test tube
-    "\u2705",  # check
-    "\U0001f9e9",  # puzzle
-    "\U0001f527",  # wrench
-    "\U0001f30a",  # wave
-    "\U0001faa2",  # knot
-    "\U0001f50c",  # plug
-    "\U0001f4de",  # phone
-    "\U0001f4c4",  # page
-    "\u2699\ufe0f",  # gear
-    "\U0001f963",  # bowl
-    "\U0001f52c",  # microscope
-    "\U0001f53c",  # up triangle
-    "\U0001f336\ufe0f",  # pepper
-    "\U0001f4e6",  # package
-    "\U0001f9f0",  # toolbox
-    "\U0001f30d",  # globe
-    "\U0001fa84",  # wand
-    "\U0001f51a",  # end
+    "\U0001f3d7\ufe0f",
+    "\U0001f40d",
+    "\U0001f9f1",
+    "\U0001f41d",
+    "\U0001f4c1",
+    "\U0001f37d\ufe0f",
+    "\U0001f4d6",
+    "\U0001f9ea",
+    "\u2705",
+    "\U0001f9e9",
+    "\U0001f527",
+    "\U0001f30a",
+    "\U0001faa2",
+    "\U0001f50c",
+    "\U0001f4de",
+    "\U0001f4c4",
+    "\u2699\ufe0f",
+    "\U0001f963",
+    "\U0001f52c",
+    "\U0001f53c",
+    "\U0001f336\ufe0f",
+    "\U0001f4e6",
+    "\U0001f9f0",
+    "\U0001f30d",
+    "\U0001fa84",
+    "\U0001f51a",
 ]
 
 
@@ -217,20 +234,19 @@ def _conform_file(filepath: Path, footer: str) -> bool:
         return False
 
 
-@register_command("conform", description="Enforce SPDX headers and footer conformance on Python files")
-def conform_command(
+@register_command("check.spdx", description="Validate SPDX headers and emoji footers")
+def check_spdx_command(
     pattern: str | None = None,
     footer: str | None = None,
-    check: bool = False,
+    fix: bool = False,
 ) -> None:
-    """Enforce SPDX headers and footer conformance on Python files.
+    """Validate SPDX headers and emoji footers on Python files.
 
     Args:
         pattern: Glob pattern for files (e.g., "src/**/*.py"). Defaults to src and tests directories.
         footer: Override footer pattern (auto-detects from repository by default)
-        check: Only check, don't modify files (exit 1 if changes needed)
+        fix: Fix files instead of just checking
     """
-    # Get footer (auto-detect unless overridden)
     if footer:
         effective_footer = footer
     else:
@@ -239,7 +255,6 @@ def conform_command(
         echo_info(f"Auto-detected repository: {repo_name}")
         echo_info(f"Using footer: {effective_footer}")
 
-    # Collect files to process
     if pattern:
         filepaths = list(Path.cwd().glob(pattern))
     else:
@@ -251,7 +266,6 @@ def conform_command(
         echo_info("No Python files found to process")
         return
 
-    # Process each file
     modified_count = 0
     error_count = 0
 
@@ -265,8 +279,14 @@ def conform_command(
             continue
 
         try:
-            if check:
-                # In check mode, read and compare without writing
+            if fix:
+                was_modified = _conform_file(filepath, effective_footer)
+                if was_modified:
+                    echo_success(f"Fixed: {filepath}")
+                    modified_count += 1
+                else:
+                    echo_info(f"  OK: {filepath}")
+            else:
                 content = filepath.read_text(encoding="utf-8")
                 lines = content.splitlines(keepends=True)
                 if not lines:
@@ -289,14 +309,7 @@ def conform_command(
                 )
 
                 if final_content != content:
-                    echo_info(f"Would fix: {filepath}")
-                    modified_count += 1
-                else:
-                    echo_info(f"  OK: {filepath}")
-            else:
-                was_modified = _conform_file(filepath, effective_footer)
-                if was_modified:
-                    echo_success(f"Fixed: {filepath}")
+                    echo_error(f"Needs fix: {filepath}")
                     modified_count += 1
                 else:
                     echo_info(f"  OK: {filepath}")
@@ -304,19 +317,203 @@ def conform_command(
             echo_error(f"Error processing {filepath}: {e}")
             error_count += 1
 
-    # Summary
     if error_count > 0:
         echo_error(f"\n{error_count} error(s) occurred")
         sys.exit(1)
 
     if modified_count > 0:
-        if check:
-            echo_error(f"\n{modified_count} file(s) need conformance fixes")
-            sys.exit(1)
-        else:
+        if fix:
             echo_success(f"\n{modified_count} file(s) fixed")
+        else:
+            echo_error(f"\n{modified_count} file(s) need fixes (use --fix to apply)")
+            sys.exit(1)
     else:
-        echo_success("\nAll files conform to standards")
+        echo_success("\nAll files conform to SPDX standards")
+
+
+# =============================================================================
+# Pyproject Command
+# =============================================================================
+
+CANONICAL_RUFF = {
+    "line-length": 111,
+    "indent-width": 4,
+    "target-version": "py311",
+}
+
+CANONICAL_RUFF_LINT_SELECT = ["E", "F", "W", "I", "UP", "ANN", "B", "C90", "SIM", "PTH", "RUF"]
+CANONICAL_RUFF_LINT_IGNORE = ["ANN401", "B008", "E501"]
+
+CANONICAL_RUFF_FORMAT = {
+    "quote-style": "double",
+    "indent-style": "space",
+    "skip-magic-trailing-comma": False,
+    "line-ending": "auto",
+}
+
+CANONICAL_MYPY = {
+    "python_version": "3.11",
+    "strict": True,
+    "pretty": True,
+    "show_error_codes": True,
+    "show_column_numbers": True,
+    "warn_unused_ignores": True,
+    "warn_unused_configs": True,
+}
+
+REQUIRED_PYTEST_SETTINGS = {
+    "log_cli": True,
+    "testpaths": ["tests"],
+    "python_files": ["test_*.py", "*_test.py"],
+}
+
+
+def _check_ruff_config(config: dict) -> list[str]:
+    """Validate ruff configuration matches canonical standards."""
+    errors = []
+    ruff = config.get("tool", {}).get("ruff", {})
+
+    for key, expected_value in CANONICAL_RUFF.items():
+        actual_value = ruff.get(key)
+        if actual_value != expected_value:
+            errors.append(f"[tool.ruff] {key} should be {expected_value!r}, got {actual_value!r}")
+
+    lint = ruff.get("lint", {})
+    select = lint.get("select", [])
+    if set(select) != set(CANONICAL_RUFF_LINT_SELECT):
+        errors.append(f"[tool.ruff.lint] select should be {CANONICAL_RUFF_LINT_SELECT}, got {select}")
+
+    ignore = lint.get("ignore", [])
+    if set(ignore) != set(CANONICAL_RUFF_LINT_IGNORE):
+        errors.append(f"[tool.ruff.lint] ignore should be {CANONICAL_RUFF_LINT_IGNORE}, got {ignore}")
+
+    fmt = ruff.get("format", {})
+    for key, expected_value in CANONICAL_RUFF_FORMAT.items():
+        actual_value = fmt.get(key)
+        if actual_value != expected_value:
+            errors.append(f"[tool.ruff.format] {key} should be {expected_value!r}, got {actual_value!r}")
+
+    return errors
+
+
+def _check_mypy_config(config: dict) -> list[str]:
+    """Validate mypy configuration matches canonical standards."""
+    errors = []
+    mypy = config.get("tool", {}).get("mypy", {})
+
+    for key, expected_value in CANONICAL_MYPY.items():
+        actual_value = mypy.get(key)
+        if actual_value != expected_value:
+            errors.append(f"[tool.mypy] {key} should be {expected_value!r}, got {actual_value!r}")
+
+    return errors
+
+
+def _check_pytest_config(config: dict) -> list[str]:
+    """Validate pytest configuration has required settings."""
+    errors = []
+    pytest = config.get("tool", {}).get("pytest", {}).get("ini_options", {})
+
+    for key, expected_value in REQUIRED_PYTEST_SETTINGS.items():
+        actual_value = pytest.get(key)
+        if actual_value != expected_value:
+            errors.append(
+                f"[tool.pytest.ini_options] {key} should be {expected_value!r}, got {actual_value!r}"
+            )
+
+    return errors
+
+
+def _check_project_metadata(config: dict) -> list[str]:
+    """Validate project metadata has required fields."""
+    warnings = []
+    project = config.get("project", {})
+
+    license_val = project.get("license")
+    if license_val != "Apache-2.0":
+        warnings.append(f"[project] license should be 'Apache-2.0', got {license_val!r}")
+
+    requires_python = project.get("requires-python", "")
+    if not requires_python.startswith(">=3.11"):
+        warnings.append(f"[project] requires-python should be '>=3.11', got {requires_python!r}")
+
+    return warnings
+
+
+def _validate_pyproject(filepath: Path) -> tuple[list[str], list[str]]:
+    """Validate a pyproject.toml file."""
+    try:
+        with filepath.open("rb") as f:
+            config = tomllib.load(f)
+    except (OSError, tomllib.TOMLDecodeError) as e:
+        return ([f"Failed to parse {filepath}: {e}"], [])
+
+    errors = []
+    warnings = []
+
+    errors.extend(_check_ruff_config(config))
+    errors.extend(_check_mypy_config(config))
+    errors.extend(_check_pytest_config(config))
+    warnings.extend(_check_project_metadata(config))
+
+    return errors, warnings
+
+
+@register_command("check.pyproject", description="Validate pyproject.toml against provide.io standards")
+def check_pyproject_command(
+    path: str | None = None,
+    strict: bool = False,
+) -> None:
+    """Validate pyproject.toml configuration matches provide.io standards.
+
+    Args:
+        path: Path to pyproject.toml. Defaults to ./pyproject.toml
+        strict: Treat warnings as errors
+    """
+    if path:
+        filepaths = [Path(path)]
+    else:
+        pyproject = Path.cwd() / "pyproject.toml"
+        if pyproject.exists():
+            filepaths = [pyproject]
+        else:
+            echo_error("No pyproject.toml found in current directory")
+            sys.exit(1)
+
+    all_valid = True
+
+    for filepath in filepaths:
+        if filepath.name != "pyproject.toml":
+            continue
+
+        if not filepath.exists():
+            echo_error(f"File not found: {filepath}")
+            all_valid = False
+            continue
+
+        echo_info(f"\nChecking {filepath}...")
+        errors, warnings = _validate_pyproject(filepath)
+
+        if errors:
+            echo_error(f"\n{len(errors)} error(s) found:")
+            for error in errors:
+                echo_error(f"  - {error}")
+            all_valid = False
+            continue
+
+        if warnings:
+            echo_warning(f"\n{len(warnings)} warning(s):")
+            for warning in warnings:
+                echo_warning(f"  - {warning}")
+            if strict:
+                all_valid = False
+                continue
+
+        if not errors and (not warnings or not strict):
+            echo_success("Configuration valid")
+
+    if not all_valid:
+        sys.exit(1)
 
 
 # 🔧🌍🔚
