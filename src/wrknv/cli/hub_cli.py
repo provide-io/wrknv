@@ -51,6 +51,7 @@ def load_commands() -> None:
     """Import all command modules to trigger registration."""
     # List of command modules to load
     command_modules = [
+        "wrknv.cli.commands.check",
         "wrknv.cli.commands.config",
         "wrknv.cli.commands.container",
         "wrknv.cli.commands.doctor",
@@ -116,6 +117,7 @@ def intercept_task_command() -> bool:
     """
     # Built-in commands that should not be intercepted
     BUILT_IN_COMMANDS = {
+        "check",
         "config",
         "container",
         "doctor",
@@ -124,6 +126,7 @@ def intercept_task_command() -> bool:
         "profile",
         "run",
         "secrets",
+        "selftest",
         "setup",
         "terraform",
         "tools",
