@@ -18,6 +18,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: Build Tools",
     "Topic :: System :: Installation/Setup",
 ]
@@ -114,6 +115,7 @@ line-ending = "auto"
 
 [tool.mypy]
 mypy_path = "src"
+strict = true
 show_error_codes = true
 show_column_numbers = true
 pretty = true
@@ -122,10 +124,6 @@ warn_unused_ignores = false
 warn_unused_configs = true
 follow_imports = "normal"
 disallow_untyped_decorators = false
-# Relaxed type checking for now - tighten incrementally
-check_untyped_defs = false
-disallow_untyped_defs = false
-disallow_incomplete_defs = false
 
 [[tool.mypy.overrides]]
 module = [
@@ -237,7 +235,7 @@ omit = ["*/tests/*", "*/__pycache__/*"]
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-fail_under = 59
+fail_under = 70
 precision = 2
 exclude_lines = [
     "pragma: no cover",
