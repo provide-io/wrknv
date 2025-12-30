@@ -1,13 +1,13 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=75.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "wrknv"
 dynamic = ["version"]
-description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"
+description = "wrknv - Task automation and development environment tooling"
 authors = [
-    {name = "Provide.io", email = "code@provide.io"},
+    { name = "Tim Perkins", email = "code@tim.life" },
 ]
 readme = "README.md"
 license = "Apache-2.0"
@@ -31,7 +31,7 @@ dependencies = [
     "jinja2>=3.0.0",
     "attrs>=25.3.0",
     "cattrs>=24.1.3",
-    "provide-foundation[all]>=0.0.0",
+    "provide-foundation[all]",
 ]
 
 [project.optional-dependencies]
@@ -53,10 +53,10 @@ dev = [
 wrknv = "wrknv.cli:entry_point"
 
 [project.urls]
-"Homepage" = "https://github.com/livingstaccato/wrknv"
-"Bug Tracker" = "https://github.com/livingstaccato/wrknv/issues"
-"Documentation" = "https://github.com/livingstaccato/wrknv#readme"
-"Source Code" = "https://github.com/livingstaccato/wrknv"
+Homepage = "https://foundry.provide.io/wrknv/"
+Documentation = "https://foundry.provide.io/wrknv/"
+Repository = "https://github.com/provide-io/wrknv"
+Issues = "https://github.com/provide-io/wrknv/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -290,4 +290,4 @@ dev = [
 # Configuration for packaging wrknv with flavor
 entry_point = "wrknv.cli:entry_point"
 app_name = "wrknv"
-description = "🧰🌍 Work Environment - Foundation for the provide.io ecosystem"
+description = "wrknv - Task automation and development environment tooling"
