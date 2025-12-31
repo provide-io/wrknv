@@ -43,7 +43,7 @@ def enter_container(
 ) -> None:
     """Enter the running container."""
     manager = ContainerManager(config)
-    manager.enter(
+    manager.enter(  # nosec B604 - shell is shell path, not subprocess shell=True
         command=command,
         shell=shell,
         working_dir=working_dir,

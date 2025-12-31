@@ -313,7 +313,7 @@ class WrknvDoctor:
                     self.checks_warning.append((f"Sibling: {sibling}", "Not found in parent directory"))
 
         except Exception:
-            pass  # Already reported in config check
+            pass  # nosec B110 - Already reported in config check
 
     def _check_common_issues(self) -> None:
         """Check for common issues that users encounter."""

@@ -194,7 +194,7 @@ class ExecutionEnvironment:
                     logger.trace("UV project detected via pyproject.toml [tool.uv]")
                     return True
             except Exception:
-                pass
+                pass  # nosec B110 - Fallback if pyproject.toml parsing fails
 
         return False
 

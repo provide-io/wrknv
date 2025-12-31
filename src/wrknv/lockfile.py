@@ -202,7 +202,7 @@ class LockfileManager:
                             name=tool_name, version=resolved_version, resolved_from=version_pattern
                         )
             except Exception:
-                # Skip tools that can't be resolved
+                # nosec B112 - Skip tools that can't be resolved
                 continue
 
         # Save lockfile
