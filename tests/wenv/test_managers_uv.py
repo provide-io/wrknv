@@ -73,9 +73,11 @@ class TestGetAvailableVersions(FoundationTestCase):
     def test_get_available_versions_network_failure(self) -> None:
         """Test handling network failures."""
         manager = UvManager()
-        with patch.object(manager, "fetch_json_secure", side_effect=Exception("Network error")):
-            with pytest.raises(ToolManagerError, match="Failed to fetch UV versions"):
-                manager.get_available_versions()
+        with (
+            patch.object(manager, "fetch_json_secure", side_effect=Exception("Network error")),
+            pytest.raises(ToolManagerError, match="Failed to fetch UV versions"),
+        ):
+            manager.get_available_versions()
 
 
 class TestGetDownloadUrl(FoundationTestCase):
