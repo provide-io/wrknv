@@ -94,7 +94,7 @@ def _detect_repo_name() -> str:
             if repo_name:
                 return repo_name
     except Exception:
-        pass
+        pass  # nosec B110 - Fallback to cwd name if git fails
     return Path.cwd().name
 
 
