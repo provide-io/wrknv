@@ -8,10 +8,13 @@ Common functionality for all tool managers.
 """
 
 from abc import ABC, abstractmethod
+import json
 import pathlib
 import platform
 import shutil
+from typing import Any
 from urllib.parse import urlparse
+from urllib.request import urlopen
 
 from provide.foundation import logger
 from provide.foundation.console.output import pout
@@ -59,6 +62,28 @@ class BaseToolManager(ABC):
     @abstractmethod
     def get_checksum_url(self, version: str) -> str | None:
         """Get checksum URL for verification (if available)."""
+
+    def fetch_json_secure(self, url: str) -> Any:
+        """Fetch JSON from a URL with HTTPS validation.
+
+        Args:
+            url: The URL to fetch from (must be HTTPS)
+
+        Returns:
+            Parsed JSON data
+
+        Raises:
+            ToolManagerError: If URL is not HTTPS or fetch fails
+        """
+        parsed = urlparse(url)
+        if parsed.scheme != "https":
+            raise ToolManagerError(
+                f"Only HTTPS URLs are allowed for security. Got: {parsed.scheme}://"
+            )
+
+        logger.debug(f"Fetching JSON from {url}")
+        with urlopen(url) as response:  # nosec B310 - URL scheme validated above
+            return json.loads(response.read())
 
     def get_platform_info(self) -> dict[str, str]:
         """Get current platform information."""
