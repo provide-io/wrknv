@@ -129,9 +129,11 @@ class TestGetAvailableVersions(FoundationTestCase):
     def test_get_available_versions_network_failure(self) -> None:
         """Test handling network failures."""
         manager = IbmTfManager()
-        with patch.object(manager, "fetch_json_secure", side_effect=Exception("Network error")):
-            with pytest.raises(ToolManagerError, match="Failed to fetch IBM Terraform versions"):
-                manager.get_available_versions()
+        with (
+            patch.object(manager, "fetch_json_secure", side_effect=Exception("Network error")),
+            pytest.raises(ToolManagerError, match="Failed to fetch IBM Terraform versions"),
+        ):
+            manager.get_available_versions()
 
 
 class TestPrereleaseDetection(FoundationTestCase):
