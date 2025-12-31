@@ -7,8 +7,7 @@
 
 from __future__ import annotations
 
-import json
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 from provide.testkit import FoundationTestCase
 import pytest
@@ -39,26 +38,21 @@ class TestIbmTfManagerProperties(FoundationTestCase):
 class TestGetAvailableVersions(FoundationTestCase):
     """Test get_available_versions method."""
 
-    @patch("wrknv.wenv.managers.ibm_tf.urlopen")
-    def test_get_available_versions_success(self, mock_urlopen: Mock) -> None:
+    def test_get_available_versions_success(self) -> None:
         """Test fetching versions from HashiCorp releases API."""
         # Mock HashiCorp releases index.json format
-        mock_response = MagicMock()
-        mock_response.read.return_value = json.dumps(
-            {
-                "versions": {
-                    "1.6.0": {"version": "1.6.0"},
-                    "1.5.7": {"version": "1.5.7"},
-                    "1.5.0": {"version": "1.5.0"},
-                    "1.5.0-rc1": {"version": "1.5.0-rc1"},
-                }
+        mock_data = {
+            "versions": {
+                "1.6.0": {"version": "1.6.0"},
+                "1.5.7": {"version": "1.5.7"},
+                "1.5.0": {"version": "1.5.0"},
+                "1.5.0-rc1": {"version": "1.5.0-rc1"},
             }
-        ).encode()
-        mock_response.__enter__.return_value = mock_response
-        mock_urlopen.return_value = mock_response
+        }
 
         manager = IbmTfManager()
-        versions = manager.get_available_versions()
+        with patch.object(manager, "fetch_json_secure", return_value=mock_data):
+            versions = manager.get_available_versions()
 
         assert isinstance(versions, list)
         assert "1.6.0" in versions
@@ -67,20 +61,14 @@ class TestGetAvailableVersions(FoundationTestCase):
         # Prereleases should be filtered
         assert "1.5.0-rc1" not in versions
 
-    @patch("wrknv.wenv.managers.ibm_tf.urlopen")
-    def test_get_available_versions_includes_prereleases(self, mock_urlopen: Mock) -> None:
+    def test_get_available_versions_includes_prereleases(self) -> None:
         """Test fetching versions including prereleases when configured."""
-        mock_response = MagicMock()
-        mock_response.read.return_value = json.dumps(
-            {
-                "versions": {
-                    "1.6.0": {"version": "1.6.0"},
-                    "1.6.0-beta1": {"version": "1.6.0-beta1"},
-                }
+        mock_data = {
+            "versions": {
+                "1.6.0": {"version": "1.6.0"},
+                "1.6.0-beta1": {"version": "1.6.0-beta1"},
             }
-        ).encode()
-        mock_response.__enter__.return_value = mock_response
-        mock_urlopen.return_value = mock_response
+        }
 
         manager = IbmTfManager()
 
@@ -92,60 +80,58 @@ class TestGetAvailableVersions(FoundationTestCase):
                 return "https://releases.hashicorp.com/terraform"
             return default
 
-        with patch.object(manager.config, "get_setting", side_effect=mock_get_setting):
+        with (
+            patch.object(manager, "fetch_json_secure", return_value=mock_data),
+            patch.object(manager.config, "get_setting", side_effect=mock_get_setting),
+        ):
             versions = manager.get_available_versions()
             assert "1.6.0-beta1" in versions
 
-    @patch("wrknv.wenv.managers.ibm_tf.urlopen")
-    def test_get_available_versions_sorted(self, mock_urlopen: Mock) -> None:
+    def test_get_available_versions_sorted(self) -> None:
         """Test that versions are sorted newest first."""
-        mock_response = MagicMock()
-        mock_response.read.return_value = json.dumps(
-            {
-                "versions": {
-                    "1.5.0": {"version": "1.5.0"},
-                    "1.6.0": {"version": "1.6.0"},
-                    "1.5.7": {"version": "1.5.7"},
-                }
+        mock_data = {
+            "versions": {
+                "1.5.0": {"version": "1.5.0"},
+                "1.6.0": {"version": "1.6.0"},
+                "1.5.7": {"version": "1.5.7"},
             }
-        ).encode()
-        mock_response.__enter__.return_value = mock_response
-        mock_urlopen.return_value = mock_response
+        }
 
         manager = IbmTfManager()
-        versions = manager.get_available_versions()
+        with patch.object(manager, "fetch_json_secure", return_value=mock_data):
+            versions = manager.get_available_versions()
 
         # Should be sorted descending (newest first)
         assert versions[0] == "1.6.0"
         assert versions[1] == "1.5.7"
         assert versions[2] == "1.5.0"
 
-    @patch("wrknv.wenv.managers.ibm_tf.urlopen")
-    def test_get_available_versions_custom_mirror(self, mock_urlopen: Mock) -> None:
+    def test_get_available_versions_custom_mirror(self) -> None:
         """Test using custom mirror URL."""
-        mock_response = MagicMock()
-        mock_response.read.return_value = json.dumps({"versions": {"1.6.0": {"version": "1.6.0"}}}).encode()
-        mock_response.__enter__.return_value = mock_response
-        mock_urlopen.return_value = mock_response
+        mock_data = {"versions": {"1.6.0": {"version": "1.6.0"}}}
 
         manager = IbmTfManager()
-        with patch.object(
-            manager.config,
-            "get_setting",
-            return_value="https://mirror.example.com/terraform",
+        fetch_mock = Mock(return_value=mock_data)
+        with (
+            patch.object(manager, "fetch_json_secure", fetch_mock),
+            patch.object(
+                manager.config,
+                "get_setting",
+                return_value="https://mirror.example.com/terraform",
+            ),
         ):
             manager.get_available_versions()
 
             # Verify custom mirror was used
-            call_args = mock_urlopen.call_args[0][0]
+            call_args = fetch_mock.call_args[0][0]
             assert "mirror.example.com/terraform/index.json" in call_args
 
-    @patch("wrknv.wenv.managers.ibm_tf.urlopen", side_effect=Exception("Network error"))
-    def test_get_available_versions_network_failure(self, mock_urlopen: Mock) -> None:
+    def test_get_available_versions_network_failure(self) -> None:
         """Test handling network failures."""
         manager = IbmTfManager()
-        with pytest.raises(ToolManagerError, match="Failed to fetch IBM Terraform versions"):
-            manager.get_available_versions()
+        with patch.object(manager, "fetch_json_secure", side_effect=Exception("Network error")):
+            with pytest.raises(ToolManagerError, match="Failed to fetch IBM Terraform versions"):
+                manager.get_available_versions()
 
 
 class TestPrereleaseDetection(FoundationTestCase):
