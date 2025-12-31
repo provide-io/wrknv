@@ -127,7 +127,9 @@ class ContainerExec:
         Returns:
             True if successful
         """
-        return self.exec(command=None, shell=shell, interactive=True, tty=True, **kwargs)
+        return self.exec(  # nosec B604 - shell is shell path, not subprocess shell=True
+            command=None, shell=shell, interactive=True, tty=True, **kwargs
+        )
 
     @resilient
     def run_command(

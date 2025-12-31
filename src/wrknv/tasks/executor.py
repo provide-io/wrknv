@@ -299,7 +299,7 @@ class TaskExecutor:
                     capture_output=True,
                     check=False,  # We handle errors ourselves
                     timeout=timeout,
-                    shell=True,  # Explicit shell usage for command strings
+                    shell=True,  # nosec B604 - Intentional: task runner executes shell commands
                     process_title=formatted_task_name,  # Set child process title
                 )
 

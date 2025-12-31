@@ -46,7 +46,7 @@ def get_venv_python_version(venv_dir: Path) -> dict[str, Any] | None:
             result_dict: dict[str, Any] = json.loads(result.stdout)
             return result_dict
     except Exception:
-        pass
+        pass  # nosec B110 - Fallback to None if uv python list fails
 
     return None
 
@@ -71,7 +71,7 @@ def get_project_python_requirement() -> str | None:
             requires_python: str = data["project"]["requires-python"]
             return requires_python
     except Exception:
-        pass
+        pass  # nosec B110 - Fallback to None if pyproject.toml parsing fails
 
     return None
 

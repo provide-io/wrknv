@@ -77,9 +77,7 @@ class BaseToolManager(ABC):
         """
         parsed = urlparse(url)
         if parsed.scheme != "https":
-            raise ToolManagerError(
-                f"Only HTTPS URLs are allowed for security. Got: {parsed.scheme}://"
-            )
+            raise ToolManagerError(f"Only HTTPS URLs are allowed for security. Got: {parsed.scheme}://")
 
         logger.debug(f"Fetching JSON from {url}")
         with urlopen(url) as response:  # nosec B310 - URL scheme validated above

@@ -150,7 +150,7 @@ def _display_tasks_hierarchical(tasks: list[TaskConfig], verbose: bool) -> None:
             if verbose:
                 detail_prefix = "    " if is_last else "│   "
                 if task.is_composite:
-                    assert isinstance(task.run, list)
+                    assert isinstance(task.run, list)  # nosec B101 - Type narrowing
                     echo_info(f"{detail_prefix}Runs: {', '.join(task.run)}")
                 else:
                     cmd_preview = str(task.run)[:60]
@@ -170,7 +170,7 @@ def _display_tasks_hierarchical(tasks: list[TaskConfig], verbose: bool) -> None:
 
             if verbose:
                 if task.is_composite:
-                    assert isinstance(task.run, list)
+                    assert isinstance(task.run, list)  # nosec B101 - Type narrowing
                     echo_info(f"    Runs: {', '.join(task.run)}")
                 else:
                     cmd_preview = str(task.run)[:60]
