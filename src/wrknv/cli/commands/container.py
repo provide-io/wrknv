@@ -152,7 +152,7 @@ def container_enter_command(
     # Parse command if provided
     command_list = command.split() if command else None
 
-    enter_container(
+    enter_container(  # nosec B604 - shell is shell path, not subprocess shell=True
         config=config,
         command=command_list,
         shell=shell,
@@ -325,7 +325,7 @@ def container_shell_command() -> None:
     """Open an interactive shell in the container."""
     config = WrknvContext.get_config()
 
-    enter_container(
+    enter_container(  # nosec B604 - shell is shell path, not subprocess shell=True
         config=config,
         command=None,
         shell="/bin/bash",

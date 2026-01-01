@@ -211,7 +211,7 @@ class GitHubReleasesClient:
             if "content-length" in head_response.headers:
                 total_size = int(head_response.headers["content-length"])
         except Exception:
-            pass  # Size unknown, continue without it
+            pass  # nosec B110 - Size unknown, continue without it
 
         # Stream download
         async with self.client:

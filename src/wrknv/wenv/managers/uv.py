@@ -7,9 +7,7 @@ UV Tool Manager for wrknv
 Manages UV (Python package manager) versions for development.
 """
 
-import json
 import pathlib
-from urllib.request import urlopen
 
 from provide.foundation import logger
 from provide.foundation.process import run as process_run
@@ -32,11 +30,7 @@ class UvManager(BaseToolManager):
         """Get available UV versions from GitHub releases."""
         try:
             api_url = "https://api.github.com/repos/astral-sh/uv/releases"
-
-            logger.debug(f"Fetching UV versions from {api_url}")
-
-            with urlopen(api_url) as response:
-                data = json.loads(response.read())
+            data = self.fetch_json_secure(api_url)
 
             versions = []
             for release in data:

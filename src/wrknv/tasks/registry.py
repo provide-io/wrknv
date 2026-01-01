@@ -383,7 +383,7 @@ class TaskRegistry:
         import asyncio
         import time
 
-        assert isinstance(task.run, list)
+        assert isinstance(task.run, list)  # nosec B101 - Type narrowing for composite task
         start_time = time.time()
 
         if task.parallel:
