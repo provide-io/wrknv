@@ -50,7 +50,7 @@ The `we` command provides an intuitive way to run development tasks:
 
 ```bash
 # Install wrknv
-uv pip install wrknv
+uv tool install wrknv
 
 # Define tasks in wrknv.toml
 cat > wrknv.toml << EOF
@@ -82,7 +82,10 @@ See [Task System Documentation](https://github.com/provide-io/wrknv/blob/main/do
 
 ## Quick Start: Environment Management
 
-1. **Install wrknv**:
+1.  **Install wrknv**:
+    ```bash
+    uv tool install wrknv
+    ```
 
    ```bash
    uv tool install wrknv
