@@ -26,6 +26,17 @@ uvx wrknv --help
 uv tool install wrknv
 ```
 
+**Using pipx (Alternative):**
+```bash
+# Install as isolated CLI tool
+pipx install wrknv
+```
+
+**Using pip:**
+```bash
+uv tool install wrknv
+```
+
 ### As a Library Dependency
 
 If you're integrating wrknv into your project:
@@ -87,7 +98,7 @@ For Docker-based development environments:
 
 ```bash
 # Install with container support
-uv tool install wrknv[container]
+uv add wrknv[container]
 ```
 
 **Container Features:**
@@ -356,7 +367,7 @@ ls dist/
 
 ```bash
 # Install with container support
-uv tool install wrknv[container]
+uv add wrknv[container]
 
 # Configure container in workenv.toml
 cat >> workenv.toml << 'EOF'

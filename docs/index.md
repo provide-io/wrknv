@@ -108,7 +108,7 @@ env.setup()
 
 # Work with containers
 container = Container("python:3.11")
-container.run("uv sync")
+container.run("uv pip install -r requirements.txt")
 ```
 
 ## API Reference
