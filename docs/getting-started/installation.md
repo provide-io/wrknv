@@ -42,7 +42,7 @@ If you're integrating wrknv into your project:
 
 **Using uv:**
 ```bash
-uv add wrknv
+uv tool install wrknv
 ```
 
 **In your `pyproject.toml`:**
@@ -96,7 +96,7 @@ For Docker-based development environments:
 
 ```bash
 # Install with container support
-uv add wrknv[container]
+uv tool install wrknv[container]
 ```
 
 **Container Features:**
@@ -356,7 +356,7 @@ ls dist/
 
 ```bash
 # Install with container support
-uv add wrknv[container]
+uv tool install wrknv[container]
 
 # Configure container in workenv.toml
 cat >> workenv.toml << 'EOF'
