@@ -183,4 +183,4 @@ With wrknv:
 - Easy updates - change template once, regenerate everywhere
 - Zero duplication
 
-Copyright (c) Provide.io LLC.
+Copyright (c) provide.io LLC.
