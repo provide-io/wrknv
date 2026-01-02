@@ -199,7 +199,7 @@ $ uv tool install wrknv
 ### Using UV
 
 ```console
-$ uv tool install wrknv
+$ uv uv tool install wrknv
 ```
 
 ### From Source
