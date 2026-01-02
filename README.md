@@ -8,16 +8,6 @@
 
 **Work Environment** - The foundation for the provide.io ecosystem, generating standardized development environments across all projects.
 
-## Requirements
-
-- **Python 3.11 or later** - wrknv uses modern Python features including native type hints with pipe operators (`str | None`), native TOML support via `tomllib`, and other Python 3.11+ improvements.
-- Git (for version control operations)
-- curl or wget (for downloading tools)
-
-## Overview
-
-`wrknv` is THE central tool that generates all `env.sh` and `env.ps1` scripts for the provide.io ecosystem. Instead of maintaining hundreds of lines of duplicated shell scripts, each project uses wrknv to generate consistent, maintainable environment setup scripts.
-
 ## Features
 
 -   **🚀 Task Runner (`we`)**: Intuitive task execution with automatic command detection, nested task organization, and smart resolution
@@ -27,6 +17,36 @@
 -   **🐍 Python Version Safety**: Detects `pyproject.toml` Python requirements and manages virtual environments
 -   **🐳 Containerized Development**: (Experimental) Manage Docker-based development environments
 -   **📦 Provider Packaging**: (Experimental) Interface for building `flavor`-based provider packages
+
+## Quick Start
+- Jump to [Quick Start: Task Runner](#quick-start-task-runner) or [Quick Start: Environment Management](#quick-start-environment-management).
+- Full documentation is in [docs/index.md](https://github.com/provide-io/wrknv/blob/main/docs/index.md).
+
+## Documentation
+- [Documentation index](https://github.com/provide-io/wrknv/blob/main/docs/index.md)
+- [Configuration reference](https://github.com/provide-io/wrknv/blob/main/docs/reference/configuration.md)
+- [Examples](https://github.com/provide-io/wrknv/blob/main/examples/README.md)
+
+## Development
+- See [CLAUDE.md](https://github.com/provide-io/wrknv/blob/main/CLAUDE.md) for local development notes.
+- Run `uv sync --extra dev` to set up the dev environment.
+
+## Contributing
+See [CONTRIBUTING.md](https://github.com/provide-io/wrknv/blob/main/CONTRIBUTING.md) for contribution guidelines.
+
+## License
+
+MIT License - See LICENSE file for details.
+
+## Requirements
+
+- **Python 3.11 or later** - wrknv uses modern Python features including native type hints with pipe operators (`str | None`), native TOML support via `tomllib`, and other Python 3.11+ improvements.
+- Git (for version control operations)
+- curl or wget (for downloading tools)
+
+## Overview
+
+`wrknv` is THE central tool that generates all `env.sh` and `env.ps1` scripts for the provide.io ecosystem. Instead of maintaining hundreds of lines of duplicated shell scripts, each project uses wrknv to generate consistent, maintainable environment setup scripts.
 
 ## Quick Start: Task Runner
 
@@ -61,7 +81,7 @@ we tasks                 # List all available tasks
 - ✅ **Arguments** - Pass flags directly: `we test --verbose`
 - ✅ **Hierarchical display** - Beautiful tree view of tasks
 
-See [Task System Documentation](docs/features/task-system.md) for full details.
+See [Task System Documentation](https://github.com/provide-io/wrknv/blob/main/docs/features/task-system.md) for full details.
 
 ## Quick Start: Environment Management
 
@@ -163,6 +183,4 @@ With wrknv:
 - Easy updates - change template once, regenerate everywhere
 - Zero duplication
 
-## License
-
-MIT License - See LICENSE file for details.
+Copyright (c) Provide.io LLC.
