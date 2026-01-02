@@ -489,10 +489,7 @@ If `we` command not found:
 
 ```bash
 # Install wrknv
-pip install wrknv
-
-# Or use uv
-uv pip install wrknv
+uv tool install wrknv
 
 # Verify installation
 which we
