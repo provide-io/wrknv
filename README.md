@@ -16,19 +16,19 @@
 
 ## Quick Start
 - Jump to [Quick Start: Task Runner](#quick-start-task-runner) or [Quick Start: Environment Management](#quick-start-environment-management).
-- Full documentation is in [docs/index.md](docs/index.md).
+- Full documentation is in [docs/index.md](https://github.com/provide-io/wrknv/blob/main/docs/index.md).
 
 ## Documentation
-- [Documentation index](docs/index.md)
-- [Configuration reference](docs/reference/configuration.md)
-- [Examples](examples/README.md)
+- [Documentation index](https://github.com/provide-io/wrknv/blob/main/docs/index.md)
+- [Configuration reference](https://github.com/provide-io/wrknv/blob/main/docs/reference/configuration.md)
+- [Examples](https://github.com/provide-io/wrknv/blob/main/examples/README.md)
 
 ## Development
-- See [CLAUDE.md](CLAUDE.md) for local development notes.
+- See [CLAUDE.md](https://github.com/provide-io/wrknv/blob/main/CLAUDE.md) for local development notes.
 - Run `uv sync --extra dev` to set up the dev environment.
 
 ## Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+See [CONTRIBUTING.md](https://github.com/provide-io/wrknv/blob/main/CONTRIBUTING.md) for contribution guidelines.
 
 ## License
 
@@ -187,3 +187,5 @@ With wrknv:
 - Consistent experience across all projects
 - Easy updates - change template once, regenerate everywhere
 - Zero duplication
+
+Copyright (c) Provide.io LLC.
