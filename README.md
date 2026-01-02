@@ -19,13 +19,17 @@
 -   **📦 Provider Packaging**: (Experimental) Interface for building `flavor`-based provider packages
 
 ## Quick Start
-For a quick start, see [docs/index.md](docs/index.md).
+- Jump to [Quick Start: Task Runner](#quick-start-task-runner) or [Quick Start: Environment Management](#quick-start-environment-management).
+- Full documentation is in [docs/index.md](docs/index.md).
 
 ## Documentation
-Documentation lives in [docs/index.md](docs/index.md).
+- [Documentation index](docs/index.md)
+- [Configuration reference](docs/reference/configuration.md)
+- [Examples](examples/README.md)
 
 ## Development
-Development notes are in [CLAUDE.md](CLAUDE.md).
+- See [CLAUDE.md](CLAUDE.md) for local development notes.
+- Run `uv sync --extra dev` to set up the dev environment.
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
