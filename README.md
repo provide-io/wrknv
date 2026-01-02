@@ -4,49 +4,27 @@
 
 **Work Environment** - The foundation for the provide.io ecosystem, generating standardized development environments across all projects.
 
-## ✨ Key Features
+## Features
 
-- 🚀 **Task Runner (`we`)** - Intuitive task execution with automatic command detection, nested task organization, and smart resolution
-- 📜 **Environment Script Generation** - Creates standardized `env.sh` and `env.ps1` scripts from templates
-- 🔧 **Tool Version Management** - Pin versions of Terraform, OpenTofu, Go, and `uv`
-- 🔗 **Sibling Package Integration** - Automatically discover and install local, editable dependencies
-- 🐍 **Python Version Safety** - Detects `pyproject.toml` Python requirements and manages virtual environments
-- 🐳 **Containerized Development** - (Experimental) Manage Docker-based development environments
-- 📦 **Provider Packaging** - (Experimental) Interface for building `flavor`-based provider packages
+-   **🚀 Task Runner (`we`)**: Intuitive task execution with automatic command detection, nested task organization, and smart resolution
+-   **📜 Environment Script Generation**: Creates standardized `env.sh` and `env.ps1` scripts from templates
+-   **🔧 Tool Version Management**: Pin versions of Terraform, OpenTofu, Go, and `uv`
+-   **🔗 Sibling Package Integration**: Automatically discover and install local, editable dependencies
+-   **🐍 Python Version Safety**: Detects `pyproject.toml` Python requirements and manages virtual environments
+-   **🐳 Containerized Development**: (Experimental) Manage Docker-based development environments
+-   **📦 Provider Packaging**: (Experimental) Interface for building `flavor`-based provider packages
 
 ## Quick Start
-
-> **Note**: wrknv is in pre-release (v0.x.x). APIs and features may change before 1.0 release.
-
-- Jump to [Quick Start: Task Runner](#quick-start-task-runner) or [Quick Start: Environment Management](#quick-start-environment-management).
-- Full documentation is in [docs/index.md](https://github.com/provide-io/wrknv/blob/main/docs/index.md).
+For a quick start, see [docs/index.md](docs/index.md).
 
 ## Documentation
-
-- [Documentation index](https://github.com/provide-io/wrknv/blob/main/docs/index.md)
-- [Configuration reference](https://github.com/provide-io/wrknv/blob/main/docs/reference/configuration.md)
-- [Examples](https://github.com/provide-io/wrknv/tree/main/examples)
+Documentation lives in [docs/index.md](docs/index.md).
 
 ## Development
-
-### Quick Start
-
-```bash
-# Set up environment
-uv sync
-
-# Run common tasks
-we test           # Run tests
-we lint           # Check code
-we format         # Format code
-we tasks          # See all available commands
-```
-
-See [CLAUDE.md](https://github.com/provide-io/wrknv/blob/main/CLAUDE.md) for detailed development instructions and architecture information.
+Development notes are in [CLAUDE.md](CLAUDE.md).
 
 ## Contributing
-
-See [CONTRIBUTING.md](https://github.com/provide-io/wrknv/blob/main/CONTRIBUTING.md) for contribution guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## License
 
@@ -205,5 +183,3 @@ With wrknv:
 - Consistent experience across all projects
 - Easy updates - change template once, regenerate everywhere
 - Zero duplication
-
-Copyright (c) provide.io LLC.
