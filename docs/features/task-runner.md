@@ -20,7 +20,7 @@ The task runner feature enables wrknv to execute predefined tasks from `wrknv.to
 - **Process Title Management**: Sets meaningful process titles for better process visibility
 - **Flexible Configuration**: Global defaults with per-task overrides
 
-## Non-Goals (Future Work)
+## Non-Goals (Exploratory Work)
 
 - Workspace-level task orchestration (Phase 2)
 - Parallel task execution (Phase 2)
@@ -365,7 +365,7 @@ description = "A friendly greeting from your work environment"
 4. **Documented**: Examples in README
 5. **Demo**: `wrknv run hello` works and is delightful
 
-## Future Enhancements (Not in MVP)
+## Exploratory Enhancements (Not in MVP)
 
 - Dependency execution (`depends_on` field)
 - Parallel execution
