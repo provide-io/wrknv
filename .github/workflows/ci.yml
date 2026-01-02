@@ -28,28 +28,17 @@ jobs:
         with:
           version: ${{ env.UV_VERSION }}
       
-      - name: Create virtual environment
-        run: uv venv
-      
       - name: Install dependencies
-        run: |
-          source .venv/bin/activate
-          uv pip install -e ".[dev]"
+        run: uv sync --all-groups
 
       - name: Check code formatting
-        run: |
-          source .venv/bin/activate
-          ruff format --check src/ tests/
+        run: uv run ruff format --check src/ tests/
 
       - name: Lint code
-        run: |
-          source .venv/bin/activate
-          ruff check src/ tests/
+        run: uv run ruff check src/ tests/
 
       - name: Type check
-        run: |
-          source .venv/bin/activate
-          mypy src/ --ignore-missing-imports
+        run: uv run mypy src/ --ignore-missing-imports
 
   test:
     name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
@@ -73,32 +62,11 @@ jobs:
         with:
           version: ${{ env.UV_VERSION }}
       
-      - name: Create virtual environment
-        run: uv venv
-      
-      - name: Install dependencies (Unix)
-        if: runner.os != 'Windows'
-        run: |
-          source .venv/bin/activate
-          uv pip install -e ".[dev]"
-      
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          .venv\Scripts\activate
-          uv pip install -e ".[dev]"
-      
-      - name: Run tests with coverage (Unix)
-        if: runner.os != 'Windows'
-        run: |
-          source .venv/bin/activate
-          pytest tests/ -v --cov=src/wrknv --cov-report=xml --cov-report=term-missing
+      - name: Install dependencies
+        run: uv sync --all-groups
 
-      - name: Run tests with coverage (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          .venv\Scripts\activate
-          pytest tests/ -v --cov=src/wrknv --cov-report=xml --cov-report=term-missing
+      - name: Run tests with coverage
+        run: uv run pytest tests/ -v --cov=src/wrknv --cov-report=xml --cov-report=term-missing
       
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
@@ -124,33 +92,25 @@ jobs:
         with:
           version: ${{ env.UV_VERSION }}
       
-      - name: Create virtual environment
-        run: uv venv
-      
       - name: Install dependencies
-        run: |
-          source .venv/bin/activate
-          uv pip install -e ".[dev]"
-      
+        run: uv sync --all-groups
+
       - name: Test CLI commands
         run: |
-          source .venv/bin/activate
-          wrknv --help
-          wrknv config path
-          wrknv setup --check
-      
+          uv run wrknv --help
+          uv run wrknv config path
+          uv run wrknv setup --check
+
       - name: Test config initialization
         run: |
-          source .venv/bin/activate
           cd /tmp
-          echo -e "test-project\n1.0.0\nINFO\nn\nn\nn\nn\n" | wrknv config init
+          echo -e "test-project\n1.0.0\nINFO\nn\nn\nn\nn\n" | uv run --directory $GITHUB_WORKSPACE wrknv config init
           cat wrknv.toml
-      
+
       - name: Test profile operations
         run: |
-          source .venv/bin/activate
-          wrknv profile list
-          wrknv profile save test-profile --force || true
+          uv run wrknv profile list
+          uv run wrknv profile save test-profile --force || true
 
   build:
     name: Build Distribution
@@ -171,9 +131,7 @@ jobs:
       
       - name: Build wheel and sdist
         run: |
-          uv venv
-          source .venv/bin/activate
-          uv pip install -e ".[dev]"
+          uv sync --all-groups
           uv build
       
       - name: Check distributions
