@@ -54,7 +54,7 @@ The `we` command provides an intuitive way to run development tasks:
 
 ```bash
 # Install wrknv
-pip install wrknv
+uv pip install wrknv
 
 # Define tasks in wrknv.toml
 cat > wrknv.toml << EOF
