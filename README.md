@@ -8,16 +8,6 @@
 
 **Work Environment** - The foundation for the provide.io ecosystem, generating standardized development environments across all projects.
 
-## Requirements
-
-- **Python 3.11 or later** - wrknv uses modern Python features including native type hints with pipe operators (`str | None`), native TOML support via `tomllib`, and other Python 3.11+ improvements.
-- Git (for version control operations)
-- curl or wget (for downloading tools)
-
-## Overview
-
-`wrknv` is THE central tool that generates all `env.sh` and `env.ps1` scripts for the provide.io ecosystem. Instead of maintaining hundreds of lines of duplicated shell scripts, each project uses wrknv to generate consistent, maintainable environment setup scripts.
-
 ## Features
 
 -   **🚀 Task Runner (`we`)**: Intuitive task execution with automatic command detection, nested task organization, and smart resolution
@@ -27,6 +17,32 @@
 -   **🐍 Python Version Safety**: Detects `pyproject.toml` Python requirements and manages virtual environments
 -   **🐳 Containerized Development**: (Experimental) Manage Docker-based development environments
 -   **📦 Provider Packaging**: (Experimental) Interface for building `flavor`-based provider packages
+
+## Quick Start
+For a quick start, see [docs/index.md](docs/index.md).
+
+## Documentation
+Documentation lives in [docs/index.md](docs/index.md).
+
+## Development
+Development notes are in [CLAUDE.md](CLAUDE.md).
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+## License
+
+MIT License - See LICENSE file for details.
+
+## Requirements
+
+- **Python 3.11 or later** - wrknv uses modern Python features including native type hints with pipe operators (`str | None`), native TOML support via `tomllib`, and other Python 3.11+ improvements.
+- Git (for version control operations)
+- curl or wget (for downloading tools)
+
+## Overview
+
+`wrknv` is THE central tool that generates all `env.sh` and `env.ps1` scripts for the provide.io ecosystem. Instead of maintaining hundreds of lines of duplicated shell scripts, each project uses wrknv to generate consistent, maintainable environment setup scripts.
 
 ## Quick Start: Task Runner
 
@@ -162,7 +178,3 @@ With wrknv:
 - Consistent experience across all projects
 - Easy updates - change template once, regenerate everywhere
 - Zero duplication
-
-## License
-
-MIT License - See LICENSE file for details.
