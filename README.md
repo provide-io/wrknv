@@ -19,6 +19,9 @@
 - 📦 **Provider Packaging** - (Experimental) Interface for building `flavor`-based provider packages
 
 ## Quick Start
+
+> **Note**: wrknv is in pre-release (v0.x.x). APIs and features may change before 1.0 release.
+
 - Jump to [Quick Start: Task Runner](#quick-start-task-runner) or [Quick Start: Environment Management](#quick-start-environment-management).
 - Full documentation is in [docs/index.md](https://github.com/provide-io/wrknv/blob/main/docs/index.md).
 
