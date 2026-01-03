@@ -42,6 +42,7 @@ dependencies = [
 ]
 
 [project.scripts]
+we = "wrknv.cli:entry_point"
 wrknv = "wrknv.cli:entry_point"
 
 [project.urls]
