@@ -25,7 +25,7 @@
 ## Documentation
 - [Documentation index](https://github.com/provide-io/wrknv/blob/main/docs/index.md)
 - [Configuration reference](https://github.com/provide-io/wrknv/blob/main/docs/reference/configuration.md)
-- [Examples](https://github.com/provide-io/wrknv/blob/main/examples/README.md)
+- [Examples](https://github.com/provide-io/wrknv/tree/main/examples)
 
 ## Development
 - See [CLAUDE.md](https://github.com/provide-io/wrknv/blob/main/CLAUDE.md) for local development notes.
