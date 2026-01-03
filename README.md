@@ -8,15 +8,15 @@
 
 **Work Environment** - The foundation for the provide.io ecosystem, generating standardized development environments across all projects.
 
-## Features
+## ✨ Key Features
 
--   **🚀 Task Runner (`we`)**: Intuitive task execution with automatic command detection, nested task organization, and smart resolution
--   **📜 Environment Script Generation**: Creates standardized `env.sh` and `env.ps1` scripts from templates
--   **🔧 Tool Version Management**: Pin versions of Terraform, OpenTofu, Go, and `uv`
--   **🔗 Sibling Package Integration**: Automatically discover and install local, editable dependencies
--   **🐍 Python Version Safety**: Detects `pyproject.toml` Python requirements and manages virtual environments
--   **🐳 Containerized Development**: (Experimental) Manage Docker-based development environments
--   **📦 Provider Packaging**: (Experimental) Interface for building `flavor`-based provider packages
+- 🚀 **Task Runner (`we`)** - Intuitive task execution with automatic command detection, nested task organization, and smart resolution
+- 📜 **Environment Script Generation** - Creates standardized `env.sh` and `env.ps1` scripts from templates
+- 🔧 **Tool Version Management** - Pin versions of Terraform, OpenTofu, Go, and `uv`
+- 🔗 **Sibling Package Integration** - Automatically discover and install local, editable dependencies
+- 🐍 **Python Version Safety** - Detects `pyproject.toml` Python requirements and manages virtual environments
+- 🐳 **Containerized Development** - (Experimental) Manage Docker-based development environments
+- 📦 **Provider Packaging** - (Experimental) Interface for building `flavor`-based provider packages
 
 ## Quick Start
 - Jump to [Quick Start: Task Runner](#quick-start-task-runner) or [Quick Start: Environment Management](#quick-start-environment-management).
@@ -153,7 +153,7 @@ rust = "1.75"
 patterns = [
     "pyvider-*",      # All pyvider packages
     "tofusoup",       # Testing suite
-    "garnish",        # Documentation generator
+    "plating",        # Documentation generator
 ]
 
 [settings]
