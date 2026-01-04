@@ -89,7 +89,7 @@ $ wrknv tool install terraform --version 1.9.0
 ✓ Installed terraform 1.9.0
 ✓ Added to PATH
 
-$ wrknv sync
+$ wrknv tools sync
 // Synchronizing dependencies...
 Resolved 45 packages
 ✓ Environment synchronized
