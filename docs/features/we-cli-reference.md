@@ -563,5 +563,5 @@ If container commands fail:
 ## See Also
 
 - [Task System](task-system.md) - Task definition and execution
-- [wrknv.toml Reference](../reference/wrknv-toml/) - Configuration schema
+- [Configuration Reference](../reference/configuration.md) - Configuration schema
 - [Examples](../../examples/) - Sample projects and workflows
