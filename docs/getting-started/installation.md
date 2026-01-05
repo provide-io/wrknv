@@ -25,24 +25,13 @@ uvx wrknv --help
 uv tool install wrknv
 ```
 
-**Using pipx (Alternative):**
-```bash
-# Install as isolated CLI tool
-pipx install wrknv
-```
-
-**Using pip:**
-```bash
-uv tool install wrknv
-```
-
 ### As a Library Dependency
 
 If you're integrating wrknv into your project:
 
 **Using uv:**
 ```bash
-uv tool install wrknv
+uv add wrknv
 ```
 
 **In your `pyproject.toml`:**
