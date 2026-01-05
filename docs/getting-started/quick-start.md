@@ -14,7 +14,7 @@ Install wrknv from PyPI:
 ```console
 $ uv tool install wrknv
 # or using uv
-$ uv uv tool install wrknv
+$ uv tool install wrknv
 ```
 
 Verify installation:
