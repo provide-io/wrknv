@@ -38,7 +38,7 @@ Fully configured development environment!
 
   Get your first environment running in 5 minutes.
 
-  [:octicons-arrow-right-24: Quick Start Guide](quick-start.md)
+    [:octicons-arrow-right-24: Quick Start Guide](quick-start.md)
 
 - :material-cog:{ .lg .middle } **Complete Installation**
 
@@ -46,7 +46,7 @@ Fully configured development environment!
 
   Detailed installation with all options and configurations.
 
-  [:octicons-arrow-right-24: Installation Guide](installation.md)
+    [:octicons-arrow-right-24: Installation Guide](installation.md)
 
 - :material-lightbulb:{ .lg .middle } **Core Concepts**
 
@@ -54,7 +54,7 @@ Fully configured development environment!
 
   Understand wrknv's architecture and design.
 
-  [:octicons-arrow-right-24: Learn Concepts](concepts.md)
+    [:octicons-arrow-right-24: Learn Concepts](concepts.md)
 
 - :material-school:{ .lg .middle } **First Project**
 
@@ -257,5 +257,5 @@ $ wrknv config show
 Ready to get started?
 
 1. **[Quick Start Guide](quick-start.md)** - Get running in 5 minutes
-1. **[Installation Guide](installation.md)** - Detailed setup
-1. **[Core Concepts](concepts.md)** - Understand how wrknv works
+2. **[Installation Guide](installation.md)** - Detailed setup
+3. **[Core Concepts](concepts.md)** - Understand how wrknv works
