@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -9,8 +9,8 @@ Configuration loading and resolution for security scanning."""
 
 from __future__ import annotations
 
-from pathlib import Path
 import tomllib
+from pathlib import Path
 
 from attrs import define, field
 from provide.foundation import logger

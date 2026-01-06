@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -9,12 +9,12 @@ Generate security scanner configuration files from a unified allowlist."""
 
 from __future__ import annotations
 
-from pathlib import Path
 import re
+from pathlib import Path
 from typing import TYPE_CHECKING
 
-from provide.foundation import logger
 import yaml
+from provide.foundation import logger
 
 if TYPE_CHECKING:
     from wrknv.security.config import SecurityConfig
@@ -145,7 +145,7 @@ class SecurityAllowlistManager:
 # https://docs.gitguardian.com/ggshield-docs/configuration
 
 """
-        return header + str(yaml.dump(config_dict, default_flow_style=False, sort_keys=False))
+        return header + yaml.dump(config_dict, default_flow_style=False, sort_keys=False)
 
     def write_all(self, dry_run: bool = False) -> dict[str, bool]:
         """Write all security scanner configuration files.
@@ -194,6 +194,9 @@ class SecurityAllowlistManager:
         if not self.config:
             errors.append("No security configuration set")
             return False, errors
+
+        if not self.config.allowed_paths:
+            errors.append("No allowed_paths defined in security configuration")
 
         # Validate glob patterns
         for path in self.config.allowed_paths:
