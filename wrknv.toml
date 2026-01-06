@@ -149,3 +149,8 @@ check = "ruff format . && ruff check . && mypy src/"
 
 [tasks.security]
 _default = "bandit -r src/ -c pyproject.toml"
+bandit = "bandit -r src/ -c pyproject.toml"
+scan = "wrknv security scan"
+generate = "wrknv security generate"
+trufflehog = "trufflehog git file://. --fail --exclude-paths=.trufflehog-exclude-paths.txt"
+gitleaks = "gitleaks git . --config=.gitleaks.toml"
