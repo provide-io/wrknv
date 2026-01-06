@@ -16,14 +16,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download wheel artifacts from CI
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v12
         with:
           workflow: ci.yml
           name: dist
           path: dist/
 
       - name: Download PSP artifacts from CI
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v12
         with:
           workflow: ci.yml
           name: psp-.*
