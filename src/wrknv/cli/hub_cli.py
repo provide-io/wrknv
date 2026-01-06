@@ -129,6 +129,7 @@ def intercept_task_command() -> bool:
         "profile",
         "run",
         "secrets",
+        "security",
         "selftest",
         "setup",
         "terraform",
