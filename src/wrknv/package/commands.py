@@ -23,7 +23,7 @@ def _check_flavor_installed() -> None:
     try:
         import flavor  # type: ignore  # noqa: F401
     except ImportError as e:
-        raise ImportError("flavorpack not installed. Install it with: uv pip install flavorpack") from e
+        raise ImportError("flavorpack not installed. Install it with: uv tool install flavorpack") from e
 
 
 def build_package(
