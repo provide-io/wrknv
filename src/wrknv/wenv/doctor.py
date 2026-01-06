@@ -200,7 +200,7 @@ class WrknvDoctor:
             "WORKENV_DIR=",
             "UV_INSTALLER_URL=",
             "uv venv",
-            "uv pip",
+            "uv sync",
         ]
 
         missing = []
