@@ -10,8 +10,6 @@ wrknv provides unified configuration for secret scanning tools, allowing you to 
 
 ## Configuration
 
-The allowlist starts empty — add entries only when a legitimately-committed file (test fixtures with fake secrets, example configs, public keys) trips a scanner. Real secrets belong in `.gitignore`, not the allowlist.
-
 Add security allowlist configuration to either `pyproject.toml` or `wrknv.toml`:
 
 ### pyproject.toml
@@ -106,22 +104,22 @@ we security scan --no-generate
 
 The `security generate` command creates:
 
-| File                            | Scanner     |
-| ------------------------------- | ----------- |
-| `.trufflehog-exclude-paths.txt` | TruffleHog  |
-| `.gitleaks.toml`                | Gitleaks    |
-| `.gitguardian.yaml`             | GitGuardian |
+| File | Scanner |
+|------|---------|
+| `.trufflehog-exclude-paths.txt` | TruffleHog |
+| `.gitleaks.toml` | Gitleaks |
+| `.gitguardian.yaml` | GitGuardian |
 
 ## Glob Pattern Syntax
 
 The `allowed_paths` field supports glob patterns:
 
-| Pattern             | Matches                                     |
-| ------------------- | ------------------------------------------- |
-| `*.key`             | Files ending in `.key` in current directory |
-| `**/*.key`          | Files ending in `.key` anywhere in tree     |
-| `tests/certs/*.key` | `.key` files in `tests/certs/`              |
-| `docs/**/*.md`      | `.md` files anywhere under `docs/`          |
+| Pattern | Matches |
+|---------|---------|
+| `*.key` | Files ending in `.key` in current directory |
+| `**/*.key` | Files ending in `.key` anywhere in tree |
+| `tests/certs/*.key` | `.key` files in `tests/certs/` |
+| `docs/**/*.md` | `.md` files anywhere under `docs/` |
 
 ## CI Integration
 
