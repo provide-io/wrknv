@@ -9,8 +9,8 @@ Configuration loading and resolution for security scanning."""
 
 from __future__ import annotations
 
-import tomllib
 from pathlib import Path
+import tomllib
 
 from attrs import define, field
 from provide.foundation import logger

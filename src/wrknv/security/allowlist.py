@@ -9,12 +9,12 @@ Generate security scanner configuration files from a unified allowlist."""
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
+import re
 from typing import TYPE_CHECKING
 
-import yaml
 from provide.foundation import logger
+import yaml
 
 if TYPE_CHECKING:
     from wrknv.security.config import SecurityConfig
