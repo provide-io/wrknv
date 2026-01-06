@@ -5,7 +5,7 @@ Get your first wrknv environment running in 5 minutes.
 ## Prerequisites
 
 - Python 3.11 or higher
-- pip or uv package manager
+- uv package manager
 
 ## Installation
 
@@ -14,7 +14,7 @@ Install wrknv from PyPI:
 ```console
 $ uv tool install wrknv
 # or using uv
-$ uv uv tool install wrknv
+$ uv tool install wrknv
 ```
 
 Verify installation:
