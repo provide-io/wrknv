@@ -293,6 +293,6 @@ When requesting features, include:
 - **Documentation**: Check the docs directory and existing code
 - **Issues**: Search existing issues before creating new ones
 - **Discussions**: Use GitHub Discussions for questions and ideas
-- **Design docs**: Review `docs/DESIGN_AND_STRATEGY.md` for architectural guidance
+- **Design docs**: Review `docs/` for architectural guidance
 
 Thank you for contributing to wrknv! Your work helps provide consistent, reliable development environments for the entire provide.io ecosystem. 🧰🌍
