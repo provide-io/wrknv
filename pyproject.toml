@@ -283,6 +283,7 @@ allowed_paths = [
 [dependency-groups]
 dev = [
     "provide-testkit[quality]",
+    "types-pyyaml>=6.0.12.20250915",
 ]
 docs = [
     "provide-testkit[docs]",
