@@ -150,7 +150,6 @@ Desktop.ini
 # UV
 .venv/
 workenv/
-uv.lock
 *bfiles*
 ai_studio*
 
