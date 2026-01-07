@@ -5,6 +5,8 @@
 
 from __future__ import annotations
 
+import re
+
 import pytest
 
 #
@@ -17,6 +19,13 @@ Tests for container volume management commands.
 """
 
 import tarfile
+
+
+def strip_ansi(text: str) -> str:
+    """Strip ANSI escape codes from text."""
+    ansi_escape = re.compile(r"\x1b\[[0-9;]*m")
+    return ansi_escape.sub("", text)
+
 
 from click.testing import CliRunner
 from provide.testkit.mocking import Mock, patch
@@ -152,10 +161,11 @@ class TestVolumeCommands:
         assert result is True
         mock_manager.backup_volumes.assert_called_once_with(compress=True, include_metadata=True, name=None)
 
-        # Check output
+        # Check output (strip ANSI codes that may break up the filename)
         captured = capsys.readouterr()
-        assert "Backup created successfully" in captured.out
-        assert "backup-20250831-150000.tar.gz" in captured.out
+        output = strip_ansi(captured.out)
+        assert "Backup created successfully" in output
+        assert "backup-20250831-150000.tar.gz" in output
 
     def test_backup_volumes_with_name(self, mock_manager, test_config, mock_home, capsys) -> None:
         """Test backup_volumes with custom name."""
