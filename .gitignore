@@ -117,7 +117,7 @@ Desktop.ini
 
 # UV
 .venv/
-uv.lockworkenv/
+workenv/
 *bfiles*
 ai_studio*
 
