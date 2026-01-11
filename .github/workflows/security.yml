@@ -21,7 +21,7 @@ env:
 jobs:
   dependency-check:
     name: Dependency Security Check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       
@@ -54,7 +54,7 @@ jobs:
 
   bandit:
     name: Bandit Security Scan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       
@@ -96,7 +96,7 @@ jobs:
 
   codeql:
     name: CodeQL Analysis
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       actions: read
       contents: read
@@ -118,7 +118,7 @@ jobs:
 
   secrets-scan:
     name: Secrets Scanning
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -151,7 +151,7 @@ jobs:
 
   semgrep:
     name: Semgrep Security Scan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container:
       image: returntocorp/semgrep
     steps:
@@ -172,7 +172,7 @@ jobs:
 
   license-check:
     name: License Compatibility Check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       
@@ -221,7 +221,7 @@ jobs:
 
   sarif-upload:
     name: Upload SARIF Results
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [bandit, semgrep]
     if: always()
     steps:
