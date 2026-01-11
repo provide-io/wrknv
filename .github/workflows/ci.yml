@@ -30,7 +30,7 @@ jobs:
         uses: astral-sh/setup-uv@v4
         with:
           version: ${{ env.UV_VERSION }}
-      
+
       - name: Install dependencies
         run: uv sync --all-groups
 
@@ -48,7 +48,48 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"}]}' || '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.12"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.13"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.11"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.12"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.13"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.11"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.12"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.13"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.11"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.12"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.13"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.11"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.12"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.13"}]}') }}
+      matrix:
+        include:
+          # Linux x64
+          - runner: ubuntu-24.04
+            platform: linux_amd64
+            python-version: "3.11"
+          - runner: ubuntu-24.04
+            platform: linux_amd64
+            python-version: "3.12"
+          - runner: ubuntu-24.04
+            platform: linux_amd64
+            python-version: "3.13"
+          # Linux ARM64
+          - runner: ubuntu-24.04-arm
+            platform: linux_arm64
+            python-version: "3.11"
+          - runner: ubuntu-24.04-arm
+            platform: linux_arm64
+            python-version: "3.12"
+          - runner: ubuntu-24.04-arm
+            platform: linux_arm64
+            python-version: "3.13"
+          # macOS ARM64
+          - runner: macos-15
+            platform: darwin_arm64
+            python-version: "3.11"
+          - runner: macos-15
+            platform: darwin_arm64
+            python-version: "3.12"
+          - runner: macos-15
+            platform: darwin_arm64
+            python-version: "3.13"
+          # macOS Intel
+          - runner: macos-15-intel
+            platform: darwin_amd64
+            python-version: "3.11"
+          - runner: macos-15-intel
+            platform: darwin_amd64
+            python-version: "3.12"
+          - runner: macos-15-intel
+            platform: darwin_amd64
+            python-version: "3.13"
 
     steps:
       - uses: actions/checkout@v4
@@ -62,15 +103,15 @@ jobs:
         uses: astral-sh/setup-uv@v4
         with:
           version: ${{ env.UV_VERSION }}
-      
+
       - name: Install dependencies
         run: uv sync --all-groups
 
       - name: Run tests with coverage
         run: uv run pytest tests/ -v --cov=src/wrknv --cov-report=xml --cov-report=term-missing --cov-fail-under=0
-      
+
       - name: Upload coverage to Codecov
-        if: matrix.python-version == '3.11' && matrix.platform == 'linux_amd64' && github.actor != 'nektos/act' && env.ACT != 'true'
+        if: matrix.python-version == '3.11' && matrix.platform == 'linux_amd64'
         uses: codecov/codecov-action@v5
         with:
           file: ./coverage.xml
@@ -92,7 +133,7 @@ jobs:
         uses: astral-sh/setup-uv@v4
         with:
           version: ${{ env.UV_VERSION }}
-      
+
       - name: Install dependencies
         run: uv sync --all-groups
 
@@ -135,7 +176,7 @@ jobs:
         run: |
           uv sync --all-groups
           uv build
-      
+
       - name: Check distributions
         run: |
           ls -la dist/
