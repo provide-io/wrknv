@@ -10,7 +10,7 @@ on:
 jobs:
   test-setup-pypi:
     name: Test Setup from PyPI
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       
@@ -32,8 +32,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python: ['3.10', '3.11', '3.12']
+        os: [ubuntu-24.04, macos-15, windows-2022]
+        python: ['3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@v4
       
@@ -51,7 +51,7 @@ jobs:
 
   test-setup-with-config:
     name: Test Setup with Configuration
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       
@@ -79,7 +79,7 @@ jobs:
 
   test-setup-with-profile:
     name: Test Setup with Profile
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       
