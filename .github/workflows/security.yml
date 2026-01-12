@@ -1,0 +1,248 @@
+name: 🔐 Security Scanning
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run every Monday at 9am UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+env:
+  PYTHON_VERSION: "3.11"
+  UV_VERSION: "0.9.13"
+
+jobs:
+  dependency-check:
+    name: Dependency Security Check
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Install UV
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: ${{ env.UV_VERSION }}
+      
+      - name: Install dependencies
+        run: |
+          uv venv
+          source .venv/bin/activate
+          uv pip install -e ".[dev]"
+          uv pip install safety pip-audit
+      
+      - name: Check with pip-audit
+        run: |
+          source .venv/bin/activate
+          pip-audit --desc
+      
+      - name: Check with safety
+        run: |
+          source .venv/bin/activate
+          safety check --json || true
+
+  bandit:
+    name: Bandit Security Scan
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Install bandit
+        run: |
+          python -m pip install --upgrade pip
+          pip install bandit[toml]
+      
+      - name: Run bandit scan
+        run: |
+          bandit -r src/ -f json -o bandit-report.json || true
+      
+      - name: Upload bandit results
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report
+          path: bandit-report.json
+      
+      - name: Parse bandit results
+        run: |
+          python -c "
+          import json
+          with open('bandit-report.json', 'r') as f:
+              data = json.load(f)
+          if data.get('results'):
+              print('Security issues found:')
+              for issue in data['results']:
+                  print(f\"  - {issue['issue_text']} ({issue['issue_severity']}) at {issue['filename']}:{issue['line_number']}\")
+              if any(issue['issue_severity'] == 'HIGH' for issue in data['results']):
+                  exit(1)
+          else:
+              print('No security issues found!')
+          "
+
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+          queries: security-extended,security-and-quality
+      
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+      
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  secrets-scan:
+    name: Secrets Scanning
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: TruffleHog OSS (Push)
+        if: github.event_name == 'push'
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.before }}
+          head: ${{ github.sha }}
+          extra_args: --only-verified
+
+      - name: TruffleHog OSS (PR)
+        if: github.event_name == 'pull_request'
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
+          extra_args: --only-verified
+
+      - name: TruffleHog OSS (Scheduled/Manual)
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          extra_args: --only-verified --since-commit HEAD~50
+
+  semgrep:
+    name: Semgrep Security Scan
+    runs-on: ubuntu-24.04
+    container:
+      image: returntocorp/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Semgrep
+        run: |
+          semgrep --config=auto \
+            --json \
+            --output=semgrep-report.json \
+            src/ tests/ || true
+      
+      - name: Upload Semgrep results
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-report
+          path: semgrep-report.json
+
+  license-check:
+    name: License Compatibility Check
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-licenses
+          pip install -e .
+      
+      - name: Check licenses
+        run: |
+          pip-licenses --format=markdown --with-urls --with-description > licenses.md
+          echo "## License Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          pip-licenses --format=markdown --with-urls >> $GITHUB_STEP_SUMMARY
+      
+      - name: Check for problematic licenses
+        run: |
+          # Check for GPL or other copyleft licenses that might be incompatible
+          pip-licenses --format=json | python -c "
+          import json
+          import sys
+          
+          data = json.loads(sys.stdin.read())
+          problematic = ['GPL', 'AGPL', 'LGPL', 'SSPL']
+          issues = []
+          
+          for pkg in data:
+              license = pkg.get('License', '').upper()
+              if any(p in license for p in problematic):
+                  issues.append(f\"{pkg['Name']}: {pkg['License']}\")
+          
+          if issues:
+              print('Potentially problematic licenses found:')
+              for issue in issues:
+                  print(f'  - {issue}')
+              print('\\nPlease review these licenses for compatibility.')
+          else:
+              print('No problematic licenses detected.')
+          "
+
+  sarif-upload:
+    name: Upload SARIF Results
+    runs-on: ubuntu-24.04
+    needs: [bandit, semgrep]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download bandit results
+        uses: actions/download-artifact@v4
+        with:
+          name: bandit-report
+          path: .
+        continue-on-error: true
+      
+      - name: Download semgrep results
+        uses: actions/download-artifact@v4
+        with:
+          name: semgrep-report
+          path: .
+        continue-on-error: true
+      
+      - name: Create summary
+        run: |
+          echo "## Security Scan Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Security scans have been completed. Check the Security tab for detailed results." >> $GITHUB_STEP_SUMMARY

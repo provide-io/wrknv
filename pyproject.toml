@@ -1,0 +1,296 @@
+#
+# wrknv/pyproject.toml
+#
+# Task automation and development environment tooling
+#
+
+[build-system]
+requires = ["setuptools>=75.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wrknv"
+dynamic = ["version"]
+description = "wrknv - Task automation and development environment tooling"
+authors = [
+    { name = "Tim Perkins", email = "code@tim.life" },
+]
+keywords = ["automation", "tasks", "cli", "developer-tools", "environment"]
+readme = "README.md"
+license = "Apache-2.0"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: System :: Installation/Setup",
+]
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.3.1",
+    "packaging>=24.0",
+    "semver>=3.0.0",
+    "rich>=14.0.0",
+    "jinja2>=3.0.0",
+    "attrs>=25.4.0",
+    "cattrs>=24.1.3",
+    "provide-foundation[all]",
+]
+
+[project.scripts]
+we = "wrknv.cli:entry_point"
+wrknv = "wrknv.cli:entry_point"
+
+[project.urls]
+Homepage = "https://foundry.provide.io/wrknv/"
+Documentation = "https://foundry.provide.io/wrknv/"
+Repository = "https://github.com/provide-io/wrknv"
+Issues = "https://github.com/provide-io/wrknv/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["wrknv*"]
+
+[tool.setuptools.package-data]
+wrknv = ["py.typed", "templates/**/*.j2", "templates/**/*.toml"]
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION"}
+
+################################################################################
+# Ruff Linter and Formatter Configuration
+################################################################################
+
+[tool.ruff]
+line-length = 111
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "ANN", "B", "BLE", "C90", "PIE", "PLR", "S", "SIM", "PTH", "RUF"]
+ignore = [
+    "ANN401",   # any-type (too restrictive)
+    "B008",     # function-call-in-default-argument (Click uses this pattern)
+    "E501",     # line-too-long (handled by formatter)
+    "S101",     # assert (valid in tests)
+    "S104",   # binding-to-all-interfaces (intentional for servers)
+    "S108",     # hardcoded-temp-file (/tmp is fine for our use cases)
+    "S310",     # suspicious-url-open-for-protocol (URLs are controlled)
+    "S603",     # subprocess-without-shell-equals-true (trusted input)
+    "S607",     # start-process-with-partial-path (trusted executables)
+    "PLR0911",  # too-many-return-statements (refactor later)
+    "PLR0912",  # too-many-branches (refactor later)
+    "PLR0913",  # too-many-arguments (common in config classes)
+    "PLR0915",  # too-many-statements (refactor later)
+    "PLR2004",  # magic-value-comparison (too noisy)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["wrknv", "tests"]
+force-sort-within-sections = true
+combine-as-imports = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN001", "ANN002", "ANN003", "ANN201", "ANN202", "ANN204", "E402", "S105", "S106", "S110", "S112", "S324", "S604", "BLE001", "S311", "PLR0124"]
+"src/wrknv/cli/**" = ["BLE001", "S604"]  # CLI commands legitimately catch broad exceptions and use shell for container entry
+"src/wrknv/container/**" = ["BLE001", "S202", "S604"]  # Container commands use shell, tarfile, and catch exceptions for UX
+"src/wrknv/package/**" = ["BLE001"]  # Package error handling
+"src/wrknv/wenv/**" = ["BLE001", "S110", "S202", "S324"]  # Wenv: tarfile, checksums, error handling
+"src/wrknv/managers/**" = ["BLE001", "S110"]  # Manager error handling
+"src/wrknv/workspace/**" = ["BLE001"]  # Workspace error handling
+"src/wrknv/tasks/**" = ["BLE001", "S110", "S604"]  # Tasks module error handling, shell execution
+"src/wrknv/utils/**" = ["BLE001", "S110"]  # Utils error handling
+"src/wrknv/lockfile.py" = ["BLE001", "S112"]  # Lockfile error handling
+"src/wrknv/gitignore/**" = ["BLE001"]  # Gitignore error handling
+"src/wrknv/config/**" = ["BLE001"]  # Config error handling
+
+[tool.ruff.lint.mccabe]
+max-complexity = 25
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+################################################################################
+# MyPy Static Type Checker Configuration
+################################################################################
+
+[tool.mypy]
+mypy_path = "src"
+strict = true
+show_error_codes = true
+show_column_numbers = true
+pretty = true
+python_version = "3.11"
+warn_unused_ignores = true
+warn_unused_configs = true
+follow_imports = "normal"
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = [
+    "packaging.*",
+    "semver.*",
+    "rich.*",
+    "jinja2.*",
+    "cattrs.*",
+    "tomli_w.*",
+    "opentelemetry.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# Container module is experimental - ignore errors
+module = [
+    "wrknv.container.*",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+# CLI commands have many dynamic attribute accesses - ignore for now
+module = [
+    "wrknv.cli.commands.*",
+    "wrknv.cli.nested_commands",
+    "wrknv.cli.hub_cli",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+# Wenv modules have some API mismatches with foundation - ignore for now
+module = [
+    "wrknv.wenv.schema",
+    "wrknv.wenv.env_generator",
+    "wrknv.wenv.managers.*",
+    "wrknv.wenv.operations.*",
+    "wrknv.wenv.doctor",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+# Config module needs API updates
+module = [
+    "wrknv.config.core",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+# Managers module has async/API issues - ignore for now
+module = [
+    "wrknv.managers.*",
+    "wrknv.lockfile",
+]
+ignore_errors = true
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "DEBUG"
+
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+asyncio_default_test_loop_scope = "function"
+
+minversion = "7.0"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*", "*Tests"]
+python_functions = ["test_*", "*_test"]
+addopts = "-m 'not integration and not slow and not network' -rFE -q --color=yes"
+# Parallel execution: pytest -n <workers> (range: 2-16, recommend: CPU cores or 8, max: 16 to avoid xdist hang)
+markers = [
+    "unit: fast unit tests",
+    "integration: integration tests requiring setup",
+    "cli: CLI command tests",
+    "config: configuration tests",
+    "container: container management tests",
+    "package: package management tests",
+    "operations: file and platform operations tests",
+    "managers: tool manager tests",
+    "slow: tests taking >1s",
+    "fast: tests taking <100ms",
+    "network: tests requiring network access",
+    "benchmark: performance/timing sensitive tests",
+    "flaky: tests known to be intermittently failing",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore:cannot collect test class 'Test.*' because it has a __init__ constructor:pytest.PytestCollectionWarning",
+    "ignore:cannot collect test class .* because it has a __init__ constructor:pytest.PytestCollectionWarning",
+    "ignore:coroutine .* was never awaited:RuntimeWarning",
+    "ignore:Module already imported so cannot be rewritten:pytest.PytestAssertRewriteWarning",
+    "ignore::pytest.PytestUnraisableExceptionWarning",
+    "ignore:Exception ignored in:pytest.PytestUnraisableExceptionWarning",
+]
+norecursedirs = [
+    ".git", ".hg", ".svn", "*_build", "build", "dist", "*.egg-info",
+    ".venv", "venv", "workenv",
+    "htmlcov", "docs/_build",
+    ".hypothesis",
+]
+
+[tool.coverage.run]
+source = ["src/wrknv"]
+branch = true
+parallel = true
+omit = ["*/tests/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 70
+precision = 2
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "def __repr__",
+    "def __str__",
+    "@(abc\\.)?abstractmethod",
+    "pass",
+    "logger\\.(debug|info|warning|error|exception|critical|trace)\\(",
+    "print\\(",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[tool.bandit]
+exclude_dirs = [".venv", "tests", "workenv"]
+
+################################################################################
+# Security Scanning Allowlist
+################################################################################
+
+[tool.security]
+# Paths to exclude from secret scanning (TruffleHog, GitGuardian, Gitleaks)
+# Run: we security generate (via wrknv) to regenerate tool configs
+description = "Auto-generated context files - intentionally committed"
+allowed_paths = [
+    # Responsum game context (auto-generated game tokens)
+    ".rsp_context.json",
+]
+
+[dependency-groups]
+dev = [
+    "provide-testkit[quality]",
+    "types-pyyaml>=6.0.12.20250915",
+]
+docs = [
+    "provide-testkit[docs]",
+]
+
+[tool.flavor]
+# Configuration for packaging wrknv with flavor
+entry_point = "wrknv.cli:entry_point"
+app_name = "wrknv"
+description = "wrknv - Task automation and development environment tooling"
