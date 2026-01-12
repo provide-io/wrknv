@@ -12,7 +12,7 @@ jobs:
     name: Test Setup from PyPI
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Setup wrknv from PyPI
         uses: ./.github/actions/setup-wrknv
@@ -35,7 +35,7 @@ jobs:
         os: [ubuntu-24.04, macos-15, windows-2022]
         python: ['3.11', '3.12', '3.13']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Setup wrknv from local
         uses: ./.github/actions/setup-wrknv
@@ -53,7 +53,7 @@ jobs:
     name: Test Setup with Configuration
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Create test configuration
         run: |
@@ -81,7 +81,7 @@ jobs:
     name: Test Setup with Profile
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Setup wrknv
         uses: ./.github/actions/setup-wrknv
