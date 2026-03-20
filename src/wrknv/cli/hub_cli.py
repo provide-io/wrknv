@@ -168,7 +168,8 @@ def intercept_task_command() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        logger.debug(f"Task intercept failed: {e}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Task intercept failed: {e}")
         return False
 
 

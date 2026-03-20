@@ -36,7 +36,8 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
     # Create extraction directory
     extract_dir.mkdir(parents=True, exist_ok=True)
 
-    logger.debug(f"Extracting {archive_path} to {extract_dir}")
+    if logger.is_debug_enabled():
+        logger.debug(f"Extracting {archive_path} to {extract_dir}")
 
     archive_name = archive_path.name.lower()
 
@@ -53,7 +54,8 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
         else:
             raise ValidationError(f"Unsupported archive format: {archive_path}")
 
-        logger.debug(f"Successfully extracted {archive_path}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Successfully extracted {archive_path}")
 
     except Exception as e:
         raise ResourceError(f"Failed to extract {archive_path}: {e}") from e
@@ -70,7 +72,8 @@ def make_executable(file_path: pathlib.Path) -> None:
     import platform
 
     if platform.system().lower() == "windows":
-        logger.debug(f"Skipping chmod on Windows for {file_path}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Skipping chmod on Windows for {file_path}")
         return
 
     try:
@@ -83,7 +86,8 @@ def make_executable(file_path: pathlib.Path) -> None:
         # Set new permissions
         file_path.chmod(new_mode)
 
-        logger.debug(f"Made {file_path} executable (mode: {oct(new_mode)})")
+        if logger.is_debug_enabled():
+            logger.debug(f"Made {file_path} executable (mode: {oct(new_mode)})")
 
     except Exception as e:
         logger.warning(f"Failed to make {file_path} executable: {e}")
@@ -105,7 +109,8 @@ def create_symlink(target: pathlib.Path, link_path: pathlib.Path) -> None:
 
     try:
         link_path.symlink_to(target)
-        logger.debug(f"Created symlink: {link_path} -> {target}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Created symlink: {link_path} -> {target}")
 
     except OSError as e:
         # Fall back to copying on Windows if symlink fails
@@ -124,14 +129,16 @@ def copy_file(source: pathlib.Path, destination: pathlib.Path, preserve_permissi
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=True, preserve_mode=preserve_permissions)
-    logger.debug(f"Copied {source} to {destination}")
+    if logger.is_debug_enabled():
+        logger.debug(f"Copied {source} to {destination}")
 
 
 def ensure_directory(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(dir_path, mode=mode)
-    logger.debug(f"Created/verified directory: {dir_path}")
+    if logger.is_debug_enabled():
+        logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -155,7 +162,8 @@ def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    logger.debug(f"Cleaned directory: {dir_path}")
+    if logger.is_debug_enabled():
+        logger.debug(f"Cleaned directory: {dir_path}")
 
 
 @resilient

@@ -63,7 +63,8 @@ def status_command() -> None:
                     else:
                         version_str = resolved_str
             except Exception as e:
-                logger.debug(f"Could not resolve versions for {tool_name}: {e}")
+                if logger.is_debug_enabled():
+                    logger.debug(f"Could not resolve versions for {tool_name}: {e}")
         else:
             version_str = version or "Not specified"
             # Try to resolve single version pattern
@@ -76,7 +77,8 @@ def status_command() -> None:
                     else:
                         version_str = resolved_versions[0] if resolved_versions else version
                 except Exception as e:
-                    logger.debug(f"Could not resolve version for {tool_name}: {e}")
+                    if logger.is_debug_enabled():
+                        logger.debug(f"Could not resolve version for {tool_name}: {e}")
 
         table.add_row(
             f"{tool_emoji} {tool_name}",

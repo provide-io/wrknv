@@ -37,7 +37,8 @@ class GoManager(BaseToolManager):
         try:
             api_url = GO_DOWNLOAD_API_URL
 
-            logger.debug(f"Fetching Go versions from {api_url}")
+            if logger.is_debug_enabled():
+                logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -57,7 +58,8 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            logger.debug(f"Found {len(versions)} Go versions")
+            if logger.is_debug_enabled():
+                logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -148,7 +150,8 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    logger.debug(f"Go {version} verification successful")
+                    if logger.is_debug_enabled():
+                        logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
