@@ -51,7 +51,7 @@ class ContainerMetadata:
         """
         metadata = self.storage.load_metadata()
 
-        if metadata:
+        if metadata and logger.is_debug_enabled():
             logger.debug(f"Loaded metadata: {metadata}")
 
         return metadata

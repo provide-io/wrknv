@@ -160,7 +160,8 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                logger.debug(f"Could not clear {self.tool_name} version in config")
+                if logger.is_debug_enabled():
+                    logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def _install_from_archive(self, archive_path: pathlib.Path, version: str) -> None:
         """Install tool from downloaded archive in tf versions format."""
@@ -404,7 +405,8 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            logger.debug(f"Could not regenerate env.sh: {e}")
+            if logger.is_debug_enabled():
+                logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 

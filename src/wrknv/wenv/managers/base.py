@@ -82,7 +82,8 @@ class BaseToolManager(ABC):
         if parsed.scheme != "https":
             raise ToolManagerError(f"Only HTTPS URLs are allowed for security. Got: {parsed.scheme}://")
 
-        logger.debug(f"Fetching JSON from {url}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Fetching JSON from {url}")
         with urlopen(url) as response:  # nosec B310 - URL scheme validated above
             return json.loads(response.read())
 
@@ -349,7 +350,8 @@ class BaseToolManager(ABC):
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
                 # If set_tool_version doesn't exist, just log
-                logger.debug(f"Could not clear {self.tool_name} version in config")
+                if logger.is_debug_enabled():
+                    logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def verify_installation(self, version: str) -> bool:
         """Verify that installation works correctly."""
@@ -370,7 +372,8 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            if logger.is_debug_enabled():
+                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
 

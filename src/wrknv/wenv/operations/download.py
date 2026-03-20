@@ -73,7 +73,7 @@ async def download_file_async(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -142,7 +142,7 @@ async def download_with_mirrors_async(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -234,7 +234,8 @@ def parse_checksum_file(checksum_path: pathlib.Path, target_filename: str) -> st
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        if logger.is_debug_enabled():
+                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
