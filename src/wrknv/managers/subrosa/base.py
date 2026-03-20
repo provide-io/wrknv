@@ -166,7 +166,8 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            logger.debug(f"Could not regenerate env.sh: {e}")
+            if logger.is_debug_enabled():
+                logger.debug(f"Could not regenerate env.sh: {e}")
 
     def switch_version(self, version: str, dry_run: bool = False) -> None:
         """Switch to a specific version (like nvm use, tfswitch).
@@ -280,7 +281,8 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    logger.debug(f"{self.variant_name} {version} verification successful")
+                    if logger.is_debug_enabled():
+                        logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")

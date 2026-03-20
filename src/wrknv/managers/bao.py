@@ -55,7 +55,8 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            logger.debug(f"Found {len(versions)} OpenBao versions")
+            if logger.is_debug_enabled():
+                logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -147,7 +148,8 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    logger.debug(f"OpenBao {version} verification successful")
+                    if logger.is_debug_enabled():
+                        logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")

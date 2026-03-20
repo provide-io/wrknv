@@ -50,7 +50,8 @@ def load_security_config(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            logger.debug(f"Loaded security config from {pyproject_file}")
+            if logger.is_debug_enabled():
+                logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -58,7 +59,8 @@ def load_security_config(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            logger.debug(f"Loaded security config from {wrknv_file}")
+            if logger.is_debug_enabled():
+                logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -66,7 +68,8 @@ def load_security_config(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            logger.debug(f"Loaded security config from {wrknv_hidden}")
+            if logger.is_debug_enabled():
+                logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")

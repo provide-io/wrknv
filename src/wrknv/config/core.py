@@ -161,7 +161,8 @@ class WorkenvConfig(RuntimeConfig):
 
         for path in locations:
             if path.exists():
-                logger.debug(f"Found config file at {path}")
+                if logger.is_debug_enabled():
+                    logger.debug(f"Found config file at {path}")
                 return path
 
         # Return default location for new configs

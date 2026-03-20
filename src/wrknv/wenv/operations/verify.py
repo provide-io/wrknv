@@ -32,7 +32,8 @@ def verify_tool_installation(binary_path: pathlib.Path, expected_version: str, t
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            logger.debug(f"{tool_name} {expected_version} verification successful")
+            if logger.is_debug_enabled():
+                logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -61,7 +62,8 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
     cmd = [str(binary_path), *version_args]
 
     try:
-        logger.debug(f"Running version check: {' '.join(cmd)}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Running version check: {' '.join(cmd)}")
 
         result = run(cmd, timeout=timeout)
 
@@ -159,7 +161,8 @@ def validate_installation_directory(install_dir: pathlib.Path, tool_name: str, v
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    if logger.is_debug_enabled():
+        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -300,7 +303,8 @@ def verify_file(file_path: pathlib.Path, signature_path: pathlib.Path | None = N
         # In production, would verify actual signature
         return True
     else:
-        logger.debug(f"No signature file found, skipping verification: {file_path}")
+        if logger.is_debug_enabled():
+            logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
 
