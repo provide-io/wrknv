@@ -129,7 +129,12 @@
       "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check tests/config/test_config_validation.py tests/config/test_config_display.py tests/config/test_config_sources.py tests/workspace/test_sync.py 2>&1)",
       "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check tests/config/test_config_validation.py tests/config/test_config_display.py tests/config/test_config_sources.py tests/workspace/test_sync.py)",
       "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check tests/cli/test_nested_commands.py)",
-      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check --select I --fix tests/cli/test_nested_commands.py)"
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check --select I --fix tests/cli/test_nested_commands.py)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/pip show:*)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -c \"import tomli; print\\(tomli.__file__\\)\" 2>&1)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check tests/wenv/test_doctor.py)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check --fix tests/wenv/test_doctor.py)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check --unsafe-fixes --fix tests/wenv/test_doctor.py)"
     ],
     "deny": [],
     "additionalDirectories": [
