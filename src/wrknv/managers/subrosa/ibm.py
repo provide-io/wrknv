@@ -34,8 +34,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()

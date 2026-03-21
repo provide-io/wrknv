@@ -168,59 +168,5 @@ site/
 .ruff_cache/
 memray-output/
 
-# Generated artifacts
-coverage.json
-env.ps1
-env.sh
-
 # Local act CI config (machine-specific)
 .actrc
-
-# Local settings (machine-specific)
-*.local.json
-
-# Added by release-scrubbing hardening
-# Python caches
-*.pyc
-*.pyo
-*.pyd
-
-# Python venvs
-.venv_*/
-
-# Docs builds
-_build/
-.docs_aggregated/
-
-# Editor backups
-*.bak.*
-*.orig
-
-# Secrets / local config
-.env.*
-.secrets/
-
-# Claude / provide.io tooling state
-.claude/
-
-# Session / scratch
-bundle.txt
-chunk_*
-
-# Node
-node_modules/
-
-# Rust
-*.rlib
-*.rmeta
-
-# Archives
-*.zip
-*.tar.gz
-*.tgz
-*.whl
-
-
-# Session bfile scratch
-*bfile*
-bf*.txt
