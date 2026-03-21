@@ -151,21 +151,24 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    logger.trace(f"Detected language {lang} from {filename}")
+                    if logger.is_trace_enabled():
+                        logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    logger.trace(f"Detected tool {tool} from {filename}")
+                    if logger.is_trace_enabled():
+                        logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    logger.trace(f"Detected OS {os_name} from {filename}")
+                    if logger.is_trace_enabled():
+                        logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -174,7 +177,8 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    logger.trace(f"Detected framework {framework} from {filename}")
+                    if logger.is_trace_enabled():
+                        logger.trace(f"Detected framework {framework} from {filename}")
 
     def _matches_pattern(self, filename: str, pattern: str, is_dir: bool) -> bool:
         """Check if filename matches a pattern."""
@@ -238,22 +242,26 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    logger.trace(f"Detected React from {package_json}")
+                    if logger.is_trace_enabled():
+                        logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    logger.trace(f"Detected Vue from {package_json}")
+                    if logger.is_trace_enabled():
+                        logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    logger.trace(f"Detected Angular from {package_json}")
+                    if logger.is_trace_enabled():
+                        logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    logger.trace(f"Detected Next.js from {package_json}")
+                    if logger.is_trace_enabled():
+                        logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
                 if logger.is_debug_enabled():
