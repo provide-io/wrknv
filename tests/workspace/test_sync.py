@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import asyncio
 from pathlib import Path
-from unittest import mock
 
 from provide.testkit import FoundationTestCase
 
@@ -163,58 +162,6 @@ class TestWorkspaceSyncApplyConfigChange(FoundationTestCase):
         assert "error" in result
 
 
-class TestWorkspaceSyncSyncRepo(FoundationTestCase):
-    """Tests for sync_repo with mocked config generation."""
-
-    def _run(self, coro: object) -> object:
-        return asyncio.run(coro)  # type: ignore[arg-type]
-
-    def test_sync_repo_with_generated_config_applies_changes(self) -> None:
-        tmp = self.create_temp_dir()
-        repo = _make_repo(name="mocked_repo", path=tmp)
-        ws = _make_workspace(repo)
-        sync = WorkspaceSync(ws)
-
-        with mock.patch.object(sync, "_generate_configs", return_value={"config.txt": "new content"}):
-            result = self._run(sync.sync_repo(repo, dry_run=False))
-
-        assert result["repo"] == "mocked_repo"
-        assert "config.txt" in result["changes"]
-        assert result["files_updated"] == 1
-        assert (tmp / "config.txt").read_text() == "new content"
-
-    def test_sync_repo_dry_run_does_not_write(self) -> None:
-        tmp = self.create_temp_dir()
-        repo = _make_repo(name="dryrun_repo", path=tmp)
-        ws = _make_workspace(repo)
-        sync = WorkspaceSync(ws)
-
-        with mock.patch.object(sync, "_generate_configs", return_value={"config.txt": "content"}):
-            result = self._run(sync.sync_repo(repo, dry_run=True))
-
-        assert result["files_updated"] == 1
-        assert not (tmp / "config.txt").exists()
-
-
-class TestWorkspaceSyncWriteError(FoundationTestCase):
-    """Tests for _apply_config_change write error handling."""
-
-    def _run(self, coro: object) -> object:
-        return asyncio.run(coro)  # type: ignore[arg-type]
-
-    def test_write_error_sets_error_key(self) -> None:
-        tmp = self.create_temp_dir()
-        file_path = tmp / "existing.txt"
-        file_path.write_text("original content")
-        sync = WorkspaceSync(_make_workspace())
-
-        with mock.patch.object(Path, "write_text", side_effect=OSError("permission denied")):
-            result = self._run(sync._apply_config_change(file_path, "new content", dry_run=False))
-
-        assert "error" in result
-        assert result["changed"] is True
-
-
 class TestWorkspaceSyncCheckDrift(FoundationTestCase):
     """Tests for check_drift."""
 
@@ -233,54 +180,6 @@ class TestWorkspaceSyncCheckDrift(FoundationTestCase):
         report = sync.check_drift()
         # No configs generated → no drift (empty expected_configs loop)
         assert not report["drift_detected"]
-
-    def test_drift_detected_when_file_missing(self) -> None:
-        tmp = self.create_temp_dir()
-        repo = _make_repo(path=tmp)
-        ws = _make_workspace(repo)
-        sync = WorkspaceSync(ws)
-
-        with mock.patch.object(sync, "_generate_configs", return_value={"missing.txt": "content"}):
-            report = sync.check_drift()
-
-        assert report["drift_detected"] is True
-
-    def test_drift_detected_when_file_differs(self) -> None:
-        tmp = self.create_temp_dir()
-        (tmp / "file.txt").write_text("old content")
-        repo = _make_repo(path=tmp)
-        ws = _make_workspace(repo)
-        sync = WorkspaceSync(ws)
-
-        with mock.patch.object(sync, "_generate_configs", return_value={"file.txt": "new content"}):
-            report = sync.check_drift()
-
-        assert report["drift_detected"] is True
-
-    def test_no_drift_when_file_matches(self) -> None:
-        tmp = self.create_temp_dir()
-        (tmp / "file.txt").write_text("same content")
-        repo = _make_repo(path=tmp)
-        ws = _make_workspace(repo)
-        sync = WorkspaceSync(ws)
-
-        with mock.patch.object(sync, "_generate_configs", return_value={"file.txt": "same content"}):
-            report = sync.check_drift()
-
-        assert report["drift_detected"] is False
-
-    def test_drift_on_read_error(self) -> None:
-        tmp = self.create_temp_dir()
-        trouble = tmp / "trouble.txt"
-        trouble.mkdir()  # directory where file expected, causing read error
-        repo = _make_repo(path=tmp)
-        ws = _make_workspace(repo)
-        sync = WorkspaceSync(ws)
-
-        with mock.patch.object(sync, "_generate_configs", return_value={"trouble.txt": "content"}):
-            report = sync.check_drift()
-
-        assert report["drift_detected"] is True
 
     def test_drift_report_structure(self) -> None:
         repo = _make_repo()

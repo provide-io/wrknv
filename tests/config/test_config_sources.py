@@ -49,10 +49,13 @@ class TestFileConfigSource(FoundationTestCase):
         return p
 
     def test_load_existing_file(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv.tools]
 terraform = "1.5.0"
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         assert source.get_tool_version("terraform") == "1.5.0"
 
@@ -62,93 +65,126 @@ terraform = "1.5.0"
         assert source.get_all_tools() == {}
 
     def test_get_all_tools(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv.tools]
 terraform = "1.5.0"
 go = "1.21.0"
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         tools = source.get_all_tools()
         assert tools["terraform"] == "1.5.0"
         assert tools["go"] == "1.21.0"
 
     def test_get_tool_version_missing_tool(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv.tools]
 terraform = "1.5.0"
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         assert source.get_tool_version("missing") is None
 
     def test_get_profile(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv.profiles.dev]
 terraform = "1.5.0"
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         profile = source.get_profile("dev")
         assert profile["terraform"] == "1.5.0"
 
     def test_get_profile_missing(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv]
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         assert source.get_profile("missing") == {}
 
     def test_get_setting_from_section_settings(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv.settings]
 auto_install = true
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         assert source.get_setting("auto_install") is True
 
     def test_get_setting_nested_path(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [project]
 name = "myapp"
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         assert source.get_setting("project.name") == "myapp"
 
     def test_get_setting_missing_returns_default(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv]
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         assert source.get_setting("nonexistent") is None
         assert source.get_setting("nonexistent", "fallback") == "fallback"
 
     def test_get_setting_nested_path_intermediate_missing(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv]
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         assert source.get_setting("missing.key.deep") is None
 
     def test_get_setting_nested_path_non_dict_intermediate(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv]
 name = "test"
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         # workenv.name is a string, so .key.deep would fail
         assert source.get_setting("workenv.name.deep") is None
 
     def test_custom_section(self) -> None:
-        toml_path = self._write_toml("pyproject.toml", """
+        toml_path = self._write_toml(
+            "pyproject.toml",
+            """
 [tool.tools]
 terraform = "1.5.0"
-""")
+""",
+        )
         source = FileConfigSource(toml_path, section="tool")
         assert source.get_tool_version("terraform") == "1.5.0"
 
     def test_all_tools_no_tools_section(self) -> None:
-        toml_path = self._write_toml("wrknv.toml", """
+        toml_path = self._write_toml(
+            "wrknv.toml",
+            """
 [workenv]
 auto_install = true
-""")
+""",
+        )
         source = FileConfigSource(toml_path)
         assert source.get_all_tools() == {}
 
