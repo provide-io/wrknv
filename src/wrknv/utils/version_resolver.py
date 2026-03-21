@@ -100,7 +100,8 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        logger.debug(f"Resolved {pattern} to {resolved}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def _resolve_major_minor(self, version: str) -> str:
@@ -115,7 +116,8 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        logger.debug(f"Resolved {version} to {resolved}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def _version_sort_key(self, version: str) -> semver.VersionInfo:

@@ -88,7 +88,8 @@ class GitignoreBuilder:
         )
 
         self.sections.insert(0, ("header", "\n".join(header_lines)))
-        logger.debug(f"Added header for project: {project_name}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Added header for project: {project_name}")
 
     def add_template_section(self, name: str, content: str) -> None:
         """
@@ -106,7 +107,8 @@ class GitignoreBuilder:
         section_content = content.strip()
 
         self.sections.append((name, section_header + section_content))
-        logger.debug(f"Added template section: {name}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Added template section: {name}")
 
     def _build_section_content(self, section_name: str, patterns: dict[str, list[str]]) -> str:
         """Build section content from pattern dictionary.
@@ -148,7 +150,8 @@ class GitignoreBuilder:
             return
 
         self.custom_rules.extend(rules)
-        logger.debug(f"Added {len(rules)} custom rules")
+        if logger.is_debug_enabled():
+            logger.debug(f"Added {len(rules)} custom rules")
 
     def build(self, merge_duplicates: bool = True) -> str:
         """
@@ -182,10 +185,12 @@ class GitignoreBuilder:
 
                 if filtered_lines:
                     all_lines.append("\n".join(filtered_lines))
-                    logger.debug(f"Added section {section_name} with {len(filtered_lines)} lines")
+                    if logger.is_debug_enabled():
+                        logger.debug(f"Added section {section_name} with {len(filtered_lines)} lines")
             else:
                 all_lines.append(section_content)
-                logger.debug(f"Added section {section_name} without deduplication")
+                if logger.is_debug_enabled():
+                    logger.debug(f"Added section {section_name} without deduplication")
 
         # Add custom rules section if we have any
         if self.custom_rules:
@@ -203,7 +208,8 @@ class GitignoreBuilder:
                         seen_patterns.add(rule.strip())
 
             all_lines.append("\n".join(custom_section))
-            logger.debug(f"Added {len(self.custom_rules)} custom rules")
+            if logger.is_debug_enabled():
+                logger.debug(f"Added {len(self.custom_rules)} custom rules")
 
         # Join all sections with double newlines
         result = "\n\n".join(all_lines)
@@ -226,7 +232,8 @@ class GitignoreBuilder:
             Merged gitignore content
         """
         if not existing_path.exists():
-            logger.debug(f"No existing file at {existing_path}")
+            if logger.is_debug_enabled():
+                logger.debug(f"No existing file at {existing_path}")
             return self.build()
 
         logger.info(f"Merging with existing gitignore at {existing_path}")
@@ -248,7 +255,8 @@ class GitignoreBuilder:
                 custom_rules.append(line)
 
         if custom_rules:
-            logger.debug(f"Preserved {len(custom_rules)} custom rules from existing file")
+            if logger.is_debug_enabled():
+                logger.debug(f"Preserved {len(custom_rules)} custom rules from existing file")
             self.add_custom_rules(custom_rules)
 
         return self.build()

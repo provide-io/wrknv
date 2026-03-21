@@ -61,7 +61,8 @@ class TofuTfVariant(TfManager):
             # Use GitHub client to fetch versions
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
-            logger.debug(f"Found {len(versions)} OpenTofu versions")
+            if logger.is_debug_enabled():
+                logger.debug(f"Found {len(versions)} OpenTofu versions")
             return versions
 
         except Exception as e:
@@ -102,7 +103,8 @@ class TofuTfVariant(TfManager):
                 # Check if version matches
                 version_pattern = rf"OpenTofu v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    logger.debug(f"OpenTofu {version} verification successful")
+                    if logger.is_debug_enabled():
+                        logger.debug(f"OpenTofu {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenTofu output: {result.stdout}")

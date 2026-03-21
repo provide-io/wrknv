@@ -57,7 +57,8 @@ class TofuManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            logger.debug(f"Found {len(versions)} OpenTofu versions")
+            if logger.is_debug_enabled():
+                logger.debug(f"Found {len(versions)} OpenTofu versions")
             return versions
 
         except Exception as e:
@@ -115,7 +116,8 @@ class TofuManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"OpenTofu v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    logger.debug(f"OpenTofu {version} verification successful")
+                    if logger.is_debug_enabled():
+                        logger.debug(f"OpenTofu {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenTofu output: {result.stdout}")

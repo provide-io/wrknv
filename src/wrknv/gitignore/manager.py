@@ -44,8 +44,10 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        logger.debug(f"Gitignore path: {self.gitignore_path}")
+        if logger.is_debug_enabled():
+            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def build_from_templates(
         self,
@@ -90,7 +92,8 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                logger.debug(f"Added template: {template_name}")
+                if logger.is_debug_enabled():
+                    logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
