@@ -54,7 +54,8 @@ class UvManager(BaseToolManager):
             # Use GitHub client to fetch versions
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
-            logger.debug(f"Found {len(versions)} UV versions")
+            if logger.is_debug_enabled():
+                logger.debug(f"Found {len(versions)} UV versions")
             return versions
 
         except Exception as e:
@@ -162,7 +163,8 @@ class UvManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version matches (UV outputs "uv 0.4.15")
                 if version in result.stdout:
-                    logger.debug(f"UV {version} verification successful")
+                    if logger.is_debug_enabled():
+                        logger.debug(f"UV {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in UV output: {result.stdout}")

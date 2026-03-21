@@ -49,7 +49,7 @@ def copy_tf_binaries_to_workenv(bin_dir: pathlib.Path, config: WorkenvConfig | N
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir):
+                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:

@@ -278,7 +278,8 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                logger.debug(f"Could not clear {self.tool_name} version in config")
+                if logger.is_debug_enabled():
+                    logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def _calculate_file_hash(self, file_path: pathlib.Path, algorithm: str = "sha256") -> str:
         """Calculate hash of a file."""
@@ -557,7 +558,8 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        if logger.is_debug_enabled():
+                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")

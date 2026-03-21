@@ -236,7 +236,8 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                logger.debug(f"Created intermediate group: {part}")
+                if logger.is_debug_enabled():
+                    logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
