@@ -88,8 +88,7 @@ class GitignoreBuilder:
         )
 
         self.sections.insert(0, ("header", "\n".join(header_lines)))
-        if logger.is_debug_enabled():
-            logger.debug(f"Added header for project: {project_name}")
+        logger.debug(f"Added header for project: {project_name}")
 
     def add_template_section(self, name: str, content: str) -> None:
         """
@@ -107,8 +106,7 @@ class GitignoreBuilder:
         section_content = content.strip()
 
         self.sections.append((name, section_header + section_content))
-        if logger.is_debug_enabled():
-            logger.debug(f"Added template section: {name}")
+        logger.debug(f"Added template section: {name}")
 
     def _build_section_content(self, section_name: str, patterns: dict[str, list[str]]) -> str:
         """Build section content from pattern dictionary.
@@ -189,8 +187,7 @@ class GitignoreBuilder:
                         logger.debug(f"Added section {section_name} with {len(filtered_lines)} lines")
             else:
                 all_lines.append(section_content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added section {section_name} without deduplication")
+                logger.debug(f"Added section {section_name} without deduplication")
 
         # Add custom rules section if we have any
         if self.custom_rules:
@@ -232,8 +229,7 @@ class GitignoreBuilder:
             Merged gitignore content
         """
         if not existing_path.exists():
-            if logger.is_debug_enabled():
-                logger.debug(f"No existing file at {existing_path}")
+            logger.debug(f"No existing file at {existing_path}")
             return self.build()
 
         logger.info(f"Merging with existing gitignore at {existing_path}")

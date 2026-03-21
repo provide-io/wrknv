@@ -16,7 +16,7 @@ from types import TracebackType
 from typing import Literal
 
 from provide.foundation.hub import get_hub
-from provide.foundation.logger import get_logger
+from provide.foundation.logger import get_logger, is_debug_enabled
 from provide.foundation.transport import UniversalClient
 
 from wrknv.managers.github.types import Asset, Release, Tag
@@ -68,8 +68,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -80,7 +79,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
+        if is_debug_enabled():
             logger.debug(f"Found {len(releases)} releases")
         return releases
 
@@ -92,8 +91,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/latest"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching latest release from {self.repo}")
+        logger.debug(f"Fetching latest release from {self.repo}")
 
         response = await self.client.get(url)
         data = response.json()
@@ -111,8 +109,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/tags/{tag}"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching release {tag} from {self.repo}")
+        logger.debug(f"Fetching release {tag} from {self.repo}")
 
         response = await self.client.get(url)
         data = response.json()
@@ -131,15 +128,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
+        if is_debug_enabled():
             logger.debug(f"Found {len(tags)} tags")
         return tags
 
@@ -266,8 +262,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -276,12 +271,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     async def close(self) -> None:

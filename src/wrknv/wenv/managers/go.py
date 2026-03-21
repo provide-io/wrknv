@@ -143,8 +143,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")

@@ -63,8 +63,7 @@ class SecurityAllowlistManager:
         self.project_dir = Path(project_dir) if project_dir else Path.cwd()
         self.config = config
 
-        if logger.is_debug_enabled():
-            logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
+        logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
 
     def set_config(self, config: SecurityConfig) -> None:
         """Set the security configuration.

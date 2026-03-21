@@ -89,28 +89,29 @@ class TestSetupCommand(FoundationTestCase):
     @pytest.mark.skipif(
         IS_WINDOWS or IS_CI, reason="Shell integration uses bash scripts and mocks don't work reliably in CI"
     )
-    @patch("wrknv.cli.commands.setup.run")
-    @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
-    def test_setup_shell_integration_success(self, mock_get_path, mock_run) -> None:
+    def test_setup_shell_integration_success(self) -> None:
         """Test successful shell integration setup."""
-        # Mock the path to exist
         from pathlib import Path
 
-        mock_script_path = Mock(spec=Path)
-        mock_script_path.exists = Mock(return_value=True)
-        mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
-        mock_get_path.return_value = mock_script_path
-
-        mock_run.return_value = Mock(returncode=0)
-
-        runner = click.testing.CliRunner()
+        # create_cli() reloads command modules, so CLI must be created before patching
         cli = get_test_cli()
-        result = runner.invoke(cli, ["setup", "--shell-integration"])
+
+        with (
+            patch("wrknv.cli.commands.setup._get_shell_integration_script_path") as mock_get_path,
+            patch("wrknv.cli.commands.setup.run") as mock_run,
+        ):
+            mock_script_path = Mock(spec=Path)
+            mock_script_path.exists = Mock(return_value=True)
+            mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
+            mock_get_path.return_value = mock_script_path
+            mock_run.return_value = Mock(returncode=0)
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--shell-integration"])
 
         assert result.exit_code == 0
         assert "Setting up shell integration" in result.output
         assert "Shell integration configured successfully" in result.output
-        # Note: mock_run assertion removed due to CLI module caching
 
     def test_setup_shell_integration_script_not_found(self) -> None:
         """Test shell integration when script is missing."""
@@ -182,27 +183,28 @@ class TestSetupCommand(FoundationTestCase):
     @pytest.mark.skipif(
         IS_WINDOWS or IS_CI, reason="Shell integration uses bash scripts and mocks don't work reliably in CI"
     )
-    @patch("wrknv.cli.commands.setup.run")
-    @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
-    def test_setup_shell_integration_creates_aliases(self, mock_get_path, mock_run) -> None:
+    def test_setup_shell_integration_creates_aliases(self) -> None:
         """Test that shell integration calls the shell script."""
-        # Mock the path to exist
         from pathlib import Path
 
-        mock_script_path = Mock(spec=Path)
-        mock_script_path.exists = Mock(return_value=True)
-        mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
-        mock_get_path.return_value = mock_script_path
-
-        mock_run.return_value = Mock(returncode=0)
-
-        runner = click.testing.CliRunner()
+        # create_cli() reloads command modules, so CLI must be created before patching
         cli = get_test_cli()
-        result = runner.invoke(cli, ["setup", "--shell-integration"])
+
+        with (
+            patch("wrknv.cli.commands.setup._get_shell_integration_script_path") as mock_get_path,
+            patch("wrknv.cli.commands.setup.run") as mock_run,
+        ):
+            mock_script_path = Mock(spec=Path)
+            mock_script_path.exists = Mock(return_value=True)
+            mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
+            mock_get_path.return_value = mock_script_path
+            mock_run.return_value = Mock(returncode=0)
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--shell-integration"])
 
         assert result.exit_code == 0
         assert "Setting up shell integration" in result.output
-        # Note: mock_run assertion removed due to CLI module caching
 
     @patch("wrknv.wenv.workenv.WorkenvManager.setup_workenv")
     def test_setup_all_options(self, mock_setup_workenv) -> None:

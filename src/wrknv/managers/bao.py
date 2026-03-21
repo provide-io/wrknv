@@ -148,8 +148,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")

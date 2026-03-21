@@ -100,8 +100,7 @@ def copy_tool_binary(source_path: pathlib.Path, target_name: str, bin_dir: pathl
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
