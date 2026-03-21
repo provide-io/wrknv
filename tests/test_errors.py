@@ -495,4 +495,5 @@ class TestInheritance(FoundationTestCase):
         err = ProfileError("staging")
         assert isinstance(err, WrkenvError)
 
+
 # 🧰🌍🔚
