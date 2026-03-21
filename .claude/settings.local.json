@@ -125,7 +125,11 @@
       "Bash(PYTHONWARNINGS=\"ignore:::pytest_benchmark\" python -m pytest:*)",
       "Bash(do echo:*)",
       "Read(//Users/tim/code/gh/provide-io/wrknv/**)",
-      "Bash(/Users/tim/code/gh/provide-io/wrknv/workenv/bin/python -c \"import provide.foundation.logger; print\\([x for x in dir\\(provide.foundation.logger\\) if ''enabled'' in x.lower\\(\\) or ''debug'' in x.lower\\(\\)]\\)\")"
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/workenv/bin/python -c \"import provide.foundation.logger; print\\([x for x in dir\\(provide.foundation.logger\\) if ''enabled'' in x.lower\\(\\) or ''debug'' in x.lower\\(\\)]\\)\")",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check tests/config/test_config_validation.py tests/config/test_config_display.py tests/config/test_config_sources.py tests/workspace/test_sync.py 2>&1)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check tests/config/test_config_validation.py tests/config/test_config_display.py tests/config/test_config_sources.py tests/workspace/test_sync.py)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check tests/cli/test_nested_commands.py)",
+      "Bash(/Users/tim/code/gh/provide-io/wrknv/.venv/bin/python -m ruff check --select I --fix tests/cli/test_nested_commands.py)"
     ],
     "deny": [],
     "additionalDirectories": [
