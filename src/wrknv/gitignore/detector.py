@@ -141,8 +141,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def _check_pattern(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -202,8 +201,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -256,8 +254,7 @@ class ProjectDetector:
                     logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def detect_project_types(self, path: Path, max_depth: int = 5) -> list[str]:
         """

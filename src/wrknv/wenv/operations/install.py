@@ -36,8 +36,7 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
     # Create extraction directory
     extract_dir.mkdir(parents=True, exist_ok=True)
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Extracting {archive_path} to {extract_dir}")
+    logger.debug(f"Extracting {archive_path} to {extract_dir}")
 
     archive_name = archive_path.name.lower()
 
@@ -54,8 +53,7 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
         else:
             raise ValidationError(f"Unsupported archive format: {archive_path}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Successfully extracted {archive_path}")
+        logger.debug(f"Successfully extracted {archive_path}")
 
     except Exception as e:
         raise ResourceError(f"Failed to extract {archive_path}: {e}") from e
@@ -72,8 +70,7 @@ def make_executable(file_path: pathlib.Path) -> None:
     import platform
 
     if platform.system().lower() == "windows":
-        if logger.is_debug_enabled():
-            logger.debug(f"Skipping chmod on Windows for {file_path}")
+        logger.debug(f"Skipping chmod on Windows for {file_path}")
         return
 
     try:
@@ -109,8 +106,7 @@ def create_symlink(target: pathlib.Path, link_path: pathlib.Path) -> None:
 
     try:
         link_path.symlink_to(target)
-        if logger.is_debug_enabled():
-            logger.debug(f"Created symlink: {link_path} -> {target}")
+        logger.debug(f"Created symlink: {link_path} -> {target}")
 
     except OSError as e:
         # Fall back to copying on Windows if symlink fails
@@ -129,16 +125,14 @@ def copy_file(source: pathlib.Path, destination: pathlib.Path, preserve_permissi
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=True, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def ensure_directory(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(dir_path, mode=mode)
-    if logger.is_debug_enabled():
-        logger.debug(f"Created/verified directory: {dir_path}")
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -162,8 +156,7 @@ def clean_directory(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 @resilient
