@@ -5731,8 +5731,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_1(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5756,8 +5755,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_2(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5781,8 +5779,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_3(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5806,8 +5803,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_4(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5831,8 +5827,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_5(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5856,8 +5851,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_6(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5881,8 +5875,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_7(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5906,8 +5899,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(None, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_8(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5931,8 +5923,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, None)
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_9(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5956,8 +5947,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version("")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_10(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -5981,8 +5971,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, )
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_11(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -6006,8 +5995,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "XXXX")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfVersionsManagerǁremove_version__mutmut_12(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -6031,8 +6019,7 @@ class TfVersionsManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
     
     xǁTfVersionsManagerǁremove_version__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁTfVersionsManagerǁremove_version__mutmut_1': xǁTfVersionsManagerǁremove_version__mutmut_1, 
@@ -15883,8 +15870,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -15927,8 +15913,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -15971,8 +15956,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16015,8 +15999,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16059,8 +16042,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16103,8 +16085,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16147,8 +16128,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16191,8 +16171,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16235,8 +16214,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16279,8 +16257,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16323,8 +16300,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16367,8 +16343,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16411,8 +16386,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16455,8 +16429,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16499,8 +16472,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16543,8 +16515,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16587,8 +16558,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16631,8 +16601,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16675,8 +16644,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16719,8 +16687,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16763,8 +16730,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16807,8 +16773,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16851,8 +16816,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16895,8 +16859,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16939,8 +16902,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -16983,8 +16945,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17027,8 +16988,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17071,8 +17031,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17115,8 +17074,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17159,8 +17117,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17203,8 +17160,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17247,8 +17203,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17291,8 +17246,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17335,8 +17289,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17379,8 +17332,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17423,8 +17375,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17467,8 +17418,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17511,8 +17461,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17555,8 +17504,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17599,8 +17547,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17643,8 +17590,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17687,8 +17633,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name == "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17731,8 +17676,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "XXntXX":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17775,8 +17719,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "NT":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17819,8 +17762,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(None)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17863,8 +17805,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(494)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17907,8 +17848,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(None)
+                        logger.debug(None)
 
             except Exception as e:
                 logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -17951,8 +17891,7 @@ class TfVersionsManager(BaseToolManager):
                         if os.name != "nt":
                             target_path.chmod(0o755)
 
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
+                        logger.debug(f"Copied {tool_name} {active_version} to {target_path}")
 
             except Exception as e:
                 logger.warning(None)

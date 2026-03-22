@@ -67,8 +67,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -88,8 +87,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -100,8 +98,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = None
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -121,8 +118,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -133,8 +129,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "XXhttps://go.dev/dl/?mode=jsonXX"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -154,8 +149,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -166,8 +160,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "HTTPS://GO.DEV/DL/?MODE=JSON"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -187,8 +180,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -199,8 +191,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -220,8 +211,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -232,8 +222,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = None
@@ -253,8 +242,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -265,8 +253,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(None)
@@ -286,8 +273,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -298,8 +284,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(None))
@@ -319,8 +304,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -331,8 +315,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -352,8 +335,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -364,8 +346,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -385,8 +366,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -397,8 +377,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -418,8 +397,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -430,8 +408,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -451,8 +428,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -463,8 +439,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -484,8 +459,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -496,8 +470,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -517,8 +490,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -529,8 +501,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -550,8 +521,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -562,8 +532,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -583,8 +552,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -595,8 +563,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -616,8 +583,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -628,8 +594,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -649,8 +614,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -661,8 +625,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -682,8 +645,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -694,8 +656,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -715,8 +676,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -727,8 +687,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -748,8 +707,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -760,8 +718,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -781,8 +738,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -793,8 +749,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -814,8 +769,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -826,8 +780,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -847,8 +800,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -859,8 +811,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -880,8 +831,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -892,8 +842,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -913,8 +862,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -925,8 +873,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -946,8 +893,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -958,8 +904,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -979,8 +924,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -991,8 +935,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1012,8 +955,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1024,8 +966,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1045,8 +986,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1057,8 +997,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1078,8 +1017,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1090,8 +1028,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1111,8 +1048,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1123,8 +1059,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1144,8 +1079,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1156,8 +1090,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1177,8 +1110,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1189,8 +1121,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1210,8 +1141,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1222,8 +1152,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1243,8 +1172,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1255,8 +1183,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1275,8 +1202,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1287,8 +1213,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1308,8 +1233,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1320,8 +1244,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1341,8 +1264,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1353,8 +1275,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1374,8 +1295,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1386,8 +1306,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1407,8 +1326,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1419,8 +1337,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1440,8 +1357,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(None)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -1452,8 +1368,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1473,8 +1388,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return versions
 
         except Exception as e:
@@ -1485,8 +1399,7 @@ class GoManager(BaseToolManager):
         try:
             api_url = "https://go.dev/dl/?mode=json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Go versions from {api_url}")
+            logger.debug(f"Fetching Go versions from {api_url}")
 
             # Use foundation transport for unified HTTP handling
             response = asyncio.run(get(api_url))
@@ -1506,8 +1419,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:
@@ -5048,8 +4960,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5086,8 +4997,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5124,8 +5034,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5162,8 +5071,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5200,8 +5108,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5238,8 +5145,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5276,8 +5182,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5314,8 +5219,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5352,8 +5256,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5390,8 +5293,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5428,8 +5330,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5466,8 +5367,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5504,8 +5404,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5542,8 +5441,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5576,8 +5474,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5614,8 +5511,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5652,8 +5548,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5690,8 +5585,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5727,8 +5621,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5764,8 +5657,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5801,8 +5693,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5839,8 +5730,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5877,8 +5767,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5915,8 +5804,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5953,8 +5841,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -5991,8 +5878,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6029,8 +5915,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6067,8 +5952,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = None
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6105,8 +5989,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(None)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6143,8 +6026,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(None, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6181,8 +6063,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, None):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6219,8 +6100,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6257,8 +6137,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, ):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6295,8 +6174,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(None)
+                    logger.debug(None)
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6333,8 +6211,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return False
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6371,8 +6248,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(None)
@@ -6409,8 +6285,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6447,8 +6322,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6485,8 +6359,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")
@@ -6523,8 +6396,7 @@ class GoManager(BaseToolManager):
                 # Check if version matches
                 version_pattern = rf"go{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"Go {version} verification successful")
+                    logger.debug(f"Go {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in Go output: {result.stdout}")

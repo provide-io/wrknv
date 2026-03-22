@@ -1955,8 +1955,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2026,8 +2025,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2097,8 +2095,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2168,8 +2165,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2239,8 +2235,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2310,8 +2305,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2381,8 +2375,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2452,8 +2445,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2523,8 +2515,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2591,8 +2582,7 @@ class NestedCommandRegistry:
                 # Create intermediate group
                 intermediate = None
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2662,8 +2652,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2733,8 +2722,7 @@ class NestedCommandRegistry:
                     description=None,
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2803,8 +2791,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2873,8 +2860,7 @@ class NestedCommandRegistry:
                     name=part,
                     )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -2944,8 +2930,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(None, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3015,8 +3000,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, None)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3086,8 +3070,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3157,8 +3140,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, )
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3228,8 +3210,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3299,8 +3280,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = None
             if isinstance(cmd, CommandGroup):
@@ -3370,8 +3350,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3441,8 +3420,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3512,8 +3490,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3583,8 +3560,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3654,8 +3630,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3725,8 +3700,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3796,8 +3770,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3867,8 +3840,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -3938,8 +3910,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4009,8 +3980,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4080,8 +4050,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4151,8 +4120,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4218,8 +4186,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4289,8 +4256,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4360,8 +4326,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4431,8 +4396,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4501,8 +4465,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4571,8 +4534,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4641,8 +4603,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4712,8 +4673,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4783,8 +4743,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4854,8 +4813,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4925,8 +4883,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -4996,8 +4953,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5067,8 +5023,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5138,8 +5093,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5209,8 +5163,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5280,8 +5233,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5351,8 +5303,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5422,8 +5373,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5486,8 +5436,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5557,8 +5506,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5628,8 +5576,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5699,8 +5646,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5770,8 +5716,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5841,8 +5786,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5912,8 +5856,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -5982,8 +5925,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6052,8 +5994,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6122,8 +6063,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6192,8 +6132,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6262,8 +6201,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6332,8 +6270,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6403,8 +6340,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6474,8 +6410,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6545,8 +6480,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6616,8 +6550,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6687,8 +6620,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6758,8 +6690,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6829,8 +6760,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6900,8 +6830,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -6971,8 +6900,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -7042,8 +6970,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -7113,8 +7040,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -7184,8 +7110,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -7255,8 +7180,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -7326,8 +7250,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -7397,8 +7320,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -7468,8 +7390,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):
@@ -7539,8 +7460,7 @@ class NestedCommandRegistry:
                     description=f"{part} commands",
                 )
                 current.add_command(part, intermediate)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Created intermediate group: {part}")
+                logger.debug(f"Created intermediate group: {part}")
 
             cmd = current.commands[part]
             if isinstance(cmd, CommandGroup):

@@ -947,8 +947,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -959,8 +958,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_1(self, include_prereleases: bool = True, per_page: int = 100) -> list[Release]:
@@ -976,8 +974,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -988,8 +985,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_2(self, include_prereleases: bool = False, per_page: int = 101) -> list[Release]:
@@ -1005,8 +1001,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1017,8 +1012,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_3(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1034,8 +1028,7 @@ class GitHubReleasesClient:
         url = None
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1046,8 +1039,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_4(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1063,8 +1055,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1075,8 +1066,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_5(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1092,8 +1082,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"XXper_pageXX": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1104,8 +1093,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_6(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1121,8 +1109,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"PER_PAGE": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1133,8 +1120,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_7(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1150,8 +1136,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(None, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1162,8 +1147,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_8(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1179,8 +1163,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, None)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1191,8 +1174,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_9(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1208,8 +1190,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1220,8 +1201,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_10(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1237,8 +1217,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, )}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1249,8 +1228,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_11(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1266,8 +1244,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 101)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1278,8 +1255,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_12(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1295,8 +1271,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1307,8 +1282,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_13(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1324,8 +1298,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = None
         data = response.json()
@@ -1336,8 +1309,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_14(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1353,8 +1325,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(None, params=params)
         data = response.json()
@@ -1365,8 +1336,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_15(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1382,8 +1352,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=None)
         data = response.json()
@@ -1394,8 +1363,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_16(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1411,8 +1379,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(params=params)
         data = response.json()
@@ -1423,8 +1390,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_17(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1440,8 +1406,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, )
         data = response.json()
@@ -1452,8 +1417,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_18(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1469,8 +1433,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = None
@@ -1481,8 +1444,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_19(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1498,8 +1460,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1510,8 +1471,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_20(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1527,8 +1487,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1539,8 +1498,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_21(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1556,8 +1514,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1568,8 +1525,7 @@ class GitHubReleasesClient:
         if include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_22(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1585,8 +1541,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1597,8 +1552,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_23(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1614,8 +1568,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1626,8 +1579,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def xǁGitHubReleasesClientǁlist_releases__mutmut_24(self, include_prereleases: bool = False, per_page: int = 100) -> list[Release]:
@@ -1643,8 +1595,7 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/releases"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching releases from {self.repo}")
+        logger.debug(f"Fetching releases from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
@@ -1655,8 +1606,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return releases
     
     xǁGitHubReleasesClientǁlist_releases__mutmut_mutants : ClassVar[MutantDict] = {
@@ -1701,8 +1651,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/latest"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching latest release from {self.repo}")
+        logger.debug(f"Fetching latest release from {self.repo}")
 
         response = await self.client.get(url)
         data = response.json()
@@ -1717,8 +1666,7 @@ class GitHubReleasesClient:
         """
         url = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching latest release from {self.repo}")
+        logger.debug(f"Fetching latest release from {self.repo}")
 
         response = await self.client.get(url)
         data = response.json()
@@ -1733,8 +1681,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/latest"
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
 
         response = await self.client.get(url)
         data = response.json()
@@ -1749,8 +1696,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/latest"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching latest release from {self.repo}")
+        logger.debug(f"Fetching latest release from {self.repo}")
 
         response = None
         data = response.json()
@@ -1765,8 +1711,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/latest"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching latest release from {self.repo}")
+        logger.debug(f"Fetching latest release from {self.repo}")
 
         response = await self.client.get(None)
         data = response.json()
@@ -1781,8 +1726,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/latest"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching latest release from {self.repo}")
+        logger.debug(f"Fetching latest release from {self.repo}")
 
         response = await self.client.get(url)
         data = None
@@ -1797,8 +1741,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/latest"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching latest release from {self.repo}")
+        logger.debug(f"Fetching latest release from {self.repo}")
 
         response = await self.client.get(url)
         data = response.json()
@@ -1832,8 +1775,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/tags/{tag}"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching release {tag} from {self.repo}")
+        logger.debug(f"Fetching release {tag} from {self.repo}")
 
         response = await self.client.get(url)
         data = response.json()
@@ -1851,8 +1793,7 @@ class GitHubReleasesClient:
         """
         url = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching release {tag} from {self.repo}")
+        logger.debug(f"Fetching release {tag} from {self.repo}")
 
         response = await self.client.get(url)
         data = response.json()
@@ -1870,8 +1811,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/tags/{tag}"
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
 
         response = await self.client.get(url)
         data = response.json()
@@ -1889,8 +1829,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/tags/{tag}"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching release {tag} from {self.repo}")
+        logger.debug(f"Fetching release {tag} from {self.repo}")
 
         response = None
         data = response.json()
@@ -1908,8 +1847,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/tags/{tag}"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching release {tag} from {self.repo}")
+        logger.debug(f"Fetching release {tag} from {self.repo}")
 
         response = await self.client.get(None)
         data = response.json()
@@ -1927,8 +1865,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/tags/{tag}"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching release {tag} from {self.repo}")
+        logger.debug(f"Fetching release {tag} from {self.repo}")
 
         response = await self.client.get(url)
         data = None
@@ -1946,8 +1883,7 @@ class GitHubReleasesClient:
         """
         url = f"https://api.github.com/repos/{self.repo}/releases/tags/{tag}"
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching release {tag} from {self.repo}")
+        logger.debug(f"Fetching release {tag} from {self.repo}")
 
         response = await self.client.get(url)
         data = response.json()
@@ -1982,16 +1918,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_1(self, per_page: int = 101) -> list[Tag]:
@@ -2006,16 +1940,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_2(self, per_page: int = 100) -> list[Tag]:
@@ -2030,16 +1962,14 @@ class GitHubReleasesClient:
         url = None
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_3(self, per_page: int = 100) -> list[Tag]:
@@ -2054,16 +1984,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_4(self, per_page: int = 100) -> list[Tag]:
@@ -2078,16 +2006,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"XXper_pageXX": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_5(self, per_page: int = 100) -> list[Tag]:
@@ -2102,16 +2028,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"PER_PAGE": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_6(self, per_page: int = 100) -> list[Tag]:
@@ -2126,16 +2050,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(None, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_7(self, per_page: int = 100) -> list[Tag]:
@@ -2150,16 +2072,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, None)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_8(self, per_page: int = 100) -> list[Tag]:
@@ -2174,16 +2094,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_9(self, per_page: int = 100) -> list[Tag]:
@@ -2198,16 +2116,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, )}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_10(self, per_page: int = 100) -> list[Tag]:
@@ -2222,16 +2138,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 101)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_11(self, per_page: int = 100) -> list[Tag]:
@@ -2246,16 +2160,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_12(self, per_page: int = 100) -> list[Tag]:
@@ -2270,16 +2182,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = None
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_13(self, per_page: int = 100) -> list[Tag]:
@@ -2294,16 +2204,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(None, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_14(self, per_page: int = 100) -> list[Tag]:
@@ -2318,16 +2226,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=None)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_15(self, per_page: int = 100) -> list[Tag]:
@@ -2342,16 +2248,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_16(self, per_page: int = 100) -> list[Tag]:
@@ -2366,16 +2270,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, )
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_17(self, per_page: int = 100) -> list[Tag]:
@@ -2390,16 +2292,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = None
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_18(self, per_page: int = 100) -> list[Tag]:
@@ -2414,16 +2314,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_19(self, per_page: int = 100) -> list[Tag]:
@@ -2438,16 +2336,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(None) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def xǁGitHubReleasesClientǁlist_tags__mutmut_20(self, per_page: int = 100) -> list[Tag]:
@@ -2462,16 +2358,14 @@ class GitHubReleasesClient:
         url = f"https://api.github.com/repos/{self.repo}/tags"
         params = {"per_page": min(per_page, 100)}
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Fetching tags from {self.repo}")
+        logger.debug(f"Fetching tags from {self.repo}")
 
         response = await self.client.get(url, params=params)
         data = response.json()
 
         tags = [Tag.from_api(t) for t in data]
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return tags
     
     xǁGitHubReleasesClientǁlist_tags__mutmut_mutants : ClassVar[MutantDict] = {
@@ -5053,8 +4947,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5063,12 +4956,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_1(self, release: Release, pattern: str) -> Asset | None:
@@ -5084,8 +4975,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name != pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5094,12 +4984,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_2(self, release: Release, pattern: str) -> Asset | None:
@@ -5115,8 +5003,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
                 return asset
 
         # Convert simple glob to regex
@@ -5125,12 +5012,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_3(self, release: Release, pattern: str) -> Asset | None:
@@ -5146,8 +5031,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5156,12 +5040,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_4(self, release: Release, pattern: str) -> Asset | None:
@@ -5177,8 +5059,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5187,12 +5068,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_5(self, release: Release, pattern: str) -> Asset | None:
@@ -5208,8 +5087,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5218,12 +5096,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_6(self, release: Release, pattern: str) -> Asset | None:
@@ -5239,8 +5115,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5249,12 +5124,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_7(self, release: Release, pattern: str) -> Asset | None:
@@ -5270,8 +5143,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5280,12 +5152,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_8(self, release: Release, pattern: str) -> Asset | None:
@@ -5301,8 +5171,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5311,12 +5180,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_9(self, release: Release, pattern: str) -> Asset | None:
@@ -5332,8 +5199,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5342,12 +5208,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_10(self, release: Release, pattern: str) -> Asset | None:
@@ -5363,8 +5227,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5373,12 +5236,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_11(self, release: Release, pattern: str) -> Asset | None:
@@ -5394,8 +5255,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5404,12 +5264,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_12(self, release: Release, pattern: str) -> Asset | None:
@@ -5425,8 +5283,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5435,12 +5292,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_13(self, release: Release, pattern: str) -> Asset | None:
@@ -5456,8 +5311,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5466,12 +5320,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_14(self, release: Release, pattern: str) -> Asset | None:
@@ -5487,8 +5339,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5497,12 +5348,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_15(self, release: Release, pattern: str) -> Asset | None:
@@ -5518,8 +5367,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5528,12 +5376,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_16(self, release: Release, pattern: str) -> Asset | None:
@@ -5549,8 +5395,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5559,12 +5404,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_17(self, release: Release, pattern: str) -> Asset | None:
@@ -5580,8 +5423,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5590,12 +5432,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_18(self, release: Release, pattern: str) -> Asset | None:
@@ -5611,8 +5451,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5621,12 +5460,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(None, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_19(self, release: Release, pattern: str) -> Asset | None:
@@ -5642,8 +5479,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5652,12 +5488,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, None):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_20(self, release: Release, pattern: str) -> Asset | None:
@@ -5673,8 +5507,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5683,12 +5516,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_21(self, release: Release, pattern: str) -> Asset | None:
@@ -5704,8 +5535,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5714,12 +5544,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, ):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_22(self, release: Release, pattern: str) -> Asset | None:
@@ -5735,8 +5563,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5745,12 +5572,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(f"No asset found matching pattern: {pattern}")
+        logger.debug(f"No asset found matching pattern: {pattern}")
         return None
 
     def xǁGitHubReleasesClientǁfind_asset__mutmut_23(self, release: Release, pattern: str) -> Asset | None:
@@ -5766,8 +5591,7 @@ class GitHubReleasesClient:
         # First try exact match
         for asset in release.assets:
             if asset.name == pattern:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found exact matching asset: {asset.name}")
+                logger.debug(f"Found exact matching asset: {asset.name}")
                 return asset
 
         # Convert simple glob to regex
@@ -5776,12 +5600,10 @@ class GitHubReleasesClient:
         # Try pattern match
         for asset in release.assets:
             if re.search(regex_pattern, asset.name):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found matching asset: {asset.name}")
+                logger.debug(f"Found matching asset: {asset.name}")
                 return asset
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return None
     
     xǁGitHubReleasesClientǁfind_asset__mutmut_mutants : ClassVar[MutantDict] = {

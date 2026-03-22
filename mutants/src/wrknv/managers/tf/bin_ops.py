@@ -81,7 +81,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_orig(bin_dir: pathlib.Path, config: Wo
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -117,7 +117,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_1(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -153,7 +153,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_2(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -189,7 +189,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_3(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -225,7 +225,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_4(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -261,7 +261,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_5(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -297,7 +297,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_6(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -333,7 +333,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_7(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -369,7 +369,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_8(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -405,7 +405,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_9(bin_dir: pathlib.Path, config: Worke
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -441,7 +441,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_10(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -477,7 +477,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_11(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -513,7 +513,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_12(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -549,7 +549,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_13(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -585,7 +585,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_14(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -621,7 +621,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_15(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -657,7 +657,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_16(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -693,7 +693,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_17(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -729,7 +729,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_18(bin_dir: pathlib.Path, config: Work
                 source_path = None
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -765,7 +765,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_19(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(None)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -801,7 +801,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_20(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = None
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -837,7 +837,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_21(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) or logger.is_debug_enabled():
+                if copy_tool_binary(None, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -873,7 +873,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_22(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(None, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, None, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -909,7 +909,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_23(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, None, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, None):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -945,7 +945,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_24(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, None) and logger.is_debug_enabled():
+                if copy_tool_binary(target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -981,7 +981,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_25(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -1017,7 +1017,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_26(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, ):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -1053,8 +1053,8 @@ def x_copy_tf_binaries_to_workenv__mutmut_27(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, ) and logger.is_debug_enabled():
-                    logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
+                if copy_tool_binary(source_path, target_name, bin_dir):
+                    logger.debug(None)
 
         except Exception as e:
             logger.warning(f"Failed to copy {tool_name} binary: {e}")
@@ -1089,43 +1089,7 @@ def x_copy_tf_binaries_to_workenv__mutmut_28(bin_dir: pathlib.Path, config: Work
                 source_path = temp_manager.get_binary_path(active_version)
                 target_name = temp_manager.executable_name
 
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
-                    logger.debug(None)
-
-        except Exception as e:
-            logger.warning(f"Failed to copy {tool_name} binary: {e}")
-
-
-def x_copy_tf_binaries_to_workenv__mutmut_29(bin_dir: pathlib.Path, config: WorkenvConfig | None) -> None:
-    """Copy all active tf binaries to workenv bin directory.
-
-    Args:
-        bin_dir: Target bin directory
-        config: Workenv configuration
-    """
-    if not bin_dir:
-        logger.warning("No bin directory available for tf binary copying")
-        return
-
-    # Get active versions for both tf variants
-    for tool_name in ["tofu", "ibmtf"]:
-        try:
-            # Create a temporary manager instance to get active version
-            if tool_name == "tofu":
-                from wrknv.managers.tf.tofu import TofuTfVariant
-
-                temp_manager = TofuTfVariant(config)
-            else:
-                from wrknv.managers.tf.ibm import IbmTfVariant
-
-                temp_manager = IbmTfVariant(config)
-
-            active_version = temp_manager.get_installed_version()
-            if active_version:
-                source_path = temp_manager.get_binary_path(active_version)
-                target_name = temp_manager.executable_name
-
-                if copy_tool_binary(source_path, target_name, bin_dir) and logger.is_debug_enabled():
+                if copy_tool_binary(source_path, target_name, bin_dir):
                     logger.debug(f"Copied {tool_name} {active_version} to {bin_dir}")
 
         except Exception as e:
@@ -1159,8 +1123,7 @@ x_copy_tf_binaries_to_workenv__mutmut_mutants : ClassVar[MutantDict] = {
     'x_copy_tf_binaries_to_workenv__mutmut_25': x_copy_tf_binaries_to_workenv__mutmut_25, 
     'x_copy_tf_binaries_to_workenv__mutmut_26': x_copy_tf_binaries_to_workenv__mutmut_26, 
     'x_copy_tf_binaries_to_workenv__mutmut_27': x_copy_tf_binaries_to_workenv__mutmut_27, 
-    'x_copy_tf_binaries_to_workenv__mutmut_28': x_copy_tf_binaries_to_workenv__mutmut_28, 
-    'x_copy_tf_binaries_to_workenv__mutmut_29': x_copy_tf_binaries_to_workenv__mutmut_29
+    'x_copy_tf_binaries_to_workenv__mutmut_28': x_copy_tf_binaries_to_workenv__mutmut_28
 }
 
 def copy_tf_binaries_to_workenv(*args, **kwargs):

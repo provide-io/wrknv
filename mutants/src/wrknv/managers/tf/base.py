@@ -1606,8 +1606,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_1(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1631,8 +1630,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_2(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1656,8 +1654,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_3(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1681,8 +1678,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_4(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1706,8 +1702,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_5(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1731,8 +1726,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_6(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1756,8 +1750,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_7(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1781,8 +1774,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_8(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1806,8 +1798,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_9(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1831,8 +1822,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_10(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1856,8 +1846,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_11(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1881,8 +1870,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_12(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1906,8 +1894,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(None, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_13(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1931,8 +1918,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, None)
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_14(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1956,8 +1942,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version("")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_15(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -1981,8 +1966,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, )
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_16(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -2006,8 +1990,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "XXXX")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not clear {self.tool_name} version in config")
+                logger.debug(f"Could not clear {self.tool_name} version in config")
 
     def xǁTfManagerǁremove_version__mutmut_17(self, version: str) -> None:
         """Remove a specific version of the tool."""
@@ -2031,8 +2014,7 @@ class TfManager(BaseToolManager):
             try:
                 self.config.set_tool_version(self.tool_name, "")
             except Exception:
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
     
     xǁTfManagerǁremove_version__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁTfManagerǁremove_version__mutmut_1': xǁTfManagerǁremove_version__mutmut_1, 
@@ -10667,8 +10649,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -10713,8 +10694,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -10759,8 +10739,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -10805,8 +10784,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -10851,8 +10829,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -10897,8 +10874,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -10943,8 +10919,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -10989,8 +10964,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11035,8 +11009,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11081,8 +11054,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11127,8 +11099,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11173,8 +11144,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11219,8 +11189,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11265,8 +11234,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11311,8 +11279,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11357,8 +11324,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11402,8 +11368,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11447,8 +11412,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11493,8 +11457,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11539,8 +11502,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11585,8 +11547,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11631,8 +11592,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11677,8 +11637,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11723,8 +11682,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11769,8 +11727,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11815,8 +11772,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11861,8 +11817,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11907,8 +11862,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(None)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11953,8 +11907,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug(None)
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -11999,8 +11952,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("XXRegenerated env.sh with new versionXX")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -12045,8 +11997,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -12091,8 +12042,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("REGENERATED ENV.SH WITH NEW VERSION")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -12137,8 +12087,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
 
         logger.info(f"Switched to {self.tool_name} {version}")
 
@@ -12183,8 +12132,7 @@ class TfManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
         logger.info(None)
     

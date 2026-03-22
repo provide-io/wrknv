@@ -105,7 +105,7 @@ async def download_file_async(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -424,7 +424,7 @@ async def x_download_with_mirrors_async__mutmut_orig(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -478,7 +478,7 @@ async def x_download_with_mirrors_async__mutmut_1(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -532,7 +532,7 @@ async def x_download_with_mirrors_async__mutmut_2(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -586,7 +586,7 @@ async def x_download_with_mirrors_async__mutmut_3(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -640,7 +640,7 @@ async def x_download_with_mirrors_async__mutmut_4(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -694,7 +694,7 @@ async def x_download_with_mirrors_async__mutmut_5(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -748,7 +748,7 @@ async def x_download_with_mirrors_async__mutmut_6(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -802,7 +802,7 @@ async def x_download_with_mirrors_async__mutmut_7(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -856,7 +856,7 @@ async def x_download_with_mirrors_async__mutmut_8(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -910,7 +910,7 @@ async def x_download_with_mirrors_async__mutmut_9(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -964,7 +964,7 @@ async def x_download_with_mirrors_async__mutmut_10(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1018,7 +1018,7 @@ async def x_download_with_mirrors_async__mutmut_11(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1072,7 +1072,7 @@ async def x_download_with_mirrors_async__mutmut_12(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1126,7 +1126,7 @@ async def x_download_with_mirrors_async__mutmut_13(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1180,7 +1180,7 @@ async def x_download_with_mirrors_async__mutmut_14(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1234,7 +1234,7 @@ async def x_download_with_mirrors_async__mutmut_15(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1288,7 +1288,7 @@ async def x_download_with_mirrors_async__mutmut_16(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1342,7 +1342,7 @@ async def x_download_with_mirrors_async__mutmut_17(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total >= 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1396,7 +1396,7 @@ async def x_download_with_mirrors_async__mutmut_18(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 1:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1450,7 +1450,7 @@ async def x_download_with_mirrors_async__mutmut_19(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = None
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1504,7 +1504,7 @@ async def x_download_with_mirrors_async__mutmut_20(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(None, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1558,7 +1558,7 @@ async def x_download_with_mirrors_async__mutmut_21(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, None)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1612,7 +1612,7 @@ async def x_download_with_mirrors_async__mutmut_22(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min((downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1666,7 +1666,7 @@ async def x_download_with_mirrors_async__mutmut_23(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, )
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1720,7 +1720,7 @@ async def x_download_with_mirrors_async__mutmut_24(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(101, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1774,7 +1774,7 @@ async def x_download_with_mirrors_async__mutmut_25(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) / total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1828,7 +1828,7 @@ async def x_download_with_mirrors_async__mutmut_26(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded / 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1882,7 +1882,7 @@ async def x_download_with_mirrors_async__mutmut_27(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 101) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1936,7 +1936,7 @@ async def x_download_with_mirrors_async__mutmut_28(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 or logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded / (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -1990,7 +1990,7 @@ async def x_download_with_mirrors_async__mutmut_29(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded / (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 / 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2044,7 +2044,7 @@ async def x_download_with_mirrors_async__mutmut_30(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 / 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1025 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2098,7 +2098,7 @@ async def x_download_with_mirrors_async__mutmut_31(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1025 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1025) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2152,7 +2152,7 @@ async def x_download_with_mirrors_async__mutmut_32(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1025) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) <= 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2206,7 +2206,7 @@ async def x_download_with_mirrors_async__mutmut_33(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) <= 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1025:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2260,8 +2260,8 @@ async def x_download_with_mirrors_async__mutmut_34(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1025 and logger.is_debug_enabled():  # Log every ~1MB
-                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
+                            logger.debug(None)
 
                 downloader.add_progress_callback(log_progress)
 
@@ -2314,10 +2314,10 @@ async def x_download_with_mirrors_async__mutmut_35(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
-                            logger.debug(None)
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
+                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
-                downloader.add_progress_callback(log_progress)
+                downloader.add_progress_callback(None)
 
             # Download with mirror fallback
             await downloader.download_with_mirrors(mirrors, output_path)
@@ -2368,13 +2368,13 @@ async def x_download_with_mirrors_async__mutmut_36(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
-                downloader.add_progress_callback(None)
+                downloader.add_progress_callback(log_progress)
 
             # Download with mirror fallback
-            await downloader.download_with_mirrors(mirrors, output_path)
+            await downloader.download_with_mirrors(None, output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
             if checksum and not verify_checksum(output_path, checksum):
@@ -2422,13 +2422,13 @@ async def x_download_with_mirrors_async__mutmut_37(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
 
             # Download with mirror fallback
-            await downloader.download_with_mirrors(None, output_path)
+            await downloader.download_with_mirrors(mirrors, None)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
             if checksum and not verify_checksum(output_path, checksum):
@@ -2476,13 +2476,13 @@ async def x_download_with_mirrors_async__mutmut_38(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
 
             # Download with mirror fallback
-            await downloader.download_with_mirrors(mirrors, None)
+            await downloader.download_with_mirrors(output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
             if checksum and not verify_checksum(output_path, checksum):
@@ -2530,13 +2530,13 @@ async def x_download_with_mirrors_async__mutmut_39(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
 
             # Download with mirror fallback
-            await downloader.download_with_mirrors(output_path)
+            await downloader.download_with_mirrors(mirrors, )
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
             if checksum and not verify_checksum(output_path, checksum):
@@ -2584,16 +2584,16 @@ async def x_download_with_mirrors_async__mutmut_40(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
 
             # Download with mirror fallback
-            await downloader.download_with_mirrors(mirrors, )
+            await downloader.download_with_mirrors(mirrors, output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum and not verify_checksum(output_path, checksum):
+            if checksum or not verify_checksum(output_path, checksum):
                 output_path.unlink()
                 raise Exception(f"Checksum verification failed for {output_path.name}")
 
@@ -2638,7 +2638,7 @@ async def x_download_with_mirrors_async__mutmut_41(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2647,7 +2647,7 @@ async def x_download_with_mirrors_async__mutmut_41(
             await downloader.download_with_mirrors(mirrors, output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum or not verify_checksum(output_path, checksum):
+            if checksum and verify_checksum(output_path, checksum):
                 output_path.unlink()
                 raise Exception(f"Checksum verification failed for {output_path.name}")
 
@@ -2692,7 +2692,7 @@ async def x_download_with_mirrors_async__mutmut_42(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2701,7 +2701,7 @@ async def x_download_with_mirrors_async__mutmut_42(
             await downloader.download_with_mirrors(mirrors, output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum and verify_checksum(output_path, checksum):
+            if checksum and not verify_checksum(None, checksum):
                 output_path.unlink()
                 raise Exception(f"Checksum verification failed for {output_path.name}")
 
@@ -2746,7 +2746,7 @@ async def x_download_with_mirrors_async__mutmut_43(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2755,7 +2755,7 @@ async def x_download_with_mirrors_async__mutmut_43(
             await downloader.download_with_mirrors(mirrors, output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum and not verify_checksum(None, checksum):
+            if checksum and not verify_checksum(output_path, None):
                 output_path.unlink()
                 raise Exception(f"Checksum verification failed for {output_path.name}")
 
@@ -2800,7 +2800,7 @@ async def x_download_with_mirrors_async__mutmut_44(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2809,7 +2809,7 @@ async def x_download_with_mirrors_async__mutmut_44(
             await downloader.download_with_mirrors(mirrors, output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum and not verify_checksum(output_path, None):
+            if checksum and not verify_checksum(checksum):
                 output_path.unlink()
                 raise Exception(f"Checksum verification failed for {output_path.name}")
 
@@ -2854,7 +2854,7 @@ async def x_download_with_mirrors_async__mutmut_45(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2863,7 +2863,7 @@ async def x_download_with_mirrors_async__mutmut_45(
             await downloader.download_with_mirrors(mirrors, output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum and not verify_checksum(checksum):
+            if checksum and not verify_checksum(output_path, ):
                 output_path.unlink()
                 raise Exception(f"Checksum verification failed for {output_path.name}")
 
@@ -2908,7 +2908,7 @@ async def x_download_with_mirrors_async__mutmut_46(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2917,9 +2917,9 @@ async def x_download_with_mirrors_async__mutmut_46(
             await downloader.download_with_mirrors(mirrors, output_path)
 
             # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum and not verify_checksum(output_path, ):
+            if checksum and not verify_checksum(output_path, checksum):
                 output_path.unlink()
-                raise Exception(f"Checksum verification failed for {output_path.name}")
+                raise Exception(None)
 
         logger.info(f"Successfully downloaded {output_path.name}")
 
@@ -2962,7 +2962,7 @@ async def x_download_with_mirrors_async__mutmut_47(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -2973,9 +2973,9 @@ async def x_download_with_mirrors_async__mutmut_47(
             # Verify checksum if provided (mirror method doesn't support checksum param)
             if checksum and not verify_checksum(output_path, checksum):
                 output_path.unlink()
-                raise Exception(None)
+                raise Exception(f"Checksum verification failed for {output_path.name}")
 
-        logger.info(f"Successfully downloaded {output_path.name}")
+        logger.info(None)
 
     except Exception as e:
         raise Exception(f"Failed to download from all mirrors: {e}") from e
@@ -3016,61 +3016,7 @@ async def x_download_with_mirrors_async__mutmut_48(
                 def log_progress(downloaded: int, total: int) -> None:
                     if total > 0:
                         percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
-                            logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
-
-                downloader.add_progress_callback(log_progress)
-
-            # Download with mirror fallback
-            await downloader.download_with_mirrors(mirrors, output_path)
-
-            # Verify checksum if provided (mirror method doesn't support checksum param)
-            if checksum and not verify_checksum(output_path, checksum):
-                output_path.unlink()
-                raise Exception(f"Checksum verification failed for {output_path.name}")
-
-        logger.info(None)
-
-    except Exception as e:
-        raise Exception(f"Failed to download from all mirrors: {e}") from e
-
-
-async def x_download_with_mirrors_async__mutmut_49(
-    mirrors: list[str],
-    output_path: pathlib.Path,
-    show_progress: bool = True,
-    headers: dict[str, str] | None = None,
-    checksum: str | None = None,
-) -> None:
-    """Download a file trying multiple mirror URLs until one succeeds.
-
-    Args:
-        mirrors: List of mirror URLs to try in order
-        output_path: Where to save the file
-        show_progress: Whether to log progress
-        headers: Optional custom headers
-        checksum: Optional checksum for verification
-
-    Raises:
-        Exception: If all mirrors fail
-    """
-    logger.info(f"Downloading from mirrors to {output_path}")
-
-    # Create parent directories if they don't exist
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    try:
-        hub = get_hub()
-        async with UniversalClient(hub=hub, default_headers=headers or {}) as client:
-            downloader = ToolDownloader(client)
-
-            # Add logging progress callback if enabled
-            if show_progress:
-
-                def log_progress(downloaded: int, total: int) -> None:
-                    if total > 0:
-                        percent = min(100, (downloaded * 100) // total)
-                        if downloaded % (1024 * 1024) < 1024 and logger.is_debug_enabled():  # Log every ~1MB
+                        if downloaded % (1024 * 1024) < 1024:  # Log every ~1MB
                             logger.debug(f"Download progress: {percent}% ({downloaded}/{total} bytes)")
 
                 downloader.add_progress_callback(log_progress)
@@ -3136,8 +3082,7 @@ x_download_with_mirrors_async__mutmut_mutants : ClassVar[MutantDict] = {
     'x_download_with_mirrors_async__mutmut_45': x_download_with_mirrors_async__mutmut_45, 
     'x_download_with_mirrors_async__mutmut_46': x_download_with_mirrors_async__mutmut_46, 
     'x_download_with_mirrors_async__mutmut_47': x_download_with_mirrors_async__mutmut_47, 
-    'x_download_with_mirrors_async__mutmut_48': x_download_with_mirrors_async__mutmut_48, 
-    'x_download_with_mirrors_async__mutmut_49': x_download_with_mirrors_async__mutmut_49
+    'x_download_with_mirrors_async__mutmut_48': x_download_with_mirrors_async__mutmut_48
 }
 
 def download_with_mirrors_async(*args, **kwargs):
@@ -4011,8 +3956,7 @@ def x_parse_checksum_file__mutmut_orig(checksum_path: pathlib.Path, target_filen
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4047,8 +3991,7 @@ def x_parse_checksum_file__mutmut_1(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4083,8 +4026,7 @@ def x_parse_checksum_file__mutmut_2(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4119,8 +4061,7 @@ def x_parse_checksum_file__mutmut_3(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4155,8 +4096,7 @@ def x_parse_checksum_file__mutmut_4(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4191,8 +4131,7 @@ def x_parse_checksum_file__mutmut_5(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4227,8 +4166,7 @@ def x_parse_checksum_file__mutmut_6(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4263,8 +4201,7 @@ def x_parse_checksum_file__mutmut_7(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4299,8 +4236,7 @@ def x_parse_checksum_file__mutmut_8(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4335,8 +4271,7 @@ def x_parse_checksum_file__mutmut_9(checksum_path: pathlib.Path, target_filename
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4371,8 +4306,7 @@ def x_parse_checksum_file__mutmut_10(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4407,8 +4341,7 @@ def x_parse_checksum_file__mutmut_11(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4443,8 +4376,7 @@ def x_parse_checksum_file__mutmut_12(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4479,8 +4411,7 @@ def x_parse_checksum_file__mutmut_13(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4515,8 +4446,7 @@ def x_parse_checksum_file__mutmut_14(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4551,8 +4481,7 @@ def x_parse_checksum_file__mutmut_15(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4587,8 +4516,7 @@ def x_parse_checksum_file__mutmut_16(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4623,8 +4551,7 @@ def x_parse_checksum_file__mutmut_17(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4659,8 +4586,7 @@ def x_parse_checksum_file__mutmut_18(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4695,8 +4621,7 @@ def x_parse_checksum_file__mutmut_19(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename and filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4731,8 +4656,7 @@ def x_parse_checksum_file__mutmut_20(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename != target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4767,8 +4691,7 @@ def x_parse_checksum_file__mutmut_21(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(None):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4803,8 +4726,7 @@ def x_parse_checksum_file__mutmut_22(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(None)
+                        logger.debug(None)
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
@@ -4839,8 +4761,7 @@ def x_parse_checksum_file__mutmut_23(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(None)
@@ -4875,8 +4796,7 @@ def x_parse_checksum_file__mutmut_24(checksum_path: pathlib.Path, target_filenam
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")
