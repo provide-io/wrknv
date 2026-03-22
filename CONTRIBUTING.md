@@ -84,10 +84,10 @@ wrknv/
 ### Adding New Tool Managers
 
 1. **Create a manager class**: Inherit from `BaseToolManager` in `src/wrknv/managers/`
-1. **Implement required methods**: `get_download_url()`, `get_executable_name()`, etc.
-1. **Add platform support**: Handle different operating systems and architectures
-1. **Include tests**: Comprehensive test coverage for all manager functionality
-1. **Update configuration**: Add tool to configuration schema
+2. **Implement required methods**: `get_download_url()`, `get_executable_name()`, etc.
+3. **Add platform support**: Handle different operating systems and architectures
+4. **Include tests**: Comprehensive test coverage for all manager functionality
+5. **Update configuration**: Add tool to configuration schema
 
 Example tool manager:
 
