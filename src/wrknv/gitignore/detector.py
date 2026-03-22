@@ -113,14 +113,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def _scan_recursive(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
