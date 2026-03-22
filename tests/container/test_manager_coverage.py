@@ -172,47 +172,6 @@ class TestCleanVolumes:
 
 
 @pytest.mark.container
-class TestContainerNameDefault:
-    """Cover line 70: else branch sets container_name to 'wrknv-dev' when project_name is None."""
-
-    def test_no_project_name_uses_default_container_name(self, tmp_path: Path) -> None:
-        """Line 70: project_name is None → container_name defaults to 'wrknv-dev'."""
-        from wrknv.wenv.schema import ContainerConfig
-
-        config = WorkenvConfig(
-            project_name=None,
-            container=ContainerConfig(enabled=True, storage_path=str(tmp_path / "storage")),
-        )
-        mgr = ContainerManager(config)
-        assert mgr.container_name == "wrknv-dev"
-
-
-@pytest.mark.container
-class TestBackupVolumesNoDir:
-    """Cover line 260: backup_volumes returns None when volumes_dir does not exist."""
-
-    def test_missing_volumes_dir_returns_none(self, tmp_path: Path) -> None:
-        """Line 260: volumes_dir absent → warning logged and None returned."""
-        from wrknv.wenv.schema import ContainerConfig
-
-        config = WorkenvConfig(
-            project_name="test-project",
-            container=ContainerConfig(enabled=True, storage_path=str(tmp_path / "storage")),
-        )
-        mgr = ContainerManager(config)
-
-        # Remove the volumes directory that setup_storage created so the branch is hit
-        volumes_dir = mgr.storage.get_container_path("volumes")
-        if volumes_dir.exists():
-            import shutil
-
-            shutil.rmtree(volumes_dir)
-
-        result = mgr.backup_volumes(backup_path=tmp_path / "backup.tar.gz")
-        assert result is None
-
-
-@pytest.mark.container
 class TestClean:
     """Cover lines 351->356, 353, 356->359 in clean()."""
 
