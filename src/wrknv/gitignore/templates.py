@@ -233,8 +233,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def search_templates(self, pattern: str) -> list[str]:
@@ -251,8 +250,7 @@ class TemplateHandler:
         all_templates = self.list_templates()
 
         matches = [t for t in all_templates if pattern_lower in t.lower()]
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
+        logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
 

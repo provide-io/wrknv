@@ -57,8 +57,7 @@ class TofuManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenTofu versions")
+            logger.debug(f"Found {len(versions)} OpenTofu versions")
             return versions
 
         except Exception as e:
