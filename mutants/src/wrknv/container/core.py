@@ -2126,8 +2126,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_1(self) -> bool:
@@ -2136,8 +2135,7 @@ class ContainerManager:
             result = None
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_2(self) -> bool:
@@ -2151,8 +2149,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_3(self) -> bool:
@@ -2166,8 +2163,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_4(self) -> bool:
@@ -2181,8 +2177,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_5(self) -> bool:
@@ -2196,8 +2191,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_6(self) -> bool:
@@ -2210,8 +2204,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_7(self) -> bool:
@@ -2224,8 +2217,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_8(self) -> bool:
@@ -2238,8 +2230,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_9(self) -> bool:
@@ -2252,8 +2243,7 @@ class ContainerManager:
                 )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_10(self) -> bool:
@@ -2267,8 +2257,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_11(self) -> bool:
@@ -2282,8 +2271,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_12(self) -> bool:
@@ -2297,8 +2285,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_13(self) -> bool:
@@ -2312,8 +2299,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_14(self) -> bool:
@@ -2327,8 +2313,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_15(self) -> bool:
@@ -2342,8 +2327,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_16(self) -> bool:
@@ -2357,8 +2341,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_17(self) -> bool:
@@ -2372,8 +2355,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_18(self) -> bool:
@@ -2387,8 +2369,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_19(self) -> bool:
@@ -2402,8 +2383,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_20(self) -> bool:
@@ -2417,8 +2397,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_21(self) -> bool:
@@ -2432,8 +2411,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_22(self) -> bool:
@@ -2447,8 +2425,7 @@ class ContainerManager:
             )
             return result.returncode != 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_23(self) -> bool:
@@ -2462,8 +2439,7 @@ class ContainerManager:
             )
             return result.returncode == 1
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_24(self) -> bool:
@@ -2477,8 +2453,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return False
 
     def xǁContainerManagerǁcheck_docker__mutmut_25(self) -> bool:
@@ -2492,8 +2467,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return True
     
     xǁContainerManagerǁcheck_docker__mutmut_mutants : ClassVar[MutantDict] = {
@@ -2541,8 +2515,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_1(self) -> bool:
@@ -2551,8 +2524,7 @@ class ContainerManager:
             result = None
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_2(self) -> bool:
@@ -2565,8 +2537,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_3(self) -> bool:
@@ -2579,8 +2550,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_4(self) -> bool:
@@ -2593,8 +2563,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_5(self) -> bool:
@@ -2606,8 +2575,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_6(self) -> bool:
@@ -2619,8 +2587,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_7(self) -> bool:
@@ -2632,8 +2599,7 @@ class ContainerManager:
                 )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_8(self) -> bool:
@@ -2646,8 +2612,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_9(self) -> bool:
@@ -2660,8 +2625,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_10(self) -> bool:
@@ -2674,8 +2638,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_11(self) -> bool:
@@ -2688,8 +2651,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_12(self) -> bool:
@@ -2702,8 +2664,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_13(self) -> bool:
@@ -2716,8 +2677,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_14(self) -> bool:
@@ -2730,8 +2690,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_15(self) -> bool:
@@ -2744,8 +2703,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_16(self) -> bool:
@@ -2758,8 +2716,7 @@ class ContainerManager:
             )
             return result.returncode != 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_17(self) -> bool:
@@ -2772,8 +2729,7 @@ class ContainerManager:
             )
             return result.returncode == 1
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_18(self) -> bool:
@@ -2786,8 +2742,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return False
 
     def xǁContainerManagerǁcontainer_exists__mutmut_19(self) -> bool:
@@ -2800,8 +2755,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return True
     
     xǁContainerManagerǁcontainer_exists__mutmut_mutants : ClassVar[MutantDict] = {
@@ -2847,8 +2801,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_1(self) -> bool:
@@ -2865,8 +2818,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_2(self) -> bool:
@@ -2883,8 +2835,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_3(self) -> bool:
@@ -2896,8 +2847,7 @@ class ContainerManager:
             result = None
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_4(self) -> bool:
@@ -2914,8 +2864,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_5(self) -> bool:
@@ -2932,8 +2881,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_6(self) -> bool:
@@ -2950,8 +2898,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_7(self) -> bool:
@@ -2968,8 +2915,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_8(self) -> bool:
@@ -2985,8 +2931,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_9(self) -> bool:
@@ -3002,8 +2947,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_10(self) -> bool:
@@ -3019,8 +2963,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_11(self) -> bool:
@@ -3036,8 +2979,7 @@ class ContainerManager:
                 )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_12(self) -> bool:
@@ -3054,8 +2996,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_13(self) -> bool:
@@ -3072,8 +3013,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_14(self) -> bool:
@@ -3090,8 +3030,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_15(self) -> bool:
@@ -3108,8 +3047,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_16(self) -> bool:
@@ -3126,8 +3064,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_17(self) -> bool:
@@ -3144,8 +3081,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_18(self) -> bool:
@@ -3162,8 +3098,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_19(self) -> bool:
@@ -3180,8 +3115,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_20(self) -> bool:
@@ -3198,8 +3132,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_21(self) -> bool:
@@ -3216,8 +3149,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_22(self) -> bool:
@@ -3234,8 +3166,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_23(self) -> bool:
@@ -3252,8 +3183,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_24(self) -> bool:
@@ -3270,8 +3200,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_25(self) -> bool:
@@ -3288,8 +3217,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_26(self) -> bool:
@@ -3306,8 +3234,7 @@ class ContainerManager:
             )
             return result.returncode == 0 or result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_27(self) -> bool:
@@ -3324,8 +3251,7 @@ class ContainerManager:
             )
             return result.returncode != 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_28(self) -> bool:
@@ -3342,8 +3268,7 @@ class ContainerManager:
             )
             return result.returncode == 1 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_29(self) -> bool:
@@ -3360,8 +3285,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() != "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_30(self) -> bool:
@@ -3378,8 +3302,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "XXtrueXX"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_31(self) -> bool:
@@ -3396,8 +3319,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "TRUE"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_32(self) -> bool:
@@ -3414,8 +3336,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return False
 
     def xǁContainerManagerǁcontainer_running__mutmut_33(self) -> bool:
@@ -3432,8 +3353,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return True
     
     xǁContainerManagerǁcontainer_running__mutmut_mutants : ClassVar[MutantDict] = {
@@ -3489,8 +3409,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_1(self) -> bool:
@@ -3499,8 +3418,7 @@ class ContainerManager:
             result = None
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_2(self) -> bool:
@@ -3513,8 +3431,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_3(self) -> bool:
@@ -3527,8 +3444,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_4(self) -> bool:
@@ -3541,8 +3457,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_5(self) -> bool:
@@ -3554,8 +3469,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_6(self) -> bool:
@@ -3567,8 +3481,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_7(self) -> bool:
@@ -3580,8 +3493,7 @@ class ContainerManager:
                 )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_8(self) -> bool:
@@ -3594,8 +3506,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_9(self) -> bool:
@@ -3608,8 +3519,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_10(self) -> bool:
@@ -3622,8 +3532,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_11(self) -> bool:
@@ -3636,8 +3545,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_12(self) -> bool:
@@ -3650,8 +3558,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_13(self) -> bool:
@@ -3664,8 +3571,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_14(self) -> bool:
@@ -3678,8 +3584,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_15(self) -> bool:
@@ -3692,8 +3597,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_16(self) -> bool:
@@ -3706,8 +3610,7 @@ class ContainerManager:
             )
             return result.returncode != 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_17(self) -> bool:
@@ -3720,8 +3623,7 @@ class ContainerManager:
             )
             return result.returncode == 1
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_18(self) -> bool:
@@ -3734,8 +3636,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return False
 
     def xǁContainerManagerǁimage_exists__mutmut_19(self) -> bool:
@@ -3748,8 +3649,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return True
     
     xǁContainerManagerǁimage_exists__mutmut_mutants : ClassVar[MutantDict] = {

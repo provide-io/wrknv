@@ -118,14 +118,7 @@ class TestConfigCommands(FoundationTestCase):
 
         self.config_file.write_text('project_name = "test-project"')
 
-        with (
-            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-            patch.dict(os.environ, {}, clear=True),
-        ):
-            # Remove EDITOR from environment
-            if "EDITOR" in os.environ:
-                del os.environ["EDITOR"]
-
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
             mock_config = Mock()
             mock_config.get_config_path.return_value = self.config_file
             mock_config.edit_config.side_effect = RuntimeError(

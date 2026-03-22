@@ -363,5 +363,60 @@ class TestBinaryPath(FoundationTestCase):
         assert path == manager.install_path / "opentofu_1.6.0"
 
 
+class TestTofuManagerCoverageBranches(FoundationTestCase):
+    """Cover uncovered branches in tofu.py."""
+
+    def test_verify_installation_binary_not_found(self, tmp_path: Path) -> None:
+        """Line 103: return False when binary doesn't exist."""
+        with patch.object(TofuManager, "get_binary_path", return_value=tmp_path / "no_such_tofu"):
+            manager = TofuManager()
+            result = manager.verify_installation("1.6.0")
+        assert result is False
+
+    def test_get_available_versions_skips_non_v_prefix(self) -> None:
+        """Line 46->44: release entries without 'v' prefix are skipped."""
+        manager = TofuManager()
+        data = [
+            {"tag_name": "v1.6.0", "prerelease": False},  # normal
+            {"tag_name": "canary-build", "prerelease": False},  # no 'v' prefix → skipped
+            {"tag_name": "v1.5.0", "prerelease": False},  # normal
+        ]
+        with patch.object(manager, "fetch_json_secure", return_value=data):
+            versions = manager.get_available_versions()
+        assert "1.6.0" in versions
+        assert "1.5.0" in versions
+        assert len(versions) == 2  # canary-build skipped
+
+
+class TestTofuInstallFromArchive(FoundationTestCase):
+    """Cover tf_base.py line 303: binary_name = 'tofu' when tool_name == 'tofu'."""
+
+    def test_install_from_archive_uses_tofu_binary_name(self, tmp_path: Path) -> None:
+        """Line 303: TofuManager sets binary_name='tofu' in _install_from_archive."""
+        import pathlib
+        from unittest.mock import patch
+
+        manager = TofuManager()
+        manager.cache_dir = tmp_path / "cache"  # type: ignore[assignment]
+        manager.cache_dir.mkdir()
+        archive = tmp_path / "tofu_1.6.0.zip"
+        archive.write_text("archive")
+
+        def fake_extract(src: pathlib.Path, dst: pathlib.Path) -> None:
+            dst.mkdir(parents=True, exist_ok=True)
+            (dst / "tofu").write_text("tofu binary")
+
+        with (
+            patch.object(manager, "extract_archive", side_effect=fake_extract),
+            patch.object(manager, "make_executable"),
+            patch.object(manager, "verify_installation", return_value=True),
+            patch("shutil.copy2"),
+            patch.object(manager, "_calculate_file_hash", return_value="abc"),
+            patch.object(manager, "_update_install_metadata"),
+            patch.object(manager, "_update_recent_file"),
+        ):
+            manager._install_from_archive(archive, "1.6.0")
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

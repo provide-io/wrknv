@@ -1524,8 +1524,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_1(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1542,8 +1541,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_2(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1559,8 +1557,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_3(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1576,8 +1573,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_4(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1594,8 +1590,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_5(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1612,8 +1607,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_6(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1630,8 +1624,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_7(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1648,8 +1641,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_8(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1666,8 +1658,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_9(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1684,8 +1675,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_10(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1702,8 +1692,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_11(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1720,8 +1709,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_12(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1738,8 +1726,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_13(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1756,8 +1743,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(None)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_14(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1774,8 +1760,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug(None)
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_15(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1792,8 +1777,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("XXRegenerated env.sh with new versionXX")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_16(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1810,8 +1794,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_17(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1828,8 +1811,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("REGENERATED ENV.SH WITH NEW VERSION")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Could not regenerate env.sh: {e}")
+            logger.debug(f"Could not regenerate env.sh: {e}")
 
     def xǁSubRosaManagerǁ_regenerate_env_script__mutmut_18(self) -> None:
         """Regenerate env.sh script with updated version."""
@@ -1846,8 +1828,7 @@ class SubRosaManager(BaseToolManager):
                 create_project_env_scripts(project_dir)
                 logger.debug("Regenerated env.sh with new version")
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
     
     xǁSubRosaManagerǁ_regenerate_env_script__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁSubRosaManagerǁ_regenerate_env_script__mutmut_1': xǁSubRosaManagerǁ_regenerate_env_script__mutmut_1, 
@@ -4324,8 +4305,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4358,8 +4338,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4392,8 +4371,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4426,8 +4404,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4460,8 +4437,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4494,8 +4470,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4523,8 +4498,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4557,8 +4531,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4591,8 +4564,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4625,8 +4597,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4659,8 +4630,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4692,8 +4662,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4725,8 +4694,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4758,8 +4726,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4791,8 +4758,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4825,8 +4791,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4859,8 +4824,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4893,8 +4857,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4927,8 +4890,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4961,8 +4923,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -4995,8 +4956,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5029,8 +4989,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode != 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5063,8 +5022,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 1:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5097,8 +5055,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout and f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5131,8 +5088,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version not in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5165,8 +5121,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" not in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5199,8 +5154,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(None)
+                    logger.debug(None)
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5233,8 +5187,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return False
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5267,8 +5220,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(None)
@@ -5301,8 +5253,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5335,8 +5286,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5369,8 +5319,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")
@@ -5403,8 +5352,7 @@ class SubRosaManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version is in output
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"{self.variant_name} {version} verification successful")
+                    logger.debug(f"{self.variant_name} {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in {self.variant_name} output: {result.stdout}")

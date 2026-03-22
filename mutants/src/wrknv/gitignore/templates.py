@@ -67,8 +67,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -84,8 +83,7 @@ class TemplateHandler:
         """
         self.cache_dir = None
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -101,8 +99,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir and Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -118,8 +115,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" * "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -135,8 +131,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() * ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -152,8 +147,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / "XX.wrknvXX" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -169,8 +163,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".WRKNV" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -186,8 +179,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "XXgitignore-templatesXX"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -203,8 +195,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "GITIGNORE-TEMPLATES"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -220,8 +211,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = None
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -237,8 +227,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -254,8 +243,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if self.cache_dir.exists():
@@ -271,8 +259,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -288,8 +275,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -305,8 +291,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -322,8 +307,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -339,8 +323,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -356,8 +339,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -373,8 +355,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -436,8 +417,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -501,8 +481,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -566,8 +545,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -631,8 +609,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -696,8 +673,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -761,8 +737,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -826,8 +801,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -891,8 +865,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -956,8 +929,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1021,8 +993,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1086,8 +1057,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1151,8 +1121,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1216,8 +1185,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1281,8 +1249,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1346,8 +1313,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1411,8 +1377,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1476,8 +1441,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=None, delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1541,8 +1505,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=None) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1606,8 +1569,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1671,8 +1633,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", ) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1736,8 +1697,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix="XX.tar.gzXX", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1801,8 +1761,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".TAR.GZ", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1866,8 +1825,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=True) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1931,8 +1889,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = None
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -1996,8 +1953,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(None)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2061,8 +2017,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2126,8 +2081,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(None, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2191,8 +2145,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, None, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2256,8 +2209,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=None)
 
             # Extract archive using foundation utilities
@@ -2321,8 +2273,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2386,8 +2337,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2451,8 +2401,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, )
 
             # Extract archive using foundation utilities
@@ -2516,8 +2465,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=True)
 
             # Extract archive using foundation utilities
@@ -2581,8 +2529,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2646,8 +2593,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2711,8 +2657,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2776,8 +2721,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2841,8 +2785,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2906,8 +2849,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -2971,8 +2913,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3036,8 +2977,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3101,8 +3041,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3166,8 +3105,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3231,8 +3169,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3296,8 +3233,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3361,8 +3297,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3426,8 +3361,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3491,8 +3425,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3556,8 +3489,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3621,8 +3553,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3686,8 +3617,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3751,8 +3681,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3816,8 +3745,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3881,8 +3809,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -3946,8 +3873,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4011,8 +3937,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4076,8 +4001,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4141,8 +4065,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4206,8 +4129,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4271,8 +4193,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4336,8 +4257,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4401,8 +4321,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4466,8 +4385,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4531,8 +4449,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4596,8 +4513,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4661,8 +4577,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4726,8 +4641,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4791,8 +4705,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -4918,8 +4831,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -4938,8 +4850,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -4958,8 +4869,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -4978,8 +4888,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -4998,8 +4907,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5018,8 +4926,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5038,8 +4945,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5058,8 +4964,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5078,8 +4983,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5098,8 +5002,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5118,8 +5021,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5138,8 +5040,7 @@ class TemplateHandler:
         essential_templates = None
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5158,8 +5059,7 @@ class TemplateHandler:
         essential_templates = ["XXPython.gitignoreXX", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5178,8 +5078,7 @@ class TemplateHandler:
         essential_templates = ["python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5198,8 +5097,7 @@ class TemplateHandler:
         essential_templates = ["PYTHON.GITIGNORE", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5218,8 +5116,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "XXNode.gitignoreXX", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5238,8 +5135,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5258,8 +5154,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "NODE.GITIGNORE", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5278,8 +5173,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "XXGo.gitignoreXX"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5298,8 +5192,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5318,8 +5211,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "GO.GITIGNORE"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5338,8 +5230,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5358,8 +5249,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir * template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5378,8 +5268,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5398,8 +5287,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return True
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5418,8 +5306,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5438,8 +5325,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5458,8 +5344,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5478,8 +5363,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5498,8 +5382,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -5576,8 +5459,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_1(self) -> None:
         """Update the version file with current information.
@@ -5593,8 +5475,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_2(self) -> None:
         """Update the version file with current information.
@@ -5610,8 +5491,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_3(self) -> None:
         """Update the version file with current information.
@@ -5627,8 +5507,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_4(self) -> None:
         """Update the version file with current information.
@@ -5644,8 +5523,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_5(self) -> None:
         """Update the version file with current information.
@@ -5661,8 +5539,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_6(self) -> None:
         """Update the version file with current information.
@@ -5678,8 +5555,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_7(self) -> None:
         """Update the version file with current information.
@@ -5695,8 +5571,7 @@ class TemplateHandler:
             commit_sha = None
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_8(self) -> None:
         """Update the version file with current information.
@@ -5712,8 +5587,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(None)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def xǁTemplateHandlerǁ_update_version_file__mutmut_9(self) -> None:
         """Update the version file with current information.
@@ -5729,8 +5603,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
     
     xǁTemplateHandlerǁ_update_version_file__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁTemplateHandlerǁ_update_version_file__mutmut_1': xǁTemplateHandlerǁ_update_version_file__mutmut_1, 
@@ -5775,8 +5648,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -5806,8 +5678,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -5837,8 +5708,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -5868,8 +5738,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -5899,8 +5768,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -5930,8 +5798,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -5957,8 +5824,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -5988,8 +5854,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6019,8 +5884,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6050,8 +5914,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6081,8 +5944,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6112,8 +5974,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6143,8 +6004,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6174,8 +6034,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6205,8 +6064,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6236,8 +6094,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6267,8 +6124,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6298,8 +6154,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -6329,8 +6184,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(None)
@@ -6385,8 +6239,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6410,8 +6263,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_1(self, category: str | None = None) -> list[str]:
@@ -6435,8 +6287,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6460,8 +6311,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_2(self, category: str | None = None) -> list[str]:
@@ -6485,8 +6335,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6510,8 +6359,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_3(self, category: str | None = None) -> list[str]:
@@ -6535,8 +6383,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6560,8 +6407,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_4(self, category: str | None = None) -> list[str]:
@@ -6585,8 +6431,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6610,8 +6455,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_5(self, category: str | None = None) -> list[str]:
@@ -6635,8 +6479,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6660,8 +6503,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_6(self, category: str | None = None) -> list[str]:
@@ -6685,8 +6527,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6710,8 +6551,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_7(self, category: str | None = None) -> list[str]:
@@ -6735,8 +6575,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = None
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6760,8 +6599,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_8(self, category: str | None = None) -> list[str]:
@@ -6785,8 +6623,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir * category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6810,8 +6647,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_9(self, category: str | None = None) -> list[str]:
@@ -6835,8 +6671,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -6860,8 +6695,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_10(self, category: str | None = None) -> list[str]:
@@ -6885,8 +6719,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob(None):
                     templates.append(file.stem)
         else:
@@ -6910,8 +6743,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_11(self, category: str | None = None) -> list[str]:
@@ -6935,8 +6767,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("XX*.gitignoreXX"):
                     templates.append(file.stem)
         else:
@@ -6960,8 +6791,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_12(self, category: str | None = None) -> list[str]:
@@ -6985,8 +6815,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.GITIGNORE"):
                     templates.append(file.stem)
         else:
@@ -7010,8 +6839,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_13(self, category: str | None = None) -> list[str]:
@@ -7035,8 +6863,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(None)
         else:
@@ -7060,8 +6887,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_14(self, category: str | None = None) -> list[str]:
@@ -7085,8 +6911,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7110,8 +6935,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_15(self, category: str | None = None) -> list[str]:
@@ -7135,8 +6959,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7160,8 +6983,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_16(self, category: str | None = None) -> list[str]:
@@ -7185,8 +7007,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7210,8 +7031,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_17(self, category: str | None = None) -> list[str]:
@@ -7235,8 +7055,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7260,8 +7079,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_18(self, category: str | None = None) -> list[str]:
@@ -7285,8 +7103,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7310,8 +7127,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_19(self, category: str | None = None) -> list[str]:
@@ -7335,8 +7151,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7360,8 +7175,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_20(self, category: str | None = None) -> list[str]:
@@ -7385,8 +7199,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7410,8 +7223,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_21(self, category: str | None = None) -> list[str]:
@@ -7435,8 +7247,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7460,8 +7271,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_22(self, category: str | None = None) -> list[str]:
@@ -7485,8 +7295,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7510,8 +7319,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_23(self, category: str | None = None) -> list[str]:
@@ -7535,8 +7343,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7560,8 +7367,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_24(self, category: str | None = None) -> list[str]:
@@ -7585,8 +7391,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7610,8 +7415,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_25(self, category: str | None = None) -> list[str]:
@@ -7635,8 +7439,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7660,8 +7463,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_26(self, category: str | None = None) -> list[str]:
@@ -7685,8 +7487,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7710,8 +7511,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_27(self, category: str | None = None) -> list[str]:
@@ -7735,8 +7535,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7760,8 +7559,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_28(self, category: str | None = None) -> list[str]:
@@ -7785,8 +7583,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7810,8 +7607,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_29(self, category: str | None = None) -> list[str]:
@@ -7835,8 +7631,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7860,8 +7655,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_30(self, category: str | None = None) -> list[str]:
@@ -7885,8 +7679,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7910,8 +7703,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_31(self, category: str | None = None) -> list[str]:
@@ -7935,8 +7727,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -7960,8 +7751,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_32(self, category: str | None = None) -> list[str]:
@@ -7985,8 +7775,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8010,8 +7799,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_33(self, category: str | None = None) -> list[str]:
@@ -8035,8 +7823,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8060,8 +7847,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_34(self, category: str | None = None) -> list[str]:
@@ -8085,8 +7871,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8110,8 +7895,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_35(self, category: str | None = None) -> list[str]:
@@ -8135,8 +7919,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8160,8 +7943,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_36(self, category: str | None = None) -> list[str]:
@@ -8185,8 +7967,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8210,8 +7991,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_37(self, category: str | None = None) -> list[str]:
@@ -8235,8 +8015,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8260,8 +8039,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_38(self, category: str | None = None) -> list[str]:
@@ -8285,8 +8063,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8310,8 +8087,7 @@ class TemplateHandler:
                     relative = None
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_39(self, category: str | None = None) -> list[str]:
@@ -8335,8 +8111,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8360,8 +8135,7 @@ class TemplateHandler:
                     relative = file.relative_to(None)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_40(self, category: str | None = None) -> list[str]:
@@ -8385,8 +8159,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8410,8 +8183,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(None)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_41(self, category: str | None = None) -> list[str]:
@@ -8435,8 +8207,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8460,8 +8231,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix(None).as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_42(self, category: str | None = None) -> list[str]:
@@ -8485,8 +8255,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8510,8 +8279,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('XXXX').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_43(self, category: str | None = None) -> list[str]:
@@ -8535,8 +8303,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8560,8 +8327,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return sorted(templates)
 
     def xǁTemplateHandlerǁlist_templates__mutmut_44(self, category: str | None = None) -> list[str]:
@@ -8585,8 +8351,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
@@ -8610,8 +8375,7 @@ class TemplateHandler:
                     relative = file.relative_to(community_dir)
                     templates.append(f"community/{relative.with_suffix('').as_posix()}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(templates)} templates")
+        logger.debug(f"Found {len(templates)} templates")
         return sorted(None)
     
     xǁTemplateHandlerǁlist_templates__mutmut_mutants : ClassVar[MutantDict] = {
@@ -8682,8 +8446,7 @@ class TemplateHandler:
         all_templates = self.list_templates()
 
         matches = [t for t in all_templates if pattern_lower in t.lower()]
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
+        logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
 
@@ -8701,8 +8464,7 @@ class TemplateHandler:
         all_templates = self.list_templates()
 
         matches = [t for t in all_templates if pattern_lower in t.lower()]
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
+        logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
 
@@ -8720,8 +8482,7 @@ class TemplateHandler:
         all_templates = self.list_templates()
 
         matches = [t for t in all_templates if pattern_lower in t.lower()]
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
+        logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
 
@@ -8739,8 +8500,7 @@ class TemplateHandler:
         all_templates = None
 
         matches = [t for t in all_templates if pattern_lower in t.lower()]
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
+        logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
 
@@ -8758,8 +8518,7 @@ class TemplateHandler:
         all_templates = self.list_templates()
 
         matches = None
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
+        logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
 
@@ -8777,8 +8536,7 @@ class TemplateHandler:
         all_templates = self.list_templates()
 
         matches = [t for t in all_templates if pattern_lower not in t.lower()]
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
+        logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
 
@@ -8796,8 +8554,7 @@ class TemplateHandler:
         all_templates = self.list_templates()
 
         matches = [t for t in all_templates if pattern_lower in t.upper()]
-        if logger.is_debug_enabled():
-            logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
+        logger.debug(f"Found {len(matches)} templates matching '{pattern}'")
 
         return matches
 
@@ -8815,8 +8572,7 @@ class TemplateHandler:
         all_templates = self.list_templates()
 
         matches = [t for t in all_templates if pattern_lower in t.lower()]
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
 
         return matches
     

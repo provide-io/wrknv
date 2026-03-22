@@ -107,8 +107,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -125,8 +124,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -143,8 +141,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -161,8 +158,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -179,8 +175,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -197,8 +192,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -215,8 +209,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -233,8 +226,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -251,8 +243,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -269,8 +260,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -287,8 +277,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -305,8 +294,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -323,8 +311,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -341,8 +328,7 @@ class BaoManager(BaseToolManager):
             versions = None
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -359,8 +345,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(None)
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -377,8 +362,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=None))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -395,8 +379,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return versions
 
         except Exception as e:
@@ -413,8 +396,7 @@ class BaoManager(BaseToolManager):
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
             # OpenBao versions have 'v' prefix in tags, already stripped by client
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} OpenBao versions")
+            logger.debug(f"Found {len(versions)} OpenBao versions")
             return versions
 
         except Exception as e:
@@ -3556,8 +3538,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3590,8 +3571,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3624,8 +3604,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3658,8 +3637,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3692,8 +3670,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3726,8 +3703,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3755,8 +3731,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3789,8 +3764,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3823,8 +3797,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3857,8 +3830,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3891,8 +3863,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3924,8 +3895,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3957,8 +3927,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -3990,8 +3959,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4023,8 +3991,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4057,8 +4024,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4091,8 +4057,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4125,8 +4090,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4159,8 +4123,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4193,8 +4156,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4227,8 +4189,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4261,8 +4222,7 @@ class BaoManager(BaseToolManager):
             if result.returncode != 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4295,8 +4255,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 1:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4329,8 +4288,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout and f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4363,8 +4321,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version not in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4397,8 +4354,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" not in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4431,8 +4387,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(None)
+                    logger.debug(None)
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4465,8 +4420,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return False
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4499,8 +4453,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(None)
@@ -4533,8 +4486,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4567,8 +4519,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4601,8 +4552,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")
@@ -4635,8 +4585,7 @@ class BaoManager(BaseToolManager):
             if result.returncode == 0:
                 # OpenBao version output: "Bao v2.1.0 (1234abcd), built 2024-01-01T00:00:00Z"
                 if version in result.stdout or f"v{version}" in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenBao {version} verification successful")
+                    logger.debug(f"OpenBao {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenBao output: {result.stdout}")

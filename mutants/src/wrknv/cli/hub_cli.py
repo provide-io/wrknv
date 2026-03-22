@@ -2016,8 +2016,7 @@ def x_intercept_task_command__mutmut_orig() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2058,8 +2057,7 @@ def x_intercept_task_command__mutmut_1() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2121,8 +2119,7 @@ def x_intercept_task_command__mutmut_2() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2184,8 +2181,7 @@ def x_intercept_task_command__mutmut_3() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2247,8 +2243,7 @@ def x_intercept_task_command__mutmut_4() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2310,8 +2305,7 @@ def x_intercept_task_command__mutmut_5() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2373,8 +2367,7 @@ def x_intercept_task_command__mutmut_6() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2436,8 +2429,7 @@ def x_intercept_task_command__mutmut_7() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2499,8 +2491,7 @@ def x_intercept_task_command__mutmut_8() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2562,8 +2553,7 @@ def x_intercept_task_command__mutmut_9() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2625,8 +2615,7 @@ def x_intercept_task_command__mutmut_10() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2688,8 +2677,7 @@ def x_intercept_task_command__mutmut_11() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2751,8 +2739,7 @@ def x_intercept_task_command__mutmut_12() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2814,8 +2801,7 @@ def x_intercept_task_command__mutmut_13() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2877,8 +2863,7 @@ def x_intercept_task_command__mutmut_14() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -2940,8 +2925,7 @@ def x_intercept_task_command__mutmut_15() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3003,8 +2987,7 @@ def x_intercept_task_command__mutmut_16() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3066,8 +3049,7 @@ def x_intercept_task_command__mutmut_17() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3129,8 +3111,7 @@ def x_intercept_task_command__mutmut_18() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3192,8 +3173,7 @@ def x_intercept_task_command__mutmut_19() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3255,8 +3235,7 @@ def x_intercept_task_command__mutmut_20() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3318,8 +3297,7 @@ def x_intercept_task_command__mutmut_21() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3381,8 +3359,7 @@ def x_intercept_task_command__mutmut_22() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3444,8 +3421,7 @@ def x_intercept_task_command__mutmut_23() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3507,8 +3483,7 @@ def x_intercept_task_command__mutmut_24() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3570,8 +3545,7 @@ def x_intercept_task_command__mutmut_25() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3633,8 +3607,7 @@ def x_intercept_task_command__mutmut_26() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3696,8 +3669,7 @@ def x_intercept_task_command__mutmut_27() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3759,8 +3731,7 @@ def x_intercept_task_command__mutmut_28() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3822,8 +3793,7 @@ def x_intercept_task_command__mutmut_29() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3885,8 +3855,7 @@ def x_intercept_task_command__mutmut_30() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -3948,8 +3917,7 @@ def x_intercept_task_command__mutmut_31() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4011,8 +3979,7 @@ def x_intercept_task_command__mutmut_32() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4074,8 +4041,7 @@ def x_intercept_task_command__mutmut_33() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4137,8 +4103,7 @@ def x_intercept_task_command__mutmut_34() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4200,8 +4165,7 @@ def x_intercept_task_command__mutmut_35() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4263,8 +4227,7 @@ def x_intercept_task_command__mutmut_36() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4326,8 +4289,7 @@ def x_intercept_task_command__mutmut_37() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4389,8 +4351,7 @@ def x_intercept_task_command__mutmut_38() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4452,8 +4413,7 @@ def x_intercept_task_command__mutmut_39() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4515,8 +4475,7 @@ def x_intercept_task_command__mutmut_40() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4578,8 +4537,7 @@ def x_intercept_task_command__mutmut_41() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4641,8 +4599,7 @@ def x_intercept_task_command__mutmut_42() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4704,8 +4661,7 @@ def x_intercept_task_command__mutmut_43() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4767,8 +4723,7 @@ def x_intercept_task_command__mutmut_44() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4830,8 +4785,7 @@ def x_intercept_task_command__mutmut_45() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4893,8 +4847,7 @@ def x_intercept_task_command__mutmut_46() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -4956,8 +4909,7 @@ def x_intercept_task_command__mutmut_47() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5019,8 +4971,7 @@ def x_intercept_task_command__mutmut_48() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5082,8 +5033,7 @@ def x_intercept_task_command__mutmut_49() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5145,8 +5095,7 @@ def x_intercept_task_command__mutmut_50() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5208,8 +5157,7 @@ def x_intercept_task_command__mutmut_51() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5271,8 +5219,7 @@ def x_intercept_task_command__mutmut_52() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5334,8 +5281,7 @@ def x_intercept_task_command__mutmut_53() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5397,8 +5343,7 @@ def x_intercept_task_command__mutmut_54() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5460,8 +5405,7 @@ def x_intercept_task_command__mutmut_55() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5523,8 +5467,7 @@ def x_intercept_task_command__mutmut_56() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5586,8 +5529,7 @@ def x_intercept_task_command__mutmut_57() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5649,8 +5591,7 @@ def x_intercept_task_command__mutmut_58() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5712,8 +5653,7 @@ def x_intercept_task_command__mutmut_59() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5775,8 +5715,7 @@ def x_intercept_task_command__mutmut_60() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5838,8 +5777,7 @@ def x_intercept_task_command__mutmut_61() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5901,8 +5839,7 @@ def x_intercept_task_command__mutmut_62() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -5964,8 +5901,7 @@ def x_intercept_task_command__mutmut_63() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -6027,8 +5963,7 @@ def x_intercept_task_command__mutmut_64() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -6090,8 +6025,7 @@ def x_intercept_task_command__mutmut_65() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -6153,8 +6087,7 @@ def x_intercept_task_command__mutmut_66() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -6216,8 +6149,7 @@ def x_intercept_task_command__mutmut_67() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return False
 
 
@@ -6279,8 +6211,7 @@ def x_intercept_task_command__mutmut_68() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return False
 
 
@@ -6342,8 +6273,7 @@ def x_intercept_task_command__mutmut_69() -> bool:
 
     except Exception as e:
         # If anything goes wrong, let Click handle it
-        if logger.is_debug_enabled():
-            logger.debug(f"Task intercept failed: {e}")
+        logger.debug(f"Task intercept failed: {e}")
         return True
 
 x_intercept_task_command__mutmut_mutants : ClassVar[MutantDict] = {

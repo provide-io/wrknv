@@ -76,10 +76,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_1(
         self,
@@ -100,10 +98,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_2(
         self,
@@ -124,10 +120,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_3(
         self,
@@ -148,10 +142,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_4(
         self,
@@ -172,10 +164,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_5(
         self,
@@ -196,10 +186,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_6(
         self,
@@ -220,10 +208,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_7(
         self,
@@ -244,10 +230,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_8(
         self,
@@ -268,10 +252,8 @@ class GitignoreManager:
         self.template_handler = None
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_9(
         self,
@@ -292,10 +274,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=None)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_10(
         self,
@@ -316,10 +296,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_11(
         self,
@@ -340,10 +318,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
-        if logger.is_debug_enabled():
-            logger.debug(f"Gitignore path: {self.gitignore_path}")
+        logger.debug(None)
+        logger.debug(f"Gitignore path: {self.gitignore_path}")
 
     def xǁGitignoreManagerǁ__init____mutmut_12(
         self,
@@ -364,10 +340,8 @@ class GitignoreManager:
         self.template_handler = TemplateHandler(cache_dir=cache_dir)
         self.detector = ProjectDetector()
 
-        if logger.is_debug_enabled():
-            logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(f"GitignoreManager initialized for project: {self.project_dir}")
+        logger.debug(None)
     
     xǁGitignoreManagerǁ__init____mutmut_mutants : ClassVar[MutantDict] = {
     'xǁGitignoreManagerǁ__init____mutmut_1': xǁGitignoreManagerǁ__init____mutmut_1, 
@@ -434,8 +408,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -511,8 +484,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -588,8 +560,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -665,8 +636,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -742,8 +712,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -819,8 +788,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -896,8 +864,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -973,8 +940,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1050,8 +1016,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1127,8 +1092,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1204,8 +1168,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1281,8 +1244,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1358,8 +1320,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1435,8 +1396,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1512,8 +1472,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1589,8 +1548,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1666,8 +1624,7 @@ class GitignoreManager:
                     content = None
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1743,8 +1700,7 @@ class GitignoreManager:
                     content = "\n".join(None)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1820,8 +1776,7 @@ class GitignoreManager:
                     content = "XX\nXX".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1897,8 +1852,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(None, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -1974,8 +1928,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, None)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2051,8 +2004,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2128,8 +2080,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, )
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2205,8 +2156,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2282,8 +2232,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(None)
 
@@ -2359,8 +2308,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2436,8 +2384,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2513,8 +2460,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2590,8 +2536,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2667,8 +2612,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2744,8 +2688,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2821,8 +2764,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2898,8 +2840,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -2975,8 +2916,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -3052,8 +2992,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -3129,8 +3068,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -3206,8 +3144,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -3283,8 +3220,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 
@@ -3360,8 +3296,7 @@ class GitignoreManager:
                     content = "\n".join(filtered_lines)
 
                 builder.add_template_section(template_name, content)
-                if logger.is_debug_enabled():
-                    logger.debug(f"Added template: {template_name}")
+                logger.debug(f"Added template: {template_name}")
             else:
                 logger.warning(f"Template '{template_name}' not found")
 

@@ -68,8 +68,7 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
     # Create extraction directory
     extract_dir.mkdir(parents=True, exist_ok=True)
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Extracting {archive_path} to {extract_dir}")
+    logger.debug(f"Extracting {archive_path} to {extract_dir}")
 
     archive_name = archive_path.name.lower()
 
@@ -86,8 +85,7 @@ def extract_archive(archive_path: pathlib.Path, extract_dir: pathlib.Path) -> No
         else:
             raise ValidationError(f"Unsupported archive format: {archive_path}")
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Successfully extracted {archive_path}")
+        logger.debug(f"Successfully extracted {archive_path}")
 
     except Exception as e:
         raise ResourceError(f"Failed to extract {archive_path}: {e}") from e
@@ -104,8 +102,7 @@ def make_executable(file_path: pathlib.Path) -> None:
     import platform
 
     if platform.system().lower() == "windows":
-        if logger.is_debug_enabled():
-            logger.debug(f"Skipping chmod on Windows for {file_path}")
+        logger.debug(f"Skipping chmod on Windows for {file_path}")
         return
 
     try:
@@ -118,8 +115,7 @@ def make_executable(file_path: pathlib.Path) -> None:
         # Set new permissions
         file_path.chmod(new_mode)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Made {file_path} executable (mode: {oct(new_mode)})")
+        logger.debug(f"Made {file_path} executable (mode: {oct(new_mode)})")
 
     except Exception as e:
         logger.warning(f"Failed to make {file_path} executable: {e}")
@@ -141,8 +137,7 @@ def create_symlink(target: pathlib.Path, link_path: pathlib.Path) -> None:
 
     try:
         link_path.symlink_to(target)
-        if logger.is_debug_enabled():
-            logger.debug(f"Created symlink: {link_path} -> {target}")
+        logger.debug(f"Created symlink: {link_path} -> {target}")
 
     except OSError as e:
         # Fall back to copying on Windows if symlink fails
@@ -161,96 +156,84 @@ def x_copy_file__mutmut_orig(source: pathlib.Path, destination: pathlib.Path, pr
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=True, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_1(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = False) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=True, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_2(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(None, destination, overwrite=True, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_3(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, None, overwrite=True, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_4(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=None, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_5(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=True, preserve_mode=None)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_6(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(destination, overwrite=True, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_7(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, overwrite=True, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_8(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_9(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=True, )
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_10(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=False, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(f"Copied {source} to {destination}")
+    logger.debug(f"Copied {source} to {destination}")
 
 
 def x_copy_file__mutmut_11(source: pathlib.Path, destination: pathlib.Path, preserve_permissions: bool = True) -> None:
     """Copy file with optional permission preservation."""
     # Use foundation's safe_copy which handles all edge cases
     safe_copy(source, destination, overwrite=True, preserve_mode=preserve_permissions)
-    if logger.is_debug_enabled():
-        logger.debug(None)
+    logger.debug(None)
 
 x_copy_file__mutmut_mutants : ClassVar[MutantDict] = {
 'x_copy_file__mutmut_1': x_copy_file__mutmut_1, 
@@ -278,56 +261,49 @@ def x_ensure_directory__mutmut_orig(dir_path: pathlib.Path, mode: int = 0o755) -
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(dir_path, mode=mode)
-    if logger.is_debug_enabled():
-        logger.debug(f"Created/verified directory: {dir_path}")
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def x_ensure_directory__mutmut_1(dir_path: pathlib.Path, mode: int = 494) -> None:
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(dir_path, mode=mode)
-    if logger.is_debug_enabled():
-        logger.debug(f"Created/verified directory: {dir_path}")
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def x_ensure_directory__mutmut_2(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(None, mode=mode)
-    if logger.is_debug_enabled():
-        logger.debug(f"Created/verified directory: {dir_path}")
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def x_ensure_directory__mutmut_3(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(dir_path, mode=None)
-    if logger.is_debug_enabled():
-        logger.debug(f"Created/verified directory: {dir_path}")
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def x_ensure_directory__mutmut_4(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(mode=mode)
-    if logger.is_debug_enabled():
-        logger.debug(f"Created/verified directory: {dir_path}")
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def x_ensure_directory__mutmut_5(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(dir_path, )
-    if logger.is_debug_enabled():
-        logger.debug(f"Created/verified directory: {dir_path}")
+    logger.debug(f"Created/verified directory: {dir_path}")
 
 
 def x_ensure_directory__mutmut_6(dir_path: pathlib.Path, mode: int = 0o755) -> None:
     """Ensure directory exists with specified permissions."""
     # Use foundation's ensure_dir which handles all edge cases
     ensure_dir(dir_path, mode=mode)
-    if logger.is_debug_enabled():
-        logger.debug(None)
+    logger.debug(None)
 
 x_ensure_directory__mutmut_mutants : ClassVar[MutantDict] = {
 'x_ensure_directory__mutmut_1': x_ensure_directory__mutmut_1, 
@@ -367,8 +343,7 @@ def x_clean_directory__mutmut_orig(dir_path: pathlib.Path, keep_hidden: bool = T
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_1(dir_path: pathlib.Path, keep_hidden: bool = False) -> None:
@@ -392,8 +367,7 @@ def x_clean_directory__mutmut_1(dir_path: pathlib.Path, keep_hidden: bool = Fals
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_2(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -417,8 +391,7 @@ def x_clean_directory__mutmut_2(dir_path: pathlib.Path, keep_hidden: bool = True
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_3(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -442,8 +415,7 @@ def x_clean_directory__mutmut_3(dir_path: pathlib.Path, keep_hidden: bool = True
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_4(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -467,8 +439,7 @@ def x_clean_directory__mutmut_4(dir_path: pathlib.Path, keep_hidden: bool = True
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_5(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -492,8 +463,7 @@ def x_clean_directory__mutmut_5(dir_path: pathlib.Path, keep_hidden: bool = True
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_6(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -517,8 +487,7 @@ def x_clean_directory__mutmut_6(dir_path: pathlib.Path, keep_hidden: bool = True
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_7(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -542,8 +511,7 @@ def x_clean_directory__mutmut_7(dir_path: pathlib.Path, keep_hidden: bool = True
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_8(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -567,8 +535,7 @@ def x_clean_directory__mutmut_8(dir_path: pathlib.Path, keep_hidden: bool = True
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_9(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -592,8 +559,7 @@ def x_clean_directory__mutmut_9(dir_path: pathlib.Path, keep_hidden: bool = True
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_10(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -617,8 +583,7 @@ def x_clean_directory__mutmut_10(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_11(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -642,8 +607,7 @@ def x_clean_directory__mutmut_11(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_12(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -667,8 +631,7 @@ def x_clean_directory__mutmut_12(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_13(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -692,8 +655,7 @@ def x_clean_directory__mutmut_13(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_14(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -717,8 +679,7 @@ def x_clean_directory__mutmut_14(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_15(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -742,8 +703,7 @@ def x_clean_directory__mutmut_15(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_16(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -767,8 +727,7 @@ def x_clean_directory__mutmut_16(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_17(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -792,8 +751,7 @@ def x_clean_directory__mutmut_17(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_18(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -817,8 +775,7 @@ def x_clean_directory__mutmut_18(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_19(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -842,8 +799,7 @@ def x_clean_directory__mutmut_19(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(None)
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Cleaned directory: {dir_path}")
+    logger.debug(f"Cleaned directory: {dir_path}")
 
 
 def x_clean_directory__mutmut_20(dir_path: pathlib.Path, keep_hidden: bool = True) -> None:
@@ -867,8 +823,7 @@ def x_clean_directory__mutmut_20(dir_path: pathlib.Path, keep_hidden: bool = Tru
         except Exception as e:
             logger.warning(f"Failed to remove {item}: {e}")
 
-    if logger.is_debug_enabled():
-        logger.debug(None)
+    logger.debug(None)
 
 x_clean_directory__mutmut_mutants : ClassVar[MutantDict] = {
 'x_clean_directory__mutmut_1': x_clean_directory__mutmut_1, 

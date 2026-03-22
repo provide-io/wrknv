@@ -735,8 +735,7 @@ class SecurityAllowlistManager:
         self.project_dir = Path(project_dir) if project_dir else Path.cwd()
         self.config = config
 
-        if logger.is_debug_enabled():
-            logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
+        logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
 
     def xǁSecurityAllowlistManagerǁ__init____mutmut_1(
         self,
@@ -752,8 +751,7 @@ class SecurityAllowlistManager:
         self.project_dir = None
         self.config = config
 
-        if logger.is_debug_enabled():
-            logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
+        logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
 
     def xǁSecurityAllowlistManagerǁ__init____mutmut_2(
         self,
@@ -769,8 +767,7 @@ class SecurityAllowlistManager:
         self.project_dir = Path(None) if project_dir else Path.cwd()
         self.config = config
 
-        if logger.is_debug_enabled():
-            logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
+        logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
 
     def xǁSecurityAllowlistManagerǁ__init____mutmut_3(
         self,
@@ -786,8 +783,7 @@ class SecurityAllowlistManager:
         self.project_dir = Path(project_dir) if project_dir else Path.cwd()
         self.config = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
+        logger.debug(f"SecurityAllowlistManager initialized for: {self.project_dir}")
 
     def xǁSecurityAllowlistManagerǁ__init____mutmut_4(
         self,
@@ -803,8 +799,7 @@ class SecurityAllowlistManager:
         self.project_dir = Path(project_dir) if project_dir else Path.cwd()
         self.config = config
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
     
     xǁSecurityAllowlistManagerǁ__init____mutmut_mutants : ClassVar[MutantDict] = {
     'xǁSecurityAllowlistManagerǁ__init____mutmut_1': xǁSecurityAllowlistManagerǁ__init____mutmut_1, 

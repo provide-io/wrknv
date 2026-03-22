@@ -66,8 +66,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -85,8 +84,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -107,8 +105,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = None
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -126,8 +123,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -148,8 +144,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "XXhttps://releases.hashicorp.com/vault/index.jsonXX"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -167,8 +162,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -189,8 +183,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "HTTPS://RELEASES.HASHICORP.COM/VAULT/INDEX.JSON"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -208,8 +201,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -230,8 +222,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -249,8 +240,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -271,8 +261,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = None
             data = response.json()
@@ -290,8 +279,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -312,8 +300,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(None)
             data = response.json()
@@ -331,8 +318,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -353,8 +339,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(None))
             data = response.json()
@@ -372,8 +357,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -394,8 +378,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = None
@@ -413,8 +396,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -435,8 +417,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -454,8 +435,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -476,8 +456,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -495,8 +474,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -517,8 +495,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -536,8 +513,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -558,8 +534,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -577,8 +552,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -599,8 +573,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -618,8 +591,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -640,8 +612,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -659,8 +630,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -681,8 +651,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -700,8 +669,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -722,8 +690,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -741,8 +708,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -763,8 +729,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -782,8 +747,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -804,8 +768,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -823,8 +786,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -845,8 +807,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -864,8 +825,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -886,8 +846,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -905,8 +864,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -927,8 +885,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -946,8 +903,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -968,8 +924,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -987,8 +942,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1009,8 +963,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1028,8 +981,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1050,8 +1002,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1069,8 +1020,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1091,8 +1041,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1110,8 +1059,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1132,8 +1080,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1151,8 +1098,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1173,8 +1119,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1192,8 +1137,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1214,8 +1158,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1233,8 +1176,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1255,8 +1197,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1274,8 +1215,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1296,8 +1236,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1315,8 +1254,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1337,8 +1275,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1356,8 +1293,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1378,8 +1314,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1397,8 +1332,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1419,8 +1353,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1438,8 +1371,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1460,8 +1392,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1479,8 +1410,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1501,8 +1431,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1520,8 +1449,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1542,8 +1470,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1561,8 +1488,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1583,8 +1509,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1602,8 +1527,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(None)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1624,8 +1548,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1643,8 +1566,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
 
             # Sort versions
             try:
@@ -1665,8 +1587,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1684,8 +1605,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1706,8 +1626,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1725,8 +1644,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1747,8 +1665,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1766,8 +1683,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1788,8 +1704,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1807,8 +1722,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1829,8 +1743,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1848,8 +1761,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1870,8 +1782,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1889,8 +1800,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1911,8 +1821,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1930,8 +1839,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1952,8 +1860,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -1971,8 +1878,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -1993,8 +1899,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -2012,8 +1917,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
@@ -2034,8 +1938,7 @@ class IbmVaultVariant(SubRosaManager):
             # HashiCorp provides a JSON API for releases
             api_url = "https://releases.hashicorp.com/vault/index.json"
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Fetching Vault versions from {api_url}")
+            logger.debug(f"Fetching Vault versions from {api_url}")
 
             response = asyncio.run(get(api_url))
             data = response.json()
@@ -2053,8 +1956,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
