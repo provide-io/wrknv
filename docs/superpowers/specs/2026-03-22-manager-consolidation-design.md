@@ -56,10 +56,51 @@ All 8 files in `src/wrknv/wenv/managers/`:
 
 ### `src/wrknv/wenv/__init__.py`
 
-Remove the stale comment on line 21:
+Remove the stale comment on line 21 and remove `"managers"` from `__all__` on line 23:
+
+Before:
 ```python
+# Submodules are available but not imported to avoid circular imports
 # Use explicit imports: from wrknv.wenv import config, managers, etc.
+
+__all__ = ["config", "managers", "operations"]
 ```
+
+After:
+```python
+# Submodules are available but not imported to avoid circular imports
+
+__all__ = ["config", "operations"]
+```
+
+### `docs/getting-started/installation.md`
+
+Three code examples reference deleted module paths. Update to use `managers/` equivalents:
+
+| Old | New |
+|---|---|
+| `from wrknv.wenv.managers.uv import UVManager` | `from wrknv.managers.uv import UvManager` |
+| `from wrknv.wenv.managers.terraform import TerraformManager` | `from wrknv.managers.tf.ibm import IbmTfVariant` (or `TofuTfVariant`) |
+| `from wrknv.wenv.managers.base import ToolManager` | `from wrknv.managers.base import BaseToolManager` |
+
+Also update class names in the examples accordingly (`UVManager` → `UvManager`, `TerraformManager` → `IbmTfVariant`, `ToolManager` → `BaseToolManager`).
+
+### `CONTRIBUTING.md`
+
+Four changes in the "Adding New Tool Managers" section:
+
+1. Line ~82: update path `src/wrknv/wenv/managers/` → `src/wrknv/managers/`
+2. Line ~91: update import `from wrknv.wenv.managers.base import BaseToolManager` → `from wrknv.managers.base import BaseToolManager`
+3. Line ~92: remove `from wrknv.wenv.managers.types import ToolInfo` — no `types.py` exists and there is no `ToolInfo` equivalent in `managers/`. Also remove the `get_tool_info` method body (lines ~105–110) that uses `ToolInfo`, keeping only the two required method stubs (`get_download_url` and `get_executable_name`).
+4. Line ~210: update `vim src/wrknv/wenv/managers/newtool.py` → `vim src/wrknv/managers/newtool.py`
+
+### `CLAUDE.md` (project root)
+
+Line ~55 describes Tool Managers as living in `src/wrknv/wenv/managers/`. Update to `src/wrknv/managers/`.
+
+### `pyproject.toml`
+
+Remove the dead mypy override entry `"wrknv.wenv.managers.*",` from the `[[tool.mypy.overrides]]` block for wenv modules (the block around line 169).
 
 ### `tests/managers/test_managers.py`
 
@@ -79,7 +120,7 @@ New test: mock `extract_dir.rglob()` to return two file paths — a non-matching
 
 - All 8 `src/wrknv/wenv/managers/` source files are deleted with no remaining references
 - All 13 `tests/wenv/test_managers_*.py` files are deleted
-- `grep -r "wenv\.managers\|wenv/managers" src/ tests/` returns zero results (excluding `wenv/operations/` which is unrelated)
+- `grep -r "wenv\.managers\|wenv/managers" src/ tests/ CONTRIBUTING.md CLAUDE.md pyproject.toml` returns zero results (`.egg-info/SOURCES.txt` is not searched and will be regenerated on next build; `docs/` is excluded because this spec file itself contains the old paths for documentation purposes)
 - `uv run python -m pytest tests/ -q` passes with no regressions
 - `uv run python -m pytest tests/managers/ --cov=src/wrknv/managers --cov-report=term-missing` shows 100% coverage for all `managers/` modules
 - `uv run ruff check src tests` passes clean
