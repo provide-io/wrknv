@@ -25,7 +25,9 @@ def _mock_downloader_setup() -> tuple[mock.Mock, mock.AsyncMock, mock.AsyncMock,
     mock_client.__aenter__ = mock.AsyncMock(return_value=mock_client)
     mock_client.__aexit__ = mock.AsyncMock(return_value=False)
     mock_downloader = mock.AsyncMock()
-    mock_downloader.add_progress_callback = mock.Mock(side_effect=lambda cb: captured.append(cb))
+    mock_downloader.add_progress_callback = mock.Mock(
+        side_effect=lambda cb: captured.append(cb)
+    )
     return mock_hub, mock_client, mock_downloader, captured
 
 

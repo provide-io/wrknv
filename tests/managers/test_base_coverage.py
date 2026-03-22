@@ -86,9 +86,7 @@ class TestInstallVersionCreateSymlink(FoundationTestCase):
     def test_install_calls_verify_checksum_when_url_exists(self) -> None:
         """Lines 220-222: _verify_download_checksum called when checksum_url + verify_checksums=True."""
         tmp = self.create_temp_dir()
-        manager = _make_manager(
-            tmp, {"create_symlinks": False, "cache_downloads": False, "verify_checksums": True}
-        )
+        manager = _make_manager(tmp, {"create_symlinks": False, "cache_downloads": False, "verify_checksums": True})
         version = "1.0.0"
         with (
             mock.patch.object(manager, "download_file"),
@@ -214,9 +212,7 @@ class TestDownloadFileAsync(FoundationTestCase):
         async def fake_async(*_args: object, **_kwargs: object) -> None:
             pass
 
-        with mock.patch(
-            "wrknv.wenv.operations.download.download_file_async", side_effect=fake_async
-        ) as mock_async:
+        with mock.patch("wrknv.wenv.operations.download.download_file_async", side_effect=fake_async) as mock_async:
 
             async def _run() -> None:
                 await manager.download_file_async("https://example.com/f.tar.gz", dest)

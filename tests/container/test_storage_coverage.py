@@ -100,7 +100,6 @@ class TestGetLatestBackup:
         newer.write_bytes(b"new")
         import os
         import time
-
         os.utime(older, (time.time() - 100, time.time() - 100))
         os.utime(newer, (time.time(), time.time()))
 
