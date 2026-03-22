@@ -258,4 +258,40 @@ templates = ["Python"]
                 assert not (test_dir / ".gitignore").exists()
 
 
+class TestGitignoreBuildAutoDetectNoTypes(FoundationTestCase):
+    """Line 176->181: auto_detect=True but detect_project_types returns empty list."""
+
+    def test_auto_detect_empty_result_skips_extend(self, cli, runner) -> None:
+        """176->181: detected=[] → template_list not extended, falls through to no-templates exit."""
+        config_path = None
+
+        with runner.isolated_filesystem():
+            from pathlib import Path as _Path
+
+            config_path = _Path.cwd() / "wrknv.toml"
+            config_path.write_text('project_name = "test"\nversion = "0.1.0"\n')
+
+            from wrknv.config import WorkenvConfig
+
+            with patch("wrknv.config.WorkenvConfig._find_config_file", return_value=config_path):
+                mock_config_instance = WorkenvConfig.load()
+
+            with (
+                patch("wrknv.cli.hub_cli.WrknvContext.get_config", return_value=mock_config_instance),
+                patch(
+                    "wrknv.cli.commands.gitignore.ProjectDetector"
+                ) as mock_detector_cls,
+            ):
+                mock_detector = Mock()
+                mock_detector.detect_project_types.return_value = []  # empty → 176->181 False branch
+                mock_detector_cls.return_value = mock_detector
+
+                result = runner.invoke(
+                    cli, ["gitignore", "build", "--auto-detect"], catch_exceptions=False
+                )
+
+            assert result.exit_code == 0
+            assert "No gitignore templates specified" in result.output
+
+
 # 🧰🌍🔚

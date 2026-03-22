@@ -302,4 +302,149 @@ class TestValidateEnvConfig(FoundationTestCase):
         assert any("Invalid environment key" in e for e in errors)
 
 
+class TestValidationBranchCoverage(FoundationTestCase):
+    """Tests for uncovered branches in validation.py."""
+
+    def _validator(self, **kwargs) -> WorkenvConfigValidator:
+        return WorkenvConfigValidator(_make_config(**kwargs))
+
+    # _is_valid_version: non-string input
+    def test_is_valid_version_non_string_returns_false(self) -> None:
+        v = self._validator()
+        assert v._is_valid_version(123) is False  # type: ignore[arg-type]
+
+    # _is_valid_version: 5-part version where part[2] has non-alnum chars
+    def test_is_valid_version_part_non_alnum(self) -> None:
+        v = self._validator()
+        # 3-part version where patch part has only symbols
+        assert v._is_valid_version("1.2.!!!") is False
+
+    # _validate_tool_config: non-string tool_name
+    def test_tool_name_not_string(self) -> None:
+        v = self._validator(tools={123: "1.0.0"})  # type: ignore[dict-item]
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Tool name must be string" in e for e in errors)
+
+    # _validate_tool_config: empty tool_name
+    def test_tool_name_empty(self) -> None:
+        v = self._validator(tools={"": "1.0.0"})
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Tool name cannot be empty" in e for e in errors)
+
+    # _validate_tool_config: list with invalid version string
+    def test_tool_list_invalid_version_string(self) -> None:
+        v = self._validator(tools={"go": ["1.21", "bad!!!"]})
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Invalid version" in e for e in errors)
+
+    # _validate_tool_config: dict with invalid version string
+    def test_tool_dict_version_invalid_string(self) -> None:
+        v = self._validator(tools={"go": {"version": "bad!!!"}})
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Invalid version" in e for e in errors)
+
+    # _validate_tool_config: env value not string
+    def test_tool_dict_env_value_not_string(self) -> None:
+        v = self._validator(tools={"go": {"env": {"MY_VAR": 123}}})
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("must be string" in e for e in errors)
+
+    # _validate_profile_config: non-string profile_name
+    def test_profile_name_not_string(self) -> None:
+        v = self._validator(profiles={123: {"go": "1.21"}})  # type: ignore[dict-item]
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Profile name must be string" in e for e in errors)
+
+    # _validate_profile_config: empty profile_name
+    def test_profile_name_empty(self) -> None:
+        v = self._validator(profiles={"": {"go": "1.21"}})
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Profile name cannot be empty" in e for e in errors)
+
+    # _validate_profile_config: tool name in profile not string
+    def test_profile_tool_name_not_string(self) -> None:
+        v = self._validator(profiles={"dev": {123: "1.21"}})  # type: ignore[dict-item]
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Tool name in profile" in e for e in errors)
+
+    # _validate_workenv_settings: bool fields not bool
+    def test_workenv_auto_install_not_bool(self) -> None:
+        ws = WorkenvSettings()
+        object.__setattr__(ws, "auto_install", "yes")  # type: ignore[arg-type]
+        v = self._validator(workenv=ws)
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("auto_install must be boolean" in e for e in errors)
+
+    def test_workenv_use_cache_not_bool(self) -> None:
+        ws = WorkenvSettings()
+        object.__setattr__(ws, "use_cache", 1)  # type: ignore[arg-type]
+        v = self._validator(workenv=ws)
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("use_cache must be boolean" in e for e in errors)
+
+    def test_workenv_cache_ttl_not_string(self) -> None:
+        ws = WorkenvSettings()
+        object.__setattr__(ws, "cache_ttl", 7)  # type: ignore[arg-type]
+        v = self._validator(workenv=ws)
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("cache_ttl must be string" in e for e in errors)
+
+    def test_workenv_log_level_not_string(self) -> None:
+        ws = WorkenvSettings()
+        object.__setattr__(ws, "log_level", 10)  # type: ignore[arg-type]
+        v = self._validator(workenv=ws)
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("log_level must be string" in e for e in errors)
+
+    def test_workenv_container_runtime_not_string(self) -> None:
+        ws = WorkenvSettings()
+        object.__setattr__(ws, "container_runtime", None)  # type: ignore[arg-type]
+        v = self._validator(workenv=ws)
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("container_runtime must be string" in e for e in errors)
+
+    def test_workenv_container_registry_not_string(self) -> None:
+        ws = WorkenvSettings()
+        object.__setattr__(ws, "container_registry", 42)  # type: ignore[arg-type]
+        v = self._validator(workenv=ws)
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("container_registry must be string" in e for e in errors)
+
+    def test_workenv_container_registry_invalid_url(self) -> None:
+        ws = WorkenvSettings()
+        object.__setattr__(ws, "container_registry", "not a valid url!!!")
+        v = self._validator(workenv=ws)
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Invalid container_registry" in e for e in errors)
+
+    # env: key not string
+    def test_env_key_not_string(self) -> None:
+        v = self._validator(env={123: "value"})  # type: ignore[dict-item]
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("Environment key must be string" in e for e in errors)
+
+    # _validate_tool_config: tool dict env key not string (line 161)
+    def test_tool_dict_env_key_not_string(self) -> None:
+        v = self._validator(tools={"go": {"env": {123: "value"}}})  # type: ignore[dict-item]
+        is_valid, errors = v.validate()
+        assert not is_valid
+        assert any("must be string" in e for e in errors)
+
+
 # 🧰🌍🔚

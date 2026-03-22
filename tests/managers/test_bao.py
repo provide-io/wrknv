@@ -300,5 +300,28 @@ class TestBaoInstallFromArchive(FoundationTestCase):
             mgr._install_from_archive(archive_path, "2.1.0")
         mock_rmtree.assert_called()
 
+    def test_installs_binary_with_non_matching_files_first(self) -> None:
+        """Branch 102->101: loop iterates past non-matching files before finding bao."""
+        tmp = self.create_temp_dir()
+        mgr = _make_bao_manager(tmp)
+        archive_path = tmp / "bao_2.1.0.tar.gz"
+        archive_path.write_bytes(b"fake")
+
+        def fake_extract(archive: pathlib.Path, dest: pathlib.Path) -> None:
+            dest.mkdir(parents=True, exist_ok=True)
+            # Create non-matching files first, then the actual binary
+            (dest / "bao_readme.txt").write_text("docs")
+            (dest / "bao_config.hcl").write_text("config")
+            (dest / "bao").write_text("#!/bin/sh")
+
+        with (
+            mock.patch.object(mgr, "extract_archive", side_effect=fake_extract),
+            mock.patch.object(mgr, "verify_installation", return_value=True),
+            mock.patch.object(mgr, "make_executable"),
+            mock.patch("provide.foundation.file.safe_copy"),
+            mock.patch("provide.foundation.file.safe_rmtree"),
+        ):
+            mgr._install_from_archive(archive_path, "2.1.0")
+
 
 # 🧰🌍🔚

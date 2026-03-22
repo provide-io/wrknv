@@ -358,7 +358,10 @@ class TestDoctorFunctionCoverage(FoundationTestCase):
         """Lines 150-151: _check_environment raises -> return fail dict."""
         from wrknv.cli.commands.doctor import _check_environment
 
-        with patch("wrknv.cli.commands.doctor.Path") as mock_path:
+        with (
+            patch("os.environ", side_effect=Exception("env error")),
+            patch("wrknv.cli.commands.doctor.Path") as mock_path,
+        ):
             mock_path.cwd.side_effect = Exception("cwd error")
             result = _check_environment()
         assert result["status"] == "fail"
@@ -376,16 +379,11 @@ class TestDoctorFunctionCoverage(FoundationTestCase):
 
     def test_check_dependencies_optional_missing(self) -> None:
         """Lines 222-223, 234-244: optional deps missing -> warn."""
-        import builtins
-
         from wrknv.cli.commands.doctor import _check_dependencies
 
-        _real_import = builtins.__import__
-
-        def fake_import(name: str, *args: object, **kwargs: object) -> object:
+        def fake_import(name):
             if name in ("tomli_w", "semver"):
                 raise ImportError("not installed")
-            return _real_import(name, *args, **kwargs)
 
         with (
             patch("builtins.__import__", side_effect=fake_import),

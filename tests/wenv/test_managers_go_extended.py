@@ -154,6 +154,34 @@ class TestGoPathMethods(FoundationTestCase):
         assert "gopath" in str(gopath)
 
 
+class TestGoManagerCoverageBranches(FoundationTestCase):
+    """Cover uncovered branches in go.py."""
+
+    def test_verify_installation_binary_not_found(self, tmp_path: Path) -> None:
+        """Line 125: return False when binary doesn't exist at the install path."""
+        config = WorkenvConfig()
+        # Must override install_path so we don't find the real Go binary
+        with patch.object(GoManager, "get_binary_path", return_value=tmp_path / "no_such_binary"):
+            manager = GoManager(config)
+            result = manager.verify_installation("1.22.0")
+        assert result is False
+
+    def test_get_available_versions_skips_non_go_prefix(self) -> None:
+        """Line 42->40: release entries without 'go' prefix are skipped."""
+        config = WorkenvConfig()
+        manager = GoManager(config)
+        data = [
+            {"version": "go1.22.0", "stable": True},  # normal
+            {"version": "bootstrap1.4", "stable": True},  # no 'go' prefix → skipped
+            {"version": "go1.21.0", "stable": True},  # normal
+        ]
+        with patch.object(manager, "fetch_json_secure", return_value=data):
+            versions = manager.get_available_versions()
+        assert "1.22.0" in versions
+        assert "1.21.0" in versions
+        assert len(versions) == 2  # bootstrap entry was skipped
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
 

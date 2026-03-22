@@ -198,13 +198,17 @@ class TestTaskRegistryCoverage:
 
     def test_from_repo_with_exports_no_tasks_list(self, tmp_path: Path) -> None:
         """Line 99->103: export section exists but tasks key is missing."""
-        (tmp_path / "wrknv.toml").write_text('[tasks]\nbuild = "make"\n\n[export]\ndescription = "pkg"\n')
+        (tmp_path / "wrknv.toml").write_text(
+            '[tasks]\nbuild = "make"\n\n[export]\ndescription = "pkg"\n'
+        )
         registry = TaskRegistry.from_repo_with_exports(tmp_path)
         assert len(registry.tasks) == 1
 
     def test_parse_task_list_value(self, tmp_path: Path) -> None:
         """Line 194: simple list task (composite = ["a", "b"]) parsed as composite."""
-        (tmp_path / "wrknv.toml").write_text('[tasks]\nall = ["build", "test"]\n')
+        (tmp_path / "wrknv.toml").write_text(
+            "[tasks]\nall = [\"build\", \"test\"]\n"
+        )
         registry = TaskRegistry.from_repo(tmp_path)
         task = registry.get_task("all")
         assert task is not None
@@ -258,7 +262,9 @@ class TestTaskRegistryCoverage:
         )
 
         async def mock_execute(self: object, task: TaskConfig, **kwargs: object) -> TaskResult:
-            return TaskResult(task=task, success=True, exit_code=0, stdout="ok", stderr="", duration=0.0)
+            return TaskResult(
+                task=task, success=True, exit_code=0, stdout="ok", stderr="", duration=0.0
+            )
 
         with patch.object(TaskExecutor, "execute", new=mock_execute):
             result = asyncio.run(registry.run_task("all"))
@@ -302,7 +308,9 @@ class TestTaskRegistryCoverage:
         )
 
         async def fail_no_stderr(self: object, task: TaskConfig, **kwargs: object) -> TaskResult:
-            return TaskResult(task=task, success=False, exit_code=1, stdout="", stderr="", duration=0.0)
+            return TaskResult(
+                task=task, success=False, exit_code=1, stdout="", stderr="", duration=0.0
+            )
 
         with patch.object(TaskExecutor, "execute", new=fail_no_stderr):
             result = asyncio.run(registry.run_task("all"))
@@ -324,7 +332,9 @@ class TestTaskRegistryCoverage:
         )
 
         async def succeed(self: object, task: TaskConfig, **kwargs: object) -> TaskResult:
-            return TaskResult(task=task, success=True, exit_code=0, stdout="ok", stderr="", duration=0.0)
+            return TaskResult(
+                task=task, success=True, exit_code=0, stdout="ok", stderr="", duration=0.0
+            )
 
         with patch.object(TaskExecutor, "execute", new=succeed):
             result = asyncio.run(registry.run_task("all"))
@@ -332,7 +342,9 @@ class TestTaskRegistryCoverage:
 
     def test_from_repo_with_exports_export_name_not_in_tasks(self, tmp_path: Path) -> None:
         """Line 104->103: exported task name not in tasks dict → if False → loop continues."""
-        (tmp_path / "wrknv.toml").write_text('[tasks]\nbuild = "make"\n\n[export]\ntasks = ["nonexistent"]\n')
+        (tmp_path / "wrknv.toml").write_text(
+            '[tasks]\nbuild = "make"\n\n[export]\ntasks = ["nonexistent"]\n'
+        )
         registry = TaskRegistry.from_repo_with_exports(tmp_path)
         build_task = registry.get_task("build")
         assert build_task is not None

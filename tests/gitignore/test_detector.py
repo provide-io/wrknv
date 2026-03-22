@@ -430,7 +430,9 @@ class TestDetectorCoverage:
         """Line 244: @angular/core in package.json deps."""
         import json
 
-        (tmp_path / "package.json").write_text(json.dumps({"dependencies": {"@angular/core": "^16.0.0"}}))
+        (tmp_path / "package.json").write_text(
+            json.dumps({"dependencies": {"@angular/core": "^16.0.0"}})
+        )
         detector = ProjectDetector()
         detector.scan_directory(tmp_path)
         assert "Angular" in detector.detected_frameworks

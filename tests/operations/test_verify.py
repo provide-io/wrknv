@@ -462,7 +462,6 @@ class TestVerifyOperations(FoundationTestCase):
     def test_parse_generic_version_no_match(self) -> None:
         """Generic parse returns dict without version when no pattern matches."""
         from wrknv.wenv.operations.verify import parse_generic_version
-
         result = parse_generic_version("no version here", "mytool")
         assert result["tool"] == "mytool"
         assert "version" not in result
@@ -470,14 +469,12 @@ class TestVerifyOperations(FoundationTestCase):
     def test_parse_generic_version_two_part_version(self) -> None:
         """Generic parse finds 2-part version (matches pattern 2 not pattern 1)."""
         from wrknv.wenv.operations.verify import parse_generic_version
-
         result = parse_generic_version("tool 1.2 beta", "mytool")
         assert "version" in result
 
     def test_verify_file_exists_no_signature(self) -> None:
         """verify_file returns True when file exists and no signature provided."""
         from wrknv.wenv.operations.verify import verify_file
-
         tmp = self.create_temp_dir()
         f = tmp / "file.tar.gz"
         f.write_bytes(b"data")
@@ -486,13 +483,11 @@ class TestVerifyOperations(FoundationTestCase):
     def test_verify_file_not_found(self) -> None:
         """verify_file returns False when file doesn't exist."""
         from wrknv.wenv.operations.verify import verify_file
-
         assert verify_file(self.create_temp_dir() / "nonexistent.tar.gz") is False
 
     def test_verify_file_with_signature(self) -> None:
         """verify_file returns True when signature file exists."""
         from wrknv.wenv.operations.verify import verify_file
-
         tmp = self.create_temp_dir()
         f = tmp / "file.tar.gz"
         sig = tmp / "file.tar.gz.sig"
