@@ -21,6 +21,7 @@ from provide.foundation.console.output import perr, pout
 from provide.foundation.hub import get_hub
 from provide.foundation.logger import get_logger
 
+from wrknv import __version__
 from wrknv.config import WorkenvConfig
 
 if TYPE_CHECKING:
@@ -101,7 +102,7 @@ def create_cli() -> click.Group:
     # Create CLI with standard options
     cli = hub.create_cli(
         name="wrknv",
-        version="0.3.0",
+        version=__version__,
         help="wrknv provides cross-platform tool installation and version management "
         "for development environments, including Terraform, OpenTofu, Go, UV, and more.",
     )
