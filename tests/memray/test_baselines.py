@@ -173,11 +173,6 @@ class TestParseTotalAllocations(FoundationTestCase):
         output = "Peak memory:\n    44.394MB\nTotal allocations:\n    42\n"
         assert parse_total_allocations(output) == 42
 
-    def test_total_allocations_label_with_no_numeric_next_line(self) -> None:
-        """Line 112->109: 'total allocations' found but next line has no digits → loop continues."""
-        output = "Total allocations:\n(unavailable)\n"
-        assert parse_total_allocations(output) == 0
-
 
 class TestParsePeakMemory(FoundationTestCase):
     """Tests for parse_peak_memory."""

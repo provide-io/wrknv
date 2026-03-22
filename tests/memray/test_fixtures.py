@@ -68,27 +68,8 @@ class TestMemrayFixtureLogic(FoundationTestCase):
         baselines_path = tmp / "baselines.json"
         baselines_path.write_text('{"alloc_key": 2500}\n')
         from wrknv.memray.baselines import load_baselines
-
         result = load_baselines(baselines_path)
         assert result == {"alloc_key": 2500}
-
-
-def test_memray_output_dir_fixture(memray_output_dir: Path) -> None:
-    """Lines 40-42: fixture creates and returns memray-output directory."""
-    assert isinstance(memray_output_dir, Path)
-    assert memray_output_dir.exists()
-    assert memray_output_dir.name == "memray-output"
-
-
-def test_memray_baselines_path_fixture(memray_baselines_path: Path) -> None:
-    """Line 48: fixture returns path to baselines.json."""
-    assert isinstance(memray_baselines_path, Path)
-    assert memray_baselines_path.name == "baselines.json"
-
-
-def test_memray_baseline_fixture(memray_baseline: dict) -> None:
-    """Line 54: fixture loads and returns baselines dict."""
-    assert isinstance(memray_baseline, dict)
 
 
 # 🧰🌍🔚

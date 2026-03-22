@@ -491,5 +491,4 @@ class TestPackageConfig(FoundationTestCase):
         cfg = PackageConfig(name="mypkg", version="1.0.0", entry_point="mypkg.cli:main")
         assert cfg.license == "MIT"
 
-
 # 🧰🌍🔚

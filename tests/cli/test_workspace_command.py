@@ -218,6 +218,7 @@ class TestWorkspaceSync(FoundationTestCase):
     """Tests for workspace sync command."""
 
     def test_sync_all_success(self) -> None:
+
         mock_manager = mock.Mock()
         mock_manager.sync_all = mock.AsyncMock(
             return_value={"repo1": {"success": True}, "repo2": {"success": True}}

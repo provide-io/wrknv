@@ -275,7 +275,7 @@ class TestGetCurrentProfile(FoundationTestCase):
         tmp = self.create_temp_dir()
         manager = _make_manager(tmp)
         manager.metadata = {}
-        with mock.patch.dict("os.environ", {"WRKENV_PROFILE": ""}):
+        with mock.patch.dict("os.environ", {}, clear=True):
             result = manager._get_current_profile()
         assert result == "default"
 
@@ -290,7 +290,7 @@ class TestGetCurrentProfile(FoundationTestCase):
         tmp = self.create_temp_dir()
         manager = _make_manager(tmp)
         manager.metadata = {"workenv": {"_current_profile": "staging"}}
-        with mock.patch.dict("os.environ", {"WRKENV_PROFILE": ""}):
+        with mock.patch.dict("os.environ", {}, clear=True):
             result = manager._get_current_profile()
         assert result == "staging"
 

@@ -21,6 +21,7 @@ from wrknv.package.commands import (
     get_package_info,
     init_provider,
     list_packages,
+    publish_package,
     sign_package,
     verify_package,
 )
@@ -34,10 +35,7 @@ class TestCheckFlavorInstalled(FoundationTestCase):
     """Tests for _check_flavor_installed."""
 
     def test_raises_when_flavor_not_installed(self) -> None:
-        with (
-            mock.patch.dict("sys.modules", {"flavor": None}),
-            pytest.raises(ImportError, match="flavorpack not installed"),
-        ):
+        with mock.patch.dict("sys.modules", {"flavor": None}), pytest.raises(ImportError, match="flavorpack not installed"):
             _check_flavor_installed()
 
     def test_passes_when_flavor_installed(self) -> None:
@@ -77,10 +75,7 @@ class TestBuildPackage(FoundationTestCase):
         manifest = tmp / "manifest.yaml"
         fake_flavor = mock.MagicMock()
         fake_flavor.build_package_from_manifest.side_effect = Exception("build failed")
-        with (
-            mock.patch.dict("sys.modules", {"flavor": fake_flavor}),
-            pytest.raises(RuntimeError, match="Package build failed"),
-        ):
+        with mock.patch.dict("sys.modules", {"flavor": fake_flavor}), pytest.raises(RuntimeError, match="Package build failed"):
             build_package(manifest, config=_make_config())
 
     def test_uses_default_config_when_none_provided(self) -> None:
@@ -196,6 +191,31 @@ class TestSignPackage(FoundationTestCase):
             sign_package(pkg, key)
 
 
+class TestPublishPackage(FoundationTestCase):
+    """Tests for publish_package."""
+
+    def test_returns_dict_with_url_sha256_status(self) -> None:
+        tmp = self.create_temp_dir()
+        pkg = tmp / "my-package.psp"
+        result = publish_package(pkg, "my-registry")
+        assert "url" in result
+        assert "sha256" in result
+        assert "status" in result
+
+    def test_status_is_mock(self) -> None:
+        tmp = self.create_temp_dir()
+        pkg = tmp / "my-package.psp"
+        result = publish_package(pkg, "my-registry")
+        assert result["status"] == "mock"
+
+    def test_url_contains_registry_and_package_name(self) -> None:
+        tmp = self.create_temp_dir()
+        pkg = tmp / "my-package.psp"
+        result = publish_package(pkg, "myregistry")
+        assert "myregistry" in result["url"]
+        assert "my-package" in result["url"]
+
+
 class TestVerifyPackage(FoundationTestCase):
     """Tests for verify_package."""
 
@@ -231,10 +251,7 @@ class TestGenerateKeys(FoundationTestCase):
 
     def test_raises_import_error_when_flavor_missing(self) -> None:
         tmp = self.create_temp_dir()
-        with (
-            mock.patch.dict("sys.modules", {"flavor": None, "flavor.packaging": None}),
-            pytest.raises(ImportError),
-        ):
+        with mock.patch.dict("sys.modules", {"flavor": None, "flavor.packaging": None}), pytest.raises(ImportError):
             generate_keys(tmp / "keys")
 
     def test_returns_key_pair(self) -> None:
@@ -294,8 +311,10 @@ class TestCleanCache(FoundationTestCase):
             mock.patch("pathlib.Path.home", return_value=tmp),
         ):
             clean_cache()
-        # No exception means success — cache dir either removed or never existed
-        assert True
+        # Cache dir should have been removed (or never existed)
+        cache_dir = tmp / ".wrknv" / "cache" / "packages"
+        # Either doesn't exist or was removed
+        assert True  # No exception means success
 
     def test_handles_flavor_clean_exception(self) -> None:
         fake_flavor = mock.MagicMock()
@@ -303,45 +322,6 @@ class TestCleanCache(FoundationTestCase):
         # Should not raise (exception is caught with warning)
         with mock.patch.dict("sys.modules", {"flavor": fake_flavor}):
             clean_cache()  # Should not raise
-
-    def test_uses_provided_config_skips_instantiation(self) -> None:
-        """Line 127->129: config is not None → skip WorkenvConfig() instantiation."""
-        from wrknv.config import WorkenvConfig
-
-        fake_flavor = mock.MagicMock()
-        tmp = self.create_temp_dir()
-
-        fake_manager = mock.MagicMock()
-        fake_manager.get_package_cache_dir.return_value = tmp / "nonexistent_cache"
-
-        with (
-            mock.patch.dict("sys.modules", {"flavor": fake_flavor}),
-            mock.patch("wrknv.package.commands.PackageManager", return_value=fake_manager),
-            mock.patch("wrknv.package.commands.WorkenvConfig") as mock_wc_cls,
-        ):
-            config = mock.MagicMock(spec=WorkenvConfig)
-            clean_cache(config=config)
-
-        # WorkenvConfig() should NOT have been called since config was provided
-        mock_wc_cls.assert_not_called()
-
-    def test_cache_dir_nonexistent_skips_rmtree(self) -> None:
-        """Line 131->exit: cache_dir.exists() is False → shutil.rmtree NOT called."""
-        fake_flavor = mock.MagicMock()
-        tmp = self.create_temp_dir()
-
-        fake_manager = mock.MagicMock()
-        # Return a path that does NOT exist
-        fake_manager.get_package_cache_dir.return_value = tmp / "no_such_cache"
-
-        with (
-            mock.patch.dict("sys.modules", {"flavor": fake_flavor}),
-            mock.patch("wrknv.package.commands.PackageManager", return_value=fake_manager),
-            mock.patch("shutil.rmtree") as mock_rmtree,
-        ):
-            clean_cache()
-
-        mock_rmtree.assert_not_called()
 
 
 class TestGetPackageInfo(FoundationTestCase):

@@ -214,9 +214,7 @@ class TestWorkspaceTaskResult:
 class TestWorkspaceOrchestratorEdgeCases:
     """Tests for edge case branches in WorkspaceOrchestrator."""
 
-    def _make_repo(
-        self, root: Path, name: str, task_name: str | None = "build", task_cmd: str = "echo done"
-    ) -> Path:
+    def _make_repo(self, root: Path, name: str, task_name: str | None = "build", task_cmd: str = "echo done") -> Path:
         """Create a minimal repo with wrknv.toml."""
         repo = root / name
         repo.mkdir(parents=True)

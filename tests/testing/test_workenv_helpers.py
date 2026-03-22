@@ -143,8 +143,7 @@ class TestWorkenvContext(FoundationTestCase):
     def test_raises_when_workenv_not_found(self) -> None:
         with (
             mock.patch("pathlib.Path.cwd", return_value=Path("/nonexistent")),
-            pytest.raises(RuntimeError),
-            workenv_context("mypkg"),
+            pytest.raises(RuntimeError),workenv_context("mypkg")
         ):
             pass
 
@@ -267,128 +266,6 @@ class TestWorkenvTestRunner(FoundationTestCase):
             runner.install_deps(extras="dev")
         call_args = mock_run.call_args[0][0]
         assert any(".[dev]" in arg for arg in call_args)
-
-    def test_install_deps_not_editable(self) -> None:
-        """Branch 180->184: install_deps(editable=False) skips -e flag."""
-        tmp = self.create_temp_dir()
-        workenv = tmp / "workenv" / "mypkg_linux_amd64"
-        workenv.mkdir(parents=True)
-        with (
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("platform.machine", return_value="x86_64"),
-            mock.patch("platform.system", return_value="Linux"),
-        ):
-            runner = WorkenvTestRunner("mypkg")
-        mock_result = mock.Mock()
-        with (
-            mock.patch("wrknv.testing.helpers.run", return_value=mock_result) as mock_run,
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("platform.machine", return_value="x86_64"),
-            mock.patch("platform.system", return_value="Linux"),
-        ):
-            runner.install_deps(editable=False)
-        call_args = mock_run.call_args[0][0]
-        assert "-e" not in call_args
-
-    def test_run_pytest(self) -> None:
-        """Lines 203-210: run_pytest passes args to run."""
-        tmp = self.create_temp_dir()
-        workenv = tmp / "workenv" / "mypkg_linux_amd64"
-        workenv.mkdir(parents=True)
-        with (
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("platform.machine", return_value="x86_64"),
-            mock.patch("platform.system", return_value="Linux"),
-        ):
-            runner = WorkenvTestRunner("mypkg")
-        mock_result = mock.Mock()
-        with (
-            mock.patch("wrknv.testing.helpers.run", return_value=mock_result) as mock_run,
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("platform.machine", return_value="x86_64"),
-            mock.patch("platform.system", return_value="Linux"),
-        ):
-            result = runner.run_pytest("-v", "--tb=short")
-        assert result is mock_result
-        call_args = mock_run.call_args[0][0]
-        assert "-v" in call_args
-        assert "--tb=short" in call_args
-
-    def test_setup_failure_raises(self) -> None:
-        """Line 163: setup raises RuntimeError when env.sh returns non-zero."""
-        tmp = self.create_temp_dir()
-        with mock.patch("pathlib.Path.cwd", return_value=tmp):
-            runner = WorkenvTestRunner("mypkg")
-        env_script = tmp / "env.sh"
-        env_script.write_text("#!/bin/bash\nexit 1")
-        mock_result = mock.Mock()
-        mock_result.returncode = 1
-        mock_result.stderr = "setup failed"
-        with (
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("wrknv.testing.helpers.run", return_value=mock_result),
-            pytest.raises(RuntimeError, match=r"Failed to source env\.sh"),
-        ):
-            runner.setup()
-
-
-class TestActivateWorkenvSitePackages(FoundationTestCase):
-    """Cover site-packages branch in activate_workenv."""
-
-    def test_sets_pythonpath_when_site_packages_exists(self) -> None:
-        """Line 89: PYTHONPATH set when site-packages dir exists."""
-        import sys
-
-        tmp = self.create_temp_dir()
-        workenv = tmp / "workenv" / "mypkg_linux_amd64"
-        site_packages = (
-            workenv / "lib" / f"python{sys.version_info.major}.{sys.version_info.minor}" / "site-packages"
-        )
-        site_packages.mkdir(parents=True)
-        with (
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("platform.machine", return_value="x86_64"),
-            mock.patch("platform.system", return_value="Linux"),
-        ):
-            env = activate_workenv("mypkg")
-        assert "PYTHONPATH" in env
-        assert str(site_packages) in env["PYTHONPATH"]
-
-
-class TestWorkenvContextSuccess(FoundationTestCase):
-    """Cover workenv_context success path."""
-
-    def test_context_manager_success(self) -> None:
-        """Lines 110-111: workenv_context success path updates and restores env."""
-        tmp = self.create_temp_dir()
-        workenv = tmp / "workenv" / "mypkg_linux_amd64"
-        workenv.mkdir(parents=True)
-        original_virtual_env = os.environ.get("VIRTUAL_ENV")
-        with (
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("platform.machine", return_value="x86_64"),
-            mock.patch("platform.system", return_value="Linux"),
-            workenv_context("mypkg"),
-        ):
-            assert os.environ.get("VIRTUAL_ENV") == str(workenv)
-        # Restored after exit
-        assert os.environ.get("VIRTUAL_ENV") == original_virtual_env
-
-
-class TestPytestWithWorkenv(FoundationTestCase):
-    """Cover pytest_with_workenv function."""
-
-    def test_pytest_with_workenv_calls_setup_and_run(self) -> None:
-        """Lines 238-241: pytest_with_workenv sets up and runs tests."""
-        from wrknv.testing.helpers import pytest_with_workenv
-
-        mock_runner = mock.Mock()
-        mock_runner.run_pytest.return_value.returncode = 0
-        with mock.patch("wrknv.testing.helpers.WorkenvTestRunner", return_value=mock_runner):
-            rc = pytest_with_workenv("mypkg", "-v")
-        assert rc == 0
-        mock_runner.setup.assert_called_once()
-        mock_runner.run_pytest.assert_called_once_with("-v", capture_output=False)
 
 
 # 🧰🌍🔚

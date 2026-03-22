@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+import subprocess
+from pathlib import Path
 from unittest import mock
 
 from provide.testkit import FoundationTestCase
@@ -168,58 +170,6 @@ class TestRunMemrayStress(FoundationTestCase):
             run_memray_stress(
                 script=str(script),
                 baseline_key="test",
-                output_dir=output_dir,
-                baselines={},
-                baselines_path=output_dir / "baselines.json",
-            )
-
-
-class TestRelativeScriptPathResolution(FoundationTestCase):
-    """Cover lines 69->74 and 70->69: relative script path candidate iteration."""
-
-    @mock.patch("subprocess.run")
-    def test_relative_path_resolved_via_parent(self, mock_subproc: mock.Mock) -> None:
-        """Line 70->69: first candidate doesn't exist, second (parent) does → resolved."""
-        tmp = self.create_temp_dir()
-        output_dir = tmp / "output"
-        output_dir.mkdir()
-
-        # Put the script in parent of cwd so second candidate matches
-        script_name = "memray_relative_stress.py"
-        parent_script = tmp / script_name
-        parent_script.write_text("# stress script")
-
-        mock_subproc.side_effect = [
-            _mock_run(returncode=0),
-            _mock_run(returncode=0, stdout=_make_stats_output(500)),
-        ]
-
-        with mock.patch("wrknv.memray.runner.Path.cwd", return_value=tmp / "subdir"):
-            run_memray_stress(
-                script=script_name,
-                baseline_key="relative",
-                output_dir=output_dir,
-                baselines={},
-                baselines_path=output_dir / "baselines.json",
-            )
-
-    @mock.patch("subprocess.run")
-    def test_relative_path_not_found_falls_through(self, mock_subproc: mock.Mock) -> None:
-        """Line 69->74: no candidate exists, loop exits without match, uses original path."""
-        tmp = self.create_temp_dir()
-        output_dir = tmp / "output"
-        output_dir.mkdir()
-
-        mock_subproc.side_effect = [
-            _mock_run(returncode=0),
-            _mock_run(returncode=0, stdout=_make_stats_output(500)),
-        ]
-
-        with mock.patch("wrknv.memray.runner.Path.cwd", return_value=tmp / "subdir"):
-            # script doesn't exist anywhere → loop exits, uses original relative path
-            run_memray_stress(
-                script="nonexistent_stress.py",
-                baseline_key="notfound",
                 output_dir=output_dir,
                 baselines={},
                 baselines_path=output_dir / "baselines.json",

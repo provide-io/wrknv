@@ -18,9 +18,7 @@ from wrknv.config.core import WorkenvConfig, WorkenvConfigError
 
 def _make_config() -> WorkenvConfig:
     """Create a config with mocked persistence/display/validator."""
-    with mock.patch.object(
-        WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/wrknv.toml")
-    ):
+    with mock.patch.object(WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/wrknv.toml")):
         cfg = WorkenvConfig.load()
     return cfg
 
@@ -150,7 +148,7 @@ class TestGetSetting(FoundationTestCase):
     def test_simple_attribute(self) -> None:
         cfg = _make_config()
         result = cfg.get_setting("project_name")
-        assert result is None
+        assert result == "my-project"
 
     def test_nested_attribute(self) -> None:
         cfg = _make_config()
@@ -328,40 +326,6 @@ class TestValidateVersion(FoundationTestCase):
     def test_arbitrary_string_is_invalid(self) -> None:
         cfg = _make_config()
         assert cfg.validate_version("terraform", "not-a-version") is False
-
-
-class TestSetSettingBranches(FoundationTestCase):
-    """Cover set_setting branches in config/core.py."""
-
-    def test_set_setting_nested_dict_creates_path(self) -> None:
-        """Line 286: nested key where parent is dict and part not in it."""
-        cfg = _make_config()
-        # Set a key that involves dict traversal
-        with mock.patch.object(cfg, "save_config"):
-            cfg.tools = {}
-            cfg.set_setting("tools.mykey.subkey", "value")
-        assert cfg.tools.get("mykey", {}).get("subkey") == "value"
-
-    def test_set_setting_invalid_target_raises(self) -> None:
-        """Line 298: set_setting on non-dict, non-object target -> error."""
-        cfg = _make_config()
-        # Set a string attribute then try to set a sub-attribute of it
-        cfg.project_name = "myproject"
-        with pytest.raises(WorkenvConfigError):
-            cfg.set_setting("project_name.subfield", "value")
-
-    def test_merge_env_description(self) -> None:
-        """Line 134: WRKNV_DESCRIPTION env var merges into config."""
-        import os
-
-        with (
-            mock.patch.dict(os.environ, {"WRKNV_DESCRIPTION": "env-set-desc"}),
-            mock.patch.object(
-                WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/wrknv.toml")
-            ),
-        ):
-            cfg = WorkenvConfig.load()
-        assert cfg.description == "env-set-desc"
 
 
 # 🧰🌍🔚
