@@ -65,6 +65,7 @@ def load_commands() -> None:
         "wrknv.cli.commands.terraform",
         "wrknv.cli.commands.tools",
         "wrknv.cli.commands.workspace",
+        "wrknv.cli.commands.memray",
     ]
 
     # Import or reload command modules to trigger @register_command decorators
