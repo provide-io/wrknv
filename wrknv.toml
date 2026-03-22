@@ -147,6 +147,10 @@ setup = "uv sync"
 test = "pytest -n auto"
 check = "ruff format . && ruff check . && mypy src/"
 
+[tasks.memray]
+run = "pytest tests/memray/ -m memray --no-header -q"
+description = "Run memray memory profiling stress tests"
+
 [tasks.security]
 _default = "bandit -r src/ -c pyproject.toml"
 bandit = "bandit -r src/ -c pyproject.toml"

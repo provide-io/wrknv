@@ -45,48 +45,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          # Linux x64
-          - runner: ubuntu-24.04
-            platform: linux_amd64
-            python-version: "3.11"
-          - runner: ubuntu-24.04
-            platform: linux_amd64
-            python-version: "3.12"
-          - runner: ubuntu-24.04
-            platform: linux_amd64
-            python-version: "3.13"
-          # Linux ARM64
-          - runner: ubuntu-24.04-arm
-            platform: linux_arm64
-            python-version: "3.11"
-          - runner: ubuntu-24.04-arm
-            platform: linux_arm64
-            python-version: "3.12"
-          - runner: ubuntu-24.04-arm
-            platform: linux_arm64
-            python-version: "3.13"
-          # macOS ARM64
-          - runner: macos-15
-            platform: darwin_arm64
-            python-version: "3.11"
-          - runner: macos-15
-            platform: darwin_arm64
-            python-version: "3.12"
-          - runner: macos-15
-            platform: darwin_arm64
-            python-version: "3.13"
-          # macOS Intel
-          - runner: macos-15-intel
-            platform: darwin_amd64
-            python-version: "3.11"
-          - runner: macos-15-intel
-            platform: darwin_amd64
-            python-version: "3.12"
-          - runner: macos-15-intel
-            platform: darwin_amd64
-            python-version: "3.13"
+      matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"}]}' || '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.12"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.13"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.11"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.12"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.13"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.11"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.12"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.13"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.11"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.12"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.13"}]}') }}
 
     steps:
       - uses: actions/checkout@v4
@@ -108,7 +67,7 @@ jobs:
         run: uv run pytest tests/ -v --cov=src/wrknv --cov-report=xml --cov-report=term-missing --cov-fail-under=0
 
       - name: Upload coverage to Codecov
-        if: matrix.python-version == '3.11' && matrix.platform == 'linux_amd64'
+        if: matrix.python-version == '3.11' && matrix.platform == 'linux_amd64' && github.actor != 'nektos/act' && env.ACT != 'true'
         uses: codecov/codecov-action@v5
         with:
           file: ./coverage.xml
@@ -192,16 +151,7 @@ jobs:
     needs: [lint, test]
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-24.04
-            target: linux_amd64
-          - os: ubuntu-24.04-arm
-            target: linux_arm64
-          - os: macos-15-intel
-            target: darwin_amd64
-          - os: macos-15
-            target: darwin_arm64
+      matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"}]}' || '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"},{"os":"ubuntu-24.04-arm","target":"linux_arm64"},{"os":"macos-15-intel","target":"darwin_amd64"},{"os":"macos-15","target":"darwin_arm64"}]}') }}
     steps:
       - uses: actions/checkout@v4
 

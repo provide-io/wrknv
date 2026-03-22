@@ -163,8 +163,7 @@ class UvManager(BaseToolManager):
             if result.returncode == 0:
                 # Check if version matches (UV outputs "uv 0.4.15")
                 if version in result.stdout:
-                    if logger.is_debug_enabled():
-                        logger.debug(f"UV {version} verification successful")
+                    logger.debug(f"UV {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in UV output: {result.stdout}")

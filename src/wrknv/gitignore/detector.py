@@ -141,8 +141,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def _check_pattern(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -151,24 +150,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -177,8 +173,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def _matches_pattern(self, filename: str, pattern: str, is_dir: bool) -> bool:
         """Check if filename matches a pattern."""
@@ -206,8 +201,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -242,30 +236,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def detect_project_types(self, path: Path, max_depth: int = 5) -> list[str]:
         """

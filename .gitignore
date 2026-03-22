@@ -134,3 +134,7 @@ site/
 .terraform/
 .terraform.lock.hcl
 .ruff_cache/
+memray-output/
+
+# Local act CI config (machine-specific)
+.actrc

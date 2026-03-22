@@ -234,8 +234,7 @@ def parse_checksum_file(checksum_path: pathlib.Path, target_filename: str) -> st
 
                     # Match target filename
                     if filename == target_filename or filename.endswith(target_filename):
-                        if logger.is_debug_enabled():
-                            logger.debug(f"Found checksum for {target_filename}: {checksum}")
+                        logger.debug(f"Found checksum for {target_filename}: {checksum}")
                         return checksum
 
         logger.warning(f"Checksum not found for {target_filename} in {checksum_path}")

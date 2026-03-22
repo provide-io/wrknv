@@ -111,8 +111,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Docker check failed: {e}")
+            logger.debug(f"Docker check failed: {e}")
             return False
 
     def container_exists(self) -> bool:
@@ -125,8 +124,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container exists check failed: {e}")
+            logger.debug(f"Container exists check failed: {e}")
             return False
 
     def container_running(self) -> bool:
@@ -143,8 +141,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Container running check failed: {e}")
+            logger.debug(f"Container running check failed: {e}")
             return False
 
     def image_exists(self) -> bool:
@@ -157,8 +154,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Image exists check failed: {e}")
+            logger.debug(f"Image exists check failed: {e}")
             return False
 
     def get_volume_mappings(self) -> dict[str, str]:
