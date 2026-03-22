@@ -57,8 +57,7 @@ class GoManager(BaseToolManager):
 
                     versions.append(version)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Go versions")
+            logger.debug(f"Found {len(versions)} Go versions")
             return versions
 
         except Exception as e:

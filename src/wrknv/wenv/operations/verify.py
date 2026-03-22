@@ -61,8 +61,7 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
     cmd = [str(binary_path), *version_args]
 
     try:
-        if logger.is_debug_enabled():
-            logger.debug(f"Running version check: {' '.join(cmd)}")
+        logger.debug(f"Running version check: {' '.join(cmd)}")
 
         result = run(cmd, timeout=timeout)
 
