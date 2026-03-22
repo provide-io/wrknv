@@ -223,14 +223,125 @@ class TestGitHubReleasesClient:
         asset = client.find_asset(release, "*windows*")
         assert asset is None
 
-    # Download tests are covered by integration tests
-    # Unit testing downloads with mocked transport is complex due to context managers
-
     @pytest.mark.asyncio
     async def test_context_manager(self) -> None:
         """Test client as context manager."""
         async with GitHubReleasesClient("owner/repo") as client:
             assert client.repo == "owner/repo"
+
+    @pytest.mark.asyncio
+    async def test_download_file_writes_chunks(self, tmp_path) -> None:
+        """Test _download_file streams chunks to destination."""
+        from unittest import mock
+
+        client = GitHubReleasesClient("owner/repo")
+
+        mock_head_response = MagicMock()
+        mock_head_response.headers = {"content-length": "12"}
+
+        chunks = [b"hello", b" ", b"world"]
+
+        async def mock_stream(*args, **kwargs):
+            for chunk in chunks:
+                yield chunk
+
+        mock_client = MagicMock()
+        mock_client.head = mock.AsyncMock(return_value=mock_head_response)
+        mock_client.stream = mock_stream
+        mock_client.__aenter__ = mock.AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = mock.AsyncMock(return_value=False)
+
+        client.client = mock_client
+
+        dest = tmp_path / "output.bin"
+        await client._download_file("https://example.com/file", dest)
+
+        assert dest.read_bytes() == b"hello world"
+
+    @pytest.mark.asyncio
+    async def test_download_file_with_progress_callback(self, tmp_path) -> None:
+        """Test _download_file calls progress_callback."""
+        from unittest import mock
+
+        client = GitHubReleasesClient("owner/repo")
+
+        mock_head_response = MagicMock()
+        mock_head_response.headers = {}  # No content-length
+
+        async def mock_stream(*args, **kwargs):
+            yield b"data"
+
+        mock_client = MagicMock()
+        mock_client.head = mock.AsyncMock(return_value=mock_head_response)
+        mock_client.stream = mock_stream
+        mock_client.__aenter__ = mock.AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = mock.AsyncMock(return_value=False)
+
+        client.client = mock_client
+
+        progress_calls = []
+        def callback(downloaded: int, total: int) -> None:
+            progress_calls.append((downloaded, total))
+
+        dest = tmp_path / "output.bin"
+        await client._download_file("https://example.com/file", dest, progress_callback=callback)
+
+        assert len(progress_calls) == 1
+        assert progress_calls[0] == (4, 0)  # 4 bytes, total unknown (0)
+
+    @pytest.mark.asyncio
+    async def test_download_asset_delegates(self, tmp_path) -> None:
+        """Test download_asset calls _download_file with asset URL."""
+        from unittest import mock
+
+        from wrknv.managers.github.types import Asset
+
+        client = GitHubReleasesClient("owner/repo")
+
+        asset = Asset(
+            name="tool.tar.gz",
+            browser_download_url="https://github.com/owner/repo/releases/download/v1.0/tool.tar.gz",
+            size=1024,
+            content_type="application/gzip",
+        )
+
+        with mock.patch.object(client, "_download_file", new=mock.AsyncMock()) as mock_dl:
+            await client.download_asset(asset, tmp_path / "tool.tar.gz")
+
+        mock_dl.assert_called_once_with(
+            "https://github.com/owner/repo/releases/download/v1.0/tool.tar.gz",
+            tmp_path / "tool.tar.gz",
+            None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_download_archive_builds_url(self, tmp_path) -> None:
+        """Test download_archive constructs correct URL."""
+        from unittest import mock
+
+        client = GitHubReleasesClient("owner/repo")
+
+        with mock.patch.object(client, "_download_file", new=mock.AsyncMock()) as mock_dl:
+            await client.download_archive("main", tmp_path / "archive.zip", "zipball", "heads")
+
+        call_url = mock_dl.call_args[0][0]
+        assert "owner/repo" in call_url
+        assert "heads/main" in call_url
+        assert call_url.endswith(".zip")
+
+    @pytest.mark.asyncio
+    async def test_download_archive_tarball(self, tmp_path) -> None:
+        """Test download_archive with tarball format."""
+        from unittest import mock
+
+        client = GitHubReleasesClient("owner/repo")
+
+        with mock.patch.object(client, "_download_file", new=mock.AsyncMock()) as mock_dl:
+            await client.download_archive("v1.0.0", tmp_path / "archive.tar.gz", "tarball", "tags")
+
+        call_url = mock_dl.call_args[0][0]
+        assert "tags/v1.0.0" in call_url
+        assert call_url.endswith(".tar.gz")
 
 
 # 🧰🌍🔚

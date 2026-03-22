@@ -472,10 +472,7 @@ class BaseToolManager(ABC):
         Base implementation is a no-op since config doesn't support writing.
         Subclasses should override this to persist version information.
         """
-        if logger.is_debug_enabled():
-            logger.debug(
-                f"Would set {self.tool_name} version to {version} (base implementation - no persistence)"
-            )
+        logger.debug(f"Would set {self.tool_name} version to {version} (base implementation - no persistence)")
 
     def xǁBaseToolManagerǁset_installed_version__mutmut_1(self, version: str) -> None:
         """Set the installed version in config.
@@ -483,10 +480,7 @@ class BaseToolManager(ABC):
         Base implementation is a no-op since config doesn't support writing.
         Subclasses should override this to persist version information.
         """
-        if logger.is_debug_enabled():
-            logger.debug(
-                None
-            )
+        logger.debug(None)
     
     xǁBaseToolManagerǁset_installed_version__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁBaseToolManagerǁset_installed_version__mutmut_1': xǁBaseToolManagerǁset_installed_version__mutmut_1
@@ -7980,8 +7974,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_1(self, version: str) -> bool:
@@ -8000,8 +7993,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_2(self, version: str) -> bool:
@@ -8020,8 +8012,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_3(self, version: str) -> bool:
@@ -8040,8 +8031,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_4(self, version: str) -> bool:
@@ -8060,8 +8050,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_5(self, version: str) -> bool:
@@ -8077,8 +8066,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_6(self, version: str) -> bool:
@@ -8097,8 +8085,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_7(self, version: str) -> bool:
@@ -8117,8 +8104,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_8(self, version: str) -> bool:
@@ -8136,8 +8122,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_9(self, version: str) -> bool:
@@ -8155,8 +8140,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_10(self, version: str) -> bool:
@@ -8175,8 +8159,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_11(self, version: str) -> bool:
@@ -8195,8 +8178,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_12(self, version: str) -> bool:
@@ -8215,8 +8197,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_13(self, version: str) -> bool:
@@ -8235,8 +8216,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_14(self, version: str) -> bool:
@@ -8255,8 +8235,7 @@ class BaseToolManager(ABC):
             return result.returncode != 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_15(self, version: str) -> bool:
@@ -8275,8 +8254,7 @@ class BaseToolManager(ABC):
             return result.returncode == 1
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_16(self, version: str) -> bool:
@@ -8295,8 +8273,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return False
 
     def xǁBaseToolManagerǁverify_installation__mutmut_17(self, version: str) -> bool:
@@ -8315,8 +8292,7 @@ class BaseToolManager(ABC):
             return result.returncode == 0
 
         except Exception as e:
-            if logger.is_debug_enabled():
-                logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
+            logger.debug(f"Verification failed for {self.tool_name} {version}: {e}")
             return True
     
     xǁBaseToolManagerǁverify_installation__mutmut_mutants : ClassVar[MutantDict] = {

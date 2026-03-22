@@ -3044,8 +3044,7 @@ def x_copy_tool_binary__mutmut_orig(source_path: pathlib.Path, target_name: str,
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3082,8 +3081,7 @@ def x_copy_tool_binary__mutmut_1(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3120,8 +3118,7 @@ def x_copy_tool_binary__mutmut_2(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3158,8 +3155,7 @@ def x_copy_tool_binary__mutmut_3(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3196,8 +3192,7 @@ def x_copy_tool_binary__mutmut_4(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3234,8 +3229,7 @@ def x_copy_tool_binary__mutmut_5(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3272,8 +3266,7 @@ def x_copy_tool_binary__mutmut_6(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3310,8 +3303,7 @@ def x_copy_tool_binary__mutmut_7(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3348,8 +3340,7 @@ def x_copy_tool_binary__mutmut_8(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3386,8 +3377,7 @@ def x_copy_tool_binary__mutmut_9(source_path: pathlib.Path, target_name: str, bi
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3424,8 +3414,7 @@ def x_copy_tool_binary__mutmut_10(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3462,8 +3451,7 @@ def x_copy_tool_binary__mutmut_11(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3500,8 +3488,7 @@ def x_copy_tool_binary__mutmut_12(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3538,8 +3525,7 @@ def x_copy_tool_binary__mutmut_13(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3576,8 +3562,7 @@ def x_copy_tool_binary__mutmut_14(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3614,8 +3599,7 @@ def x_copy_tool_binary__mutmut_15(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3652,8 +3636,7 @@ def x_copy_tool_binary__mutmut_16(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3690,8 +3673,7 @@ def x_copy_tool_binary__mutmut_17(source_path: pathlib.Path, target_name: str, b
         if os.name == "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3728,8 +3710,7 @@ def x_copy_tool_binary__mutmut_18(source_path: pathlib.Path, target_name: str, b
         if os.name != "XXntXX":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3766,8 +3747,7 @@ def x_copy_tool_binary__mutmut_19(source_path: pathlib.Path, target_name: str, b
         if os.name != "NT":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3804,8 +3784,7 @@ def x_copy_tool_binary__mutmut_20(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(None)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3842,8 +3821,7 @@ def x_copy_tool_binary__mutmut_21(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(494)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3880,8 +3858,7 @@ def x_copy_tool_binary__mutmut_22(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return True
 
     except Exception as e:
@@ -3918,8 +3895,7 @@ def x_copy_tool_binary__mutmut_23(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return False
 
     except Exception as e:
@@ -3956,8 +3932,7 @@ def x_copy_tool_binary__mutmut_24(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:
@@ -3994,8 +3969,7 @@ def x_copy_tool_binary__mutmut_25(source_path: pathlib.Path, target_name: str, b
         if os.name != "nt":
             target_path.chmod(0o755)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Copied binary to {target_path}")
+        logger.debug(f"Copied binary to {target_path}")
         return True
 
     except Exception as e:

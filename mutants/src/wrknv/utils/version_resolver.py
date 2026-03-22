@@ -1373,8 +1373,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_1(self, pattern: str) -> str:
@@ -1392,8 +1391,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_2(self, pattern: str) -> str:
@@ -1411,8 +1409,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_3(self, pattern: str) -> str:
@@ -1430,8 +1427,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_4(self, pattern: str) -> str:
@@ -1449,8 +1445,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_5(self, pattern: str) -> str:
@@ -1468,8 +1463,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_6(self, pattern: str) -> str:
@@ -1487,8 +1481,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_7(self, pattern: str) -> str:
@@ -1506,8 +1499,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_8(self, pattern: str) -> str:
@@ -1525,8 +1517,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_9(self, pattern: str) -> str:
@@ -1544,8 +1535,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_10(self, pattern: str) -> str:
@@ -1563,8 +1553,7 @@ class VersionResolver:
         matching_versions.sort(key=None, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_11(self, pattern: str) -> str:
@@ -1582,8 +1571,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=None)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_12(self, pattern: str) -> str:
@@ -1601,8 +1589,7 @@ class VersionResolver:
         matching_versions.sort(reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_13(self, pattern: str) -> str:
@@ -1620,8 +1607,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, )
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_14(self, pattern: str) -> str:
@@ -1639,8 +1625,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=False)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_15(self, pattern: str) -> str:
@@ -1658,8 +1643,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_16(self, pattern: str) -> str:
@@ -1677,8 +1661,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[1]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {pattern} to {resolved}")
+        logger.debug(f"Resolved {pattern} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_x_pattern__mutmut_17(self, pattern: str) -> str:
@@ -1696,8 +1679,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return resolved
     
     xǁVersionResolverǁ_resolve_x_pattern__mutmut_mutants : ClassVar[MutantDict] = {
@@ -1739,8 +1721,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_1(self, version: str) -> str:
@@ -1755,8 +1736,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_2(self, version: str) -> str:
@@ -1771,8 +1751,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_3(self, version: str) -> str:
@@ -1787,8 +1766,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_4(self, version: str) -> str:
@@ -1803,8 +1781,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_5(self, version: str) -> str:
@@ -1819,8 +1796,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_6(self, version: str) -> str:
@@ -1835,8 +1811,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_7(self, version: str) -> str:
@@ -1851,8 +1826,7 @@ class VersionResolver:
         matching_versions.sort(key=None, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_8(self, version: str) -> str:
@@ -1867,8 +1841,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=None)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_9(self, version: str) -> str:
@@ -1883,8 +1856,7 @@ class VersionResolver:
         matching_versions.sort(reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_10(self, version: str) -> str:
@@ -1899,8 +1871,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, )
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_11(self, version: str) -> str:
@@ -1915,8 +1886,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=False)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_12(self, version: str) -> str:
@@ -1931,8 +1901,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = None
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_13(self, version: str) -> str:
@@ -1947,8 +1916,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[1]
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Resolved {version} to {resolved}")
+        logger.debug(f"Resolved {version} to {resolved}")
         return resolved
 
     def xǁVersionResolverǁ_resolve_major_minor__mutmut_14(self, version: str) -> str:
@@ -1963,8 +1931,7 @@ class VersionResolver:
         matching_versions.sort(key=self._version_sort_key, reverse=True)
         resolved = matching_versions[0]
 
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return resolved
     
     xǁVersionResolverǁ_resolve_major_minor__mutmut_mutants : ClassVar[MutantDict] = {

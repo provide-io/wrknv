@@ -266,6 +266,92 @@ class TestInterceptTaskCommand(FoundationTestCase):
             assert result is False
 
 
+class TestRunTaskForIntercept(FoundationTestCase):
+    """Tests for _run_task_for_intercept async function."""
+
+    def test_runs_task_successfully(self) -> None:
+        import asyncio
+
+        from wrknv.cli.hub_cli import _run_task_for_intercept
+
+        mock_registry = Mock()
+        mock_result = Mock()
+        mock_result.stdout = "output text"
+        mock_result.stderr = ""
+        mock_result.success = True
+        mock_result.duration = 1.23
+        mock_result.exit_code = 0
+        mock_registry.run_task = Mock(return_value=mock_result)
+
+        with (
+            patch("wrknv.cli.hub_cli.pout"),
+            patch("wrknv.cli.hub_cli.perr"),
+            patch("provide.foundation.process.set_process_title"),
+            patch("wrknv.tasks.registry.TaskRegistry.run_task", new=Mock(return_value=mock_result)),
+        ):
+            # run_task is a coroutine — use AsyncMock
+            async_mock = Mock()
+            async_mock.return_value = mock_result
+            mock_registry.run_task = async_mock
+
+            async def _async_run_task(*a, **kw):
+                return mock_result
+
+            mock_registry.run_task = _async_run_task
+
+            with pytest.raises(SystemExit) as exc_info:
+                asyncio.run(_run_task_for_intercept(mock_registry, "test.task", []))
+            assert exc_info.value.code == 0
+
+    def test_exits_nonzero_on_task_failure(self) -> None:
+        import asyncio
+
+        from wrknv.cli.hub_cli import _run_task_for_intercept
+
+        mock_registry = Mock()
+        mock_result = Mock()
+        mock_result.stdout = ""
+        mock_result.stderr = "error"
+        mock_result.success = False
+        mock_result.duration = 0.5
+        mock_result.exit_code = 1
+
+        async def _async_run_task(*a, **kw):
+            return mock_result
+
+        mock_registry.run_task = _async_run_task
+
+        with (
+            patch("wrknv.cli.hub_cli.pout"),
+            patch("wrknv.cli.hub_cli.perr"),
+            patch("provide.foundation.process.set_process_title"),
+        ):
+            with pytest.raises(SystemExit) as exc_info:
+                asyncio.run(_run_task_for_intercept(mock_registry, "test.task", []))
+            assert exc_info.value.code == 1
+
+    def test_exits_1_on_exception(self) -> None:
+        import asyncio
+
+        from wrknv.cli.hub_cli import _run_task_for_intercept
+
+        mock_registry = Mock()
+
+        async def _failing_run_task(*a, **kw):
+            raise RuntimeError("task crashed")
+
+        mock_registry.run_task = _failing_run_task
+
+        with (
+            patch("wrknv.cli.hub_cli.pout"),
+            patch("wrknv.cli.hub_cli.perr"),
+            patch("provide.foundation.process.set_process_title"),
+        ):
+            with pytest.raises(SystemExit) as exc_info:
+                asyncio.run(_run_task_for_intercept(mock_registry, "test.task", []))
+            assert exc_info.value.code == 1
+
+
 class TestIntegration(FoundationTestCase):
     """Integration tests for hub CLI."""
 
@@ -304,6 +390,49 @@ class TestIntegration(FoundationTestCase):
             config3 = WrknvContext.get_config()
             assert config3 is not None
             assert mock_load.call_count == 2
+
+
+class TestMainFunction(FoundationTestCase):
+    """Cover main() entry point (lines 246-286)."""
+
+    def test_main_runs_cli_when_no_task(self) -> None:
+        """Lines 246-286: main() initializes foundation and falls through to cli()."""
+        from wrknv.cli.hub_cli import main
+
+        mock_cfg = Mock()
+        mock_cfg.workenv.log_level = "INFO"
+        mock_cli = Mock()
+        with (
+            patch("wrknv.config.WorkenvConfig.from_env", return_value=mock_cfg),
+            patch("wrknv.cli.hub_cli.get_hub"),
+            patch("wrknv.cli.hub_cli.create_cli", return_value=mock_cli),
+            patch("wrknv.cli.hub_cli.intercept_task_command", return_value=False),
+            patch("wrknv.logging.setup.setup_wrknv_logging"),
+            patch("attrs.evolve", side_effect=lambda x, **kw: x),
+            patch("provide.foundation.TelemetryConfig.from_env", return_value=Mock()),
+            patch("provide.foundation.process.set_process_title"),
+        ):
+            main()
+        mock_cli.assert_called_once()
+
+    def test_main_returns_early_when_task_intercepted(self) -> None:
+        """Line 282: main() returns without calling cli when task is intercepted."""
+        from wrknv.cli.hub_cli import main
+
+        mock_cfg = Mock()
+        mock_cfg.workenv.log_level = "INFO"
+        with (
+            patch("wrknv.config.WorkenvConfig.from_env", return_value=mock_cfg),
+            patch("wrknv.cli.hub_cli.get_hub"),
+            patch("wrknv.cli.hub_cli.create_cli") as mock_create_cli,
+            patch("wrknv.cli.hub_cli.intercept_task_command", return_value=True),
+            patch("wrknv.logging.setup.setup_wrknv_logging"),
+            patch("attrs.evolve", side_effect=lambda x, **kw: x),
+            patch("provide.foundation.TelemetryConfig.from_env", return_value=Mock()),
+            patch("provide.foundation.process.set_process_title"),
+        ):
+            main()
+        mock_create_cli.assert_not_called()
 
 
 if __name__ == "__main__":

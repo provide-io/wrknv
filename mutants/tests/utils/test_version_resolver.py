@@ -247,6 +247,12 @@ class TestResolveToolVersions(FoundationTestCase):
         result = resolve_tool_versions(mock_manager, [])
         assert result == []
 
+    def test_resolves_non_semver_pattern_in_available_versions(self) -> None:
+        """Line 71: fallback return when pattern is in available_versions but not semver/wildcard."""
+        resolver = VersionResolver(available_versions=["v1.11.0", "1.11.0"])
+        result = resolver.resolve_version("v1.11.0")
+        assert result == "v1.11.0"
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

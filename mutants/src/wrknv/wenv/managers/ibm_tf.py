@@ -85,10 +85,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -113,10 +112,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -143,10 +141,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -173,10 +170,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -203,10 +199,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -232,10 +227,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -262,10 +256,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -292,10 +285,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -322,10 +314,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -352,10 +343,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -382,10 +372,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -412,10 +401,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -442,10 +430,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -472,10 +459,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -502,10 +488,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -532,10 +517,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -562,10 +546,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -592,10 +575,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -622,10 +604,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -652,10 +633,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -682,10 +662,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -712,10 +691,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -742,10 +720,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -772,10 +749,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -802,10 +778,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -832,10 +807,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -862,10 +836,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -892,10 +865,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -922,10 +894,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -952,10 +923,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -982,10 +952,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -1012,10 +981,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=None, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -1042,10 +1010,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=None)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -1072,10 +1039,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -1102,10 +1068,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, )
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -1132,10 +1097,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=False)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -1162,10 +1126,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -1192,11 +1155,10 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions or logger.is_debug_enabled():
-                logger.debug(f"Latest versions: {versions[:5]}")
+            if versions:
+                logger.debug(None)
 
             return versions
 
@@ -1222,11 +1184,10 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
-                logger.debug(None)
+            if versions:
+                logger.debug(f"Latest versions: {versions[:6]}")
 
             return versions
 
@@ -1252,40 +1213,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
-                logger.debug(f"Latest versions: {versions[:6]}")
-
-            return versions
-
-        except Exception as e:
-            raise ToolManagerError(f"Failed to fetch IBM Terraform versions: {e}") from e
-
-    def xǁIbmTfManagerǁget_available_versions__mutmut_40(self) -> list[str]:
-        """Get available IBM Terraform versions from HashiCorp releases API."""
-        try:
-            # Use custom mirror if configured
-            mirror_url = self.config.get_setting(
-                "terraform_mirror", "https://releases.hashicorp.com/terraform"
-            )
-            api_url = f"{mirror_url.rstrip('/')}/index.json"
-            data = self.fetch_json_secure(api_url)
-
-            versions = []
-            for version_info in data.get("versions", {}).values():
-                version = version_info.get("version")
-                if version and not self._is_prerelease(version):
-                    versions.append(version)
-
-            # Sort versions in descending order (latest first)
-            versions.sort(key=self._version_sort_key, reverse=True)
-
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
-            # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
@@ -1332,8 +1262,7 @@ class IbmTfManager(TfVersionsManager):
         'xǁIbmTfManagerǁget_available_versions__mutmut_36': xǁIbmTfManagerǁget_available_versions__mutmut_36, 
         'xǁIbmTfManagerǁget_available_versions__mutmut_37': xǁIbmTfManagerǁget_available_versions__mutmut_37, 
         'xǁIbmTfManagerǁget_available_versions__mutmut_38': xǁIbmTfManagerǁget_available_versions__mutmut_38, 
-        'xǁIbmTfManagerǁget_available_versions__mutmut_39': xǁIbmTfManagerǁget_available_versions__mutmut_39, 
-        'xǁIbmTfManagerǁget_available_versions__mutmut_40': xǁIbmTfManagerǁget_available_versions__mutmut_40
+        'xǁIbmTfManagerǁget_available_versions__mutmut_39': xǁIbmTfManagerǁget_available_versions__mutmut_39
     }
     
     def get_available_versions(self, *args, **kwargs):
@@ -2299,8 +2228,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2335,8 +2263,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2371,8 +2298,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2407,8 +2333,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2443,8 +2368,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2479,8 +2403,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2509,8 +2432,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2545,8 +2467,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2581,8 +2502,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2617,8 +2537,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2653,8 +2572,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2689,8 +2607,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2724,8 +2641,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2759,8 +2675,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2794,8 +2709,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2829,8 +2743,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2864,8 +2777,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2900,8 +2812,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2936,8 +2847,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -2972,8 +2882,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3008,8 +2917,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3044,8 +2952,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3080,8 +2987,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3116,8 +3022,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3152,8 +3057,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3188,8 +3092,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3224,8 +3127,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = None
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3260,8 +3162,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(None)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3296,8 +3197,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(None, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3332,8 +3232,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, None):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3368,8 +3267,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3404,8 +3302,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, ):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3440,8 +3337,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(None)
+                    logger.debug(None)
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3476,8 +3372,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return False
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3512,8 +3407,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(None)
@@ -3548,8 +3442,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3584,8 +3477,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3620,8 +3512,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")
@@ -3656,8 +3547,7 @@ class IbmTfManager(TfVersionsManager):
                 # Check if version matches
                 version_pattern = rf"Terraform v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"IBM Terraform {version} verification successful")
+                    logger.debug(f"IBM Terraform {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in IBM Terraform output: {result.stdout}")

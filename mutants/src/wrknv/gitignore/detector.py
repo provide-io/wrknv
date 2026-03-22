@@ -273,14 +273,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_1(self, path: Path, max_depth: int = 6) -> None:
         """
@@ -304,14 +300,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_2(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -335,14 +327,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_3(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -366,14 +354,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_4(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -397,14 +381,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_5(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -428,14 +408,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_6(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -459,14 +435,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_7(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -490,14 +462,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_8(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -521,14 +489,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_9(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -552,14 +516,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_10(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -583,14 +543,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_11(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -614,14 +570,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_12(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -645,14 +597,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_13(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -676,14 +624,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_14(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -707,14 +651,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(None)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_15(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -738,14 +678,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(None)
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(None)
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_16(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -769,14 +705,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(None)
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(None)
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_17(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -800,14 +732,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(None)
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected OS: {self.detected_os}")
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(None)
+        logger.debug(f"Detected OS: {self.detected_os}")
 
     def xǁProjectDetectorǁscan_directory__mutmut_18(self, path: Path, max_depth: int = 5) -> None:
         """
@@ -831,14 +759,10 @@ class ProjectDetector:
         self._detect_frameworks_from_configs(path)
 
         # Log results
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected languages: {self.detected_languages}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected frameworks: {self.detected_frameworks}")
-        if logger.is_debug_enabled():
-            logger.debug(f"Detected tools: {self.detected_tools}")
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(f"Detected languages: {self.detected_languages}")
+        logger.debug(f"Detected frameworks: {self.detected_frameworks}")
+        logger.debug(f"Detected tools: {self.detected_tools}")
+        logger.debug(None)
     
     xǁProjectDetectorǁscan_directory__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁProjectDetectorǁscan_directory__mutmut_1': xǁProjectDetectorǁscan_directory__mutmut_1, 
@@ -887,8 +811,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_1(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -909,8 +832,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_2(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -931,8 +853,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_3(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -953,8 +874,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_4(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -975,8 +895,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_5(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -997,8 +916,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_6(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1019,8 +937,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_7(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1041,8 +958,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_8(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1063,8 +979,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_9(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1085,8 +1000,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_10(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1107,8 +1021,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_11(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1129,8 +1042,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_12(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1151,8 +1063,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_13(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1173,8 +1084,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_14(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1195,8 +1105,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_15(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1217,8 +1126,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_16(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1239,8 +1147,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_17(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1261,8 +1168,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_18(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1283,8 +1189,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_19(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1305,8 +1210,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_20(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1327,8 +1231,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_21(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1349,8 +1252,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_22(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1371,8 +1273,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_23(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1393,8 +1294,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_24(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1415,8 +1315,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_25(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1437,8 +1336,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_26(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1459,8 +1357,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_27(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1481,8 +1378,7 @@ class ProjectDetector:
                 elif item.is_dir() or not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_28(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1503,8 +1399,7 @@ class ProjectDetector:
                 elif item.is_dir() and item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_29(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1525,8 +1420,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith(None):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_30(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1547,8 +1441,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("XX.XX"):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_31(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1569,8 +1462,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(None, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_32(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1591,8 +1483,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, None, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_33(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1613,8 +1504,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, None)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_34(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1635,8 +1525,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_35(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1657,8 +1546,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_36(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1679,8 +1567,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, )
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_37(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1701,8 +1588,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth - 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_38(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1723,8 +1609,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 2, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing: {path}")
+            logger.debug(f"Permission denied accessing: {path}")
 
     def xǁProjectDetectorǁ_scan_recursive__mutmut_39(self, path: Path, current_depth: int, max_depth: int) -> None:
         """Recursively scan directory."""
@@ -1745,8 +1630,7 @@ class ProjectDetector:
                 elif item.is_dir() and not item.name.startswith("."):
                     self._scan_recursive(item, current_depth + 1, max_depth)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
     
     xǁProjectDetectorǁ_scan_recursive__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁProjectDetectorǁ_scan_recursive__mutmut_1': xǁProjectDetectorǁ_scan_recursive__mutmut_1, 
@@ -1804,24 +1688,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -1830,8 +1711,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_1(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -1840,24 +1720,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(None, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -1866,8 +1743,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_2(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -1876,24 +1752,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, None, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -1902,8 +1775,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_3(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -1912,24 +1784,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, None):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -1938,8 +1807,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_4(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -1948,24 +1816,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -1974,8 +1839,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_5(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -1984,24 +1848,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2010,8 +1871,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_6(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2020,24 +1880,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, ):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2046,8 +1903,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_7(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2056,24 +1912,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(None)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2082,8 +1935,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_8(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2092,24 +1944,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(None)
+                    logger.trace(None)
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2118,8 +1967,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_9(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2128,24 +1976,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(None, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2154,8 +1999,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_10(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2164,24 +2008,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, None, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2190,8 +2031,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_11(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2200,24 +2040,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, None):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2226,8 +2063,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_12(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2236,24 +2072,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2262,8 +2095,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_13(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2272,24 +2104,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2298,8 +2127,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_14(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2308,24 +2136,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, ):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2334,8 +2159,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_15(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2344,24 +2168,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(None)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2370,8 +2191,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_16(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2380,24 +2200,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(None)
+                    logger.trace(None)
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2406,8 +2223,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_17(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2416,24 +2232,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(None, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2442,8 +2255,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_18(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2452,24 +2264,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, None, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2478,8 +2287,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_19(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2488,24 +2296,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, None):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2514,8 +2319,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_20(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2524,24 +2328,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2550,8 +2351,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_21(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2560,24 +2360,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2586,8 +2383,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_22(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2596,24 +2392,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, ):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2622,8 +2415,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_23(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2632,24 +2424,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(None)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2658,8 +2447,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_24(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2668,24 +2456,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(None)
+                    logger.trace(None)
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2694,8 +2479,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_25(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2704,24 +2488,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2730,8 +2511,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_26(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2740,24 +2520,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2766,8 +2543,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_27(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2776,24 +2552,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2802,8 +2575,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_28(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2812,24 +2584,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2838,8 +2607,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_29(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2848,24 +2616,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2874,8 +2639,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_30(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2884,24 +2648,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2910,8 +2671,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_31(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2920,24 +2680,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2946,8 +2703,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_32(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2956,24 +2712,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -2982,8 +2735,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_33(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -2992,24 +2744,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3018,8 +2767,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_34(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3028,24 +2776,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3054,8 +2799,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_35(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3064,24 +2808,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3090,8 +2831,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_36(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3100,24 +2840,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3126,8 +2863,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_37(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3136,24 +2872,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3162,8 +2895,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_38(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3172,24 +2904,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3198,8 +2927,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_39(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3208,24 +2936,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3234,8 +2959,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(None, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_40(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3244,24 +2968,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3270,8 +2991,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, None, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_41(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3280,24 +3000,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3306,8 +3023,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, None):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_42(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3316,24 +3032,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3342,8 +3055,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_43(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3352,24 +3064,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3378,8 +3087,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_44(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3388,24 +3096,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3414,8 +3119,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, ):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_45(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3424,24 +3128,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3450,8 +3151,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(None)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected framework {framework} from {filename}")
+                    logger.trace(f"Detected framework {framework} from {filename}")
 
     def xǁProjectDetectorǁ_check_pattern__mutmut_46(self, filename: str, is_dir: bool) -> None:
         """Check if a filename matches any detection patterns."""
@@ -3460,24 +3160,21 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_languages.add(lang)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected language {lang} from {filename}")
+                    logger.trace(f"Detected language {lang} from {filename}")
 
         # Check tool patterns
         for tool, patterns in self.TOOL_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_tools.add(tool)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected tool {tool} from {filename}")
+                    logger.trace(f"Detected tool {tool} from {filename}")
 
         # Check OS patterns
         for os_name, patterns in self.OS_PATTERNS.items():
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_os.add(os_name)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected OS {os_name} from {filename}")
+                    logger.trace(f"Detected OS {os_name} from {filename}")
 
         # Check basic framework patterns
         for framework, patterns in self.FRAMEWORK_PATTERNS.items():
@@ -3486,8 +3183,7 @@ class ProjectDetector:
             for pattern in patterns:
                 if self._matches_pattern(filename, pattern, is_dir):
                     self.detected_frameworks.add(framework)
-                    if logger.is_trace_enabled():
-                        logger.trace(None)
+                    logger.trace(None)
     
     xǁProjectDetectorǁ_check_pattern__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁProjectDetectorǁ_check_pattern__mutmut_1': xǁProjectDetectorǁ_check_pattern__mutmut_1, 
@@ -3821,8 +3517,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -3857,8 +3552,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -3893,8 +3587,7 @@ class ProjectDetector:
                 if subdir.is_dir() or not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -3929,8 +3622,7 @@ class ProjectDetector:
                 if subdir.is_dir() and subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -3965,8 +3657,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith(None):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4001,8 +3692,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("XX.XX"):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4037,8 +3727,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(None)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4073,8 +3762,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4109,8 +3797,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = None
@@ -4145,8 +3832,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path * "requirements.txt"
@@ -4181,8 +3867,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "XXrequirements.txtXX"
@@ -4217,8 +3902,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "REQUIREMENTS.TXT"
@@ -4253,8 +3937,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4289,8 +3972,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4325,8 +4007,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4361,8 +4042,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4397,8 +4077,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4433,8 +4112,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4469,8 +4147,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4505,8 +4182,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4541,8 +4217,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4577,8 +4252,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4613,8 +4287,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4649,8 +4322,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4685,8 +4357,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4721,8 +4392,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4757,8 +4427,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4793,8 +4462,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4829,8 +4497,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4865,8 +4532,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4901,8 +4567,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4937,8 +4602,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -4973,8 +4637,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5009,8 +4672,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5045,8 +4707,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5081,8 +4742,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5117,8 +4777,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5153,8 +4812,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5189,8 +4847,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5225,8 +4882,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5261,8 +4917,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5297,8 +4952,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5333,8 +4987,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5369,8 +5022,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5405,8 +5057,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5441,8 +5092,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5477,8 +5127,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5513,8 +5162,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5549,8 +5197,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5585,8 +5232,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5621,8 +5267,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5657,8 +5302,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5693,8 +5337,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5729,8 +5372,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5765,8 +5407,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5801,8 +5442,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5837,8 +5477,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5873,8 +5512,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5909,8 +5547,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5945,8 +5582,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -5981,8 +5617,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -6017,8 +5652,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -6053,8 +5687,7 @@ class ProjectDetector:
                 if subdir.is_dir() and not subdir.name.startswith("."):
                     self._check_package_json(subdir)
         except PermissionError:
-            if logger.is_debug_enabled():
-                logger.debug(f"Permission denied accessing subdirectories of: {path}")
+            logger.debug(f"Permission denied accessing subdirectories of: {path}")
 
         # Check requirements.txt for Python frameworks
         requirements_txt = path / "requirements.txt"
@@ -6161,30 +5794,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_1(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6197,30 +5825,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_2(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6233,30 +5856,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_3(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6269,30 +5887,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_4(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6305,30 +5918,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_5(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6341,30 +5949,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_6(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6377,30 +5980,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_7(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6413,30 +6011,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_8(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6449,30 +6042,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_9(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6485,30 +6073,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_10(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6521,30 +6104,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_11(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6557,30 +6135,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_12(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6593,30 +6166,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_13(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6629,30 +6197,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_14(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6665,30 +6228,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_15(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6701,30 +6259,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_16(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6737,30 +6290,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_17(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6773,30 +6321,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_18(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6809,30 +6352,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_19(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6845,30 +6383,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_20(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6881,30 +6414,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_21(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6917,30 +6445,25 @@ class ProjectDetector:
                 # Check for React
                 if "XXreactXX" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_22(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6953,30 +6476,25 @@ class ProjectDetector:
                 # Check for React
                 if "REACT" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_23(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -6989,30 +6507,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" not in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_24(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7025,30 +6538,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add(None)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_25(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7061,30 +6569,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("XXReactXX")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_26(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7097,30 +6600,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("react")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_27(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7133,30 +6631,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("REACT")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_28(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7169,30 +6662,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(None)
+                    logger.trace(None)
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_29(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7205,30 +6693,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "XXvueXX" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_30(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7241,30 +6724,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "VUE" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_31(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7277,30 +6755,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" not in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_32(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7313,30 +6786,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add(None)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_33(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7349,30 +6817,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("XXVueXX")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_34(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7385,30 +6848,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_35(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7421,30 +6879,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("VUE")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_36(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7457,30 +6910,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(None)
+                    logger.trace(None)
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_37(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7493,30 +6941,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "XX@angular/coreXX" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_38(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7529,30 +6972,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@ANGULAR/CORE" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_39(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7565,30 +7003,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" not in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_40(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7601,30 +7034,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add(None)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_41(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7637,30 +7065,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("XXAngularXX")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_42(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7673,30 +7096,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_43(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7709,30 +7127,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("ANGULAR")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_44(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7745,30 +7158,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(None)
+                    logger.trace(None)
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_45(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7781,30 +7189,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "XXnextXX" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_46(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7817,30 +7220,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "NEXT" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_47(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7853,30 +7251,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" not in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_48(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7889,30 +7282,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add(None)
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_49(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7925,30 +7313,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("XXNextJSXX")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_50(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7961,30 +7344,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("nextjs")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_51(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -7997,30 +7375,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NEXTJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_52(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -8033,30 +7406,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(None)
+                    logger.trace(None)
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(f"Could not parse {package_json}")
+                logger.debug(f"Could not parse {package_json}")
 
     def xǁProjectDetectorǁ_check_package_json__mutmut_53(self, path: Path) -> None:
         """Check a specific directory for package.json and detect frameworks."""
@@ -8069,30 +7437,25 @@ class ProjectDetector:
                 # Check for React
                 if "react" in deps:
                     self.detected_frameworks.add("React")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected React from {package_json}")
+                    logger.trace(f"Detected React from {package_json}")
 
                 # Check for Vue
                 if "vue" in deps:
                     self.detected_frameworks.add("Vue")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Vue from {package_json}")
+                    logger.trace(f"Detected Vue from {package_json}")
 
                 # Check for Angular
                 if "@angular/core" in deps:
                     self.detected_frameworks.add("Angular")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Angular from {package_json}")
+                    logger.trace(f"Detected Angular from {package_json}")
 
                 # Check for Next.js
                 if "next" in deps:
                     self.detected_frameworks.add("NextJS")
-                    if logger.is_trace_enabled():
-                        logger.trace(f"Detected Next.js from {package_json}")
+                    logger.trace(f"Detected Next.js from {package_json}")
 
             except (json.JSONDecodeError, KeyError):
-                if logger.is_debug_enabled():
-                    logger.debug(None)
+                logger.debug(None)
     
     xǁProjectDetectorǁ_check_package_json__mutmut_mutants : ClassVar[MutantDict] = {
     'xǁProjectDetectorǁ_check_package_json__mutmut_1': xǁProjectDetectorǁ_check_package_json__mutmut_1, 

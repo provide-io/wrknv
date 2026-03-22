@@ -89,28 +89,29 @@ class TestSetupCommand(FoundationTestCase):
     @pytest.mark.skipif(
         IS_WINDOWS or IS_CI, reason="Shell integration uses bash scripts and mocks don't work reliably in CI"
     )
-    @patch("wrknv.cli.commands.setup.run")
-    @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
-    def test_setup_shell_integration_success(self, mock_get_path, mock_run) -> None:
+    def test_setup_shell_integration_success(self) -> None:
         """Test successful shell integration setup."""
-        # Mock the path to exist
         from pathlib import Path
 
-        mock_script_path = Mock(spec=Path)
-        mock_script_path.exists = Mock(return_value=True)
-        mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
-        mock_get_path.return_value = mock_script_path
-
-        mock_run.return_value = Mock(returncode=0)
-
-        runner = click.testing.CliRunner()
+        # create_cli() reloads command modules, so CLI must be created before patching
         cli = get_test_cli()
-        result = runner.invoke(cli, ["setup", "--shell-integration"])
+
+        with (
+            patch("wrknv.cli.commands.setup._get_shell_integration_script_path") as mock_get_path,
+            patch("wrknv.cli.commands.setup.run") as mock_run,
+        ):
+            mock_script_path = Mock(spec=Path)
+            mock_script_path.exists = Mock(return_value=True)
+            mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
+            mock_get_path.return_value = mock_script_path
+            mock_run.return_value = Mock(returncode=0)
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--shell-integration"])
 
         assert result.exit_code == 0
         assert "Setting up shell integration" in result.output
         assert "Shell integration configured successfully" in result.output
-        # Note: mock_run assertion removed due to CLI module caching
 
     def test_setup_shell_integration_script_not_found(self) -> None:
         """Test shell integration when script is missing."""
@@ -182,27 +183,28 @@ class TestSetupCommand(FoundationTestCase):
     @pytest.mark.skipif(
         IS_WINDOWS or IS_CI, reason="Shell integration uses bash scripts and mocks don't work reliably in CI"
     )
-    @patch("wrknv.cli.commands.setup.run")
-    @patch("wrknv.cli.commands.setup._get_shell_integration_script_path")
-    def test_setup_shell_integration_creates_aliases(self, mock_get_path, mock_run) -> None:
+    def test_setup_shell_integration_creates_aliases(self) -> None:
         """Test that shell integration calls the shell script."""
-        # Mock the path to exist
         from pathlib import Path
 
-        mock_script_path = Mock(spec=Path)
-        mock_script_path.exists = Mock(return_value=True)
-        mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
-        mock_get_path.return_value = mock_script_path
-
-        mock_run.return_value = Mock(returncode=0)
-
-        runner = click.testing.CliRunner()
+        # create_cli() reloads command modules, so CLI must be created before patching
         cli = get_test_cli()
-        result = runner.invoke(cli, ["setup", "--shell-integration"])
+
+        with (
+            patch("wrknv.cli.commands.setup._get_shell_integration_script_path") as mock_get_path,
+            patch("wrknv.cli.commands.setup.run") as mock_run,
+        ):
+            mock_script_path = Mock(spec=Path)
+            mock_script_path.exists = Mock(return_value=True)
+            mock_script_path.__str__ = Mock(return_value="/fake/path/shell-integration.sh")
+            mock_get_path.return_value = mock_script_path
+            mock_run.return_value = Mock(returncode=0)
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--shell-integration"])
 
         assert result.exit_code == 0
         assert "Setting up shell integration" in result.output
-        # Note: mock_run assertion removed due to CLI module caching
 
     @patch("wrknv.wenv.workenv.WorkenvManager.setup_workenv")
     def test_setup_all_options(self, mock_setup_workenv) -> None:
@@ -339,6 +341,99 @@ class TestSetupCommandIntegration(FoundationTestCase):
                     dir_path = workenv_dir / dir_name
                     if dir_path.exists():
                         assert dir_path.is_dir()
+
+
+class TestSetupCommandCoverage(FoundationTestCase):
+    """Tests to cover remaining uncovered branches in setup.py."""
+
+    def setup_method(self) -> None:
+        """Set up test fixtures."""
+        super().setup_method()
+        self.temp_dir = self.create_temp_dir()
+
+    def test_get_shell_integration_script_path(self) -> None:
+        """Test _get_shell_integration_script_path returns path ending in shell-integration.sh."""
+        from wrknv.cli.commands.setup import _get_shell_integration_script_path
+
+        result = _get_shell_integration_script_path()
+        assert result.name == "shell-integration.sh"
+        assert "scripts" in str(result)
+
+    def test_setup_completions_bash_install_existing_dir(self) -> None:
+        """Test bash completions install when .bash_completion.d already exists."""
+        bash_dir = self.temp_dir / ".bash_completion.d"
+        bash_dir.mkdir()
+
+        cli = get_test_cli()
+        with patch("pathlib.Path.home", return_value=self.temp_dir):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--completions", "bash", "--install"])
+
+        assert result.exit_code == 0
+        assert "Add this to your ~/.bashrc:" in result.output
+        assert (bash_dir / "wrknv").exists()
+
+    def test_setup_completions_zsh_install_no_existing_dir(self) -> None:
+        """Test zsh completions install creates user dir when none exists."""
+        cli = get_test_cli()
+        with patch("pathlib.Path.home", return_value=self.temp_dir):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--completions", "zsh", "--install"])
+
+        assert result.exit_code == 0
+        assert "Add this to your ~/.zshrc:" in result.output
+        # Check the completion file was created
+        zsh_dir = self.temp_dir / ".zsh" / "completions"
+        assert zsh_dir.exists()
+        assert (zsh_dir / "_wrknv").exists()
+
+    def test_setup_completions_zsh_install_existing_dir(self) -> None:
+        """Test zsh completions install when .zsh/completions already exists."""
+        zsh_dir = self.temp_dir / ".zsh" / "completions"
+        zsh_dir.mkdir(parents=True)
+
+        cli = get_test_cli()
+        with patch("pathlib.Path.home", return_value=self.temp_dir):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--completions", "zsh", "--install"])
+
+        assert result.exit_code == 0
+        assert (zsh_dir / "_wrknv").exists()
+
+    def test_setup_completions_fish_install(self) -> None:
+        """Test fish completions install creates completions dir and file."""
+        cli = get_test_cli()
+        with patch("pathlib.Path.home", return_value=self.temp_dir):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--completions", "fish", "--install"])
+
+        assert result.exit_code == 0
+        fish_dir = self.temp_dir / ".config" / "fish" / "completions"
+        assert fish_dir.exists()
+        assert (fish_dir / "wrknv.fish").exists()
+
+
+class TestSetupCompletionsUnknownShell(FoundationTestCase):
+    """Lines 128->134 and 134->147: unknown shell + install → install_path stays None."""
+
+    def test_unknown_shell_with_install_skips_write(self) -> None:
+        """Lines 128->134, 134->147: completions='powershell' + install=True → no write, just return."""
+        from wrknv.cli.hub_cli import create_cli
+
+        cli = create_cli()
+
+        from unittest.mock import patch
+
+        with patch("wrknv.wenv.completions.generate_completions", return_value="# completion script"):
+            import click.testing
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(
+                cli, ["setup", "--completions", "powershell", "--install"]
+            )
+
+        # Should exit cleanly — no install_path found, nothing written
+        assert result.exit_code == 0
 
 
 if __name__ == "__main__":

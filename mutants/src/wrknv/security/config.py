@@ -82,8 +82,7 @@ def x_load_security_config__mutmut_orig(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -91,8 +90,7 @@ def x_load_security_config__mutmut_orig(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -100,8 +98,7 @@ def x_load_security_config__mutmut_orig(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -134,8 +131,7 @@ def x_load_security_config__mutmut_1(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -143,8 +139,7 @@ def x_load_security_config__mutmut_1(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -152,8 +147,7 @@ def x_load_security_config__mutmut_1(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -186,8 +180,7 @@ def x_load_security_config__mutmut_2(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -195,8 +188,7 @@ def x_load_security_config__mutmut_2(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -204,8 +196,7 @@ def x_load_security_config__mutmut_2(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -238,8 +229,7 @@ def x_load_security_config__mutmut_3(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -247,8 +237,7 @@ def x_load_security_config__mutmut_3(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -256,8 +245,7 @@ def x_load_security_config__mutmut_3(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -290,8 +278,7 @@ def x_load_security_config__mutmut_4(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -299,8 +286,7 @@ def x_load_security_config__mutmut_4(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -308,8 +294,7 @@ def x_load_security_config__mutmut_4(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -342,8 +327,7 @@ def x_load_security_config__mutmut_5(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -351,8 +335,7 @@ def x_load_security_config__mutmut_5(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -360,8 +343,7 @@ def x_load_security_config__mutmut_5(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -394,8 +376,7 @@ def x_load_security_config__mutmut_6(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -403,8 +384,7 @@ def x_load_security_config__mutmut_6(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -412,8 +392,7 @@ def x_load_security_config__mutmut_6(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -446,8 +425,7 @@ def x_load_security_config__mutmut_7(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -455,8 +433,7 @@ def x_load_security_config__mutmut_7(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -464,8 +441,7 @@ def x_load_security_config__mutmut_7(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -498,8 +474,7 @@ def x_load_security_config__mutmut_8(
     if pyproject_file.exists():
         config = None
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -507,8 +482,7 @@ def x_load_security_config__mutmut_8(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -516,8 +490,7 @@ def x_load_security_config__mutmut_8(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -550,8 +523,7 @@ def x_load_security_config__mutmut_9(
     if pyproject_file.exists():
         config = _load_from_pyproject(None)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -559,8 +531,7 @@ def x_load_security_config__mutmut_9(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -568,8 +539,7 @@ def x_load_security_config__mutmut_9(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -602,8 +572,7 @@ def x_load_security_config__mutmut_10(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return config
 
     # Try wrknv.toml
@@ -611,8 +580,7 @@ def x_load_security_config__mutmut_10(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -620,8 +588,7 @@ def x_load_security_config__mutmut_10(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -654,8 +621,7 @@ def x_load_security_config__mutmut_11(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -663,8 +629,7 @@ def x_load_security_config__mutmut_11(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -672,8 +637,7 @@ def x_load_security_config__mutmut_11(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -706,8 +670,7 @@ def x_load_security_config__mutmut_12(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -715,8 +678,7 @@ def x_load_security_config__mutmut_12(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -724,8 +686,7 @@ def x_load_security_config__mutmut_12(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -758,8 +719,7 @@ def x_load_security_config__mutmut_13(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -767,8 +727,7 @@ def x_load_security_config__mutmut_13(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -776,8 +735,7 @@ def x_load_security_config__mutmut_13(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -810,8 +768,7 @@ def x_load_security_config__mutmut_14(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -819,8 +776,7 @@ def x_load_security_config__mutmut_14(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -828,8 +784,7 @@ def x_load_security_config__mutmut_14(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -862,8 +817,7 @@ def x_load_security_config__mutmut_15(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -871,8 +825,7 @@ def x_load_security_config__mutmut_15(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -880,8 +833,7 @@ def x_load_security_config__mutmut_15(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -914,8 +866,7 @@ def x_load_security_config__mutmut_16(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -923,8 +874,7 @@ def x_load_security_config__mutmut_16(
     if wrknv_file.exists():
         config = None
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -932,8 +882,7 @@ def x_load_security_config__mutmut_16(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -966,8 +915,7 @@ def x_load_security_config__mutmut_17(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -975,8 +923,7 @@ def x_load_security_config__mutmut_17(
     if wrknv_file.exists():
         config = _load_from_wrknv(None)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -984,8 +931,7 @@ def x_load_security_config__mutmut_17(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -1018,8 +964,7 @@ def x_load_security_config__mutmut_18(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1027,8 +972,7 @@ def x_load_security_config__mutmut_18(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1036,8 +980,7 @@ def x_load_security_config__mutmut_18(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -1070,8 +1013,7 @@ def x_load_security_config__mutmut_19(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1079,8 +1021,7 @@ def x_load_security_config__mutmut_19(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1088,8 +1029,7 @@ def x_load_security_config__mutmut_19(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -1122,8 +1062,7 @@ def x_load_security_config__mutmut_20(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1131,8 +1070,7 @@ def x_load_security_config__mutmut_20(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1140,8 +1078,7 @@ def x_load_security_config__mutmut_20(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -1174,8 +1111,7 @@ def x_load_security_config__mutmut_21(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1183,8 +1119,7 @@ def x_load_security_config__mutmut_21(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1192,8 +1127,7 @@ def x_load_security_config__mutmut_21(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -1226,8 +1160,7 @@ def x_load_security_config__mutmut_22(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1235,8 +1168,7 @@ def x_load_security_config__mutmut_22(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1244,8 +1176,7 @@ def x_load_security_config__mutmut_22(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -1278,8 +1209,7 @@ def x_load_security_config__mutmut_23(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1287,8 +1217,7 @@ def x_load_security_config__mutmut_23(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1296,8 +1225,7 @@ def x_load_security_config__mutmut_23(
     if wrknv_hidden.exists():
         config = None
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -1330,8 +1258,7 @@ def x_load_security_config__mutmut_24(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1339,8 +1266,7 @@ def x_load_security_config__mutmut_24(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1348,8 +1274,7 @@ def x_load_security_config__mutmut_24(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(None)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("No security configuration found")
@@ -1382,8 +1307,7 @@ def x_load_security_config__mutmut_25(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1391,8 +1315,7 @@ def x_load_security_config__mutmut_25(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1400,8 +1323,7 @@ def x_load_security_config__mutmut_25(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return config
 
     logger.debug("No security configuration found")
@@ -1434,8 +1356,7 @@ def x_load_security_config__mutmut_26(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1443,8 +1364,7 @@ def x_load_security_config__mutmut_26(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1452,8 +1372,7 @@ def x_load_security_config__mutmut_26(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug(None)
@@ -1486,8 +1405,7 @@ def x_load_security_config__mutmut_27(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1495,8 +1413,7 @@ def x_load_security_config__mutmut_27(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1504,8 +1421,7 @@ def x_load_security_config__mutmut_27(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("XXNo security configuration foundXX")
@@ -1538,8 +1454,7 @@ def x_load_security_config__mutmut_28(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1547,8 +1462,7 @@ def x_load_security_config__mutmut_28(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1556,8 +1470,7 @@ def x_load_security_config__mutmut_28(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("no security configuration found")
@@ -1590,8 +1503,7 @@ def x_load_security_config__mutmut_29(
     if pyproject_file.exists():
         config = _load_from_pyproject(pyproject_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {pyproject_file}")
+            logger.debug(f"Loaded security config from {pyproject_file}")
             return config
 
     # Try wrknv.toml
@@ -1599,8 +1511,7 @@ def x_load_security_config__mutmut_29(
     if wrknv_file.exists():
         config = _load_from_wrknv(wrknv_file)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_file}")
+            logger.debug(f"Loaded security config from {wrknv_file}")
             return config
 
     # Try .wrknv.toml (hidden)
@@ -1608,8 +1519,7 @@ def x_load_security_config__mutmut_29(
     if wrknv_hidden.exists():
         config = _load_from_wrknv(wrknv_hidden)
         if config:
-            if logger.is_debug_enabled():
-                logger.debug(f"Loaded security config from {wrknv_hidden}")
+            logger.debug(f"Loaded security config from {wrknv_hidden}")
             return config
 
     logger.debug("NO SECURITY CONFIGURATION FOUND")

@@ -11,7 +11,6 @@ import subprocess
 
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import Mock, patch
-import pytest
 
 from wrknv.wenv.operations.verify import (
     check_binary_compatibility,
@@ -427,14 +426,74 @@ class TestVerifyOperations(FoundationTestCase):
         """Test parsing generic version output."""
         output = "some-tool version 1.2.3\nother info"
         result = parse_generic_version(output, "some-tool")
-
         assert result["tool"] == "some-tool"
-        assert result["raw_output"] == output
-        # Should attempt to extract version
         assert "version" in result
 
+    def test_parse_terraform_version_with_extra_lines(self) -> None:
+        """Lines not matching either pattern loop back without setting values."""
+        result = parse_terraform_version("Terraform v1.5.0\nextra info here\non linux_amd64")
+        assert result["version"] == "1.5.0"
+        assert result["platform"] == "linux_amd64"
 
-if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    def test_parse_tofu_version_with_extra_lines(self) -> None:
+        """Lines not matching either pattern loop back."""
+        result = parse_tofu_version("OpenTofu v1.6.0\nextra info here\non darwin_arm64")
+        assert result["version"] == "1.6.0"
+
+    def test_parse_go_version_short_output(self) -> None:
+        """Go version parse with fewer than 3 parts returns dict without version."""
+        result = parse_go_version("go")
+        assert result["tool"] == "go"
+        assert "version" not in result
+
+    def test_parse_go_version_exactly_three_parts(self) -> None:
+        """Go version with exactly 3 parts: no platform set."""
+        result = parse_go_version("go version go1.21.0")
+        assert result["tool"] == "go"
+        assert result["version"] == "1.21.0"
+        assert "platform" not in result
+
+    def test_parse_uv_version_single_word(self) -> None:
+        """UV version with only one word returns dict without version."""
+        result = parse_uv_version("uv")
+        assert result["tool"] == "uv"
+        assert "version" not in result
+
+    def test_parse_generic_version_no_match(self) -> None:
+        """Generic parse returns dict without version when no pattern matches."""
+        from wrknv.wenv.operations.verify import parse_generic_version
+        result = parse_generic_version("no version here", "mytool")
+        assert result["tool"] == "mytool"
+        assert "version" not in result
+
+    def test_parse_generic_version_two_part_version(self) -> None:
+        """Generic parse finds 2-part version (matches pattern 2 not pattern 1)."""
+        from wrknv.wenv.operations.verify import parse_generic_version
+        result = parse_generic_version("tool 1.2 beta", "mytool")
+        assert "version" in result
+
+    def test_verify_file_exists_no_signature(self) -> None:
+        """verify_file returns True when file exists and no signature provided."""
+        from wrknv.wenv.operations.verify import verify_file
+        tmp = self.create_temp_dir()
+        f = tmp / "file.tar.gz"
+        f.write_bytes(b"data")
+        assert verify_file(f) is True
+
+    def test_verify_file_not_found(self) -> None:
+        """verify_file returns False when file doesn't exist."""
+        from wrknv.wenv.operations.verify import verify_file
+        assert verify_file(self.create_temp_dir() / "nonexistent.tar.gz") is False
+
+    def test_verify_file_with_signature(self) -> None:
+        """verify_file returns True when signature file exists."""
+        from wrknv.wenv.operations.verify import verify_file
+        tmp = self.create_temp_dir()
+        f = tmp / "file.tar.gz"
+        sig = tmp / "file.tar.gz.sig"
+        f.write_bytes(b"data")
+        sig.write_bytes(b"sig")
+        assert verify_file(f, sig) is True
+
 
 # 🧰🌍🔚

@@ -56,7 +56,7 @@ def _mutmut_trampoline(orig, mutants, call_args, call_kwargs, self_arg = None):
 def x__check_flavor_installed__mutmut_orig() -> None:
     """Check if flavorpack is installed."""
     try:
-        import flavor  # type: ignore  # noqa: F401
+        import flavor  # noqa: F401
     except ImportError as e:
         raise ImportError("flavorpack not installed. Install it with: uv tool install flavorpack") from e
 
@@ -64,7 +64,7 @@ def x__check_flavor_installed__mutmut_orig() -> None:
 def x__check_flavor_installed__mutmut_1() -> None:
     """Check if flavorpack is installed."""
     try:
-        import flavor  # type: ignore  # noqa: F401
+        import flavor  # noqa: F401
     except ImportError as e:
         raise ImportError(None) from e
 
@@ -72,7 +72,7 @@ def x__check_flavor_installed__mutmut_1() -> None:
 def x__check_flavor_installed__mutmut_2() -> None:
     """Check if flavorpack is installed."""
     try:
-        import flavor  # type: ignore  # noqa: F401
+        import flavor  # noqa: F401
     except ImportError as e:
         raise ImportError("XXflavorpack not installed. Install it with: uv tool install flavorpackXX") from e
 
@@ -80,7 +80,7 @@ def x__check_flavor_installed__mutmut_2() -> None:
 def x__check_flavor_installed__mutmut_3() -> None:
     """Check if flavorpack is installed."""
     try:
-        import flavor  # type: ignore  # noqa: F401
+        import flavor  # noqa: F401
     except ImportError as e:
         raise ImportError("flavorpack not installed. install it with: uv tool install flavorpack") from e
 
@@ -88,7 +88,7 @@ def x__check_flavor_installed__mutmut_3() -> None:
 def x__check_flavor_installed__mutmut_4() -> None:
     """Check if flavorpack is installed."""
     try:
-        import flavor  # type: ignore  # noqa: F401
+        import flavor  # noqa: F401
     except ImportError as e:
         raise ImportError("FLAVORPACK NOT INSTALLED. INSTALL IT WITH: UV TOOL INSTALL FLAVORPACK") from e
 
@@ -1871,7 +1871,7 @@ def x_generate_keys__mutmut_orig(output_dir: Path, config: WorkenvConfig | None 
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1890,7 +1890,7 @@ def x_generate_keys__mutmut_1(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=None, exist_ok=True)
 
@@ -1909,7 +1909,7 @@ def x_generate_keys__mutmut_2(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=None)
 
@@ -1928,7 +1928,7 @@ def x_generate_keys__mutmut_3(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(exist_ok=True)
 
@@ -1947,7 +1947,7 @@ def x_generate_keys__mutmut_4(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, )
 
@@ -1966,7 +1966,7 @@ def x_generate_keys__mutmut_5(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=False, exist_ok=True)
 
@@ -1985,7 +1985,7 @@ def x_generate_keys__mutmut_6(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=False)
 
@@ -2004,7 +2004,7 @@ def x_generate_keys__mutmut_7(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -2023,7 +2023,7 @@ def x_generate_keys__mutmut_8(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -2042,7 +2042,7 @@ def x_generate_keys__mutmut_9(output_dir: Path, config: WorkenvConfig | None = N
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -2061,7 +2061,7 @@ def x_generate_keys__mutmut_10(output_dir: Path, config: WorkenvConfig | None = 
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -2080,7 +2080,7 @@ def x_generate_keys__mutmut_11(output_dir: Path, config: WorkenvConfig | None = 
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -2099,7 +2099,7 @@ def x_generate_keys__mutmut_12(output_dir: Path, config: WorkenvConfig | None = 
     """Generate signing key pair."""
     _check_flavor_installed()
 
-    from flavor.packaging import generate_key_pair  # type: ignore
+    from flavor.packaging import generate_key_pair
 
     output_dir.mkdir(parents=True, exist_ok=True)
 

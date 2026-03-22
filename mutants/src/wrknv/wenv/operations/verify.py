@@ -64,8 +64,7 @@ def x_verify_tool_installation__mutmut_orig(binary_path: pathlib.Path, expected_
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -94,8 +93,7 @@ def x_verify_tool_installation__mutmut_1(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -124,8 +122,7 @@ def x_verify_tool_installation__mutmut_2(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -154,8 +151,7 @@ def x_verify_tool_installation__mutmut_3(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -184,8 +180,7 @@ def x_verify_tool_installation__mutmut_4(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -214,8 +209,7 @@ def x_verify_tool_installation__mutmut_5(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -244,8 +238,7 @@ def x_verify_tool_installation__mutmut_6(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -274,8 +267,7 @@ def x_verify_tool_installation__mutmut_7(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -304,8 +296,7 @@ def x_verify_tool_installation__mutmut_8(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -334,8 +325,7 @@ def x_verify_tool_installation__mutmut_9(binary_path: pathlib.Path, expected_ver
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -364,8 +354,7 @@ def x_verify_tool_installation__mutmut_10(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -394,8 +383,7 @@ def x_verify_tool_installation__mutmut_11(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -424,8 +412,7 @@ def x_verify_tool_installation__mutmut_12(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version not in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -454,8 +441,7 @@ def x_verify_tool_installation__mutmut_13(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(None)
+            logger.debug(None)
             return True
         else:
             logger.error(
@@ -484,8 +470,7 @@ def x_verify_tool_installation__mutmut_14(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return False
         else:
             logger.error(
@@ -514,8 +499,7 @@ def x_verify_tool_installation__mutmut_15(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -544,8 +528,7 @@ def x_verify_tool_installation__mutmut_16(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -574,8 +557,7 @@ def x_verify_tool_installation__mutmut_17(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -604,8 +586,7 @@ def x_verify_tool_installation__mutmut_18(binary_path: pathlib.Path, expected_ve
 
         # Check if expected version is in the output
         if expected_version in version_output:
-            if logger.is_debug_enabled():
-                logger.debug(f"{tool_name} {expected_version} verification successful")
+            logger.debug(f"{tool_name} {expected_version} verification successful")
             return True
         else:
             logger.error(
@@ -662,8 +643,7 @@ def run_version_check(binary_path: pathlib.Path, tool_name: str, timeout: int = 
     cmd = [str(binary_path), *version_args]
 
     try:
-        if logger.is_debug_enabled():
-            logger.debug(f"Running version check: {' '.join(cmd)}")
+        logger.debug(f"Running version check: {' '.join(cmd)}")
 
         result = run(cmd, timeout=timeout)
 
@@ -3103,8 +3083,7 @@ def x_validate_installation_directory__mutmut_orig(install_dir: pathlib.Path, to
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3138,8 +3117,7 @@ def x_validate_installation_directory__mutmut_1(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3173,8 +3151,7 @@ def x_validate_installation_directory__mutmut_2(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3208,8 +3185,7 @@ def x_validate_installation_directory__mutmut_3(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3243,8 +3219,7 @@ def x_validate_installation_directory__mutmut_4(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3278,8 +3253,7 @@ def x_validate_installation_directory__mutmut_5(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3313,8 +3287,7 @@ def x_validate_installation_directory__mutmut_6(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3348,8 +3321,7 @@ def x_validate_installation_directory__mutmut_7(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3383,8 +3355,7 @@ def x_validate_installation_directory__mutmut_8(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3418,8 +3389,7 @@ def x_validate_installation_directory__mutmut_9(install_dir: pathlib.Path, tool_
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3453,8 +3423,7 @@ def x_validate_installation_directory__mutmut_10(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3488,8 +3457,7 @@ def x_validate_installation_directory__mutmut_11(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3523,8 +3491,7 @@ def x_validate_installation_directory__mutmut_12(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3558,8 +3525,7 @@ def x_validate_installation_directory__mutmut_13(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3593,8 +3559,7 @@ def x_validate_installation_directory__mutmut_14(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3628,8 +3593,7 @@ def x_validate_installation_directory__mutmut_15(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3663,8 +3627,7 @@ def x_validate_installation_directory__mutmut_16(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3698,8 +3661,7 @@ def x_validate_installation_directory__mutmut_17(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3733,8 +3695,7 @@ def x_validate_installation_directory__mutmut_18(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3768,8 +3729,7 @@ def x_validate_installation_directory__mutmut_19(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3803,8 +3763,7 @@ def x_validate_installation_directory__mutmut_20(install_dir: pathlib.Path, tool
         logger.error(None)
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3838,8 +3797,7 @@ def x_validate_installation_directory__mutmut_21(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return True
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return True
 
 
@@ -3873,8 +3831,7 @@ def x_validate_installation_directory__mutmut_22(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(None)
+    logger.debug(None)
     return True
 
 
@@ -3908,8 +3865,7 @@ def x_validate_installation_directory__mutmut_23(install_dir: pathlib.Path, tool
         logger.error(f"Binary is not executable: {binary_path}")
         return False
 
-    if logger.is_debug_enabled():
-        logger.debug(f"Installation directory validation passed for {tool_name} {version}")
+    logger.debug(f"Installation directory validation passed for {tool_name} {version}")
     return False
 
 x_validate_installation_directory__mutmut_mutants : ClassVar[MutantDict] = {
@@ -7538,8 +7494,7 @@ def x_verify_file__mutmut_orig(file_path: pathlib.Path, signature_path: pathlib.
         # In production, would verify actual signature
         return True
     else:
-        if logger.is_debug_enabled():
-            logger.debug(f"No signature file found, skipping verification: {file_path}")
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
 
@@ -7563,8 +7518,7 @@ def x_verify_file__mutmut_1(file_path: pathlib.Path, signature_path: pathlib.Pat
         # In production, would verify actual signature
         return True
     else:
-        if logger.is_debug_enabled():
-            logger.debug(f"No signature file found, skipping verification: {file_path}")
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
 
@@ -7588,8 +7542,7 @@ def x_verify_file__mutmut_2(file_path: pathlib.Path, signature_path: pathlib.Pat
         # In production, would verify actual signature
         return True
     else:
-        if logger.is_debug_enabled():
-            logger.debug(f"No signature file found, skipping verification: {file_path}")
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
 
@@ -7613,8 +7566,7 @@ def x_verify_file__mutmut_3(file_path: pathlib.Path, signature_path: pathlib.Pat
         # In production, would verify actual signature
         return True
     else:
-        if logger.is_debug_enabled():
-            logger.debug(f"No signature file found, skipping verification: {file_path}")
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
 
@@ -7638,8 +7590,7 @@ def x_verify_file__mutmut_4(file_path: pathlib.Path, signature_path: pathlib.Pat
         # In production, would verify actual signature
         return True
     else:
-        if logger.is_debug_enabled():
-            logger.debug(f"No signature file found, skipping verification: {file_path}")
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
 
@@ -7663,8 +7614,7 @@ def x_verify_file__mutmut_5(file_path: pathlib.Path, signature_path: pathlib.Pat
         # In production, would verify actual signature
         return True
     else:
-        if logger.is_debug_enabled():
-            logger.debug(f"No signature file found, skipping verification: {file_path}")
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
 
@@ -7688,8 +7638,7 @@ def x_verify_file__mutmut_6(file_path: pathlib.Path, signature_path: pathlib.Pat
         # In production, would verify actual signature
         return False
     else:
-        if logger.is_debug_enabled():
-            logger.debug(f"No signature file found, skipping verification: {file_path}")
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
         return True
 
 
@@ -7713,8 +7662,7 @@ def x_verify_file__mutmut_7(file_path: pathlib.Path, signature_path: pathlib.Pat
         # In production, would verify actual signature
         return True
     else:
-        if logger.is_debug_enabled():
-            logger.debug(None)
+        logger.debug(None)
         return True
 
 
@@ -7738,8 +7686,7 @@ def x_verify_file__mutmut_8(file_path: pathlib.Path, signature_path: pathlib.Pat
         # In production, would verify actual signature
         return True
     else:
-        if logger.is_debug_enabled():
-            logger.debug(f"No signature file found, skipping verification: {file_path}")
+        logger.debug(f"No signature file found, skipping verification: {file_path}")
         return False
 
 x_verify_file__mutmut_mutants : ClassVar[MutantDict] = {

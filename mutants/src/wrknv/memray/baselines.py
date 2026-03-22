@@ -65,7 +65,7 @@ def x_load_baselines__mutmut_orig(baselines_path: Path) -> dict[str, Any]:
         Dictionary of baseline key -> allocation count
     """
     if baselines_path.exists():
-        return json.loads(baselines_path.read_text())
+        return dict[str, Any](json.loads(baselines_path.read_text()))
     return {}
 
 
@@ -79,11 +79,26 @@ def x_load_baselines__mutmut_1(baselines_path: Path) -> dict[str, Any]:
         Dictionary of baseline key -> allocation count
     """
     if baselines_path.exists():
-        return json.loads(None)
+        return dict[str, Any](None)
+    return {}
+
+
+def x_load_baselines__mutmut_2(baselines_path: Path) -> dict[str, Any]:
+    """Load baselines from a JSON file.
+
+    Args:
+        baselines_path: Path to baselines.json
+
+    Returns:
+        Dictionary of baseline key -> allocation count
+    """
+    if baselines_path.exists():
+        return dict[str, Any](json.loads(None))
     return {}
 
 x_load_baselines__mutmut_mutants : ClassVar[MutantDict] = {
-'x_load_baselines__mutmut_1': x_load_baselines__mutmut_1
+'x_load_baselines__mutmut_1': x_load_baselines__mutmut_1, 
+    'x_load_baselines__mutmut_2': x_load_baselines__mutmut_2
 }
 
 def load_baselines(*args, **kwargs):

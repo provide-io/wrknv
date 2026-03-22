@@ -349,4 +349,61 @@ class TestGitignoreManager:
             )
 
 
+class TestManagerCoverage:
+    """Cover remaining uncovered branches in manager.py."""
+
+    @pytest.fixture
+    def temp_dir(self, tmp_path) -> Path:
+        return tmp_path
+
+    @pytest.fixture
+    def manager(self, temp_dir) -> GitignoreManager:
+        return GitignoreManager(project_dir=temp_dir)
+
+    def test_build_from_detection_returns_false_when_no_templates(self, manager) -> None:
+        """Line 154: no templates detected -> return False."""
+        with patch.object(manager.detector, "suggest_templates", return_value=[]):
+            result = manager.build_from_detection()
+        assert result is False
+
+    def test_preview_skips_missing_template(self, manager) -> None:
+        """Branch 268->266: template_handler.get_template returns None -> skip."""
+        with patch.object(manager.template_handler, "get_template", return_value=None):
+            result = manager.preview(templates=["NonExistent"])
+        assert isinstance(result, str)
+        assert "NonExistent" not in result
+
+    def test_preview_with_custom_rules(self, manager) -> None:
+        """Line 275: custom_rules provided -> add_custom_rules called."""
+        with patch.object(manager.template_handler, "get_template", return_value="*.pyc\n"):
+            result = manager.preview(
+                templates=["Python"],
+                custom_rules=["*.myignore", "build/"],
+            )
+        assert "*.myignore" in result
+        assert "build/" in result
+
+    def test_get_detection_report_empty(self, manager) -> None:
+        """Line 311: no characteristics detected -> 'No project characteristics detected'."""
+        with patch.object(manager.detector, "scan_directory"):
+            # Ensure all sets are empty
+            manager.detector.reset()
+            result = manager.get_detection_report()
+        assert "No project characteristics detected" in result
+
+    def test_get_detection_report_only_languages(self, temp_dir, manager) -> None:
+        """Branches 291->294, 294->297, etc.: only languages detected."""
+        (temp_dir / "main.py").touch()
+        with patch.object(manager.detector, "scan_directory") as mock_scan:
+
+            def set_languages(path, max_depth=5):
+                manager.detector.detected_languages.add("Python")
+
+            mock_scan.side_effect = set_languages
+            result = manager.get_detection_report()
+        assert "Languages: Python" in result
+        assert "Frameworks:" not in result
+        assert "Tools:" not in result
+
+
 # 🧰🌍🔚

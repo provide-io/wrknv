@@ -35,7 +35,6 @@ class TestDownloadOperations(FoundationTestCase):
     def teardown_method(self, method: object = None) -> None:
         """Tear down test."""
         self._log_patcher.stop()
-        super().teardown_method()
 
     def test_verify_checksum_success(self) -> None:
         """Test successful checksum verification."""

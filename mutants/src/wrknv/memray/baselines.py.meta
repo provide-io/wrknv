@@ -1,6 +1,7 @@
 {
     "exit_code_by_key": {
         "wrknv.memray.baselines.x_load_baselines__mutmut_1": null,
+        "wrknv.memray.baselines.x_load_baselines__mutmut_2": null,
         "wrknv.memray.baselines.x_update_baseline__mutmut_1": null,
         "wrknv.memray.baselines.x_update_baseline__mutmut_2": null,
         "wrknv.memray.baselines.x_update_baseline__mutmut_3": null,

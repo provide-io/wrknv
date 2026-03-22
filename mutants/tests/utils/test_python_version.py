@@ -263,5 +263,46 @@ class TestGetPythonVersion(FoundationTestCase):
         assert result == expected
 
 
+class TestGetVenvPythonVersionCoverage(FoundationTestCase):
+    """Cover missing branches in get_venv_python_version."""
+
+    def test_windows_path_used_on_win(self, tmp_path: Path) -> None:
+        """Line 31: Windows path (Scripts/python.exe) used when sys.platform is 'win32'."""
+        venv_dir = tmp_path / "venv"
+        venv_bin = venv_dir / "Scripts" / "python.exe"
+        venv_bin.parent.mkdir(parents=True)
+        venv_bin.write_text("fake")
+
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = '{"version": "3.11.0", "major": 3, "minor": 11, "micro": 0}'
+
+        with (
+            patch("wrknv.utils.python_version.sys") as mock_sys,
+            patch("wrknv.utils.python_version.run", return_value=mock_result),
+        ):
+            mock_sys.platform = "win32"
+            result = get_venv_python_version(venv_dir)
+
+        assert result is not None
+        assert result["major"] == 3
+
+    def test_returns_dict_on_success(self, tmp_path: Path) -> None:
+        """Lines 46-47: returns parsed dict when run succeeds."""
+        venv_dir = tmp_path / "venv"
+        venv_bin = venv_dir / "bin" / "python"
+        venv_bin.parent.mkdir(parents=True)
+        venv_bin.write_text("fake")
+
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = '{"version": "3.12.1", "major": 3, "minor": 12, "micro": 1}'
+
+        with patch("wrknv.utils.python_version.run", return_value=mock_result):
+            result = get_venv_python_version(venv_dir)
+
+        assert result == {"version": "3.12.1", "major": 3, "minor": 12, "micro": 1}
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
