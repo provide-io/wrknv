@@ -269,11 +269,6 @@ def main() -> None:
     hub = get_hub()
     hub.initialize_foundation(telemetry_config)
 
-    # Set up wrknv-specific logging (emoji hierarchy)
-    from wrknv.logging.setup import setup_wrknv_logging
-
-    setup_wrknv_logging()
-
     # Set initial process title
     set_process_title("we")
 
