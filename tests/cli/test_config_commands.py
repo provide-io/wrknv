@@ -326,7 +326,9 @@ class TestConfigCommandBranches(FoundationTestCase):
             mock_config = self._mock_config()
             mock_config.get_profile.return_value = {"terraform": "1.5.0"}
             mock_load.return_value = mock_config
-            result = self.runner.invoke(self.cli, ["config", "show", "--profile", "dev", "--output-json"])
+            result = self.runner.invoke(
+                self.cli, ["config", "show", "--profile", "dev", "--output-json"]
+            )
         assert result.exit_code == 0
         import json as _json
 
@@ -452,7 +454,9 @@ class TestConfigCommandBranches(FoundationTestCase):
             mock_config.config_path = "/tmp/wrknv.toml"
             mock_config.config_exists.return_value = False
             mock_load.return_value = mock_config
-            result = self.runner.invoke(self.cli, ["config", "init"], input="myproject\n\n")
+            result = self.runner.invoke(
+                self.cli, ["config", "init"], input="myproject\n\n"
+            )
         assert result.exit_code == 0
         call_args = mock_config.write_config.call_args[0][0]
         assert call_args["project_name"] == "myproject"
@@ -465,7 +469,9 @@ class TestConfigCommandBranches(FoundationTestCase):
             mock_config.config_exists.return_value = False
             mock_config.write_config.side_effect = Exception("disk full")
             mock_load.return_value = mock_config
-            result = self.runner.invoke(self.cli, ["config", "init"], input="\n\n")
+            result = self.runner.invoke(
+                self.cli, ["config", "init"], input="\n\n"
+            )
         assert result.exit_code == 1
         assert "Failed to create configuration" in result.output
 

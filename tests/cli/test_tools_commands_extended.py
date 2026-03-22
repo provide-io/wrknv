@@ -227,6 +227,156 @@ class TestToolsCommandIntegration(FoundationTestCase):
             mock_manager.install_version.assert_called_with("0.5.0", dry_run=False)
 
 
+class TestToolsCommandsBranchCoverage(FoundationTestCase):
+    """Cover uncovered branches in tools commands."""
+
+    def _make_mock_config(self, tools=None):
+        cfg = Mock()
+        cfg.get_all_tools.return_value = tools or {"uv": "0.5.0"}
+        return cfg
+
+    def test_sync_no_lock(self) -> None:
+        """Branch 103->107: sync with lock=False skips locking (direct call)."""
+        from wrknv.cli.commands.tools import sync_command
+
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_get_config,
+            patch("wrknv.cli.commands.tools.get_tool_manager") as mock_mgr_fn,
+            patch("wrknv.cli.commands.tools.resolve_tool_versions", return_value=["0.5.0"]),
+            patch("wrknv.cli.commands.tools.LockfileManager") as mock_lf_cls,
+        ):
+            mock_get_config.return_value = self._make_mock_config()
+            mock_mgr = Mock()
+            mock_mgr_fn.return_value = mock_mgr
+
+            sync_command(lock=False)
+
+            # With lock=False, resolve_and_lock should NOT be called
+            mock_lf_cls.return_value.resolve_and_lock.assert_not_called()
+
+    def test_status_list_version_resolved_differs(self) -> None:
+        """Line 62: list version where resolved != input patterns -> arrow notation."""
+        cli = get_test_cli()
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_get_config,
+            patch("wrknv.cli.commands.tools.get_tool_manager") as mock_mgr_fn,
+            patch("wrknv.cli.commands.tools.resolve_tool_versions", return_value=["0.5.1", "0.6.0"]),
+        ):
+            cfg = Mock()
+            cfg.get_all_tools.return_value = {"uv": [">=0.5", ">=0.6"]}
+            mock_get_config.return_value = cfg
+            mock_mgr_fn.return_value = Mock()
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["status"])
+        assert result.exit_code == 0
+
+    def test_status_list_version_resolve_empty(self) -> None:
+        """Branch 58->81: list version where resolved_versions is empty."""
+        cli = get_test_cli()
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_get_config,
+            patch("wrknv.cli.commands.tools.get_tool_manager") as mock_mgr_fn,
+            patch("wrknv.cli.commands.tools.resolve_tool_versions", return_value=[]),
+        ):
+            cfg = Mock()
+            cfg.get_all_tools.return_value = {"uv": [">=0.5"]}
+            mock_get_config.return_value = cfg
+            mock_mgr_fn.return_value = Mock()
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["status"])
+        assert result.exit_code == 0
+
+    def test_status_list_version_exception(self) -> None:
+        """Line 65: exception resolving list versions -> debug log, continue."""
+        cli = get_test_cli()
+        with (
+            patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_get_config,
+            patch("wrknv.cli.commands.tools.get_tool_manager") as mock_mgr_fn,
+            patch("wrknv.cli.commands.tools.resolve_tool_versions", side_effect=Exception("err")),
+        ):
+            cfg = Mock()
+            cfg.get_all_tools.return_value = {"uv": [">=0.5"]}
+            mock_get_config.return_value = cfg
+            mock_mgr_fn.return_value = Mock()
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["status"])
+        assert result.exit_code == 0
+
+    def test_status_none_version(self) -> None:
+        """Branch 70->81: version is None -> 'Not specified', skip resolve."""
+        cli = get_test_cli()
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_get_config:
+            cfg = Mock()
+            cfg.get_all_tools.return_value = {"go": None}
+            mock_get_config.return_value = cfg
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["status"])
+        assert result.exit_code == 0
+        assert "Not specified" in result.output
+
+
+class TestGenerateEnvNoMoveBranches(FoundationTestCase):
+    """Lines 164->169 and 166->169: branches where output already equals target path.
+
+    Hub passes pathlib.Path parameters as strings, so these branches are only reachable
+    by calling generate_env_command directly with Path objects.
+    """
+
+    def test_powershell_output_equals_ps1_path_no_move(self, tmp_path: Path) -> None:
+        """Line 164->169: shell=powershell, output == ps1_path → safe_move NOT called."""
+        import pathlib
+
+        from wrknv.cli.commands.tools import generate_env_command
+
+        ps1_path = pathlib.Path("env.ps1")
+        sh_path = pathlib.Path("env.sh")
+
+        with (
+            patch(
+                "wrknv.cli.commands.tools.create_project_env_scripts",
+                return_value=(sh_path, ps1_path),
+            ),
+            patch("wrknv.cli.commands.tools.safe_move") as mock_move,
+            patch("wrknv.cli.commands.tools.echo_info"),
+        ):
+            generate_env_command(
+                output=ps1_path,
+                shell="powershell",
+                project_dir=pathlib.Path(),
+            )
+
+        mock_move.assert_not_called()
+
+    def test_sh_output_equals_sh_path_no_move(self, tmp_path: Path) -> None:
+        """Line 166->169: shell=sh, output == sh_path → safe_move NOT called."""
+        import pathlib
+
+        from wrknv.cli.commands.tools import generate_env_command
+
+        sh_path = pathlib.Path("env.sh")
+        ps1_path = pathlib.Path("env.ps1")
+
+        with (
+            patch(
+                "wrknv.cli.commands.tools.create_project_env_scripts",
+                return_value=(sh_path, ps1_path),
+            ),
+            patch("wrknv.cli.commands.tools.safe_move") as mock_move,
+            patch("wrknv.cli.commands.tools.echo_info"),
+        ):
+            generate_env_command(
+                output=sh_path,
+                shell="sh",
+                project_dir=pathlib.Path(),
+            )
+
+        mock_move.assert_not_called()
+
+
 if __name__ == "__main__":
     import pytest
 

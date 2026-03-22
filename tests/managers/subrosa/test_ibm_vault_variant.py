@@ -226,4 +226,59 @@ class TestIbmVaultInstallFromArchive(FoundationTestCase):
         mock_rmtree.assert_called_once()
 
 
+class TestIbmVaultVariantCoverageBranches(FoundationTestCase):
+    """Cover uncovered branches in ibm.py."""
+
+    def test_get_available_versions_sort_fallback(self) -> None:
+        """Lines 62-63: when packaging.version import fails, falls back to string sort."""
+        import sys
+
+        mgr = IbmVaultVariant(WorkenvConfig())
+        mock_response = mock.MagicMock()
+        mock_response.json.return_value = {
+            "versions": {"1.15.0": {}, "1.16.0": {}, "1.14.5": {}}
+        }
+        # Force `from packaging.version import parse` to fail by hiding the module
+        real_packaging = sys.modules.get("packaging.version")
+        sys.modules["packaging.version"] = None  # type: ignore[assignment]
+        try:
+            with mock.patch("wrknv.managers.subrosa.ibm.asyncio.run", return_value=mock_response):
+                versions = mgr.get_available_versions()
+        finally:
+            if real_packaging is not None:
+                sys.modules["packaging.version"] = real_packaging
+            elif "packaging.version" in sys.modules:
+                del sys.modules["packaging.version"]
+        assert isinstance(versions, list)
+        assert len(versions) > 0
+
+    def test_get_download_url_unknown_arch(self) -> None:
+        """Line 82: arch not arm64/amd64/x86_64 falls through to else branch."""
+        mgr = IbmVaultVariant(WorkenvConfig())
+        with mock.patch.object(mgr, "get_platform_info", return_value={"os": "linux", "arch": "riscv64"}):
+            url = mgr.get_download_url("1.15.0")
+        assert "riscv64" in url
+
+    def test_install_loop_skips_non_vault_files(self) -> None:
+        """Line 108->107: files like 'vault_license' match rglob but are skipped in loop."""
+        tmp = self.create_temp_dir()
+        mgr = _make_ibm_vault(tmp)
+        archive = tmp / "vault_1.15.0.zip"
+        archive.write_text("fake archive")
+
+        def fake_extract(src, dst) -> None:  # type: ignore[no-untyped-def]
+            dst.mkdir(parents=True, exist_ok=True)
+            (dst / "vault_license").write_text("license")  # matches vault* but not "vault"
+            (dst / "vault").write_text("vault binary")     # the real binary
+
+        with (
+            mock.patch.object(mgr, "extract_archive", side_effect=fake_extract),
+            mock.patch("wrknv.managers.subrosa.ibm.safe_copy"),
+            mock.patch.object(mgr, "make_executable"),
+            mock.patch.object(mgr, "verify_installation", return_value=True),
+            mock.patch("wrknv.managers.subrosa.ibm.safe_rmtree"),
+        ):
+            mgr._install_from_archive(archive, "1.15.0")
+
+
 # 🧰🌍🔚
