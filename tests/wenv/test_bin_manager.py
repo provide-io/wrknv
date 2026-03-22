@@ -258,5 +258,21 @@ class TestCopyToolBinary(FoundationTestCase):
         assert (bin_dir / "mytool").exists()
         assert not (bin_dir / "mytool.exe").exists()
 
+    def test_adds_exe_suffix_on_windows(self) -> None:
+        """Line 91: os.name == 'nt' appends .exe to target name."""
+        tmp = self.create_temp_dir()
+        source = tmp / "mytool"
+        source.write_bytes(b"\x7fELF")
+        bin_dir = tmp / "bin"
+        bin_dir.mkdir()
+
+        fake_os = mock.MagicMock()
+        fake_os.name = "nt"
+        fake_os.chmod = os.chmod
+        with mock.patch("wrknv.wenv.bin_manager.os", fake_os):
+            copy_tool_binary(source, "mytool", bin_dir)
+
+        assert (bin_dir / "mytool.exe").exists()
+
 
 # 🧰🌍🔚

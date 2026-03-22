@@ -343,6 +343,99 @@ class TestSetupCommandIntegration(FoundationTestCase):
                         assert dir_path.is_dir()
 
 
+class TestSetupCommandCoverage(FoundationTestCase):
+    """Tests to cover remaining uncovered branches in setup.py."""
+
+    def setup_method(self) -> None:
+        """Set up test fixtures."""
+        super().setup_method()
+        self.temp_dir = self.create_temp_dir()
+
+    def test_get_shell_integration_script_path(self) -> None:
+        """Test _get_shell_integration_script_path returns path ending in shell-integration.sh."""
+        from wrknv.cli.commands.setup import _get_shell_integration_script_path
+
+        result = _get_shell_integration_script_path()
+        assert result.name == "shell-integration.sh"
+        assert "scripts" in str(result)
+
+    def test_setup_completions_bash_install_existing_dir(self) -> None:
+        """Test bash completions install when .bash_completion.d already exists."""
+        bash_dir = self.temp_dir / ".bash_completion.d"
+        bash_dir.mkdir()
+
+        cli = get_test_cli()
+        with patch("pathlib.Path.home", return_value=self.temp_dir):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--completions", "bash", "--install"])
+
+        assert result.exit_code == 0
+        assert "Add this to your ~/.bashrc:" in result.output
+        assert (bash_dir / "wrknv").exists()
+
+    def test_setup_completions_zsh_install_no_existing_dir(self) -> None:
+        """Test zsh completions install creates user dir when none exists."""
+        cli = get_test_cli()
+        with patch("pathlib.Path.home", return_value=self.temp_dir):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--completions", "zsh", "--install"])
+
+        assert result.exit_code == 0
+        assert "Add this to your ~/.zshrc:" in result.output
+        # Check the completion file was created
+        zsh_dir = self.temp_dir / ".zsh" / "completions"
+        assert zsh_dir.exists()
+        assert (zsh_dir / "_wrknv").exists()
+
+    def test_setup_completions_zsh_install_existing_dir(self) -> None:
+        """Test zsh completions install when .zsh/completions already exists."""
+        zsh_dir = self.temp_dir / ".zsh" / "completions"
+        zsh_dir.mkdir(parents=True)
+
+        cli = get_test_cli()
+        with patch("pathlib.Path.home", return_value=self.temp_dir):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--completions", "zsh", "--install"])
+
+        assert result.exit_code == 0
+        assert (zsh_dir / "_wrknv").exists()
+
+    def test_setup_completions_fish_install(self) -> None:
+        """Test fish completions install creates completions dir and file."""
+        cli = get_test_cli()
+        with patch("pathlib.Path.home", return_value=self.temp_dir):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["setup", "--completions", "fish", "--install"])
+
+        assert result.exit_code == 0
+        fish_dir = self.temp_dir / ".config" / "fish" / "completions"
+        assert fish_dir.exists()
+        assert (fish_dir / "wrknv.fish").exists()
+
+
+class TestSetupCompletionsUnknownShell(FoundationTestCase):
+    """Lines 128->134 and 134->147: unknown shell + install → install_path stays None."""
+
+    def test_unknown_shell_with_install_skips_write(self) -> None:
+        """Lines 128->134, 134->147: completions='powershell' + install=True → no write, just return."""
+        from wrknv.cli.hub_cli import create_cli
+
+        cli = create_cli()
+
+        from unittest.mock import patch
+
+        with patch("wrknv.wenv.completions.generate_completions", return_value="# completion script"):
+            import click.testing
+
+            runner = click.testing.CliRunner()
+            result = runner.invoke(
+                cli, ["setup", "--completions", "powershell", "--install"]
+            )
+
+        # Should exit cleanly — no install_path found, nothing written
+        assert result.exit_code == 0
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
 

@@ -244,4 +244,47 @@ class TestConfigToToml(FoundationTestCase):
         result = config_to_toml(config)  # type: ignore[arg-type]
         assert "my-toml-project" in result
 
+
+class TestSchemaCoverage(FoundationTestCase):
+    """Cover uncovered branches in schema.py."""
+
+    def test_validate_package_name_empty_raises(self) -> None:
+        """Lines 74-75: validate_package_name_validator raises on empty value."""
+        from wrknv.wenv.schema import validate_package_name_validator
+
+        with pytest.raises(ValueError, match="cannot be empty"):
+            validate_package_name_validator(None, None, "")  # type: ignore[arg-type]
+
+    def test_validate_package_name_invalid_chars_raises(self) -> None:
+        """Lines 77-78: validate_package_name_validator raises on invalid chars."""
+        from wrknv.wenv.schema import validate_package_name_validator
+
+        with pytest.raises(ValueError, match="Invalid package name"):
+            validate_package_name_validator(None, None, "bad@name!")  # type: ignore[arg-type]
+
+    def test_validate_package_name_valid_returns_none(self) -> None:
+        """Line 77->exit: valid package name → no ValueError, function returns None."""
+        from wrknv.wenv.schema import validate_package_name_validator
+
+        # Should not raise — "my-package" is valid (alphanumeric after replacements)
+        result = validate_package_name_validator(None, None, "my-package")  # type: ignore[arg-type]
+        assert result is None
+
+    def test_validate_config_dict_exception_with_cause(self) -> None:
+        """Line 387: exception with __cause__ appends cause message."""
+        from unittest.mock import patch
+
+        from wrknv.wenv.schema import validate_config_dict
+
+        exc = Exception("outer error")
+        exc.__cause__ = ValueError("inner cause")
+
+        with patch("wrknv.wenv.schema.cattrs.Converter") as mock_converter_cls:
+            mock_converter_cls.return_value.structure.side_effect = exc
+            valid, errors = validate_config_dict({})
+
+        assert valid is False
+        assert "inner cause" in errors[0]
+
+
 # 🧰🌍🔚

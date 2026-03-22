@@ -7,8 +7,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from provide.testkit import FoundationTestCase
 
 from wrknv.memray.scaffold import (
@@ -158,6 +156,26 @@ class TestScaffoldMemray(FoundationTestCase):
         actions = scaffold_memray(tmp)
         assert isinstance(actions, list)
         assert all(isinstance(a, str) for a in actions)
+
+    def test_skips_existing_files(self) -> None:
+        """Lines 141->146, 155->160, 161->166, 169->174: already-existing files are skipped."""
+        tmp = self.create_temp_dir()
+        # Create all files that scaffold would create
+        memray_test_dir = tmp / "tests" / "memray"
+        memray_test_dir.mkdir(parents=True, exist_ok=True)
+        (memray_test_dir / "__init__.py").write_text("# existing")
+        (memray_test_dir / "conftest.py").write_text("# existing")
+        (memray_test_dir / "baselines.json").write_text("{}")
+        (memray_test_dir / "test_example_stress.py").write_text("# existing")
+        scripts_dir = tmp / "scripts"
+        scripts_dir.mkdir(exist_ok=True)
+        (scripts_dir / "memray_example_stress.py").write_text("# existing")
+
+        actions = scaffold_memray(tmp)
+        # conftest.py already exists → "Skipped" message expected
+        assert any("Skipped" in a for a in actions)
+        # init and other files should not be re-created
+        assert (memray_test_dir / "__init__.py").read_text() == "# existing"
 
 
 # 🧰🌍🔚

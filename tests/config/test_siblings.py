@@ -311,4 +311,49 @@ siblings = [
             assert "special-package" in ps1_content
 
 
+class TestEnvGeneratorCoverage:
+    """Cover uncovered branches in env_generator.py."""
+
+    def test_explicit_template_base_dir(self, tmp_path) -> None:
+        """Branch 26->29: provide explicit template_base_dir skips default path."""
+        from pathlib import Path
+        import shutil
+
+        # Create minimal sh/pwsh subdirs with dummy template files
+        sh_dir = tmp_path / "sh"
+        pwsh_dir = tmp_path / "pwsh"
+        sh_dir.mkdir()
+        pwsh_dir.mkdir()
+        # Copy actual templates so the object is valid
+        actual_tmpl = Path(__file__).parent.parent.parent / "src" / "wrknv" / "templates" / "env"
+        if actual_tmpl.exists():
+            shutil.copytree(actual_tmpl / "sh", sh_dir, dirs_exist_ok=True)
+            shutil.copytree(actual_tmpl / "pwsh", pwsh_dir, dirs_exist_ok=True)
+        gen = EnvScriptGenerator(template_base_dir=tmp_path)
+        assert gen.template_base_dir == tmp_path
+
+    def test_generate_env_script_unknown_type_raises(self, tmp_path) -> None:
+        """Line 136: unknown script_type raises ValueError."""
+        gen = EnvScriptGenerator()
+        with pytest.raises(ValueError, match="Unknown script type"):
+            gen.generate_env_script("myproject", tmp_path / "out.txt", script_type="bat")
+
+    def test_create_project_env_scripts_missing_pyproject(self, tmp_path) -> None:
+        """Line 179: missing pyproject.toml raises FileNotFoundError."""
+        with pytest.raises(FileNotFoundError, match=r"pyproject\.toml"):
+            create_project_env_scripts(tmp_path)
+
+    def test_create_project_env_scripts_with_workenv_name(self, tmp_path) -> None:
+        """Lines 192-193: workenv_name sets extra_config fields."""
+        pyproject = tmp_path / "pyproject.toml"
+        pyproject.write_text('[project]\nname = "myapp"\n')
+        wrknv_toml = tmp_path / "wrknv.toml"
+        wrknv_toml.write_text("")
+        with patch("wrknv.config.WorkenvConfig._find_config_file") as mock_find:
+            mock_find.return_value = wrknv_toml
+            sh_path, ps1_path = create_project_env_scripts(tmp_path, workenv_name="custom-env")
+        assert sh_path.exists()
+        assert ps1_path.exists()
+
+
 # 🧰🌍🔚

@@ -359,4 +359,102 @@ class TestProjectDetector:
         assert "VisualStudioCode" in detector.detected_tools
 
 
+class TestDetectorCoverage:
+    """Cover remaining uncovered branches in detector.py."""
+
+    def test_scan_nonexistent_path_logs_warning(self) -> None:
+        """Line 105: path.exists() is False -> logger.warning + return."""
+        from pathlib import Path
+
+        detector = ProjectDetector()
+        detector.scan_directory(Path("/nonexistent/path/that/does/not/exist"))
+        # No exception, no detections
+        assert not detector.detected_languages
+
+    def test_scan_subdirectory_non_dot(self, tmp_path) -> None:
+        """Branch 137->127: subdir that is not hidden and is a dir -> recurse."""
+        subdir = tmp_path / "subdir"
+        subdir.mkdir()
+        (subdir / "go.mod").write_text("module mymod\ngo 1.21")
+
+        detector = ProjectDetector()
+        detector.scan_directory(tmp_path)
+        assert "Go" in detector.detected_languages
+
+    def test_permission_error_in_scan_recursive(self, tmp_path) -> None:
+        """Line 139: PermissionError in scan_recursive is caught silently."""
+        from pathlib import Path
+        from unittest import mock
+
+        detector = ProjectDetector()
+        with mock.patch.object(Path, "iterdir", side_effect=PermissionError("denied")):
+            detector.scan_directory(tmp_path)
+        # No exception raised
+
+    def test_permission_error_in_detect_frameworks(self, tmp_path) -> None:
+        """Line 199: PermissionError when iterdir for subdirs is caught silently."""
+        from pathlib import Path
+        from unittest import mock
+
+        detector = ProjectDetector()
+        (tmp_path / "setup.py").touch()
+        orig_iterdir = Path.iterdir
+        call_count = 0
+
+        def fake_iterdir(self):
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                return orig_iterdir(self)
+            raise PermissionError("denied")
+
+        with mock.patch.object(Path, "iterdir", fake_iterdir):
+            detector.scan_directory(tmp_path)
+        # No exception raised
+
+    def test_django_detected_from_requirements(self, tmp_path) -> None:
+        """Line 211: Django in requirements.txt."""
+        (tmp_path / "requirements.txt").write_text("django==4.2\npsycopg2\n")
+        detector = ProjectDetector()
+        detector.scan_directory(tmp_path)
+        assert "Django" in detector.detected_frameworks
+
+    def test_fastapi_detected_from_requirements(self, tmp_path) -> None:
+        """Lines 214-216: FastAPI in requirements.txt."""
+        (tmp_path / "requirements.txt").write_text("fastapi>=0.100\nuvicorn\n")
+        detector = ProjectDetector()
+        detector.scan_directory(tmp_path)
+        assert "FastAPI" in detector.detected_frameworks
+
+    def test_angular_detected_from_package_json(self, tmp_path) -> None:
+        """Line 244: @angular/core in package.json deps."""
+        import json
+
+        (tmp_path / "package.json").write_text(
+            json.dumps({"dependencies": {"@angular/core": "^16.0.0"}})
+        )
+        detector = ProjectDetector()
+        detector.scan_directory(tmp_path)
+        assert "Angular" in detector.detected_frameworks
+
+    def test_nextjs_detected_from_package_json(self, tmp_path) -> None:
+        """Line 249: next in package.json deps."""
+        import json
+
+        (tmp_path / "package.json").write_text(
+            json.dumps({"dependencies": {"next": "^14.0.0", "react": "^18.0.0"}})
+        )
+        detector = ProjectDetector()
+        detector.scan_directory(tmp_path)
+        assert "NextJS" in detector.detected_frameworks
+
+    def test_detect_project_types_convenience_method(self, tmp_path) -> None:
+        """Lines 268-270: detect_project_types calls reset+scan+suggest."""
+        (tmp_path / "pyproject.toml").write_text("[project]\nname='test'")
+        detector = ProjectDetector()
+        results = detector.detect_project_types(tmp_path)
+        assert isinstance(results, list)
+        assert "Python" in results
+
+
 # 🧰🌍🔚
