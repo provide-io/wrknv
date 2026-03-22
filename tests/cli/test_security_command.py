@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 """Test suite for CLI security command."""
+
 from __future__ import annotations
 
 import click.testing
@@ -316,9 +317,7 @@ class TestSecurityGenerate(FoundationTestCase):
             mock_load.return_value = config
             mock_cls.return_value = mock_manager
             runner = click.testing.CliRunner()
-            result = runner.invoke(
-                cli, ["security", "generate", "--tool", "gitleaks", "--dry-run"]
-            )
+            result = runner.invoke(cli, ["security", "generate", "--tool", "gitleaks", "--dry-run"])
         assert result.exit_code == 0
         assert "gitleaks config" in result.output
         mock_manager.generate_gitleaks.assert_called_once()

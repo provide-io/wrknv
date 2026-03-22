@@ -81,9 +81,7 @@ class BaseToolManager(ABC):
         Base implementation is a no-op since config doesn't support writing.
         Subclasses should override this to persist version information.
         """
-        logger.debug(
-            f"Would set {self.tool_name} version to {version} (base implementation - no persistence)"
-        )
+        logger.debug(f"Would set {self.tool_name} version to {version} (base implementation - no persistence)")
 
     def get_binary_path(self, version: str) -> pathlib.Path:
         """Get path to the installed binary for a version."""
