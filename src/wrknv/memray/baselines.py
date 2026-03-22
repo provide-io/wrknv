@@ -33,7 +33,7 @@ def load_baselines(baselines_path: Path) -> dict[str, Any]:
         Dictionary of baseline key -> allocation count
     """
     if baselines_path.exists():
-        return json.loads(baselines_path.read_text())
+        return dict[str, Any](json.loads(baselines_path.read_text()))
     return {}
 
 

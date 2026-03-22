@@ -566,7 +566,7 @@ class TestConformFile(FoundationTestCase):
         """Executable files (starting with shebang) keep shebang header."""
         temp_dir = self.create_temp_dir()
         filepath = temp_dir / "script.py"
-        filepath.write_text("#!/usr/bin/env python3\n\n\"\"\"Script.\"\"\"\n\nprint('hi')\n", encoding="utf-8")
+        filepath.write_text('#!/usr/bin/env python3\n\n"""Script."""\n\nprint(\'hi\')\n', encoding="utf-8")
 
         _conform_file(filepath, "# \U0001f51a")
 
@@ -1302,9 +1302,7 @@ python_files = ["test_*.py", "*_test.py"]
         cli = get_test_cli()
         temp_dir = self.create_temp_dir()
 
-        toml_with_warnings = self._canonical_toml().replace(
-            'license = "Apache-2.0"', 'license = "MIT"'
-        )
+        toml_with_warnings = self._canonical_toml().replace('license = "Apache-2.0"', 'license = "MIT"')
         filepath = temp_dir / "pyproject.toml"
         filepath.write_text(toml_with_warnings, encoding="utf-8")
 
@@ -1318,9 +1316,7 @@ python_files = ["test_*.py", "*_test.py"]
         cli = get_test_cli()
         temp_dir = self.create_temp_dir()
 
-        toml_with_warnings = self._canonical_toml().replace(
-            'license = "Apache-2.0"', 'license = "MIT"'
-        )
+        toml_with_warnings = self._canonical_toml().replace('license = "Apache-2.0"', 'license = "MIT"')
         filepath = temp_dir / "pyproject.toml"
         filepath.write_text(toml_with_warnings, encoding="utf-8")
 
