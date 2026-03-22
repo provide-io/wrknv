@@ -18,7 +18,7 @@ from wrknv.container.core import ContainerManager
 from wrknv.wenv.schema import ContainerConfig
 
 
-def _make_manager(tmp_dir: Path, project_name: str | None = None) -> ContainerManager:
+def _make_manager(tmp_dir: Path, project_name: str = "my-project") -> ContainerManager:
     """Create a ContainerManager with storage path in tmp_dir."""
 
     container_cfg = ContainerConfig(
@@ -40,7 +40,7 @@ class TestContainerManagerInit(FoundationTestCase):
 
     def test_init_with_default_project_name(self) -> None:
         tmp = self.create_temp_dir()
-        manager = _make_manager(tmp, None)
+        manager = _make_manager(tmp, "my-project")
         assert manager.CONTAINER_NAME == ContainerManager.DEFAULT_CONTAINER_NAME
 
     def test_init_with_custom_project_name(self) -> None:
@@ -85,7 +85,9 @@ class TestContainerManagerInit(FoundationTestCase):
 
         default_cfg = get_default_config()
         with (
-            mock.patch.object(type(default_cfg.container), "storage_path", new=str(tmp / "containers")),
+            mock.patch.object(
+                type(default_cfg.container), "storage_path", new=str(tmp / "containers")
+            ),
             mock.patch("wrknv.wenv.schema.get_default_config", return_value=default_cfg),
             mock.patch("pathlib.Path.cwd", return_value=tmp),
         ):

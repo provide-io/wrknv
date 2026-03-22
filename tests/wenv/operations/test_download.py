@@ -58,9 +58,7 @@ class TestGetFilenameFromUrl(FoundationTestCase):
         assert result == "file.tar.gz"
 
     def test_extracts_versioned_filename(self) -> None:
-        result = get_filename_from_url(
-            "https://github.com/owner/repo/releases/download/v1.0/tool_1.0_linux.tar.gz"
-        )
+        result = get_filename_from_url("https://github.com/owner/repo/releases/download/v1.0/tool_1.0_linux.tar.gz")
         assert result == "tool_1.0_linux.tar.gz"
 
     def test_fallback_for_no_filename(self) -> None:
@@ -83,14 +81,20 @@ class TestParseChecksumFile(FoundationTestCase):
     def test_finds_checksum_by_filename(self) -> None:
         tmp = self.create_temp_dir()
         checksum_file = tmp / "SHA256SUMS"
-        checksum_file.write_text("abc123def456  file.tar.gz\n999888777666  other.tar.gz\n")
+        checksum_file.write_text(
+            "abc123def456  file.tar.gz\n"
+            "999888777666  other.tar.gz\n"
+        )
         result = parse_checksum_file(checksum_file, "file.tar.gz")
         assert result == "abc123def456"
 
     def test_skips_comment_lines(self) -> None:
         tmp = self.create_temp_dir()
         checksum_file = tmp / "checksums.txt"
-        checksum_file.write_text("# This is a comment\nabc123  file.tar.gz\n")
+        checksum_file.write_text(
+            "# This is a comment\n"
+            "abc123  file.tar.gz\n"
+        )
         result = parse_checksum_file(checksum_file, "file.tar.gz")
         assert result == "abc123"
 
@@ -222,7 +226,9 @@ class TestDownloadFileAsync(FoundationTestCase):
         mock_client.__aenter__ = mock.AsyncMock(return_value=mock_client)
         mock_client.__aexit__ = mock.AsyncMock(return_value=False)
         mock_downloader = mock.AsyncMock()
-        mock_downloader.download_with_progress = mock.AsyncMock(side_effect=Exception("connection error"))
+        mock_downloader.download_with_progress = mock.AsyncMock(
+            side_effect=Exception("connection error")
+        )
         mock_downloader.add_progress_callback = mock.Mock()
 
         with (
@@ -234,8 +240,7 @@ class TestDownloadFileAsync(FoundationTestCase):
             mock.patch(
                 "wrknv.wenv.operations.download.ToolDownloader",
                 return_value=mock_downloader,
-            ),
-            pytest.raises(Exception, match="Failed to download"),
+            ),pytest.raises(Exception, match="Failed to download")
         ):
             asyncio.run(download_file_async("https://example.com/file.tar.gz", pathlib.Path("/tmp/f")))
 
@@ -262,7 +267,9 @@ class TestDownloadFileAsync(FoundationTestCase):
                 return_value=mock_downloader,
             ),
         ):
-            asyncio.run(download_file_async("https://example.com/file.tar.gz", tmp / "file.tar.gz"))
+            asyncio.run(
+                download_file_async("https://example.com/file.tar.gz", tmp / "file.tar.gz")
+            )
         mock_downloader.download_with_progress.assert_called_once()
 
     def test_with_progress_callback(self) -> None:
@@ -279,7 +286,6 @@ class TestDownloadFileAsync(FoundationTestCase):
         mock_downloader.add_progress_callback = mock.Mock()
 
         callback_calls = []
-
         def my_callback(downloaded: int, total: int) -> None:
             callback_calls.append((downloaded, total))
 
@@ -288,13 +294,11 @@ class TestDownloadFileAsync(FoundationTestCase):
             mock.patch("wrknv.wenv.operations.download.UniversalClient", return_value=mock_client),
             mock.patch("wrknv.wenv.operations.download.ToolDownloader", return_value=mock_downloader),
         ):
-            asyncio.run(
-                download_file_async(
-                    "https://example.com/file.tar.gz",
-                    tmp / "file.tar.gz",
-                    progress_callback=my_callback,
-                )
-            )
+            asyncio.run(download_file_async(
+                "https://example.com/file.tar.gz",
+                tmp / "file.tar.gz",
+                progress_callback=my_callback,
+            ))
 
         # add_progress_callback called at least once (for progress_callback + possibly show_progress)
         assert mock_downloader.add_progress_callback.call_count >= 1
@@ -317,13 +321,11 @@ class TestDownloadFileAsync(FoundationTestCase):
             mock.patch("wrknv.wenv.operations.download.UniversalClient", return_value=mock_client),
             mock.patch("wrknv.wenv.operations.download.ToolDownloader", return_value=mock_downloader),
         ):
-            asyncio.run(
-                download_file_async(
-                    "https://example.com/file.tar.gz",
-                    tmp / "file.tar.gz",
-                    show_progress=False,
-                )
-            )
+            asyncio.run(download_file_async(
+                "https://example.com/file.tar.gz",
+                tmp / "file.tar.gz",
+                show_progress=False,
+            ))
 
         mock_downloader.download_with_progress.assert_called_once()
 
@@ -348,12 +350,10 @@ class TestDownloadWithMirrorsAsync(FoundationTestCase):
             mock.patch("wrknv.wenv.operations.download.UniversalClient", return_value=mock_client),
             mock.patch("wrknv.wenv.operations.download.ToolDownloader", return_value=mock_downloader),
         ):
-            asyncio.run(
-                download_with_mirrors_async(
-                    ["https://mirror1.com/file.tar.gz"],
-                    tmp / "file.tar.gz",
-                )
-            )
+            asyncio.run(download_with_mirrors_async(
+                ["https://mirror1.com/file.tar.gz"],
+                tmp / "file.tar.gz",
+            ))
 
         mock_downloader.download_with_mirrors.assert_called_once()
 
@@ -375,12 +375,10 @@ class TestDownloadWithMirrorsAsync(FoundationTestCase):
             mock.patch("wrknv.wenv.operations.download.ToolDownloader", return_value=mock_downloader),
             pytest.raises(Exception, match="Failed to download from all mirrors"),
         ):
-            asyncio.run(
-                download_with_mirrors_async(
-                    ["https://mirror1.com/file.tar.gz"],
-                    tmp / "file.tar.gz",
-                )
-            )
+            asyncio.run(download_with_mirrors_async(
+                ["https://mirror1.com/file.tar.gz"],
+                tmp / "file.tar.gz",
+            ))
 
     def test_with_show_progress_false(self) -> None:
         tmp = self.create_temp_dir()
@@ -399,13 +397,11 @@ class TestDownloadWithMirrorsAsync(FoundationTestCase):
             mock.patch("wrknv.wenv.operations.download.UniversalClient", return_value=mock_client),
             mock.patch("wrknv.wenv.operations.download.ToolDownloader", return_value=mock_downloader),
         ):
-            asyncio.run(
-                download_with_mirrors_async(
-                    ["https://mirror1.com/file.tar.gz"],
-                    tmp / "file.tar.gz",
-                    show_progress=False,
-                )
-            )
+            asyncio.run(download_with_mirrors_async(
+                ["https://mirror1.com/file.tar.gz"],
+                tmp / "file.tar.gz",
+                show_progress=False,
+            ))
 
         mock_downloader.download_with_mirrors.assert_called_once()
 
@@ -431,13 +427,11 @@ class TestDownloadWithMirrorsAsync(FoundationTestCase):
             mock.patch("pathlib.Path.unlink"),
             pytest.raises(Exception, match="Failed to download from all mirrors"),
         ):
-            asyncio.run(
-                download_with_mirrors_async(
-                    ["https://mirror1.com/file.tar.gz"],
-                    output_file,
-                    checksum="expected_hash",
-                )
-            )
+            asyncio.run(download_with_mirrors_async(
+                ["https://mirror1.com/file.tar.gz"],
+                output_file,
+                checksum="expected_hash",
+            ))
 
 
 class TestParseChecksumFileEdgeCases(FoundationTestCase):

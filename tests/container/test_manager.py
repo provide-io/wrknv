@@ -290,7 +290,6 @@ class TestContainerManager(FoundationTestCase):
         assert result is False
         mock_exec.enter.assert_called_once()
 
-
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
 

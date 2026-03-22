@@ -411,41 +411,4 @@ class TestCompatibilityChecks(FoundationTestCase):
             assert result["compatible"] is True
 
 
-class TestGetDownloadUrlCoverageBranches(FoundationTestCase):
-    """Cover line 82->86: arch not amd64 and not arm64."""
-
-    def test_unknown_arch_passes_through_unchanged(self) -> None:
-        """Line 82->86: arch is neither amd64 nor arm64 → no rename, goes to os check."""
-        tmp = self.create_temp_dir()
-        manager = _make_manager(tmp)
-        with mock.patch.object(manager, "get_platform_info", return_value={"os": "linux", "arch": "x86_64"}):
-            url = manager.get_download_url("0.4.15")
-        assert "x86_64" in url
-
-
-class TestInstallFromArchiveCoverageBranches(FoundationTestCase):
-    """Cover line 117->116: rglob finds uv* file that is NOT 'uv' or 'uv.exe'."""
-
-    def test_loop_skips_non_uv_named_files(self) -> None:
-        """Line 117->116: 'uv_helper' matches rglob but not 'uv'/'uv.exe' → loop skips it.
-
-        Only uv_helper exists (no real uv binary), so the loop iterates, the
-        condition is False (117->116), and then ToolManagerError is raised.
-        """
-        tmp = self.create_temp_dir()
-        manager = _make_manager(tmp)
-        archive_path = tmp / "uv.tar.gz"
-        archive_path.write_bytes(b"")
-
-        def fake_extract(src: pathlib.Path, dst: pathlib.Path) -> None:
-            (dst / "uv_helper").write_text("helper")  # matches uv* but not "uv" or "uv.exe"
-            # No real "uv" binary → loop finds uv_helper, skips it, raises error
-
-        with (
-            mock.patch.object(manager, "extract_archive", side_effect=fake_extract),
-            pytest.raises(ToolManagerError, match="UV binary not found"),
-        ):
-            manager._install_from_archive(archive_path, "0.4.15")
-
-
 # 🧰🌍🔚

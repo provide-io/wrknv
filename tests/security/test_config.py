@@ -68,23 +68,33 @@ class TestLoadSecurityConfig(FoundationTestCase):
 
     def test_loads_from_hidden_wrknv_toml(self) -> None:
         tmp = self.create_temp_dir()
-        (tmp / ".wrknv.toml").write_bytes(b'[security]\nallowed_paths = ["hidden/"]\n')
+        (tmp / ".wrknv.toml").write_bytes(
+            b'[security]\nallowed_paths = ["hidden/"]\n'
+        )
         result = load_security_config(project_dir=tmp)
         assert result is not None
         assert result.allowed_paths == ["hidden/"]
 
     def test_pyproject_takes_priority_over_wrknv(self) -> None:
         tmp = self.create_temp_dir()
-        (tmp / "pyproject.toml").write_bytes(b'[tool.security]\ndescription = "from pyproject"\n')
-        (tmp / "wrknv.toml").write_bytes(b'[security]\ndescription = "from wrknv"\n')
+        (tmp / "pyproject.toml").write_bytes(
+            b'[tool.security]\ndescription = "from pyproject"\n'
+        )
+        (tmp / "wrknv.toml").write_bytes(
+            b'[security]\ndescription = "from wrknv"\n'
+        )
         result = load_security_config(project_dir=tmp)
         assert result is not None
         assert result.description == "from pyproject"
 
     def test_wrknv_takes_priority_over_hidden_wrknv(self) -> None:
         tmp = self.create_temp_dir()
-        (tmp / "wrknv.toml").write_bytes(b'[security]\ndescription = "from wrknv"\n')
-        (tmp / ".wrknv.toml").write_bytes(b'[security]\ndescription = "from hidden"\n')
+        (tmp / "wrknv.toml").write_bytes(
+            b'[security]\ndescription = "from wrknv"\n'
+        )
+        (tmp / ".wrknv.toml").write_bytes(
+            b'[security]\ndescription = "from hidden"\n'
+        )
         result = load_security_config(project_dir=tmp)
         assert result is not None
         assert result.description == "from wrknv"
@@ -125,7 +135,7 @@ class TestLoadSecurityConfig(FoundationTestCase):
 
     def test_default_allowed_paths_from_toml(self) -> None:
         tmp = self.create_temp_dir()
-        (tmp / "pyproject.toml").write_bytes(b"[tool.security]\n")
+        (tmp / "pyproject.toml").write_bytes(b'[tool.security]\n')
         # empty security section returns None since security_data is empty/falsy
         result = load_security_config(project_dir=tmp)
         assert result is None

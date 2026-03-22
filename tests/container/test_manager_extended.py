@@ -33,7 +33,6 @@ class TestContainerManagerExtended(FoundationTestCase):
         test_build_dir = Path.home() / ".wrknv" / "container-build"
         if test_build_dir.exists():
             shutil.rmtree(test_build_dir, ignore_errors=True)
-        super().teardown_method()
 
     def test_stop_container_success(self) -> None:
         """Test successful container stop."""

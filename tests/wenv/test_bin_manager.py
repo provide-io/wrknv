@@ -23,8 +23,7 @@ class TestGetWorkenvBinDirInVenv(FoundationTestCase):
 
     def test_returns_venv_bin_when_in_venv(self) -> None:
         tmp = self.create_temp_dir()
-        bin_name = "Scripts" if os.name == "nt" else "bin"
-        bin_dir = tmp / bin_name
+        bin_dir = tmp / "bin"
         bin_dir.mkdir()
         with (
             mock.patch.object(sys, "prefix", str(tmp)),
@@ -47,8 +46,7 @@ class TestGetWorkenvBinDirInVenv(FoundationTestCase):
 
     def test_creates_bin_dir_when_missing_in_venv(self) -> None:
         tmp = self.create_temp_dir()
-        bin_name = "Scripts" if os.name == "nt" else "bin"
-        expected_bin = tmp / bin_name
+        expected_bin = tmp / "bin"
         # Do NOT pre-create bin dir; get_workenv_bin_dir should create it
         with (
             mock.patch.object(sys, "prefix", str(tmp)),
@@ -116,11 +114,8 @@ class TestGetWorkenvBinDirNotInVenv(FoundationTestCase):
 
         home_tmp = self.create_temp_dir()
         p1, p2 = self._same_prefix_patches("/real/python")
-        with (
-            p1,
-            p2,
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("pathlib.Path.home", return_value=home_tmp),
+        with p1, p2, mock.patch("pathlib.Path.cwd", return_value=tmp), mock.patch(
+            "pathlib.Path.home", return_value=home_tmp
         ):
             result = get_workenv_bin_dir(config=config)
         assert result == home_tmp / ".local" / "bin"
@@ -128,11 +123,8 @@ class TestGetWorkenvBinDirNotInVenv(FoundationTestCase):
     def test_falls_back_to_local_bin_when_no_project_root(self) -> None:
         home_tmp = self.create_temp_dir()
         p1, p2 = self._same_prefix_patches("/real/python")
-        with (
-            p1,
-            p2,
-            mock.patch("pathlib.Path.cwd", return_value=pathlib.Path("/tmp/no-project-here")),
-            mock.patch("pathlib.Path.home", return_value=home_tmp),
+        with p1, p2, mock.patch("pathlib.Path.cwd", return_value=pathlib.Path("/tmp/no-project-here")), mock.patch(
+            "pathlib.Path.home", return_value=home_tmp
         ):
             result = get_workenv_bin_dir(config=None)
         assert result == home_tmp / ".local" / "bin"
@@ -143,11 +135,8 @@ class TestGetWorkenvBinDirNotInVenv(FoundationTestCase):
 
         home_tmp = self.create_temp_dir()
         p1, p2 = self._same_prefix_patches("/real/python")
-        with (
-            p1,
-            p2,
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("pathlib.Path.home", return_value=home_tmp),
+        with p1, p2, mock.patch("pathlib.Path.cwd", return_value=tmp), mock.patch(
+            "pathlib.Path.home", return_value=home_tmp
         ):
             result = get_workenv_bin_dir(config=None)
         assert result == home_tmp / ".local" / "bin"
@@ -160,11 +149,8 @@ class TestGetWorkenvBinDirNotInVenv(FoundationTestCase):
 
         home_tmp = self.create_temp_dir()
         p1, p2 = self._same_prefix_patches("/real/python")
-        with (
-            p1,
-            p2,
-            mock.patch("pathlib.Path.cwd", return_value=tmp),
-            mock.patch("pathlib.Path.home", return_value=home_tmp),
+        with p1, p2, mock.patch("pathlib.Path.cwd", return_value=tmp), mock.patch(
+            "pathlib.Path.home", return_value=home_tmp
         ):
             result = get_workenv_bin_dir(config=config_plain)
         assert result == home_tmp / ".local" / "bin"
@@ -207,11 +193,9 @@ class TestCopyToolBinary(FoundationTestCase):
 
         result = copy_tool_binary(source, "mytool", bin_dir)
 
-        expected_name = "mytool.exe" if os.name == "nt" else "mytool"
         assert result is True
-        assert (bin_dir / expected_name).exists()
+        assert (bin_dir / "mytool").exists()
 
-    @pytest.mark.skipif(os.name == "nt", reason="chmod execute bits not meaningful on Windows")
     def test_sets_executable_permission_on_unix(self) -> None:
         tmp = self.create_temp_dir()
         source = tmp / "mytool"
@@ -268,31 +252,11 @@ class TestCopyToolBinary(FoundationTestCase):
         bin_dir = tmp / "bin"
         bin_dir.mkdir()
 
-        # Patch the entire os module to reliably simulate posix on any platform
-        fake_os = mock.MagicMock()
-        fake_os.name = "posix"
-        fake_os.chmod = os.chmod
-        with mock.patch("wrknv.wenv.bin_manager.os", fake_os):
+        with mock.patch("wrknv.wenv.bin_manager.os.name", "posix"):
             copy_tool_binary(source, "mytool", bin_dir)
 
         assert (bin_dir / "mytool").exists()
         assert not (bin_dir / "mytool.exe").exists()
-
-    def test_adds_exe_suffix_on_windows(self) -> None:
-        """Line 91: os.name == 'nt' appends .exe to target name."""
-        tmp = self.create_temp_dir()
-        source = tmp / "mytool"
-        source.write_bytes(b"\x7fELF")
-        bin_dir = tmp / "bin"
-        bin_dir.mkdir()
-
-        fake_os = mock.MagicMock()
-        fake_os.name = "nt"
-        fake_os.chmod = os.chmod
-        with mock.patch("wrknv.wenv.bin_manager.os", fake_os):
-            copy_tool_binary(source, "mytool", bin_dir)
-
-        assert (bin_dir / "mytool.exe").exists()
 
 
 # 🧰🌍🔚

@@ -117,8 +117,7 @@ class TestGetBinaryPath(FoundationTestCase):
     def test_returns_correct_path(self) -> None:
         tmp = self.create_temp_dir()
         manager = _make_manager(tmp)
-        with mock.patch("platform.system", return_value="Linux"):
-            result = manager.get_binary_path("1.0.0")
+        result = manager.get_binary_path("1.0.0")
         assert result == manager.install_path / "faketool" / "1.0.0" / "bin" / "faketool"
 
     def test_adds_exe_on_windows(self) -> None:

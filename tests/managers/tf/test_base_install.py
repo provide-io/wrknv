@@ -297,7 +297,9 @@ class TestUpdateRecentFileWithActive(FoundationTestCase):
     def test_delegates_to_metadata_manager(self) -> None:
         tmp = self.create_temp_dir()
         manager = _make_manager(tmp)
-        with mock.patch.object(manager.metadata_manager, "update_recent_file_with_active") as mock_update:
+        with mock.patch.object(
+            manager.metadata_manager, "update_recent_file_with_active"
+        ) as mock_update:
             manager._update_recent_file_with_active("1.7.0")
         mock_update.assert_called_once()
 
