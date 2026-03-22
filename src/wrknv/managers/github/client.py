@@ -16,7 +16,7 @@ from types import TracebackType
 from typing import Literal
 
 from provide.foundation.hub import get_hub
-from provide.foundation.logger import get_logger, is_debug_enabled
+from provide.foundation.logger import get_logger
 from provide.foundation.transport import UniversalClient
 
 from wrknv.managers.github.types import Asset, Release, Tag
@@ -79,8 +79,7 @@ class GitHubReleasesClient:
         if not include_prereleases:
             releases = [r for r in releases if not r.prerelease]
 
-        if is_debug_enabled():
-            logger.debug(f"Found {len(releases)} releases")
+        logger.debug(f"Found {len(releases)} releases")
         return releases
 
     async def get_latest_release(self) -> Release:
@@ -135,8 +134,7 @@ class GitHubReleasesClient:
 
         tags = [Tag.from_api(t) for t in data]
 
-        if is_debug_enabled():
-            logger.debug(f"Found {len(tags)} tags")
+        logger.debug(f"Found {len(tags)} tags")
         return tags
 
     async def download_asset(

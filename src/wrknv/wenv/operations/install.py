@@ -83,8 +83,7 @@ def make_executable(file_path: pathlib.Path) -> None:
         # Set new permissions
         file_path.chmod(new_mode)
 
-        if logger.is_debug_enabled():
-            logger.debug(f"Made {file_path} executable (mode: {oct(new_mode)})")
+        logger.debug(f"Made {file_path} executable (mode: {oct(new_mode)})")
 
     except Exception as e:
         logger.warning(f"Failed to make {file_path} executable: {e}")
