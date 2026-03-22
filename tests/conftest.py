@@ -18,7 +18,7 @@ import pytest
 # (where log.debug = _nop). Patch those in-place so functions that reference
 # their module's 'log' via __globals__ will use the proper lazy proxy.
 import structlog as _structlog
-import structlog._native as _sn
+import structlog._native as _sn  # private module; class naming convention tested against structlog>=21
 from provide.testkit import reset_foundation_setup_for_testing as _reset_foundation
 
 _reset_foundation()
@@ -38,8 +38,8 @@ for _mod_name, _mod in list(sys.modules.items()):
 
 
 def _make_permissive(_orig_method):  # noqa: E302
-    def _permissive(self, event="", **kw):  # type: ignore[misc]
-        return _orig_method(self, event, **kw)
+    def _permissive(self, event="", *args, **kw):  # type: ignore[misc]
+        return _orig_method(self, event, *args, **kw)
 
     return _permissive
 
