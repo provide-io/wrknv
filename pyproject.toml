@@ -201,7 +201,7 @@ pythonpath = ["src", "."]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*", "*Tests"]
 python_functions = ["test_*", "*_test"]
-addopts = "-m 'not integration and not slow and not network' -rFE -q --color=yes"
+addopts = "-m 'not integration and not slow and not network and not memray' -rFE -q --color=yes"
 # Parallel execution: pytest -n <workers> (range: 2-16, recommend: CPU cores or 8, max: 16 to avoid xdist hang)
 markers = [
     "unit: fast unit tests",
@@ -215,6 +215,7 @@ markers = [
     "slow: tests taking >1s",
     "fast: tests taking <100ms",
     "network: tests requiring network access",
+    "memray: memory profiling stress tests",
     "benchmark: performance/timing sensitive tests",
     "flaky: tests known to be intermittently failing",
 ]

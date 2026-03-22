@@ -13,7 +13,7 @@ import asyncio
 import re
 from typing import TYPE_CHECKING
 
-from provide.foundation.logger import get_logger
+from provide.foundation.logger import get_logger, is_debug_enabled
 
 from wrknv.managers.base import ToolManagerError
 from wrknv.managers.github import GitHubReleasesClient
@@ -61,7 +61,7 @@ class TofuTfVariant(TfManager):
             # Use GitHub client to fetch versions
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
-            if logger.is_debug_enabled():
+            if is_debug_enabled():
                 logger.debug(f"Found {len(versions)} OpenTofu versions")
             return versions
 
@@ -103,8 +103,7 @@ class TofuTfVariant(TfManager):
                 # Check if version matches
                 version_pattern = rf"OpenTofu v{re.escape(version)}"
                 if re.search(version_pattern, result.stdout):
-                    if logger.is_debug_enabled():
-                        logger.debug(f"OpenTofu {version} verification successful")
+                    logger.debug(f"OpenTofu {version} verification successful")
                     return True
                 else:
                     logger.error(f"Version mismatch in OpenTofu output: {result.stdout}")

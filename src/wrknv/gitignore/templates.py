@@ -35,8 +35,7 @@ class TemplateHandler:
         """
         self.cache_dir = cache_dir or Path.home() / ".wrknv" / "gitignore-templates"
         self.cache_dir = self.cache_dir.expanduser()
-        if logger.is_debug_enabled():
-            logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
+        logger.debug(f"TemplateHandler initialized with cache_dir: {self.cache_dir}")
 
         # Create cache directory if it doesn't exist
         if not self.cache_dir.exists():
@@ -70,8 +69,7 @@ class TemplateHandler:
             with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
                 tmp_path = Path(tmp_file.name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Downloading templates archive to {tmp_path}")
+            logger.debug(f"Downloading templates archive to {tmp_path}")
             download_file(self.GITHUB_ARCHIVE, tmp_path, show_progress=False)
 
             # Extract archive using foundation utilities
@@ -120,8 +118,7 @@ class TemplateHandler:
         essential_templates = ["Python.gitignore", "Node.gitignore", "Go.gitignore"]
         for template in essential_templates:
             if not (self.cache_dir / template).exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Essential template {template} missing, cache invalid")
+                logger.debug(f"Essential template {template} missing, cache invalid")
                 return False
 
         # Cache is considered valid if version file exists and essential templates are present
@@ -159,8 +156,7 @@ class TemplateHandler:
             commit_sha = self._fallback_version()
 
         version_file.write_text(commit_sha)
-        if logger.is_debug_enabled():
-            logger.debug(f"Updated version file with: {commit_sha}")
+        logger.debug(f"Updated version file with: {commit_sha}")
 
     def get_template(self, name: str) -> str | None:
         """
@@ -186,8 +182,7 @@ class TemplateHandler:
 
         for path in possible_paths:
             if path.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Found template at {path}")
+                logger.debug(f"Found template at {path}")
                 return path.read_text()
 
         logger.warning(f"Template '{name}' not found in cache")
@@ -214,8 +209,7 @@ class TemplateHandler:
             # List templates in specific category
             category_dir = self.cache_dir / category
             if category_dir.exists():
-                if logger.is_debug_enabled():
-                    logger.debug(f"Listing templates in category: {category}")
+                logger.debug(f"Listing templates in category: {category}")
                 for file in category_dir.glob("*.gitignore"):
                     templates.append(file.stem)
         else:
