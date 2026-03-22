@@ -7,8 +7,6 @@
 
 from __future__ import annotations
 
-import os
-
 import click.testing
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import Mock, patch
