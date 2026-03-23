@@ -236,4 +236,17 @@ class TestSetupWorkenv(FoundationTestCase):
         assert any("Bash" in c or "source" in c for c in calls)
 
 
+class TestGetWorkenvNameArchNormalization(FoundationTestCase):
+    """Tests for WorkenvManager.get_workenv_name arch normalization branches."""
+
+    def test_unknown_arch_passes_through_unchanged(self) -> None:
+        """Line 34->38: machine not arm64/aarch64/x86_64/amd64 → passed through as-is."""
+        with (
+            mock.patch("platform.system", return_value="Linux"),
+            mock.patch("platform.machine", return_value="ppc64le"),
+        ):
+            name = WorkenvManager.get_workenv_name()
+        assert "ppc64le" in name
+
+
 # 🧰🌍🔚

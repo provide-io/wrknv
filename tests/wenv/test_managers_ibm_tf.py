@@ -405,5 +405,20 @@ class TestBinaryPath(FoundationTestCase):
         assert path == manager.install_path / "terraform_1.6.0"
 
 
+class TestVerifyInstallationIsolated(FoundationTestCase):
+    """Line 118: verify_installation returns False when binary path doesn't exist (isolated)."""
+
+    def test_binary_path_nonexistent_returns_false(self) -> None:
+        """Line 118: patched get_binary_path to non-existent → return False."""
+        import pathlib
+
+        manager = IbmTfManager()
+        with patch.object(
+            manager, "get_binary_path", return_value=pathlib.Path("/nonexistent/ibm_terraform_1.6.0")
+        ):
+            result = manager.verify_installation("1.6.0")
+        assert result is False
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

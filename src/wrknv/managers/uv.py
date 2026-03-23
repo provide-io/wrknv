@@ -54,8 +54,7 @@ class UvManager(BaseToolManager):
             # Use GitHub client to fetch versions
             versions = asyncio.run(self.github_client.get_versions(include_prereleases=include_prereleases))
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} UV versions")
+            logger.debug(f"Found {len(versions)} UV versions")
             return versions
 
         except Exception as e:

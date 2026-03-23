@@ -392,5 +392,48 @@ class TestIntegration(FoundationTestCase):
             assert mock_load.call_count == 2
 
 
+class TestMainFunction(FoundationTestCase):
+    """Cover main() entry point (lines 246-286)."""
+
+    def test_main_runs_cli_when_no_task(self) -> None:
+        """Lines 246-286: main() initializes foundation and falls through to cli()."""
+        from wrknv.cli.hub_cli import main
+
+        mock_cfg = Mock()
+        mock_cfg.workenv.log_level = "INFO"
+        mock_cli = Mock()
+        with (
+            patch("wrknv.config.WorkenvConfig.from_env", return_value=mock_cfg),
+            patch("wrknv.cli.hub_cli.get_hub"),
+            patch("wrknv.cli.hub_cli.create_cli", return_value=mock_cli),
+            patch("wrknv.cli.hub_cli.intercept_task_command", return_value=False),
+            patch("wrknv.logging.setup.setup_wrknv_logging"),
+            patch("attrs.evolve", side_effect=lambda x, **kw: x),
+            patch("provide.foundation.TelemetryConfig.from_env", return_value=Mock()),
+            patch("provide.foundation.process.set_process_title"),
+        ):
+            main()
+        mock_cli.assert_called_once()
+
+    def test_main_returns_early_when_task_intercepted(self) -> None:
+        """Line 282: main() returns without calling cli when task is intercepted."""
+        from wrknv.cli.hub_cli import main
+
+        mock_cfg = Mock()
+        mock_cfg.workenv.log_level = "INFO"
+        with (
+            patch("wrknv.config.WorkenvConfig.from_env", return_value=mock_cfg),
+            patch("wrknv.cli.hub_cli.get_hub"),
+            patch("wrknv.cli.hub_cli.create_cli") as mock_create_cli,
+            patch("wrknv.cli.hub_cli.intercept_task_command", return_value=True),
+            patch("wrknv.logging.setup.setup_wrknv_logging"),
+            patch("attrs.evolve", side_effect=lambda x, **kw: x),
+            patch("provide.foundation.TelemetryConfig.from_env", return_value=Mock()),
+            patch("provide.foundation.process.set_process_title"),
+        ):
+            main()
+        mock_create_cli.assert_not_called()
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

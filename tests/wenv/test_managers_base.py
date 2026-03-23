@@ -293,4 +293,71 @@ class TestShowCurrent(FoundationTestCase):
 
 # (Additional tests split into test_managers_base_install.py)
 
+
+class TestBaseToolManagerCoverage(FoundationTestCase):
+    """Cover uncovered branches in base.py."""
+
+    def _make_manager(self, tmp_path: Path | None = None) -> ConcreteToolManager:
+        cfg = Mock(spec=["get_setting", "get_command_option", "get_tool_version", "set_tool_version"])
+        install_root = (tmp_path or self.create_temp_dir()) / "tools"
+        cfg.get_setting.side_effect = lambda key, default=None: str(install_root) if key == "install_path" else default
+        cfg.get_command_option.return_value = False  # disable symlinks by default
+        cfg.get_tool_version.return_value = None
+        return ConcreteToolManager(config=cfg)
+
+    def test_create_symlink_oserror_logged(self) -> None:
+        """Line 144: OSError in symlink_to is caught and logged as warning."""
+        manager = self._make_manager()
+        version = "1.0.0"
+        binary_path = manager.get_binary_path(version)
+        binary_path.parent.mkdir(parents=True, exist_ok=True)
+        binary_path.write_text("#!/bin/sh")
+        with patch("pathlib.Path.symlink_to", side_effect=OSError("no permission")):
+            # Should not raise
+            manager.create_symlink(version)
+
+    def test_download_file_delegates(self) -> None:
+        """Lines 149-151: download_file method delegates to operations."""
+        manager = self._make_manager()
+        dest = self.create_temp_dir() / "file.tar.gz"
+        with patch("wrknv.wenv.operations.download.download_file") as mock_dl:
+            manager.download_file("https://example.com/file.tar.gz", dest)
+        mock_dl.assert_called_once_with("https://example.com/file.tar.gz", dest, True)
+
+    def test_verify_checksum_delegates_when_enabled(self) -> None:
+        """Lines 161-163: verify_checksum delegates when verify_checksums=True."""
+        manager = self._make_manager()
+        file_path = self.create_temp_dir() / "binary"
+        file_path.write_text("data")
+        # Override get_setting to return True for verify_checksums
+        manager.config.get_setting.side_effect = lambda key, default=None: (
+            str(manager.install_path.parent / "tools") if key == "install_path" else True
+        )
+        with patch("wrknv.wenv.operations.download.verify_checksum", return_value=True) as mock_vc:
+            result = manager.verify_checksum(file_path, "abc123")
+        assert result is True
+        mock_vc.assert_called_once()
+
+    def test_remove_version_unlinks_binary_in_different_dir(self) -> None:
+        """Line 342: remove_version unlinks binary when not inside version_dir."""
+        manager = self._make_manager()
+        version = "1.0.0"
+        # Create just the binary (not version_dir), so rmtree is skipped
+        binary_path = manager.get_binary_path(version)
+        binary_path.parent.mkdir(parents=True, exist_ok=True)
+        binary_path.write_text("#!/bin/sh")
+        manager.config.get_tool_version.return_value = "other-version"
+        manager.remove_version(version)
+        assert not binary_path.exists()
+
+    def test_remove_version_clears_config_for_current_version(self) -> None:
+        """Line 350: remove_version clears config when removing current version."""
+        manager = self._make_manager()
+        version = "1.0.0"
+        manager.config.get_tool_version.return_value = version
+        # No directories to remove
+        manager.remove_version(version)
+        manager.config.set_tool_version.assert_called_once_with("testtool", "")
+
+
 # 🧰🌍🔚

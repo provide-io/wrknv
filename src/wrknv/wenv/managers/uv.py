@@ -47,8 +47,7 @@ class UvManager(BaseToolManager):
 
                 versions.append(tag_name)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} UV versions")
+            logger.debug(f"Found {len(versions)} UV versions")
             return versions
 
         except Exception as e:

@@ -7,13 +7,11 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 from unittest import mock
-
-import pytest
 
 from provide.foundation.errors import ProcessError, ProcessTimeoutError
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.errors import TaskTimeoutError
 from wrknv.tasks.executor import TaskExecutor, _should_stream_output

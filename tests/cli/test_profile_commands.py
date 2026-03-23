@@ -307,6 +307,157 @@ go = { version = "1.21.0" }
                 assert result.exit_code == 0
 
 
+class TestProfileCommandBranches(FoundationTestCase):
+    """Tests for uncovered branches in profile commands."""
+
+    def setup_method(self) -> None:
+        super().setup_method()
+        self.runner = click.testing.CliRunner()
+        self.cli = get_test_cli()
+
+    def _mock_config(self, **kwargs):
+        m = Mock()
+        for k, v in kwargs.items():
+            setattr(m, k, v)
+        return m
+
+    def test_profile_list_active_profile_marked(self) -> None:
+        """profile list marks active profile with *."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.list_profiles.return_value = ["dev", "prod"]
+            cfg.get_current_profile.return_value = "dev"
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "list"])
+        assert result.exit_code == 0
+        assert "* dev (active)" in result.output
+        assert "prod" in result.output
+
+    def test_profile_save_already_exists_no_force(self) -> None:
+        """profile save exits 1 if profile exists without --force."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.profile_exists.return_value = True
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "save", "dev"])
+        assert result.exit_code == 1
+        assert "already exists" in result.output
+
+    def test_profile_save_no_tools(self) -> None:
+        """profile save exits 1 if no tools configured."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.profile_exists.return_value = False
+            cfg.get_all_tools.return_value = {}
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "save", "dev"])
+        assert result.exit_code == 1
+        assert "No tools configured" in result.output
+
+    def test_profile_load_not_found_with_available(self) -> None:
+        """profile load shows available profiles when target not found."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.get_profile.return_value = None
+            cfg.list_profiles.return_value = ["dev", "prod"]
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "load", "missing"])
+        assert result.exit_code == 1
+        assert "Available profiles" in result.output
+
+    def test_profile_delete_not_found(self) -> None:
+        """profile delete exits 1 when profile does not exist."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.profile_exists.return_value = False
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "delete", "nope"])
+        assert result.exit_code == 1
+        assert "not found" in result.output
+
+    def test_profile_delete_confirmed(self) -> None:
+        """profile delete with 'y' input deletes profile."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.profile_exists.return_value = True
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "delete", "dev"], input="y\n")
+        assert result.exit_code == 0
+        cfg.delete_profile.assert_called_once_with("dev")
+
+    def test_profile_delete_cancelled(self) -> None:
+        """profile delete with non-y input cancels."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.profile_exists.return_value = True
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "delete", "dev"], input="n\n")
+        assert result.exit_code == 0
+        assert "Cancelled" in result.output
+
+    def test_profile_show_not_found(self) -> None:
+        """profile show exits 1 when profile not found."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.get_profile.return_value = None
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "show", "nope"])
+        assert result.exit_code == 1
+
+    def test_profile_export_json_format(self, tmp_path) -> None:
+        """profile export writes JSON when output ends with .json."""
+        out = tmp_path / "profile.json"
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.get_profile.return_value = {"terraform": "1.5.0"}
+            mock_load.return_value = cfg
+            result = self.runner.invoke(
+                self.cli, ["profile", "export", "dev", str(out)]
+            )
+        assert result.exit_code == 0
+        import json as _json
+        data = _json.loads(out.read_text())
+        assert data["name"] == "dev"
+
+    def test_profile_export_not_found(self) -> None:
+        """profile export exits 1 when profile not found."""
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.get_profile.return_value = None
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "export", "nope", "/tmp/x.toml"])
+        assert result.exit_code == 1
+
+    def test_profile_import_file_not_found(self) -> None:
+        """profile import exits 1 when file missing."""
+        result = self.runner.invoke(self.cli, ["profile", "import", "/no/such/file.toml"])
+        assert result.exit_code == 1
+        assert "File not found" in result.output
+
+    def test_profile_import_invalid_format(self, tmp_path) -> None:
+        """profile import exits 1 when data missing name/tools."""
+        bad_file = tmp_path / "bad.json"
+        import json as _json
+        bad_file.write_text(_json.dumps({"other": "data"}))
+        result = self.runner.invoke(self.cli, ["profile", "import", str(bad_file)])
+        assert result.exit_code == 1
+        assert "Invalid profile format" in result.output
+
+    def test_profile_import_exception(self, tmp_path) -> None:
+        """profile import exits 1 on general exception (e.g. save_profile fails)."""
+        import json as _json
+
+        good_file = tmp_path / "good.json"
+        good_file.write_text(_json.dumps({"name": "dev", "tools": {"go": "1.21"}}))
+        with patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load:
+            cfg = self._mock_config()
+            cfg.save_profile.side_effect = Exception("db error")
+            mock_load.return_value = cfg
+            result = self.runner.invoke(self.cli, ["profile", "import", str(good_file)])
+        assert result.exit_code == 1
+        assert "Failed to import" in result.output
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
 

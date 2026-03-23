@@ -52,8 +52,7 @@ class IbmVaultVariant(SubRosaManager):
 
                 versions.append(version_str)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} Vault versions")
+            logger.debug(f"Found {len(versions)} Vault versions")
 
             # Sort versions
             try:
