@@ -166,7 +166,6 @@ ignore_errors = true
 module = [
     "wrknv.wenv.schema",
     "wrknv.wenv.env_generator",
-    "wrknv.wenv.managers.*",
     "wrknv.wenv.operations.*",
     "wrknv.wenv.doctor",
 ]

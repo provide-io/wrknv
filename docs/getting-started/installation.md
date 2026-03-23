@@ -269,30 +269,30 @@ wrknv includes managers for common development tools:
 ### UV Manager
 
 ```python
-from wrknv.wenv.managers.uv import UVManager
+from wrknv.managers.uv import UvManager
 
-manager = UVManager()
+manager = UvManager(config)
 await manager.ensure_installed(version="0.5.11")
 ```
 
 ### Terraform Manager
 
 ```python
-from wrknv.wenv.managers.terraform import TerraformManager
+from wrknv.managers.tf.ibm import IbmTfVariant
 
-manager = TerraformManager()
+manager = IbmTfVariant(config)
 await manager.ensure_installed(version="1.9.8")
 ```
 
 ### Custom Tool Managers
 
-Extend `ToolManager` base class for custom tools:
+Extend `BaseToolManager` base class for custom tools:
 
 ```python
-from wrknv.wenv.managers.base import ToolManager
+from wrknv.managers.base import BaseToolManager
 
-class CustomToolManager(ToolManager):
-    async def get_download_url(self, version: str, platform: str) -> str:
+class CustomToolManager(BaseToolManager):
+    def get_download_url(self, version: str) -> str:
         # Return download URL for tool
         pass
 
