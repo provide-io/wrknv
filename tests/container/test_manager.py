@@ -46,6 +46,7 @@ class TestContainerManager(FoundationTestCase):
         test_build_dir = Path.home() / ".wrknv" / "container-build"
         if test_build_dir.exists():
             shutil.rmtree(test_build_dir, ignore_errors=True)
+        super().teardown_method()
 
     @patch.object(DockerRuntime, "is_available", return_value=True)
     def test_check_docker_success(self, mock_is_available) -> None:
