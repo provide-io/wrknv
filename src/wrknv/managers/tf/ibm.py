@@ -12,7 +12,7 @@ from __future__ import annotations
 import asyncio
 import re
 
-from provide.foundation.logger import get_logger, is_debug_enabled
+from provide.foundation.logger import get_logger
 from provide.foundation.transport import get
 
 from wrknv.managers.base import ToolManagerError
@@ -60,10 +60,9 @@ class IbmTfVariant(TfManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=version_sort_key, reverse=True)
 
-            if is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions

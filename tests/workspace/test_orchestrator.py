@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
@@ -208,3 +209,80 @@ class TestWorkspaceTaskResult:
 
         succeeded_repos = result.get_succeeded_repos()
         assert set(succeeded_repos) == {"repo1", "repo3"}
+
+
+class TestWorkspaceOrchestratorEdgeCases:
+    """Tests for edge case branches in WorkspaceOrchestrator."""
+
+    def _make_repo(self, root: Path, name: str, task_name: str | None = "build", task_cmd: str = "echo done") -> Path:
+        """Create a minimal repo with wrknv.toml."""
+        repo = root / name
+        repo.mkdir(parents=True)
+        (repo / ".git").mkdir()
+        (repo / "pyproject.toml").write_text(f'[project]\nname = "{name}"')
+        if task_name:
+            (repo / "wrknv.toml").write_text(f'[tasks]\n{task_name} = "{task_cmd}"')
+        return repo
+
+    def test_discover_repos_with_explicit_patterns(self, tmp_path: Path) -> None:
+        """Test discover_repos when patterns is explicitly provided (78->82 branch)."""
+        (tmp_path / "myrepo" / ".git").mkdir(parents=True)
+        (tmp_path / "myrepo" / "pyproject.toml").write_text('[project]\nname = "myrepo"')
+
+        orchestrator = WorkspaceOrchestrator(root=tmp_path)
+        repos = orchestrator.discover_repos(patterns=["myrepo"])
+        assert len(repos) == 1
+
+    @pytest.mark.asyncio
+    async def test_run_task_sequential_exception_in_registry(self, tmp_path: Path) -> None:
+        """Test sequential execution exception handler (lines 181-205)."""
+        self._make_repo(tmp_path, "repo1", task_name="build")
+
+        orchestrator = WorkspaceOrchestrator(root=tmp_path)
+
+        with mock.patch(
+            "wrknv.workspace.orchestrator.TaskRegistry.from_repo",
+            side_effect=Exception("registry error"),
+        ):
+            result = await orchestrator.run_task("build")
+
+        assert result.failed == 1
+        assert result.succeeded == 0
+
+    @pytest.mark.asyncio
+    async def test_run_task_parallel_task_not_found(self, tmp_path: Path) -> None:
+        """Test parallel execution when task not found (260-266, 313 branches)."""
+        self._make_repo(tmp_path, "repo1", task_name="other")
+
+        orchestrator = WorkspaceOrchestrator(root=tmp_path)
+        result = await orchestrator.run_task("missing-task", parallel=True)
+
+        assert result.skipped == 1
+        assert result.failed == 0
+
+    @pytest.mark.asyncio
+    async def test_run_task_parallel_exception_in_run(self, tmp_path: Path) -> None:
+        """Test parallel execution exception handler (280-300 branch)."""
+        self._make_repo(tmp_path, "repo1", task_name="build")
+
+        orchestrator = WorkspaceOrchestrator(root=tmp_path)
+
+        with mock.patch(
+            "wrknv.workspace.orchestrator.TaskRegistry.from_repo",
+            side_effect=Exception("parallel error"),
+        ):
+            result = await orchestrator.run_task("build", parallel=True)
+
+        assert result.failed == 1
+        assert result.succeeded == 0
+
+    @pytest.mark.asyncio
+    async def test_run_task_parallel_failed_result(self, tmp_path: Path) -> None:
+        """Test parallel execution counting failed result (line 319 branch)."""
+        self._make_repo(tmp_path, "repo1", task_name="build", task_cmd="exit 1")
+
+        orchestrator = WorkspaceOrchestrator(root=tmp_path)
+        result = await orchestrator.run_task("build", parallel=True)
+
+        assert result.failed == 1
+        assert result.succeeded == 0

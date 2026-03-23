@@ -53,10 +53,9 @@ class IbmTfManager(TfVersionsManager):
             # Sort versions in descending order (latest first)
             versions.sort(key=self._version_sort_key, reverse=True)
 
-            if logger.is_debug_enabled():
-                logger.debug(f"Found {len(versions)} IBM Terraform versions")
+            logger.debug(f"Found {len(versions)} IBM Terraform versions")
             # Log the first few versions to debug
-            if versions and logger.is_debug_enabled():
+            if versions:
                 logger.debug(f"Latest versions: {versions[:5]}")
 
             return versions
