@@ -124,7 +124,7 @@ class TestProfileManagement(FoundationTestCase):
         mock_file.__exit__.return_value = False
         mock_open.return_value = mock_file
 
-        with patch("json.load", return_value=test_metadata), patch.dict("os.environ", {}, clear=True):
+        with patch("json.load", return_value=test_metadata), patch.dict("os.environ", {"WRKENV_PROFILE": ""}):
             manager = ConcreteTfManager()
             profile = manager._get_current_profile()
 

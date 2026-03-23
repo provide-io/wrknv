@@ -199,7 +199,7 @@ class TestEditConfig(FoundationTestCase):
         persistence = WorkenvConfigPersistence(config=cfg)
 
         with (
-            mock.patch.dict("os.environ", {}, clear=True),
+            mock.patch.dict("os.environ", {"EDITOR": "", "VISUAL": ""}),
             pytest.raises(RuntimeError, match="No editor configured"),
         ):
             persistence.edit_config()
