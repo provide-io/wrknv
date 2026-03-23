@@ -101,6 +101,9 @@ logs/
 # Build artifacts
 bfiles-*.txt
 
+# mutmut mutation testing output (generated, not tracked)
+mutants/
+
 # macOS
 .DS_Store
 .AppleDouble

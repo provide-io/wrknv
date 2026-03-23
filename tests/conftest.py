@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import sys
 
+from provide.testkit import reset_foundation_setup_for_testing as _reset_foundation
 import pytest
 
 # Initialize Foundation at conftest import time so that module-level loggers
@@ -19,7 +20,6 @@ import pytest
 # their module's 'log' via __globals__ will use the proper lazy proxy.
 import structlog as _structlog
 import structlog._native as _sn  # private module; class naming convention tested against structlog>=21
-from provide.testkit import reset_foundation_setup_for_testing as _reset_foundation
 
 _reset_foundation()
 
@@ -27,7 +27,7 @@ _reset_foundation()
 # lazy proxies that re-evaluate against the current structlog config on each call.
 for _mod_name, _mod in list(sys.modules.items()):
     if _mod_name.startswith("provide.foundation") and hasattr(_mod, "log"):
-        _logger = getattr(_mod, "log")
+        _logger = _mod.log
         if hasattr(_logger, "debug") and getattr(_logger.debug, "__name__", "") == "_nop":
             _mod.log = _structlog.get_logger(_mod_name)
 
@@ -37,7 +37,7 @@ for _mod_name, _mod in list(sys.modules.items()):
 # classes to make event optional so these calls don't raise TypeError.
 
 
-def _make_permissive(_orig_method):  # noqa: E302
+def _make_permissive(_orig_method):
     def _permissive(self, event="", *args, **kw):  # type: ignore[misc]
         return _orig_method(self, event, *args, **kw)
 
