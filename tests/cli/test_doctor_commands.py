@@ -376,9 +376,9 @@ class TestDoctorFunctionCoverage(FoundationTestCase):
 
     def test_check_dependencies_optional_missing(self) -> None:
         """Lines 222-223, 234-244: optional deps missing -> warn."""
-        from wrknv.cli.commands.doctor import _check_dependencies
-
         import builtins
+
+        from wrknv.cli.commands.doctor import _check_dependencies
 
         _real_import = builtins.__import__
 

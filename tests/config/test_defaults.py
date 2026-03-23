@@ -14,7 +14,6 @@ from wrknv.config.defaults import (
     DEFAULT_AUTO_DISCOVER,
     DEFAULT_CLI_HELP,
     DEFAULT_CLI_NAME,
-    DEFAULT_CLI_VERSION,
     DEFAULT_CONTAINER_PLATFORM,
     DEFAULT_CONTAINER_RUNTIME,
     DEFAULT_DRY_RUN,
@@ -80,7 +79,6 @@ class TestDefaults:
         assert isinstance(DEFAULT_PYTHON_VERSION, str)
         assert isinstance(DEFAULT_LOG_LEVEL, str)
         assert isinstance(DEFAULT_CLI_NAME, str)
-        assert isinstance(DEFAULT_CLI_VERSION, str)
         assert isinstance(DEFAULT_CLI_HELP, str)
 
         assert DEFAULT_VERSION
@@ -92,7 +90,6 @@ class TestDefaults:
         assert DEFAULT_PYTHON_VERSION
         assert DEFAULT_LOG_LEVEL
         assert DEFAULT_CLI_NAME
-        assert DEFAULT_CLI_VERSION
         assert DEFAULT_CLI_HELP
 
     def test_none_defaults(self) -> None:

@@ -27,6 +27,8 @@ from typing import TYPE_CHECKING
 from provide.foundation import logger
 import semver
 
+from wrknv import __version__
+
 from .base import BaseToolManager, ToolManagerError
 
 if TYPE_CHECKING:
@@ -375,7 +377,7 @@ class TfVersionsManager(BaseToolManager):
             "binary_sha256": binary_hash,
             "signature_files": [str(f) for f in signature_files],
             "platform": self.get_platform_info(),
-            "wrknv_version": "0.3.0",  # Track which version of wrknv installed this
+            "wrknv_version": __version__,  # Track which version of wrknv installed this
         }
 
         self._save_metadata()
