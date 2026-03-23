@@ -291,5 +291,6 @@ class TestShowCurrent(FoundationTestCase):
         assert "not installed" in mock_pout.call_args[0][0]
 
 
-if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+# (Additional tests split into test_managers_base_install.py)
+
+# 🧰🌍🔚
