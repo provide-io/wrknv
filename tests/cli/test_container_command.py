@@ -379,4 +379,118 @@ class TestContainerExec(FoundationTestCase):
         assert call_kwargs["command"] == ["ls", "-la"]
 
 
+class TestContainerCommandFunctions(FoundationTestCase):
+    """Cover remaining branches in container command functions."""
+
+    def test_container_status_docker_unavailable(self) -> None:
+        """Line 77: docker not available -> red status."""
+        from wrknv.container.commands import container_status
+
+        with mock.patch("wrknv.container.commands.ContainerManager") as mock_mgr_cls:
+            mock_mgr = mock.Mock()
+            mock_mgr.status.return_value = {
+                "docker_available": False,
+                "image_found": False,
+                "container_exists": False,
+                "container_running": False,
+                "container_info": None,
+            }
+            mock_mgr.full_image = "myimg:latest"
+            mock_mgr.container_name = "mycontainer"
+            mock_mgr_cls.return_value = mock_mgr
+            # Should not raise
+            container_status(None)
+
+    def test_container_status_no_container(self) -> None:
+        """Line 99: container doesn't exist -> 'Not Created' status."""
+        from wrknv.container.commands import container_status
+
+        with mock.patch("wrknv.container.commands.ContainerManager") as mock_mgr_cls:
+            mock_mgr = mock.Mock()
+            mock_mgr.status.return_value = {
+                "docker_available": True,
+                "image_found": True,
+                "container_exists": False,
+                "container_running": False,
+                "container_info": None,
+            }
+            mock_mgr.full_image = "myimg:latest"
+            mock_mgr.container_name = "mycontainer"
+            mock_mgr_cls.return_value = mock_mgr
+            container_status(None)
+
+    def test_rebuild_clean_fails(self) -> None:
+        """Line 153: rebuild when clean fails -> return False."""
+        from wrknv.container.commands import rebuild_container
+
+        with mock.patch("wrknv.container.commands.ContainerManager") as mock_mgr_cls:
+            mock_mgr = mock.Mock()
+            mock_mgr.clean.return_value = False
+            mock_mgr_cls.return_value = mock_mgr
+            result = rebuild_container(None)
+        assert result is False
+
+    def test_rebuild_build_fails(self) -> None:
+        """Line 157: rebuild when build_image fails -> return False."""
+        from wrknv.container.commands import rebuild_container
+
+        with mock.patch("wrknv.container.commands.ContainerManager") as mock_mgr_cls:
+            mock_mgr = mock.Mock()
+            mock_mgr.clean.return_value = True
+            mock_mgr.build_image.return_value = False
+            mock_mgr_cls.return_value = mock_mgr
+            result = rebuild_container(None)
+        assert result is False
+
+    def test_list_volumes_gb_size(self) -> None:
+        """Line 186: volume size > 1GB -> GB format."""
+        from wrknv.container.commands import list_volumes
+
+        with mock.patch("wrknv.container.commands.ContainerManager") as mock_mgr_cls:
+            mock_mgr = mock.Mock()
+            mock_mgr.list_volumes.return_value = [
+                {
+                    "name": "data",
+                    "path": "/mnt/data",
+                    "size": 2 * 1024 * 1024 * 1024,
+                    "exists": True,
+                    "files": 100,
+                }
+            ]
+            mock_mgr_cls.return_value = mock_mgr
+            # Should not raise
+            list_volumes(None)
+
+    def test_restore_volumes_exception(self) -> None:
+        """Lines 249-251: exception during restore -> return False."""
+        from wrknv.container.commands import restore_volumes
+
+        with mock.patch("wrknv.container.commands.ContainerManager") as mock_mgr_cls:
+            mock_mgr = mock.Mock()
+            mock_mgr.restore_volumes.side_effect = RuntimeError("restore failed")
+            mock_mgr_cls.return_value = mock_mgr
+            result = restore_volumes(None, "/tmp/backup.tar.gz")
+        assert result is False
+
+    def test_restore_volumes_fails_no_force(self) -> None:
+        """Line 245: restore fails without force -> show hint."""
+        from wrknv.container.commands import restore_volumes
+
+        with mock.patch("wrknv.container.commands.ContainerManager") as mock_mgr_cls:
+            mock_mgr = mock.Mock()
+            mock_mgr.restore_volumes.return_value = False
+            mock_mgr_cls.return_value = mock_mgr
+            result = restore_volumes(None, "/tmp/backup.tar.gz", force=False)
+        assert result is False
+
+    def test_container_exec_empty_command(self) -> None:
+        """Lines 345-347: exec with empty command -> error exit."""
+        cfg = _mock_config()
+        cli = get_test_cli()
+        with mock.patch("wrknv.cli.commands.container.WrknvContext.get_config", return_value=cfg):
+            runner = click.testing.CliRunner()
+            result = runner.invoke(cli, ["container", "exec", ""])
+        assert result.exit_code != 0
+
+
 # 🧰🌍🔚

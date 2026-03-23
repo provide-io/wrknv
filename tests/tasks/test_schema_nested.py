@@ -186,6 +186,11 @@ class TestPackageTaskReference:
         with pytest.raises(ValueError, match="must start with @"):
             PackageTaskReference.parse("pyvider-cty.test")
 
+    def test_reject_package_reference_without_dot(self) -> None:
+        """Lines 111-112: @ reference with no dot → must include task name."""
+        with pytest.raises(ValueError, match="must include task name"):
+            PackageTaskReference.parse("@mypackage")
+
     def test_is_package_reference_detection(self) -> None:
         """Test detecting if a string is a package reference."""
         assert PackageTaskReference.is_package_reference("@pyvider-cty.test")

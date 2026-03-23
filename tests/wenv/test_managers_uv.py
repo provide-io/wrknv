@@ -360,5 +360,53 @@ class TestHarnessCompatibility(FoundationTestCase):
         assert "notes" in result
 
 
+class TestUvManagerCoverageBranches(FoundationTestCase):
+    """Cover uncovered branches in uv.py."""
+
+    def test_verify_installation_binary_not_found(self, tmp_path: Path) -> None:
+        """Line 135: return False when binary doesn't exist."""
+        config = WorkenvConfig()
+        with patch.object(UvManager, "get_binary_path", return_value=tmp_path / "no_such_uv"):
+            manager = UvManager(config)
+            result = manager.verify_installation("0.4.15")
+        assert result is False
+
+    @patch("shutil.copy2")
+    @patch("shutil.rmtree")
+    @patch.object(UvManager, "verify_installation", return_value=True)
+    @patch.object(UvManager, "make_executable")
+    @patch.object(UvManager, "extract_archive")
+    def test_install_skips_non_uv_files_in_archive(
+        self,
+        mock_extract: Mock,
+        mock_make_exec: Mock,
+        mock_verify: Mock,
+        mock_rmtree: Mock,
+        mock_copy: Mock,
+        tmp_path: Path,
+    ) -> None:
+        """Line 102->101: loop iterates past files whose names aren't 'uv' or 'uv.exe'."""
+        config = WorkenvConfig()
+        config.workenv_cache_dir = str(tmp_path / "cache")
+        manager = UvManager(config)
+
+        extract_dir = manager.cache_dir / "uv_0.4.15_extract"
+        extract_dir.mkdir(parents=True, exist_ok=True)
+        # A file that matches rglob("uv*") but is not named "uv" or "uv.exe"
+        non_uv = extract_dir / "uvicorn"
+        non_uv.touch()
+        # The real uv binary
+        uv_binary = extract_dir / "uv"
+        uv_binary.touch()
+
+        archive_path = tmp_path / "uv.tar.gz"
+        archive_path.touch()
+
+        # Force rglob to return uvicorn before uv so the False branch (102->101) is covered
+        with patch.object(Path, "rglob", return_value=iter([non_uv, uv_binary])):
+            manager._install_from_archive(archive_path, "0.4.15")
+        mock_verify.assert_called_once_with("0.4.15")
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
