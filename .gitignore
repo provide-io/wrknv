@@ -138,3 +138,6 @@ memray-output/
 
 # Local act CI config (machine-specific)
 .actrc
+
+# Local settings (machine-specific)
+*.local.json
