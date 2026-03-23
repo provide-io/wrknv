@@ -70,7 +70,8 @@ class TestLockfile(FoundationTestCase):
         assert lockfile.config_checksum
         assert len(lockfile.config_checksum) == 12
         assert lockfile.created_at == "2025-01-01T00:00:00"
-        assert lockfile.wrknv_version == "0.3.0"
+        from wrknv import __version__
+        assert lockfile.wrknv_version == __version__
         assert len(lockfile.resolved_tools) == 0
 
     def test_add_resolved_tool(self) -> None:

@@ -79,7 +79,7 @@ wrknv/
 
 ### Adding New Tool Managers
 
-1. **Create a manager class**: Inherit from `BaseToolManager` in `src/wrknv/wenv/managers/`
+1. **Create a manager class**: Inherit from `BaseToolManager` in `src/wrknv/managers/`
 2. **Implement required methods**: `get_download_url()`, `get_executable_name()`, etc.
 3. **Add platform support**: Handle different operating systems and architectures
 4. **Include tests**: Comprehensive test coverage for all manager functionality
@@ -88,8 +88,7 @@ wrknv/
 Example tool manager:
 
 ```python
-from wrknv.wenv.managers.base import BaseToolManager
-from wrknv.wenv.managers.types import ToolInfo
+from wrknv.managers.base import BaseToolManager
 
 class NewToolManager(BaseToolManager):
     """Manager for NewTool installation and management."""
@@ -101,14 +100,6 @@ class NewToolManager(BaseToolManager):
     def get_executable_name(self, platform: str) -> str:
         """Get executable name for the platform."""
         return "newtool.exe" if platform == "windows" else "newtool"
-
-    def get_tool_info(self, version: str) -> ToolInfo:
-        """Get tool information for specified version."""
-        return ToolInfo(
-            name="newtool",
-            version=version,
-            description="Description of NewTool"
-        )
 ```
 
 ### Adding New CLI Commands
@@ -207,7 +198,7 @@ bandit -r src/
 2. **Implement changes**:
    ```bash
    # Add new tool manager
-   vim src/wrknv/wenv/managers/newtool.py
+   vim src/wrknv/managers/newtool.py
 
    # Add tests
    vim tests/test_newtool_manager.py

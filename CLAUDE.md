@@ -52,7 +52,7 @@ uv pip install -e .
 
 **Environment Generation (`src/wrknv/wenv/env_generator.py`)**: Jinja2-based template system that generates `env.sh` and `env.ps1` scripts from templates in `src/wrknv/templates/env/`.
 
-**Tool Managers (`src/wrknv/wenv/managers/`)**: Abstract base class pattern for tool installation/management. Implementations for UV, Terraform, OpenTofu, Go, etc. Each manager handles platform-specific download URLs and verification.
+**Tool Managers (`src/wrknv/managers/`)**: Abstract base class pattern for tool installation/management. Implementations for UV, Terraform, OpenTofu, Go, Bao, Vault, etc. Each manager handles platform-specific download URLs and verification.
 
 **Container Management (`src/wrknv/container/`)**: Experimental Docker-based development environment management with runtime abstraction and operations (build, exec, lifecycle, volumes).
 
