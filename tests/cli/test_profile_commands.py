@@ -411,11 +411,10 @@ class TestProfileCommandBranches(FoundationTestCase):
             cfg = self._mock_config()
             cfg.get_profile.return_value = {"terraform": "1.5.0"}
             mock_load.return_value = cfg
-            result = self.runner.invoke(
-                self.cli, ["profile", "export", "dev", str(out)]
-            )
+            result = self.runner.invoke(self.cli, ["profile", "export", "dev", str(out)])
         assert result.exit_code == 0
         import json as _json
+
         data = _json.loads(out.read_text())
         assert data["name"] == "dev"
 
@@ -438,6 +437,7 @@ class TestProfileCommandBranches(FoundationTestCase):
         """profile import exits 1 when data missing name/tools."""
         bad_file = tmp_path / "bad.json"
         import json as _json
+
         bad_file.write_text(_json.dumps({"other": "data"}))
         result = self.runner.invoke(self.cli, ["profile", "import", str(bad_file)])
         assert result.exit_code == 1

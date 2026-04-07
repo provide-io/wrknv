@@ -68,6 +68,7 @@ class TestMemrayFixtureLogic(FoundationTestCase):
         baselines_path = tmp / "baselines.json"
         baselines_path.write_text('{"alloc_key": 2500}\n')
         from wrknv.memray.baselines import load_baselines
+
         result = load_baselines(baselines_path)
         assert result == {"alloc_key": 2500}
 
