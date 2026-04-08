@@ -18,7 +18,9 @@ from wrknv.config.core import WorkenvConfig, WorkenvConfigError
 
 def _make_config() -> WorkenvConfig:
     """Create a config with mocked persistence/display/validator."""
-    with mock.patch.object(WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/wrknv.toml")):
+    with mock.patch.object(
+        WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/wrknv.toml")
+    ):
         cfg = WorkenvConfig.load()
     return cfg
 
@@ -354,7 +356,9 @@ class TestSetSettingBranches(FoundationTestCase):
 
         with (
             mock.patch.dict(os.environ, {"WRKNV_DESCRIPTION": "env-set-desc"}),
-            mock.patch.object(WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/wrknv.toml")),
+            mock.patch.object(
+                WorkenvConfig, "_find_config_file", return_value=pathlib.Path("/nonexistent/wrknv.toml")
+            ),
         ):
             cfg = WorkenvConfig.load()
         assert cfg.description == "env-set-desc"

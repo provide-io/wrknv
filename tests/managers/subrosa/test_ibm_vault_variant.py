@@ -235,9 +235,7 @@ class TestIbmVaultVariantCoverageBranches(FoundationTestCase):
 
         mgr = IbmVaultVariant(WorkenvConfig())
         mock_response = mock.MagicMock()
-        mock_response.json.return_value = {
-            "versions": {"1.15.0": {}, "1.16.0": {}, "1.14.5": {}}
-        }
+        mock_response.json.return_value = {"versions": {"1.15.0": {}, "1.16.0": {}, "1.14.5": {}}}
         # Force `from packaging.version import parse` to fail by hiding the module
         real_packaging = sys.modules.get("packaging.version")
         sys.modules["packaging.version"] = None  # type: ignore[assignment]
@@ -269,7 +267,7 @@ class TestIbmVaultVariantCoverageBranches(FoundationTestCase):
         def fake_extract(src, dst) -> None:  # type: ignore[no-untyped-def]
             dst.mkdir(parents=True, exist_ok=True)
             (dst / "vault_license").write_text("license")  # matches vault* but not "vault"
-            (dst / "vault").write_text("vault binary")     # the real binary
+            (dst / "vault").write_text("vault binary")  # the real binary
 
         with (
             mock.patch.object(mgr, "extract_archive", side_effect=fake_extract),

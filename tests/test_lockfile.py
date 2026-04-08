@@ -71,6 +71,7 @@ class TestLockfile(FoundationTestCase):
         assert len(lockfile.config_checksum) == 12
         assert lockfile.created_at == "2025-01-01T00:00:00"
         from wrknv import __version__
+
         assert lockfile.wrknv_version == __version__
         assert len(lockfile.resolved_tools) == 0
 

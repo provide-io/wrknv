@@ -85,9 +85,7 @@ class TestContainerManagerInit(FoundationTestCase):
 
         default_cfg = get_default_config()
         with (
-            mock.patch.object(
-                type(default_cfg.container), "storage_path", new=str(tmp / "containers")
-            ),
+            mock.patch.object(type(default_cfg.container), "storage_path", new=str(tmp / "containers")),
             mock.patch("wrknv.wenv.schema.get_default_config", return_value=default_cfg),
             mock.patch("pathlib.Path.cwd", return_value=tmp),
         ):

@@ -244,15 +244,17 @@ class TestGetContainerStatsCoverage:
         mock_mgr.container_running.return_value = True
         mock_mgr.container_name = "test-project-dev"
         mock_cls.return_value = mock_mgr
-        stats_json = json.dumps({
-            "Name": "test-project-dev",
-            "CPUPerc": "0.5%",
-            "MemUsage": "100MiB / 2GiB",
-            "MemPerc": "5%",
-            "NetIO": "1kB / 500B",
-            "BlockIO": "0B / 0B",
-            "PIDs": "5",
-        })
+        stats_json = json.dumps(
+            {
+                "Name": "test-project-dev",
+                "CPUPerc": "0.5%",
+                "MemUsage": "100MiB / 2GiB",
+                "MemPerc": "5%",
+                "NetIO": "1kB / 500B",
+                "BlockIO": "0B / 0B",
+                "PIDs": "5",
+            }
+        )
         mock_run.return_value = Mock(returncode=0, stdout=stats_json)
 
         result = get_container_stats(_enabled_config())

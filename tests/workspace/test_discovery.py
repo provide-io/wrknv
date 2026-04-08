@@ -198,17 +198,23 @@ class TestDetectRepoType(FoundationTestCase):
 
     def test_detects_foundation_by_name(self) -> None:
         disc = self._disc()
-        result = disc.detect_repo_type({"project": {"name": "provide-foundation", "dependencies": []}}, Path("/x"))
+        result = disc.detect_repo_type(
+            {"project": {"name": "provide-foundation", "dependencies": []}}, Path("/x")
+        )
         assert result == "foundation"
 
     def test_detects_testkit_by_name(self) -> None:
         disc = self._disc()
-        result = disc.detect_repo_type({"project": {"name": "provide-testkit", "dependencies": []}}, Path("/x"))
+        result = disc.detect_repo_type(
+            {"project": {"name": "provide-testkit", "dependencies": []}}, Path("/x")
+        )
         assert result == "testkit"
 
     def test_detects_pyvider_plugin_by_prefix(self) -> None:
         disc = self._disc()
-        result = disc.detect_repo_type({"project": {"name": "pyvider-myplugin", "dependencies": []}}, Path("/x"))
+        result = disc.detect_repo_type(
+            {"project": {"name": "pyvider-myplugin", "dependencies": []}}, Path("/x")
+        )
         assert result == "pyvider-plugin"
 
     def test_detects_provider_by_exact_name(self) -> None:
