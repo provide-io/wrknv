@@ -203,7 +203,11 @@ class TestDoctorCoverageBranches(FoundationTestCase):
         import platform
 
         machine = platform.machine().lower()
-        arch = "amd64" if machine in ["x86_64", "amd64"] else ("arm64" if machine in ["arm64", "aarch64"] else machine)
+        arch = (
+            "amd64"
+            if machine in ["x86_64", "amd64"]
+            else ("arm64" if machine in ["arm64", "aarch64"] else machine)
+        )
         system = platform.system().lower()
         pkg = tmp.name
         env_script = tmp / "env.sh"

@@ -278,17 +278,13 @@ class TestGitignoreBuildAutoDetectNoTypes(FoundationTestCase):
 
             with (
                 patch("wrknv.cli.hub_cli.WrknvContext.get_config", return_value=mock_config_instance),
-                patch(
-                    "wrknv.cli.commands.gitignore.ProjectDetector"
-                ) as mock_detector_cls,
+                patch("wrknv.cli.commands.gitignore.ProjectDetector") as mock_detector_cls,
             ):
                 mock_detector = Mock()
                 mock_detector.detect_project_types.return_value = []  # empty → 176->181 False branch
                 mock_detector_cls.return_value = mock_detector
 
-                result = runner.invoke(
-                    cli, ["gitignore", "build", "--auto-detect"], catch_exceptions=False
-                )
+                result = runner.invoke(cli, ["gitignore", "build", "--auto-detect"], catch_exceptions=False)
 
             assert result.exit_code == 0
             assert "No gitignore templates specified" in result.output
