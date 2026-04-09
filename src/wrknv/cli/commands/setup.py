@@ -110,20 +110,10 @@ def setup_command(
                     install_path = user_dir / "wrknv"
 
             elif completions == "zsh":
-                # Zsh completion paths
-                for path in [
-                    Path.home() / ".zsh/completions",
-                    Path("/usr/local/share/zsh/site-functions"),
-                ]:
-                    if path.exists() and path.is_dir():
-                        install_path = path / "_wrknv"
-                        break
-
-                if not install_path:
-                    # Create user directory
-                    user_dir = Path.home() / ".zsh/completions"
-                    user_dir.mkdir(parents=True, exist_ok=True)
-                    install_path = user_dir / "_wrknv"
+                # Install to user zsh completions dir (system dirs require sudo)
+                user_dir = Path.home() / ".zsh/completions"
+                user_dir.mkdir(parents=True, exist_ok=True)
+                install_path = user_dir / "_wrknv"
 
             elif completions == "fish":
                 # Fish completion path
