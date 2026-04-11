@@ -260,6 +260,19 @@ class TestGetContainerStatsCoverage:
         assert result["cpu"] == "0.5%"
         assert result["pids"] == "5"
 
+    @patch("wrknv.container.shell_commands.run")
+    @patch("wrknv.container.shell_commands.ContainerManager")
+    def test_no_stdout_returns_none(self, mock_cls, mock_run) -> None:
+        """Line 338->355: returncode=0 but no stdout returns None."""
+        mock_mgr = Mock()
+        mock_mgr.container_running.return_value = True
+        mock_mgr.container_name = "test-project-dev"
+        mock_cls.return_value = mock_mgr
+        mock_run.return_value = Mock(returncode=0, stdout="")
+
+        result = get_container_stats(_enabled_config())
+        assert result is None
+
     @patch("wrknv.container.shell_commands.run", side_effect=RuntimeError("stats failed"))
     @patch("wrknv.container.shell_commands.ContainerManager")
     def test_exception_returns_none(self, mock_cls, mock_run) -> None:
