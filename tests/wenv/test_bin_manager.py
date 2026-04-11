@@ -23,7 +23,8 @@ class TestGetWorkenvBinDirInVenv(FoundationTestCase):
 
     def test_returns_venv_bin_when_in_venv(self) -> None:
         tmp = self.create_temp_dir()
-        bin_dir = tmp / "bin"
+        bin_name = "Scripts" if os.name == "nt" else "bin"
+        bin_dir = tmp / bin_name
         bin_dir.mkdir()
         with (
             mock.patch.object(sys, "prefix", str(tmp)),
@@ -46,7 +47,8 @@ class TestGetWorkenvBinDirInVenv(FoundationTestCase):
 
     def test_creates_bin_dir_when_missing_in_venv(self) -> None:
         tmp = self.create_temp_dir()
-        expected_bin = tmp / "bin"
+        bin_name = "Scripts" if os.name == "nt" else "bin"
+        expected_bin = tmp / bin_name
         # Do NOT pre-create bin dir; get_workenv_bin_dir should create it
         with (
             mock.patch.object(sys, "prefix", str(tmp)),
@@ -205,9 +207,11 @@ class TestCopyToolBinary(FoundationTestCase):
 
         result = copy_tool_binary(source, "mytool", bin_dir)
 
+        expected_name = "mytool.exe" if os.name == "nt" else "mytool"
         assert result is True
-        assert (bin_dir / "mytool").exists()
+        assert (bin_dir / expected_name).exists()
 
+    @pytest.mark.skipif(os.name == "nt", reason="chmod execute bits not meaningful on Windows")
     def test_sets_executable_permission_on_unix(self) -> None:
         tmp = self.create_temp_dir()
         source = tmp / "mytool"
@@ -264,7 +268,11 @@ class TestCopyToolBinary(FoundationTestCase):
         bin_dir = tmp / "bin"
         bin_dir.mkdir()
 
-        with mock.patch("wrknv.wenv.bin_manager.os.name", "posix"):
+        # Patch the entire os module to reliably simulate posix on any platform
+        fake_os = mock.MagicMock()
+        fake_os.name = "posix"
+        fake_os.chmod = os.chmod
+        with mock.patch("wrknv.wenv.bin_manager.os", fake_os):
             copy_tool_binary(source, "mytool", bin_dir)
 
         assert (bin_dir / "mytool").exists()

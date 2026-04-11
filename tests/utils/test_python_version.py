@@ -290,7 +290,10 @@ class TestGetVenvPythonVersionCoverage(FoundationTestCase):
     def test_returns_dict_on_success(self, tmp_path: Path) -> None:
         """Lines 46-47: returns parsed dict when run succeeds."""
         venv_dir = tmp_path / "venv"
-        venv_bin = venv_dir / "bin" / "python"
+        if sys.platform.startswith("win"):
+            venv_bin = venv_dir / "Scripts" / "python.exe"
+        else:
+            venv_bin = venv_dir / "bin" / "python"
         venv_bin.parent.mkdir(parents=True)
         venv_bin.write_text("fake")
 
