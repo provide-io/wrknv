@@ -42,7 +42,7 @@ _wrknv_completion() {
     local container_commands="build start enter stop restart status logs clean rebuild"
     local profile_commands="list save load show delete export import"
     local config_commands="show edit validate init get set path"
-    local package_commands="build verify keygen clean init list info sign publish config"
+    local package_commands="build verify keygen clean init list info sign config"
 
     case "${prev}" in
         wrknv)
@@ -195,7 +195,6 @@ _wrknv() {
                         'list:List built packages'
                         'info:Show package information'
                         'sign:Sign package'
-                        'publish:Publish package to registry'
                         'config:Show package configuration'
                     )
                     _describe -t package_commands 'package command' package_commands
@@ -281,16 +280,15 @@ complete -c wrknv -n "__fish_seen_subcommand_from config; and not __fish_seen_su
 complete -c wrknv -n "__fish_seen_subcommand_from config; and not __fish_seen_subcommand_from show edit validate init get set path" -a "path" -d "Show path"
 
 # Package subcommands
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "build" -d "Build package"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "verify" -d "Verify package"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "keygen" -d "Generate keys"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "clean" -d "Clean cache"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "init" -d "Initialize provider"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "list" -d "List packages"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "info" -d "Show package info"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "sign" -d "Sign package"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "publish" -d "Publish package"
-complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign publish config" -a "config" -d "Show config"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "build" -d "Build package"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "verify" -d "Verify package"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "keygen" -d "Generate keys"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "clean" -d "Clean cache"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "init" -d "Initialize provider"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "list" -d "List packages"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "info" -d "Show package info"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "sign" -d "Sign package"
+complete -c wrknv -n "__fish_seen_subcommand_from package; and not __fish_seen_subcommand_from build verify keygen clean init list info sign config" -a "config" -d "Show config"
 """
 
 
