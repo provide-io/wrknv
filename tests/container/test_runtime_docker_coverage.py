@@ -403,9 +403,7 @@ class TestDockerRuntimeIsAvailable:
 
         rt = make_runtime()
         with patch("wrknv.container.runtime.docker.run") as mock_run:
-            mock_run.return_value = CompletedProcess(
-                args=[], returncode=0, stdout="Docker version 24.0", stderr=""
-            )
+            mock_run.return_value = CompletedProcess(args=[], returncode=0, stdout="Docker version 24.0", stderr="")
             result = rt.is_available()
 
         assert result is True
@@ -416,9 +414,7 @@ class TestDockerRuntimeIsAvailable:
 
         rt = make_runtime()
         with patch("wrknv.container.runtime.docker.run") as mock_run:
-            mock_run.return_value = CompletedProcess(
-                args=[], returncode=1, stdout="", stderr="daemon not running"
-            )
+            mock_run.return_value = CompletedProcess(args=[], returncode=1, stdout="", stderr="daemon not running")
             with pytest.raises((ProcessError, RuntimeError)):
                 rt.is_available()
 
@@ -428,8 +424,7 @@ class TestDockerRuntimeIsAvailable:
 
         rt = make_runtime()
         err = ProcessError(message="docker not found")
-        with (
-            patch("wrknv.container.runtime.docker.run", side_effect=err),
-            pytest.raises((ProcessError, RuntimeError)),
+        with patch("wrknv.container.runtime.docker.run", side_effect=err), pytest.raises(
+            (ProcessError, RuntimeError)
         ):
             rt.is_available()
