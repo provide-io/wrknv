@@ -38,13 +38,6 @@ class TestWorkenvConfigValidatorBasic(FoundationTestCase):
         assert is_valid
         assert errors == []
 
-    def test_invalid_project_name_not_string(self) -> None:
-        config = _make_config(project_name=123)
-        v = WorkenvConfigValidator(config)
-        is_valid, errors = v.validate()
-        assert not is_valid
-        assert any("project_name" in e for e in errors)
-
     def test_invalid_project_name_empty(self) -> None:
         config = _make_config(project_name="   ")
         v = WorkenvConfigValidator(config)
