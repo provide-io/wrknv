@@ -18,7 +18,7 @@ from wrknv.container.core import ContainerManager
 from wrknv.wenv.schema import ContainerConfig
 
 
-def _make_manager(tmp_dir: Path, project_name: str = "my-project") -> ContainerManager:
+def _make_manager(tmp_dir: Path, project_name: str | None = None) -> ContainerManager:
     """Create a ContainerManager with storage path in tmp_dir."""
 
     container_cfg = ContainerConfig(
@@ -40,7 +40,7 @@ class TestContainerManagerInit(FoundationTestCase):
 
     def test_init_with_default_project_name(self) -> None:
         tmp = self.create_temp_dir()
-        manager = _make_manager(tmp, "my-project")
+        manager = _make_manager(tmp, None)
         assert manager.CONTAINER_NAME == ContainerManager.DEFAULT_CONTAINER_NAME
 
     def test_init_with_custom_project_name(self) -> None:
