@@ -16,6 +16,8 @@ import re
 from provide.foundation import logger
 from provide.foundation.transport import get
 
+from wrknv.config.defaults import GO_DOWNLOAD_API_URL
+
 from .base import BaseToolManager, ToolManagerError
 
 
@@ -33,7 +35,7 @@ class GoManager(BaseToolManager):
     def get_available_versions(self) -> list[str]:
         """Get available Go versions from official API."""
         try:
-            api_url = "https://go.dev/dl/?mode=json"
+            api_url = GO_DOWNLOAD_API_URL
 
             logger.debug(f"Fetching Go versions from {api_url}")
 
