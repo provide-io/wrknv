@@ -16,7 +16,7 @@ import re
 from provide.foundation import logger
 from provide.foundation.transport import get
 
-from wrknv.config.defaults import GO_DOWNLOAD_API_URL, GO_MIRROR_DEFAULT
+from wrknv.config.defaults import GO_DOWNLOAD_API_URL
 
 from .base import BaseToolManager, ToolManagerError
 
