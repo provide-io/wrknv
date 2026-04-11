@@ -42,9 +42,7 @@ class TestContainerLifecycleBasicChecks:
         """exists() returns True when container_exists returns True (line 36)."""
         lc = make_lifecycle()
         with patch("wrknv.container.runtime.docker.run") as mock_run:
-            mock_run.return_value = CompletedProcess(
-                args=[], returncode=0, stdout="test-container", stderr=""
-            )
+            mock_run.return_value = CompletedProcess(args=[], returncode=0, stdout="test-container", stderr="")
             assert lc.exists() is True
 
     def test_exists_false(self):
@@ -58,9 +56,7 @@ class TestContainerLifecycleBasicChecks:
         """is_running() returns True when container_running returns True (line 40)."""
         lc = make_lifecycle()
         with patch("wrknv.container.runtime.docker.run") as mock_run:
-            mock_run.return_value = CompletedProcess(
-                args=[], returncode=0, stdout="test-container", stderr=""
-            )
+            mock_run.return_value = CompletedProcess(args=[], returncode=0, stdout="test-container", stderr="")
             assert lc.is_running() is True
 
     def test_is_running_false(self):
