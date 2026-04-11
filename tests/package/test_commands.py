@@ -196,6 +196,7 @@ class TestSignPackage(FoundationTestCase):
             sign_package(pkg, key)
 
 
+
 class TestVerifyPackage(FoundationTestCase):
     """Tests for verify_package."""
 
