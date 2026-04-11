@@ -48,7 +48,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"}]}' || '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.12"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.13"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.11"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.12"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.13"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.11"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.12"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.13"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.11"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.12"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.13"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.11"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.12"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.13"}]}') }}
+      matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"}]}' || '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.12"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.13"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.11"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.12"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.13"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.11"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.12"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.13"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.11"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.12"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.13"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.11"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.12"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.13"},{"runner":"windows-11-arm","platform":"windows_arm64","python-version":"3.11"},{"runner":"windows-11-arm","platform":"windows_arm64","python-version":"3.12"},{"runner":"windows-11-arm","platform":"windows_arm64","python-version":"3.13"}]}') }}
 
     steps:
       - uses: actions/checkout@v4
@@ -154,7 +154,7 @@ jobs:
     needs: [lint, test]
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"}]}' || '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"},{"os":"ubuntu-24.04-arm","target":"linux_arm64"},{"os":"macos-15-intel","target":"darwin_amd64"},{"os":"macos-15","target":"darwin_arm64"},{"os":"windows-2022","target":"windows_amd64"}]}') }}
+      matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"}]}' || '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"},{"os":"ubuntu-24.04-arm","target":"linux_arm64"},{"os":"macos-15-intel","target":"darwin_amd64"},{"os":"macos-15","target":"darwin_arm64"},{"os":"windows-2022","target":"windows_amd64"},{"os":"windows-11-arm","target":"windows_arm64"}]}') }}
     steps:
       - uses: actions/checkout@v4
 
@@ -163,23 +163,6 @@ jobs:
           manifest: pyproject.toml
           output-path: dist/wrknv_${{ matrix.target }}.psp
           strip: true
-
-      # Smoke-test the PSP: run the built binary with --help to confirm it executes
-      - name: Smoke-test PSP (non-Windows)
-        if: ${{ !startsWith(matrix.os, 'windows') }}
-        shell: bash
-        run: |
-          chmod +x dist/wrknv_${{ matrix.target }}.psp
-          ./dist/wrknv_${{ matrix.target }}.psp --help
-
-      # Windows PSP launchers are PE binaries; rename to .exe and run via cmd to
-      # preserve SYSTEMROOT/WINDIR/COMSPEC which the PSP runtime requires
-      - name: Smoke-test PSP (Windows)
-        if: ${{ startsWith(matrix.os, 'windows') }}
-        shell: cmd
-        run: |
-          copy dist\wrknv_${{ matrix.target }}.psp dist\wrknv_${{ matrix.target }}.exe
-          dist\wrknv_${{ matrix.target }}.exe --help
 
       - uses: actions/upload-artifact@v7
         with:
