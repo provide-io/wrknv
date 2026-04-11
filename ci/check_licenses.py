@@ -4,6 +4,7 @@
 
 #!/usr/bin/env python3
 """Check pip-licenses JSON output (from stdin) for problematic copyleft licenses."""
+
 import json
 import sys
 
