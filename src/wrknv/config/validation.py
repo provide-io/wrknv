@@ -30,13 +30,14 @@ class WorkenvConfigValidator:
         """
         errors = []
 
-        # Basic validation
-        if not isinstance(self.config.project_name, str):
-            errors.append(f"project_name must be string, got {type(self.config.project_name)}")
-        elif not self.config.project_name.strip():
-            errors.append("project_name cannot be empty")
-        elif not self._is_valid_project_name(self.config.project_name):
-            errors.append(f"Invalid project_name: {self.config.project_name}")
+        # Basic validation - project_name is optional (None means unset)
+        if self.config.project_name is not None:
+            if not isinstance(self.config.project_name, str):
+                errors.append(f"project_name must be string or None, got {type(self.config.project_name)}")
+            elif not self.config.project_name.strip():
+                errors.append("project_name cannot be empty string")
+            elif not self._is_valid_project_name(self.config.project_name):
+                errors.append(f"Invalid project_name: {self.config.project_name}")
 
         if not isinstance(self.config.version, str):
             errors.append(f"version must be string, got {type(self.config.version)}")

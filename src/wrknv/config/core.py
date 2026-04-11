@@ -65,7 +65,7 @@ class WorkenvConfig(RuntimeConfig):
 
     # Project metadata
     project_name: str | None = config_field(
-        default="my-project", description="Project name", env_var="WRKNV_PROJECT_NAME"
+        default=None, description="Project name", env_var="WRKNV_PROJECT_NAME"
     )
     version: str | None = config_field(default="1.0.0", description="Project version", env_var="WRKNV_VERSION")
     description: str | None = config_field(

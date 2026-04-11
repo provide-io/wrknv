@@ -43,8 +43,9 @@ class ContainerManager:
         self.container_config = self.config.container or ContainerConfig()
 
         # Set container and image names (can be customized in config)
-        project_name = self.config.project_name.replace(" ", "-").lower()
-        if project_name != "my-project":
+        raw_name = self.config.project_name
+        if raw_name:
+            project_name = raw_name.replace(" ", "-").lower()
             self.CONTAINER_NAME = f"{project_name}-dev"
         else:
             self.CONTAINER_NAME = self.DEFAULT_CONTAINER_NAME
