@@ -207,7 +207,7 @@ class TestGetDefaultConfig(FoundationTestCase):
 
     def test_default_project_name(self) -> None:
         result = get_default_config()
-        assert result.project_name == "my-project"
+        assert result.project_name == "wrknv"
 
     def test_custom_project_name(self) -> None:
         result = get_default_config("acme")
