@@ -79,20 +79,8 @@ jobs:
           path: bandit-report.json
       
       - name: Parse bandit results
-        run: |
-          python -c "
-          import json
-          with open('bandit-report.json', 'r') as f:
-              data = json.load(f)
-          if data.get('results'):
-              print('Security issues found:')
-              for issue in data['results']:
-                  print(f\"  - {issue['issue_text']} ({issue['issue_severity']}) at {issue['filename']}:{issue['line_number']}\")
-              if any(issue['issue_severity'] == 'HIGH' for issue in data['results']):
-                  exit(1)
-          else:
-              print('No security issues found!')
-          "
+        # Reads bandit-report.json and exits 1 on HIGH severity findings
+        run: python ci/parse_bandit.py
 
   codeql:
     name: CodeQL Analysis
@@ -195,29 +183,8 @@ jobs:
           pip-licenses --format=markdown --with-urls >> $GITHUB_STEP_SUMMARY
       
       - name: Check for problematic licenses
-        run: |
-          # Check for GPL or other copyleft licenses that might be incompatible
-          pip-licenses --format=json | python -c "
-          import json
-          import sys
-          
-          data = json.loads(sys.stdin.read())
-          problematic = ['GPL', 'AGPL', 'LGPL', 'SSPL']
-          issues = []
-          
-          for pkg in data:
-              license = pkg.get('License', '').upper()
-              if any(p in license for p in problematic):
-                  issues.append(f\"{pkg['Name']}: {pkg['License']}\")
-          
-          if issues:
-              print('Potentially problematic licenses found:')
-              for issue in issues:
-                  print(f'  - {issue}')
-              print('\\nPlease review these licenses for compatibility.')
-          else:
-              print('No problematic licenses detected.')
-          "
+        # Checks pip-licenses output for GPL/AGPL/LGPL/SSPL licenses
+        run: pip-licenses --format=json | python ci/check_licenses.py
 
   sarif-upload:
     name: Upload SARIF Results
