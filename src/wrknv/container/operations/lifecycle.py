@@ -107,7 +107,7 @@ class ContainerLifecycle:
             self.console.print(f"[red]❌ Failed to start container: {e}[/red]")
             return False
 
-    def stop(self, timeout: int) -> bool:
+    def stop(self, timeout: int = 10) -> bool:
         """Stop the container.
 
         Args:
