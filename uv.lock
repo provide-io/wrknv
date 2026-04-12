@@ -2286,6 +2286,7 @@ dependencies = [
     { name = "jinja2" },
     { name = "packaging" },
     { name = "provide-foundation", extra = ["all"] },
+    { name = "pyyaml" },
     { name = "rich" },
     { name = "semver" },
 ]
@@ -2307,6 +2308,7 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.0.0" },
     { name = "packaging", specifier = ">=24.0" },
     { name = "provide-foundation", extras = ["all"], specifier = ">=0.3.21" },
+    { name = "pyyaml", specifier = ">=6.0" },
     { name = "rich", specifier = ">=14.0.0" },
     { name = "semver", specifier = ">=3.0.0" },
 ]
