@@ -102,7 +102,7 @@ def _load_footer_registry() -> dict[str, str]:
     """Load the footer registry from JSON file."""
     registry_path = Path(__file__).parent.parent.parent / "data" / "footer_registry.json"
     try:
-        with registry_path.open() as f:
+        with registry_path.open(encoding="utf-8") as f:
             data = json.load(f)
             return data.get("repositories", {})
     except (FileNotFoundError, json.JSONDecodeError) as e:

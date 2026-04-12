@@ -7,11 +7,13 @@
 
 from __future__ import annotations
 
+import os
 import tomllib
 import types
 from unittest import mock
 
 from provide.testkit import FoundationTestCase
+import pytest
 
 from wrknv.wenv.doctor import WrknvDoctor, run_doctor
 
@@ -196,6 +198,7 @@ class TestRunDoctorFunction(FoundationTestCase):
 class TestDoctorCoverageBranches(FoundationTestCase):
     """Cover uncovered branches in doctor.py."""
 
+    @pytest.mark.skipif(os.name == "nt", reason="chmod execute bits not meaningful on Windows")
     def test_env_script_not_executable_warning(self) -> None:
         """Line 174: env.sh exists but is not executable → warning."""
         doctor = WrknvDoctor()
