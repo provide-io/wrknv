@@ -172,13 +172,14 @@ jobs:
           chmod +x dist/wrknv_${{ matrix.target }}.psp
           ./dist/wrknv_${{ matrix.target }}.psp --help
 
-      # Windows PSP launchers are PE binaries; rename to .exe before executing
+      # Windows PSP launchers are PE binaries; rename to .exe and run via cmd to
+      # preserve SYSTEMROOT/WINDIR/COMSPEC which the PSP runtime requires
       - name: Smoke-test PSP (Windows)
         if: ${{ startsWith(matrix.os, 'windows') }}
-        shell: pwsh
+        shell: cmd
         run: |
-          Copy-Item dist\wrknv_${{ matrix.target }}.psp dist\wrknv_${{ matrix.target }}.exe
-          .\dist\wrknv_${{ matrix.target }}.exe --help
+          copy dist\wrknv_${{ matrix.target }}.psp dist\wrknv_${{ matrix.target }}.exe
+          dist\wrknv_${{ matrix.target }}.exe --help
 
       - uses: actions/upload-artifact@v7
         with:
