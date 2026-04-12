@@ -73,6 +73,15 @@ DEFAULT_PYTHON_VERSION = "3.11"
 DEFAULT_REGISTRY_URL = None  # Will be set when registry is implemented
 
 # =================================
+# External service URLs
+# =================================
+GITHUB_GITIGNORE_REPO = "https://github.com/github/gitignore"
+GITHUB_GITIGNORE_ARCHIVE = "https://github.com/github/gitignore/archive/refs/heads/main.tar.gz"
+GITHUB_GITIGNORE_API = "https://api.github.com/repos/github/gitignore"
+GO_DOWNLOAD_API_URL = "https://go.dev/dl/?mode=json"
+GO_MIRROR_DEFAULT = "https://go.dev/dl"
+
+# =================================
 # Template defaults
 # =================================
 DEFAULT_TEMPLATE_VERSION = None

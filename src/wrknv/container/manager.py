@@ -62,8 +62,12 @@ class ContainerManager:
         self.container_config = self.config.container or ContainerConfig()
 
         # Set container and image names
-        project_name = self.config.project_name.replace(" ", "-").lower()
-        self.container_name = f"{project_name}-dev" if project_name != "my-project" else "wrknv-dev"
+        raw_name = self.config.project_name
+        if raw_name:
+            project_name = raw_name.replace(" ", "-").lower()
+            self.container_name = f"{project_name}-dev"
+        else:
+            self.container_name = "wrknv-dev"
         self.image_name = self.container_name
         self.full_image = f"{self.image_name}:{self.image_tag}"
 
@@ -392,7 +396,7 @@ class ContainerManager:
 
 def create_container_manager(project_name: str | None = None) -> ContainerManager:
     """Create a ContainerManager with default configuration."""
-    config = get_default_config(project_name or "my-project")
+    config = get_default_config(project_name or "")
     return ContainerManager(config=config)
 
 

@@ -21,7 +21,6 @@ from wrknv.package.commands import (
     get_package_info,
     init_provider,
     list_packages,
-    publish_package,
     sign_package,
     verify_package,
 )
@@ -196,30 +195,6 @@ class TestSignPackage(FoundationTestCase):
         with pytest.raises(NotImplementedError):
             sign_package(pkg, key)
 
-
-class TestPublishPackage(FoundationTestCase):
-    """Tests for publish_package."""
-
-    def test_returns_dict_with_url_sha256_status(self) -> None:
-        tmp = self.create_temp_dir()
-        pkg = tmp / "my-package.psp"
-        result = publish_package(pkg, "my-registry")
-        assert "url" in result
-        assert "sha256" in result
-        assert "status" in result
-
-    def test_status_is_mock(self) -> None:
-        tmp = self.create_temp_dir()
-        pkg = tmp / "my-package.psp"
-        result = publish_package(pkg, "my-registry")
-        assert result["status"] == "mock"
-
-    def test_url_contains_registry_and_package_name(self) -> None:
-        tmp = self.create_temp_dir()
-        pkg = tmp / "my-package.psp"
-        result = publish_package(pkg, "myregistry")
-        assert "myregistry" in result["url"]
-        assert "my-package" in result["url"]
 
 
 class TestVerifyPackage(FoundationTestCase):

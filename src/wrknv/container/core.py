@@ -43,8 +43,9 @@ class ContainerManager:
         self.container_config = self.config.container or ContainerConfig()
 
         # Set container and image names (can be customized in config)
-        project_name = self.config.project_name.replace(" ", "-").lower()
-        if project_name != "my-project":
+        raw_name = self.config.project_name
+        if raw_name:
+            project_name = raw_name.replace(" ", "-").lower()
             self.CONTAINER_NAME = f"{project_name}-dev"
         else:
             self.CONTAINER_NAME = self.DEFAULT_CONTAINER_NAME
@@ -111,7 +112,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            logger.debug(f"Docker check failed: {e}")
+            logger.warning(f"Docker check failed: {e}")
             return False
 
     def container_exists(self) -> bool:
@@ -124,7 +125,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            logger.debug(f"Container exists check failed: {e}")
+            logger.warning(f"Container exists check failed: {e}")
             return False
 
     def container_running(self) -> bool:
@@ -141,7 +142,7 @@ class ContainerManager:
             )
             return result.returncode == 0 and result.stdout.strip() == "true"
         except Exception as e:
-            logger.debug(f"Container running check failed: {e}")
+            logger.warning(f"Container running check failed: {e}")
             return False
 
     def image_exists(self) -> bool:
@@ -154,7 +155,7 @@ class ContainerManager:
             )
             return result.returncode == 0
         except Exception as e:
-            logger.debug(f"Image exists check failed: {e}")
+            logger.warning(f"Image exists check failed: {e}")
             return False
 
     def get_volume_mappings(self) -> dict[str, str]:
