@@ -407,10 +407,10 @@ def load_config_from_dict(config_dict: dict[str, Any]) -> WorkenvSchema:
     return converter.structure(config_dict, WorkenvSchema)
 
 
-def get_default_config(project_name: str = "my-project") -> WorkenvSchema:
+def get_default_config(project_name: str = "") -> WorkenvSchema:
     """Get a default configuration schema."""
     return WorkenvSchema(
-        project_name=project_name,
+        project_name=project_name or "wrknv",
         tools={
             "terraform": ToolConfig(version="1.5.0"),
             "tofu": ToolConfig(version="1.6.0", enabled=False),

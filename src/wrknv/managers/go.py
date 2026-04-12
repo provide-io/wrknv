@@ -16,6 +16,8 @@ import re
 from provide.foundation import logger
 from provide.foundation.transport import get
 
+from wrknv.config.defaults import GO_DOWNLOAD_API_URL, GO_MIRROR_DEFAULT
+
 from .base import BaseToolManager, ToolManagerError
 
 
@@ -33,7 +35,7 @@ class GoManager(BaseToolManager):
     def get_available_versions(self) -> list[str]:
         """Get available Go versions from official API."""
         try:
-            api_url = "https://go.dev/dl/?mode=json"
+            api_url = GO_DOWNLOAD_API_URL
 
             logger.debug(f"Fetching Go versions from {api_url}")
 
@@ -68,7 +70,7 @@ class GoManager(BaseToolManager):
         arch = platform_info["arch"]
 
         # Use custom mirror if configured
-        mirror_url = self.config.get_setting("go_mirror", "https://go.dev/dl")
+        mirror_url = self.config.get_setting("go_mirror", GO_MIRROR_DEFAULT)
 
         return f"{mirror_url.rstrip('/')}/go{version}.{os_name}-{arch}.tar.gz"
 

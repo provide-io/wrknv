@@ -225,18 +225,4 @@ def sign_package(package_path: Path, key_path: Path, config: WorkenvConfig | Non
     )
 
 
-def publish_package(package_path: Path, registry: str, config: WorkenvConfig | None = None) -> dict[str, str]:
-    """Publish package to a registry."""
-    # This would need a registry client implementation
-    logger.info(f"Publishing {package_path} to {registry}")
-
-    # For now, return mock data
-    # TODO: Implement actual registry publishing
-    return {
-        "url": f"https://{registry}.example.com/{package_path.stem}",
-        "sha256": "abc123def456",  # Would calculate real hash
-        "status": "mock",
-    }
-
-
 # 🧰🌍🖥️🪄

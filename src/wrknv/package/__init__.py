@@ -13,7 +13,6 @@ from .commands import (
     get_package_info,
     init_provider,
     list_packages,
-    publish_package,
     sign_package,
     verify_package,
 )
@@ -27,7 +26,6 @@ __all__ = [
     "get_package_info",
     "init_provider",
     "list_packages",
-    "publish_package",
     "sign_package",
     "verify_package",
 ]

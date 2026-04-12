@@ -18,13 +18,19 @@ from provide.foundation.file import safe_move, safe_rmtree
 from provide.foundation.resilience import retry
 from provide.foundation.transport import get
 
+from wrknv.config.defaults import (
+    GITHUB_GITIGNORE_API,
+    GITHUB_GITIGNORE_ARCHIVE,
+    GITHUB_GITIGNORE_REPO,
+)
+
 
 class TemplateHandler:
     """Handles gitignore template operations including caching and GitHub sync."""
 
-    GITHUB_REPO = "https://github.com/github/gitignore"
-    GITHUB_ARCHIVE = "https://github.com/github/gitignore/archive/refs/heads/main.tar.gz"
-    GITHUB_API = "https://api.github.com/repos/github/gitignore"
+    GITHUB_REPO = GITHUB_GITIGNORE_REPO
+    GITHUB_ARCHIVE = GITHUB_GITIGNORE_ARCHIVE
+    GITHUB_API = GITHUB_GITIGNORE_API
 
     def __init__(self, cache_dir: Path | None = None) -> None:
         """

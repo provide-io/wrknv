@@ -28,7 +28,7 @@ class TestWorkenvConfig:
         ):
             config = WorkenvConfig.load()
 
-            assert config.project_name == "my-project"
+            assert config.project_name is None
             assert config.version == "1.0.0"
             assert config.workenv.log_level == "WARNING"
             assert config.workenv.auto_install is True
@@ -146,7 +146,7 @@ class TestWorkenvConfigMethods:
             config = WorkenvConfig.load()
 
             # Should get direct attributes
-            assert config.get_setting("project_name") == "my-project"
+            assert config.get_setting("project_name") is None
 
             # Should get nested attributes
             assert config.get_setting("workenv.log_level") == "WARNING"

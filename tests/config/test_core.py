@@ -150,7 +150,7 @@ class TestGetSetting(FoundationTestCase):
     def test_simple_attribute(self) -> None:
         cfg = _make_config()
         result = cfg.get_setting("project_name")
-        assert result == "my-project"
+        assert result is None
 
     def test_nested_attribute(self) -> None:
         cfg = _make_config()
