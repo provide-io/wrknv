@@ -161,6 +161,22 @@ jobs:
           output-path: dist/wrknv_${{ matrix.target }}.psp
           strip: true
 
+      # Smoke-test the PSP: run the built binary with --help to confirm it executes
+      - name: Smoke-test PSP (non-Windows)
+        if: ${{ !startsWith(matrix.os, 'windows') }}
+        shell: bash
+        run: |
+          chmod +x dist/wrknv_${{ matrix.target }}.psp
+          ./dist/wrknv_${{ matrix.target }}.psp --help
+
+      # Windows PSP launchers are PE binaries; rename to .exe before executing
+      - name: Smoke-test PSP (Windows)
+        if: ${{ startsWith(matrix.os, 'windows') }}
+        shell: pwsh
+        run: |
+          Copy-Item dist\wrknv_${{ matrix.target }}.psp dist\wrknv_${{ matrix.target }}.exe
+          .\dist\wrknv_${{ matrix.target }}.exe --help
+
       - uses: actions/upload-artifact@v7
         with:
           name: psp-${{ matrix.target }}
