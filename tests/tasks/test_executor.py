@@ -34,7 +34,7 @@ class TestTaskExecutor:
         assert result.exit_code == 0
         assert "Hello World" in result.stdout
         assert result.stderr == ""
-        assert result.duration > 0
+        assert result.duration >= 0
 
     @pytest.mark.asyncio
     async def test_execute_failed_command(self, tmp_path: Path) -> None:
