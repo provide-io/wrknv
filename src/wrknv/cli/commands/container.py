@@ -33,12 +33,6 @@ from wrknv.container.commands import (
     restore_volumes,
 )
 
-# Import click for explicit decorators
-try:
-    import click
-except ImportError:
-    click = None
-
 
 # Register the container group first
 @register_command("container", group=True, description="Docker container management")
