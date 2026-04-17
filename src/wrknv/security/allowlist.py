@@ -195,9 +195,6 @@ class SecurityAllowlistManager:
             errors.append("No security configuration set")
             return False, errors
 
-        if not self.config.allowed_paths:
-            errors.append("No allowed_paths defined in security configuration")
-
         # Validate glob patterns
         for path in self.config.allowed_paths:
             if not path:

@@ -94,9 +94,38 @@ Cargo.lock
 *.log
 logs/
 
-# Local configuration
+# Secrets and credentials (never commit)
 .env
 .env.local
+.env.*.local
+!.env.example
+
+# Responsum session context
+.rsp_context.json
+
+# Keys and certificates
+*.pem
+*.key
+!**/public*.key
+*.pfx
+*.p12
+id_rsa
+id_rsa.*
+id_dsa
+id_ecdsa
+id_ed25519
+
+# Cloud credentials
+.aws/credentials
+.gcp/
+gha-creds-*.json
+credentials.json
+service-account*.json
+
+# Package registry auth
+.npmrc
+.pypirc
+.netrc
 
 # Build artifacts
 bfiles-*.txt

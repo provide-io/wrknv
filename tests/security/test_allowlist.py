@@ -114,13 +114,13 @@ class TestSecurityAllowlistManagerValidate(FoundationTestCase):
         assert valid is False
         assert "No security configuration set" in errors
 
-    def test_empty_allowed_paths_returns_false(self) -> None:
-        """Config with empty allowed_paths list returns (False, error)."""
+    def test_empty_allowed_paths_returns_true(self) -> None:
+        """Config with empty allowed_paths list is valid (no scanner exceptions)."""
         config = SecurityConfig(description="Test", allowed_paths=[])
         manager = SecurityAllowlistManager(config=config)
         valid, errors = manager.validate()
-        assert valid is False
-        assert any("allowed_paths" in e for e in errors)
+        assert valid is True
+        assert errors == []
 
     def test_valid_config_returns_true(self) -> None:
         """Config with valid paths returns (True, [])."""
