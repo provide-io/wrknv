@@ -10,6 +10,8 @@ wrknv provides unified configuration for secret scanning tools, allowing you to 
 
 ## Configuration
 
+The allowlist starts empty — add entries only when a legitimately-committed file (test fixtures with fake secrets, example configs, public keys) trips a scanner. Real secrets belong in `.gitignore`, not the allowlist.
+
 Add security allowlist configuration to either `pyproject.toml` or `wrknv.toml`:
 
 ### pyproject.toml

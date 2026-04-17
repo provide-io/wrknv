@@ -122,16 +122,10 @@ def gitignore_detect(path: str | None = None) -> None:
         manager = GitignoreManager(cache_dir=Path(templates_path) if templates_path else None)
 
         for project_type in detected:
-            # TODO: manager should have a template_exists method
             if manager.search_templates(project_type):
                 echo_success(f"  ✓ {project_type}")
             else:
-                # Try to find similar templates
-                similar = manager.search_templates(project_type)
-                if similar:
-                    echo_warning(f"  ? {project_type} → {', '.join(similar[:3])}")
-                else:
-                    echo_warning(f"  ? {project_type} (no template found)")
+                echo_warning(f"  ? {project_type} (no template found)")
 
     except Exception as e:
         echo_error(f"Failed to detect project types: {e}")
