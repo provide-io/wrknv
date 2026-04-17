@@ -400,9 +400,7 @@ class TestSecurityValidate(FoundationTestCase):
         """When config has validation errors, exits with code 1."""
         cli = get_test_cli()
         config = make_config()
-        mock_manager = make_mock_manager(
-            is_valid=False, errors=["No allowed_paths defined in security configuration"]
-        )
+        mock_manager = make_mock_manager(is_valid=False, errors=["Empty path in allowed_paths"])
         with (
             patch("wrknv.cli.commands.security.load_security_config") as mock_load,
             patch("wrknv.cli.commands.security.SecurityAllowlistManager") as mock_cls,
@@ -412,7 +410,7 @@ class TestSecurityValidate(FoundationTestCase):
             runner = click.testing.CliRunner()
             result = runner.invoke(cli, ["security", "validate"])
         assert result.exit_code == 1
-        assert "No allowed_paths defined" in result.output
+        assert "Empty path in allowed_paths" in result.output
 
 
 # 🧰🌍🔚

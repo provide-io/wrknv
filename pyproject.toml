@@ -275,11 +275,9 @@ exclude_dirs = [".venv", "tests", "workenv"]
 [tool.security]
 # Paths to exclude from secret scanning (TruffleHog, GitGuardian, Gitleaks)
 # Run: we security generate (via wrknv) to regenerate tool configs
-description = "Auto-generated context files - intentionally committed"
-allowed_paths = [
-    # Responsum game context (auto-generated game tokens)
-    ".rsp_context.json",
-]
+# Add entries here only when a legitimately-committed file trips a scanner.
+description = "Scanner allowlist for intentionally-committed files"
+allowed_paths = []
 
 [dependency-groups]
 dev = [
