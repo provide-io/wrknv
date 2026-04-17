@@ -13,16 +13,11 @@ import ast
 import json
 from pathlib import Path
 import sys
+import tomllib
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning
 from provide.foundation.hub import register_command
 from provide.foundation.process import run as process_run
-
-try:
-    import tomllib  # Python 3.11+
-except ImportError:
-    import tomli as tomllib  # type: ignore[import-not-found]
-
 
 # =============================================================================
 # Check Group
