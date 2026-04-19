@@ -106,22 +106,22 @@ we security scan --no-generate
 
 The `security generate` command creates:
 
-| File | Scanner |
-|------|---------|
-| `.trufflehog-exclude-paths.txt` | TruffleHog |
-| `.gitleaks.toml` | Gitleaks |
-| `.gitguardian.yaml` | GitGuardian |
+| File                            | Scanner     |
+| ------------------------------- | ----------- |
+| `.trufflehog-exclude-paths.txt` | TruffleHog  |
+| `.gitleaks.toml`                | Gitleaks    |
+| `.gitguardian.yaml`             | GitGuardian |
 
 ## Glob Pattern Syntax
 
 The `allowed_paths` field supports glob patterns:
 
-| Pattern | Matches |
-|---------|---------|
-| `*.key` | Files ending in `.key` in current directory |
-| `**/*.key` | Files ending in `.key` anywhere in tree |
-| `tests/certs/*.key` | `.key` files in `tests/certs/` |
-| `docs/**/*.md` | `.md` files anywhere under `docs/` |
+| Pattern             | Matches                                     |
+| ------------------- | ------------------------------------------- |
+| `*.key`             | Files ending in `.key` in current directory |
+| `**/*.key`          | Files ending in `.key` anywhere in tree     |
+| `tests/certs/*.key` | `.key` files in `tests/certs/`              |
+| `docs/**/*.md`      | `.md` files anywhere under `docs/`          |
 
 ## CI Integration
 

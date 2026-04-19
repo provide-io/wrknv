@@ -61,6 +61,7 @@ version = "1.0.0"
 ```
 
 **Fields:**
+
 - `project_name` (string, required) - Project identifier
 - `version` (string, optional) - Project version
 
@@ -80,6 +81,7 @@ version = "20.x"
 ```
 
 **Supported Tools:**
+
 - `terraform` - Terraform versions
 - `tofu` - OpenTofu versions
 - `go` - Go versions
@@ -88,8 +90,9 @@ version = "20.x"
 - `bao` - HashiCorp Bao
 
 **Version Syntax:**
+
 - Exact: `"1.6.0"`
-- Patch wildcard: `"1.6.x"` (latest 1.6.*)
+- Patch wildcard: `"1.6.x"` (latest 1.6.\*)
 - Multiple versions: `["1.6.x", "1.5.x"]`
 
 **Tool-Specific Config:**
@@ -114,6 +117,7 @@ DATABASE_URL = "postgresql://localhost/mydb"
 ```
 
 **Usage:**
+
 - Variables set in generated `env.sh` and `env.ps1`
 - Available to all tasks
 - Can be overridden at runtime
@@ -148,6 +152,7 @@ working_dir = "tests"
 ```
 
 **Task Fields:**
+
 - `run` (string or array, required) - Command to execute or list of tasks
 - `description` (string, optional) - Task description
 - `timeout` (float, optional) - Timeout in seconds (default: 300)
@@ -205,6 +210,7 @@ description = "Complete CI pipeline"
 wrknv automatically detects the optimal execution strategy (no need to prefix commands with `uv run`!):
 
 **Basic Example** (auto-detection):
+
 ```toml
 [tasks]
 test = "pytest tests/"  # No "uv run" prefix needed!
@@ -212,6 +218,7 @@ lint = "ruff check src/"
 ```
 
 **Advanced Configuration**:
+
 ```toml
 # Force specific execution mode
 [tasks.build]
@@ -230,11 +237,12 @@ command_prefix = ""  # Empty string = no prefix
 ```
 
 **Detection Priority**:
+
 1. `WRKNV_TASK_RUNNER` environment variable (highest)
-2. Editable install detection (preserves `uv pip install -e .`)
-3. UV project detection (`uv.lock` or `[tool.uv]`)
-4. Virtual environment detection (`.venv/`, `venv/`, `workenv/`)
-5. System Python (lowest)
+1. Editable install detection (preserves `uv pip install -e .`)
+1. UV project detection (`uv.lock` or `[tool.uv]`)
+1. Virtual environment detection (`.venv/`, `venv/`, `workenv/`)
+1. System Python (lowest)
 
 **Why This Matters**: `uv run` can uninstall editable installs (UV issue #3843). wrknv auto-detects editable installs and uses direct execution to preserve them.
 
@@ -254,6 +262,7 @@ go = ["1.21.5"]
 ```
 
 **Usage:**
+
 ```bash
 we setup --profile dev
 we setup --profile production
@@ -274,6 +283,7 @@ container_registry = "ghcr.io"
 ```
 
 **Fields:**
+
 - `auto_install` (bool, default: true) - Auto-install missing tools
 - `use_cache` (bool, default: true) - Cache downloaded tools
 - `cache_ttl` (string, default: "7d") - Cache time-to-live
@@ -292,6 +302,7 @@ exclude = ["**/node_modules", "**/.venv"]
 ```
 
 **Fields:**
+
 - `patterns` (array) - Glob patterns to search for sibling projects
 - `exclude` (array) - Patterns to exclude from discovery
 
@@ -312,6 +323,7 @@ environment = { DEBUG = "true" }
 ```
 
 **Fields:**
+
 - `image` (string) - Base container image
 - `dockerfile` (string) - Custom Dockerfile path
 - `volumes` (array) - Volume mounts (host:container format)
@@ -414,9 +426,10 @@ we config validate
 ```
 
 Common validation errors:
+
 - **Invalid TOML syntax** - Check brackets, quotes, commas
 - **Unknown fields** - Check spelling and section names
-- **Invalid version syntax** - Use "1.6.x" not "1.6.*"
+- **Invalid version syntax** - Use "1.6.x" not "1.6.\*"
 - **Nested too deep** - Tasks max 3 levels
 
 ## Schema Reference
@@ -458,6 +471,7 @@ TOOL_NAME = ["version"]               # Tool versions for this profile
 ### Version Pinning
 
 **Development:**
+
 ```toml
 [profiles.dev]
 terraform = ["1.6.x"]  # Allow patch updates
@@ -465,6 +479,7 @@ go = ["1.21.x"]
 ```
 
 **Production:**
+
 ```toml
 [profiles.production]
 terraform = ["1.6.0"]  # Exact versions
@@ -474,6 +489,7 @@ go = ["1.21.5"]
 ### Task Organization
 
 **Small, focused tasks:**
+
 ```toml
 [tasks]
 lint = "ruff check ."
@@ -482,12 +498,14 @@ typecheck = "mypy src/"
 ```
 
 **Composite workflows:**
+
 ```toml
 [tasks.quality]
 run = ["lint", "typecheck", "format"]
 ```
 
 **Logical namespaces:**
+
 ```toml
 [tasks.test]
 unit = "..."
@@ -501,6 +519,7 @@ serve = "..."
 ### Environment Variables
 
 **Project defaults:**
+
 ```toml
 [env]
 DEBUG = "false"
@@ -508,6 +527,7 @@ LOG_LEVEL = "info"
 ```
 
 **Profile-specific:**
+
 ```toml
 [profiles.dev.env]
 DEBUG = "true"
@@ -515,6 +535,7 @@ LOG_LEVEL = "debug"
 ```
 
 **Task-specific:**
+
 ```toml
 [tasks.test]
 env = { PYTEST_WORKERS = "4" }
