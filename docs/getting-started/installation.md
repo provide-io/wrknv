@@ -4,11 +4,11 @@ Get started with wrknv, a tool that generates standardized development environme
 
 ## Prerequisites
 
---8<-- ".provide/foundry/docs/_partials/python-requirements.md"
+--8\<-- ".provide/foundry/docs/\_partials/python-requirements.md"
 
---8<-- ".provide/foundry/docs/_partials/uv-installation.md"
+--8\<-- ".provide/foundry/docs/\_partials/uv-installation.md"
 
---8<-- ".provide/foundry/docs/_partials/python-version-setup.md"
+--8\<-- ".provide/foundry/docs/\_partials/python-version-setup.md"
 
 ## Installation Methods
 
@@ -17,6 +17,7 @@ Get started with wrknv, a tool that generates standardized development environme
 If you want to use wrknv to manage development environments:
 
 **Using uv (Recommended):**
+
 ```bash
 # Install wrknv globally with uv
 uvx wrknv --help
@@ -30,11 +31,13 @@ uv tool install wrknv
 If you're integrating wrknv into your project:
 
 **Using uv:**
+
 ```bash
 uv add wrknv
 ```
 
 **In your `pyproject.toml`:**
+
 ```toml
 [project]
 dependencies = [
@@ -70,12 +73,11 @@ source ./env.sh  # Linux/macOS
 # The workenv location follows pattern: workenv/wrknv_${OS}_${ARCH}
 ```
 
---8<-- ".provide/foundry/docs/_partials/virtual-env-setup.md"
+--8\<-- ".provide/foundry/docs/\_partials/virtual-env-setup.md"
 
-!!! note "Virtual Environment Location"
-    Unlike most Python projects, wrknv uses `workenv/` directory instead of `.venv/`. This is intentional for the provide.io ecosystem's standardized environment management.
+!!! note "Virtual Environment Location" Unlike most Python projects, wrknv uses `workenv/` directory instead of `.venv/`. This is intentional for the provide.io ecosystem's standardized environment management.
 
---8<-- ".provide/foundry/docs/_partials/platform-specific-macos.md"
+--8\<-- ".provide/foundry/docs/\_partials/platform-specific-macos.md"
 
 ## Optional Dependencies
 
@@ -89,6 +91,7 @@ uv tool install wrknv[container]
 ```
 
 **Container Features:**
+
 - Docker runtime abstraction
 - Container lifecycle management
 - Volume management
@@ -96,11 +99,13 @@ uv tool install wrknv[container]
 - Exec commands in containers
 
 **Requirements:**
+
 - Docker or compatible container runtime installed
 - Docker daemon running
 - Appropriate user permissions for container operations
 
 **Verify Docker:**
+
 ```bash
 # Check Docker installation
 docker --version
@@ -114,14 +119,14 @@ docker run --rm hello-world
 
 ### Basic Verification
 
---8<-- ".provide/foundry/docs/_partials/verification-commands.md"
+--8\<-- ".provide/foundry/docs/\_partials/verification-commands.md"
 
-!!! note "Package and Command Names"
-    Replace `{{PACKAGE_NAME}}` with `wrknv` and `{{COMMAND_NAME}}` with `wrknv` in the verification commands above.
+!!! note "Package and Command Names" Replace `{{PACKAGE_NAME}}` with `wrknv` and `{{COMMAND_NAME}}` with `wrknv` in the verification commands above.
 
 ### wrknv-Specific Verification
 
 **1. Test Core Imports:**
+
 ```python
 import wrknv
 from wrknv.cli import hub_cli
@@ -133,6 +138,7 @@ print("Installation successful!")
 ```
 
 **2. Test Configuration Loading:**
+
 ```python
 from wrknv.wenv.config import WorkenvConfig
 from wrknv.wenv.schema import load_config_from_toml
@@ -156,6 +162,7 @@ config_path.unlink()  # Clean up
 ```
 
 **3. Test Environment Generation:**
+
 ```bash
 # Generate environment scripts
 wrknv generate
@@ -172,6 +179,7 @@ echo $PATH | grep workenv
 ```
 
 **4. Run Tests:**
+
 ```bash
 # Run all tests with coverage
 uv run pytest tests/ -v --cov=src/wrknv --cov-report=term-missing
@@ -218,11 +226,11 @@ EOF
 
 **Configuration Options:**
 
-| Section | Description |
-|---------|-------------|
-| `[tools.*]` | Tool version specifications (uv, terraform, opentofu, go, etc.) |
-| `[sibling_patterns]` | Patterns for locating sibling packages |
-| `[container]` | Container runtime configuration |
+| Section              | Description                                                     |
+| -------------------- | --------------------------------------------------------------- |
+| `[tools.*]`          | Tool version specifications (uv, terraform, opentofu, go, etc.) |
+| `[sibling_patterns]` | Patterns for locating sibling packages                          |
+| `[container]`        | Container runtime configuration                                 |
 
 **Supported Tools:**
 
@@ -237,6 +245,7 @@ EOF
 After generating with `wrknv generate`, source the appropriate script:
 
 **Linux/macOS:**
+
 ```bash
 # Source environment
 source ./env.sh
@@ -246,6 +255,7 @@ echo "source $(pwd)/env.sh" >> ~/.bashrc
 ```
 
 **Windows:**
+
 ```powershell
 # Load environment
 .\env.ps1
@@ -303,9 +313,10 @@ class CustomToolManager(BaseToolManager):
 
 ## Development Workflow
 
---8<-- ".provide/foundry/docs/_partials/testing-setup.md"
+--8\<-- ".provide/foundry/docs/\_partials/testing-setup.md"
 
 **Additional Testing Options:**
+
 ```bash
 # Run unit tests only
 uv run pytest -m unit
@@ -317,7 +328,7 @@ uv run pytest -m cli
 uv run pytest tests/path/to/test_file.py -xvs
 ```
 
---8<-- ".provide/foundry/docs/_partials/code-quality-setup.md"
+--8\<-- ".provide/foundry/docs/\_partials/code-quality-setup.md"
 
 ### Pre-commit Hooks
 
@@ -387,7 +398,7 @@ wrknv container clean
 
 ## Troubleshooting
 
---8<-- ".provide/foundry/docs/_partials/troubleshooting-common.md"
+--8\<-- ".provide/foundry/docs/\_partials/troubleshooting-common.md"
 
 ### wrknv-Specific Issues
 
@@ -473,10 +484,10 @@ wrknv generate
 If you encounter issues:
 
 1. **Check generated scripts** - Look at `env.sh` or `env.ps1` content
-2. **Verify Python version** - Ensure you're using Python 3.11+
-3. **Check configuration** - Validate TOML syntax with `wrknv config show`
-4. **Review logs** - Run with `--verbose` flag for detailed output
-5. **Report issues** - [GitHub Issues](https://github.com/provide-io/wrknv/issues)
+1. **Verify Python version** - Ensure you're using Python 3.11+
+1. **Check configuration** - Validate TOML syntax with `wrknv config show`
+1. **Review logs** - Run with `--verbose` flag for detailed output
+1. **Report issues** - [GitHub Issues](https://github.com/provide-io/wrknv/issues)
 
 ## Next Steps
 

@@ -41,6 +41,7 @@ wrknv follows a **configuration-driven code generation** approach:
 wrknv replaces shell script **code** with TOML **configuration**:
 
 **Before (Shell Script)**:
+
 ```bash
 # env.sh (400 lines of bash)
 TERRAFORM_VERSION="1.9.0"
@@ -49,6 +50,7 @@ GO_VERSION="1.22.0"
 ```
 
 **After (TOML Configuration)**:
+
 ```toml
 # pyproject.toml (4 lines)
 [tool.wrknv.tools]
@@ -65,6 +67,7 @@ wrknv uses Jinja2 templates to generate platform-specific scripts:
 - **Scripts**: Fresh, correct, platform-appropriate
 
 This means:
+
 - ✅ No copy-paste errors
 - ✅ Automatic platform handling
 - ✅ Updates via `wrknv generate`
@@ -87,6 +90,7 @@ my-project/
 ```
 
 **Why workenv/?**
+
 - **Clear ownership**: Managed by wrknv, not manual
 - **Avoid conflicts**: Doesn't interfere with IDE-created .venv/
 - **Consistency**: Same name across all projects
@@ -97,9 +101,9 @@ my-project/
 Each tool (UV, Terraform, Go) has a **manager** that knows how to:
 
 1. **Download** - From official sources
-2. **Verify** - Checksums and signatures
-3. **Install** - To `workenv/bin/`
-4. **Update** - When configuration changes
+1. **Verify** - Checksums and signatures
+1. **Install** - To `workenv/bin/`
+1. **Update** - When configuration changes
 
 ```
 ToolManager (Abstract Base)
@@ -110,6 +114,7 @@ ToolManager (Abstract Base)
 ```
 
 **Manager Pattern Benefits:**
+
 - Extensible: Add new tools easily
 - Consistent: Same interface for all tools
 - Platform-aware: Handles OS/architecture differences
@@ -131,6 +136,7 @@ workspace/
 ```
 
 **Configuration:**
+
 ```toml
 [tool.wrknv.siblings]
 discover_patterns = ["../*/pyproject.toml"]
@@ -138,13 +144,15 @@ install_as_editable = true
 ```
 
 **Discovery Process:**
+
 1. Match patterns against filesystem
-2. Read each `pyproject.toml`
-3. Build dependency graph
-4. Install in topological order
-5. Use editable mode (`uv pip install -e`)
+1. Read each `pyproject.toml`
+1. Build dependency graph
+1. Install in topological order
+1. Use editable mode (`uv pip install -e`)
 
 **Benefits:**
+
 - ✅ No manual path management
 - ✅ Automatic dependency order
 - ✅ Live code updates (editable mode)
@@ -194,6 +202,7 @@ platform = "darwin_arm64"
 ```
 
 **Lock Command:**
+
 ```console
 $ wrknv lock
 ✓ Resolved tool versions
@@ -202,6 +211,7 @@ $ wrknv lock
 ```
 
 **Benefits:**
+
 - 🔒 Exact versions across team
 - 🔒 Verified downloads
 - 🔒 Audit trail
@@ -224,6 +234,7 @@ go = "1.22.0"        # Local dev also needs Go
 ```
 
 **Usage:**
+
 ```console
 # Default profile
 $ wrknv generate
@@ -247,6 +258,7 @@ volumes = [".:/workspace"]
 ```
 
 **Workflow:**
+
 ```console
 $ wrknv container build
 $ wrknv container shell
@@ -270,6 +282,7 @@ $ wrknv doctor
 ```
 
 **Doctor Checks:**
+
 - Python version requirements
 - Tool installation and versions
 - Virtual environment state
@@ -284,6 +297,7 @@ $ wrknv doctor
 wrknv requires explicit configuration. No hidden magic.
 
 **Example:** You must specify tool versions:
+
 ```toml
 [tool.wrknv.tools]
 uv = "0.5.1"  # Explicit, not "latest"
@@ -294,6 +308,7 @@ uv = "0.5.1"  # Explicit, not "latest"
 wrknv generates readable scripts you can inspect and modify.
 
 **Philosophy:**
+
 - Scripts are **artifacts**, not black boxes
 - You can read `env.sh` to see what it does
 - Modifications go in config, not scripts
@@ -313,11 +328,13 @@ No "universal shell" compromises.
 wrknv owns tool installation, not your entire environment:
 
 **wrknv manages:**
+
 - Tools in `workenv/bin/`
 - Python virtual environment
 - Sibling package installation
 
 **wrknv does NOT manage:**
+
 - System Python installation
 - IDE configuration
 - Global shell settings
@@ -366,12 +383,14 @@ workspace/
 ### Pattern 3: Team Standardization
 
 All team projects use:
+
 ```toml
 [tool.wrknv.tools]
 uv = "0.5.1"  # Team standard
 ```
 
 One command updates all projects:
+
 ```console
 $ for dir in */; do (cd "$dir" && wrknv generate); done
 ```

@@ -178,9 +178,9 @@ The task resolver uses intelligent fallback:
 Given command: `we test unit fast`
 
 1. **Exact match**: Look for `test.unit.fast`
-2. **Parent + args**: Try `test.unit` with args `["fast"]`
-3. **Grandparent + args**: Try `test` with args `["unit", "fast"]`
-4. **Default tasks**: Check for `_default` in each namespace
+1. **Parent + args**: Try `test.unit` with args `["fast"]`
+1. **Grandparent + args**: Try `test` with args `["unit", "fast"]`
+1. **Default tasks**: Check for `_default` in each namespace
 
 ### Examples
 
@@ -193,6 +193,7 @@ fast = "pytest tests/unit/ -x"
 ```
 
 Resolution:
+
 - `we test unit fast` → finds `test.unit.fast` (exact match)
 - `we test unit --verbose` → finds `test.unit` + passes `--verbose`
 - `we test --verbose` → finds `test._default` or `test` + passes `--verbose`
@@ -274,11 +275,13 @@ serve = "mkdocs serve"
 ### Arguments vs Nested Tasks
 
 Use arguments for variations:
+
 ```bash
 we test --verbose        # Good: variation of test
 ```
 
 Use nested tasks for distinct operations:
+
 ```toml
 [tasks.test]
 unit = "pytest tests/unit/"
@@ -320,6 +323,7 @@ description = "Full development check"
 ```
 
 Usage:
+
 ```bash
 we format               # Format code
 we test                 # Run all tests
@@ -366,9 +370,9 @@ frontend = "cd frontend && npm run build"
 If `we test unit` fails:
 
 1. Check task exists: `we tasks`
-2. Verify syntax in `wrknv.toml`
-3. Check for typos in task name
-4. Try explicit: `we run test.unit`
+1. Verify syntax in `wrknv.toml`
+1. Check for typos in task name
+1. Try explicit: `we run test.unit`
 
 ### Timeout Errors
 

@@ -59,6 +59,7 @@ $ wrknv generate
 ```
 
 This creates two files:
+
 - `env.sh` - Bash script for Linux/macOS
 - `env.ps1` - PowerShell script for Windows
 
@@ -109,10 +110,10 @@ $ which uv  # or 'where uv' on Windows
 When you ran `source env.sh`, wrknv:
 
 1. **Detected your Python version** from `pyproject.toml`
-2. **Downloaded and installed UV** (specified in `[tool.wrknv.tools]`)
-3. **Created a virtual environment** in `workenv/` (not `.venv/`)
-4. **Installed project dependencies** using UV
-5. **Activated the environment** automatically
+1. **Downloaded and installed UV** (specified in `[tool.wrknv.tools]`)
+1. **Created a virtual environment** in `workenv/` (not `.venv/`)
+1. **Installed project dependencies** using UV
+1. **Activated the environment** automatically
 
 ## Next Steps
 
@@ -204,8 +205,8 @@ This locks the exact versions of all tools being used.
 To add or change tool versions:
 
 1. Edit `pyproject.toml`
-2. Run `wrknv generate` to update scripts
-3. Run `source env.sh` (or `.\env.ps1`) to apply changes
+1. Run `wrknv generate` to update scripts
+1. Run `source env.sh` (or `.\env.ps1`) to apply changes
 
 ### Clean Up
 
@@ -288,10 +289,6 @@ PS> .\env.ps1
 
 You've now:
 
-✓ Installed wrknv
-✓ Generated environment scripts
-✓ Activated your first wrknv environment
-✓ Learned basic wrknv commands
-✓ Understood what wrknv does
+✓ Installed wrknv ✓ Generated environment scripts ✓ Activated your first wrknv environment ✓ Learned basic wrknv commands ✓ Understood what wrknv does
 
 Ready to dive deeper? Check out the [Complete Installation Guide](installation.md) or explore [Core Concepts](concepts.md).

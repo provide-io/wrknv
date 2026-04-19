@@ -31,6 +31,7 @@ we TASK [ARGS...]
 ```
 
 **Examples:**
+
 ```bash
 we test                      # Run test task
 we test unit                 # Run nested test.unit task
@@ -40,6 +41,7 @@ we build docker production   # Multi-level nested task
 ```
 
 **How it works:**
+
 - Checks if first argument is a built-in command
 - If not, tries to resolve as a task name
 - Uses greedy matching for nested tasks
@@ -54,11 +56,13 @@ we run TASK [OPTIONS]
 ```
 
 **Options:**
+
 - `--dry-run` - Show what would be executed without running
 - `--info` - Show task information without running
 - `--env KEY=VALUE` - Set environment variables (repeatable)
 
 **Examples:**
+
 ```bash
 we run test
 we run test --dry-run
@@ -75,9 +79,11 @@ we tasks [OPTIONS]
 ```
 
 **Options:**
+
 - `--verbose` - Show detailed task information including commands
 
 **Examples:**
+
 ```bash
 we tasks                     # List all tasks
 we tasks --verbose           # Show task details
@@ -86,6 +92,7 @@ we tasks --verbose           # Show task details
 **Output Format:**
 
 Normal mode:
+
 ```
 Available tasks:
 
@@ -100,6 +107,7 @@ Flat tasks:
 ```
 
 Verbose mode adds command details:
+
 ```
 test
 ├── unit
@@ -119,11 +127,13 @@ we setup [OPTIONS]
 ```
 
 **Options:**
+
 - `--init` - Initialize new wrknv.toml configuration
 - `--profile PROFILE` - Use specific tool profile
 - `--force` - Overwrite existing files
 
 **Examples:**
+
 ```bash
 we setup                     # Initialize with default profile
 we setup --init              # Create new wrknv.toml
@@ -140,11 +150,13 @@ we config [COMMAND]
 ```
 
 **Subcommands:**
+
 - `show` - Display current configuration
 - `validate` - Validate wrknv.toml syntax
 - `init` - Initialize new configuration
 
 **Examples:**
+
 ```bash
 we config show               # Show current config
 we config validate           # Validate wrknv.toml
@@ -162,12 +174,14 @@ we tools [COMMAND]
 ```
 
 **Subcommands:**
+
 - `list` - List configured tools and versions
 - `install` - Install specific tool versions
 - `upgrade` - Upgrade tools to latest allowed versions
 - `verify` - Verify installed tools
 
 **Examples:**
+
 ```bash
 we tools list                # Show all configured tools
 we tools install terraform   # Install Terraform
@@ -185,11 +199,13 @@ we terraform [COMMAND]
 ```
 
 **Commands:**
+
 - `list` - List available/installed versions
 - `install VERSION` - Install specific version
 - `use VERSION` - Set active version
 
 **Examples:**
+
 ```bash
 we terraform list
 we terraform install 1.6.0
@@ -197,6 +213,7 @@ we terraform use 1.6.0
 ```
 
 Similar commands exist for:
+
 - `we tofu` - OpenTofu management
 - `we go` - Go management
 - `we uv` - UV management
@@ -212,6 +229,7 @@ we container [COMMAND]
 ```
 
 **Subcommands:**
+
 - `build` - Build development container
 - `start` - Start container
 - `stop` - Stop container
@@ -219,6 +237,7 @@ we container [COMMAND]
 - `shell` - Open interactive shell
 
 **Examples:**
+
 ```bash
 we container build           # Build dev container
 we container start           # Start container
@@ -238,11 +257,13 @@ we workspace [COMMAND]
 ```
 
 **Subcommands:**
+
 - `sync` - Sync workspace dependencies
 - `list` - List workspace packages
 - `run` - Run task across all packages
 
 **Examples:**
+
 ```bash
 we workspace sync            # Sync all packages
 we workspace list            # List packages
@@ -260,6 +281,7 @@ we doctor
 ```
 
 Checks:
+
 - Configuration validity
 - Tool installations
 - Path setup
@@ -274,11 +296,13 @@ we profile [COMMAND]
 ```
 
 **Commands:**
+
 - `list` - List available profiles
 - `show PROFILE` - Show profile details
 - `use PROFILE` - Activate profile
 
 **Examples:**
+
 ```bash
 we profile list
 we profile show dev
@@ -294,6 +318,7 @@ we secrets [COMMAND]
 ```
 
 **Commands:**
+
 - `list` - List configured secrets (masked)
 - `set KEY VALUE` - Set secret value
 - `unset KEY` - Remove secret
@@ -301,6 +326,7 @@ we secrets [COMMAND]
 - `decrypt` - Decrypt secrets file
 
 **Examples:**
+
 ```bash
 we secrets list
 we secrets set API_KEY abc123
@@ -316,9 +342,11 @@ we gitignore [OPTIONS]
 ```
 
 **Options:**
+
 - `--update` - Update existing .gitignore
 
 **Examples:**
+
 ```bash
 we gitignore                 # Show recommended entries
 we gitignore --update        # Add to .gitignore
@@ -333,6 +361,7 @@ we lock [COMMAND]
 ```
 
 **Commands:**
+
 - `generate` - Generate lock file
 - `verify` - Verify lock file
 - `upgrade` - Upgrade locked dependencies
@@ -344,10 +373,10 @@ we lock [COMMAND]
 When you run `we test unit fast`:
 
 1. **Exact match**: Look for `test.unit.fast` task
-2. **Default task**: Check `test.unit._default`
-3. **Parent + args**: Try `test.unit` with args `["fast"]`
-4. **Default parent**: Check `test._default` with args `["unit", "fast"]`
-5. **Grandparent + args**: Try `test` with args `["unit", "fast"]`
+1. **Default task**: Check `test.unit._default`
+1. **Parent + args**: Try `test.unit` with args `["fast"]`
+1. **Default parent**: Check `test._default` with args `["unit", "fast"]`
+1. **Grandparent + args**: Try `test` with args `["unit", "fast"]`
 
 ### Built-in Commands
 
@@ -362,9 +391,9 @@ These commands bypass task resolution:
 ### Environment Variable Priority
 
 1. Runtime flags: `--env KEY=VALUE`
-2. Task definition: `[tasks.name] env = {...}`
-3. Executor environment
-4. System environment
+1. Task definition: `[tasks.name] env = {...}`
+1. Executor environment
+1. System environment
 
 ### Exit Codes
 
@@ -379,6 +408,7 @@ These commands bypass task resolution:
 Main configuration file. See [Configuration Reference](../reference/configuration.md).
 
 **Location:**
+
 - Project root: `./wrknv.toml`
 - User home: `~/.wrknv/config.toml` (global defaults)
 
@@ -390,6 +420,7 @@ Generated by `we setup`:
 - `env.ps1` - PowerShell environment script
 
 **Usage:**
+
 ```bash
 source env.sh              # Bash/Zsh
 . ./env.ps1                # PowerShell
@@ -427,6 +458,7 @@ if (Test-Path ".\env.ps1") {
 ### Common Workflows
 
 **Development workflow:**
+
 ```bash
 we setup                     # Initialize environment
 we test                      # Run tests
@@ -435,6 +467,7 @@ we build                     # Build project
 ```
 
 **CI/CD workflow:**
+
 ```bash
 we quality                   # Run quality checks
 we test unit                 # Unit tests
@@ -444,6 +477,7 @@ we deploy staging            # Deploy to staging
 ```
 
 **Tool management:**
+
 ```bash
 we tools list                # See what's configured
 we tools install --all       # Install all tools
@@ -451,6 +485,7 @@ we terraform use 1.6.0       # Switch Terraform version
 ```
 
 **Container development:**
+
 ```bash
 we container build           # Build dev container
 we container start           # Start container
@@ -462,18 +497,21 @@ we container stop            # Clean up
 ### Task Composition
 
 **Simple tasks:**
+
 ```bash
 we test                      # Single task
 we lint --fix                # Task with args
 ```
 
 **Composite workflows:**
+
 ```bash
 we quality                   # Runs: lint, typecheck, format
 we ci                        # Runs: quality, test, build
 ```
 
 **Nested organization:**
+
 ```bash
 we test unit                 # Specific test suite
 we test unit fast            # Quick unit tests
@@ -501,26 +539,26 @@ we --version
 If `we test` fails:
 
 1. Check task exists: `we tasks`
-2. Verify `wrknv.toml` syntax: `we config validate`
-3. Try explicit: `we run test`
-4. Check for typos in task name
+1. Verify `wrknv.toml` syntax: `we config validate`
+1. Try explicit: `we run test`
+1. Check for typos in task name
 
 ### Environment Issues
 
 If tools not found:
 
 1. Run setup: `we setup`
-2. Source environment: `source env.sh`
-3. Verify tools: `we doctor`
-4. Check tool installation: `we tools list`
+1. Source environment: `source env.sh`
+1. Verify tools: `we doctor`
+1. Check tool installation: `we tools list`
 
 ### Container Issues
 
 If container commands fail:
 
 1. Check Docker running: `docker ps`
-2. Verify runtime: `we doctor`
-3. Check container config in `wrknv.toml`
+1. Verify runtime: `we doctor`
+1. Check container config in `wrknv.toml`
 
 ## See Also
 
