@@ -131,7 +131,7 @@ class TestScaffoldMemray(FoundationTestCase):
 
     def test_notes_missing_marker_in_pyproject(self) -> None:
         tmp = self.create_temp_dir()
-        (tmp / "pyproject.toml").write_text('[tool.pytest.ini_options]\n')
+        (tmp / "pyproject.toml").write_text("[tool.pytest.ini_options]\n")
         actions = scaffold_memray(tmp)
         assert any("memray marker" in a.lower() or "NOTE" in a for a in actions)
 

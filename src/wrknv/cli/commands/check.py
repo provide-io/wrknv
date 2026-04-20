@@ -93,8 +93,8 @@ def _detect_repo_name() -> str:
             repo_name = repo_name.removesuffix(".git")
             if repo_name:
                 return repo_name
-    except Exception:
-        pass  # nosec B110 - Fallback to cwd name if git fails
+    except Exception:  # noqa: S110 - Fallback to cwd name if git fails
+        pass
     return Path.cwd().name
 
 

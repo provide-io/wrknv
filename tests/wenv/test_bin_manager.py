@@ -114,8 +114,11 @@ class TestGetWorkenvBinDirNotInVenv(FoundationTestCase):
 
         home_tmp = self.create_temp_dir()
         p1, p2 = self._same_prefix_patches("/real/python")
-        with p1, p2, mock.patch("pathlib.Path.cwd", return_value=tmp), mock.patch(
-            "pathlib.Path.home", return_value=home_tmp
+        with (
+            p1,
+            p2,
+            mock.patch("pathlib.Path.cwd", return_value=tmp),
+            mock.patch("pathlib.Path.home", return_value=home_tmp),
         ):
             result = get_workenv_bin_dir(config=config)
         assert result == home_tmp / ".local" / "bin"
@@ -123,8 +126,11 @@ class TestGetWorkenvBinDirNotInVenv(FoundationTestCase):
     def test_falls_back_to_local_bin_when_no_project_root(self) -> None:
         home_tmp = self.create_temp_dir()
         p1, p2 = self._same_prefix_patches("/real/python")
-        with p1, p2, mock.patch("pathlib.Path.cwd", return_value=pathlib.Path("/tmp/no-project-here")), mock.patch(
-            "pathlib.Path.home", return_value=home_tmp
+        with (
+            p1,
+            p2,
+            mock.patch("pathlib.Path.cwd", return_value=pathlib.Path("/tmp/no-project-here")),
+            mock.patch("pathlib.Path.home", return_value=home_tmp),
         ):
             result = get_workenv_bin_dir(config=None)
         assert result == home_tmp / ".local" / "bin"
@@ -135,8 +141,11 @@ class TestGetWorkenvBinDirNotInVenv(FoundationTestCase):
 
         home_tmp = self.create_temp_dir()
         p1, p2 = self._same_prefix_patches("/real/python")
-        with p1, p2, mock.patch("pathlib.Path.cwd", return_value=tmp), mock.patch(
-            "pathlib.Path.home", return_value=home_tmp
+        with (
+            p1,
+            p2,
+            mock.patch("pathlib.Path.cwd", return_value=tmp),
+            mock.patch("pathlib.Path.home", return_value=home_tmp),
         ):
             result = get_workenv_bin_dir(config=None)
         assert result == home_tmp / ".local" / "bin"
@@ -149,8 +158,11 @@ class TestGetWorkenvBinDirNotInVenv(FoundationTestCase):
 
         home_tmp = self.create_temp_dir()
         p1, p2 = self._same_prefix_patches("/real/python")
-        with p1, p2, mock.patch("pathlib.Path.cwd", return_value=tmp), mock.patch(
-            "pathlib.Path.home", return_value=home_tmp
+        with (
+            p1,
+            p2,
+            mock.patch("pathlib.Path.cwd", return_value=tmp),
+            mock.patch("pathlib.Path.home", return_value=home_tmp),
         ):
             result = get_workenv_bin_dir(config=config_plain)
         assert result == home_tmp / ".local" / "bin"

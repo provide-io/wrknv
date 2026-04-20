@@ -22,15 +22,18 @@
 - Full documentation is in [docs/index.md](https://github.com/provide-io/wrknv/blob/main/docs/index.md).
 
 ## Documentation
+
 - [Documentation index](https://github.com/provide-io/wrknv/blob/main/docs/index.md)
 - [Configuration reference](https://github.com/provide-io/wrknv/blob/main/docs/reference/configuration.md)
 - [Examples](https://github.com/provide-io/wrknv/blob/main/examples/README.md)
 
 ## Development
+
 - See [CLAUDE.md](https://github.com/provide-io/wrknv/blob/main/CLAUDE.md) for local development notes.
 - Run `uv sync --extra dev` to set up the dev environment.
 
 ## Contributing
+
 See [CONTRIBUTING.md](https://github.com/provide-io/wrknv/blob/main/CONTRIBUTING.md) for contribution guidelines.
 
 ## License
@@ -85,14 +88,14 @@ See [Task System Documentation](https://github.com/provide-io/wrknv/blob/main/do
 
 ## Quick Start: Environment Management
 
-1.  **Install wrknv**:
-    ```bash
-    uv tool install wrknv
-    ```
-
+1. **Install wrknv**:
    ```bash
    uv tool install wrknv
    ```
+
+```bash
+uv tool install wrknv
+```
 
 1. **Create a `wrknv.toml` file**:
 

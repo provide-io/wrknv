@@ -143,7 +143,8 @@ class TestWorkenvContext(FoundationTestCase):
     def test_raises_when_workenv_not_found(self) -> None:
         with (
             mock.patch("pathlib.Path.cwd", return_value=Path("/nonexistent")),
-            pytest.raises(RuntimeError),workenv_context("mypkg")
+            pytest.raises(RuntimeError),
+            workenv_context("mypkg"),
         ):
             pass
 
@@ -341,10 +342,7 @@ class TestActivateWorkenvSitePackages(FoundationTestCase):
         tmp = self.create_temp_dir()
         workenv = tmp / "workenv" / "mypkg_linux_amd64"
         site_packages = (
-            workenv
-            / "lib"
-            / f"python{sys.version_info.major}.{sys.version_info.minor}"
-            / "site-packages"
+            workenv / "lib" / f"python{sys.version_info.major}.{sys.version_info.minor}" / "site-packages"
         )
         site_packages.mkdir(parents=True)
         with (

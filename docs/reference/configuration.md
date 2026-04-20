@@ -239,10 +239,10 @@ command_prefix = ""  # Empty string = no prefix
 **Detection Priority**:
 
 1. `WRKNV_TASK_RUNNER` environment variable (highest)
-2. Editable install detection (preserves `uv pip install -e .`)
-3. UV project detection (`uv.lock` or `[tool.uv]`)
-4. Virtual environment detection (`.venv/`, `venv/`, `workenv/`)
-5. System Python (lowest)
+1. Editable install detection (preserves `uv pip install -e .`)
+1. UV project detection (`uv.lock` or `[tool.uv]`)
+1. Virtual environment detection (`.venv/`, `venv/`, `workenv/`)
+1. System Python (lowest)
 
 **Why This Matters**: `uv run` can uninstall editable installs (UV issue #3843). wrknv auto-detects editable installs and uses direct execution to preserve them.
 

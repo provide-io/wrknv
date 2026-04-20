@@ -418,9 +418,7 @@ class TestGetDownloadUrlCoverageBranches(FoundationTestCase):
         """Line 82->86: arch is neither amd64 nor arm64 → no rename, goes to os check."""
         tmp = self.create_temp_dir()
         manager = _make_manager(tmp)
-        with mock.patch.object(
-            manager, "get_platform_info", return_value={"os": "linux", "arch": "x86_64"}
-        ):
+        with mock.patch.object(manager, "get_platform_info", return_value={"os": "linux", "arch": "x86_64"}):
             url = manager.get_download_url("0.4.15")
         assert "x86_64" in url
 

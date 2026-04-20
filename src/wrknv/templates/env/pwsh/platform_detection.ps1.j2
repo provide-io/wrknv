@@ -1,7 +1,7 @@
 # --- Platform Detection ---
 $TFOS = if ($IsWindows) { "windows" } elseif ($IsMacOS) { "darwin" } else { "linux" }
 $TFARCH = switch ([System.Environment]::Is64BitOperatingSystem) {
-    $true { 
+    $true {
         if ([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture -eq [System.Runtime.InteropServices.Architecture]::Arm64) {
             "arm64"
         } else {

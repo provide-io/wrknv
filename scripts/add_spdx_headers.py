@@ -13,8 +13,8 @@ from __future__ import annotations
 
 import argparse
 import ast
-import sys
 from pathlib import Path
+import sys
 
 HEADER_LINES = [
     "# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.",

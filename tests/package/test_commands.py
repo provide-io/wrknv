@@ -34,7 +34,10 @@ class TestCheckFlavorInstalled(FoundationTestCase):
     """Tests for _check_flavor_installed."""
 
     def test_raises_when_flavor_not_installed(self) -> None:
-        with mock.patch.dict("sys.modules", {"flavor": None}), pytest.raises(ImportError, match="flavorpack not installed"):
+        with (
+            mock.patch.dict("sys.modules", {"flavor": None}),
+            pytest.raises(ImportError, match="flavorpack not installed"),
+        ):
             _check_flavor_installed()
 
     def test_passes_when_flavor_installed(self) -> None:
@@ -74,7 +77,10 @@ class TestBuildPackage(FoundationTestCase):
         manifest = tmp / "manifest.yaml"
         fake_flavor = mock.MagicMock()
         fake_flavor.build_package_from_manifest.side_effect = Exception("build failed")
-        with mock.patch.dict("sys.modules", {"flavor": fake_flavor}), pytest.raises(RuntimeError, match="Package build failed"):
+        with (
+            mock.patch.dict("sys.modules", {"flavor": fake_flavor}),
+            pytest.raises(RuntimeError, match="Package build failed"),
+        ):
             build_package(manifest, config=_make_config())
 
     def test_uses_default_config_when_none_provided(self) -> None:
@@ -190,7 +196,6 @@ class TestSignPackage(FoundationTestCase):
             sign_package(pkg, key)
 
 
-
 class TestVerifyPackage(FoundationTestCase):
     """Tests for verify_package."""
 
@@ -226,7 +231,10 @@ class TestGenerateKeys(FoundationTestCase):
 
     def test_raises_import_error_when_flavor_missing(self) -> None:
         tmp = self.create_temp_dir()
-        with mock.patch.dict("sys.modules", {"flavor": None, "flavor.packaging": None}), pytest.raises(ImportError):
+        with (
+            mock.patch.dict("sys.modules", {"flavor": None, "flavor.packaging": None}),
+            pytest.raises(ImportError),
+        ):
             generate_keys(tmp / "keys")
 
     def test_returns_key_pair(self) -> None:

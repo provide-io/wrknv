@@ -74,9 +74,7 @@ class TestRegenerateEnvScriptException(FoundationTestCase):
         """Line 168: _regenerate_env_script silently catches exceptions."""
         tmp = self.create_temp_dir()
         mgr = _make_subrosa(tmp)
-        with mock.patch(
-            "wrknv.managers.subrosa.base.pathlib.Path.cwd", side_effect=OSError("no cwd")
-        ):
+        with mock.patch("wrknv.managers.subrosa.base.pathlib.Path.cwd", side_effect=OSError("no cwd")):
             mgr._regenerate_env_script()  # Should not raise
 
 
@@ -116,7 +114,7 @@ class TestInstallFromArchiveLoopSkipsNonMatching(FoundationTestCase):
 
         def fake_extract(src: pathlib.Path, dst: pathlib.Path) -> None:
             (dst / "bao-unarchiver").write_text("helper")  # matches rglob but not exact name
-            (dst / "bao").write_text("binary")             # the real binary
+            (dst / "bao").write_text("binary")  # the real binary
 
         with (
             mock.patch.object(mgr, "extract_archive", side_effect=fake_extract),

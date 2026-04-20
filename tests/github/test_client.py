@@ -280,6 +280,7 @@ class TestGitHubReleasesClient:
         client.client = mock_client
 
         progress_calls = []
+
         def callback(downloaded: int, total: int) -> None:
             progress_calls.append((downloaded, total))
 
