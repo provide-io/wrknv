@@ -52,8 +52,10 @@ class TestWorkspaceManagerLoadConfig(FoundationTestCase):
         mgr.config_path.write_text("")
 
         mock_config = mock.Mock(spec=WorkspaceConfig)
-        with mock.patch("wrknv.workspace.manager.read_toml", return_value={"root": str(tmp)}), \
-             mock.patch("wrknv.workspace.manager.WorkspaceConfig.from_dict", return_value=mock_config):
+        with (
+            mock.patch("wrknv.workspace.manager.read_toml", return_value={"root": str(tmp)}),
+            mock.patch("wrknv.workspace.manager.WorkspaceConfig.from_dict", return_value=mock_config),
+        ):
             result = mgr.load_config()
         assert result is mock_config
 

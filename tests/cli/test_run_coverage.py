@@ -18,7 +18,16 @@ def get_test_cli():
     return create_cli()
 
 
-def _make_task(name, description=None, run="echo hi", depends_on=None, is_composite=False, env=None, is_default=False, namespace=None):
+def _make_task(
+    name,
+    description=None,
+    run="echo hi",
+    depends_on=None,
+    is_composite=False,
+    env=None,
+    is_default=False,
+    namespace=None,
+):
     t = Mock()
     t.name = name
     t.description = description
@@ -29,7 +38,6 @@ def _make_task(name, description=None, run="echo hi", depends_on=None, is_compos
     t.is_default = is_default
     t.namespace = namespace
     return t
-
 
 
 class TestTasksListCoverage(FoundationTestCase):

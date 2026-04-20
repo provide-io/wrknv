@@ -410,6 +410,7 @@ class TestRegisterNestedCommand(FoundationTestCase):
             mock.patch.object(_nested_registry, "register_command") as mock_reg,
             mock.patch("wrknv.cli.nested_commands.get_hub"),
         ):
+
             @register_nested_command("test-cmd-xyz", description="test")
             def my_cmd() -> None:
                 pass
@@ -425,6 +426,7 @@ class TestRegisterNestedCommand(FoundationTestCase):
             mock.patch.object(_nested_registry, "register_command"),
             mock.patch("wrknv.cli.nested_commands.get_hub"),
         ):
+
             @register_nested_command("my-unique-cmd-abc")
             def my_unique_func() -> None:
                 """My unique function."""
@@ -441,6 +443,7 @@ class TestRegisterNestedCommand(FoundationTestCase):
             mock.patch.object(_nested_registry, "register_command") as mock_reg,
             mock.patch("wrknv.cli.nested_commands.get_hub"),
         ):
+
             @register_nested_command("my-group-abc", group=True)
             def group_func() -> None:
                 pass

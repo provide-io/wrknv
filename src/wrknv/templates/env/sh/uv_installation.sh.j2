@@ -9,16 +9,16 @@ if ! command -v uv &> /dev/null; then
     {% else %}
     curl -LsSf https://astral.sh/uv/install.sh | sh
     {% endif %}
-    
+
     UV_ENV_PATH_LOCAL="$HOME/.local/bin/env"
     UV_ENV_PATH_CARGO="$HOME/.cargo/env"
-    
+
     if [ -f "$UV_ENV_PATH_LOCAL" ]; then
         source "$UV_ENV_PATH_LOCAL"
     elif [ -f "$UV_ENV_PATH_CARGO" ]; then
         source "$UV_ENV_PATH_CARGO"
     fi
-    
+
     if command -v uv &> /dev/null; then
         print_success "UV installed successfully"
     else

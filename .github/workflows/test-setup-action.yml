@@ -16,14 +16,14 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup wrknv from PyPI
         uses: ./.github/actions/setup-wrknv
         with:
           python-version: '3.11'
           install-from: 'pypi'
           version: 'latest'
-      
+
       - name: Verify installation
         run: |
           wrknv --version
@@ -39,13 +39,13 @@ jobs:
         python: ['3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup wrknv from local
         uses: ./.github/actions/setup-wrknv
         with:
           python-version: ${{ matrix.python }}
           install-from: 'local'
-      
+
       - name: Test with tools
         run: |
           wrknv --version
@@ -57,24 +57,24 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Create test configuration
         run: |
           cat > test-wrknv.toml << EOF
           project_name = "test-project"
           version = "1.0.0"
-          
+
           [tools]
           tofu = { version = "1.8.0" }
           EOF
-      
+
       - name: Setup wrknv with config
         uses: ./.github/actions/setup-wrknv
         with:
           install-from: 'local'
           config-file: 'test-wrknv.toml'
           tofu-version: '1.8.0'
-      
+
       - name: Verify tools
         run: |
           wrknv status
@@ -85,17 +85,17 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup wrknv
         uses: ./.github/actions/setup-wrknv
         with:
           install-from: 'local'
-      
+
       - name: Create and load profile
         run: |
           # Create a test profile
           wrknv profile save test-profile --force || true
           wrknv profile list
-          
+
           # Test loading (even if it doesn't have tools)
           wrknv profile load test-profile || true

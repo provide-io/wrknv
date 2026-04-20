@@ -146,10 +146,10 @@ install_as_editable = true
 **Discovery Process:**
 
 1. Match patterns against filesystem
-2. Read each `pyproject.toml`
-3. Build dependency graph
-4. Install in topological order
-5. Use editable mode (`uv pip install -e`)
+1. Read each `pyproject.toml`
+1. Build dependency graph
+1. Install in topological order
+1. Use editable mode (`uv pip install -e`)
 
 **Benefits:**
 

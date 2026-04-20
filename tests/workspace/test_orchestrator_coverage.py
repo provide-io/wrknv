@@ -56,9 +56,7 @@ class TestSequentialSuccessIncrementsCounter(FoundationTestCase):
             duration=0.1,
         )
 
-        async def mock_execute(
-            self: object, task: TaskConfig, **kwargs: object
-        ) -> TaskResult:
+        async def mock_execute(self: object, task: TaskConfig, **kwargs: object) -> TaskResult:
             return success_result
 
         with mock.patch.object(TaskExecutor, "execute", new=mock_execute):
@@ -129,9 +127,7 @@ class TestParallelSuccessIncrementsCounter(FoundationTestCase):
             duration=0.1,
         )
 
-        async def mock_execute(
-            self: object, task: TaskConfig, **kwargs: object
-        ) -> TaskResult:
+        async def mock_execute(self: object, task: TaskConfig, **kwargs: object) -> TaskResult:
             return success_result
 
         with mock.patch.object(TaskExecutor, "execute", new=mock_execute):

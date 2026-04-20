@@ -108,6 +108,8 @@ combine-as-imports = true
 "src/wrknv/lockfile.py" = ["BLE001", "S112"]  # Lockfile error handling
 "src/wrknv/gitignore/**" = ["BLE001"]  # Gitignore error handling
 "src/wrknv/config/**" = ["BLE001"]  # Config error handling
+"scripts/**" = ["BLE001"]  # Helper scripts catch broad exceptions for user-friendly error messages
+"archive/**" = ["BLE001"]  # Archived/legacy scripts
 
 [tool.ruff.lint.mccabe]
 max-complexity = 25

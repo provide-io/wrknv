@@ -112,7 +112,9 @@ class TestBaoGetDownloadUrl(FoundationTestCase):
         platform_info = {"os": "darwin", "arch": "arm64"}
         with mock.patch.object(mgr, "get_platform_info", return_value=platform_info):
             url = mgr.get_download_url("2.1.0")
-        assert url == "https://github.com/openbao/openbao/releases/download/v2.1.0/bao_2.1.0_Darwin_arm64.tar.gz"
+        assert (
+            url == "https://github.com/openbao/openbao/releases/download/v2.1.0/bao_2.1.0_Darwin_arm64.tar.gz"
+        )
 
     def test_get_download_url_linux_amd64(self) -> None:
         tmp = self.create_temp_dir()
@@ -120,7 +122,9 @@ class TestBaoGetDownloadUrl(FoundationTestCase):
         platform_info = {"os": "linux", "arch": "amd64"}
         with mock.patch.object(mgr, "get_platform_info", return_value=platform_info):
             url = mgr.get_download_url("2.1.0")
-        assert url == "https://github.com/openbao/openbao/releases/download/v2.1.0/bao_2.1.0_Linux_amd64.tar.gz"
+        assert (
+            url == "https://github.com/openbao/openbao/releases/download/v2.1.0/bao_2.1.0_Linux_amd64.tar.gz"
+        )
 
     def test_get_download_url_windows(self) -> None:
         tmp = self.create_temp_dir()

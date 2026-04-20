@@ -9,8 +9,8 @@ import os
 
 os.environ.setdefault("LOG_LEVEL", "ERROR")
 
-import tempfile
 from pathlib import Path
+import tempfile
 
 from wrknv.tasks.registry import TaskRegistry
 from wrknv.tasks.schema import TaskNamespace
@@ -101,8 +101,12 @@ def main() -> None:
 
         # Stress: TaskNamespace parsing
         names = [
-            "test", "test.unit", "test.coverage._default",
-            "docs.links.check", "quality", "ci",
+            "test",
+            "test.unit",
+            "test.coverage._default",
+            "docs.links.check",
+            "quality",
+            "ci",
         ]
         for _ in range(STRESS_CYCLES):
             for name in names:

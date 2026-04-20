@@ -15,18 +15,18 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Validate YAML files
         # Validates all workflow YAML files can be parsed
         run: bash ci/validate_workflows.sh
-      
+
       - name: Check Python syntax
         run: |
           python -m py_compile src/wrknv/__init__.py
           python -m py_compile src/wrknv/wenv/schema.py
           python -m py_compile src/wrknv/wenv/env_generator.py
           echo "Python syntax check passed!"
-      
+
       - name: List project structure
         run: |
           echo "## Project Structure" >> $GITHUB_STEP_SUMMARY

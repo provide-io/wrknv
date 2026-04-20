@@ -212,6 +212,7 @@ class TestCheckPermissions(FoundationTestCase):
 
     def test_warn_when_home_config_not_creatable(self) -> None:
         tmp = self.create_temp_dir()
+
         def mkdir_side_effect(*args, **kwargs):
             raise PermissionError("denied")
 
@@ -253,21 +254,27 @@ class TestSelftestCheck(FoundationTestCase):
     def test_all_pass_exits_zero(self) -> None:
         checks = [self._make_pass_check(f"check{i}") for i in range(5)]
         cli = get_test_cli()
-        with mock.patch(
-            "wrknv.cli.commands.doctor._check_environment",
-            return_value=checks[0],
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_config",
-            return_value=checks[1],
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_dependencies",
-            return_value=checks[2],
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_commands",
-            return_value=checks[3],
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_permissions",
-            return_value=checks[4],
+        with (
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_environment",
+                return_value=checks[0],
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_config",
+                return_value=checks[1],
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_dependencies",
+                return_value=checks[2],
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_commands",
+                return_value=checks[3],
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_permissions",
+                return_value=checks[4],
+            ),
         ):
             runner = click.testing.CliRunner()
             result = runner.invoke(cli, ["selftest", "check"])
@@ -277,21 +284,27 @@ class TestSelftestCheck(FoundationTestCase):
         pass_check = self._make_pass_check("ok")
         fail_check = self._make_fail_check("failed")
         cli = get_test_cli()
-        with mock.patch(
-            "wrknv.cli.commands.doctor._check_environment",
-            return_value=fail_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_config",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_dependencies",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_commands",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_permissions",
-            return_value=pass_check,
+        with (
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_environment",
+                return_value=fail_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_config",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_dependencies",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_commands",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_permissions",
+                return_value=pass_check,
+            ),
         ):
             runner = click.testing.CliRunner()
             result = runner.invoke(cli, ["selftest", "check"])
@@ -301,21 +314,27 @@ class TestSelftestCheck(FoundationTestCase):
         pass_check = self._make_pass_check("ok")
         warn_check = self._make_warn_check("warn")
         cli = get_test_cli()
-        with mock.patch(
-            "wrknv.cli.commands.doctor._check_environment",
-            return_value=warn_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_config",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_dependencies",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_commands",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_permissions",
-            return_value=pass_check,
+        with (
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_environment",
+                return_value=warn_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_config",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_dependencies",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_commands",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_permissions",
+                return_value=pass_check,
+            ),
         ):
             runner = click.testing.CliRunner()
             result = runner.invoke(cli, ["selftest", "check"])
@@ -330,21 +349,27 @@ class TestSelftestCheck(FoundationTestCase):
         }
         pass_check = self._make_pass_check("ok")
         cli = get_test_cli()
-        with mock.patch(
-            "wrknv.cli.commands.doctor._check_environment",
-            return_value=check_with_details,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_config",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_dependencies",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_commands",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_permissions",
-            return_value=pass_check,
+        with (
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_environment",
+                return_value=check_with_details,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_config",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_dependencies",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_commands",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_permissions",
+                return_value=pass_check,
+            ),
         ):
             runner = click.testing.CliRunner()
             result = runner.invoke(cli, ["selftest", "check", "--verbose"])
@@ -359,21 +384,27 @@ class TestSelftestCheck(FoundationTestCase):
         }
         pass_check = self._make_pass_check("ok")
         cli = get_test_cli()
-        with mock.patch(
-            "wrknv.cli.commands.doctor._check_environment",
-            return_value=fail_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_config",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_dependencies",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_commands",
-            return_value=pass_check,
-        ), mock.patch(
-            "wrknv.cli.commands.doctor._check_permissions",
-            return_value=pass_check,
+        with (
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_environment",
+                return_value=fail_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_config",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_dependencies",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_commands",
+                return_value=pass_check,
+            ),
+            mock.patch(
+                "wrknv.cli.commands.doctor._check_permissions",
+                return_value=pass_check,
+            ),
         ):
             runner = click.testing.CliRunner()
             result = runner.invoke(cli, ["selftest", "check", "--fix"])

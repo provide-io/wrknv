@@ -428,9 +428,7 @@ class TestSetupCompletionsUnknownShell(FoundationTestCase):
             import click.testing
 
             runner = click.testing.CliRunner()
-            result = runner.invoke(
-                cli, ["setup", "--completions", "powershell", "--install"]
-            )
+            result = runner.invoke(cli, ["setup", "--completions", "powershell", "--install"])
 
         # Should exit cleanly — no install_path found, nothing written
         assert result.exit_code == 0

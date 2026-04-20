@@ -79,6 +79,7 @@ GITHUB_GITIGNORE_REPO = "https://github.com/github/gitignore"
 GITHUB_GITIGNORE_ARCHIVE = "https://github.com/github/gitignore/archive/refs/heads/main.tar.gz"
 GITHUB_GITIGNORE_API = "https://api.github.com/repos/github/gitignore"
 GO_DOWNLOAD_API_URL = "https://go.dev/dl/?mode=json"
+GO_MIRROR_DEFAULT = "https://dl.google.com/go"
 
 # =================================
 # Template defaults
