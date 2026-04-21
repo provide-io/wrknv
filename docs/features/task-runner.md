@@ -7,10 +7,10 @@ The task runner feature enables wrknv to execute predefined tasks from `wrknv.to
 ## Goals
 
 1. **Single Command Interface**: Developers run tasks via `wrknv run <task-name>`
-1. **TOML-Based Configuration**: Tasks defined in existing `wrknv.toml` files
-1. **Simple Syntax**: Both simple string commands and complex task definitions
-1. **Composability**: Tasks can depend on or run other tasks
-1. **Discoverability**: `wrknv tasks` lists all available tasks
+2. **TOML-Based Configuration**: Tasks defined in existing `wrknv.toml` files
+3. **Simple Syntax**: Both simple string commands and complex task definitions
+4. **Composability**: Tasks can depend on or run other tasks
+5. **Discoverability**: `wrknv tasks` lists all available tasks
 
 ## Features
 
@@ -124,12 +124,12 @@ wrknv tasks --verbose
 ### Execution Flow
 
 1. Load `wrknv.toml` from current directory
-1. Parse `[tasks]` section
-1. Resolve task name to `TaskConfig`
-1. If composite task, recursively resolve subtasks
-1. Execute command(s) in subprocess
-1. Capture stdout/stderr
-1. Report results
+2. Parse `[tasks]` section
+3. Resolve task name to `TaskConfig`
+4. If composite task, recursively resolve subtasks
+5. Execute command(s) in subprocess
+6. Capture stdout/stderr
+7. Report results
 
 ### Environment
 
@@ -156,28 +156,27 @@ wrknv automatically detects the optimal execution strategy for tasks:
 ### Detection Priority
 
 1. **Environment Variable Override**: `WRKNV_TASK_RUNNER` env var (highest priority)
-1. **Editable Install**: If package is installed with `uv pip install -e .`, use direct execution with PATH modification
-1. **UV Project**: If `uv.lock` or `[tool.uv]` in pyproject.toml exists, use `uv run`
-1. **Virtual Environment**: If `.venv/`, `venv/`, or `workenv/` exists, use direct execution with PATH
-1. **System Python**: Use system Python (lowest priority)
+2. **Editable Install**: If package is installed with `uv pip install -e .`, use direct execution with PATH modification
+3. **UV Project**: If `uv.lock` or `[tool.uv]` in pyproject.toml exists, use `uv run`
+4. **Virtual Environment**: If `.venv/`, `venv/`, or `workenv/` exists, use direct execution with PATH
+5. **System Python**: Use system Python (lowest priority)
 
 ### Why This Matters
 
-**Problem**: `uv run` uninstalls editable installs (UV issue #3843) **Solution**: Auto-detect editable installs and use direct execution to preserve them
+**Problem**: `uv run` uninstalls editable installs (UV issue #3843)
+**Solution**: Auto-detect editable installs and use direct execution to preserve them
 
 ### Virtual Environment Detection
 
 wrknv searches for virtual environments in this order:
-
 1. `workenv/{package}_{os}_{arch}/` (wrknv pattern)
-1. `.venv/` (standard)
-1. `venv/` (fallback)
-1. Current Python's venv (if already in one)
+2. `.venv/` (standard)
+3. `venv/` (fallback)
+4. Current Python's venv (if already in one)
 
 ### Configuration Options
 
 **Global Configuration** (wrknv.toml):
-
 ```toml
 project_name = "myproject"
 task_auto_detect = true  # Enable auto-detection (default)
@@ -185,7 +184,6 @@ execution_mode = "auto"  # "auto", "uv_run", "direct", or "system"
 ```
 
 **Per-Task Override**:
-
 ```toml
 [tasks.build]
 run = "python -m build"
@@ -194,7 +192,6 @@ command_prefix = "uv run"  # Or custom prefix
 ```
 
 **Environment Variable Override**:
-
 ```bash
 # Override for all tasks
 export WRKNV_TASK_RUNNER="poetry run"
@@ -208,7 +205,6 @@ wrknv run test  # Uses "pytest tests/" directly
 ### Migration Guide
 
 **Before** (old pattern with hardcoded `uv run`):
-
 ```toml
 [tasks]
 test = "uv run pytest tests/"
@@ -216,7 +212,6 @@ lint = "uv run ruff check src/"
 ```
 
 **After** (new pattern with auto-detection):
-
 ```toml
 [tasks]
 test = "pytest tests/"
@@ -224,7 +219,6 @@ lint = "ruff check src/"
 ```
 
 wrknv will automatically:
-
 - Use `uv run` if it's a UV project AND not editable
 - Use direct execution (with PATH modification) if editable install detected
 - Preserve your development workflow
@@ -364,10 +358,10 @@ description = "A friendly greeting from your work environment"
 ## Success Criteria
 
 1. **Functional**: Can run simple and composite tasks
-1. **Tested**: >90% code coverage with TDD-written tests
-1. **Typed**: Passes mypy strict mode
-1. **Documented**: Examples in README
-1. **Demo**: `wrknv run hello` works and is delightful
+2. **Tested**: >90% code coverage with TDD-written tests
+3. **Typed**: Passes mypy strict mode
+4. **Documented**: Examples in README
+5. **Demo**: `wrknv run hello` works and is delightful
 
 ## Exploratory Enhancements (Not in MVP)
 

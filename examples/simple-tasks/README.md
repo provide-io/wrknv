@@ -33,7 +33,6 @@ we lint --fix
 ## Task Organization
 
 All tasks are at the top level (flat structure). This is ideal for:
-
 - Small projects
 - Simple workflows
 - Quick prototyping

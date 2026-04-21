@@ -10,7 +10,7 @@ Auto-configure GitHub token from gh CLI if available."""
 from __future__ import annotations
 
 import os
-import subprocess
+import subprocess  # nosec
 
 
 def pytest_configure(config) -> None:

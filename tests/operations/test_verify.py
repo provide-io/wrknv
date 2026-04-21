@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-import subprocess
+import subprocess  # nosec
 
 from provide.testkit import FoundationTestCase
 from provide.testkit.mocking import Mock, patch

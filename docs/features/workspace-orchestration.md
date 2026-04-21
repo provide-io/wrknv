@@ -42,19 +42,16 @@ we workspace run <task> [OPTIONS]
 ### Options
 
 - **`--repos=PATTERN`**: Glob pattern to filter repositories
-
   - Default: All repositories in workspace
   - Examples: `"pyvider-*"`, `"terraform-provider-*"`, `"wrknv"`
   - Supports standard glob patterns (`*`, `?`, `[]`)
 
 - **`--parallel`**: Run tasks in parallel across repositories
-
   - Default: Sequential execution
   - Sequential provides clearer output ordering
   - Parallel is faster for independent tasks
 
 - **`--fail-fast`**: Stop on first failure (sequential mode only)
-
   - Default: Continue on error (collect all results)
   - Useful for CI/CD pipelines
   - Ignored in parallel mode
@@ -70,14 +67,12 @@ we workspace run test
 ```
 
 **Benefits:**
-
 - Clear, ordered output per repository
 - Easy to debug failures
 - Fail-fast support
 - Real-time streaming output
 
 **Output Format:**
-
 ```
 ================================================================================
 ▶ Running 'test' in pyvider
@@ -115,13 +110,11 @@ we workspace run test --parallel
 ```
 
 **Benefits:**
-
 - Faster execution
 - Efficient use of system resources
 - Good for independent tasks
 
 **Considerations:**
-
 - Output may be interleaved
 - No fail-fast support (all repos run to completion)
 - Harder to debug failures in real-time
@@ -161,20 +154,17 @@ we workspace run build --repos="terraform-provider-*"
 For a task to run in a repository:
 
 1. **Repository must have:**
-
    - `.git` directory (Git repository)
    - `pyproject.toml` file (Python project)
 
-1. **Task must be defined in `wrknv.toml`:**
-
+2. **Task must be defined in `wrknv.toml`:**
    ```toml
    [tasks]
    test = "pytest"
    typecheck = "mypy src/"
    ```
 
-1. **If task is missing:**
-
+3. **If task is missing:**
    - Repository is automatically skipped
    - Counted in "Skipped" metric
    - Warning logged but not treated as failure
@@ -200,7 +190,6 @@ we workspace run test
 ```
 
 **Summary includes:**
-
 - Total repositories processed
 - Succeeded count
 - Failed count with repo names and exit codes
@@ -208,7 +197,6 @@ we workspace run test
 - Total duration
 
 **Exit Code:**
-
 - `0` if all repositories succeeded
 - `1` if any repository failed
 
@@ -221,7 +209,6 @@ we workspace run test --fail-fast
 ```
 
 **Behavior:**
-
 - Stops immediately when any task fails
 - Remaining repositories are not processed
 - Faster feedback in CI/CD
@@ -312,7 +299,6 @@ we workspace run test.integration --repos="{wrknv,pyvider,flavorpack}"
 ### Optimization Tips
 
 1. **Use specific filters**: Don't run tasks on repos that don't need them
-
    ```bash
    # Bad: runs on all repos, many skipped
    we workspace run test
@@ -321,14 +307,12 @@ we workspace run test.integration --repos="{wrknv,pyvider,flavorpack}"
    we workspace run test --repos="pyvider-*"
    ```
 
-1. **Combine with parallel for speed**:
-
+2. **Combine with parallel for speed**:
    ```bash
    we workspace run typecheck --repos="pyvider-*" --parallel
    ```
 
-1. **Use fail-fast in CI for quick feedback**:
-
+3. **Use fail-fast in CI for quick feedback**:
    ```bash
    we workspace run quality --fail-fast
    ```
@@ -338,7 +322,6 @@ we workspace run test.integration --repos="{wrknv,pyvider,flavorpack}"
 ### Task Auto-Detection
 
 Environment auto-detection works per-repository:
-
 - Each repo's environment is detected independently
 - `uv run` prefix added automatically when needed
 - Editable installs detected and handled correctly
@@ -346,7 +329,6 @@ Environment auto-detection works per-repository:
 ### Process Streaming
 
 All task output is streamed in real-time:
-
 - See progress as it happens
 - Process titles show current repo
 - Same streaming behavior as `we run <task>`
@@ -354,7 +336,6 @@ All task output is streamed in real-time:
 ### Task Execution Environment
 
 Respects all task configuration:
-
 - `timeout`: Per-task timeouts
 - `stream_output`: Streaming preferences
 - `execution_mode`: Environment detection mode
@@ -369,7 +350,6 @@ Respects all task configuration:
 ```
 
 **Solutions:**
-
 - Ensure you're in a workspace directory
 - Check that sibling directories have `.git` and `pyproject.toml`
 - Verify `--repos` pattern is correct
@@ -382,7 +362,6 @@ Respects all task configuration:
 ```
 
 **Solutions:**
-
 - Add task to repository's `wrknv.toml`
 - Use different filter to exclude repos without task
 - Task will be skipped automatically (not an error)
@@ -395,7 +374,6 @@ Respects all task configuration:
 ```
 
 **Solutions:**
-
 - Check task works in individual repos: `we run test`
 - Verify environment is set up: `we setup`
 - Check for dependency issues: `uv sync`
@@ -404,7 +382,6 @@ Respects all task configuration:
 ### Parallel Execution Issues
 
 If parallel execution causes problems:
-
 - Use sequential mode instead
 - Tasks may have shared resource conflicts
 - Output may be too interleaved to debug

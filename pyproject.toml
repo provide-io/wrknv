@@ -39,7 +39,7 @@ dependencies = [
     "jinja2>=3.0.0",
     "attrs>=25.4.0",
     "cattrs>=24.1.3",
-    "provide-foundation[all]>=0.3.21",
+    "provide-foundation[all]>=0.4.0",
 ]
 
 [project.scripts]
@@ -285,16 +285,12 @@ allowed_paths = [
 
 [dependency-groups]
 dev = [
-    "provide-testkit[quality]",
+    "provide-testkit[quality]>=0.4.0",
     "types-pyyaml>=6.0.12.20250915",
 ]
 docs = [
-    "provide-testkit[docs]",
+    "provide-testkit[docs]>=0.4.0",
 ]
-
-[tool.uv.sources]
-provide-testkit = { path = "../provide-testkit", editable = true }
-
 [tool.flavor]
 # Configuration for packaging wrknv with flavor
 entry_point = "wrknv.cli:entry_point"
