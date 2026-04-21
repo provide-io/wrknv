@@ -9,7 +9,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 ### Running Tests
-
 ```bash
 # Run all tests with coverage
 uv sync
@@ -24,7 +23,6 @@ python -m pytest -m cli   # CLI tests only
 ```
 
 ### Code Quality
-
 ```bash
 # Linting and formatting
 uv run ruff check src tests
@@ -35,7 +33,6 @@ uv run mypy src --ignore-missing-imports
 ```
 
 ### Building and Installing
-
 ```bash
 # Build distribution
 uv build

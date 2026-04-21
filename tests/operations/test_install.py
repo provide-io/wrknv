@@ -20,9 +20,6 @@ import pytest
 # Platform detection
 IS_WINDOWS = sys.platform == "win32"
 
-# Platform detection
-IS_WINDOWS = sys.platform == "win32"
-
 from wrknv.wenv.operations.install import (
     clean_directory,
     copy_file,

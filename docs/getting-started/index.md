@@ -32,37 +32,37 @@ Fully configured development environment!
 
 <div class="grid cards" markdown>
 
-- :material-rocket-launch:{ .lg .middle } **Quick Start**
+-   :material-rocket-launch:{ .lg .middle } **Quick Start**
 
-  ______________________________________________________________________
+    ---
 
-  Get your first environment running in 5 minutes.
+    Get your first environment running in 5 minutes.
 
-  [:octicons-arrow-right-24: Quick Start Guide](quick-start.md)
+    [:octicons-arrow-right-24: Quick Start Guide](quick-start.md)
 
-- :material-cog:{ .lg .middle } **Complete Installation**
+-   :material-cog:{ .lg .middle } **Complete Installation**
 
-  ______________________________________________________________________
+    ---
 
-  Detailed installation with all options and configurations.
+    Detailed installation with all options and configurations.
 
-  [:octicons-arrow-right-24: Installation Guide](installation.md)
+    [:octicons-arrow-right-24: Installation Guide](installation.md)
 
-- :material-lightbulb:{ .lg .middle } **Core Concepts**
+-   :material-lightbulb:{ .lg .middle } **Core Concepts**
 
-  ______________________________________________________________________
+    ---
 
-  Understand wrknv's architecture and design.
+    Understand wrknv's architecture and design.
 
-  [:octicons-arrow-right-24: Learn Concepts](concepts.md)
+    [:octicons-arrow-right-24: Learn Concepts](concepts.md)
 
-- :material-school:{ .lg .middle } **First Project**
+-   :material-school:{ .lg .middle } **First Project**
 
-  ______________________________________________________________________
+    ---
 
-  Step-by-step walkthrough of setting up a complete project.
+    Step-by-step walkthrough of setting up a complete project.
 
-  [:octicons-arrow-right-24: Project Tutorial](#first-commands)
+    [:octicons-arrow-right-24: Project Tutorial](#first-commands)
 
 </div>
 
@@ -257,5 +257,5 @@ $ wrknv config show
 Ready to get started?
 
 1. **[Quick Start Guide](quick-start.md)** - Get running in 5 minutes
-1. **[Installation Guide](installation.md)** - Detailed setup
-1. **[Core Concepts](concepts.md)** - Understand how wrknv works
+2. **[Installation Guide](installation.md)** - Detailed setup
+3. **[Core Concepts](concepts.md)** - Understand how wrknv works

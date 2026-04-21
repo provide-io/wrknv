@@ -5,13 +5,11 @@ This example demonstrates hierarchical task organization with nested namespaces 
 ## Task Organization
 
 ### Flat Tasks (Top Level)
-
 - `lint`, `format`, `typecheck` - Code quality tools
 - `quality` - Composite quality workflow
 - `ci` - Complete CI pipeline
 
 ### Test Namespace (2 levels)
-
 ```
 test/
 ├── _default      → pytest tests/
@@ -21,7 +19,6 @@ test/
 ```
 
 ### Test.Unit Namespace (3 levels)
-
 ```
 test.unit/
 ├── fast          → pytest tests/unit/ -x
@@ -30,7 +27,6 @@ test.unit/
 ```
 
 ### Docs Namespace
-
 ```
 docs/
 ├── _default      → mkdocs serve
@@ -39,7 +35,6 @@ docs/
 ```
 
 ### Build Namespace
-
 ```
 build/
 ├── _default      → python -m build
@@ -49,7 +44,6 @@ build/
 ```
 
 ### Deploy Namespace
-
 ```
 deploy/
 ├── staging       → deploy to staging
@@ -158,13 +152,11 @@ This means if `test.unit` accepts a `debug` flag, it will receive it!
 ### When to Use Nesting
 
 **Good use cases:**
-
 - Related operations: `test.unit`, `test.integration`
 - Different targets: `build.docker`, `build.wheel`
 - Environment variations: `deploy.staging`, `deploy.production`
 
 **Avoid nesting for:**
-
 - Unrelated operations
 - Simple projects with few tasks
 - Tasks that are run independently
@@ -178,7 +170,6 @@ This means if `test.unit` accepts a `debug` flag, it will receive it!
 ### Maximum Depth
 
 Tasks support up to 3 levels:
-
 ```
 level1.level2.level3     ✅ Supported
 level1.level2.level3.level4     ❌ Too deep

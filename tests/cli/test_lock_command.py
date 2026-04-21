@@ -14,9 +14,6 @@ from provide.testkit import FoundationTestCase
 from wrknv.cli.hub_cli import create_cli
 from wrknv.lockfile import ResolvedTool
 
-# Module-level shared CLI instance
-_test_cli = None
-
 
 def get_test_cli():
     """Create a fresh test CLI instance.
@@ -67,7 +64,7 @@ class TestLockGenerateCommand(FoundationTestCase):
         """Test generating lockfile when it already exists without --force."""
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-            patch("wrknv.cli.commands.lock.LockfileManager") as mock_manager_class,
+            patch("wrknv.lockfile.LockfileManager") as mock_manager_class,
         ):
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -92,7 +89,7 @@ class TestLockGenerateCommand(FoundationTestCase):
         """Test generating lockfile with --force flag."""
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-            patch("wrknv.cli.commands.lock.LockfileManager") as mock_manager_class,
+            patch("wrknv.lockfile.LockfileManager") as mock_manager_class,
         ):
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -120,7 +117,7 @@ class TestLockGenerateCommand(FoundationTestCase):
         """Test error during lockfile generation."""
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-            patch("wrknv.cli.commands.lock.LockfileManager") as mock_manager_class,
+            patch("wrknv.lockfile.LockfileManager") as mock_manager_class,
         ):
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -148,7 +145,7 @@ class TestLockCheckCommand(FoundationTestCase):
         """Test checking when no lockfile exists."""
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-            patch("wrknv.cli.commands.lock.LockfileManager") as mock_manager_class,
+            patch("wrknv.lockfile.LockfileManager") as mock_manager_class,
         ):
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -172,7 +169,7 @@ class TestLockCheckCommand(FoundationTestCase):
         """Test checking with valid lockfile."""
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-            patch("wrknv.cli.commands.lock.LockfileManager") as mock_manager_class,
+            patch("wrknv.lockfile.LockfileManager") as mock_manager_class,
         ):
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -196,7 +193,7 @@ class TestLockCheckCommand(FoundationTestCase):
         """Test checking with invalid/outdated lockfile."""
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-            patch("wrknv.cli.commands.lock.LockfileManager") as mock_manager_class,
+            patch("wrknv.lockfile.LockfileManager") as mock_manager_class,
         ):
             mock_config = Mock()
             mock_load.return_value = mock_config
@@ -221,7 +218,7 @@ class TestLockCheckCommand(FoundationTestCase):
         """Test error during lockfile check."""
         with (
             patch("wrknv.cli.hub_cli.WrknvContext.get_config") as mock_load,
-            patch("wrknv.cli.commands.lock.LockfileManager") as mock_manager_class,
+            patch("wrknv.lockfile.LockfileManager") as mock_manager_class,
         ):
             mock_config = Mock()
             mock_load.return_value = mock_config

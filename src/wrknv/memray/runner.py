@@ -25,7 +25,7 @@ Usage in a pytest test::
 from __future__ import annotations
 
 from pathlib import Path
-import subprocess
+import subprocess  # nosec
 import sys
 from typing import Any
 

@@ -17,7 +17,7 @@ else
     uv venv "${VENV_DIR}"
     {% endif %}
     print_success "Virtual environment created"
-
+    
     # Save Python version for future checks
     ${VENV_DIR}/bin/python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}')" > "${VENV_DIR}/.python-version"
 fi

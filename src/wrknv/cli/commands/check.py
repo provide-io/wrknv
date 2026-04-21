@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -41,7 +41,7 @@ def check_group() -> None:
 HEADER_SHEBANG = "#!/usr/bin/env python3"
 HEADER_LIBRARY = "# "
 SPDX_BLOCK = [
-    "# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.",
+    "# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.",
     "# SPDX-License-Identifier: Apache-2.0",
     "#",
 ]
@@ -93,8 +93,8 @@ def _detect_repo_name() -> str:
             repo_name = repo_name.removesuffix(".git")
             if repo_name:
                 return repo_name
-    except Exception:  # noqa: S110 - Fallback to cwd name if git fails
-        pass
+    except Exception:  # noqa: S110
+        pass  # nosec B110 - Fallback to cwd name if git fails
     return Path.cwd().name
 
 
@@ -102,7 +102,7 @@ def _load_footer_registry() -> dict[str, str]:
     """Load the footer registry from JSON file."""
     registry_path = Path(__file__).parent.parent.parent / "data" / "footer_registry.json"
     try:
-        with registry_path.open() as f:
+        with registry_path.open(encoding="utf-8") as f:
             data = json.load(f)
             return data.get("repositories", {})
     except (FileNotFoundError, json.JSONDecodeError) as e:

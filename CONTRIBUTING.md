@@ -5,13 +5,11 @@ Thank you for your interest in contributing to wrknv! This tool is the foundatio
 ## Development Setup
 
 ### Prerequisites
-
 - Python 3.11 or higher
 - Git
 - Docker (for container management features)
 
 ### Quick Setup
-
 ```bash
 # Clone the repository
 git clone https://github.com/provide-io/wrknv.git
@@ -25,9 +23,7 @@ pytest tests/
 ```
 
 ### Alternative Setup (Ecosystem Development)
-
 If you're working on the entire ecosystem:
-
 ```bash
 # From the provide-io root directory
 cd /path/to/provide-io
@@ -66,10 +62,10 @@ wrknv/
 ### Core Design Principles
 
 1. **Hub Pattern**: Commands are registered via decorators to a central hub, avoiding monolithic CLI files
-1. **Manager Pattern**: Each tool (UV, Terraform, etc.) has its own manager class inheriting from `ToolManager`
-1. **Operation Pattern**: Complex operations (download, verify, install) are separated into focused modules
-1. **Schema-driven Config**: All configuration uses typed schemas via `cattrs` for validation
-1. **Template-based Generation**: Use Jinja2 templates for all script generation
+2. **Manager Pattern**: Each tool (UV, Terraform, etc.) has its own manager class inheriting from `ToolManager`
+3. **Operation Pattern**: Complex operations (download, verify, install) are separated into focused modules
+4. **Schema-driven Config**: All configuration uses typed schemas via `cattrs` for validation
+5. **Template-based Generation**: Use Jinja2 templates for all script generation
 
 ### Key Concepts
 
@@ -84,10 +80,10 @@ wrknv/
 ### Adding New Tool Managers
 
 1. **Create a manager class**: Inherit from `BaseToolManager` in `src/wrknv/managers/`
-1. **Implement required methods**: `get_download_url()`, `get_executable_name()`, etc.
-1. **Add platform support**: Handle different operating systems and architectures
-1. **Include tests**: Comprehensive test coverage for all manager functionality
-1. **Update configuration**: Add tool to configuration schema
+2. **Implement required methods**: `get_download_url()`, `get_executable_name()`, etc.
+3. **Add platform support**: Handle different operating systems and architectures
+4. **Include tests**: Comprehensive test coverage for all manager functionality
+5. **Update configuration**: Add tool to configuration schema
 
 Example tool manager:
 
@@ -109,10 +105,10 @@ class NewToolManager(BaseToolManager):
 ### Adding New CLI Commands
 
 1. **Create command module**: Add new file in `src/wrknv/cli/commands/`
-1. **Use hub registration**: Register commands with the hub using decorators
-1. **Follow naming conventions**: Use descriptive command names and help text
-1. **Include error handling**: Comprehensive error handling with user-friendly messages
-1. **Add tests**: Test all command functionality and error cases
+2. **Use hub registration**: Register commands with the hub using decorators
+3. **Follow naming conventions**: Use descriptive command names and help text
+4. **Include error handling**: Comprehensive error handling with user-friendly messages
+5. **Add tests**: Test all command functionality and error cases
 
 Example command:
 
@@ -129,18 +125,18 @@ def new_command():
 ### Extending Templates
 
 1. **Template location**: Add templates to `templates/env/`
-1. **Jinja2 syntax**: Use Jinja2 template syntax for dynamic content
-1. **Platform support**: Consider cross-platform compatibility
-1. **Variable context**: Document required template variables
-1. **Test generation**: Ensure generated scripts work correctly
+2. **Jinja2 syntax**: Use Jinja2 template syntax for dynamic content
+3. **Platform support**: Consider cross-platform compatibility
+4. **Variable context**: Document required template variables
+5. **Test generation**: Ensure generated scripts work correctly
 
 ### Configuration Schema
 
 1. **Schema definition**: Update configuration schema in `src/wrknv/wenv/schema.py`
-1. **Type safety**: Use comprehensive type annotations
-1. **Validation**: Include validation rules for configuration values
-1. **Documentation**: Document configuration options clearly
-1. **Backward compatibility**: Consider migration paths for configuration changes
+2. **Type safety**: Use comprehensive type annotations
+3. **Validation**: Include validation rules for configuration values
+4. **Documentation**: Document configuration options clearly
+5. **Backward compatibility**: Consider migration paths for configuration changes
 
 ## Testing Requirements
 
@@ -195,13 +191,11 @@ bandit -r src/
 ### Making Changes
 
 1. **Create feature branch**:
-
    ```bash
    git checkout -b feature/add-new-tool-manager
    ```
 
-1. **Implement changes**:
-
+2. **Implement changes**:
    ```bash
    # Add new tool manager
    vim src/wrknv/managers/newtool.py
@@ -213,8 +207,7 @@ bandit -r src/
    vim src/wrknv/wenv/schema.py
    ```
 
-1. **Test changes**:
-
+3. **Test changes**:
    ```bash
    pytest tests/test_newtool_manager.py -v
    pytest tests/ # Run all tests
@@ -222,8 +215,7 @@ bandit -r src/
    mypy src/
    ```
 
-1. **Update documentation**:
-
+4. **Update documentation**:
    ```bash
    # Update README if needed
    vim README.md
@@ -232,8 +224,7 @@ bandit -r src/
    vim CHANGELOG.md
    ```
 
-1. **Submit pull request**:
-
+5. **Submit pull request**:
    ```bash
    git add .
    git commit -m "feat: add NewTool manager support"
@@ -243,21 +234,19 @@ bandit -r src/
 ### Review Process
 
 1. **Automated checks**: CI will run tests, linting, and type checking
-1. **Code review**: Maintainers will review for:
+2. **Code review**: Maintainers will review for:
    - Code quality and adherence to patterns
    - Test coverage and quality
    - Documentation completeness
    - Platform compatibility
    - Performance impact
-1. **Testing**: Changes will be tested across different platforms
-1. **Integration**: Once approved, changes will be merged and released
+3. **Testing**: Changes will be tested across different platforms
+4. **Integration**: Once approved, changes will be merged and released
 
 ## Issue Reporting
 
 ### Bug Reports
-
 When reporting bugs, include:
-
 - **Environment**: OS, Python version, wrknv version
 - **Configuration**: Relevant `wrknv.toml` configuration
 - **Command**: Exact command that triggered the issue
@@ -266,9 +255,7 @@ When reporting bugs, include:
 - **Logs**: Any relevant error messages or stack traces
 
 ### Feature Requests
-
 When requesting features, include:
-
 - **Use case**: Why is this feature needed?
 - **Proposed implementation**: How should it work?
 - **Configuration**: What configuration options are needed?
@@ -277,10 +264,10 @@ When requesting features, include:
 ## Release Process
 
 1. **Version bumping**: Follow semantic versioning
-1. **Changelog**: Update CHANGELOG.md with all changes
-1. **Testing**: Run full test suite across platforms
-1. **Documentation**: Update README and docs as needed
-1. **Release**: Create GitHub release with notes
+2. **Changelog**: Update CHANGELOG.md with all changes
+3. **Testing**: Run full test suite across platforms
+4. **Documentation**: Update README and docs as needed
+5. **Release**: Create GitHub release with notes
 
 ## Development Guidelines
 

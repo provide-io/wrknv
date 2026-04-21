@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from pathlib import Path
 import shutil
-import subprocess
+import subprocess  # nosec
 import sys
 
 from provide.foundation.cli import echo_error, echo_info, echo_success, echo_warning

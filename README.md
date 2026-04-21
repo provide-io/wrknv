@@ -1,6 +1,10 @@
 # 🧰🌍 Wrknv
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/) [![uv](https://img.shields.io/badge/uv-package_manager-FF6B35.svg)](https://github.com/astral-sh/uv) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) [![CI](https://github.com/provide-io/wrknv/actions/workflows/ci.yml/badge.svg)](https://github.com/provide-io/wrknv/actions)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![uv](https://img.shields.io/badge/uv-package_manager-FF6B35.svg)](https://github.com/astral-sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![CI](https://github.com/provide-io/wrknv/actions/workflows/ci.yml/badge.svg)](https://github.com/provide-io/wrknv/actions)
 
 **Work Environment** - The foundation for the provide.io ecosystem, generating standardized development environments across all projects.
 
@@ -22,18 +26,28 @@
 - Full documentation is in [docs/index.md](https://github.com/provide-io/wrknv/blob/main/docs/index.md).
 
 ## Documentation
-
 - [Documentation index](https://github.com/provide-io/wrknv/blob/main/docs/index.md)
 - [Configuration reference](https://github.com/provide-io/wrknv/blob/main/docs/reference/configuration.md)
-- [Examples](https://github.com/provide-io/wrknv/blob/main/examples/README.md)
+- [Examples](https://github.com/provide-io/wrknv/tree/main/examples)
 
 ## Development
 
-- See [CLAUDE.md](https://github.com/provide-io/wrknv/blob/main/CLAUDE.md) for local development notes.
-- Run `uv sync --extra dev` to set up the dev environment.
+### Quick Start
+
+```bash
+# Set up environment
+uv sync
+
+# Run common tasks
+we test           # Run tests
+we lint           # Check code
+we format         # Format code
+we tasks          # See all available commands
+```
+
+See [CLAUDE.md](https://github.com/provide-io/wrknv/blob/main/CLAUDE.md) for detailed development instructions and architecture information.
 
 ## Contributing
-
 See [CONTRIBUTING.md](https://github.com/provide-io/wrknv/blob/main/CONTRIBUTING.md) for contribution guidelines.
 
 ## License
@@ -77,7 +91,6 @@ we tasks                 # List all available tasks
 ```
 
 **Key Features:**
-
 - ✅ **Auto-detection** - Just `we test`, not `we run test`
 - ✅ **Nested tasks** - Organize with namespaces like `test.unit`, `docs.build`
 - ✅ **Smart resolution** - Hierarchical fallback finds the right task
@@ -88,63 +101,55 @@ See [Task System Documentation](https://github.com/provide-io/wrknv/blob/main/do
 
 ## Quick Start: Environment Management
 
-1. **Install wrknv**:
-   ```bash
-   uv tool install wrknv
-   ```
+1.  **Install wrknv**:
+    ```bash
+    uv tool install wrknv
+    ```
 
-```bash
-uv tool install wrknv
-```
+2.  **Create a `wrknv.toml` file**:
 
-1. **Create a `wrknv.toml` file**:
+    ```toml
+    # wrknv.toml
+    
+    [project]
+    name = "my-project"
+    
+    [tools]
+    uv = "latest"
+    tofu = "1.7.0"
+    go = "1.22.1"
+    
+    [siblings]
+    patterns = ["pyvider-*", "tofusoup", "garnish"]
+    ```
 
-   ```toml
-   # wrknv.toml
+3.  **Generate Environment Scripts**:
+    ```bash
+    wrknv generate
+    ```
+    This creates `env.sh` and `env.ps1` in your project root.
 
-   [project]
-   name = "my-project"
-
-   [tools]
-   uv = "latest"
-   tofu = "1.7.0"
-   go = "1.22.1"
-
-   [siblings]
-   patterns = ["pyvider-*", "tofusoup", "garnish"]
-   ```
-
-1. **Generate Environment Scripts**:
-
-   ```bash
-   wrknv generate
-   ```
-
-   This creates `env.sh` and `env.ps1` in your project root.
-
-1. **Activate Your Environment**:
-
-   ```bash
-   uv sync
-   ```
-
-   Your shell is now configured with the specified tool versions and all Python dependencies installed in `./workenv/`.
+4.  **Activate Your Environment**:
+    ```bash
+    uv sync
+    ```
+    Your shell is now configured with the specified tool versions and all Python dependencies installed in `./workenv/`.
 
 ## Core Commands
 
-- `wrknv init`: Initialize a new wrknv.toml interactively
-- `wrknv generate`: Generate env.sh and env.ps1 scripts
-- `wrknv status`: Show the status and versions of all managed tools
-- `wrknv setup`: Complete setup (init + generate + activate instructions)
-- `wrknv test`: Run project tests
-- `wrknv build`: Build project artifacts
+-   `wrknv init`: Initialize a new wrknv.toml interactively
+-   `wrknv generate`: Generate env.sh and env.ps1 scripts
+-   `wrknv status`: Show the status and versions of all managed tools
+-   `wrknv setup`: Complete setup (init + generate + activate instructions)
+-   `wrknv test`: Run project tests
+-   `wrknv build`: Build project artifacts
 
 ## Ecosystem Commands
 
-- `wrknv ecosystem setup`: Set up all provide.io projects
-- `wrknv ecosystem status`: Check health of all projects
-- `wrknv ecosystem test`: Run tests for all projects
-- `wrknv ecosystem build`: Build all project artifacts
+-   `wrknv ecosystem setup`: Set up all provide.io projects
+-   `wrknv ecosystem status`: Check health of all projects
+-   `wrknv ecosystem test`: Run tests for all projects
+-   `wrknv ecosystem build`: Build all project artifacts
 
 ## Project Configuration
 
@@ -175,26 +180,23 @@ verify_checksums = true
 ## Generated Files
 
 wrknv generates:
-
 - `env.sh` - Bash environment setup script
-- `env.ps1` - PowerShell environment setup script
+- `env.ps1` - PowerShell environment setup script  
 - `Makefile` - Standard development commands (optional)
 - `.vscode/` - VS Code settings and launch configs (optional)
 
 ## Why wrknv?
 
 Before wrknv, every project had 300-400 lines of hand-written, duplicated `env.sh` scripts. This led to:
-
 - Inconsistent setup experiences
 - Maintenance burden
 - Copy-paste errors
 - Drift between projects
 
 With wrknv:
-
 - Single source of truth for environment setup
 - Consistent experience across all projects
 - Easy updates - change template once, regenerate everywhere
 - Zero duplication
 
-Copyright (c) Provide.io LLC.
+Copyright (c) provide.io LLC.
