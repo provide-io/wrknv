@@ -8,26 +8,70 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Delegate build + tests + TestPyPI verify to the ci-tooling reusable.
-  # GH release creation is suppressed because the 'release: published' trigger
-  # implies the release already exists.
+  # Delegate tests + build + (optional) GH release to the ci-tooling reusable.
+  # GH release creation is suppressed because `release: published` means one already exists.
   release:
-    uses: provide-io/ci-tooling/.github/workflows/python-release.yml@v0.4.1
+    uses: provide-io/ci-tooling/.github/workflows/python-release.yml@v0.4.2
     permissions:
       contents: write
-      id-token: write
     with:
-      package-name: wrknv
-      publish-testpypi: true
-      verify-testpypi: true
-      verify-import: "import wrknv; v = wrknv.__version__"
       create-github-release: false
     secrets: inherit
 
-  # Publish to PyPI from the caller so trusted publishing keys on this repo's
-  # release.yml + environment 'pypi' continue to work unchanged.
-  publish-pypi:
+  # TestPyPI publish runs in the caller so PyPI Trusted Publishing matches the
+  # OIDC job_workflow_ref against this repo's release.yml (reusable workflows
+  # are not matched by PyPI's publisher config).
+  publish-testpypi:
     needs: release
+    runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
+      contents: read
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/wrknv
+    steps:
+      - name: 📦 Download artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          name: release-artifacts
+          path: dist
+      - name: 📤 Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e  # release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+
+  # Install from TestPyPI and assert the installed version matches the release tag.
+  # Uses the helper scripts from ci-tooling/scripts/release/.
+  verify-testpypi:
+    needs: publish-testpypi
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 📥 Checkout ci-tooling helpers
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          repository: provide-io/ci-tooling
+          ref: v0.4.2
+          path: .ci-tooling
+      - name: 🐍 Setup Python
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57  # v8.0.0
+        with:
+          python-version: "3.11"
+          enable-cache: false
+      - name: 🔖 Resolve version
+        id: ver
+        env:
+          REF_NAME: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: .ci-tooling/scripts/release/resolve-tag-version.sh >> "$GITHUB_OUTPUT"
+      - name: ✅ Install from TestPyPI and verify
+        run: |
+          .ci-tooling/scripts/release/verify-testpypi.sh wrknv "${{ steps.ver.outputs.version }}" "import wrknv; v = wrknv.__version__"
+
+  # PyPI publish via trusted publisher bound to this repo's release.yml + env `pypi`.
+  publish-pypi:
+    needs: verify-testpypi
     runs-on: ubuntu-24.04
     permissions:
       id-token: write
@@ -36,56 +80,42 @@ jobs:
       name: pypi
       url: https://pypi.org/p/wrknv
     steps:
-      # Pull the artifacts produced by the reusable build job
       - name: 📦 Download artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
         with:
           name: release-artifacts
           path: dist
-      # Trusted-publishing publish; skip-existing makes re-runs idempotent
       - name: 📤 Publish to PyPI
         uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e  # release/v1
         with:
           skip-existing: true
 
-  # Generate SBOM, sign artifacts, and attach everything to the GH release.
-  # Only runs on the 'release: published' trigger since it needs a release to attach to.
+  # Generate SBOM, sign artifacts, attach everything to the GH release.
   sign-and-upload:
-    needs: [release, publish-pypi]
+    needs: [publish-pypi]
     if: github.event_name == 'release'
     runs-on: ubuntu-24.04
     permissions:
       contents: write
       id-token: write
     steps:
-      # Need repo contents to run cyclonedx environment SBOM against the package install
       - name: 📥 Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
-
-      # uv for the cyclonedx tool invocation
       - name: 🐍 Setup uv
         uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57  # v8.0.0
         with:
           python-version: "3.11"
-
-      # Fetch the same artifacts as publish-pypi consumed
       - name: 📦 Download artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
         with:
           name: release-artifacts
           path: dist
-
-      # Generate a CycloneDX SBOM from the installed environment
       - name: 🧾 Generate Python SBOM
         run: uvx cyclonedx-py environment --output-format json -o sbom-python.cdx.json
-
-      # Sign the wheel + sdist with sigstore
       - name: 🔏 Sigstore sign artifacts
         uses: sigstore/gh-action-sigstore-python@f514d46b907ebcd5bedc05145c03b69c1edd8b46  # v3.0.0
         with:
           inputs: dist/*.whl dist/*.tar.gz
-
-      # Upload signed artifacts + SBOM onto the GH release that triggered this run
       - name: ⬆️ Attach artifacts to release
         env:
           GH_TOKEN: ${{ github.token }}
