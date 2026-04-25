@@ -149,6 +149,12 @@ jobs:
     name: Build PSP (${{ matrix.target }})
     runs-on: ${{ matrix.os }}
     needs: [lint, test]
+    # Disabled: flavorpack 0.4.0 PyPI wheel is pure-python (248KB, no launchers).
+    # flavor-rs-launcher and flavor-go-launcher need to be bundled — flavorpack
+    # 0.3.x shipped 6 platform-specific wheels with helpers; 0.4.0 regression.
+    # Re-enable once flavorpack v0.4.x ships proper platform wheels (see
+    # provide-io/flavorpack — v0.4.0 GH release is currently in draft).
+    if: false
     strategy:
       fail-fast: false
       matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"}]}' || '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"},{"os":"ubuntu-24.04-arm","target":"linux_arm64"},{"os":"macos-15-intel","target":"darwin_amd64"},{"os":"macos-15","target":"darwin_arm64"},{"os":"windows-2022","target":"windows_amd64"}]}') }}
