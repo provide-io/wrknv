@@ -16,7 +16,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -48,7 +48,7 @@ jobs:
       matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"}]}' || '{"include":[{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.11"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.12"},{"runner":"ubuntu-24.04","platform":"linux_amd64","python-version":"3.13"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.11"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.12"},{"runner":"ubuntu-24.04-arm","platform":"linux_arm64","python-version":"3.13"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.11"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.12"},{"runner":"macos-15","platform":"darwin_arm64","python-version":"3.13"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.11"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.12"},{"runner":"macos-15-intel","platform":"darwin_amd64","python-version":"3.13"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.11"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.12"},{"runner":"windows-2022","platform":"windows_amd64","python-version":"3.13"}]}') }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [lint, test]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -116,7 +116,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [lint, test]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -153,7 +153,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson((github.actor == 'nektos/act') && '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"}]}' || '{"include":[{"os":"ubuntu-24.04","target":"linux_amd64"},{"os":"ubuntu-24.04-arm","target":"linux_arm64"},{"os":"macos-15-intel","target":"darwin_amd64"},{"os":"macos-15","target":"darwin_arm64"},{"os":"windows-2022","target":"windows_amd64"}]}') }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: provide-io/ci-tooling/actions/build-psp@main
         with:
