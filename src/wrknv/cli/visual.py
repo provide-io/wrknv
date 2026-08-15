@@ -9,6 +9,9 @@ Emoji and color support for enhanced CLI output."""
 
 from __future__ import annotations
 
+import contextlib
+import sys
+
 from rich.console import Console
 from rich.theme import Theme
 
@@ -67,7 +70,16 @@ class Emoji:
 
 
 def get_console() -> Console:
-    """Get a configured Rich console with theme."""
+    """Get a configured Rich console with theme.
+
+    Reconfigures stdout/stderr to replace unencodable characters instead of
+    raising UnicodeEncodeError — e.g. emoji output on a Windows console
+    still using a legacy (non-UTF-8) codepage.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            with contextlib.suppress(Exception):
+                stream.reconfigure(errors="replace")
     return Console(theme=WRKENV_THEME)
 
 

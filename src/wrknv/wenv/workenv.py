@@ -66,22 +66,35 @@ class WorkenvManager:
             check=True,
         )
 
-        # Install wrknv in development mode
+        # Install wrknv into the new workenv. If this process is running from
+        # a local source checkout (src/wrknv/wenv/workenv.py -> repo root
+        # four levels up), install it editable so the workenv tracks that
+        # checkout. Otherwise wrknv was installed as a regular package (e.g.
+        # from PyPI) and there is no source tree to editable-install from —
+        # install the same released version instead.
         pip_path = cls._get_pip_path(workenv_path)
         wrknv_root = Path(__file__).parent.parent.parent.parent
 
-        print_info("Installing wrknv in development mode...", Emoji.INSTALL)
-        run(
-            [str(pip_path), "install", "-e", str(wrknv_root)],
-            check=True,
-        )
+        if (wrknv_root / "pyproject.toml").is_file():
+            print_info("Installing wrknv in development mode...", Emoji.INSTALL)
+            run(
+                [str(pip_path), "install", "-e", str(wrknv_root)],
+                check=True,
+            )
 
-        # Install development dependencies
-        print_info("Installing development dependencies...", Emoji.PACKAGE)
-        run(
-            [str(pip_path), "install", "-e", f"{wrknv_root}[dev]"],
-            check=True,
-        )
+            print_info("Installing development dependencies...", Emoji.PACKAGE)
+            run(
+                [str(pip_path), "install", "-e", f"{wrknv_root}[dev]"],
+                check=True,
+            )
+        else:
+            from wrknv import __version__ as wrknv_version
+
+            print_info(f"Installing wrknv {wrknv_version}...", Emoji.INSTALL)
+            run(
+                [str(pip_path), "install", f"wrknv=={wrknv_version}"],
+                check=True,
+            )
 
         print_success(f"Workenv created successfully at {workenv_path}", Emoji.SUCCESS)
         return workenv_path

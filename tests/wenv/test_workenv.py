@@ -152,6 +152,32 @@ class TestCreateWorkenv(FoundationTestCase):
                 WorkenvManager.create_workenv(tmp)
         assert mock_run.call_count == 3  # venv, pip install -e, pip install -e [dev]
 
+    def test_installs_pinned_version_when_not_a_source_checkout(self) -> None:
+        """When wrknv is running from an installed package (no pyproject.toml
+        at the computed wrknv_root — e.g. installed from PyPI, not a source
+        checkout), there is no source tree to editable-install from. It
+        should install the same released version instead.
+        """
+        tmp = self.create_temp_dir()
+        with (
+            mock.patch("platform.system", return_value="Linux"),
+            mock.patch("platform.machine", return_value="x86_64"),
+        ):
+            mock_result = mock.Mock()
+            mock_result.returncode = 0
+            with (
+                mock.patch("wrknv.wenv.workenv.run", return_value=mock_result) as mock_run,
+                mock.patch("wrknv.wenv.workenv.print_info"),
+                mock.patch("wrknv.wenv.workenv.print_success"),
+                mock.patch.object(Path, "is_file", return_value=False),
+                mock.patch("wrknv.__version__", "9.9.9"),
+            ):
+                WorkenvManager.create_workenv(tmp)
+        assert mock_run.call_count == 2  # venv, pip install wrknv==<version>
+        install_call = mock_run.call_args_list[1]
+        assert install_call.args[0][-1] == "wrknv==9.9.9"
+        assert "-e" not in install_call.args[0]
+
 
 class TestGenerateEnvScripts(FoundationTestCase):
     """Tests for WorkenvManager.generate_env_scripts."""

@@ -76,6 +76,39 @@ class TestVisualFunctions(FoundationTestCase):
         assert isinstance(console, Console)
         # Console has theme configured (no direct accessor)
 
+    def test_get_console_reconfigures_streams_to_replace_encode_errors(self) -> None:
+        """Emoji output shouldn't crash on a legacy (non-UTF-8) console codepage."""
+        mock_stdout = Mock()
+        mock_stderr = Mock()
+        with (
+            patch("wrknv.cli.visual.sys.stdout", mock_stdout),
+            patch("wrknv.cli.visual.sys.stderr", mock_stderr),
+        ):
+            get_console()
+        mock_stdout.reconfigure.assert_called_once_with(errors="replace")
+        mock_stderr.reconfigure.assert_called_once_with(errors="replace")
+
+    def test_get_console_tolerates_streams_without_reconfigure(self) -> None:
+        """Streams that don't support reconfigure (e.g. some test captures) are skipped."""
+
+        class _NoReconfigure:
+            pass
+
+        with (
+            patch("wrknv.cli.visual.sys.stdout", _NoReconfigure()),
+            patch("wrknv.cli.visual.sys.stderr", _NoReconfigure()),
+        ):
+            console = get_console()
+        assert isinstance(console, Console)
+
+    def test_get_console_tolerates_reconfigure_errors(self) -> None:
+        """A stream whose reconfigure() raises shouldn't prevent console creation."""
+        mock_stdout = Mock()
+        mock_stdout.reconfigure.side_effect = ValueError("already detached")
+        with patch("wrknv.cli.visual.sys.stdout", mock_stdout):
+            console = get_console()
+        assert isinstance(console, Console)
+
     def test_print_header_with_emoji(self) -> None:
         """Test printing header with emoji."""
         with patch("wrknv.cli.visual.Console") as mock_console_cls:
