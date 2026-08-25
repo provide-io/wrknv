@@ -111,7 +111,7 @@ jobs:
           name: release-artifacts
           path: dist
       - name: 🧾 Generate Python SBOM
-        run: uvx cyclonedx-py environment --output-format json -o sbom-python.cdx.json
+        run: scripts/sbom_from_wheel.sh dist sbom-python.cdx.json
       - name: 🔏 Sigstore sign artifacts
         uses: sigstore/gh-action-sigstore-python@5b79a39c381910c090341a2c9b0bf022c8b387e1  # v3.4.0
         with:
