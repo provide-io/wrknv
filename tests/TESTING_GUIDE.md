@@ -48,6 +48,7 @@ from tests.conftest import (
 # Or import directly from fixtures
 from tests.utils.fixtures import create_mock_runtime
 
+
 def test_example():
     # Create a mock runtime
     runtime = create_mock_runtime(available=True)
@@ -66,6 +67,7 @@ For most tests, use `create_mock_manager()` which gives you a manager with all d
 
 ```python
 from tests.conftest import create_mock_manager
+
 
 def test_with_mock_manager():
     # All dependencies are already mocked
@@ -87,6 +89,7 @@ When testing ContainerManager methods, replace just the components you need:
 
 ```python
 from tests.conftest import create_mock_builder
+
 
 def test_build_image():
     manager = ContainerManager(config)
@@ -123,7 +126,7 @@ def test_with_fixtures(mock_manager, test_config):
 ### Before (doesn't work with attrs):
 
 ```python
-@patch.object(manager.runtime, 'is_available')
+@patch.object(manager.runtime, "is_available")
 def test_check_docker(mock_available):
     # ❌ Fails: can't mock attrs object methods
     mock_available.return_value = True
@@ -134,6 +137,7 @@ def test_check_docker(mock_available):
 
 ```python
 from tests.conftest import create_mock_runtime
+
 
 def test_check_docker():
     # ✅ Replace entire runtime
@@ -147,20 +151,21 @@ def test_check_docker():
 
 ### Available Mock Factories
 
-| Factory | Creates Mock For | Key Parameters |
-|---------|-----------------|----------------|
-| `create_mock_runtime()` | `DockerRuntime` | `available=True` |
-| `create_mock_lifecycle()` | `ContainerLifecycle` | `exists=True`, `running=True` |
-| `create_mock_exec()` | `ContainerExec` | `container_name` |
-| `create_mock_logs()` | `ContainerLogs` | `container_name` |
-| `create_mock_builder()` | `ContainerBuilder` | - |
-| `create_mock_volumes()` | `VolumeManager` | `backup_dir` |
-| `create_mock_storage()` | `ContainerStorage` | `container_name` |
-| `create_mock_manager()` | `ContainerManager` | `docker_available`, `container_exists`, `container_running` |
+| Factory                   | Creates Mock For     | Key Parameters                                              |
+| ------------------------- | -------------------- | ----------------------------------------------------------- |
+| `create_mock_runtime()`   | `DockerRuntime`      | `available=True`                                            |
+| `create_mock_lifecycle()` | `ContainerLifecycle` | `exists=True`, `running=True`                               |
+| `create_mock_exec()`      | `ContainerExec`      | `container_name`                                            |
+| `create_mock_logs()`      | `ContainerLogs`      | `container_name`                                            |
+| `create_mock_builder()`   | `ContainerBuilder`   | -                                                           |
+| `create_mock_volumes()`   | `VolumeManager`      | `backup_dir`                                                |
+| `create_mock_storage()`   | `ContainerStorage`   | `container_name`                                            |
+| `create_mock_manager()`   | `ContainerManager`   | `docker_available`, `container_exists`, `container_running` |
 
 ### Available pytest Fixtures
 
 From `conftest.py`:
+
 - `test_config` - Test configuration
 - `mock_runtime` - Mock DockerRuntime
 - `mock_manager` - Manager with mocked dependencies
@@ -174,39 +179,44 @@ From `conftest.py`:
 ## Why This Approach?
 
 1. **attrs Provides Value**: Immutability prevents bugs, validation catches errors early
-2. **Production Code Quality**: Architecture is correct, tests adapt to it
-3. **Type Safety**: Better IDE support and type checking
-4. **Maintainability**: Less boilerplate in production code
-5. **Future-Proof**: Modern Python ecosystem standard
+1. **Production Code Quality**: Architecture is correct, tests adapt to it
+1. **Type Safety**: Better IDE support and type checking
+1. **Maintainability**: Less boilerplate in production code
+1. **Future-Proof**: Modern Python ecosystem standard
 
 ## Common Mistakes
 
 ### ❌ Don't mock individual attrs methods
+
 ```python
 manager.runtime.is_available = Mock(return_value=True)  # Fails!
 ```
 
 ### ❌ Don't use patch.object on attrs instances
+
 ```python
-@patch.object(manager.runtime, 'is_available')  # Fails!
+@patch.object(manager.runtime, "is_available")  # Fails!
 def test_something(mock):
     pass
 ```
 
 ### ✅ Do replace entire objects
+
 ```python
 manager.runtime = create_mock_runtime(available=True)  # Works!
 ```
 
 ### ✅ Do use provided mock factories
+
 ```python
 from tests.utils.fixtures import create_mock_builder
+
 manager.builder = create_mock_builder()  # Works!
 ```
 
 ## Need Help?
 
 1. Check `tests/utils/fixtures.py` for available mock factories
-2. Look at `tests/container/test_manager.py` for working examples
-3. See `tests/conftest.py` for available pytest fixtures
-4. Refer to this guide for patterns and anti-patterns
+1. Look at `tests/container/test_manager.py` for working examples
+1. See `tests/conftest.py` for available pytest fixtures
+1. Refer to this guide for patterns and anti-patterns
