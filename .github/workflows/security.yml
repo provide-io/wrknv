@@ -35,24 +35,14 @@ jobs:
         with:
           version: ${{ env.UV_VERSION }}
 
-      - name: Install dependencies
-        run: |
-          uv venv
-          source .venv/bin/activate
-          uv pip install -e ".[dev]"
-          uv pip install safety pip-audit
-
-      - name: Check with pip-audit
-        run: |
-          source .venv/bin/activate
-          # Ignore pip's self-vulnerability in the scanner environment itself.
-          # This does not impact wrknv runtime dependencies.
-          pip-audit --desc --ignore-vuln CVE-2026-3219
-
-      - name: Check with safety
-        run: |
-          source .venv/bin/activate
-          safety check --json || true
+      # Reads the resolved lock and runs the scanners from `uvx`, so what is
+      # audited is what this project depends on rather than what the scanners
+      # do. Installing them into the audited virtualenv meant every advisory
+      # against their own dependencies was reported here -- and one of those,
+      # an unpatched finding against `nltk` by way of `safety`, turned this
+      # build red over a package `uv.lock` has never contained.
+      - name: 🔍 Audit the locked dependencies
+        run: ci/audit_dependencies.sh
 
   bandit:
     name: Bandit Security Scan
