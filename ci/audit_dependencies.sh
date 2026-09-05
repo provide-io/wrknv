@@ -20,7 +20,10 @@
 # are nobody's problem.
 set -euo pipefail
 
-REQUIREMENTS="$(mktemp -t wrknv-audit-requirements)"
+# A full template rather than `mktemp -t <prefix>`: GNU mktemp rejects a
+# template with no trailing X's, which BSD mktemp accepts -- so the short
+# form runs on macOS and fails on the runner.
+REQUIREMENTS="$(mktemp "${TMPDIR:-/tmp}/wrknv-audit-requirements.XXXXXX")"
 trap 'rm -f "${REQUIREMENTS}"' EXIT
 
 # Everything the lock resolves, dev groups included: a vulnerable test-time
@@ -34,8 +37,3 @@ echo "==> auditing $(grep -c '==' "${REQUIREMENTS}") locked packages"
 # to resolve with -- which it does even for a pinned file, and which fails on
 # a host whose ensurepip cannot run.
 uvx pip-audit --desc --no-deps --disable-pip --requirement "${REQUIREMENTS}"
-
-# Informational, and deliberately not allowed to fail the build: `safety`
-# reports against its own database and needs an account for the full picture,
-# so it is a second opinion rather than a gate.
-uvx safety check --file "${REQUIREMENTS}" || true
