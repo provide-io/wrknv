@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: 📥 Checkout ci-tooling helpers
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           repository: provide-io/ci-tooling
           ref: v0.8.4
@@ -121,7 +121,7 @@ jobs:
     steps:
       # Only the script is needed from the checkout; no token is left behind.
       - name: 📥 Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
       - name: 🐍 Setup uv
@@ -161,7 +161,7 @@ jobs:
       # behind, so nothing fetched from a registry runs next to the signing
       # identity -- which is what this job was kept checkout-free to avoid.
       - name: 📥 Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
       - name: 📦 Download artifacts
@@ -212,7 +212,7 @@ jobs:
     steps:
       # Only the fetch script is needed; no token is left behind.
       - name: 📥 Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
       - name: 📦 Fetch the published artifacts from PyPI
